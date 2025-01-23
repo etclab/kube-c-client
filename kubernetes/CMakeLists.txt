@@ -1445,6 +1445,7 @@ set(PROJECT_VERSION_STRING "${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}.${
 add_library(${pkgName} STATIC ${SRCS} ${HDRS})
 # Link dependent libraries
 if(NOT CMAKE_VERSION VERSION_LESS 3.4)
+    target_include_directories (${pkgName} PRIVATE ${OPENSSL_INCLUDE_DIR})
     target_link_libraries(${pkgName} PRIVATE OpenSSL::SSL OpenSSL::Crypto)
 endif()
 target_link_libraries(${pkgName} PUBLIC ${CURL_LIBRARIES} )
