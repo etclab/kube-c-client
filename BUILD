@@ -75,7 +75,7 @@ cmake(
         "-j 1",
     ],
     lib_source = ":kubernetes",
-    out_shared_libs = ["libkubernetes.so"],
+    out_static_libs = ["libkubernetes.a"],
 )
 
 # create lib files (.so or .a)

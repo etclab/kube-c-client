@@ -1442,7 +1442,7 @@ include(PreTarget.cmake OPTIONAL)
 set(PROJECT_VERSION_STRING "${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}.${PROJECT_VERSION_PATCH}")
 
 # Add library with project file with project name as library name
-add_library(${pkgName} ${SRCS} ${HDRS})
+add_library(${pkgName} STATIC ${SRCS} ${HDRS})
 # Link dependent libraries
 if(NOT CMAKE_VERSION VERSION_LESS 3.4)
     target_link_libraries(${pkgName} PRIVATE OpenSSL::SSL OpenSSL::Crypto)
