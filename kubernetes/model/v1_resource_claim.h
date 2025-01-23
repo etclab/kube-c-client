@@ -8,7 +8,7 @@
 #define _v1_resource_claim_H_
 
 #include <string.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
 #include "../include/binary.h"
@@ -31,9 +31,9 @@ v1_resource_claim_t *v1_resource_claim_create(
 
 void v1_resource_claim_free(v1_resource_claim_t *v1_resource_claim);
 
-v1_resource_claim_t *v1_resource_claim_parseFromJSON(cJSON *v1_resource_claimJSON);
+v1_resource_claim_t *v1_resource_claim_parseFromJSON(mazu_cJSON *v1_resource_claimJSON);
 
-cJSON *v1_resource_claim_convertToJSON(v1_resource_claim_t *v1_resource_claim);
+mazu_cJSON *v1_resource_claim_convertToJSON(v1_resource_claim_t *v1_resource_claim);
 
 #endif /* _v1_resource_claim_H_ */
 

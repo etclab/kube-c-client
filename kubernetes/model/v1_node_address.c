@@ -36,14 +36,14 @@ void v1_node_address_free(v1_node_address_t *v1_node_address) {
     free(v1_node_address);
 }
 
-cJSON *v1_node_address_convertToJSON(v1_node_address_t *v1_node_address) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_node_address_convertToJSON(v1_node_address_t *v1_node_address) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_node_address->address
     if (!v1_node_address->address) {
         goto fail;
     }
-    if(cJSON_AddStringToObject(item, "address", v1_node_address->address) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "address", v1_node_address->address) == NULL) {
     goto fail; //String
     }
 
@@ -52,42 +52,42 @@ cJSON *v1_node_address_convertToJSON(v1_node_address_t *v1_node_address) {
     if (!v1_node_address->type) {
         goto fail;
     }
-    if(cJSON_AddStringToObject(item, "type", v1_node_address->type) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "type", v1_node_address->type) == NULL) {
     goto fail; //String
     }
 
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_node_address_t *v1_node_address_parseFromJSON(cJSON *v1_node_addressJSON){
+v1_node_address_t *v1_node_address_parseFromJSON(mazu_cJSON *v1_node_addressJSON){
 
     v1_node_address_t *v1_node_address_local_var = NULL;
 
     // v1_node_address->address
-    cJSON *address = cJSON_GetObjectItemCaseSensitive(v1_node_addressJSON, "address");
+    mazu_cJSON *address = mazu_cJSON_GetObjectItemCaseSensitive(v1_node_addressJSON, "address");
     if (!address) {
         goto end;
     }
 
     
-    if(!cJSON_IsString(address))
+    if(!mazu_cJSON_IsString(address))
     {
     goto end; //String
     }
 
     // v1_node_address->type
-    cJSON *type = cJSON_GetObjectItemCaseSensitive(v1_node_addressJSON, "type");
+    mazu_cJSON *type = mazu_cJSON_GetObjectItemCaseSensitive(v1_node_addressJSON, "type");
     if (!type) {
         goto end;
     }
 
     
-    if(!cJSON_IsString(type))
+    if(!mazu_cJSON_IsString(type))
     {
     goto end; //String
     }

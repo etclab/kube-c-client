@@ -54,12 +54,12 @@ void v2_horizontal_pod_autoscaler_free(v2_horizontal_pod_autoscaler_t *v2_horizo
     free(v2_horizontal_pod_autoscaler);
 }
 
-cJSON *v2_horizontal_pod_autoscaler_convertToJSON(v2_horizontal_pod_autoscaler_t *v2_horizontal_pod_autoscaler) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v2_horizontal_pod_autoscaler_convertToJSON(v2_horizontal_pod_autoscaler_t *v2_horizontal_pod_autoscaler) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v2_horizontal_pod_autoscaler->api_version
     if(v2_horizontal_pod_autoscaler->api_version) {
-    if(cJSON_AddStringToObject(item, "apiVersion", v2_horizontal_pod_autoscaler->api_version) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "apiVersion", v2_horizontal_pod_autoscaler->api_version) == NULL) {
     goto fail; //String
     }
     }
@@ -67,7 +67,7 @@ cJSON *v2_horizontal_pod_autoscaler_convertToJSON(v2_horizontal_pod_autoscaler_t
 
     // v2_horizontal_pod_autoscaler->kind
     if(v2_horizontal_pod_autoscaler->kind) {
-    if(cJSON_AddStringToObject(item, "kind", v2_horizontal_pod_autoscaler->kind) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "kind", v2_horizontal_pod_autoscaler->kind) == NULL) {
     goto fail; //String
     }
     }
@@ -75,11 +75,11 @@ cJSON *v2_horizontal_pod_autoscaler_convertToJSON(v2_horizontal_pod_autoscaler_t
 
     // v2_horizontal_pod_autoscaler->metadata
     if(v2_horizontal_pod_autoscaler->metadata) {
-    cJSON *metadata_local_JSON = v1_object_meta_convertToJSON(v2_horizontal_pod_autoscaler->metadata);
+    mazu_cJSON *metadata_local_JSON = v1_object_meta_convertToJSON(v2_horizontal_pod_autoscaler->metadata);
     if(metadata_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "metadata", metadata_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "metadata", metadata_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -88,11 +88,11 @@ cJSON *v2_horizontal_pod_autoscaler_convertToJSON(v2_horizontal_pod_autoscaler_t
 
     // v2_horizontal_pod_autoscaler->spec
     if(v2_horizontal_pod_autoscaler->spec) {
-    cJSON *spec_local_JSON = v2_horizontal_pod_autoscaler_spec_convertToJSON(v2_horizontal_pod_autoscaler->spec);
+    mazu_cJSON *spec_local_JSON = v2_horizontal_pod_autoscaler_spec_convertToJSON(v2_horizontal_pod_autoscaler->spec);
     if(spec_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "spec", spec_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "spec", spec_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -101,11 +101,11 @@ cJSON *v2_horizontal_pod_autoscaler_convertToJSON(v2_horizontal_pod_autoscaler_t
 
     // v2_horizontal_pod_autoscaler->status
     if(v2_horizontal_pod_autoscaler->status) {
-    cJSON *status_local_JSON = v2_horizontal_pod_autoscaler_status_convertToJSON(v2_horizontal_pod_autoscaler->status);
+    mazu_cJSON *status_local_JSON = v2_horizontal_pod_autoscaler_status_convertToJSON(v2_horizontal_pod_autoscaler->status);
     if(status_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "status", status_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "status", status_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -114,12 +114,12 @@ cJSON *v2_horizontal_pod_autoscaler_convertToJSON(v2_horizontal_pod_autoscaler_t
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v2_horizontal_pod_autoscaler_t *v2_horizontal_pod_autoscaler_parseFromJSON(cJSON *v2_horizontal_pod_autoscalerJSON){
+v2_horizontal_pod_autoscaler_t *v2_horizontal_pod_autoscaler_parseFromJSON(mazu_cJSON *v2_horizontal_pod_autoscalerJSON){
 
     v2_horizontal_pod_autoscaler_t *v2_horizontal_pod_autoscaler_local_var = NULL;
 
@@ -133,45 +133,45 @@ v2_horizontal_pod_autoscaler_t *v2_horizontal_pod_autoscaler_parseFromJSON(cJSON
     v2_horizontal_pod_autoscaler_status_t *status_local_nonprim = NULL;
 
     // v2_horizontal_pod_autoscaler->api_version
-    cJSON *api_version = cJSON_GetObjectItemCaseSensitive(v2_horizontal_pod_autoscalerJSON, "apiVersion");
+    mazu_cJSON *api_version = mazu_cJSON_GetObjectItemCaseSensitive(v2_horizontal_pod_autoscalerJSON, "apiVersion");
     if (api_version) { 
-    if(!cJSON_IsString(api_version) && !cJSON_IsNull(api_version))
+    if(!mazu_cJSON_IsString(api_version) && !mazu_cJSON_IsNull(api_version))
     {
     goto end; //String
     }
     }
 
     // v2_horizontal_pod_autoscaler->kind
-    cJSON *kind = cJSON_GetObjectItemCaseSensitive(v2_horizontal_pod_autoscalerJSON, "kind");
+    mazu_cJSON *kind = mazu_cJSON_GetObjectItemCaseSensitive(v2_horizontal_pod_autoscalerJSON, "kind");
     if (kind) { 
-    if(!cJSON_IsString(kind) && !cJSON_IsNull(kind))
+    if(!mazu_cJSON_IsString(kind) && !mazu_cJSON_IsNull(kind))
     {
     goto end; //String
     }
     }
 
     // v2_horizontal_pod_autoscaler->metadata
-    cJSON *metadata = cJSON_GetObjectItemCaseSensitive(v2_horizontal_pod_autoscalerJSON, "metadata");
+    mazu_cJSON *metadata = mazu_cJSON_GetObjectItemCaseSensitive(v2_horizontal_pod_autoscalerJSON, "metadata");
     if (metadata) { 
     metadata_local_nonprim = v1_object_meta_parseFromJSON(metadata); //nonprimitive
     }
 
     // v2_horizontal_pod_autoscaler->spec
-    cJSON *spec = cJSON_GetObjectItemCaseSensitive(v2_horizontal_pod_autoscalerJSON, "spec");
+    mazu_cJSON *spec = mazu_cJSON_GetObjectItemCaseSensitive(v2_horizontal_pod_autoscalerJSON, "spec");
     if (spec) { 
     spec_local_nonprim = v2_horizontal_pod_autoscaler_spec_parseFromJSON(spec); //nonprimitive
     }
 
     // v2_horizontal_pod_autoscaler->status
-    cJSON *status = cJSON_GetObjectItemCaseSensitive(v2_horizontal_pod_autoscalerJSON, "status");
+    mazu_cJSON *status = mazu_cJSON_GetObjectItemCaseSensitive(v2_horizontal_pod_autoscalerJSON, "status");
     if (status) { 
     status_local_nonprim = v2_horizontal_pod_autoscaler_status_parseFromJSON(status); //nonprimitive
     }
 
 
     v2_horizontal_pod_autoscaler_local_var = v2_horizontal_pod_autoscaler_create (
-        api_version && !cJSON_IsNull(api_version) ? strdup(api_version->valuestring) : NULL,
-        kind && !cJSON_IsNull(kind) ? strdup(kind->valuestring) : NULL,
+        api_version && !mazu_cJSON_IsNull(api_version) ? strdup(api_version->valuestring) : NULL,
+        kind && !mazu_cJSON_IsNull(kind) ? strdup(kind->valuestring) : NULL,
         metadata ? metadata_local_nonprim : NULL,
         spec ? spec_local_nonprim : NULL,
         status ? status_local_nonprim : NULL

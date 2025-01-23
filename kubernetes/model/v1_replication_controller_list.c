@@ -51,12 +51,12 @@ void v1_replication_controller_list_free(v1_replication_controller_list_t *v1_re
     free(v1_replication_controller_list);
 }
 
-cJSON *v1_replication_controller_list_convertToJSON(v1_replication_controller_list_t *v1_replication_controller_list) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_replication_controller_list_convertToJSON(v1_replication_controller_list_t *v1_replication_controller_list) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_replication_controller_list->api_version
     if(v1_replication_controller_list->api_version) {
-    if(cJSON_AddStringToObject(item, "apiVersion", v1_replication_controller_list->api_version) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "apiVersion", v1_replication_controller_list->api_version) == NULL) {
     goto fail; //String
     }
     }
@@ -66,7 +66,7 @@ cJSON *v1_replication_controller_list_convertToJSON(v1_replication_controller_li
     if (!v1_replication_controller_list->items) {
         goto fail;
     }
-    cJSON *items = cJSON_AddArrayToObject(item, "items");
+    mazu_cJSON *items = mazu_cJSON_AddArrayToObject(item, "items");
     if(items == NULL) {
     goto fail; //nonprimitive container
     }
@@ -74,18 +74,18 @@ cJSON *v1_replication_controller_list_convertToJSON(v1_replication_controller_li
     listEntry_t *itemsListEntry;
     if (v1_replication_controller_list->items) {
     list_ForEach(itemsListEntry, v1_replication_controller_list->items) {
-    cJSON *itemLocal = v1_replication_controller_convertToJSON(itemsListEntry->data);
+    mazu_cJSON *itemLocal = v1_replication_controller_convertToJSON(itemsListEntry->data);
     if(itemLocal == NULL) {
     goto fail;
     }
-    cJSON_AddItemToArray(items, itemLocal);
+    mazu_cJSON_AddItemToArray(items, itemLocal);
     }
     }
 
 
     // v1_replication_controller_list->kind
     if(v1_replication_controller_list->kind) {
-    if(cJSON_AddStringToObject(item, "kind", v1_replication_controller_list->kind) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "kind", v1_replication_controller_list->kind) == NULL) {
     goto fail; //String
     }
     }
@@ -93,11 +93,11 @@ cJSON *v1_replication_controller_list_convertToJSON(v1_replication_controller_li
 
     // v1_replication_controller_list->metadata
     if(v1_replication_controller_list->metadata) {
-    cJSON *metadata_local_JSON = v1_list_meta_convertToJSON(v1_replication_controller_list->metadata);
+    mazu_cJSON *metadata_local_JSON = v1_list_meta_convertToJSON(v1_replication_controller_list->metadata);
     if(metadata_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "metadata", metadata_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "metadata", metadata_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -106,12 +106,12 @@ cJSON *v1_replication_controller_list_convertToJSON(v1_replication_controller_li
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_replication_controller_list_t *v1_replication_controller_list_parseFromJSON(cJSON *v1_replication_controller_listJSON){
+v1_replication_controller_list_t *v1_replication_controller_list_parseFromJSON(mazu_cJSON *v1_replication_controller_listJSON){
 
     v1_replication_controller_list_t *v1_replication_controller_list_local_var = NULL;
 
@@ -122,31 +122,31 @@ v1_replication_controller_list_t *v1_replication_controller_list_parseFromJSON(c
     v1_list_meta_t *metadata_local_nonprim = NULL;
 
     // v1_replication_controller_list->api_version
-    cJSON *api_version = cJSON_GetObjectItemCaseSensitive(v1_replication_controller_listJSON, "apiVersion");
+    mazu_cJSON *api_version = mazu_cJSON_GetObjectItemCaseSensitive(v1_replication_controller_listJSON, "apiVersion");
     if (api_version) { 
-    if(!cJSON_IsString(api_version) && !cJSON_IsNull(api_version))
+    if(!mazu_cJSON_IsString(api_version) && !mazu_cJSON_IsNull(api_version))
     {
     goto end; //String
     }
     }
 
     // v1_replication_controller_list->items
-    cJSON *items = cJSON_GetObjectItemCaseSensitive(v1_replication_controller_listJSON, "items");
+    mazu_cJSON *items = mazu_cJSON_GetObjectItemCaseSensitive(v1_replication_controller_listJSON, "items");
     if (!items) {
         goto end;
     }
 
     
-    cJSON *items_local_nonprimitive = NULL;
-    if(!cJSON_IsArray(items)){
+    mazu_cJSON *items_local_nonprimitive = NULL;
+    if(!mazu_cJSON_IsArray(items)){
         goto end; //nonprimitive container
     }
 
     itemsList = list_createList();
 
-    cJSON_ArrayForEach(items_local_nonprimitive,items )
+    mazu_cJSON_ArrayForEach(items_local_nonprimitive,items )
     {
-        if(!cJSON_IsObject(items_local_nonprimitive)){
+        if(!mazu_cJSON_IsObject(items_local_nonprimitive)){
             goto end;
         }
         v1_replication_controller_t *itemsItem = v1_replication_controller_parseFromJSON(items_local_nonprimitive);
@@ -155,25 +155,25 @@ v1_replication_controller_list_t *v1_replication_controller_list_parseFromJSON(c
     }
 
     // v1_replication_controller_list->kind
-    cJSON *kind = cJSON_GetObjectItemCaseSensitive(v1_replication_controller_listJSON, "kind");
+    mazu_cJSON *kind = mazu_cJSON_GetObjectItemCaseSensitive(v1_replication_controller_listJSON, "kind");
     if (kind) { 
-    if(!cJSON_IsString(kind) && !cJSON_IsNull(kind))
+    if(!mazu_cJSON_IsString(kind) && !mazu_cJSON_IsNull(kind))
     {
     goto end; //String
     }
     }
 
     // v1_replication_controller_list->metadata
-    cJSON *metadata = cJSON_GetObjectItemCaseSensitive(v1_replication_controller_listJSON, "metadata");
+    mazu_cJSON *metadata = mazu_cJSON_GetObjectItemCaseSensitive(v1_replication_controller_listJSON, "metadata");
     if (metadata) { 
     metadata_local_nonprim = v1_list_meta_parseFromJSON(metadata); //nonprimitive
     }
 
 
     v1_replication_controller_list_local_var = v1_replication_controller_list_create (
-        api_version && !cJSON_IsNull(api_version) ? strdup(api_version->valuestring) : NULL,
+        api_version && !mazu_cJSON_IsNull(api_version) ? strdup(api_version->valuestring) : NULL,
         itemsList,
-        kind && !cJSON_IsNull(kind) ? strdup(kind->valuestring) : NULL,
+        kind && !mazu_cJSON_IsNull(kind) ? strdup(kind->valuestring) : NULL,
         metadata ? metadata_local_nonprim : NULL
         );
 

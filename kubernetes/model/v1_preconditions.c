@@ -36,12 +36,12 @@ void v1_preconditions_free(v1_preconditions_t *v1_preconditions) {
     free(v1_preconditions);
 }
 
-cJSON *v1_preconditions_convertToJSON(v1_preconditions_t *v1_preconditions) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_preconditions_convertToJSON(v1_preconditions_t *v1_preconditions) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_preconditions->resource_version
     if(v1_preconditions->resource_version) {
-    if(cJSON_AddStringToObject(item, "resourceVersion", v1_preconditions->resource_version) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "resourceVersion", v1_preconditions->resource_version) == NULL) {
     goto fail; //String
     }
     }
@@ -49,7 +49,7 @@ cJSON *v1_preconditions_convertToJSON(v1_preconditions_t *v1_preconditions) {
 
     // v1_preconditions->uid
     if(v1_preconditions->uid) {
-    if(cJSON_AddStringToObject(item, "uid", v1_preconditions->uid) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "uid", v1_preconditions->uid) == NULL) {
     goto fail; //String
     }
     }
@@ -57,28 +57,28 @@ cJSON *v1_preconditions_convertToJSON(v1_preconditions_t *v1_preconditions) {
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_preconditions_t *v1_preconditions_parseFromJSON(cJSON *v1_preconditionsJSON){
+v1_preconditions_t *v1_preconditions_parseFromJSON(mazu_cJSON *v1_preconditionsJSON){
 
     v1_preconditions_t *v1_preconditions_local_var = NULL;
 
     // v1_preconditions->resource_version
-    cJSON *resource_version = cJSON_GetObjectItemCaseSensitive(v1_preconditionsJSON, "resourceVersion");
+    mazu_cJSON *resource_version = mazu_cJSON_GetObjectItemCaseSensitive(v1_preconditionsJSON, "resourceVersion");
     if (resource_version) { 
-    if(!cJSON_IsString(resource_version) && !cJSON_IsNull(resource_version))
+    if(!mazu_cJSON_IsString(resource_version) && !mazu_cJSON_IsNull(resource_version))
     {
     goto end; //String
     }
     }
 
     // v1_preconditions->uid
-    cJSON *uid = cJSON_GetObjectItemCaseSensitive(v1_preconditionsJSON, "uid");
+    mazu_cJSON *uid = mazu_cJSON_GetObjectItemCaseSensitive(v1_preconditionsJSON, "uid");
     if (uid) { 
-    if(!cJSON_IsString(uid) && !cJSON_IsNull(uid))
+    if(!mazu_cJSON_IsString(uid) && !mazu_cJSON_IsNull(uid))
     {
     goto end; //String
     }
@@ -86,8 +86,8 @@ v1_preconditions_t *v1_preconditions_parseFromJSON(cJSON *v1_preconditionsJSON){
 
 
     v1_preconditions_local_var = v1_preconditions_create (
-        resource_version && !cJSON_IsNull(resource_version) ? strdup(resource_version->valuestring) : NULL,
-        uid && !cJSON_IsNull(uid) ? strdup(uid->valuestring) : NULL
+        resource_version && !mazu_cJSON_IsNull(resource_version) ? strdup(resource_version->valuestring) : NULL,
+        uid && !mazu_cJSON_IsNull(uid) ? strdup(uid->valuestring) : NULL
         );
 
     return v1_preconditions_local_var;

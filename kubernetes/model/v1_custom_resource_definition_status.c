@@ -48,16 +48,16 @@ void v1_custom_resource_definition_status_free(v1_custom_resource_definition_sta
     free(v1_custom_resource_definition_status);
 }
 
-cJSON *v1_custom_resource_definition_status_convertToJSON(v1_custom_resource_definition_status_t *v1_custom_resource_definition_status) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_custom_resource_definition_status_convertToJSON(v1_custom_resource_definition_status_t *v1_custom_resource_definition_status) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_custom_resource_definition_status->accepted_names
     if(v1_custom_resource_definition_status->accepted_names) {
-    cJSON *accepted_names_local_JSON = v1_custom_resource_definition_names_convertToJSON(v1_custom_resource_definition_status->accepted_names);
+    mazu_cJSON *accepted_names_local_JSON = v1_custom_resource_definition_names_convertToJSON(v1_custom_resource_definition_status->accepted_names);
     if(accepted_names_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "acceptedNames", accepted_names_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "acceptedNames", accepted_names_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -66,7 +66,7 @@ cJSON *v1_custom_resource_definition_status_convertToJSON(v1_custom_resource_def
 
     // v1_custom_resource_definition_status->conditions
     if(v1_custom_resource_definition_status->conditions) {
-    cJSON *conditions = cJSON_AddArrayToObject(item, "conditions");
+    mazu_cJSON *conditions = mazu_cJSON_AddArrayToObject(item, "conditions");
     if(conditions == NULL) {
     goto fail; //nonprimitive container
     }
@@ -74,11 +74,11 @@ cJSON *v1_custom_resource_definition_status_convertToJSON(v1_custom_resource_def
     listEntry_t *conditionsListEntry;
     if (v1_custom_resource_definition_status->conditions) {
     list_ForEach(conditionsListEntry, v1_custom_resource_definition_status->conditions) {
-    cJSON *itemLocal = v1_custom_resource_definition_condition_convertToJSON(conditionsListEntry->data);
+    mazu_cJSON *itemLocal = v1_custom_resource_definition_condition_convertToJSON(conditionsListEntry->data);
     if(itemLocal == NULL) {
     goto fail;
     }
-    cJSON_AddItemToArray(conditions, itemLocal);
+    mazu_cJSON_AddItemToArray(conditions, itemLocal);
     }
     }
     }
@@ -86,14 +86,14 @@ cJSON *v1_custom_resource_definition_status_convertToJSON(v1_custom_resource_def
 
     // v1_custom_resource_definition_status->stored_versions
     if(v1_custom_resource_definition_status->stored_versions) {
-    cJSON *stored_versions = cJSON_AddArrayToObject(item, "storedVersions");
+    mazu_cJSON *stored_versions = mazu_cJSON_AddArrayToObject(item, "storedVersions");
     if(stored_versions == NULL) {
         goto fail; //primitive container
     }
 
     listEntry_t *stored_versionsListEntry;
     list_ForEach(stored_versionsListEntry, v1_custom_resource_definition_status->stored_versions) {
-    if(cJSON_AddStringToObject(stored_versions, "", (char*)stored_versionsListEntry->data) == NULL)
+    if(mazu_cJSON_AddStringToObject(stored_versions, "", (char*)stored_versionsListEntry->data) == NULL)
     {
         goto fail;
     }
@@ -103,12 +103,12 @@ cJSON *v1_custom_resource_definition_status_convertToJSON(v1_custom_resource_def
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_custom_resource_definition_status_t *v1_custom_resource_definition_status_parseFromJSON(cJSON *v1_custom_resource_definition_statusJSON){
+v1_custom_resource_definition_status_t *v1_custom_resource_definition_status_parseFromJSON(mazu_cJSON *v1_custom_resource_definition_statusJSON){
 
     v1_custom_resource_definition_status_t *v1_custom_resource_definition_status_local_var = NULL;
 
@@ -122,24 +122,24 @@ v1_custom_resource_definition_status_t *v1_custom_resource_definition_status_par
     list_t *stored_versionsList = NULL;
 
     // v1_custom_resource_definition_status->accepted_names
-    cJSON *accepted_names = cJSON_GetObjectItemCaseSensitive(v1_custom_resource_definition_statusJSON, "acceptedNames");
+    mazu_cJSON *accepted_names = mazu_cJSON_GetObjectItemCaseSensitive(v1_custom_resource_definition_statusJSON, "acceptedNames");
     if (accepted_names) { 
     accepted_names_local_nonprim = v1_custom_resource_definition_names_parseFromJSON(accepted_names); //nonprimitive
     }
 
     // v1_custom_resource_definition_status->conditions
-    cJSON *conditions = cJSON_GetObjectItemCaseSensitive(v1_custom_resource_definition_statusJSON, "conditions");
+    mazu_cJSON *conditions = mazu_cJSON_GetObjectItemCaseSensitive(v1_custom_resource_definition_statusJSON, "conditions");
     if (conditions) { 
-    cJSON *conditions_local_nonprimitive = NULL;
-    if(!cJSON_IsArray(conditions)){
+    mazu_cJSON *conditions_local_nonprimitive = NULL;
+    if(!mazu_cJSON_IsArray(conditions)){
         goto end; //nonprimitive container
     }
 
     conditionsList = list_createList();
 
-    cJSON_ArrayForEach(conditions_local_nonprimitive,conditions )
+    mazu_cJSON_ArrayForEach(conditions_local_nonprimitive,conditions )
     {
-        if(!cJSON_IsObject(conditions_local_nonprimitive)){
+        if(!mazu_cJSON_IsObject(conditions_local_nonprimitive)){
             goto end;
         }
         v1_custom_resource_definition_condition_t *conditionsItem = v1_custom_resource_definition_condition_parseFromJSON(conditions_local_nonprimitive);
@@ -149,17 +149,17 @@ v1_custom_resource_definition_status_t *v1_custom_resource_definition_status_par
     }
 
     // v1_custom_resource_definition_status->stored_versions
-    cJSON *stored_versions = cJSON_GetObjectItemCaseSensitive(v1_custom_resource_definition_statusJSON, "storedVersions");
+    mazu_cJSON *stored_versions = mazu_cJSON_GetObjectItemCaseSensitive(v1_custom_resource_definition_statusJSON, "storedVersions");
     if (stored_versions) { 
-    cJSON *stored_versions_local = NULL;
-    if(!cJSON_IsArray(stored_versions)) {
+    mazu_cJSON *stored_versions_local = NULL;
+    if(!mazu_cJSON_IsArray(stored_versions)) {
         goto end;//primitive container
     }
     stored_versionsList = list_createList();
 
-    cJSON_ArrayForEach(stored_versions_local, stored_versions)
+    mazu_cJSON_ArrayForEach(stored_versions_local, stored_versions)
     {
-        if(!cJSON_IsString(stored_versions_local))
+        if(!mazu_cJSON_IsString(stored_versions_local))
         {
             goto end;
         }

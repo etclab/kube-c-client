@@ -48,12 +48,12 @@ void rbac_v1_subject_free(rbac_v1_subject_t *rbac_v1_subject) {
     free(rbac_v1_subject);
 }
 
-cJSON *rbac_v1_subject_convertToJSON(rbac_v1_subject_t *rbac_v1_subject) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *rbac_v1_subject_convertToJSON(rbac_v1_subject_t *rbac_v1_subject) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // rbac_v1_subject->api_group
     if(rbac_v1_subject->api_group) {
-    if(cJSON_AddStringToObject(item, "apiGroup", rbac_v1_subject->api_group) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "apiGroup", rbac_v1_subject->api_group) == NULL) {
     goto fail; //String
     }
     }
@@ -63,7 +63,7 @@ cJSON *rbac_v1_subject_convertToJSON(rbac_v1_subject_t *rbac_v1_subject) {
     if (!rbac_v1_subject->kind) {
         goto fail;
     }
-    if(cJSON_AddStringToObject(item, "kind", rbac_v1_subject->kind) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "kind", rbac_v1_subject->kind) == NULL) {
     goto fail; //String
     }
 
@@ -72,14 +72,14 @@ cJSON *rbac_v1_subject_convertToJSON(rbac_v1_subject_t *rbac_v1_subject) {
     if (!rbac_v1_subject->name) {
         goto fail;
     }
-    if(cJSON_AddStringToObject(item, "name", rbac_v1_subject->name) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "name", rbac_v1_subject->name) == NULL) {
     goto fail; //String
     }
 
 
     // rbac_v1_subject->_namespace
     if(rbac_v1_subject->_namespace) {
-    if(cJSON_AddStringToObject(item, "namespace", rbac_v1_subject->_namespace) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "namespace", rbac_v1_subject->_namespace) == NULL) {
     goto fail; //String
     }
     }
@@ -87,52 +87,52 @@ cJSON *rbac_v1_subject_convertToJSON(rbac_v1_subject_t *rbac_v1_subject) {
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-rbac_v1_subject_t *rbac_v1_subject_parseFromJSON(cJSON *rbac_v1_subjectJSON){
+rbac_v1_subject_t *rbac_v1_subject_parseFromJSON(mazu_cJSON *rbac_v1_subjectJSON){
 
     rbac_v1_subject_t *rbac_v1_subject_local_var = NULL;
 
     // rbac_v1_subject->api_group
-    cJSON *api_group = cJSON_GetObjectItemCaseSensitive(rbac_v1_subjectJSON, "apiGroup");
+    mazu_cJSON *api_group = mazu_cJSON_GetObjectItemCaseSensitive(rbac_v1_subjectJSON, "apiGroup");
     if (api_group) { 
-    if(!cJSON_IsString(api_group) && !cJSON_IsNull(api_group))
+    if(!mazu_cJSON_IsString(api_group) && !mazu_cJSON_IsNull(api_group))
     {
     goto end; //String
     }
     }
 
     // rbac_v1_subject->kind
-    cJSON *kind = cJSON_GetObjectItemCaseSensitive(rbac_v1_subjectJSON, "kind");
+    mazu_cJSON *kind = mazu_cJSON_GetObjectItemCaseSensitive(rbac_v1_subjectJSON, "kind");
     if (!kind) {
         goto end;
     }
 
     
-    if(!cJSON_IsString(kind))
+    if(!mazu_cJSON_IsString(kind))
     {
     goto end; //String
     }
 
     // rbac_v1_subject->name
-    cJSON *name = cJSON_GetObjectItemCaseSensitive(rbac_v1_subjectJSON, "name");
+    mazu_cJSON *name = mazu_cJSON_GetObjectItemCaseSensitive(rbac_v1_subjectJSON, "name");
     if (!name) {
         goto end;
     }
 
     
-    if(!cJSON_IsString(name))
+    if(!mazu_cJSON_IsString(name))
     {
     goto end; //String
     }
 
     // rbac_v1_subject->_namespace
-    cJSON *_namespace = cJSON_GetObjectItemCaseSensitive(rbac_v1_subjectJSON, "namespace");
+    mazu_cJSON *_namespace = mazu_cJSON_GetObjectItemCaseSensitive(rbac_v1_subjectJSON, "namespace");
     if (_namespace) { 
-    if(!cJSON_IsString(_namespace) && !cJSON_IsNull(_namespace))
+    if(!mazu_cJSON_IsString(_namespace) && !mazu_cJSON_IsNull(_namespace))
     {
     goto end; //String
     }
@@ -140,10 +140,10 @@ rbac_v1_subject_t *rbac_v1_subject_parseFromJSON(cJSON *rbac_v1_subjectJSON){
 
 
     rbac_v1_subject_local_var = rbac_v1_subject_create (
-        api_group && !cJSON_IsNull(api_group) ? strdup(api_group->valuestring) : NULL,
+        api_group && !mazu_cJSON_IsNull(api_group) ? strdup(api_group->valuestring) : NULL,
         strdup(kind->valuestring),
         strdup(name->valuestring),
-        _namespace && !cJSON_IsNull(_namespace) ? strdup(_namespace->valuestring) : NULL
+        _namespace && !mazu_cJSON_IsNull(_namespace) ? strdup(_namespace->valuestring) : NULL
         );
 
     return rbac_v1_subject_local_var;

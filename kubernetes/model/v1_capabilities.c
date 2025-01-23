@@ -42,19 +42,19 @@ void v1_capabilities_free(v1_capabilities_t *v1_capabilities) {
     free(v1_capabilities);
 }
 
-cJSON *v1_capabilities_convertToJSON(v1_capabilities_t *v1_capabilities) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_capabilities_convertToJSON(v1_capabilities_t *v1_capabilities) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_capabilities->add
     if(v1_capabilities->add) {
-    cJSON *add = cJSON_AddArrayToObject(item, "add");
+    mazu_cJSON *add = mazu_cJSON_AddArrayToObject(item, "add");
     if(add == NULL) {
         goto fail; //primitive container
     }
 
     listEntry_t *addListEntry;
     list_ForEach(addListEntry, v1_capabilities->add) {
-    if(cJSON_AddStringToObject(add, "", (char*)addListEntry->data) == NULL)
+    if(mazu_cJSON_AddStringToObject(add, "", (char*)addListEntry->data) == NULL)
     {
         goto fail;
     }
@@ -64,14 +64,14 @@ cJSON *v1_capabilities_convertToJSON(v1_capabilities_t *v1_capabilities) {
 
     // v1_capabilities->drop
     if(v1_capabilities->drop) {
-    cJSON *drop = cJSON_AddArrayToObject(item, "drop");
+    mazu_cJSON *drop = mazu_cJSON_AddArrayToObject(item, "drop");
     if(drop == NULL) {
         goto fail; //primitive container
     }
 
     listEntry_t *dropListEntry;
     list_ForEach(dropListEntry, v1_capabilities->drop) {
-    if(cJSON_AddStringToObject(drop, "", (char*)dropListEntry->data) == NULL)
+    if(mazu_cJSON_AddStringToObject(drop, "", (char*)dropListEntry->data) == NULL)
     {
         goto fail;
     }
@@ -81,12 +81,12 @@ cJSON *v1_capabilities_convertToJSON(v1_capabilities_t *v1_capabilities) {
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_capabilities_t *v1_capabilities_parseFromJSON(cJSON *v1_capabilitiesJSON){
+v1_capabilities_t *v1_capabilities_parseFromJSON(mazu_cJSON *v1_capabilitiesJSON){
 
     v1_capabilities_t *v1_capabilities_local_var = NULL;
 
@@ -97,17 +97,17 @@ v1_capabilities_t *v1_capabilities_parseFromJSON(cJSON *v1_capabilitiesJSON){
     list_t *dropList = NULL;
 
     // v1_capabilities->add
-    cJSON *add = cJSON_GetObjectItemCaseSensitive(v1_capabilitiesJSON, "add");
+    mazu_cJSON *add = mazu_cJSON_GetObjectItemCaseSensitive(v1_capabilitiesJSON, "add");
     if (add) { 
-    cJSON *add_local = NULL;
-    if(!cJSON_IsArray(add)) {
+    mazu_cJSON *add_local = NULL;
+    if(!mazu_cJSON_IsArray(add)) {
         goto end;//primitive container
     }
     addList = list_createList();
 
-    cJSON_ArrayForEach(add_local, add)
+    mazu_cJSON_ArrayForEach(add_local, add)
     {
-        if(!cJSON_IsString(add_local))
+        if(!mazu_cJSON_IsString(add_local))
         {
             goto end;
         }
@@ -116,17 +116,17 @@ v1_capabilities_t *v1_capabilities_parseFromJSON(cJSON *v1_capabilitiesJSON){
     }
 
     // v1_capabilities->drop
-    cJSON *drop = cJSON_GetObjectItemCaseSensitive(v1_capabilitiesJSON, "drop");
+    mazu_cJSON *drop = mazu_cJSON_GetObjectItemCaseSensitive(v1_capabilitiesJSON, "drop");
     if (drop) { 
-    cJSON *drop_local = NULL;
-    if(!cJSON_IsArray(drop)) {
+    mazu_cJSON *drop_local = NULL;
+    if(!mazu_cJSON_IsArray(drop)) {
         goto end;//primitive container
     }
     dropList = list_createList();
 
-    cJSON_ArrayForEach(drop_local, drop)
+    mazu_cJSON_ArrayForEach(drop_local, drop)
     {
-        if(!cJSON_IsString(drop_local))
+        if(!mazu_cJSON_IsString(drop_local))
         {
             goto end;
         }

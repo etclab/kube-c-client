@@ -8,7 +8,7 @@
 #define _v1_api_group_H_
 
 #include <string.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
 #include "../include/binary.h"
@@ -41,9 +41,9 @@ v1_api_group_t *v1_api_group_create(
 
 void v1_api_group_free(v1_api_group_t *v1_api_group);
 
-v1_api_group_t *v1_api_group_parseFromJSON(cJSON *v1_api_groupJSON);
+v1_api_group_t *v1_api_group_parseFromJSON(mazu_cJSON *v1_api_groupJSON);
 
-cJSON *v1_api_group_convertToJSON(v1_api_group_t *v1_api_group);
+mazu_cJSON *v1_api_group_convertToJSON(v1_api_group_t *v1_api_group);
 
 #endif /* _v1_api_group_H_ */
 

@@ -36,14 +36,14 @@ void v1alpha1_variable_free(v1alpha1_variable_t *v1alpha1_variable) {
     free(v1alpha1_variable);
 }
 
-cJSON *v1alpha1_variable_convertToJSON(v1alpha1_variable_t *v1alpha1_variable) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1alpha1_variable_convertToJSON(v1alpha1_variable_t *v1alpha1_variable) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1alpha1_variable->expression
     if (!v1alpha1_variable->expression) {
         goto fail;
     }
-    if(cJSON_AddStringToObject(item, "expression", v1alpha1_variable->expression) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "expression", v1alpha1_variable->expression) == NULL) {
     goto fail; //String
     }
 
@@ -52,42 +52,42 @@ cJSON *v1alpha1_variable_convertToJSON(v1alpha1_variable_t *v1alpha1_variable) {
     if (!v1alpha1_variable->name) {
         goto fail;
     }
-    if(cJSON_AddStringToObject(item, "name", v1alpha1_variable->name) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "name", v1alpha1_variable->name) == NULL) {
     goto fail; //String
     }
 
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1alpha1_variable_t *v1alpha1_variable_parseFromJSON(cJSON *v1alpha1_variableJSON){
+v1alpha1_variable_t *v1alpha1_variable_parseFromJSON(mazu_cJSON *v1alpha1_variableJSON){
 
     v1alpha1_variable_t *v1alpha1_variable_local_var = NULL;
 
     // v1alpha1_variable->expression
-    cJSON *expression = cJSON_GetObjectItemCaseSensitive(v1alpha1_variableJSON, "expression");
+    mazu_cJSON *expression = mazu_cJSON_GetObjectItemCaseSensitive(v1alpha1_variableJSON, "expression");
     if (!expression) {
         goto end;
     }
 
     
-    if(!cJSON_IsString(expression))
+    if(!mazu_cJSON_IsString(expression))
     {
     goto end; //String
     }
 
     // v1alpha1_variable->name
-    cJSON *name = cJSON_GetObjectItemCaseSensitive(v1alpha1_variableJSON, "name");
+    mazu_cJSON *name = mazu_cJSON_GetObjectItemCaseSensitive(v1alpha1_variableJSON, "name");
     if (!name) {
         goto end;
     }
 
     
-    if(!cJSON_IsString(name))
+    if(!mazu_cJSON_IsString(name))
     {
     goto end; //String
     }

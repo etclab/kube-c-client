@@ -8,7 +8,7 @@
 #define _v1_cluster_trust_bundle_projection_H_
 
 #include <string.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
 #include "../include/binary.h"
@@ -38,9 +38,9 @@ v1_cluster_trust_bundle_projection_t *v1_cluster_trust_bundle_projection_create(
 
 void v1_cluster_trust_bundle_projection_free(v1_cluster_trust_bundle_projection_t *v1_cluster_trust_bundle_projection);
 
-v1_cluster_trust_bundle_projection_t *v1_cluster_trust_bundle_projection_parseFromJSON(cJSON *v1_cluster_trust_bundle_projectionJSON);
+v1_cluster_trust_bundle_projection_t *v1_cluster_trust_bundle_projection_parseFromJSON(mazu_cJSON *v1_cluster_trust_bundle_projectionJSON);
 
-cJSON *v1_cluster_trust_bundle_projection_convertToJSON(v1_cluster_trust_bundle_projection_t *v1_cluster_trust_bundle_projection);
+mazu_cJSON *v1_cluster_trust_bundle_projection_convertToJSON(v1_cluster_trust_bundle_projection_t *v1_cluster_trust_bundle_projection);
 
 #endif /* _v1_cluster_trust_bundle_projection_H_ */
 

@@ -8,7 +8,7 @@
 #define _v1_mutating_webhook_configuration_H_
 
 #include <string.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
 #include "../include/binary.h"
@@ -37,9 +37,9 @@ v1_mutating_webhook_configuration_t *v1_mutating_webhook_configuration_create(
 
 void v1_mutating_webhook_configuration_free(v1_mutating_webhook_configuration_t *v1_mutating_webhook_configuration);
 
-v1_mutating_webhook_configuration_t *v1_mutating_webhook_configuration_parseFromJSON(cJSON *v1_mutating_webhook_configurationJSON);
+v1_mutating_webhook_configuration_t *v1_mutating_webhook_configuration_parseFromJSON(mazu_cJSON *v1_mutating_webhook_configurationJSON);
 
-cJSON *v1_mutating_webhook_configuration_convertToJSON(v1_mutating_webhook_configuration_t *v1_mutating_webhook_configuration);
+mazu_cJSON *v1_mutating_webhook_configuration_convertToJSON(v1_mutating_webhook_configuration_t *v1_mutating_webhook_configuration);
 
 #endif /* _v1_mutating_webhook_configuration_H_ */
 

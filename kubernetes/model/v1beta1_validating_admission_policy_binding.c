@@ -48,12 +48,12 @@ void v1beta1_validating_admission_policy_binding_free(v1beta1_validating_admissi
     free(v1beta1_validating_admission_policy_binding);
 }
 
-cJSON *v1beta1_validating_admission_policy_binding_convertToJSON(v1beta1_validating_admission_policy_binding_t *v1beta1_validating_admission_policy_binding) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1beta1_validating_admission_policy_binding_convertToJSON(v1beta1_validating_admission_policy_binding_t *v1beta1_validating_admission_policy_binding) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1beta1_validating_admission_policy_binding->api_version
     if(v1beta1_validating_admission_policy_binding->api_version) {
-    if(cJSON_AddStringToObject(item, "apiVersion", v1beta1_validating_admission_policy_binding->api_version) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "apiVersion", v1beta1_validating_admission_policy_binding->api_version) == NULL) {
     goto fail; //String
     }
     }
@@ -61,7 +61,7 @@ cJSON *v1beta1_validating_admission_policy_binding_convertToJSON(v1beta1_validat
 
     // v1beta1_validating_admission_policy_binding->kind
     if(v1beta1_validating_admission_policy_binding->kind) {
-    if(cJSON_AddStringToObject(item, "kind", v1beta1_validating_admission_policy_binding->kind) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "kind", v1beta1_validating_admission_policy_binding->kind) == NULL) {
     goto fail; //String
     }
     }
@@ -69,11 +69,11 @@ cJSON *v1beta1_validating_admission_policy_binding_convertToJSON(v1beta1_validat
 
     // v1beta1_validating_admission_policy_binding->metadata
     if(v1beta1_validating_admission_policy_binding->metadata) {
-    cJSON *metadata_local_JSON = v1_object_meta_convertToJSON(v1beta1_validating_admission_policy_binding->metadata);
+    mazu_cJSON *metadata_local_JSON = v1_object_meta_convertToJSON(v1beta1_validating_admission_policy_binding->metadata);
     if(metadata_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "metadata", metadata_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "metadata", metadata_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -82,11 +82,11 @@ cJSON *v1beta1_validating_admission_policy_binding_convertToJSON(v1beta1_validat
 
     // v1beta1_validating_admission_policy_binding->spec
     if(v1beta1_validating_admission_policy_binding->spec) {
-    cJSON *spec_local_JSON = v1beta1_validating_admission_policy_binding_spec_convertToJSON(v1beta1_validating_admission_policy_binding->spec);
+    mazu_cJSON *spec_local_JSON = v1beta1_validating_admission_policy_binding_spec_convertToJSON(v1beta1_validating_admission_policy_binding->spec);
     if(spec_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "spec", spec_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "spec", spec_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -95,12 +95,12 @@ cJSON *v1beta1_validating_admission_policy_binding_convertToJSON(v1beta1_validat
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1beta1_validating_admission_policy_binding_t *v1beta1_validating_admission_policy_binding_parseFromJSON(cJSON *v1beta1_validating_admission_policy_bindingJSON){
+v1beta1_validating_admission_policy_binding_t *v1beta1_validating_admission_policy_binding_parseFromJSON(mazu_cJSON *v1beta1_validating_admission_policy_bindingJSON){
 
     v1beta1_validating_admission_policy_binding_t *v1beta1_validating_admission_policy_binding_local_var = NULL;
 
@@ -111,39 +111,39 @@ v1beta1_validating_admission_policy_binding_t *v1beta1_validating_admission_poli
     v1beta1_validating_admission_policy_binding_spec_t *spec_local_nonprim = NULL;
 
     // v1beta1_validating_admission_policy_binding->api_version
-    cJSON *api_version = cJSON_GetObjectItemCaseSensitive(v1beta1_validating_admission_policy_bindingJSON, "apiVersion");
+    mazu_cJSON *api_version = mazu_cJSON_GetObjectItemCaseSensitive(v1beta1_validating_admission_policy_bindingJSON, "apiVersion");
     if (api_version) { 
-    if(!cJSON_IsString(api_version) && !cJSON_IsNull(api_version))
+    if(!mazu_cJSON_IsString(api_version) && !mazu_cJSON_IsNull(api_version))
     {
     goto end; //String
     }
     }
 
     // v1beta1_validating_admission_policy_binding->kind
-    cJSON *kind = cJSON_GetObjectItemCaseSensitive(v1beta1_validating_admission_policy_bindingJSON, "kind");
+    mazu_cJSON *kind = mazu_cJSON_GetObjectItemCaseSensitive(v1beta1_validating_admission_policy_bindingJSON, "kind");
     if (kind) { 
-    if(!cJSON_IsString(kind) && !cJSON_IsNull(kind))
+    if(!mazu_cJSON_IsString(kind) && !mazu_cJSON_IsNull(kind))
     {
     goto end; //String
     }
     }
 
     // v1beta1_validating_admission_policy_binding->metadata
-    cJSON *metadata = cJSON_GetObjectItemCaseSensitive(v1beta1_validating_admission_policy_bindingJSON, "metadata");
+    mazu_cJSON *metadata = mazu_cJSON_GetObjectItemCaseSensitive(v1beta1_validating_admission_policy_bindingJSON, "metadata");
     if (metadata) { 
     metadata_local_nonprim = v1_object_meta_parseFromJSON(metadata); //nonprimitive
     }
 
     // v1beta1_validating_admission_policy_binding->spec
-    cJSON *spec = cJSON_GetObjectItemCaseSensitive(v1beta1_validating_admission_policy_bindingJSON, "spec");
+    mazu_cJSON *spec = mazu_cJSON_GetObjectItemCaseSensitive(v1beta1_validating_admission_policy_bindingJSON, "spec");
     if (spec) { 
     spec_local_nonprim = v1beta1_validating_admission_policy_binding_spec_parseFromJSON(spec); //nonprimitive
     }
 
 
     v1beta1_validating_admission_policy_binding_local_var = v1beta1_validating_admission_policy_binding_create (
-        api_version && !cJSON_IsNull(api_version) ? strdup(api_version->valuestring) : NULL,
-        kind && !cJSON_IsNull(kind) ? strdup(kind->valuestring) : NULL,
+        api_version && !mazu_cJSON_IsNull(api_version) ? strdup(api_version->valuestring) : NULL,
+        kind && !mazu_cJSON_IsNull(kind) ? strdup(kind->valuestring) : NULL,
         metadata ? metadata_local_nonprim : NULL,
         spec ? spec_local_nonprim : NULL
         );

@@ -11,7 +11,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdbool.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 
 #include "../model/v1_probe.h"
 v1_probe_t* instantiate_v1_probe(int include_optional);
@@ -65,11 +65,11 @@ v1_probe_t* instantiate_v1_probe(int include_optional) {
 void test_v1_probe(int include_optional) {
     v1_probe_t* v1_probe_1 = instantiate_v1_probe(include_optional);
 
-	cJSON* jsonv1_probe_1 = v1_probe_convertToJSON(v1_probe_1);
-	printf("v1_probe :\n%s\n", cJSON_Print(jsonv1_probe_1));
+	mazu_cJSON* jsonv1_probe_1 = v1_probe_convertToJSON(v1_probe_1);
+	printf("v1_probe :\n%s\n", mazu_cJSON_Print(jsonv1_probe_1));
 	v1_probe_t* v1_probe_2 = v1_probe_parseFromJSON(jsonv1_probe_1);
-	cJSON* jsonv1_probe_2 = v1_probe_convertToJSON(v1_probe_2);
-	printf("repeating v1_probe:\n%s\n", cJSON_Print(jsonv1_probe_2));
+	mazu_cJSON* jsonv1_probe_2 = v1_probe_convertToJSON(v1_probe_2);
+	printf("repeating v1_probe:\n%s\n", mazu_cJSON_Print(jsonv1_probe_2));
 }
 
 int main() {

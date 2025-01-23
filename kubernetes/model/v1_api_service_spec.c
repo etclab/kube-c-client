@@ -54,12 +54,12 @@ void v1_api_service_spec_free(v1_api_service_spec_t *v1_api_service_spec) {
     free(v1_api_service_spec);
 }
 
-cJSON *v1_api_service_spec_convertToJSON(v1_api_service_spec_t *v1_api_service_spec) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_api_service_spec_convertToJSON(v1_api_service_spec_t *v1_api_service_spec) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_api_service_spec->ca_bundle
     if(v1_api_service_spec->ca_bundle) {
-    if(cJSON_AddStringToObject(item, "caBundle", v1_api_service_spec->ca_bundle) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "caBundle", v1_api_service_spec->ca_bundle) == NULL) {
     goto fail; //ByteArray
     }
     }
@@ -67,7 +67,7 @@ cJSON *v1_api_service_spec_convertToJSON(v1_api_service_spec_t *v1_api_service_s
 
     // v1_api_service_spec->group
     if(v1_api_service_spec->group) {
-    if(cJSON_AddStringToObject(item, "group", v1_api_service_spec->group) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "group", v1_api_service_spec->group) == NULL) {
     goto fail; //String
     }
     }
@@ -77,14 +77,14 @@ cJSON *v1_api_service_spec_convertToJSON(v1_api_service_spec_t *v1_api_service_s
     if (!v1_api_service_spec->group_priority_minimum) {
         goto fail;
     }
-    if(cJSON_AddNumberToObject(item, "groupPriorityMinimum", v1_api_service_spec->group_priority_minimum) == NULL) {
+    if(mazu_cJSON_AddNumberToObject(item, "groupPriorityMinimum", v1_api_service_spec->group_priority_minimum) == NULL) {
     goto fail; //Numeric
     }
 
 
     // v1_api_service_spec->insecure_skip_tls_verify
     if(v1_api_service_spec->insecure_skip_tls_verify) {
-    if(cJSON_AddBoolToObject(item, "insecureSkipTLSVerify", v1_api_service_spec->insecure_skip_tls_verify) == NULL) {
+    if(mazu_cJSON_AddBoolToObject(item, "insecureSkipTLSVerify", v1_api_service_spec->insecure_skip_tls_verify) == NULL) {
     goto fail; //Bool
     }
     }
@@ -92,11 +92,11 @@ cJSON *v1_api_service_spec_convertToJSON(v1_api_service_spec_t *v1_api_service_s
 
     // v1_api_service_spec->service
     if(v1_api_service_spec->service) {
-    cJSON *service_local_JSON = apiregistration_v1_service_reference_convertToJSON(v1_api_service_spec->service);
+    mazu_cJSON *service_local_JSON = apiregistration_v1_service_reference_convertToJSON(v1_api_service_spec->service);
     if(service_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "service", service_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "service", service_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -105,7 +105,7 @@ cJSON *v1_api_service_spec_convertToJSON(v1_api_service_spec_t *v1_api_service_s
 
     // v1_api_service_spec->version
     if(v1_api_service_spec->version) {
-    if(cJSON_AddStringToObject(item, "version", v1_api_service_spec->version) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "version", v1_api_service_spec->version) == NULL) {
     goto fail; //String
     }
     }
@@ -115,19 +115,19 @@ cJSON *v1_api_service_spec_convertToJSON(v1_api_service_spec_t *v1_api_service_s
     if (!v1_api_service_spec->version_priority) {
         goto fail;
     }
-    if(cJSON_AddNumberToObject(item, "versionPriority", v1_api_service_spec->version_priority) == NULL) {
+    if(mazu_cJSON_AddNumberToObject(item, "versionPriority", v1_api_service_spec->version_priority) == NULL) {
     goto fail; //Numeric
     }
 
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_api_service_spec_t *v1_api_service_spec_parseFromJSON(cJSON *v1_api_service_specJSON){
+v1_api_service_spec_t *v1_api_service_spec_parseFromJSON(mazu_cJSON *v1_api_service_specJSON){
 
     v1_api_service_spec_t *v1_api_service_spec_local_var = NULL;
 
@@ -135,67 +135,67 @@ v1_api_service_spec_t *v1_api_service_spec_parseFromJSON(cJSON *v1_api_service_s
     apiregistration_v1_service_reference_t *service_local_nonprim = NULL;
 
     // v1_api_service_spec->ca_bundle
-    cJSON *ca_bundle = cJSON_GetObjectItemCaseSensitive(v1_api_service_specJSON, "caBundle");
+    mazu_cJSON *ca_bundle = mazu_cJSON_GetObjectItemCaseSensitive(v1_api_service_specJSON, "caBundle");
     if (ca_bundle) { 
-    if(!cJSON_IsString(ca_bundle))
+    if(!mazu_cJSON_IsString(ca_bundle))
     {
     goto end; //ByteArray
     }
     }
 
     // v1_api_service_spec->group
-    cJSON *group = cJSON_GetObjectItemCaseSensitive(v1_api_service_specJSON, "group");
+    mazu_cJSON *group = mazu_cJSON_GetObjectItemCaseSensitive(v1_api_service_specJSON, "group");
     if (group) { 
-    if(!cJSON_IsString(group) && !cJSON_IsNull(group))
+    if(!mazu_cJSON_IsString(group) && !mazu_cJSON_IsNull(group))
     {
     goto end; //String
     }
     }
 
     // v1_api_service_spec->group_priority_minimum
-    cJSON *group_priority_minimum = cJSON_GetObjectItemCaseSensitive(v1_api_service_specJSON, "groupPriorityMinimum");
+    mazu_cJSON *group_priority_minimum = mazu_cJSON_GetObjectItemCaseSensitive(v1_api_service_specJSON, "groupPriorityMinimum");
     if (!group_priority_minimum) {
         goto end;
     }
 
     
-    if(!cJSON_IsNumber(group_priority_minimum))
+    if(!mazu_cJSON_IsNumber(group_priority_minimum))
     {
     goto end; //Numeric
     }
 
     // v1_api_service_spec->insecure_skip_tls_verify
-    cJSON *insecure_skip_tls_verify = cJSON_GetObjectItemCaseSensitive(v1_api_service_specJSON, "insecureSkipTLSVerify");
+    mazu_cJSON *insecure_skip_tls_verify = mazu_cJSON_GetObjectItemCaseSensitive(v1_api_service_specJSON, "insecureSkipTLSVerify");
     if (insecure_skip_tls_verify) { 
-    if(!cJSON_IsBool(insecure_skip_tls_verify))
+    if(!mazu_cJSON_IsBool(insecure_skip_tls_verify))
     {
     goto end; //Bool
     }
     }
 
     // v1_api_service_spec->service
-    cJSON *service = cJSON_GetObjectItemCaseSensitive(v1_api_service_specJSON, "service");
+    mazu_cJSON *service = mazu_cJSON_GetObjectItemCaseSensitive(v1_api_service_specJSON, "service");
     if (service) { 
     service_local_nonprim = apiregistration_v1_service_reference_parseFromJSON(service); //nonprimitive
     }
 
     // v1_api_service_spec->version
-    cJSON *version = cJSON_GetObjectItemCaseSensitive(v1_api_service_specJSON, "version");
+    mazu_cJSON *version = mazu_cJSON_GetObjectItemCaseSensitive(v1_api_service_specJSON, "version");
     if (version) { 
-    if(!cJSON_IsString(version) && !cJSON_IsNull(version))
+    if(!mazu_cJSON_IsString(version) && !mazu_cJSON_IsNull(version))
     {
     goto end; //String
     }
     }
 
     // v1_api_service_spec->version_priority
-    cJSON *version_priority = cJSON_GetObjectItemCaseSensitive(v1_api_service_specJSON, "versionPriority");
+    mazu_cJSON *version_priority = mazu_cJSON_GetObjectItemCaseSensitive(v1_api_service_specJSON, "versionPriority");
     if (!version_priority) {
         goto end;
     }
 
     
-    if(!cJSON_IsNumber(version_priority))
+    if(!mazu_cJSON_IsNumber(version_priority))
     {
     goto end; //Numeric
     }
@@ -203,11 +203,11 @@ v1_api_service_spec_t *v1_api_service_spec_parseFromJSON(cJSON *v1_api_service_s
 
     v1_api_service_spec_local_var = v1_api_service_spec_create (
         ca_bundle ? strdup(ca_bundle->valuestring) : NULL,
-        group && !cJSON_IsNull(group) ? strdup(group->valuestring) : NULL,
+        group && !mazu_cJSON_IsNull(group) ? strdup(group->valuestring) : NULL,
         group_priority_minimum->valuedouble,
         insecure_skip_tls_verify ? insecure_skip_tls_verify->valueint : 0,
         service ? service_local_nonprim : NULL,
-        version && !cJSON_IsNull(version) ? strdup(version->valuestring) : NULL,
+        version && !mazu_cJSON_IsNull(version) ? strdup(version->valuestring) : NULL,
         version_priority->valuedouble
         );
 

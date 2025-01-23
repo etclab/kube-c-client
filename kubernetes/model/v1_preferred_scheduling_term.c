@@ -32,18 +32,18 @@ void v1_preferred_scheduling_term_free(v1_preferred_scheduling_term_t *v1_prefer
     free(v1_preferred_scheduling_term);
 }
 
-cJSON *v1_preferred_scheduling_term_convertToJSON(v1_preferred_scheduling_term_t *v1_preferred_scheduling_term) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_preferred_scheduling_term_convertToJSON(v1_preferred_scheduling_term_t *v1_preferred_scheduling_term) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_preferred_scheduling_term->preference
     if (!v1_preferred_scheduling_term->preference) {
         goto fail;
     }
-    cJSON *preference_local_JSON = v1_node_selector_term_convertToJSON(v1_preferred_scheduling_term->preference);
+    mazu_cJSON *preference_local_JSON = v1_node_selector_term_convertToJSON(v1_preferred_scheduling_term->preference);
     if(preference_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "preference", preference_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "preference", preference_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -53,19 +53,19 @@ cJSON *v1_preferred_scheduling_term_convertToJSON(v1_preferred_scheduling_term_t
     if (!v1_preferred_scheduling_term->weight) {
         goto fail;
     }
-    if(cJSON_AddNumberToObject(item, "weight", v1_preferred_scheduling_term->weight) == NULL) {
+    if(mazu_cJSON_AddNumberToObject(item, "weight", v1_preferred_scheduling_term->weight) == NULL) {
     goto fail; //Numeric
     }
 
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_preferred_scheduling_term_t *v1_preferred_scheduling_term_parseFromJSON(cJSON *v1_preferred_scheduling_termJSON){
+v1_preferred_scheduling_term_t *v1_preferred_scheduling_term_parseFromJSON(mazu_cJSON *v1_preferred_scheduling_termJSON){
 
     v1_preferred_scheduling_term_t *v1_preferred_scheduling_term_local_var = NULL;
 
@@ -73,7 +73,7 @@ v1_preferred_scheduling_term_t *v1_preferred_scheduling_term_parseFromJSON(cJSON
     v1_node_selector_term_t *preference_local_nonprim = NULL;
 
     // v1_preferred_scheduling_term->preference
-    cJSON *preference = cJSON_GetObjectItemCaseSensitive(v1_preferred_scheduling_termJSON, "preference");
+    mazu_cJSON *preference = mazu_cJSON_GetObjectItemCaseSensitive(v1_preferred_scheduling_termJSON, "preference");
     if (!preference) {
         goto end;
     }
@@ -82,13 +82,13 @@ v1_preferred_scheduling_term_t *v1_preferred_scheduling_term_parseFromJSON(cJSON
     preference_local_nonprim = v1_node_selector_term_parseFromJSON(preference); //nonprimitive
 
     // v1_preferred_scheduling_term->weight
-    cJSON *weight = cJSON_GetObjectItemCaseSensitive(v1_preferred_scheduling_termJSON, "weight");
+    mazu_cJSON *weight = mazu_cJSON_GetObjectItemCaseSensitive(v1_preferred_scheduling_termJSON, "weight");
     if (!weight) {
         goto end;
     }
 
     
-    if(!cJSON_IsNumber(weight))
+    if(!mazu_cJSON_IsNumber(weight))
     {
     goto end; //Numeric
     }

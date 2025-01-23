@@ -11,7 +11,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdbool.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 
 #include "../model/core_v1_event_series.h"
 core_v1_event_series_t* instantiate_core_v1_event_series(int include_optional);
@@ -41,11 +41,11 @@ core_v1_event_series_t* instantiate_core_v1_event_series(int include_optional) {
 void test_core_v1_event_series(int include_optional) {
     core_v1_event_series_t* core_v1_event_series_1 = instantiate_core_v1_event_series(include_optional);
 
-	cJSON* jsoncore_v1_event_series_1 = core_v1_event_series_convertToJSON(core_v1_event_series_1);
-	printf("core_v1_event_series :\n%s\n", cJSON_Print(jsoncore_v1_event_series_1));
+	mazu_cJSON* jsoncore_v1_event_series_1 = core_v1_event_series_convertToJSON(core_v1_event_series_1);
+	printf("core_v1_event_series :\n%s\n", mazu_cJSON_Print(jsoncore_v1_event_series_1));
 	core_v1_event_series_t* core_v1_event_series_2 = core_v1_event_series_parseFromJSON(jsoncore_v1_event_series_1);
-	cJSON* jsoncore_v1_event_series_2 = core_v1_event_series_convertToJSON(core_v1_event_series_2);
-	printf("repeating core_v1_event_series:\n%s\n", cJSON_Print(jsoncore_v1_event_series_2));
+	mazu_cJSON* jsoncore_v1_event_series_2 = core_v1_event_series_convertToJSON(core_v1_event_series_2);
+	printf("repeating core_v1_event_series:\n%s\n", mazu_cJSON_Print(jsoncore_v1_event_series_2));
 }
 
 int main() {

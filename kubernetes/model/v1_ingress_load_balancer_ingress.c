@@ -45,12 +45,12 @@ void v1_ingress_load_balancer_ingress_free(v1_ingress_load_balancer_ingress_t *v
     free(v1_ingress_load_balancer_ingress);
 }
 
-cJSON *v1_ingress_load_balancer_ingress_convertToJSON(v1_ingress_load_balancer_ingress_t *v1_ingress_load_balancer_ingress) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_ingress_load_balancer_ingress_convertToJSON(v1_ingress_load_balancer_ingress_t *v1_ingress_load_balancer_ingress) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_ingress_load_balancer_ingress->hostname
     if(v1_ingress_load_balancer_ingress->hostname) {
-    if(cJSON_AddStringToObject(item, "hostname", v1_ingress_load_balancer_ingress->hostname) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "hostname", v1_ingress_load_balancer_ingress->hostname) == NULL) {
     goto fail; //String
     }
     }
@@ -58,7 +58,7 @@ cJSON *v1_ingress_load_balancer_ingress_convertToJSON(v1_ingress_load_balancer_i
 
     // v1_ingress_load_balancer_ingress->ip
     if(v1_ingress_load_balancer_ingress->ip) {
-    if(cJSON_AddStringToObject(item, "ip", v1_ingress_load_balancer_ingress->ip) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "ip", v1_ingress_load_balancer_ingress->ip) == NULL) {
     goto fail; //String
     }
     }
@@ -66,7 +66,7 @@ cJSON *v1_ingress_load_balancer_ingress_convertToJSON(v1_ingress_load_balancer_i
 
     // v1_ingress_load_balancer_ingress->ports
     if(v1_ingress_load_balancer_ingress->ports) {
-    cJSON *ports = cJSON_AddArrayToObject(item, "ports");
+    mazu_cJSON *ports = mazu_cJSON_AddArrayToObject(item, "ports");
     if(ports == NULL) {
     goto fail; //nonprimitive container
     }
@@ -74,11 +74,11 @@ cJSON *v1_ingress_load_balancer_ingress_convertToJSON(v1_ingress_load_balancer_i
     listEntry_t *portsListEntry;
     if (v1_ingress_load_balancer_ingress->ports) {
     list_ForEach(portsListEntry, v1_ingress_load_balancer_ingress->ports) {
-    cJSON *itemLocal = v1_ingress_port_status_convertToJSON(portsListEntry->data);
+    mazu_cJSON *itemLocal = v1_ingress_port_status_convertToJSON(portsListEntry->data);
     if(itemLocal == NULL) {
     goto fail;
     }
-    cJSON_AddItemToArray(ports, itemLocal);
+    mazu_cJSON_AddItemToArray(ports, itemLocal);
     }
     }
     }
@@ -86,12 +86,12 @@ cJSON *v1_ingress_load_balancer_ingress_convertToJSON(v1_ingress_load_balancer_i
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_ingress_load_balancer_ingress_t *v1_ingress_load_balancer_ingress_parseFromJSON(cJSON *v1_ingress_load_balancer_ingressJSON){
+v1_ingress_load_balancer_ingress_t *v1_ingress_load_balancer_ingress_parseFromJSON(mazu_cJSON *v1_ingress_load_balancer_ingressJSON){
 
     v1_ingress_load_balancer_ingress_t *v1_ingress_load_balancer_ingress_local_var = NULL;
 
@@ -99,36 +99,36 @@ v1_ingress_load_balancer_ingress_t *v1_ingress_load_balancer_ingress_parseFromJS
     list_t *portsList = NULL;
 
     // v1_ingress_load_balancer_ingress->hostname
-    cJSON *hostname = cJSON_GetObjectItemCaseSensitive(v1_ingress_load_balancer_ingressJSON, "hostname");
+    mazu_cJSON *hostname = mazu_cJSON_GetObjectItemCaseSensitive(v1_ingress_load_balancer_ingressJSON, "hostname");
     if (hostname) { 
-    if(!cJSON_IsString(hostname) && !cJSON_IsNull(hostname))
+    if(!mazu_cJSON_IsString(hostname) && !mazu_cJSON_IsNull(hostname))
     {
     goto end; //String
     }
     }
 
     // v1_ingress_load_balancer_ingress->ip
-    cJSON *ip = cJSON_GetObjectItemCaseSensitive(v1_ingress_load_balancer_ingressJSON, "ip");
+    mazu_cJSON *ip = mazu_cJSON_GetObjectItemCaseSensitive(v1_ingress_load_balancer_ingressJSON, "ip");
     if (ip) { 
-    if(!cJSON_IsString(ip) && !cJSON_IsNull(ip))
+    if(!mazu_cJSON_IsString(ip) && !mazu_cJSON_IsNull(ip))
     {
     goto end; //String
     }
     }
 
     // v1_ingress_load_balancer_ingress->ports
-    cJSON *ports = cJSON_GetObjectItemCaseSensitive(v1_ingress_load_balancer_ingressJSON, "ports");
+    mazu_cJSON *ports = mazu_cJSON_GetObjectItemCaseSensitive(v1_ingress_load_balancer_ingressJSON, "ports");
     if (ports) { 
-    cJSON *ports_local_nonprimitive = NULL;
-    if(!cJSON_IsArray(ports)){
+    mazu_cJSON *ports_local_nonprimitive = NULL;
+    if(!mazu_cJSON_IsArray(ports)){
         goto end; //nonprimitive container
     }
 
     portsList = list_createList();
 
-    cJSON_ArrayForEach(ports_local_nonprimitive,ports )
+    mazu_cJSON_ArrayForEach(ports_local_nonprimitive,ports )
     {
-        if(!cJSON_IsObject(ports_local_nonprimitive)){
+        if(!mazu_cJSON_IsObject(ports_local_nonprimitive)){
             goto end;
         }
         v1_ingress_port_status_t *portsItem = v1_ingress_port_status_parseFromJSON(ports_local_nonprimitive);
@@ -139,8 +139,8 @@ v1_ingress_load_balancer_ingress_t *v1_ingress_load_balancer_ingress_parseFromJS
 
 
     v1_ingress_load_balancer_ingress_local_var = v1_ingress_load_balancer_ingress_create (
-        hostname && !cJSON_IsNull(hostname) ? strdup(hostname->valuestring) : NULL,
-        ip && !cJSON_IsNull(ip) ? strdup(ip->valuestring) : NULL,
+        hostname && !mazu_cJSON_IsNull(hostname) ? strdup(hostname->valuestring) : NULL,
+        ip && !mazu_cJSON_IsNull(ip) ? strdup(ip->valuestring) : NULL,
         ports ? portsList : NULL
         );
 

@@ -69,16 +69,16 @@ void v1_subject_access_review_spec_free(v1_subject_access_review_spec_t *v1_subj
     free(v1_subject_access_review_spec);
 }
 
-cJSON *v1_subject_access_review_spec_convertToJSON(v1_subject_access_review_spec_t *v1_subject_access_review_spec) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_subject_access_review_spec_convertToJSON(v1_subject_access_review_spec_t *v1_subject_access_review_spec) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_subject_access_review_spec->extra
     if(v1_subject_access_review_spec->extra) {
-    cJSON *extra = cJSON_AddObjectToObject(item, "extra");
+    mazu_cJSON *extra = mazu_cJSON_AddObjectToObject(item, "extra");
     if(extra == NULL) {
         goto fail; //primitive map container
     }
-    cJSON *localMapObject = extra;
+    mazu_cJSON *localMapObject = extra;
     listEntry_t *extraListEntry;
     if (v1_subject_access_review_spec->extra) {
     list_ForEach(extraListEntry, v1_subject_access_review_spec->extra) {
@@ -90,14 +90,14 @@ cJSON *v1_subject_access_review_spec_convertToJSON(v1_subject_access_review_spec
 
     // v1_subject_access_review_spec->groups
     if(v1_subject_access_review_spec->groups) {
-    cJSON *groups = cJSON_AddArrayToObject(item, "groups");
+    mazu_cJSON *groups = mazu_cJSON_AddArrayToObject(item, "groups");
     if(groups == NULL) {
         goto fail; //primitive container
     }
 
     listEntry_t *groupsListEntry;
     list_ForEach(groupsListEntry, v1_subject_access_review_spec->groups) {
-    if(cJSON_AddStringToObject(groups, "", (char*)groupsListEntry->data) == NULL)
+    if(mazu_cJSON_AddStringToObject(groups, "", (char*)groupsListEntry->data) == NULL)
     {
         goto fail;
     }
@@ -107,11 +107,11 @@ cJSON *v1_subject_access_review_spec_convertToJSON(v1_subject_access_review_spec
 
     // v1_subject_access_review_spec->non_resource_attributes
     if(v1_subject_access_review_spec->non_resource_attributes) {
-    cJSON *non_resource_attributes_local_JSON = v1_non_resource_attributes_convertToJSON(v1_subject_access_review_spec->non_resource_attributes);
+    mazu_cJSON *non_resource_attributes_local_JSON = v1_non_resource_attributes_convertToJSON(v1_subject_access_review_spec->non_resource_attributes);
     if(non_resource_attributes_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "nonResourceAttributes", non_resource_attributes_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "nonResourceAttributes", non_resource_attributes_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -120,11 +120,11 @@ cJSON *v1_subject_access_review_spec_convertToJSON(v1_subject_access_review_spec
 
     // v1_subject_access_review_spec->resource_attributes
     if(v1_subject_access_review_spec->resource_attributes) {
-    cJSON *resource_attributes_local_JSON = v1_resource_attributes_convertToJSON(v1_subject_access_review_spec->resource_attributes);
+    mazu_cJSON *resource_attributes_local_JSON = v1_resource_attributes_convertToJSON(v1_subject_access_review_spec->resource_attributes);
     if(resource_attributes_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "resourceAttributes", resource_attributes_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "resourceAttributes", resource_attributes_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -133,7 +133,7 @@ cJSON *v1_subject_access_review_spec_convertToJSON(v1_subject_access_review_spec
 
     // v1_subject_access_review_spec->uid
     if(v1_subject_access_review_spec->uid) {
-    if(cJSON_AddStringToObject(item, "uid", v1_subject_access_review_spec->uid) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "uid", v1_subject_access_review_spec->uid) == NULL) {
     goto fail; //String
     }
     }
@@ -141,7 +141,7 @@ cJSON *v1_subject_access_review_spec_convertToJSON(v1_subject_access_review_spec
 
     // v1_subject_access_review_spec->user
     if(v1_subject_access_review_spec->user) {
-    if(cJSON_AddStringToObject(item, "user", v1_subject_access_review_spec->user) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "user", v1_subject_access_review_spec->user) == NULL) {
     goto fail; //String
     }
     }
@@ -149,12 +149,12 @@ cJSON *v1_subject_access_review_spec_convertToJSON(v1_subject_access_review_spec
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_subject_access_review_spec_t *v1_subject_access_review_spec_parseFromJSON(cJSON *v1_subject_access_review_specJSON){
+v1_subject_access_review_spec_t *v1_subject_access_review_spec_parseFromJSON(mazu_cJSON *v1_subject_access_review_specJSON){
 
     v1_subject_access_review_spec_t *v1_subject_access_review_spec_local_var = NULL;
 
@@ -171,37 +171,37 @@ v1_subject_access_review_spec_t *v1_subject_access_review_spec_parseFromJSON(cJS
     v1_resource_attributes_t *resource_attributes_local_nonprim = NULL;
 
     // v1_subject_access_review_spec->extra
-    cJSON *extra = cJSON_GetObjectItemCaseSensitive(v1_subject_access_review_specJSON, "extra");
+    mazu_cJSON *extra = mazu_cJSON_GetObjectItemCaseSensitive(v1_subject_access_review_specJSON, "extra");
     if (extra) { 
-    cJSON *extra_local_map = NULL;
-    if(!cJSON_IsObject(extra) && !cJSON_IsNull(extra))
+    mazu_cJSON *extra_local_map = NULL;
+    if(!mazu_cJSON_IsObject(extra) && !mazu_cJSON_IsNull(extra))
     {
         goto end;//primitive map container
     }
-    if(cJSON_IsObject(extra))
+    if(mazu_cJSON_IsObject(extra))
     {
         extraList = list_createList();
         keyValuePair_t *localMapKeyPair;
-        cJSON_ArrayForEach(extra_local_map, extra)
+        mazu_cJSON_ArrayForEach(extra_local_map, extra)
         {
-            cJSON *localMapObject = extra_local_map;
+            mazu_cJSON *localMapObject = extra_local_map;
             list_addElement(extraList , localMapKeyPair);
         }
     }
     }
 
     // v1_subject_access_review_spec->groups
-    cJSON *groups = cJSON_GetObjectItemCaseSensitive(v1_subject_access_review_specJSON, "groups");
+    mazu_cJSON *groups = mazu_cJSON_GetObjectItemCaseSensitive(v1_subject_access_review_specJSON, "groups");
     if (groups) { 
-    cJSON *groups_local = NULL;
-    if(!cJSON_IsArray(groups)) {
+    mazu_cJSON *groups_local = NULL;
+    if(!mazu_cJSON_IsArray(groups)) {
         goto end;//primitive container
     }
     groupsList = list_createList();
 
-    cJSON_ArrayForEach(groups_local, groups)
+    mazu_cJSON_ArrayForEach(groups_local, groups)
     {
-        if(!cJSON_IsString(groups_local))
+        if(!mazu_cJSON_IsString(groups_local))
         {
             goto end;
         }
@@ -210,30 +210,30 @@ v1_subject_access_review_spec_t *v1_subject_access_review_spec_parseFromJSON(cJS
     }
 
     // v1_subject_access_review_spec->non_resource_attributes
-    cJSON *non_resource_attributes = cJSON_GetObjectItemCaseSensitive(v1_subject_access_review_specJSON, "nonResourceAttributes");
+    mazu_cJSON *non_resource_attributes = mazu_cJSON_GetObjectItemCaseSensitive(v1_subject_access_review_specJSON, "nonResourceAttributes");
     if (non_resource_attributes) { 
     non_resource_attributes_local_nonprim = v1_non_resource_attributes_parseFromJSON(non_resource_attributes); //nonprimitive
     }
 
     // v1_subject_access_review_spec->resource_attributes
-    cJSON *resource_attributes = cJSON_GetObjectItemCaseSensitive(v1_subject_access_review_specJSON, "resourceAttributes");
+    mazu_cJSON *resource_attributes = mazu_cJSON_GetObjectItemCaseSensitive(v1_subject_access_review_specJSON, "resourceAttributes");
     if (resource_attributes) { 
     resource_attributes_local_nonprim = v1_resource_attributes_parseFromJSON(resource_attributes); //nonprimitive
     }
 
     // v1_subject_access_review_spec->uid
-    cJSON *uid = cJSON_GetObjectItemCaseSensitive(v1_subject_access_review_specJSON, "uid");
+    mazu_cJSON *uid = mazu_cJSON_GetObjectItemCaseSensitive(v1_subject_access_review_specJSON, "uid");
     if (uid) { 
-    if(!cJSON_IsString(uid) && !cJSON_IsNull(uid))
+    if(!mazu_cJSON_IsString(uid) && !mazu_cJSON_IsNull(uid))
     {
     goto end; //String
     }
     }
 
     // v1_subject_access_review_spec->user
-    cJSON *user = cJSON_GetObjectItemCaseSensitive(v1_subject_access_review_specJSON, "user");
+    mazu_cJSON *user = mazu_cJSON_GetObjectItemCaseSensitive(v1_subject_access_review_specJSON, "user");
     if (user) { 
-    if(!cJSON_IsString(user) && !cJSON_IsNull(user))
+    if(!mazu_cJSON_IsString(user) && !mazu_cJSON_IsNull(user))
     {
     goto end; //String
     }
@@ -245,8 +245,8 @@ v1_subject_access_review_spec_t *v1_subject_access_review_spec_parseFromJSON(cJS
         groups ? groupsList : NULL,
         non_resource_attributes ? non_resource_attributes_local_nonprim : NULL,
         resource_attributes ? resource_attributes_local_nonprim : NULL,
-        uid && !cJSON_IsNull(uid) ? strdup(uid->valuestring) : NULL,
-        user && !cJSON_IsNull(user) ? strdup(user->valuestring) : NULL
+        uid && !mazu_cJSON_IsNull(uid) ? strdup(uid->valuestring) : NULL,
+        user && !mazu_cJSON_IsNull(user) ? strdup(user->valuestring) : NULL
         );
 
     return v1_subject_access_review_spec_local_var;

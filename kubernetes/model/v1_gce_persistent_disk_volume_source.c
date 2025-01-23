@@ -40,12 +40,12 @@ void v1_gce_persistent_disk_volume_source_free(v1_gce_persistent_disk_volume_sou
     free(v1_gce_persistent_disk_volume_source);
 }
 
-cJSON *v1_gce_persistent_disk_volume_source_convertToJSON(v1_gce_persistent_disk_volume_source_t *v1_gce_persistent_disk_volume_source) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_gce_persistent_disk_volume_source_convertToJSON(v1_gce_persistent_disk_volume_source_t *v1_gce_persistent_disk_volume_source) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_gce_persistent_disk_volume_source->fs_type
     if(v1_gce_persistent_disk_volume_source->fs_type) {
-    if(cJSON_AddStringToObject(item, "fsType", v1_gce_persistent_disk_volume_source->fs_type) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "fsType", v1_gce_persistent_disk_volume_source->fs_type) == NULL) {
     goto fail; //String
     }
     }
@@ -53,7 +53,7 @@ cJSON *v1_gce_persistent_disk_volume_source_convertToJSON(v1_gce_persistent_disk
 
     // v1_gce_persistent_disk_volume_source->partition
     if(v1_gce_persistent_disk_volume_source->partition) {
-    if(cJSON_AddNumberToObject(item, "partition", v1_gce_persistent_disk_volume_source->partition) == NULL) {
+    if(mazu_cJSON_AddNumberToObject(item, "partition", v1_gce_persistent_disk_volume_source->partition) == NULL) {
     goto fail; //Numeric
     }
     }
@@ -63,14 +63,14 @@ cJSON *v1_gce_persistent_disk_volume_source_convertToJSON(v1_gce_persistent_disk
     if (!v1_gce_persistent_disk_volume_source->pd_name) {
         goto fail;
     }
-    if(cJSON_AddStringToObject(item, "pdName", v1_gce_persistent_disk_volume_source->pd_name) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "pdName", v1_gce_persistent_disk_volume_source->pd_name) == NULL) {
     goto fail; //String
     }
 
 
     // v1_gce_persistent_disk_volume_source->read_only
     if(v1_gce_persistent_disk_volume_source->read_only) {
-    if(cJSON_AddBoolToObject(item, "readOnly", v1_gce_persistent_disk_volume_source->read_only) == NULL) {
+    if(mazu_cJSON_AddBoolToObject(item, "readOnly", v1_gce_persistent_disk_volume_source->read_only) == NULL) {
     goto fail; //Bool
     }
     }
@@ -78,49 +78,49 @@ cJSON *v1_gce_persistent_disk_volume_source_convertToJSON(v1_gce_persistent_disk
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_gce_persistent_disk_volume_source_t *v1_gce_persistent_disk_volume_source_parseFromJSON(cJSON *v1_gce_persistent_disk_volume_sourceJSON){
+v1_gce_persistent_disk_volume_source_t *v1_gce_persistent_disk_volume_source_parseFromJSON(mazu_cJSON *v1_gce_persistent_disk_volume_sourceJSON){
 
     v1_gce_persistent_disk_volume_source_t *v1_gce_persistent_disk_volume_source_local_var = NULL;
 
     // v1_gce_persistent_disk_volume_source->fs_type
-    cJSON *fs_type = cJSON_GetObjectItemCaseSensitive(v1_gce_persistent_disk_volume_sourceJSON, "fsType");
+    mazu_cJSON *fs_type = mazu_cJSON_GetObjectItemCaseSensitive(v1_gce_persistent_disk_volume_sourceJSON, "fsType");
     if (fs_type) { 
-    if(!cJSON_IsString(fs_type) && !cJSON_IsNull(fs_type))
+    if(!mazu_cJSON_IsString(fs_type) && !mazu_cJSON_IsNull(fs_type))
     {
     goto end; //String
     }
     }
 
     // v1_gce_persistent_disk_volume_source->partition
-    cJSON *partition = cJSON_GetObjectItemCaseSensitive(v1_gce_persistent_disk_volume_sourceJSON, "partition");
+    mazu_cJSON *partition = mazu_cJSON_GetObjectItemCaseSensitive(v1_gce_persistent_disk_volume_sourceJSON, "partition");
     if (partition) { 
-    if(!cJSON_IsNumber(partition))
+    if(!mazu_cJSON_IsNumber(partition))
     {
     goto end; //Numeric
     }
     }
 
     // v1_gce_persistent_disk_volume_source->pd_name
-    cJSON *pd_name = cJSON_GetObjectItemCaseSensitive(v1_gce_persistent_disk_volume_sourceJSON, "pdName");
+    mazu_cJSON *pd_name = mazu_cJSON_GetObjectItemCaseSensitive(v1_gce_persistent_disk_volume_sourceJSON, "pdName");
     if (!pd_name) {
         goto end;
     }
 
     
-    if(!cJSON_IsString(pd_name))
+    if(!mazu_cJSON_IsString(pd_name))
     {
     goto end; //String
     }
 
     // v1_gce_persistent_disk_volume_source->read_only
-    cJSON *read_only = cJSON_GetObjectItemCaseSensitive(v1_gce_persistent_disk_volume_sourceJSON, "readOnly");
+    mazu_cJSON *read_only = mazu_cJSON_GetObjectItemCaseSensitive(v1_gce_persistent_disk_volume_sourceJSON, "readOnly");
     if (read_only) { 
-    if(!cJSON_IsBool(read_only))
+    if(!mazu_cJSON_IsBool(read_only))
     {
     goto end; //Bool
     }
@@ -128,7 +128,7 @@ v1_gce_persistent_disk_volume_source_t *v1_gce_persistent_disk_volume_source_par
 
 
     v1_gce_persistent_disk_volume_source_local_var = v1_gce_persistent_disk_volume_source_create (
-        fs_type && !cJSON_IsNull(fs_type) ? strdup(fs_type->valuestring) : NULL,
+        fs_type && !mazu_cJSON_IsNull(fs_type) ? strdup(fs_type->valuestring) : NULL,
         partition ? partition->valuedouble : 0,
         strdup(pd_name->valuestring),
         read_only ? read_only->valueint : 0

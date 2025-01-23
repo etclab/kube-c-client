@@ -11,7 +11,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdbool.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 
 #include "../model/v1_csi_node.h"
 v1_csi_node_t* instantiate_v1_csi_node(int include_optional);
@@ -49,11 +49,11 @@ v1_csi_node_t* instantiate_v1_csi_node(int include_optional) {
 void test_v1_csi_node(int include_optional) {
     v1_csi_node_t* v1_csi_node_1 = instantiate_v1_csi_node(include_optional);
 
-	cJSON* jsonv1_csi_node_1 = v1_csi_node_convertToJSON(v1_csi_node_1);
-	printf("v1_csi_node :\n%s\n", cJSON_Print(jsonv1_csi_node_1));
+	mazu_cJSON* jsonv1_csi_node_1 = v1_csi_node_convertToJSON(v1_csi_node_1);
+	printf("v1_csi_node :\n%s\n", mazu_cJSON_Print(jsonv1_csi_node_1));
 	v1_csi_node_t* v1_csi_node_2 = v1_csi_node_parseFromJSON(jsonv1_csi_node_1);
-	cJSON* jsonv1_csi_node_2 = v1_csi_node_convertToJSON(v1_csi_node_2);
-	printf("repeating v1_csi_node:\n%s\n", cJSON_Print(jsonv1_csi_node_2));
+	mazu_cJSON* jsonv1_csi_node_2 = v1_csi_node_convertToJSON(v1_csi_node_2);
+	printf("repeating v1_csi_node:\n%s\n", mazu_cJSON_Print(jsonv1_csi_node_2));
 }
 
 int main() {

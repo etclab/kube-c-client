@@ -53,9 +53,9 @@ RbacAuthorizationAPI_getAPIGroup_16(apiClient_t *apiClient)
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *RbacAuthorizationAPIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    mazu_cJSON *RbacAuthorizationAPIlocalVarJSON = mazu_cJSON_Parse(apiClient->dataReceived);
     v1_api_group_t *elementToReturn = v1_api_group_parseFromJSON(RbacAuthorizationAPIlocalVarJSON);
-    cJSON_Delete(RbacAuthorizationAPIlocalVarJSON);
+    mazu_cJSON_Delete(RbacAuthorizationAPIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
     }

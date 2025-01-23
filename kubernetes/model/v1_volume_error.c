@@ -36,12 +36,12 @@ void v1_volume_error_free(v1_volume_error_t *v1_volume_error) {
     free(v1_volume_error);
 }
 
-cJSON *v1_volume_error_convertToJSON(v1_volume_error_t *v1_volume_error) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_volume_error_convertToJSON(v1_volume_error_t *v1_volume_error) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_volume_error->message
     if(v1_volume_error->message) {
-    if(cJSON_AddStringToObject(item, "message", v1_volume_error->message) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "message", v1_volume_error->message) == NULL) {
     goto fail; //String
     }
     }
@@ -49,7 +49,7 @@ cJSON *v1_volume_error_convertToJSON(v1_volume_error_t *v1_volume_error) {
 
     // v1_volume_error->time
     if(v1_volume_error->time) {
-    if(cJSON_AddStringToObject(item, "time", v1_volume_error->time) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "time", v1_volume_error->time) == NULL) {
     goto fail; //Date-Time
     }
     }
@@ -57,28 +57,28 @@ cJSON *v1_volume_error_convertToJSON(v1_volume_error_t *v1_volume_error) {
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_volume_error_t *v1_volume_error_parseFromJSON(cJSON *v1_volume_errorJSON){
+v1_volume_error_t *v1_volume_error_parseFromJSON(mazu_cJSON *v1_volume_errorJSON){
 
     v1_volume_error_t *v1_volume_error_local_var = NULL;
 
     // v1_volume_error->message
-    cJSON *message = cJSON_GetObjectItemCaseSensitive(v1_volume_errorJSON, "message");
+    mazu_cJSON *message = mazu_cJSON_GetObjectItemCaseSensitive(v1_volume_errorJSON, "message");
     if (message) { 
-    if(!cJSON_IsString(message) && !cJSON_IsNull(message))
+    if(!mazu_cJSON_IsString(message) && !mazu_cJSON_IsNull(message))
     {
     goto end; //String
     }
     }
 
     // v1_volume_error->time
-    cJSON *time = cJSON_GetObjectItemCaseSensitive(v1_volume_errorJSON, "time");
+    mazu_cJSON *time = mazu_cJSON_GetObjectItemCaseSensitive(v1_volume_errorJSON, "time");
     if (time) { 
-    if(!cJSON_IsString(time) && !cJSON_IsNull(time))
+    if(!mazu_cJSON_IsString(time) && !mazu_cJSON_IsNull(time))
     {
     goto end; //DateTime
     }
@@ -86,8 +86,8 @@ v1_volume_error_t *v1_volume_error_parseFromJSON(cJSON *v1_volume_errorJSON){
 
 
     v1_volume_error_local_var = v1_volume_error_create (
-        message && !cJSON_IsNull(message) ? strdup(message->valuestring) : NULL,
-        time && !cJSON_IsNull(time) ? strdup(time->valuestring) : NULL
+        message && !mazu_cJSON_IsNull(message) ? strdup(message->valuestring) : NULL,
+        time && !mazu_cJSON_IsNull(time) ? strdup(time->valuestring) : NULL
         );
 
     return v1_volume_error_local_var;

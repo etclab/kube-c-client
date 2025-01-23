@@ -812,9 +812,9 @@ docs/v2_pods_metric_status.md
 docs/v2_resource_metric_source.md
 docs/v2_resource_metric_status.md
 docs/version_info.md
-external/cJSON.c
-external/cJSON.h
-external/cJSON.licence
+external/mazu_cJSON.c
+external/mazu_cJSON.h
+external/mazu_cJSON.licence
 include/apiClient.h
 include/binary.h
 include/keyValuePair.h

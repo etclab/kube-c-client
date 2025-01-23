@@ -11,7 +11,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdbool.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 
 #include "../model/v2_horizontal_pod_autoscaler_list.h"
 v2_horizontal_pod_autoscaler_list_t* instantiate_v2_horizontal_pod_autoscaler_list(int include_optional);
@@ -47,11 +47,11 @@ v2_horizontal_pod_autoscaler_list_t* instantiate_v2_horizontal_pod_autoscaler_li
 void test_v2_horizontal_pod_autoscaler_list(int include_optional) {
     v2_horizontal_pod_autoscaler_list_t* v2_horizontal_pod_autoscaler_list_1 = instantiate_v2_horizontal_pod_autoscaler_list(include_optional);
 
-	cJSON* jsonv2_horizontal_pod_autoscaler_list_1 = v2_horizontal_pod_autoscaler_list_convertToJSON(v2_horizontal_pod_autoscaler_list_1);
-	printf("v2_horizontal_pod_autoscaler_list :\n%s\n", cJSON_Print(jsonv2_horizontal_pod_autoscaler_list_1));
+	mazu_cJSON* jsonv2_horizontal_pod_autoscaler_list_1 = v2_horizontal_pod_autoscaler_list_convertToJSON(v2_horizontal_pod_autoscaler_list_1);
+	printf("v2_horizontal_pod_autoscaler_list :\n%s\n", mazu_cJSON_Print(jsonv2_horizontal_pod_autoscaler_list_1));
 	v2_horizontal_pod_autoscaler_list_t* v2_horizontal_pod_autoscaler_list_2 = v2_horizontal_pod_autoscaler_list_parseFromJSON(jsonv2_horizontal_pod_autoscaler_list_1);
-	cJSON* jsonv2_horizontal_pod_autoscaler_list_2 = v2_horizontal_pod_autoscaler_list_convertToJSON(v2_horizontal_pod_autoscaler_list_2);
-	printf("repeating v2_horizontal_pod_autoscaler_list:\n%s\n", cJSON_Print(jsonv2_horizontal_pod_autoscaler_list_2));
+	mazu_cJSON* jsonv2_horizontal_pod_autoscaler_list_2 = v2_horizontal_pod_autoscaler_list_convertToJSON(v2_horizontal_pod_autoscaler_list_2);
+	printf("repeating v2_horizontal_pod_autoscaler_list:\n%s\n", mazu_cJSON_Print(jsonv2_horizontal_pod_autoscaler_list_2));
 }
 
 int main() {

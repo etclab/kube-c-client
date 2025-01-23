@@ -11,7 +11,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdbool.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 
 #include "../model/v1_pod_security_context.h"
 v1_pod_security_context_t* instantiate_v1_pod_security_context(int include_optional);
@@ -69,11 +69,11 @@ v1_pod_security_context_t* instantiate_v1_pod_security_context(int include_optio
 void test_v1_pod_security_context(int include_optional) {
     v1_pod_security_context_t* v1_pod_security_context_1 = instantiate_v1_pod_security_context(include_optional);
 
-	cJSON* jsonv1_pod_security_context_1 = v1_pod_security_context_convertToJSON(v1_pod_security_context_1);
-	printf("v1_pod_security_context :\n%s\n", cJSON_Print(jsonv1_pod_security_context_1));
+	mazu_cJSON* jsonv1_pod_security_context_1 = v1_pod_security_context_convertToJSON(v1_pod_security_context_1);
+	printf("v1_pod_security_context :\n%s\n", mazu_cJSON_Print(jsonv1_pod_security_context_1));
 	v1_pod_security_context_t* v1_pod_security_context_2 = v1_pod_security_context_parseFromJSON(jsonv1_pod_security_context_1);
-	cJSON* jsonv1_pod_security_context_2 = v1_pod_security_context_convertToJSON(v1_pod_security_context_2);
-	printf("repeating v1_pod_security_context:\n%s\n", cJSON_Print(jsonv1_pod_security_context_2));
+	mazu_cJSON* jsonv1_pod_security_context_2 = v1_pod_security_context_convertToJSON(v1_pod_security_context_2);
+	printf("repeating v1_pod_security_context:\n%s\n", mazu_cJSON_Print(jsonv1_pod_security_context_2));
 }
 
 int main() {

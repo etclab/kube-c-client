@@ -39,12 +39,12 @@ void v1alpha3_device_constraint_free(v1alpha3_device_constraint_t *v1alpha3_devi
     free(v1alpha3_device_constraint);
 }
 
-cJSON *v1alpha3_device_constraint_convertToJSON(v1alpha3_device_constraint_t *v1alpha3_device_constraint) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1alpha3_device_constraint_convertToJSON(v1alpha3_device_constraint_t *v1alpha3_device_constraint) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1alpha3_device_constraint->match_attribute
     if(v1alpha3_device_constraint->match_attribute) {
-    if(cJSON_AddStringToObject(item, "matchAttribute", v1alpha3_device_constraint->match_attribute) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "matchAttribute", v1alpha3_device_constraint->match_attribute) == NULL) {
     goto fail; //String
     }
     }
@@ -52,14 +52,14 @@ cJSON *v1alpha3_device_constraint_convertToJSON(v1alpha3_device_constraint_t *v1
 
     // v1alpha3_device_constraint->requests
     if(v1alpha3_device_constraint->requests) {
-    cJSON *requests = cJSON_AddArrayToObject(item, "requests");
+    mazu_cJSON *requests = mazu_cJSON_AddArrayToObject(item, "requests");
     if(requests == NULL) {
         goto fail; //primitive container
     }
 
     listEntry_t *requestsListEntry;
     list_ForEach(requestsListEntry, v1alpha3_device_constraint->requests) {
-    if(cJSON_AddStringToObject(requests, "", (char*)requestsListEntry->data) == NULL)
+    if(mazu_cJSON_AddStringToObject(requests, "", (char*)requestsListEntry->data) == NULL)
     {
         goto fail;
     }
@@ -69,12 +69,12 @@ cJSON *v1alpha3_device_constraint_convertToJSON(v1alpha3_device_constraint_t *v1
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1alpha3_device_constraint_t *v1alpha3_device_constraint_parseFromJSON(cJSON *v1alpha3_device_constraintJSON){
+v1alpha3_device_constraint_t *v1alpha3_device_constraint_parseFromJSON(mazu_cJSON *v1alpha3_device_constraintJSON){
 
     v1alpha3_device_constraint_t *v1alpha3_device_constraint_local_var = NULL;
 
@@ -82,26 +82,26 @@ v1alpha3_device_constraint_t *v1alpha3_device_constraint_parseFromJSON(cJSON *v1
     list_t *requestsList = NULL;
 
     // v1alpha3_device_constraint->match_attribute
-    cJSON *match_attribute = cJSON_GetObjectItemCaseSensitive(v1alpha3_device_constraintJSON, "matchAttribute");
+    mazu_cJSON *match_attribute = mazu_cJSON_GetObjectItemCaseSensitive(v1alpha3_device_constraintJSON, "matchAttribute");
     if (match_attribute) { 
-    if(!cJSON_IsString(match_attribute) && !cJSON_IsNull(match_attribute))
+    if(!mazu_cJSON_IsString(match_attribute) && !mazu_cJSON_IsNull(match_attribute))
     {
     goto end; //String
     }
     }
 
     // v1alpha3_device_constraint->requests
-    cJSON *requests = cJSON_GetObjectItemCaseSensitive(v1alpha3_device_constraintJSON, "requests");
+    mazu_cJSON *requests = mazu_cJSON_GetObjectItemCaseSensitive(v1alpha3_device_constraintJSON, "requests");
     if (requests) { 
-    cJSON *requests_local = NULL;
-    if(!cJSON_IsArray(requests)) {
+    mazu_cJSON *requests_local = NULL;
+    if(!mazu_cJSON_IsArray(requests)) {
         goto end;//primitive container
     }
     requestsList = list_createList();
 
-    cJSON_ArrayForEach(requests_local, requests)
+    mazu_cJSON_ArrayForEach(requests_local, requests)
     {
-        if(!cJSON_IsString(requests_local))
+        if(!mazu_cJSON_IsString(requests_local))
         {
             goto end;
         }
@@ -111,7 +111,7 @@ v1alpha3_device_constraint_t *v1alpha3_device_constraint_parseFromJSON(cJSON *v1
 
 
     v1alpha3_device_constraint_local_var = v1alpha3_device_constraint_create (
-        match_attribute && !cJSON_IsNull(match_attribute) ? strdup(match_attribute->valuestring) : NULL,
+        match_attribute && !mazu_cJSON_IsNull(match_attribute) ? strdup(match_attribute->valuestring) : NULL,
         requests ? requestsList : NULL
         );
 

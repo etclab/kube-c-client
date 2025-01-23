@@ -8,7 +8,7 @@
 #define _core_v1_event_list_H_
 
 #include <string.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
 #include "../include/binary.h"
@@ -37,9 +37,9 @@ core_v1_event_list_t *core_v1_event_list_create(
 
 void core_v1_event_list_free(core_v1_event_list_t *core_v1_event_list);
 
-core_v1_event_list_t *core_v1_event_list_parseFromJSON(cJSON *core_v1_event_listJSON);
+core_v1_event_list_t *core_v1_event_list_parseFromJSON(mazu_cJSON *core_v1_event_listJSON);
 
-cJSON *core_v1_event_list_convertToJSON(core_v1_event_list_t *core_v1_event_list);
+mazu_cJSON *core_v1_event_list_convertToJSON(core_v1_event_list_t *core_v1_event_list);
 
 #endif /* _core_v1_event_list_H_ */
 

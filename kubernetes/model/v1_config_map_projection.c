@@ -41,12 +41,12 @@ void v1_config_map_projection_free(v1_config_map_projection_t *v1_config_map_pro
     free(v1_config_map_projection);
 }
 
-cJSON *v1_config_map_projection_convertToJSON(v1_config_map_projection_t *v1_config_map_projection) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_config_map_projection_convertToJSON(v1_config_map_projection_t *v1_config_map_projection) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_config_map_projection->items
     if(v1_config_map_projection->items) {
-    cJSON *items = cJSON_AddArrayToObject(item, "items");
+    mazu_cJSON *items = mazu_cJSON_AddArrayToObject(item, "items");
     if(items == NULL) {
     goto fail; //nonprimitive container
     }
@@ -54,11 +54,11 @@ cJSON *v1_config_map_projection_convertToJSON(v1_config_map_projection_t *v1_con
     listEntry_t *itemsListEntry;
     if (v1_config_map_projection->items) {
     list_ForEach(itemsListEntry, v1_config_map_projection->items) {
-    cJSON *itemLocal = v1_key_to_path_convertToJSON(itemsListEntry->data);
+    mazu_cJSON *itemLocal = v1_key_to_path_convertToJSON(itemsListEntry->data);
     if(itemLocal == NULL) {
     goto fail;
     }
-    cJSON_AddItemToArray(items, itemLocal);
+    mazu_cJSON_AddItemToArray(items, itemLocal);
     }
     }
     }
@@ -66,7 +66,7 @@ cJSON *v1_config_map_projection_convertToJSON(v1_config_map_projection_t *v1_con
 
     // v1_config_map_projection->name
     if(v1_config_map_projection->name) {
-    if(cJSON_AddStringToObject(item, "name", v1_config_map_projection->name) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "name", v1_config_map_projection->name) == NULL) {
     goto fail; //String
     }
     }
@@ -74,7 +74,7 @@ cJSON *v1_config_map_projection_convertToJSON(v1_config_map_projection_t *v1_con
 
     // v1_config_map_projection->optional
     if(v1_config_map_projection->optional) {
-    if(cJSON_AddBoolToObject(item, "optional", v1_config_map_projection->optional) == NULL) {
+    if(mazu_cJSON_AddBoolToObject(item, "optional", v1_config_map_projection->optional) == NULL) {
     goto fail; //Bool
     }
     }
@@ -82,12 +82,12 @@ cJSON *v1_config_map_projection_convertToJSON(v1_config_map_projection_t *v1_con
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_config_map_projection_t *v1_config_map_projection_parseFromJSON(cJSON *v1_config_map_projectionJSON){
+v1_config_map_projection_t *v1_config_map_projection_parseFromJSON(mazu_cJSON *v1_config_map_projectionJSON){
 
     v1_config_map_projection_t *v1_config_map_projection_local_var = NULL;
 
@@ -95,18 +95,18 @@ v1_config_map_projection_t *v1_config_map_projection_parseFromJSON(cJSON *v1_con
     list_t *itemsList = NULL;
 
     // v1_config_map_projection->items
-    cJSON *items = cJSON_GetObjectItemCaseSensitive(v1_config_map_projectionJSON, "items");
+    mazu_cJSON *items = mazu_cJSON_GetObjectItemCaseSensitive(v1_config_map_projectionJSON, "items");
     if (items) { 
-    cJSON *items_local_nonprimitive = NULL;
-    if(!cJSON_IsArray(items)){
+    mazu_cJSON *items_local_nonprimitive = NULL;
+    if(!mazu_cJSON_IsArray(items)){
         goto end; //nonprimitive container
     }
 
     itemsList = list_createList();
 
-    cJSON_ArrayForEach(items_local_nonprimitive,items )
+    mazu_cJSON_ArrayForEach(items_local_nonprimitive,items )
     {
-        if(!cJSON_IsObject(items_local_nonprimitive)){
+        if(!mazu_cJSON_IsObject(items_local_nonprimitive)){
             goto end;
         }
         v1_key_to_path_t *itemsItem = v1_key_to_path_parseFromJSON(items_local_nonprimitive);
@@ -116,18 +116,18 @@ v1_config_map_projection_t *v1_config_map_projection_parseFromJSON(cJSON *v1_con
     }
 
     // v1_config_map_projection->name
-    cJSON *name = cJSON_GetObjectItemCaseSensitive(v1_config_map_projectionJSON, "name");
+    mazu_cJSON *name = mazu_cJSON_GetObjectItemCaseSensitive(v1_config_map_projectionJSON, "name");
     if (name) { 
-    if(!cJSON_IsString(name) && !cJSON_IsNull(name))
+    if(!mazu_cJSON_IsString(name) && !mazu_cJSON_IsNull(name))
     {
     goto end; //String
     }
     }
 
     // v1_config_map_projection->optional
-    cJSON *optional = cJSON_GetObjectItemCaseSensitive(v1_config_map_projectionJSON, "optional");
+    mazu_cJSON *optional = mazu_cJSON_GetObjectItemCaseSensitive(v1_config_map_projectionJSON, "optional");
     if (optional) { 
-    if(!cJSON_IsBool(optional))
+    if(!mazu_cJSON_IsBool(optional))
     {
     goto end; //Bool
     }
@@ -136,7 +136,7 @@ v1_config_map_projection_t *v1_config_map_projection_parseFromJSON(cJSON *v1_con
 
     v1_config_map_projection_local_var = v1_config_map_projection_create (
         items ? itemsList : NULL,
-        name && !cJSON_IsNull(name) ? strdup(name->valuestring) : NULL,
+        name && !mazu_cJSON_IsNull(name) ? strdup(name->valuestring) : NULL,
         optional ? optional->valueint : 0
         );
 

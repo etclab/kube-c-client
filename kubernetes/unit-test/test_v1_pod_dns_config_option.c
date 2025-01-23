@@ -11,7 +11,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdbool.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 
 #include "../model/v1_pod_dns_config_option.h"
 v1_pod_dns_config_option_t* instantiate_v1_pod_dns_config_option(int include_optional);
@@ -41,11 +41,11 @@ v1_pod_dns_config_option_t* instantiate_v1_pod_dns_config_option(int include_opt
 void test_v1_pod_dns_config_option(int include_optional) {
     v1_pod_dns_config_option_t* v1_pod_dns_config_option_1 = instantiate_v1_pod_dns_config_option(include_optional);
 
-	cJSON* jsonv1_pod_dns_config_option_1 = v1_pod_dns_config_option_convertToJSON(v1_pod_dns_config_option_1);
-	printf("v1_pod_dns_config_option :\n%s\n", cJSON_Print(jsonv1_pod_dns_config_option_1));
+	mazu_cJSON* jsonv1_pod_dns_config_option_1 = v1_pod_dns_config_option_convertToJSON(v1_pod_dns_config_option_1);
+	printf("v1_pod_dns_config_option :\n%s\n", mazu_cJSON_Print(jsonv1_pod_dns_config_option_1));
 	v1_pod_dns_config_option_t* v1_pod_dns_config_option_2 = v1_pod_dns_config_option_parseFromJSON(jsonv1_pod_dns_config_option_1);
-	cJSON* jsonv1_pod_dns_config_option_2 = v1_pod_dns_config_option_convertToJSON(v1_pod_dns_config_option_2);
-	printf("repeating v1_pod_dns_config_option:\n%s\n", cJSON_Print(jsonv1_pod_dns_config_option_2));
+	mazu_cJSON* jsonv1_pod_dns_config_option_2 = v1_pod_dns_config_option_convertToJSON(v1_pod_dns_config_option_2);
+	printf("repeating v1_pod_dns_config_option:\n%s\n", mazu_cJSON_Print(jsonv1_pod_dns_config_option_2));
 }
 
 int main() {

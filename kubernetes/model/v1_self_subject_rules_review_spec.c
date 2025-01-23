@@ -30,12 +30,12 @@ void v1_self_subject_rules_review_spec_free(v1_self_subject_rules_review_spec_t 
     free(v1_self_subject_rules_review_spec);
 }
 
-cJSON *v1_self_subject_rules_review_spec_convertToJSON(v1_self_subject_rules_review_spec_t *v1_self_subject_rules_review_spec) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_self_subject_rules_review_spec_convertToJSON(v1_self_subject_rules_review_spec_t *v1_self_subject_rules_review_spec) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_self_subject_rules_review_spec->_namespace
     if(v1_self_subject_rules_review_spec->_namespace) {
-    if(cJSON_AddStringToObject(item, "namespace", v1_self_subject_rules_review_spec->_namespace) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "namespace", v1_self_subject_rules_review_spec->_namespace) == NULL) {
     goto fail; //String
     }
     }
@@ -43,19 +43,19 @@ cJSON *v1_self_subject_rules_review_spec_convertToJSON(v1_self_subject_rules_rev
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_self_subject_rules_review_spec_t *v1_self_subject_rules_review_spec_parseFromJSON(cJSON *v1_self_subject_rules_review_specJSON){
+v1_self_subject_rules_review_spec_t *v1_self_subject_rules_review_spec_parseFromJSON(mazu_cJSON *v1_self_subject_rules_review_specJSON){
 
     v1_self_subject_rules_review_spec_t *v1_self_subject_rules_review_spec_local_var = NULL;
 
     // v1_self_subject_rules_review_spec->_namespace
-    cJSON *_namespace = cJSON_GetObjectItemCaseSensitive(v1_self_subject_rules_review_specJSON, "namespace");
+    mazu_cJSON *_namespace = mazu_cJSON_GetObjectItemCaseSensitive(v1_self_subject_rules_review_specJSON, "namespace");
     if (_namespace) { 
-    if(!cJSON_IsString(_namespace) && !cJSON_IsNull(_namespace))
+    if(!mazu_cJSON_IsString(_namespace) && !mazu_cJSON_IsNull(_namespace))
     {
     goto end; //String
     }
@@ -63,7 +63,7 @@ v1_self_subject_rules_review_spec_t *v1_self_subject_rules_review_spec_parseFrom
 
 
     v1_self_subject_rules_review_spec_local_var = v1_self_subject_rules_review_spec_create (
-        _namespace && !cJSON_IsNull(_namespace) ? strdup(_namespace->valuestring) : NULL
+        _namespace && !mazu_cJSON_IsNull(_namespace) ? strdup(_namespace->valuestring) : NULL
         );
 
     return v1_self_subject_rules_review_spec_local_var;

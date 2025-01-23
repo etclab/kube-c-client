@@ -8,7 +8,7 @@
 #define _v1_ephemeral_container_H_
 
 #include <string.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
 #include "../include/binary.h"
@@ -87,9 +87,9 @@ v1_ephemeral_container_t *v1_ephemeral_container_create(
 
 void v1_ephemeral_container_free(v1_ephemeral_container_t *v1_ephemeral_container);
 
-v1_ephemeral_container_t *v1_ephemeral_container_parseFromJSON(cJSON *v1_ephemeral_containerJSON);
+v1_ephemeral_container_t *v1_ephemeral_container_parseFromJSON(mazu_cJSON *v1_ephemeral_containerJSON);
 
-cJSON *v1_ephemeral_container_convertToJSON(v1_ephemeral_container_t *v1_ephemeral_container);
+mazu_cJSON *v1_ephemeral_container_convertToJSON(v1_ephemeral_container_t *v1_ephemeral_container);
 
 #endif /* _v1_ephemeral_container_H_ */
 

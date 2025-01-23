@@ -36,12 +36,12 @@ void v1_ingress_class_spec_free(v1_ingress_class_spec_t *v1_ingress_class_spec) 
     free(v1_ingress_class_spec);
 }
 
-cJSON *v1_ingress_class_spec_convertToJSON(v1_ingress_class_spec_t *v1_ingress_class_spec) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_ingress_class_spec_convertToJSON(v1_ingress_class_spec_t *v1_ingress_class_spec) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_ingress_class_spec->controller
     if(v1_ingress_class_spec->controller) {
-    if(cJSON_AddStringToObject(item, "controller", v1_ingress_class_spec->controller) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "controller", v1_ingress_class_spec->controller) == NULL) {
     goto fail; //String
     }
     }
@@ -49,11 +49,11 @@ cJSON *v1_ingress_class_spec_convertToJSON(v1_ingress_class_spec_t *v1_ingress_c
 
     // v1_ingress_class_spec->parameters
     if(v1_ingress_class_spec->parameters) {
-    cJSON *parameters_local_JSON = v1_ingress_class_parameters_reference_convertToJSON(v1_ingress_class_spec->parameters);
+    mazu_cJSON *parameters_local_JSON = v1_ingress_class_parameters_reference_convertToJSON(v1_ingress_class_spec->parameters);
     if(parameters_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "parameters", parameters_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "parameters", parameters_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -62,12 +62,12 @@ cJSON *v1_ingress_class_spec_convertToJSON(v1_ingress_class_spec_t *v1_ingress_c
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_ingress_class_spec_t *v1_ingress_class_spec_parseFromJSON(cJSON *v1_ingress_class_specJSON){
+v1_ingress_class_spec_t *v1_ingress_class_spec_parseFromJSON(mazu_cJSON *v1_ingress_class_specJSON){
 
     v1_ingress_class_spec_t *v1_ingress_class_spec_local_var = NULL;
 
@@ -75,23 +75,23 @@ v1_ingress_class_spec_t *v1_ingress_class_spec_parseFromJSON(cJSON *v1_ingress_c
     v1_ingress_class_parameters_reference_t *parameters_local_nonprim = NULL;
 
     // v1_ingress_class_spec->controller
-    cJSON *controller = cJSON_GetObjectItemCaseSensitive(v1_ingress_class_specJSON, "controller");
+    mazu_cJSON *controller = mazu_cJSON_GetObjectItemCaseSensitive(v1_ingress_class_specJSON, "controller");
     if (controller) { 
-    if(!cJSON_IsString(controller) && !cJSON_IsNull(controller))
+    if(!mazu_cJSON_IsString(controller) && !mazu_cJSON_IsNull(controller))
     {
     goto end; //String
     }
     }
 
     // v1_ingress_class_spec->parameters
-    cJSON *parameters = cJSON_GetObjectItemCaseSensitive(v1_ingress_class_specJSON, "parameters");
+    mazu_cJSON *parameters = mazu_cJSON_GetObjectItemCaseSensitive(v1_ingress_class_specJSON, "parameters");
     if (parameters) { 
     parameters_local_nonprim = v1_ingress_class_parameters_reference_parseFromJSON(parameters); //nonprimitive
     }
 
 
     v1_ingress_class_spec_local_var = v1_ingress_class_spec_create (
-        controller && !cJSON_IsNull(controller) ? strdup(controller->valuestring) : NULL,
+        controller && !mazu_cJSON_IsNull(controller) ? strdup(controller->valuestring) : NULL,
         parameters ? parameters_local_nonprim : NULL
         );
 

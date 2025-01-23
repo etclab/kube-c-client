@@ -71,12 +71,12 @@ void v1_rbd_persistent_volume_source_free(v1_rbd_persistent_volume_source_t *v1_
     free(v1_rbd_persistent_volume_source);
 }
 
-cJSON *v1_rbd_persistent_volume_source_convertToJSON(v1_rbd_persistent_volume_source_t *v1_rbd_persistent_volume_source) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_rbd_persistent_volume_source_convertToJSON(v1_rbd_persistent_volume_source_t *v1_rbd_persistent_volume_source) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_rbd_persistent_volume_source->fs_type
     if(v1_rbd_persistent_volume_source->fs_type) {
-    if(cJSON_AddStringToObject(item, "fsType", v1_rbd_persistent_volume_source->fs_type) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "fsType", v1_rbd_persistent_volume_source->fs_type) == NULL) {
     goto fail; //String
     }
     }
@@ -86,14 +86,14 @@ cJSON *v1_rbd_persistent_volume_source_convertToJSON(v1_rbd_persistent_volume_so
     if (!v1_rbd_persistent_volume_source->image) {
         goto fail;
     }
-    if(cJSON_AddStringToObject(item, "image", v1_rbd_persistent_volume_source->image) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "image", v1_rbd_persistent_volume_source->image) == NULL) {
     goto fail; //String
     }
 
 
     // v1_rbd_persistent_volume_source->keyring
     if(v1_rbd_persistent_volume_source->keyring) {
-    if(cJSON_AddStringToObject(item, "keyring", v1_rbd_persistent_volume_source->keyring) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "keyring", v1_rbd_persistent_volume_source->keyring) == NULL) {
     goto fail; //String
     }
     }
@@ -103,14 +103,14 @@ cJSON *v1_rbd_persistent_volume_source_convertToJSON(v1_rbd_persistent_volume_so
     if (!v1_rbd_persistent_volume_source->monitors) {
         goto fail;
     }
-    cJSON *monitors = cJSON_AddArrayToObject(item, "monitors");
+    mazu_cJSON *monitors = mazu_cJSON_AddArrayToObject(item, "monitors");
     if(monitors == NULL) {
         goto fail; //primitive container
     }
 
     listEntry_t *monitorsListEntry;
     list_ForEach(monitorsListEntry, v1_rbd_persistent_volume_source->monitors) {
-    if(cJSON_AddStringToObject(monitors, "", (char*)monitorsListEntry->data) == NULL)
+    if(mazu_cJSON_AddStringToObject(monitors, "", (char*)monitorsListEntry->data) == NULL)
     {
         goto fail;
     }
@@ -119,7 +119,7 @@ cJSON *v1_rbd_persistent_volume_source_convertToJSON(v1_rbd_persistent_volume_so
 
     // v1_rbd_persistent_volume_source->pool
     if(v1_rbd_persistent_volume_source->pool) {
-    if(cJSON_AddStringToObject(item, "pool", v1_rbd_persistent_volume_source->pool) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "pool", v1_rbd_persistent_volume_source->pool) == NULL) {
     goto fail; //String
     }
     }
@@ -127,7 +127,7 @@ cJSON *v1_rbd_persistent_volume_source_convertToJSON(v1_rbd_persistent_volume_so
 
     // v1_rbd_persistent_volume_source->read_only
     if(v1_rbd_persistent_volume_source->read_only) {
-    if(cJSON_AddBoolToObject(item, "readOnly", v1_rbd_persistent_volume_source->read_only) == NULL) {
+    if(mazu_cJSON_AddBoolToObject(item, "readOnly", v1_rbd_persistent_volume_source->read_only) == NULL) {
     goto fail; //Bool
     }
     }
@@ -135,11 +135,11 @@ cJSON *v1_rbd_persistent_volume_source_convertToJSON(v1_rbd_persistent_volume_so
 
     // v1_rbd_persistent_volume_source->secret_ref
     if(v1_rbd_persistent_volume_source->secret_ref) {
-    cJSON *secret_ref_local_JSON = v1_secret_reference_convertToJSON(v1_rbd_persistent_volume_source->secret_ref);
+    mazu_cJSON *secret_ref_local_JSON = v1_secret_reference_convertToJSON(v1_rbd_persistent_volume_source->secret_ref);
     if(secret_ref_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "secretRef", secret_ref_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "secretRef", secret_ref_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -148,7 +148,7 @@ cJSON *v1_rbd_persistent_volume_source_convertToJSON(v1_rbd_persistent_volume_so
 
     // v1_rbd_persistent_volume_source->user
     if(v1_rbd_persistent_volume_source->user) {
-    if(cJSON_AddStringToObject(item, "user", v1_rbd_persistent_volume_source->user) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "user", v1_rbd_persistent_volume_source->user) == NULL) {
     goto fail; //String
     }
     }
@@ -156,12 +156,12 @@ cJSON *v1_rbd_persistent_volume_source_convertToJSON(v1_rbd_persistent_volume_so
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_rbd_persistent_volume_source_t *v1_rbd_persistent_volume_source_parseFromJSON(cJSON *v1_rbd_persistent_volume_sourceJSON){
+v1_rbd_persistent_volume_source_t *v1_rbd_persistent_volume_source_parseFromJSON(mazu_cJSON *v1_rbd_persistent_volume_sourceJSON){
 
     v1_rbd_persistent_volume_source_t *v1_rbd_persistent_volume_source_local_var = NULL;
 
@@ -172,51 +172,51 @@ v1_rbd_persistent_volume_source_t *v1_rbd_persistent_volume_source_parseFromJSON
     v1_secret_reference_t *secret_ref_local_nonprim = NULL;
 
     // v1_rbd_persistent_volume_source->fs_type
-    cJSON *fs_type = cJSON_GetObjectItemCaseSensitive(v1_rbd_persistent_volume_sourceJSON, "fsType");
+    mazu_cJSON *fs_type = mazu_cJSON_GetObjectItemCaseSensitive(v1_rbd_persistent_volume_sourceJSON, "fsType");
     if (fs_type) { 
-    if(!cJSON_IsString(fs_type) && !cJSON_IsNull(fs_type))
+    if(!mazu_cJSON_IsString(fs_type) && !mazu_cJSON_IsNull(fs_type))
     {
     goto end; //String
     }
     }
 
     // v1_rbd_persistent_volume_source->image
-    cJSON *image = cJSON_GetObjectItemCaseSensitive(v1_rbd_persistent_volume_sourceJSON, "image");
+    mazu_cJSON *image = mazu_cJSON_GetObjectItemCaseSensitive(v1_rbd_persistent_volume_sourceJSON, "image");
     if (!image) {
         goto end;
     }
 
     
-    if(!cJSON_IsString(image))
+    if(!mazu_cJSON_IsString(image))
     {
     goto end; //String
     }
 
     // v1_rbd_persistent_volume_source->keyring
-    cJSON *keyring = cJSON_GetObjectItemCaseSensitive(v1_rbd_persistent_volume_sourceJSON, "keyring");
+    mazu_cJSON *keyring = mazu_cJSON_GetObjectItemCaseSensitive(v1_rbd_persistent_volume_sourceJSON, "keyring");
     if (keyring) { 
-    if(!cJSON_IsString(keyring) && !cJSON_IsNull(keyring))
+    if(!mazu_cJSON_IsString(keyring) && !mazu_cJSON_IsNull(keyring))
     {
     goto end; //String
     }
     }
 
     // v1_rbd_persistent_volume_source->monitors
-    cJSON *monitors = cJSON_GetObjectItemCaseSensitive(v1_rbd_persistent_volume_sourceJSON, "monitors");
+    mazu_cJSON *monitors = mazu_cJSON_GetObjectItemCaseSensitive(v1_rbd_persistent_volume_sourceJSON, "monitors");
     if (!monitors) {
         goto end;
     }
 
     
-    cJSON *monitors_local = NULL;
-    if(!cJSON_IsArray(monitors)) {
+    mazu_cJSON *monitors_local = NULL;
+    if(!mazu_cJSON_IsArray(monitors)) {
         goto end;//primitive container
     }
     monitorsList = list_createList();
 
-    cJSON_ArrayForEach(monitors_local, monitors)
+    mazu_cJSON_ArrayForEach(monitors_local, monitors)
     {
-        if(!cJSON_IsString(monitors_local))
+        if(!mazu_cJSON_IsString(monitors_local))
         {
             goto end;
         }
@@ -224,33 +224,33 @@ v1_rbd_persistent_volume_source_t *v1_rbd_persistent_volume_source_parseFromJSON
     }
 
     // v1_rbd_persistent_volume_source->pool
-    cJSON *pool = cJSON_GetObjectItemCaseSensitive(v1_rbd_persistent_volume_sourceJSON, "pool");
+    mazu_cJSON *pool = mazu_cJSON_GetObjectItemCaseSensitive(v1_rbd_persistent_volume_sourceJSON, "pool");
     if (pool) { 
-    if(!cJSON_IsString(pool) && !cJSON_IsNull(pool))
+    if(!mazu_cJSON_IsString(pool) && !mazu_cJSON_IsNull(pool))
     {
     goto end; //String
     }
     }
 
     // v1_rbd_persistent_volume_source->read_only
-    cJSON *read_only = cJSON_GetObjectItemCaseSensitive(v1_rbd_persistent_volume_sourceJSON, "readOnly");
+    mazu_cJSON *read_only = mazu_cJSON_GetObjectItemCaseSensitive(v1_rbd_persistent_volume_sourceJSON, "readOnly");
     if (read_only) { 
-    if(!cJSON_IsBool(read_only))
+    if(!mazu_cJSON_IsBool(read_only))
     {
     goto end; //Bool
     }
     }
 
     // v1_rbd_persistent_volume_source->secret_ref
-    cJSON *secret_ref = cJSON_GetObjectItemCaseSensitive(v1_rbd_persistent_volume_sourceJSON, "secretRef");
+    mazu_cJSON *secret_ref = mazu_cJSON_GetObjectItemCaseSensitive(v1_rbd_persistent_volume_sourceJSON, "secretRef");
     if (secret_ref) { 
     secret_ref_local_nonprim = v1_secret_reference_parseFromJSON(secret_ref); //nonprimitive
     }
 
     // v1_rbd_persistent_volume_source->user
-    cJSON *user = cJSON_GetObjectItemCaseSensitive(v1_rbd_persistent_volume_sourceJSON, "user");
+    mazu_cJSON *user = mazu_cJSON_GetObjectItemCaseSensitive(v1_rbd_persistent_volume_sourceJSON, "user");
     if (user) { 
-    if(!cJSON_IsString(user) && !cJSON_IsNull(user))
+    if(!mazu_cJSON_IsString(user) && !mazu_cJSON_IsNull(user))
     {
     goto end; //String
     }
@@ -258,14 +258,14 @@ v1_rbd_persistent_volume_source_t *v1_rbd_persistent_volume_source_parseFromJSON
 
 
     v1_rbd_persistent_volume_source_local_var = v1_rbd_persistent_volume_source_create (
-        fs_type && !cJSON_IsNull(fs_type) ? strdup(fs_type->valuestring) : NULL,
+        fs_type && !mazu_cJSON_IsNull(fs_type) ? strdup(fs_type->valuestring) : NULL,
         strdup(image->valuestring),
-        keyring && !cJSON_IsNull(keyring) ? strdup(keyring->valuestring) : NULL,
+        keyring && !mazu_cJSON_IsNull(keyring) ? strdup(keyring->valuestring) : NULL,
         monitorsList,
-        pool && !cJSON_IsNull(pool) ? strdup(pool->valuestring) : NULL,
+        pool && !mazu_cJSON_IsNull(pool) ? strdup(pool->valuestring) : NULL,
         read_only ? read_only->valueint : 0,
         secret_ref ? secret_ref_local_nonprim : NULL,
-        user && !cJSON_IsNull(user) ? strdup(user->valuestring) : NULL
+        user && !mazu_cJSON_IsNull(user) ? strdup(user->valuestring) : NULL
         );
 
     return v1_rbd_persistent_volume_source_local_var;

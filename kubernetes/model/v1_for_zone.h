@@ -8,7 +8,7 @@
 #define _v1_for_zone_H_
 
 #include <string.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
 #include "../include/binary.h"
@@ -29,9 +29,9 @@ v1_for_zone_t *v1_for_zone_create(
 
 void v1_for_zone_free(v1_for_zone_t *v1_for_zone);
 
-v1_for_zone_t *v1_for_zone_parseFromJSON(cJSON *v1_for_zoneJSON);
+v1_for_zone_t *v1_for_zone_parseFromJSON(mazu_cJSON *v1_for_zoneJSON);
 
-cJSON *v1_for_zone_convertToJSON(v1_for_zone_t *v1_for_zone);
+mazu_cJSON *v1_for_zone_convertToJSON(v1_for_zone_t *v1_for_zone);
 
 #endif /* _v1_for_zone_H_ */
 

@@ -8,7 +8,7 @@
 #define _v1beta1_service_cidr_H_
 
 #include <string.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
 #include "../include/binary.h"
@@ -40,9 +40,9 @@ v1beta1_service_cidr_t *v1beta1_service_cidr_create(
 
 void v1beta1_service_cidr_free(v1beta1_service_cidr_t *v1beta1_service_cidr);
 
-v1beta1_service_cidr_t *v1beta1_service_cidr_parseFromJSON(cJSON *v1beta1_service_cidrJSON);
+v1beta1_service_cidr_t *v1beta1_service_cidr_parseFromJSON(mazu_cJSON *v1beta1_service_cidrJSON);
 
-cJSON *v1beta1_service_cidr_convertToJSON(v1beta1_service_cidr_t *v1beta1_service_cidr);
+mazu_cJSON *v1beta1_service_cidr_convertToJSON(v1beta1_service_cidr_t *v1beta1_service_cidr);
 
 #endif /* _v1beta1_service_cidr_H_ */
 

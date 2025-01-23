@@ -11,7 +11,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdbool.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 
 #include "../model/v1beta1_match_resources.h"
 v1beta1_match_resources_t* instantiate_v1beta1_match_resources(int include_optional);
@@ -51,11 +51,11 @@ v1beta1_match_resources_t* instantiate_v1beta1_match_resources(int include_optio
 void test_v1beta1_match_resources(int include_optional) {
     v1beta1_match_resources_t* v1beta1_match_resources_1 = instantiate_v1beta1_match_resources(include_optional);
 
-	cJSON* jsonv1beta1_match_resources_1 = v1beta1_match_resources_convertToJSON(v1beta1_match_resources_1);
-	printf("v1beta1_match_resources :\n%s\n", cJSON_Print(jsonv1beta1_match_resources_1));
+	mazu_cJSON* jsonv1beta1_match_resources_1 = v1beta1_match_resources_convertToJSON(v1beta1_match_resources_1);
+	printf("v1beta1_match_resources :\n%s\n", mazu_cJSON_Print(jsonv1beta1_match_resources_1));
 	v1beta1_match_resources_t* v1beta1_match_resources_2 = v1beta1_match_resources_parseFromJSON(jsonv1beta1_match_resources_1);
-	cJSON* jsonv1beta1_match_resources_2 = v1beta1_match_resources_convertToJSON(v1beta1_match_resources_2);
-	printf("repeating v1beta1_match_resources:\n%s\n", cJSON_Print(jsonv1beta1_match_resources_2));
+	mazu_cJSON* jsonv1beta1_match_resources_2 = v1beta1_match_resources_convertToJSON(v1beta1_match_resources_2);
+	printf("repeating v1beta1_match_resources:\n%s\n", mazu_cJSON_Print(jsonv1beta1_match_resources_2));
 }
 
 int main() {

@@ -54,12 +54,12 @@ void v1alpha3_pod_scheduling_context_free(v1alpha3_pod_scheduling_context_t *v1a
     free(v1alpha3_pod_scheduling_context);
 }
 
-cJSON *v1alpha3_pod_scheduling_context_convertToJSON(v1alpha3_pod_scheduling_context_t *v1alpha3_pod_scheduling_context) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1alpha3_pod_scheduling_context_convertToJSON(v1alpha3_pod_scheduling_context_t *v1alpha3_pod_scheduling_context) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1alpha3_pod_scheduling_context->api_version
     if(v1alpha3_pod_scheduling_context->api_version) {
-    if(cJSON_AddStringToObject(item, "apiVersion", v1alpha3_pod_scheduling_context->api_version) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "apiVersion", v1alpha3_pod_scheduling_context->api_version) == NULL) {
     goto fail; //String
     }
     }
@@ -67,7 +67,7 @@ cJSON *v1alpha3_pod_scheduling_context_convertToJSON(v1alpha3_pod_scheduling_con
 
     // v1alpha3_pod_scheduling_context->kind
     if(v1alpha3_pod_scheduling_context->kind) {
-    if(cJSON_AddStringToObject(item, "kind", v1alpha3_pod_scheduling_context->kind) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "kind", v1alpha3_pod_scheduling_context->kind) == NULL) {
     goto fail; //String
     }
     }
@@ -75,11 +75,11 @@ cJSON *v1alpha3_pod_scheduling_context_convertToJSON(v1alpha3_pod_scheduling_con
 
     // v1alpha3_pod_scheduling_context->metadata
     if(v1alpha3_pod_scheduling_context->metadata) {
-    cJSON *metadata_local_JSON = v1_object_meta_convertToJSON(v1alpha3_pod_scheduling_context->metadata);
+    mazu_cJSON *metadata_local_JSON = v1_object_meta_convertToJSON(v1alpha3_pod_scheduling_context->metadata);
     if(metadata_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "metadata", metadata_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "metadata", metadata_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -90,11 +90,11 @@ cJSON *v1alpha3_pod_scheduling_context_convertToJSON(v1alpha3_pod_scheduling_con
     if (!v1alpha3_pod_scheduling_context->spec) {
         goto fail;
     }
-    cJSON *spec_local_JSON = v1alpha3_pod_scheduling_context_spec_convertToJSON(v1alpha3_pod_scheduling_context->spec);
+    mazu_cJSON *spec_local_JSON = v1alpha3_pod_scheduling_context_spec_convertToJSON(v1alpha3_pod_scheduling_context->spec);
     if(spec_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "spec", spec_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "spec", spec_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -102,11 +102,11 @@ cJSON *v1alpha3_pod_scheduling_context_convertToJSON(v1alpha3_pod_scheduling_con
 
     // v1alpha3_pod_scheduling_context->status
     if(v1alpha3_pod_scheduling_context->status) {
-    cJSON *status_local_JSON = v1alpha3_pod_scheduling_context_status_convertToJSON(v1alpha3_pod_scheduling_context->status);
+    mazu_cJSON *status_local_JSON = v1alpha3_pod_scheduling_context_status_convertToJSON(v1alpha3_pod_scheduling_context->status);
     if(status_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "status", status_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "status", status_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -115,12 +115,12 @@ cJSON *v1alpha3_pod_scheduling_context_convertToJSON(v1alpha3_pod_scheduling_con
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1alpha3_pod_scheduling_context_t *v1alpha3_pod_scheduling_context_parseFromJSON(cJSON *v1alpha3_pod_scheduling_contextJSON){
+v1alpha3_pod_scheduling_context_t *v1alpha3_pod_scheduling_context_parseFromJSON(mazu_cJSON *v1alpha3_pod_scheduling_contextJSON){
 
     v1alpha3_pod_scheduling_context_t *v1alpha3_pod_scheduling_context_local_var = NULL;
 
@@ -134,31 +134,31 @@ v1alpha3_pod_scheduling_context_t *v1alpha3_pod_scheduling_context_parseFromJSON
     v1alpha3_pod_scheduling_context_status_t *status_local_nonprim = NULL;
 
     // v1alpha3_pod_scheduling_context->api_version
-    cJSON *api_version = cJSON_GetObjectItemCaseSensitive(v1alpha3_pod_scheduling_contextJSON, "apiVersion");
+    mazu_cJSON *api_version = mazu_cJSON_GetObjectItemCaseSensitive(v1alpha3_pod_scheduling_contextJSON, "apiVersion");
     if (api_version) { 
-    if(!cJSON_IsString(api_version) && !cJSON_IsNull(api_version))
+    if(!mazu_cJSON_IsString(api_version) && !mazu_cJSON_IsNull(api_version))
     {
     goto end; //String
     }
     }
 
     // v1alpha3_pod_scheduling_context->kind
-    cJSON *kind = cJSON_GetObjectItemCaseSensitive(v1alpha3_pod_scheduling_contextJSON, "kind");
+    mazu_cJSON *kind = mazu_cJSON_GetObjectItemCaseSensitive(v1alpha3_pod_scheduling_contextJSON, "kind");
     if (kind) { 
-    if(!cJSON_IsString(kind) && !cJSON_IsNull(kind))
+    if(!mazu_cJSON_IsString(kind) && !mazu_cJSON_IsNull(kind))
     {
     goto end; //String
     }
     }
 
     // v1alpha3_pod_scheduling_context->metadata
-    cJSON *metadata = cJSON_GetObjectItemCaseSensitive(v1alpha3_pod_scheduling_contextJSON, "metadata");
+    mazu_cJSON *metadata = mazu_cJSON_GetObjectItemCaseSensitive(v1alpha3_pod_scheduling_contextJSON, "metadata");
     if (metadata) { 
     metadata_local_nonprim = v1_object_meta_parseFromJSON(metadata); //nonprimitive
     }
 
     // v1alpha3_pod_scheduling_context->spec
-    cJSON *spec = cJSON_GetObjectItemCaseSensitive(v1alpha3_pod_scheduling_contextJSON, "spec");
+    mazu_cJSON *spec = mazu_cJSON_GetObjectItemCaseSensitive(v1alpha3_pod_scheduling_contextJSON, "spec");
     if (!spec) {
         goto end;
     }
@@ -167,15 +167,15 @@ v1alpha3_pod_scheduling_context_t *v1alpha3_pod_scheduling_context_parseFromJSON
     spec_local_nonprim = v1alpha3_pod_scheduling_context_spec_parseFromJSON(spec); //nonprimitive
 
     // v1alpha3_pod_scheduling_context->status
-    cJSON *status = cJSON_GetObjectItemCaseSensitive(v1alpha3_pod_scheduling_contextJSON, "status");
+    mazu_cJSON *status = mazu_cJSON_GetObjectItemCaseSensitive(v1alpha3_pod_scheduling_contextJSON, "status");
     if (status) { 
     status_local_nonprim = v1alpha3_pod_scheduling_context_status_parseFromJSON(status); //nonprimitive
     }
 
 
     v1alpha3_pod_scheduling_context_local_var = v1alpha3_pod_scheduling_context_create (
-        api_version && !cJSON_IsNull(api_version) ? strdup(api_version->valuestring) : NULL,
-        kind && !cJSON_IsNull(kind) ? strdup(kind->valuestring) : NULL,
+        api_version && !mazu_cJSON_IsNull(api_version) ? strdup(api_version->valuestring) : NULL,
+        kind && !mazu_cJSON_IsNull(kind) ? strdup(kind->valuestring) : NULL,
         metadata ? metadata_local_nonprim : NULL,
         spec_local_nonprim,
         status ? status_local_nonprim : NULL

@@ -11,7 +11,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdbool.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 
 #include "../model/v1alpha3_resource_claim_consumer_reference.h"
 v1alpha3_resource_claim_consumer_reference_t* instantiate_v1alpha3_resource_claim_consumer_reference(int include_optional);
@@ -45,11 +45,11 @@ v1alpha3_resource_claim_consumer_reference_t* instantiate_v1alpha3_resource_clai
 void test_v1alpha3_resource_claim_consumer_reference(int include_optional) {
     v1alpha3_resource_claim_consumer_reference_t* v1alpha3_resource_claim_consumer_reference_1 = instantiate_v1alpha3_resource_claim_consumer_reference(include_optional);
 
-	cJSON* jsonv1alpha3_resource_claim_consumer_reference_1 = v1alpha3_resource_claim_consumer_reference_convertToJSON(v1alpha3_resource_claim_consumer_reference_1);
-	printf("v1alpha3_resource_claim_consumer_reference :\n%s\n", cJSON_Print(jsonv1alpha3_resource_claim_consumer_reference_1));
+	mazu_cJSON* jsonv1alpha3_resource_claim_consumer_reference_1 = v1alpha3_resource_claim_consumer_reference_convertToJSON(v1alpha3_resource_claim_consumer_reference_1);
+	printf("v1alpha3_resource_claim_consumer_reference :\n%s\n", mazu_cJSON_Print(jsonv1alpha3_resource_claim_consumer_reference_1));
 	v1alpha3_resource_claim_consumer_reference_t* v1alpha3_resource_claim_consumer_reference_2 = v1alpha3_resource_claim_consumer_reference_parseFromJSON(jsonv1alpha3_resource_claim_consumer_reference_1);
-	cJSON* jsonv1alpha3_resource_claim_consumer_reference_2 = v1alpha3_resource_claim_consumer_reference_convertToJSON(v1alpha3_resource_claim_consumer_reference_2);
-	printf("repeating v1alpha3_resource_claim_consumer_reference:\n%s\n", cJSON_Print(jsonv1alpha3_resource_claim_consumer_reference_2));
+	mazu_cJSON* jsonv1alpha3_resource_claim_consumer_reference_2 = v1alpha3_resource_claim_consumer_reference_convertToJSON(v1alpha3_resource_claim_consumer_reference_2);
+	printf("repeating v1alpha3_resource_claim_consumer_reference:\n%s\n", mazu_cJSON_Print(jsonv1alpha3_resource_claim_consumer_reference_2));
 }
 
 int main() {

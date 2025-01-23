@@ -11,7 +11,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdbool.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 
 #include "../model/v1beta3_limit_response.h"
 v1beta3_limit_response_t* instantiate_v1beta3_limit_response(int include_optional);
@@ -43,11 +43,11 @@ v1beta3_limit_response_t* instantiate_v1beta3_limit_response(int include_optiona
 void test_v1beta3_limit_response(int include_optional) {
     v1beta3_limit_response_t* v1beta3_limit_response_1 = instantiate_v1beta3_limit_response(include_optional);
 
-	cJSON* jsonv1beta3_limit_response_1 = v1beta3_limit_response_convertToJSON(v1beta3_limit_response_1);
-	printf("v1beta3_limit_response :\n%s\n", cJSON_Print(jsonv1beta3_limit_response_1));
+	mazu_cJSON* jsonv1beta3_limit_response_1 = v1beta3_limit_response_convertToJSON(v1beta3_limit_response_1);
+	printf("v1beta3_limit_response :\n%s\n", mazu_cJSON_Print(jsonv1beta3_limit_response_1));
 	v1beta3_limit_response_t* v1beta3_limit_response_2 = v1beta3_limit_response_parseFromJSON(jsonv1beta3_limit_response_1);
-	cJSON* jsonv1beta3_limit_response_2 = v1beta3_limit_response_convertToJSON(v1beta3_limit_response_2);
-	printf("repeating v1beta3_limit_response:\n%s\n", cJSON_Print(jsonv1beta3_limit_response_2));
+	mazu_cJSON* jsonv1beta3_limit_response_2 = v1beta3_limit_response_convertToJSON(v1beta3_limit_response_2);
+	printf("repeating v1beta3_limit_response:\n%s\n", mazu_cJSON_Print(jsonv1beta3_limit_response_2));
 }
 
 int main() {

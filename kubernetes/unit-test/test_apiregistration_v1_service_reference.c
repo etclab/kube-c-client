@@ -11,7 +11,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdbool.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 
 #include "../model/apiregistration_v1_service_reference.h"
 apiregistration_v1_service_reference_t* instantiate_apiregistration_v1_service_reference(int include_optional);
@@ -43,11 +43,11 @@ apiregistration_v1_service_reference_t* instantiate_apiregistration_v1_service_r
 void test_apiregistration_v1_service_reference(int include_optional) {
     apiregistration_v1_service_reference_t* apiregistration_v1_service_reference_1 = instantiate_apiregistration_v1_service_reference(include_optional);
 
-	cJSON* jsonapiregistration_v1_service_reference_1 = apiregistration_v1_service_reference_convertToJSON(apiregistration_v1_service_reference_1);
-	printf("apiregistration_v1_service_reference :\n%s\n", cJSON_Print(jsonapiregistration_v1_service_reference_1));
+	mazu_cJSON* jsonapiregistration_v1_service_reference_1 = apiregistration_v1_service_reference_convertToJSON(apiregistration_v1_service_reference_1);
+	printf("apiregistration_v1_service_reference :\n%s\n", mazu_cJSON_Print(jsonapiregistration_v1_service_reference_1));
 	apiregistration_v1_service_reference_t* apiregistration_v1_service_reference_2 = apiregistration_v1_service_reference_parseFromJSON(jsonapiregistration_v1_service_reference_1);
-	cJSON* jsonapiregistration_v1_service_reference_2 = apiregistration_v1_service_reference_convertToJSON(apiregistration_v1_service_reference_2);
-	printf("repeating apiregistration_v1_service_reference:\n%s\n", cJSON_Print(jsonapiregistration_v1_service_reference_2));
+	mazu_cJSON* jsonapiregistration_v1_service_reference_2 = apiregistration_v1_service_reference_convertToJSON(apiregistration_v1_service_reference_2);
+	printf("repeating apiregistration_v1_service_reference:\n%s\n", mazu_cJSON_Print(jsonapiregistration_v1_service_reference_2));
 }
 
 int main() {

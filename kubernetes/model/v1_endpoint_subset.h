@@ -8,7 +8,7 @@
 #define _v1_endpoint_subset_H_
 
 #include <string.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
 #include "../include/binary.h"
@@ -35,9 +35,9 @@ v1_endpoint_subset_t *v1_endpoint_subset_create(
 
 void v1_endpoint_subset_free(v1_endpoint_subset_t *v1_endpoint_subset);
 
-v1_endpoint_subset_t *v1_endpoint_subset_parseFromJSON(cJSON *v1_endpoint_subsetJSON);
+v1_endpoint_subset_t *v1_endpoint_subset_parseFromJSON(mazu_cJSON *v1_endpoint_subsetJSON);
 
-cJSON *v1_endpoint_subset_convertToJSON(v1_endpoint_subset_t *v1_endpoint_subset);
+mazu_cJSON *v1_endpoint_subset_convertToJSON(v1_endpoint_subset_t *v1_endpoint_subset);
 
 #endif /* _v1_endpoint_subset_H_ */
 

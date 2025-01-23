@@ -8,7 +8,7 @@
 #define _v1_api_service_H_
 
 #include <string.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
 #include "../include/binary.h"
@@ -40,9 +40,9 @@ v1_api_service_t *v1_api_service_create(
 
 void v1_api_service_free(v1_api_service_t *v1_api_service);
 
-v1_api_service_t *v1_api_service_parseFromJSON(cJSON *v1_api_serviceJSON);
+v1_api_service_t *v1_api_service_parseFromJSON(mazu_cJSON *v1_api_serviceJSON);
 
-cJSON *v1_api_service_convertToJSON(v1_api_service_t *v1_api_service);
+mazu_cJSON *v1_api_service_convertToJSON(v1_api_service_t *v1_api_service);
 
 #endif /* _v1_api_service_H_ */
 

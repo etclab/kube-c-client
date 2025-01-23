@@ -36,14 +36,14 @@ void v1_http_header_free(v1_http_header_t *v1_http_header) {
     free(v1_http_header);
 }
 
-cJSON *v1_http_header_convertToJSON(v1_http_header_t *v1_http_header) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_http_header_convertToJSON(v1_http_header_t *v1_http_header) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_http_header->name
     if (!v1_http_header->name) {
         goto fail;
     }
-    if(cJSON_AddStringToObject(item, "name", v1_http_header->name) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "name", v1_http_header->name) == NULL) {
     goto fail; //String
     }
 
@@ -52,42 +52,42 @@ cJSON *v1_http_header_convertToJSON(v1_http_header_t *v1_http_header) {
     if (!v1_http_header->value) {
         goto fail;
     }
-    if(cJSON_AddStringToObject(item, "value", v1_http_header->value) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "value", v1_http_header->value) == NULL) {
     goto fail; //String
     }
 
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_http_header_t *v1_http_header_parseFromJSON(cJSON *v1_http_headerJSON){
+v1_http_header_t *v1_http_header_parseFromJSON(mazu_cJSON *v1_http_headerJSON){
 
     v1_http_header_t *v1_http_header_local_var = NULL;
 
     // v1_http_header->name
-    cJSON *name = cJSON_GetObjectItemCaseSensitive(v1_http_headerJSON, "name");
+    mazu_cJSON *name = mazu_cJSON_GetObjectItemCaseSensitive(v1_http_headerJSON, "name");
     if (!name) {
         goto end;
     }
 
     
-    if(!cJSON_IsString(name))
+    if(!mazu_cJSON_IsString(name))
     {
     goto end; //String
     }
 
     // v1_http_header->value
-    cJSON *value = cJSON_GetObjectItemCaseSensitive(v1_http_headerJSON, "value");
+    mazu_cJSON *value = mazu_cJSON_GetObjectItemCaseSensitive(v1_http_headerJSON, "value");
     if (!value) {
         goto end;
     }
 
     
-    if(!cJSON_IsString(value))
+    if(!mazu_cJSON_IsString(value))
     {
     goto end; //String
     }

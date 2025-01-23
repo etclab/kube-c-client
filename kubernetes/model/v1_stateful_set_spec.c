@@ -81,12 +81,12 @@ void v1_stateful_set_spec_free(v1_stateful_set_spec_t *v1_stateful_set_spec) {
     free(v1_stateful_set_spec);
 }
 
-cJSON *v1_stateful_set_spec_convertToJSON(v1_stateful_set_spec_t *v1_stateful_set_spec) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_stateful_set_spec_convertToJSON(v1_stateful_set_spec_t *v1_stateful_set_spec) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_stateful_set_spec->min_ready_seconds
     if(v1_stateful_set_spec->min_ready_seconds) {
-    if(cJSON_AddNumberToObject(item, "minReadySeconds", v1_stateful_set_spec->min_ready_seconds) == NULL) {
+    if(mazu_cJSON_AddNumberToObject(item, "minReadySeconds", v1_stateful_set_spec->min_ready_seconds) == NULL) {
     goto fail; //Numeric
     }
     }
@@ -94,11 +94,11 @@ cJSON *v1_stateful_set_spec_convertToJSON(v1_stateful_set_spec_t *v1_stateful_se
 
     // v1_stateful_set_spec->ordinals
     if(v1_stateful_set_spec->ordinals) {
-    cJSON *ordinals_local_JSON = v1_stateful_set_ordinals_convertToJSON(v1_stateful_set_spec->ordinals);
+    mazu_cJSON *ordinals_local_JSON = v1_stateful_set_ordinals_convertToJSON(v1_stateful_set_spec->ordinals);
     if(ordinals_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "ordinals", ordinals_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "ordinals", ordinals_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -107,11 +107,11 @@ cJSON *v1_stateful_set_spec_convertToJSON(v1_stateful_set_spec_t *v1_stateful_se
 
     // v1_stateful_set_spec->persistent_volume_claim_retention_policy
     if(v1_stateful_set_spec->persistent_volume_claim_retention_policy) {
-    cJSON *persistent_volume_claim_retention_policy_local_JSON = v1_stateful_set_persistent_volume_claim_retention_policy_convertToJSON(v1_stateful_set_spec->persistent_volume_claim_retention_policy);
+    mazu_cJSON *persistent_volume_claim_retention_policy_local_JSON = v1_stateful_set_persistent_volume_claim_retention_policy_convertToJSON(v1_stateful_set_spec->persistent_volume_claim_retention_policy);
     if(persistent_volume_claim_retention_policy_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "persistentVolumeClaimRetentionPolicy", persistent_volume_claim_retention_policy_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "persistentVolumeClaimRetentionPolicy", persistent_volume_claim_retention_policy_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -120,7 +120,7 @@ cJSON *v1_stateful_set_spec_convertToJSON(v1_stateful_set_spec_t *v1_stateful_se
 
     // v1_stateful_set_spec->pod_management_policy
     if(v1_stateful_set_spec->pod_management_policy) {
-    if(cJSON_AddStringToObject(item, "podManagementPolicy", v1_stateful_set_spec->pod_management_policy) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "podManagementPolicy", v1_stateful_set_spec->pod_management_policy) == NULL) {
     goto fail; //String
     }
     }
@@ -128,7 +128,7 @@ cJSON *v1_stateful_set_spec_convertToJSON(v1_stateful_set_spec_t *v1_stateful_se
 
     // v1_stateful_set_spec->replicas
     if(v1_stateful_set_spec->replicas) {
-    if(cJSON_AddNumberToObject(item, "replicas", v1_stateful_set_spec->replicas) == NULL) {
+    if(mazu_cJSON_AddNumberToObject(item, "replicas", v1_stateful_set_spec->replicas) == NULL) {
     goto fail; //Numeric
     }
     }
@@ -136,7 +136,7 @@ cJSON *v1_stateful_set_spec_convertToJSON(v1_stateful_set_spec_t *v1_stateful_se
 
     // v1_stateful_set_spec->revision_history_limit
     if(v1_stateful_set_spec->revision_history_limit) {
-    if(cJSON_AddNumberToObject(item, "revisionHistoryLimit", v1_stateful_set_spec->revision_history_limit) == NULL) {
+    if(mazu_cJSON_AddNumberToObject(item, "revisionHistoryLimit", v1_stateful_set_spec->revision_history_limit) == NULL) {
     goto fail; //Numeric
     }
     }
@@ -146,11 +146,11 @@ cJSON *v1_stateful_set_spec_convertToJSON(v1_stateful_set_spec_t *v1_stateful_se
     if (!v1_stateful_set_spec->selector) {
         goto fail;
     }
-    cJSON *selector_local_JSON = v1_label_selector_convertToJSON(v1_stateful_set_spec->selector);
+    mazu_cJSON *selector_local_JSON = v1_label_selector_convertToJSON(v1_stateful_set_spec->selector);
     if(selector_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "selector", selector_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "selector", selector_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -160,7 +160,7 @@ cJSON *v1_stateful_set_spec_convertToJSON(v1_stateful_set_spec_t *v1_stateful_se
     if (!v1_stateful_set_spec->service_name) {
         goto fail;
     }
-    if(cJSON_AddStringToObject(item, "serviceName", v1_stateful_set_spec->service_name) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "serviceName", v1_stateful_set_spec->service_name) == NULL) {
     goto fail; //String
     }
 
@@ -169,11 +169,11 @@ cJSON *v1_stateful_set_spec_convertToJSON(v1_stateful_set_spec_t *v1_stateful_se
     if (!v1_stateful_set_spec->_template) {
         goto fail;
     }
-    cJSON *_template_local_JSON = v1_pod_template_spec_convertToJSON(v1_stateful_set_spec->_template);
+    mazu_cJSON *_template_local_JSON = v1_pod_template_spec_convertToJSON(v1_stateful_set_spec->_template);
     if(_template_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "template", _template_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "template", _template_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -181,11 +181,11 @@ cJSON *v1_stateful_set_spec_convertToJSON(v1_stateful_set_spec_t *v1_stateful_se
 
     // v1_stateful_set_spec->update_strategy
     if(v1_stateful_set_spec->update_strategy) {
-    cJSON *update_strategy_local_JSON = v1_stateful_set_update_strategy_convertToJSON(v1_stateful_set_spec->update_strategy);
+    mazu_cJSON *update_strategy_local_JSON = v1_stateful_set_update_strategy_convertToJSON(v1_stateful_set_spec->update_strategy);
     if(update_strategy_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "updateStrategy", update_strategy_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "updateStrategy", update_strategy_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -194,7 +194,7 @@ cJSON *v1_stateful_set_spec_convertToJSON(v1_stateful_set_spec_t *v1_stateful_se
 
     // v1_stateful_set_spec->volume_claim_templates
     if(v1_stateful_set_spec->volume_claim_templates) {
-    cJSON *volume_claim_templates = cJSON_AddArrayToObject(item, "volumeClaimTemplates");
+    mazu_cJSON *volume_claim_templates = mazu_cJSON_AddArrayToObject(item, "volumeClaimTemplates");
     if(volume_claim_templates == NULL) {
     goto fail; //nonprimitive container
     }
@@ -202,11 +202,11 @@ cJSON *v1_stateful_set_spec_convertToJSON(v1_stateful_set_spec_t *v1_stateful_se
     listEntry_t *volume_claim_templatesListEntry;
     if (v1_stateful_set_spec->volume_claim_templates) {
     list_ForEach(volume_claim_templatesListEntry, v1_stateful_set_spec->volume_claim_templates) {
-    cJSON *itemLocal = v1_persistent_volume_claim_convertToJSON(volume_claim_templatesListEntry->data);
+    mazu_cJSON *itemLocal = v1_persistent_volume_claim_convertToJSON(volume_claim_templatesListEntry->data);
     if(itemLocal == NULL) {
     goto fail;
     }
-    cJSON_AddItemToArray(volume_claim_templates, itemLocal);
+    mazu_cJSON_AddItemToArray(volume_claim_templates, itemLocal);
     }
     }
     }
@@ -214,12 +214,12 @@ cJSON *v1_stateful_set_spec_convertToJSON(v1_stateful_set_spec_t *v1_stateful_se
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_stateful_set_spec_t *v1_stateful_set_spec_parseFromJSON(cJSON *v1_stateful_set_specJSON){
+v1_stateful_set_spec_t *v1_stateful_set_spec_parseFromJSON(mazu_cJSON *v1_stateful_set_specJSON){
 
     v1_stateful_set_spec_t *v1_stateful_set_spec_local_var = NULL;
 
@@ -242,55 +242,55 @@ v1_stateful_set_spec_t *v1_stateful_set_spec_parseFromJSON(cJSON *v1_stateful_se
     list_t *volume_claim_templatesList = NULL;
 
     // v1_stateful_set_spec->min_ready_seconds
-    cJSON *min_ready_seconds = cJSON_GetObjectItemCaseSensitive(v1_stateful_set_specJSON, "minReadySeconds");
+    mazu_cJSON *min_ready_seconds = mazu_cJSON_GetObjectItemCaseSensitive(v1_stateful_set_specJSON, "minReadySeconds");
     if (min_ready_seconds) { 
-    if(!cJSON_IsNumber(min_ready_seconds))
+    if(!mazu_cJSON_IsNumber(min_ready_seconds))
     {
     goto end; //Numeric
     }
     }
 
     // v1_stateful_set_spec->ordinals
-    cJSON *ordinals = cJSON_GetObjectItemCaseSensitive(v1_stateful_set_specJSON, "ordinals");
+    mazu_cJSON *ordinals = mazu_cJSON_GetObjectItemCaseSensitive(v1_stateful_set_specJSON, "ordinals");
     if (ordinals) { 
     ordinals_local_nonprim = v1_stateful_set_ordinals_parseFromJSON(ordinals); //nonprimitive
     }
 
     // v1_stateful_set_spec->persistent_volume_claim_retention_policy
-    cJSON *persistent_volume_claim_retention_policy = cJSON_GetObjectItemCaseSensitive(v1_stateful_set_specJSON, "persistentVolumeClaimRetentionPolicy");
+    mazu_cJSON *persistent_volume_claim_retention_policy = mazu_cJSON_GetObjectItemCaseSensitive(v1_stateful_set_specJSON, "persistentVolumeClaimRetentionPolicy");
     if (persistent_volume_claim_retention_policy) { 
     persistent_volume_claim_retention_policy_local_nonprim = v1_stateful_set_persistent_volume_claim_retention_policy_parseFromJSON(persistent_volume_claim_retention_policy); //nonprimitive
     }
 
     // v1_stateful_set_spec->pod_management_policy
-    cJSON *pod_management_policy = cJSON_GetObjectItemCaseSensitive(v1_stateful_set_specJSON, "podManagementPolicy");
+    mazu_cJSON *pod_management_policy = mazu_cJSON_GetObjectItemCaseSensitive(v1_stateful_set_specJSON, "podManagementPolicy");
     if (pod_management_policy) { 
-    if(!cJSON_IsString(pod_management_policy) && !cJSON_IsNull(pod_management_policy))
+    if(!mazu_cJSON_IsString(pod_management_policy) && !mazu_cJSON_IsNull(pod_management_policy))
     {
     goto end; //String
     }
     }
 
     // v1_stateful_set_spec->replicas
-    cJSON *replicas = cJSON_GetObjectItemCaseSensitive(v1_stateful_set_specJSON, "replicas");
+    mazu_cJSON *replicas = mazu_cJSON_GetObjectItemCaseSensitive(v1_stateful_set_specJSON, "replicas");
     if (replicas) { 
-    if(!cJSON_IsNumber(replicas))
+    if(!mazu_cJSON_IsNumber(replicas))
     {
     goto end; //Numeric
     }
     }
 
     // v1_stateful_set_spec->revision_history_limit
-    cJSON *revision_history_limit = cJSON_GetObjectItemCaseSensitive(v1_stateful_set_specJSON, "revisionHistoryLimit");
+    mazu_cJSON *revision_history_limit = mazu_cJSON_GetObjectItemCaseSensitive(v1_stateful_set_specJSON, "revisionHistoryLimit");
     if (revision_history_limit) { 
-    if(!cJSON_IsNumber(revision_history_limit))
+    if(!mazu_cJSON_IsNumber(revision_history_limit))
     {
     goto end; //Numeric
     }
     }
 
     // v1_stateful_set_spec->selector
-    cJSON *selector = cJSON_GetObjectItemCaseSensitive(v1_stateful_set_specJSON, "selector");
+    mazu_cJSON *selector = mazu_cJSON_GetObjectItemCaseSensitive(v1_stateful_set_specJSON, "selector");
     if (!selector) {
         goto end;
     }
@@ -299,19 +299,19 @@ v1_stateful_set_spec_t *v1_stateful_set_spec_parseFromJSON(cJSON *v1_stateful_se
     selector_local_nonprim = v1_label_selector_parseFromJSON(selector); //nonprimitive
 
     // v1_stateful_set_spec->service_name
-    cJSON *service_name = cJSON_GetObjectItemCaseSensitive(v1_stateful_set_specJSON, "serviceName");
+    mazu_cJSON *service_name = mazu_cJSON_GetObjectItemCaseSensitive(v1_stateful_set_specJSON, "serviceName");
     if (!service_name) {
         goto end;
     }
 
     
-    if(!cJSON_IsString(service_name))
+    if(!mazu_cJSON_IsString(service_name))
     {
     goto end; //String
     }
 
     // v1_stateful_set_spec->_template
-    cJSON *_template = cJSON_GetObjectItemCaseSensitive(v1_stateful_set_specJSON, "template");
+    mazu_cJSON *_template = mazu_cJSON_GetObjectItemCaseSensitive(v1_stateful_set_specJSON, "template");
     if (!_template) {
         goto end;
     }
@@ -320,24 +320,24 @@ v1_stateful_set_spec_t *v1_stateful_set_spec_parseFromJSON(cJSON *v1_stateful_se
     _template_local_nonprim = v1_pod_template_spec_parseFromJSON(_template); //nonprimitive
 
     // v1_stateful_set_spec->update_strategy
-    cJSON *update_strategy = cJSON_GetObjectItemCaseSensitive(v1_stateful_set_specJSON, "updateStrategy");
+    mazu_cJSON *update_strategy = mazu_cJSON_GetObjectItemCaseSensitive(v1_stateful_set_specJSON, "updateStrategy");
     if (update_strategy) { 
     update_strategy_local_nonprim = v1_stateful_set_update_strategy_parseFromJSON(update_strategy); //nonprimitive
     }
 
     // v1_stateful_set_spec->volume_claim_templates
-    cJSON *volume_claim_templates = cJSON_GetObjectItemCaseSensitive(v1_stateful_set_specJSON, "volumeClaimTemplates");
+    mazu_cJSON *volume_claim_templates = mazu_cJSON_GetObjectItemCaseSensitive(v1_stateful_set_specJSON, "volumeClaimTemplates");
     if (volume_claim_templates) { 
-    cJSON *volume_claim_templates_local_nonprimitive = NULL;
-    if(!cJSON_IsArray(volume_claim_templates)){
+    mazu_cJSON *volume_claim_templates_local_nonprimitive = NULL;
+    if(!mazu_cJSON_IsArray(volume_claim_templates)){
         goto end; //nonprimitive container
     }
 
     volume_claim_templatesList = list_createList();
 
-    cJSON_ArrayForEach(volume_claim_templates_local_nonprimitive,volume_claim_templates )
+    mazu_cJSON_ArrayForEach(volume_claim_templates_local_nonprimitive,volume_claim_templates )
     {
-        if(!cJSON_IsObject(volume_claim_templates_local_nonprimitive)){
+        if(!mazu_cJSON_IsObject(volume_claim_templates_local_nonprimitive)){
             goto end;
         }
         v1_persistent_volume_claim_t *volume_claim_templatesItem = v1_persistent_volume_claim_parseFromJSON(volume_claim_templates_local_nonprimitive);
@@ -351,7 +351,7 @@ v1_stateful_set_spec_t *v1_stateful_set_spec_parseFromJSON(cJSON *v1_stateful_se
         min_ready_seconds ? min_ready_seconds->valuedouble : 0,
         ordinals ? ordinals_local_nonprim : NULL,
         persistent_volume_claim_retention_policy ? persistent_volume_claim_retention_policy_local_nonprim : NULL,
-        pod_management_policy && !cJSON_IsNull(pod_management_policy) ? strdup(pod_management_policy->valuestring) : NULL,
+        pod_management_policy && !mazu_cJSON_IsNull(pod_management_policy) ? strdup(pod_management_policy->valuestring) : NULL,
         replicas ? replicas->valuedouble : 0,
         revision_history_limit ? revision_history_limit->valuedouble : 0,
         selector_local_nonprim,

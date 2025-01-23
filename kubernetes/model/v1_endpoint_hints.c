@@ -33,12 +33,12 @@ void v1_endpoint_hints_free(v1_endpoint_hints_t *v1_endpoint_hints) {
     free(v1_endpoint_hints);
 }
 
-cJSON *v1_endpoint_hints_convertToJSON(v1_endpoint_hints_t *v1_endpoint_hints) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_endpoint_hints_convertToJSON(v1_endpoint_hints_t *v1_endpoint_hints) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_endpoint_hints->for_zones
     if(v1_endpoint_hints->for_zones) {
-    cJSON *for_zones = cJSON_AddArrayToObject(item, "forZones");
+    mazu_cJSON *for_zones = mazu_cJSON_AddArrayToObject(item, "forZones");
     if(for_zones == NULL) {
     goto fail; //nonprimitive container
     }
@@ -46,11 +46,11 @@ cJSON *v1_endpoint_hints_convertToJSON(v1_endpoint_hints_t *v1_endpoint_hints) {
     listEntry_t *for_zonesListEntry;
     if (v1_endpoint_hints->for_zones) {
     list_ForEach(for_zonesListEntry, v1_endpoint_hints->for_zones) {
-    cJSON *itemLocal = v1_for_zone_convertToJSON(for_zonesListEntry->data);
+    mazu_cJSON *itemLocal = v1_for_zone_convertToJSON(for_zonesListEntry->data);
     if(itemLocal == NULL) {
     goto fail;
     }
-    cJSON_AddItemToArray(for_zones, itemLocal);
+    mazu_cJSON_AddItemToArray(for_zones, itemLocal);
     }
     }
     }
@@ -58,12 +58,12 @@ cJSON *v1_endpoint_hints_convertToJSON(v1_endpoint_hints_t *v1_endpoint_hints) {
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_endpoint_hints_t *v1_endpoint_hints_parseFromJSON(cJSON *v1_endpoint_hintsJSON){
+v1_endpoint_hints_t *v1_endpoint_hints_parseFromJSON(mazu_cJSON *v1_endpoint_hintsJSON){
 
     v1_endpoint_hints_t *v1_endpoint_hints_local_var = NULL;
 
@@ -71,18 +71,18 @@ v1_endpoint_hints_t *v1_endpoint_hints_parseFromJSON(cJSON *v1_endpoint_hintsJSO
     list_t *for_zonesList = NULL;
 
     // v1_endpoint_hints->for_zones
-    cJSON *for_zones = cJSON_GetObjectItemCaseSensitive(v1_endpoint_hintsJSON, "forZones");
+    mazu_cJSON *for_zones = mazu_cJSON_GetObjectItemCaseSensitive(v1_endpoint_hintsJSON, "forZones");
     if (for_zones) { 
-    cJSON *for_zones_local_nonprimitive = NULL;
-    if(!cJSON_IsArray(for_zones)){
+    mazu_cJSON *for_zones_local_nonprimitive = NULL;
+    if(!mazu_cJSON_IsArray(for_zones)){
         goto end; //nonprimitive container
     }
 
     for_zonesList = list_createList();
 
-    cJSON_ArrayForEach(for_zones_local_nonprimitive,for_zones )
+    mazu_cJSON_ArrayForEach(for_zones_local_nonprimitive,for_zones )
     {
-        if(!cJSON_IsObject(for_zones_local_nonprimitive)){
+        if(!mazu_cJSON_IsObject(for_zones_local_nonprimitive)){
             goto end;
         }
         v1_for_zone_t *for_zonesItem = v1_for_zone_parseFromJSON(for_zones_local_nonprimitive);

@@ -8,7 +8,7 @@
 #define _v1_status_details_H_
 
 #include <string.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
 #include "../include/binary.h"
@@ -40,9 +40,9 @@ v1_status_details_t *v1_status_details_create(
 
 void v1_status_details_free(v1_status_details_t *v1_status_details);
 
-v1_status_details_t *v1_status_details_parseFromJSON(cJSON *v1_status_detailsJSON);
+v1_status_details_t *v1_status_details_parseFromJSON(mazu_cJSON *v1_status_detailsJSON);
 
-cJSON *v1_status_details_convertToJSON(v1_status_details_t *v1_status_details);
+mazu_cJSON *v1_status_details_convertToJSON(v1_status_details_t *v1_status_details);
 
 #endif /* _v1_status_details_H_ */
 

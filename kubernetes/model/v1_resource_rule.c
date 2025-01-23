@@ -60,19 +60,19 @@ void v1_resource_rule_free(v1_resource_rule_t *v1_resource_rule) {
     free(v1_resource_rule);
 }
 
-cJSON *v1_resource_rule_convertToJSON(v1_resource_rule_t *v1_resource_rule) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_resource_rule_convertToJSON(v1_resource_rule_t *v1_resource_rule) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_resource_rule->api_groups
     if(v1_resource_rule->api_groups) {
-    cJSON *api_groups = cJSON_AddArrayToObject(item, "apiGroups");
+    mazu_cJSON *api_groups = mazu_cJSON_AddArrayToObject(item, "apiGroups");
     if(api_groups == NULL) {
         goto fail; //primitive container
     }
 
     listEntry_t *api_groupsListEntry;
     list_ForEach(api_groupsListEntry, v1_resource_rule->api_groups) {
-    if(cJSON_AddStringToObject(api_groups, "", (char*)api_groupsListEntry->data) == NULL)
+    if(mazu_cJSON_AddStringToObject(api_groups, "", (char*)api_groupsListEntry->data) == NULL)
     {
         goto fail;
     }
@@ -82,14 +82,14 @@ cJSON *v1_resource_rule_convertToJSON(v1_resource_rule_t *v1_resource_rule) {
 
     // v1_resource_rule->resource_names
     if(v1_resource_rule->resource_names) {
-    cJSON *resource_names = cJSON_AddArrayToObject(item, "resourceNames");
+    mazu_cJSON *resource_names = mazu_cJSON_AddArrayToObject(item, "resourceNames");
     if(resource_names == NULL) {
         goto fail; //primitive container
     }
 
     listEntry_t *resource_namesListEntry;
     list_ForEach(resource_namesListEntry, v1_resource_rule->resource_names) {
-    if(cJSON_AddStringToObject(resource_names, "", (char*)resource_namesListEntry->data) == NULL)
+    if(mazu_cJSON_AddStringToObject(resource_names, "", (char*)resource_namesListEntry->data) == NULL)
     {
         goto fail;
     }
@@ -99,14 +99,14 @@ cJSON *v1_resource_rule_convertToJSON(v1_resource_rule_t *v1_resource_rule) {
 
     // v1_resource_rule->resources
     if(v1_resource_rule->resources) {
-    cJSON *resources = cJSON_AddArrayToObject(item, "resources");
+    mazu_cJSON *resources = mazu_cJSON_AddArrayToObject(item, "resources");
     if(resources == NULL) {
         goto fail; //primitive container
     }
 
     listEntry_t *resourcesListEntry;
     list_ForEach(resourcesListEntry, v1_resource_rule->resources) {
-    if(cJSON_AddStringToObject(resources, "", (char*)resourcesListEntry->data) == NULL)
+    if(mazu_cJSON_AddStringToObject(resources, "", (char*)resourcesListEntry->data) == NULL)
     {
         goto fail;
     }
@@ -118,14 +118,14 @@ cJSON *v1_resource_rule_convertToJSON(v1_resource_rule_t *v1_resource_rule) {
     if (!v1_resource_rule->verbs) {
         goto fail;
     }
-    cJSON *verbs = cJSON_AddArrayToObject(item, "verbs");
+    mazu_cJSON *verbs = mazu_cJSON_AddArrayToObject(item, "verbs");
     if(verbs == NULL) {
         goto fail; //primitive container
     }
 
     listEntry_t *verbsListEntry;
     list_ForEach(verbsListEntry, v1_resource_rule->verbs) {
-    if(cJSON_AddStringToObject(verbs, "", (char*)verbsListEntry->data) == NULL)
+    if(mazu_cJSON_AddStringToObject(verbs, "", (char*)verbsListEntry->data) == NULL)
     {
         goto fail;
     }
@@ -134,12 +134,12 @@ cJSON *v1_resource_rule_convertToJSON(v1_resource_rule_t *v1_resource_rule) {
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_resource_rule_t *v1_resource_rule_parseFromJSON(cJSON *v1_resource_ruleJSON){
+v1_resource_rule_t *v1_resource_rule_parseFromJSON(mazu_cJSON *v1_resource_ruleJSON){
 
     v1_resource_rule_t *v1_resource_rule_local_var = NULL;
 
@@ -156,17 +156,17 @@ v1_resource_rule_t *v1_resource_rule_parseFromJSON(cJSON *v1_resource_ruleJSON){
     list_t *verbsList = NULL;
 
     // v1_resource_rule->api_groups
-    cJSON *api_groups = cJSON_GetObjectItemCaseSensitive(v1_resource_ruleJSON, "apiGroups");
+    mazu_cJSON *api_groups = mazu_cJSON_GetObjectItemCaseSensitive(v1_resource_ruleJSON, "apiGroups");
     if (api_groups) { 
-    cJSON *api_groups_local = NULL;
-    if(!cJSON_IsArray(api_groups)) {
+    mazu_cJSON *api_groups_local = NULL;
+    if(!mazu_cJSON_IsArray(api_groups)) {
         goto end;//primitive container
     }
     api_groupsList = list_createList();
 
-    cJSON_ArrayForEach(api_groups_local, api_groups)
+    mazu_cJSON_ArrayForEach(api_groups_local, api_groups)
     {
-        if(!cJSON_IsString(api_groups_local))
+        if(!mazu_cJSON_IsString(api_groups_local))
         {
             goto end;
         }
@@ -175,17 +175,17 @@ v1_resource_rule_t *v1_resource_rule_parseFromJSON(cJSON *v1_resource_ruleJSON){
     }
 
     // v1_resource_rule->resource_names
-    cJSON *resource_names = cJSON_GetObjectItemCaseSensitive(v1_resource_ruleJSON, "resourceNames");
+    mazu_cJSON *resource_names = mazu_cJSON_GetObjectItemCaseSensitive(v1_resource_ruleJSON, "resourceNames");
     if (resource_names) { 
-    cJSON *resource_names_local = NULL;
-    if(!cJSON_IsArray(resource_names)) {
+    mazu_cJSON *resource_names_local = NULL;
+    if(!mazu_cJSON_IsArray(resource_names)) {
         goto end;//primitive container
     }
     resource_namesList = list_createList();
 
-    cJSON_ArrayForEach(resource_names_local, resource_names)
+    mazu_cJSON_ArrayForEach(resource_names_local, resource_names)
     {
-        if(!cJSON_IsString(resource_names_local))
+        if(!mazu_cJSON_IsString(resource_names_local))
         {
             goto end;
         }
@@ -194,17 +194,17 @@ v1_resource_rule_t *v1_resource_rule_parseFromJSON(cJSON *v1_resource_ruleJSON){
     }
 
     // v1_resource_rule->resources
-    cJSON *resources = cJSON_GetObjectItemCaseSensitive(v1_resource_ruleJSON, "resources");
+    mazu_cJSON *resources = mazu_cJSON_GetObjectItemCaseSensitive(v1_resource_ruleJSON, "resources");
     if (resources) { 
-    cJSON *resources_local = NULL;
-    if(!cJSON_IsArray(resources)) {
+    mazu_cJSON *resources_local = NULL;
+    if(!mazu_cJSON_IsArray(resources)) {
         goto end;//primitive container
     }
     resourcesList = list_createList();
 
-    cJSON_ArrayForEach(resources_local, resources)
+    mazu_cJSON_ArrayForEach(resources_local, resources)
     {
-        if(!cJSON_IsString(resources_local))
+        if(!mazu_cJSON_IsString(resources_local))
         {
             goto end;
         }
@@ -213,21 +213,21 @@ v1_resource_rule_t *v1_resource_rule_parseFromJSON(cJSON *v1_resource_ruleJSON){
     }
 
     // v1_resource_rule->verbs
-    cJSON *verbs = cJSON_GetObjectItemCaseSensitive(v1_resource_ruleJSON, "verbs");
+    mazu_cJSON *verbs = mazu_cJSON_GetObjectItemCaseSensitive(v1_resource_ruleJSON, "verbs");
     if (!verbs) {
         goto end;
     }
 
     
-    cJSON *verbs_local = NULL;
-    if(!cJSON_IsArray(verbs)) {
+    mazu_cJSON *verbs_local = NULL;
+    if(!mazu_cJSON_IsArray(verbs)) {
         goto end;//primitive container
     }
     verbsList = list_createList();
 
-    cJSON_ArrayForEach(verbs_local, verbs)
+    mazu_cJSON_ArrayForEach(verbs_local, verbs)
     {
-        if(!cJSON_IsString(verbs_local))
+        if(!mazu_cJSON_IsString(verbs_local))
         {
             goto end;
         }

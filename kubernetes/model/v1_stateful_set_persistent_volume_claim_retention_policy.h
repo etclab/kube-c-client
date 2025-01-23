@@ -8,7 +8,7 @@
 #define _v1_stateful_set_persistent_volume_claim_retention_policy_H_
 
 #include <string.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
 #include "../include/binary.h"
@@ -31,9 +31,9 @@ v1_stateful_set_persistent_volume_claim_retention_policy_t *v1_stateful_set_pers
 
 void v1_stateful_set_persistent_volume_claim_retention_policy_free(v1_stateful_set_persistent_volume_claim_retention_policy_t *v1_stateful_set_persistent_volume_claim_retention_policy);
 
-v1_stateful_set_persistent_volume_claim_retention_policy_t *v1_stateful_set_persistent_volume_claim_retention_policy_parseFromJSON(cJSON *v1_stateful_set_persistent_volume_claim_retention_policyJSON);
+v1_stateful_set_persistent_volume_claim_retention_policy_t *v1_stateful_set_persistent_volume_claim_retention_policy_parseFromJSON(mazu_cJSON *v1_stateful_set_persistent_volume_claim_retention_policyJSON);
 
-cJSON *v1_stateful_set_persistent_volume_claim_retention_policy_convertToJSON(v1_stateful_set_persistent_volume_claim_retention_policy_t *v1_stateful_set_persistent_volume_claim_retention_policy);
+mazu_cJSON *v1_stateful_set_persistent_volume_claim_retention_policy_convertToJSON(v1_stateful_set_persistent_volume_claim_retention_policy_t *v1_stateful_set_persistent_volume_claim_retention_policy);
 
 #endif /* _v1_stateful_set_persistent_volume_claim_retention_policy_H_ */
 

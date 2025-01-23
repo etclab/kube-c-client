@@ -8,7 +8,7 @@
 #define _v1_host_ip_H_
 
 #include <string.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
 #include "../include/binary.h"
@@ -29,9 +29,9 @@ v1_host_ip_t *v1_host_ip_create(
 
 void v1_host_ip_free(v1_host_ip_t *v1_host_ip);
 
-v1_host_ip_t *v1_host_ip_parseFromJSON(cJSON *v1_host_ipJSON);
+v1_host_ip_t *v1_host_ip_parseFromJSON(mazu_cJSON *v1_host_ipJSON);
 
-cJSON *v1_host_ip_convertToJSON(v1_host_ip_t *v1_host_ip);
+mazu_cJSON *v1_host_ip_convertToJSON(v1_host_ip_t *v1_host_ip);
 
 #endif /* _v1_host_ip_H_ */
 

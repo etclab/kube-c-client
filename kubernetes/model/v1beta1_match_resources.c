@@ -60,12 +60,12 @@ void v1beta1_match_resources_free(v1beta1_match_resources_t *v1beta1_match_resou
     free(v1beta1_match_resources);
 }
 
-cJSON *v1beta1_match_resources_convertToJSON(v1beta1_match_resources_t *v1beta1_match_resources) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1beta1_match_resources_convertToJSON(v1beta1_match_resources_t *v1beta1_match_resources) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1beta1_match_resources->exclude_resource_rules
     if(v1beta1_match_resources->exclude_resource_rules) {
-    cJSON *exclude_resource_rules = cJSON_AddArrayToObject(item, "excludeResourceRules");
+    mazu_cJSON *exclude_resource_rules = mazu_cJSON_AddArrayToObject(item, "excludeResourceRules");
     if(exclude_resource_rules == NULL) {
     goto fail; //nonprimitive container
     }
@@ -73,11 +73,11 @@ cJSON *v1beta1_match_resources_convertToJSON(v1beta1_match_resources_t *v1beta1_
     listEntry_t *exclude_resource_rulesListEntry;
     if (v1beta1_match_resources->exclude_resource_rules) {
     list_ForEach(exclude_resource_rulesListEntry, v1beta1_match_resources->exclude_resource_rules) {
-    cJSON *itemLocal = v1beta1_named_rule_with_operations_convertToJSON(exclude_resource_rulesListEntry->data);
+    mazu_cJSON *itemLocal = v1beta1_named_rule_with_operations_convertToJSON(exclude_resource_rulesListEntry->data);
     if(itemLocal == NULL) {
     goto fail;
     }
-    cJSON_AddItemToArray(exclude_resource_rules, itemLocal);
+    mazu_cJSON_AddItemToArray(exclude_resource_rules, itemLocal);
     }
     }
     }
@@ -85,7 +85,7 @@ cJSON *v1beta1_match_resources_convertToJSON(v1beta1_match_resources_t *v1beta1_
 
     // v1beta1_match_resources->match_policy
     if(v1beta1_match_resources->match_policy) {
-    if(cJSON_AddStringToObject(item, "matchPolicy", v1beta1_match_resources->match_policy) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "matchPolicy", v1beta1_match_resources->match_policy) == NULL) {
     goto fail; //String
     }
     }
@@ -93,11 +93,11 @@ cJSON *v1beta1_match_resources_convertToJSON(v1beta1_match_resources_t *v1beta1_
 
     // v1beta1_match_resources->namespace_selector
     if(v1beta1_match_resources->namespace_selector) {
-    cJSON *namespace_selector_local_JSON = v1_label_selector_convertToJSON(v1beta1_match_resources->namespace_selector);
+    mazu_cJSON *namespace_selector_local_JSON = v1_label_selector_convertToJSON(v1beta1_match_resources->namespace_selector);
     if(namespace_selector_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "namespaceSelector", namespace_selector_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "namespaceSelector", namespace_selector_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -106,11 +106,11 @@ cJSON *v1beta1_match_resources_convertToJSON(v1beta1_match_resources_t *v1beta1_
 
     // v1beta1_match_resources->object_selector
     if(v1beta1_match_resources->object_selector) {
-    cJSON *object_selector_local_JSON = v1_label_selector_convertToJSON(v1beta1_match_resources->object_selector);
+    mazu_cJSON *object_selector_local_JSON = v1_label_selector_convertToJSON(v1beta1_match_resources->object_selector);
     if(object_selector_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "objectSelector", object_selector_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "objectSelector", object_selector_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -119,7 +119,7 @@ cJSON *v1beta1_match_resources_convertToJSON(v1beta1_match_resources_t *v1beta1_
 
     // v1beta1_match_resources->resource_rules
     if(v1beta1_match_resources->resource_rules) {
-    cJSON *resource_rules = cJSON_AddArrayToObject(item, "resourceRules");
+    mazu_cJSON *resource_rules = mazu_cJSON_AddArrayToObject(item, "resourceRules");
     if(resource_rules == NULL) {
     goto fail; //nonprimitive container
     }
@@ -127,11 +127,11 @@ cJSON *v1beta1_match_resources_convertToJSON(v1beta1_match_resources_t *v1beta1_
     listEntry_t *resource_rulesListEntry;
     if (v1beta1_match_resources->resource_rules) {
     list_ForEach(resource_rulesListEntry, v1beta1_match_resources->resource_rules) {
-    cJSON *itemLocal = v1beta1_named_rule_with_operations_convertToJSON(resource_rulesListEntry->data);
+    mazu_cJSON *itemLocal = v1beta1_named_rule_with_operations_convertToJSON(resource_rulesListEntry->data);
     if(itemLocal == NULL) {
     goto fail;
     }
-    cJSON_AddItemToArray(resource_rules, itemLocal);
+    mazu_cJSON_AddItemToArray(resource_rules, itemLocal);
     }
     }
     }
@@ -139,12 +139,12 @@ cJSON *v1beta1_match_resources_convertToJSON(v1beta1_match_resources_t *v1beta1_
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1beta1_match_resources_t *v1beta1_match_resources_parseFromJSON(cJSON *v1beta1_match_resourcesJSON){
+v1beta1_match_resources_t *v1beta1_match_resources_parseFromJSON(mazu_cJSON *v1beta1_match_resourcesJSON){
 
     v1beta1_match_resources_t *v1beta1_match_resources_local_var = NULL;
 
@@ -161,18 +161,18 @@ v1beta1_match_resources_t *v1beta1_match_resources_parseFromJSON(cJSON *v1beta1_
     list_t *resource_rulesList = NULL;
 
     // v1beta1_match_resources->exclude_resource_rules
-    cJSON *exclude_resource_rules = cJSON_GetObjectItemCaseSensitive(v1beta1_match_resourcesJSON, "excludeResourceRules");
+    mazu_cJSON *exclude_resource_rules = mazu_cJSON_GetObjectItemCaseSensitive(v1beta1_match_resourcesJSON, "excludeResourceRules");
     if (exclude_resource_rules) { 
-    cJSON *exclude_resource_rules_local_nonprimitive = NULL;
-    if(!cJSON_IsArray(exclude_resource_rules)){
+    mazu_cJSON *exclude_resource_rules_local_nonprimitive = NULL;
+    if(!mazu_cJSON_IsArray(exclude_resource_rules)){
         goto end; //nonprimitive container
     }
 
     exclude_resource_rulesList = list_createList();
 
-    cJSON_ArrayForEach(exclude_resource_rules_local_nonprimitive,exclude_resource_rules )
+    mazu_cJSON_ArrayForEach(exclude_resource_rules_local_nonprimitive,exclude_resource_rules )
     {
-        if(!cJSON_IsObject(exclude_resource_rules_local_nonprimitive)){
+        if(!mazu_cJSON_IsObject(exclude_resource_rules_local_nonprimitive)){
             goto end;
         }
         v1beta1_named_rule_with_operations_t *exclude_resource_rulesItem = v1beta1_named_rule_with_operations_parseFromJSON(exclude_resource_rules_local_nonprimitive);
@@ -182,39 +182,39 @@ v1beta1_match_resources_t *v1beta1_match_resources_parseFromJSON(cJSON *v1beta1_
     }
 
     // v1beta1_match_resources->match_policy
-    cJSON *match_policy = cJSON_GetObjectItemCaseSensitive(v1beta1_match_resourcesJSON, "matchPolicy");
+    mazu_cJSON *match_policy = mazu_cJSON_GetObjectItemCaseSensitive(v1beta1_match_resourcesJSON, "matchPolicy");
     if (match_policy) { 
-    if(!cJSON_IsString(match_policy) && !cJSON_IsNull(match_policy))
+    if(!mazu_cJSON_IsString(match_policy) && !mazu_cJSON_IsNull(match_policy))
     {
     goto end; //String
     }
     }
 
     // v1beta1_match_resources->namespace_selector
-    cJSON *namespace_selector = cJSON_GetObjectItemCaseSensitive(v1beta1_match_resourcesJSON, "namespaceSelector");
+    mazu_cJSON *namespace_selector = mazu_cJSON_GetObjectItemCaseSensitive(v1beta1_match_resourcesJSON, "namespaceSelector");
     if (namespace_selector) { 
     namespace_selector_local_nonprim = v1_label_selector_parseFromJSON(namespace_selector); //nonprimitive
     }
 
     // v1beta1_match_resources->object_selector
-    cJSON *object_selector = cJSON_GetObjectItemCaseSensitive(v1beta1_match_resourcesJSON, "objectSelector");
+    mazu_cJSON *object_selector = mazu_cJSON_GetObjectItemCaseSensitive(v1beta1_match_resourcesJSON, "objectSelector");
     if (object_selector) { 
     object_selector_local_nonprim = v1_label_selector_parseFromJSON(object_selector); //nonprimitive
     }
 
     // v1beta1_match_resources->resource_rules
-    cJSON *resource_rules = cJSON_GetObjectItemCaseSensitive(v1beta1_match_resourcesJSON, "resourceRules");
+    mazu_cJSON *resource_rules = mazu_cJSON_GetObjectItemCaseSensitive(v1beta1_match_resourcesJSON, "resourceRules");
     if (resource_rules) { 
-    cJSON *resource_rules_local_nonprimitive = NULL;
-    if(!cJSON_IsArray(resource_rules)){
+    mazu_cJSON *resource_rules_local_nonprimitive = NULL;
+    if(!mazu_cJSON_IsArray(resource_rules)){
         goto end; //nonprimitive container
     }
 
     resource_rulesList = list_createList();
 
-    cJSON_ArrayForEach(resource_rules_local_nonprimitive,resource_rules )
+    mazu_cJSON_ArrayForEach(resource_rules_local_nonprimitive,resource_rules )
     {
-        if(!cJSON_IsObject(resource_rules_local_nonprimitive)){
+        if(!mazu_cJSON_IsObject(resource_rules_local_nonprimitive)){
             goto end;
         }
         v1beta1_named_rule_with_operations_t *resource_rulesItem = v1beta1_named_rule_with_operations_parseFromJSON(resource_rules_local_nonprimitive);
@@ -226,7 +226,7 @@ v1beta1_match_resources_t *v1beta1_match_resources_parseFromJSON(cJSON *v1beta1_
 
     v1beta1_match_resources_local_var = v1beta1_match_resources_create (
         exclude_resource_rules ? exclude_resource_rulesList : NULL,
-        match_policy && !cJSON_IsNull(match_policy) ? strdup(match_policy->valuestring) : NULL,
+        match_policy && !mazu_cJSON_IsNull(match_policy) ? strdup(match_policy->valuestring) : NULL,
         namespace_selector ? namespace_selector_local_nonprim : NULL,
         object_selector ? object_selector_local_nonprim : NULL,
         resource_rules ? resource_rulesList : NULL

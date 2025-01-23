@@ -8,7 +8,7 @@
 #define _v1_component_status_list_H_
 
 #include <string.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
 #include "../include/binary.h"
@@ -37,9 +37,9 @@ v1_component_status_list_t *v1_component_status_list_create(
 
 void v1_component_status_list_free(v1_component_status_list_t *v1_component_status_list);
 
-v1_component_status_list_t *v1_component_status_list_parseFromJSON(cJSON *v1_component_status_listJSON);
+v1_component_status_list_t *v1_component_status_list_parseFromJSON(mazu_cJSON *v1_component_status_listJSON);
 
-cJSON *v1_component_status_list_convertToJSON(v1_component_status_list_t *v1_component_status_list);
+mazu_cJSON *v1_component_status_list_convertToJSON(v1_component_status_list_t *v1_component_status_list);
 
 #endif /* _v1_component_status_list_H_ */
 

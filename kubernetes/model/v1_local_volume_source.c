@@ -36,12 +36,12 @@ void v1_local_volume_source_free(v1_local_volume_source_t *v1_local_volume_sourc
     free(v1_local_volume_source);
 }
 
-cJSON *v1_local_volume_source_convertToJSON(v1_local_volume_source_t *v1_local_volume_source) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_local_volume_source_convertToJSON(v1_local_volume_source_t *v1_local_volume_source) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_local_volume_source->fs_type
     if(v1_local_volume_source->fs_type) {
-    if(cJSON_AddStringToObject(item, "fsType", v1_local_volume_source->fs_type) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "fsType", v1_local_volume_source->fs_type) == NULL) {
     goto fail; //String
     }
     }
@@ -51,46 +51,46 @@ cJSON *v1_local_volume_source_convertToJSON(v1_local_volume_source_t *v1_local_v
     if (!v1_local_volume_source->path) {
         goto fail;
     }
-    if(cJSON_AddStringToObject(item, "path", v1_local_volume_source->path) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "path", v1_local_volume_source->path) == NULL) {
     goto fail; //String
     }
 
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_local_volume_source_t *v1_local_volume_source_parseFromJSON(cJSON *v1_local_volume_sourceJSON){
+v1_local_volume_source_t *v1_local_volume_source_parseFromJSON(mazu_cJSON *v1_local_volume_sourceJSON){
 
     v1_local_volume_source_t *v1_local_volume_source_local_var = NULL;
 
     // v1_local_volume_source->fs_type
-    cJSON *fs_type = cJSON_GetObjectItemCaseSensitive(v1_local_volume_sourceJSON, "fsType");
+    mazu_cJSON *fs_type = mazu_cJSON_GetObjectItemCaseSensitive(v1_local_volume_sourceJSON, "fsType");
     if (fs_type) { 
-    if(!cJSON_IsString(fs_type) && !cJSON_IsNull(fs_type))
+    if(!mazu_cJSON_IsString(fs_type) && !mazu_cJSON_IsNull(fs_type))
     {
     goto end; //String
     }
     }
 
     // v1_local_volume_source->path
-    cJSON *path = cJSON_GetObjectItemCaseSensitive(v1_local_volume_sourceJSON, "path");
+    mazu_cJSON *path = mazu_cJSON_GetObjectItemCaseSensitive(v1_local_volume_sourceJSON, "path");
     if (!path) {
         goto end;
     }
 
     
-    if(!cJSON_IsString(path))
+    if(!mazu_cJSON_IsString(path))
     {
     goto end; //String
     }
 
 
     v1_local_volume_source_local_var = v1_local_volume_source_create (
-        fs_type && !cJSON_IsNull(fs_type) ? strdup(fs_type->valuestring) : NULL,
+        fs_type && !mazu_cJSON_IsNull(fs_type) ? strdup(fs_type->valuestring) : NULL,
         strdup(path->valuestring)
         );
 

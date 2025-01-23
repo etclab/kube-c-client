@@ -8,7 +8,7 @@
 #define _v1_api_service_condition_H_
 
 #include <string.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
 #include "../include/binary.h"
@@ -37,9 +37,9 @@ v1_api_service_condition_t *v1_api_service_condition_create(
 
 void v1_api_service_condition_free(v1_api_service_condition_t *v1_api_service_condition);
 
-v1_api_service_condition_t *v1_api_service_condition_parseFromJSON(cJSON *v1_api_service_conditionJSON);
+v1_api_service_condition_t *v1_api_service_condition_parseFromJSON(mazu_cJSON *v1_api_service_conditionJSON);
 
-cJSON *v1_api_service_condition_convertToJSON(v1_api_service_condition_t *v1_api_service_condition);
+mazu_cJSON *v1_api_service_condition_convertToJSON(v1_api_service_condition_t *v1_api_service_condition);
 
 #endif /* _v1_api_service_condition_H_ */
 

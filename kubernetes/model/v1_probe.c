@@ -60,16 +60,16 @@ void v1_probe_free(v1_probe_t *v1_probe) {
     free(v1_probe);
 }
 
-cJSON *v1_probe_convertToJSON(v1_probe_t *v1_probe) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_probe_convertToJSON(v1_probe_t *v1_probe) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_probe->exec
     if(v1_probe->exec) {
-    cJSON *exec_local_JSON = v1_exec_action_convertToJSON(v1_probe->exec);
+    mazu_cJSON *exec_local_JSON = v1_exec_action_convertToJSON(v1_probe->exec);
     if(exec_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "exec", exec_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "exec", exec_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -78,7 +78,7 @@ cJSON *v1_probe_convertToJSON(v1_probe_t *v1_probe) {
 
     // v1_probe->failure_threshold
     if(v1_probe->failure_threshold) {
-    if(cJSON_AddNumberToObject(item, "failureThreshold", v1_probe->failure_threshold) == NULL) {
+    if(mazu_cJSON_AddNumberToObject(item, "failureThreshold", v1_probe->failure_threshold) == NULL) {
     goto fail; //Numeric
     }
     }
@@ -86,11 +86,11 @@ cJSON *v1_probe_convertToJSON(v1_probe_t *v1_probe) {
 
     // v1_probe->grpc
     if(v1_probe->grpc) {
-    cJSON *grpc_local_JSON = v1_grpc_action_convertToJSON(v1_probe->grpc);
+    mazu_cJSON *grpc_local_JSON = v1_grpc_action_convertToJSON(v1_probe->grpc);
     if(grpc_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "grpc", grpc_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "grpc", grpc_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -99,11 +99,11 @@ cJSON *v1_probe_convertToJSON(v1_probe_t *v1_probe) {
 
     // v1_probe->http_get
     if(v1_probe->http_get) {
-    cJSON *http_get_local_JSON = v1_http_get_action_convertToJSON(v1_probe->http_get);
+    mazu_cJSON *http_get_local_JSON = v1_http_get_action_convertToJSON(v1_probe->http_get);
     if(http_get_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "httpGet", http_get_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "httpGet", http_get_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -112,7 +112,7 @@ cJSON *v1_probe_convertToJSON(v1_probe_t *v1_probe) {
 
     // v1_probe->initial_delay_seconds
     if(v1_probe->initial_delay_seconds) {
-    if(cJSON_AddNumberToObject(item, "initialDelaySeconds", v1_probe->initial_delay_seconds) == NULL) {
+    if(mazu_cJSON_AddNumberToObject(item, "initialDelaySeconds", v1_probe->initial_delay_seconds) == NULL) {
     goto fail; //Numeric
     }
     }
@@ -120,7 +120,7 @@ cJSON *v1_probe_convertToJSON(v1_probe_t *v1_probe) {
 
     // v1_probe->period_seconds
     if(v1_probe->period_seconds) {
-    if(cJSON_AddNumberToObject(item, "periodSeconds", v1_probe->period_seconds) == NULL) {
+    if(mazu_cJSON_AddNumberToObject(item, "periodSeconds", v1_probe->period_seconds) == NULL) {
     goto fail; //Numeric
     }
     }
@@ -128,7 +128,7 @@ cJSON *v1_probe_convertToJSON(v1_probe_t *v1_probe) {
 
     // v1_probe->success_threshold
     if(v1_probe->success_threshold) {
-    if(cJSON_AddNumberToObject(item, "successThreshold", v1_probe->success_threshold) == NULL) {
+    if(mazu_cJSON_AddNumberToObject(item, "successThreshold", v1_probe->success_threshold) == NULL) {
     goto fail; //Numeric
     }
     }
@@ -136,11 +136,11 @@ cJSON *v1_probe_convertToJSON(v1_probe_t *v1_probe) {
 
     // v1_probe->tcp_socket
     if(v1_probe->tcp_socket) {
-    cJSON *tcp_socket_local_JSON = v1_tcp_socket_action_convertToJSON(v1_probe->tcp_socket);
+    mazu_cJSON *tcp_socket_local_JSON = v1_tcp_socket_action_convertToJSON(v1_probe->tcp_socket);
     if(tcp_socket_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "tcpSocket", tcp_socket_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "tcpSocket", tcp_socket_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -149,7 +149,7 @@ cJSON *v1_probe_convertToJSON(v1_probe_t *v1_probe) {
 
     // v1_probe->termination_grace_period_seconds
     if(v1_probe->termination_grace_period_seconds) {
-    if(cJSON_AddNumberToObject(item, "terminationGracePeriodSeconds", v1_probe->termination_grace_period_seconds) == NULL) {
+    if(mazu_cJSON_AddNumberToObject(item, "terminationGracePeriodSeconds", v1_probe->termination_grace_period_seconds) == NULL) {
     goto fail; //Numeric
     }
     }
@@ -157,7 +157,7 @@ cJSON *v1_probe_convertToJSON(v1_probe_t *v1_probe) {
 
     // v1_probe->timeout_seconds
     if(v1_probe->timeout_seconds) {
-    if(cJSON_AddNumberToObject(item, "timeoutSeconds", v1_probe->timeout_seconds) == NULL) {
+    if(mazu_cJSON_AddNumberToObject(item, "timeoutSeconds", v1_probe->timeout_seconds) == NULL) {
     goto fail; //Numeric
     }
     }
@@ -165,12 +165,12 @@ cJSON *v1_probe_convertToJSON(v1_probe_t *v1_probe) {
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_probe_t *v1_probe_parseFromJSON(cJSON *v1_probeJSON){
+v1_probe_t *v1_probe_parseFromJSON(mazu_cJSON *v1_probeJSON){
 
     v1_probe_t *v1_probe_local_var = NULL;
 
@@ -187,78 +187,78 @@ v1_probe_t *v1_probe_parseFromJSON(cJSON *v1_probeJSON){
     v1_tcp_socket_action_t *tcp_socket_local_nonprim = NULL;
 
     // v1_probe->exec
-    cJSON *exec = cJSON_GetObjectItemCaseSensitive(v1_probeJSON, "exec");
+    mazu_cJSON *exec = mazu_cJSON_GetObjectItemCaseSensitive(v1_probeJSON, "exec");
     if (exec) { 
     exec_local_nonprim = v1_exec_action_parseFromJSON(exec); //nonprimitive
     }
 
     // v1_probe->failure_threshold
-    cJSON *failure_threshold = cJSON_GetObjectItemCaseSensitive(v1_probeJSON, "failureThreshold");
+    mazu_cJSON *failure_threshold = mazu_cJSON_GetObjectItemCaseSensitive(v1_probeJSON, "failureThreshold");
     if (failure_threshold) { 
-    if(!cJSON_IsNumber(failure_threshold))
+    if(!mazu_cJSON_IsNumber(failure_threshold))
     {
     goto end; //Numeric
     }
     }
 
     // v1_probe->grpc
-    cJSON *grpc = cJSON_GetObjectItemCaseSensitive(v1_probeJSON, "grpc");
+    mazu_cJSON *grpc = mazu_cJSON_GetObjectItemCaseSensitive(v1_probeJSON, "grpc");
     if (grpc) { 
     grpc_local_nonprim = v1_grpc_action_parseFromJSON(grpc); //nonprimitive
     }
 
     // v1_probe->http_get
-    cJSON *http_get = cJSON_GetObjectItemCaseSensitive(v1_probeJSON, "httpGet");
+    mazu_cJSON *http_get = mazu_cJSON_GetObjectItemCaseSensitive(v1_probeJSON, "httpGet");
     if (http_get) { 
     http_get_local_nonprim = v1_http_get_action_parseFromJSON(http_get); //nonprimitive
     }
 
     // v1_probe->initial_delay_seconds
-    cJSON *initial_delay_seconds = cJSON_GetObjectItemCaseSensitive(v1_probeJSON, "initialDelaySeconds");
+    mazu_cJSON *initial_delay_seconds = mazu_cJSON_GetObjectItemCaseSensitive(v1_probeJSON, "initialDelaySeconds");
     if (initial_delay_seconds) { 
-    if(!cJSON_IsNumber(initial_delay_seconds))
+    if(!mazu_cJSON_IsNumber(initial_delay_seconds))
     {
     goto end; //Numeric
     }
     }
 
     // v1_probe->period_seconds
-    cJSON *period_seconds = cJSON_GetObjectItemCaseSensitive(v1_probeJSON, "periodSeconds");
+    mazu_cJSON *period_seconds = mazu_cJSON_GetObjectItemCaseSensitive(v1_probeJSON, "periodSeconds");
     if (period_seconds) { 
-    if(!cJSON_IsNumber(period_seconds))
+    if(!mazu_cJSON_IsNumber(period_seconds))
     {
     goto end; //Numeric
     }
     }
 
     // v1_probe->success_threshold
-    cJSON *success_threshold = cJSON_GetObjectItemCaseSensitive(v1_probeJSON, "successThreshold");
+    mazu_cJSON *success_threshold = mazu_cJSON_GetObjectItemCaseSensitive(v1_probeJSON, "successThreshold");
     if (success_threshold) { 
-    if(!cJSON_IsNumber(success_threshold))
+    if(!mazu_cJSON_IsNumber(success_threshold))
     {
     goto end; //Numeric
     }
     }
 
     // v1_probe->tcp_socket
-    cJSON *tcp_socket = cJSON_GetObjectItemCaseSensitive(v1_probeJSON, "tcpSocket");
+    mazu_cJSON *tcp_socket = mazu_cJSON_GetObjectItemCaseSensitive(v1_probeJSON, "tcpSocket");
     if (tcp_socket) { 
     tcp_socket_local_nonprim = v1_tcp_socket_action_parseFromJSON(tcp_socket); //nonprimitive
     }
 
     // v1_probe->termination_grace_period_seconds
-    cJSON *termination_grace_period_seconds = cJSON_GetObjectItemCaseSensitive(v1_probeJSON, "terminationGracePeriodSeconds");
+    mazu_cJSON *termination_grace_period_seconds = mazu_cJSON_GetObjectItemCaseSensitive(v1_probeJSON, "terminationGracePeriodSeconds");
     if (termination_grace_period_seconds) { 
-    if(!cJSON_IsNumber(termination_grace_period_seconds))
+    if(!mazu_cJSON_IsNumber(termination_grace_period_seconds))
     {
     goto end; //Numeric
     }
     }
 
     // v1_probe->timeout_seconds
-    cJSON *timeout_seconds = cJSON_GetObjectItemCaseSensitive(v1_probeJSON, "timeoutSeconds");
+    mazu_cJSON *timeout_seconds = mazu_cJSON_GetObjectItemCaseSensitive(v1_probeJSON, "timeoutSeconds");
     if (timeout_seconds) { 
-    if(!cJSON_IsNumber(timeout_seconds))
+    if(!mazu_cJSON_IsNumber(timeout_seconds))
     {
     goto end; //Numeric
     }

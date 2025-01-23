@@ -11,7 +11,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdbool.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 
 #include "../model/v1_uncounted_terminated_pods.h"
 v1_uncounted_terminated_pods_t* instantiate_v1_uncounted_terminated_pods(int include_optional);
@@ -41,11 +41,11 @@ v1_uncounted_terminated_pods_t* instantiate_v1_uncounted_terminated_pods(int inc
 void test_v1_uncounted_terminated_pods(int include_optional) {
     v1_uncounted_terminated_pods_t* v1_uncounted_terminated_pods_1 = instantiate_v1_uncounted_terminated_pods(include_optional);
 
-	cJSON* jsonv1_uncounted_terminated_pods_1 = v1_uncounted_terminated_pods_convertToJSON(v1_uncounted_terminated_pods_1);
-	printf("v1_uncounted_terminated_pods :\n%s\n", cJSON_Print(jsonv1_uncounted_terminated_pods_1));
+	mazu_cJSON* jsonv1_uncounted_terminated_pods_1 = v1_uncounted_terminated_pods_convertToJSON(v1_uncounted_terminated_pods_1);
+	printf("v1_uncounted_terminated_pods :\n%s\n", mazu_cJSON_Print(jsonv1_uncounted_terminated_pods_1));
 	v1_uncounted_terminated_pods_t* v1_uncounted_terminated_pods_2 = v1_uncounted_terminated_pods_parseFromJSON(jsonv1_uncounted_terminated_pods_1);
-	cJSON* jsonv1_uncounted_terminated_pods_2 = v1_uncounted_terminated_pods_convertToJSON(v1_uncounted_terminated_pods_2);
-	printf("repeating v1_uncounted_terminated_pods:\n%s\n", cJSON_Print(jsonv1_uncounted_terminated_pods_2));
+	mazu_cJSON* jsonv1_uncounted_terminated_pods_2 = v1_uncounted_terminated_pods_convertToJSON(v1_uncounted_terminated_pods_2);
+	printf("repeating v1_uncounted_terminated_pods:\n%s\n", mazu_cJSON_Print(jsonv1_uncounted_terminated_pods_2));
 }
 
 int main() {

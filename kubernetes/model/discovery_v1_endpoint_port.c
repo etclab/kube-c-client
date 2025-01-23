@@ -44,12 +44,12 @@ void discovery_v1_endpoint_port_free(discovery_v1_endpoint_port_t *discovery_v1_
     free(discovery_v1_endpoint_port);
 }
 
-cJSON *discovery_v1_endpoint_port_convertToJSON(discovery_v1_endpoint_port_t *discovery_v1_endpoint_port) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *discovery_v1_endpoint_port_convertToJSON(discovery_v1_endpoint_port_t *discovery_v1_endpoint_port) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // discovery_v1_endpoint_port->app_protocol
     if(discovery_v1_endpoint_port->app_protocol) {
-    if(cJSON_AddStringToObject(item, "appProtocol", discovery_v1_endpoint_port->app_protocol) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "appProtocol", discovery_v1_endpoint_port->app_protocol) == NULL) {
     goto fail; //String
     }
     }
@@ -57,7 +57,7 @@ cJSON *discovery_v1_endpoint_port_convertToJSON(discovery_v1_endpoint_port_t *di
 
     // discovery_v1_endpoint_port->name
     if(discovery_v1_endpoint_port->name) {
-    if(cJSON_AddStringToObject(item, "name", discovery_v1_endpoint_port->name) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "name", discovery_v1_endpoint_port->name) == NULL) {
     goto fail; //String
     }
     }
@@ -65,7 +65,7 @@ cJSON *discovery_v1_endpoint_port_convertToJSON(discovery_v1_endpoint_port_t *di
 
     // discovery_v1_endpoint_port->port
     if(discovery_v1_endpoint_port->port) {
-    if(cJSON_AddNumberToObject(item, "port", discovery_v1_endpoint_port->port) == NULL) {
+    if(mazu_cJSON_AddNumberToObject(item, "port", discovery_v1_endpoint_port->port) == NULL) {
     goto fail; //Numeric
     }
     }
@@ -73,7 +73,7 @@ cJSON *discovery_v1_endpoint_port_convertToJSON(discovery_v1_endpoint_port_t *di
 
     // discovery_v1_endpoint_port->protocol
     if(discovery_v1_endpoint_port->protocol) {
-    if(cJSON_AddStringToObject(item, "protocol", discovery_v1_endpoint_port->protocol) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "protocol", discovery_v1_endpoint_port->protocol) == NULL) {
     goto fail; //String
     }
     }
@@ -81,46 +81,46 @@ cJSON *discovery_v1_endpoint_port_convertToJSON(discovery_v1_endpoint_port_t *di
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-discovery_v1_endpoint_port_t *discovery_v1_endpoint_port_parseFromJSON(cJSON *discovery_v1_endpoint_portJSON){
+discovery_v1_endpoint_port_t *discovery_v1_endpoint_port_parseFromJSON(mazu_cJSON *discovery_v1_endpoint_portJSON){
 
     discovery_v1_endpoint_port_t *discovery_v1_endpoint_port_local_var = NULL;
 
     // discovery_v1_endpoint_port->app_protocol
-    cJSON *app_protocol = cJSON_GetObjectItemCaseSensitive(discovery_v1_endpoint_portJSON, "appProtocol");
+    mazu_cJSON *app_protocol = mazu_cJSON_GetObjectItemCaseSensitive(discovery_v1_endpoint_portJSON, "appProtocol");
     if (app_protocol) { 
-    if(!cJSON_IsString(app_protocol) && !cJSON_IsNull(app_protocol))
+    if(!mazu_cJSON_IsString(app_protocol) && !mazu_cJSON_IsNull(app_protocol))
     {
     goto end; //String
     }
     }
 
     // discovery_v1_endpoint_port->name
-    cJSON *name = cJSON_GetObjectItemCaseSensitive(discovery_v1_endpoint_portJSON, "name");
+    mazu_cJSON *name = mazu_cJSON_GetObjectItemCaseSensitive(discovery_v1_endpoint_portJSON, "name");
     if (name) { 
-    if(!cJSON_IsString(name) && !cJSON_IsNull(name))
+    if(!mazu_cJSON_IsString(name) && !mazu_cJSON_IsNull(name))
     {
     goto end; //String
     }
     }
 
     // discovery_v1_endpoint_port->port
-    cJSON *port = cJSON_GetObjectItemCaseSensitive(discovery_v1_endpoint_portJSON, "port");
+    mazu_cJSON *port = mazu_cJSON_GetObjectItemCaseSensitive(discovery_v1_endpoint_portJSON, "port");
     if (port) { 
-    if(!cJSON_IsNumber(port))
+    if(!mazu_cJSON_IsNumber(port))
     {
     goto end; //Numeric
     }
     }
 
     // discovery_v1_endpoint_port->protocol
-    cJSON *protocol = cJSON_GetObjectItemCaseSensitive(discovery_v1_endpoint_portJSON, "protocol");
+    mazu_cJSON *protocol = mazu_cJSON_GetObjectItemCaseSensitive(discovery_v1_endpoint_portJSON, "protocol");
     if (protocol) { 
-    if(!cJSON_IsString(protocol) && !cJSON_IsNull(protocol))
+    if(!mazu_cJSON_IsString(protocol) && !mazu_cJSON_IsNull(protocol))
     {
     goto end; //String
     }
@@ -128,10 +128,10 @@ discovery_v1_endpoint_port_t *discovery_v1_endpoint_port_parseFromJSON(cJSON *di
 
 
     discovery_v1_endpoint_port_local_var = discovery_v1_endpoint_port_create (
-        app_protocol && !cJSON_IsNull(app_protocol) ? strdup(app_protocol->valuestring) : NULL,
-        name && !cJSON_IsNull(name) ? strdup(name->valuestring) : NULL,
+        app_protocol && !mazu_cJSON_IsNull(app_protocol) ? strdup(app_protocol->valuestring) : NULL,
+        name && !mazu_cJSON_IsNull(name) ? strdup(name->valuestring) : NULL,
         port ? port->valuedouble : 0,
-        protocol && !cJSON_IsNull(protocol) ? strdup(protocol->valuestring) : NULL
+        protocol && !mazu_cJSON_IsNull(protocol) ? strdup(protocol->valuestring) : NULL
         );
 
     return discovery_v1_endpoint_port_local_var;

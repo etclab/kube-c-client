@@ -48,14 +48,14 @@ void v1_taint_free(v1_taint_t *v1_taint) {
     free(v1_taint);
 }
 
-cJSON *v1_taint_convertToJSON(v1_taint_t *v1_taint) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_taint_convertToJSON(v1_taint_t *v1_taint) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_taint->effect
     if (!v1_taint->effect) {
         goto fail;
     }
-    if(cJSON_AddStringToObject(item, "effect", v1_taint->effect) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "effect", v1_taint->effect) == NULL) {
     goto fail; //String
     }
 
@@ -64,14 +64,14 @@ cJSON *v1_taint_convertToJSON(v1_taint_t *v1_taint) {
     if (!v1_taint->key) {
         goto fail;
     }
-    if(cJSON_AddStringToObject(item, "key", v1_taint->key) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "key", v1_taint->key) == NULL) {
     goto fail; //String
     }
 
 
     // v1_taint->time_added
     if(v1_taint->time_added) {
-    if(cJSON_AddStringToObject(item, "timeAdded", v1_taint->time_added) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "timeAdded", v1_taint->time_added) == NULL) {
     goto fail; //Date-Time
     }
     }
@@ -79,7 +79,7 @@ cJSON *v1_taint_convertToJSON(v1_taint_t *v1_taint) {
 
     // v1_taint->value
     if(v1_taint->value) {
-    if(cJSON_AddStringToObject(item, "value", v1_taint->value) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "value", v1_taint->value) == NULL) {
     goto fail; //String
     }
     }
@@ -87,52 +87,52 @@ cJSON *v1_taint_convertToJSON(v1_taint_t *v1_taint) {
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_taint_t *v1_taint_parseFromJSON(cJSON *v1_taintJSON){
+v1_taint_t *v1_taint_parseFromJSON(mazu_cJSON *v1_taintJSON){
 
     v1_taint_t *v1_taint_local_var = NULL;
 
     // v1_taint->effect
-    cJSON *effect = cJSON_GetObjectItemCaseSensitive(v1_taintJSON, "effect");
+    mazu_cJSON *effect = mazu_cJSON_GetObjectItemCaseSensitive(v1_taintJSON, "effect");
     if (!effect) {
         goto end;
     }
 
     
-    if(!cJSON_IsString(effect))
+    if(!mazu_cJSON_IsString(effect))
     {
     goto end; //String
     }
 
     // v1_taint->key
-    cJSON *key = cJSON_GetObjectItemCaseSensitive(v1_taintJSON, "key");
+    mazu_cJSON *key = mazu_cJSON_GetObjectItemCaseSensitive(v1_taintJSON, "key");
     if (!key) {
         goto end;
     }
 
     
-    if(!cJSON_IsString(key))
+    if(!mazu_cJSON_IsString(key))
     {
     goto end; //String
     }
 
     // v1_taint->time_added
-    cJSON *time_added = cJSON_GetObjectItemCaseSensitive(v1_taintJSON, "timeAdded");
+    mazu_cJSON *time_added = mazu_cJSON_GetObjectItemCaseSensitive(v1_taintJSON, "timeAdded");
     if (time_added) { 
-    if(!cJSON_IsString(time_added) && !cJSON_IsNull(time_added))
+    if(!mazu_cJSON_IsString(time_added) && !mazu_cJSON_IsNull(time_added))
     {
     goto end; //DateTime
     }
     }
 
     // v1_taint->value
-    cJSON *value = cJSON_GetObjectItemCaseSensitive(v1_taintJSON, "value");
+    mazu_cJSON *value = mazu_cJSON_GetObjectItemCaseSensitive(v1_taintJSON, "value");
     if (value) { 
-    if(!cJSON_IsString(value) && !cJSON_IsNull(value))
+    if(!mazu_cJSON_IsString(value) && !mazu_cJSON_IsNull(value))
     {
     goto end; //String
     }
@@ -142,8 +142,8 @@ v1_taint_t *v1_taint_parseFromJSON(cJSON *v1_taintJSON){
     v1_taint_local_var = v1_taint_create (
         strdup(effect->valuestring),
         strdup(key->valuestring),
-        time_added && !cJSON_IsNull(time_added) ? strdup(time_added->valuestring) : NULL,
-        value && !cJSON_IsNull(value) ? strdup(value->valuestring) : NULL
+        time_added && !mazu_cJSON_IsNull(time_added) ? strdup(time_added->valuestring) : NULL,
+        value && !mazu_cJSON_IsNull(value) ? strdup(value->valuestring) : NULL
         );
 
     return v1_taint_local_var;

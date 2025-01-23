@@ -39,12 +39,12 @@ void v1_node_affinity_free(v1_node_affinity_t *v1_node_affinity) {
     free(v1_node_affinity);
 }
 
-cJSON *v1_node_affinity_convertToJSON(v1_node_affinity_t *v1_node_affinity) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_node_affinity_convertToJSON(v1_node_affinity_t *v1_node_affinity) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_node_affinity->preferred_during_scheduling_ignored_during_execution
     if(v1_node_affinity->preferred_during_scheduling_ignored_during_execution) {
-    cJSON *preferred_during_scheduling_ignored_during_execution = cJSON_AddArrayToObject(item, "preferredDuringSchedulingIgnoredDuringExecution");
+    mazu_cJSON *preferred_during_scheduling_ignored_during_execution = mazu_cJSON_AddArrayToObject(item, "preferredDuringSchedulingIgnoredDuringExecution");
     if(preferred_during_scheduling_ignored_during_execution == NULL) {
     goto fail; //nonprimitive container
     }
@@ -52,11 +52,11 @@ cJSON *v1_node_affinity_convertToJSON(v1_node_affinity_t *v1_node_affinity) {
     listEntry_t *preferred_during_scheduling_ignored_during_executionListEntry;
     if (v1_node_affinity->preferred_during_scheduling_ignored_during_execution) {
     list_ForEach(preferred_during_scheduling_ignored_during_executionListEntry, v1_node_affinity->preferred_during_scheduling_ignored_during_execution) {
-    cJSON *itemLocal = v1_preferred_scheduling_term_convertToJSON(preferred_during_scheduling_ignored_during_executionListEntry->data);
+    mazu_cJSON *itemLocal = v1_preferred_scheduling_term_convertToJSON(preferred_during_scheduling_ignored_during_executionListEntry->data);
     if(itemLocal == NULL) {
     goto fail;
     }
-    cJSON_AddItemToArray(preferred_during_scheduling_ignored_during_execution, itemLocal);
+    mazu_cJSON_AddItemToArray(preferred_during_scheduling_ignored_during_execution, itemLocal);
     }
     }
     }
@@ -64,11 +64,11 @@ cJSON *v1_node_affinity_convertToJSON(v1_node_affinity_t *v1_node_affinity) {
 
     // v1_node_affinity->required_during_scheduling_ignored_during_execution
     if(v1_node_affinity->required_during_scheduling_ignored_during_execution) {
-    cJSON *required_during_scheduling_ignored_during_execution_local_JSON = v1_node_selector_convertToJSON(v1_node_affinity->required_during_scheduling_ignored_during_execution);
+    mazu_cJSON *required_during_scheduling_ignored_during_execution_local_JSON = v1_node_selector_convertToJSON(v1_node_affinity->required_during_scheduling_ignored_during_execution);
     if(required_during_scheduling_ignored_during_execution_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "requiredDuringSchedulingIgnoredDuringExecution", required_during_scheduling_ignored_during_execution_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "requiredDuringSchedulingIgnoredDuringExecution", required_during_scheduling_ignored_during_execution_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -77,12 +77,12 @@ cJSON *v1_node_affinity_convertToJSON(v1_node_affinity_t *v1_node_affinity) {
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_node_affinity_t *v1_node_affinity_parseFromJSON(cJSON *v1_node_affinityJSON){
+v1_node_affinity_t *v1_node_affinity_parseFromJSON(mazu_cJSON *v1_node_affinityJSON){
 
     v1_node_affinity_t *v1_node_affinity_local_var = NULL;
 
@@ -93,18 +93,18 @@ v1_node_affinity_t *v1_node_affinity_parseFromJSON(cJSON *v1_node_affinityJSON){
     v1_node_selector_t *required_during_scheduling_ignored_during_execution_local_nonprim = NULL;
 
     // v1_node_affinity->preferred_during_scheduling_ignored_during_execution
-    cJSON *preferred_during_scheduling_ignored_during_execution = cJSON_GetObjectItemCaseSensitive(v1_node_affinityJSON, "preferredDuringSchedulingIgnoredDuringExecution");
+    mazu_cJSON *preferred_during_scheduling_ignored_during_execution = mazu_cJSON_GetObjectItemCaseSensitive(v1_node_affinityJSON, "preferredDuringSchedulingIgnoredDuringExecution");
     if (preferred_during_scheduling_ignored_during_execution) { 
-    cJSON *preferred_during_scheduling_ignored_during_execution_local_nonprimitive = NULL;
-    if(!cJSON_IsArray(preferred_during_scheduling_ignored_during_execution)){
+    mazu_cJSON *preferred_during_scheduling_ignored_during_execution_local_nonprimitive = NULL;
+    if(!mazu_cJSON_IsArray(preferred_during_scheduling_ignored_during_execution)){
         goto end; //nonprimitive container
     }
 
     preferred_during_scheduling_ignored_during_executionList = list_createList();
 
-    cJSON_ArrayForEach(preferred_during_scheduling_ignored_during_execution_local_nonprimitive,preferred_during_scheduling_ignored_during_execution )
+    mazu_cJSON_ArrayForEach(preferred_during_scheduling_ignored_during_execution_local_nonprimitive,preferred_during_scheduling_ignored_during_execution )
     {
-        if(!cJSON_IsObject(preferred_during_scheduling_ignored_during_execution_local_nonprimitive)){
+        if(!mazu_cJSON_IsObject(preferred_during_scheduling_ignored_during_execution_local_nonprimitive)){
             goto end;
         }
         v1_preferred_scheduling_term_t *preferred_during_scheduling_ignored_during_executionItem = v1_preferred_scheduling_term_parseFromJSON(preferred_during_scheduling_ignored_during_execution_local_nonprimitive);
@@ -114,7 +114,7 @@ v1_node_affinity_t *v1_node_affinity_parseFromJSON(cJSON *v1_node_affinityJSON){
     }
 
     // v1_node_affinity->required_during_scheduling_ignored_during_execution
-    cJSON *required_during_scheduling_ignored_during_execution = cJSON_GetObjectItemCaseSensitive(v1_node_affinityJSON, "requiredDuringSchedulingIgnoredDuringExecution");
+    mazu_cJSON *required_during_scheduling_ignored_during_execution = mazu_cJSON_GetObjectItemCaseSensitive(v1_node_affinityJSON, "requiredDuringSchedulingIgnoredDuringExecution");
     if (required_during_scheduling_ignored_during_execution) { 
     required_during_scheduling_ignored_during_execution_local_nonprim = v1_node_selector_parseFromJSON(required_during_scheduling_ignored_during_execution); //nonprimitive
     }

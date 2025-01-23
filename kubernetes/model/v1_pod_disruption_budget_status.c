@@ -55,12 +55,12 @@ void v1_pod_disruption_budget_status_free(v1_pod_disruption_budget_status_t *v1_
     free(v1_pod_disruption_budget_status);
 }
 
-cJSON *v1_pod_disruption_budget_status_convertToJSON(v1_pod_disruption_budget_status_t *v1_pod_disruption_budget_status) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_pod_disruption_budget_status_convertToJSON(v1_pod_disruption_budget_status_t *v1_pod_disruption_budget_status) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_pod_disruption_budget_status->conditions
     if(v1_pod_disruption_budget_status->conditions) {
-    cJSON *conditions = cJSON_AddArrayToObject(item, "conditions");
+    mazu_cJSON *conditions = mazu_cJSON_AddArrayToObject(item, "conditions");
     if(conditions == NULL) {
     goto fail; //nonprimitive container
     }
@@ -68,11 +68,11 @@ cJSON *v1_pod_disruption_budget_status_convertToJSON(v1_pod_disruption_budget_st
     listEntry_t *conditionsListEntry;
     if (v1_pod_disruption_budget_status->conditions) {
     list_ForEach(conditionsListEntry, v1_pod_disruption_budget_status->conditions) {
-    cJSON *itemLocal = v1_condition_convertToJSON(conditionsListEntry->data);
+    mazu_cJSON *itemLocal = v1_condition_convertToJSON(conditionsListEntry->data);
     if(itemLocal == NULL) {
     goto fail;
     }
-    cJSON_AddItemToArray(conditions, itemLocal);
+    mazu_cJSON_AddItemToArray(conditions, itemLocal);
     }
     }
     }
@@ -82,7 +82,7 @@ cJSON *v1_pod_disruption_budget_status_convertToJSON(v1_pod_disruption_budget_st
     if (!v1_pod_disruption_budget_status->current_healthy) {
         goto fail;
     }
-    if(cJSON_AddNumberToObject(item, "currentHealthy", v1_pod_disruption_budget_status->current_healthy) == NULL) {
+    if(mazu_cJSON_AddNumberToObject(item, "currentHealthy", v1_pod_disruption_budget_status->current_healthy) == NULL) {
     goto fail; //Numeric
     }
 
@@ -91,18 +91,18 @@ cJSON *v1_pod_disruption_budget_status_convertToJSON(v1_pod_disruption_budget_st
     if (!v1_pod_disruption_budget_status->desired_healthy) {
         goto fail;
     }
-    if(cJSON_AddNumberToObject(item, "desiredHealthy", v1_pod_disruption_budget_status->desired_healthy) == NULL) {
+    if(mazu_cJSON_AddNumberToObject(item, "desiredHealthy", v1_pod_disruption_budget_status->desired_healthy) == NULL) {
     goto fail; //Numeric
     }
 
 
     // v1_pod_disruption_budget_status->disrupted_pods
     if(v1_pod_disruption_budget_status->disrupted_pods) {
-    cJSON *disrupted_pods = cJSON_AddObjectToObject(item, "disruptedPods");
+    mazu_cJSON *disrupted_pods = mazu_cJSON_AddObjectToObject(item, "disruptedPods");
     if(disrupted_pods == NULL) {
         goto fail; //primitive map container
     }
-    cJSON *localMapObject = disrupted_pods;
+    mazu_cJSON *localMapObject = disrupted_pods;
     listEntry_t *disrupted_podsListEntry;
     if (v1_pod_disruption_budget_status->disrupted_pods) {
     list_ForEach(disrupted_podsListEntry, v1_pod_disruption_budget_status->disrupted_pods) {
@@ -116,7 +116,7 @@ cJSON *v1_pod_disruption_budget_status_convertToJSON(v1_pod_disruption_budget_st
     if (!v1_pod_disruption_budget_status->disruptions_allowed) {
         goto fail;
     }
-    if(cJSON_AddNumberToObject(item, "disruptionsAllowed", v1_pod_disruption_budget_status->disruptions_allowed) == NULL) {
+    if(mazu_cJSON_AddNumberToObject(item, "disruptionsAllowed", v1_pod_disruption_budget_status->disruptions_allowed) == NULL) {
     goto fail; //Numeric
     }
 
@@ -125,14 +125,14 @@ cJSON *v1_pod_disruption_budget_status_convertToJSON(v1_pod_disruption_budget_st
     if (!v1_pod_disruption_budget_status->expected_pods) {
         goto fail;
     }
-    if(cJSON_AddNumberToObject(item, "expectedPods", v1_pod_disruption_budget_status->expected_pods) == NULL) {
+    if(mazu_cJSON_AddNumberToObject(item, "expectedPods", v1_pod_disruption_budget_status->expected_pods) == NULL) {
     goto fail; //Numeric
     }
 
 
     // v1_pod_disruption_budget_status->observed_generation
     if(v1_pod_disruption_budget_status->observed_generation) {
-    if(cJSON_AddNumberToObject(item, "observedGeneration", v1_pod_disruption_budget_status->observed_generation) == NULL) {
+    if(mazu_cJSON_AddNumberToObject(item, "observedGeneration", v1_pod_disruption_budget_status->observed_generation) == NULL) {
     goto fail; //Numeric
     }
     }
@@ -140,12 +140,12 @@ cJSON *v1_pod_disruption_budget_status_convertToJSON(v1_pod_disruption_budget_st
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_pod_disruption_budget_status_t *v1_pod_disruption_budget_status_parseFromJSON(cJSON *v1_pod_disruption_budget_statusJSON){
+v1_pod_disruption_budget_status_t *v1_pod_disruption_budget_status_parseFromJSON(mazu_cJSON *v1_pod_disruption_budget_statusJSON){
 
     v1_pod_disruption_budget_status_t *v1_pod_disruption_budget_status_local_var = NULL;
 
@@ -156,18 +156,18 @@ v1_pod_disruption_budget_status_t *v1_pod_disruption_budget_status_parseFromJSON
     list_t *disrupted_podsList = NULL;
 
     // v1_pod_disruption_budget_status->conditions
-    cJSON *conditions = cJSON_GetObjectItemCaseSensitive(v1_pod_disruption_budget_statusJSON, "conditions");
+    mazu_cJSON *conditions = mazu_cJSON_GetObjectItemCaseSensitive(v1_pod_disruption_budget_statusJSON, "conditions");
     if (conditions) { 
-    cJSON *conditions_local_nonprimitive = NULL;
-    if(!cJSON_IsArray(conditions)){
+    mazu_cJSON *conditions_local_nonprimitive = NULL;
+    if(!mazu_cJSON_IsArray(conditions)){
         goto end; //nonprimitive container
     }
 
     conditionsList = list_createList();
 
-    cJSON_ArrayForEach(conditions_local_nonprimitive,conditions )
+    mazu_cJSON_ArrayForEach(conditions_local_nonprimitive,conditions )
     {
-        if(!cJSON_IsObject(conditions_local_nonprimitive)){
+        if(!mazu_cJSON_IsObject(conditions_local_nonprimitive)){
             goto end;
         }
         v1_condition_t *conditionsItem = v1_condition_parseFromJSON(conditions_local_nonprimitive);
@@ -177,77 +177,77 @@ v1_pod_disruption_budget_status_t *v1_pod_disruption_budget_status_parseFromJSON
     }
 
     // v1_pod_disruption_budget_status->current_healthy
-    cJSON *current_healthy = cJSON_GetObjectItemCaseSensitive(v1_pod_disruption_budget_statusJSON, "currentHealthy");
+    mazu_cJSON *current_healthy = mazu_cJSON_GetObjectItemCaseSensitive(v1_pod_disruption_budget_statusJSON, "currentHealthy");
     if (!current_healthy) {
         goto end;
     }
 
     
-    if(!cJSON_IsNumber(current_healthy))
+    if(!mazu_cJSON_IsNumber(current_healthy))
     {
     goto end; //Numeric
     }
 
     // v1_pod_disruption_budget_status->desired_healthy
-    cJSON *desired_healthy = cJSON_GetObjectItemCaseSensitive(v1_pod_disruption_budget_statusJSON, "desiredHealthy");
+    mazu_cJSON *desired_healthy = mazu_cJSON_GetObjectItemCaseSensitive(v1_pod_disruption_budget_statusJSON, "desiredHealthy");
     if (!desired_healthy) {
         goto end;
     }
 
     
-    if(!cJSON_IsNumber(desired_healthy))
+    if(!mazu_cJSON_IsNumber(desired_healthy))
     {
     goto end; //Numeric
     }
 
     // v1_pod_disruption_budget_status->disrupted_pods
-    cJSON *disrupted_pods = cJSON_GetObjectItemCaseSensitive(v1_pod_disruption_budget_statusJSON, "disruptedPods");
+    mazu_cJSON *disrupted_pods = mazu_cJSON_GetObjectItemCaseSensitive(v1_pod_disruption_budget_statusJSON, "disruptedPods");
     if (disrupted_pods) { 
-    cJSON *disrupted_pods_local_map = NULL;
-    if(!cJSON_IsObject(disrupted_pods) && !cJSON_IsNull(disrupted_pods))
+    mazu_cJSON *disrupted_pods_local_map = NULL;
+    if(!mazu_cJSON_IsObject(disrupted_pods) && !mazu_cJSON_IsNull(disrupted_pods))
     {
         goto end;//primitive map container
     }
-    if(cJSON_IsObject(disrupted_pods))
+    if(mazu_cJSON_IsObject(disrupted_pods))
     {
         disrupted_podsList = list_createList();
         keyValuePair_t *localMapKeyPair;
-        cJSON_ArrayForEach(disrupted_pods_local_map, disrupted_pods)
+        mazu_cJSON_ArrayForEach(disrupted_pods_local_map, disrupted_pods)
         {
-            cJSON *localMapObject = disrupted_pods_local_map;
+            mazu_cJSON *localMapObject = disrupted_pods_local_map;
             list_addElement(disrupted_podsList , localMapKeyPair);
         }
     }
     }
 
     // v1_pod_disruption_budget_status->disruptions_allowed
-    cJSON *disruptions_allowed = cJSON_GetObjectItemCaseSensitive(v1_pod_disruption_budget_statusJSON, "disruptionsAllowed");
+    mazu_cJSON *disruptions_allowed = mazu_cJSON_GetObjectItemCaseSensitive(v1_pod_disruption_budget_statusJSON, "disruptionsAllowed");
     if (!disruptions_allowed) {
         goto end;
     }
 
     
-    if(!cJSON_IsNumber(disruptions_allowed))
+    if(!mazu_cJSON_IsNumber(disruptions_allowed))
     {
     goto end; //Numeric
     }
 
     // v1_pod_disruption_budget_status->expected_pods
-    cJSON *expected_pods = cJSON_GetObjectItemCaseSensitive(v1_pod_disruption_budget_statusJSON, "expectedPods");
+    mazu_cJSON *expected_pods = mazu_cJSON_GetObjectItemCaseSensitive(v1_pod_disruption_budget_statusJSON, "expectedPods");
     if (!expected_pods) {
         goto end;
     }
 
     
-    if(!cJSON_IsNumber(expected_pods))
+    if(!mazu_cJSON_IsNumber(expected_pods))
     {
     goto end; //Numeric
     }
 
     // v1_pod_disruption_budget_status->observed_generation
-    cJSON *observed_generation = cJSON_GetObjectItemCaseSensitive(v1_pod_disruption_budget_statusJSON, "observedGeneration");
+    mazu_cJSON *observed_generation = mazu_cJSON_GetObjectItemCaseSensitive(v1_pod_disruption_budget_statusJSON, "observedGeneration");
     if (observed_generation) { 
-    if(!cJSON_IsNumber(observed_generation))
+    if(!mazu_cJSON_IsNumber(observed_generation))
     {
     goto end; //Numeric
     }

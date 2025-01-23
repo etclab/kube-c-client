@@ -41,16 +41,16 @@ void v1alpha3_resource_claim_status_free(v1alpha3_resource_claim_status_t *v1alp
     free(v1alpha3_resource_claim_status);
 }
 
-cJSON *v1alpha3_resource_claim_status_convertToJSON(v1alpha3_resource_claim_status_t *v1alpha3_resource_claim_status) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1alpha3_resource_claim_status_convertToJSON(v1alpha3_resource_claim_status_t *v1alpha3_resource_claim_status) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1alpha3_resource_claim_status->allocation
     if(v1alpha3_resource_claim_status->allocation) {
-    cJSON *allocation_local_JSON = v1alpha3_allocation_result_convertToJSON(v1alpha3_resource_claim_status->allocation);
+    mazu_cJSON *allocation_local_JSON = v1alpha3_allocation_result_convertToJSON(v1alpha3_resource_claim_status->allocation);
     if(allocation_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "allocation", allocation_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "allocation", allocation_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -59,7 +59,7 @@ cJSON *v1alpha3_resource_claim_status_convertToJSON(v1alpha3_resource_claim_stat
 
     // v1alpha3_resource_claim_status->deallocation_requested
     if(v1alpha3_resource_claim_status->deallocation_requested) {
-    if(cJSON_AddBoolToObject(item, "deallocationRequested", v1alpha3_resource_claim_status->deallocation_requested) == NULL) {
+    if(mazu_cJSON_AddBoolToObject(item, "deallocationRequested", v1alpha3_resource_claim_status->deallocation_requested) == NULL) {
     goto fail; //Bool
     }
     }
@@ -67,7 +67,7 @@ cJSON *v1alpha3_resource_claim_status_convertToJSON(v1alpha3_resource_claim_stat
 
     // v1alpha3_resource_claim_status->reserved_for
     if(v1alpha3_resource_claim_status->reserved_for) {
-    cJSON *reserved_for = cJSON_AddArrayToObject(item, "reservedFor");
+    mazu_cJSON *reserved_for = mazu_cJSON_AddArrayToObject(item, "reservedFor");
     if(reserved_for == NULL) {
     goto fail; //nonprimitive container
     }
@@ -75,11 +75,11 @@ cJSON *v1alpha3_resource_claim_status_convertToJSON(v1alpha3_resource_claim_stat
     listEntry_t *reserved_forListEntry;
     if (v1alpha3_resource_claim_status->reserved_for) {
     list_ForEach(reserved_forListEntry, v1alpha3_resource_claim_status->reserved_for) {
-    cJSON *itemLocal = v1alpha3_resource_claim_consumer_reference_convertToJSON(reserved_forListEntry->data);
+    mazu_cJSON *itemLocal = v1alpha3_resource_claim_consumer_reference_convertToJSON(reserved_forListEntry->data);
     if(itemLocal == NULL) {
     goto fail;
     }
-    cJSON_AddItemToArray(reserved_for, itemLocal);
+    mazu_cJSON_AddItemToArray(reserved_for, itemLocal);
     }
     }
     }
@@ -87,12 +87,12 @@ cJSON *v1alpha3_resource_claim_status_convertToJSON(v1alpha3_resource_claim_stat
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1alpha3_resource_claim_status_t *v1alpha3_resource_claim_status_parseFromJSON(cJSON *v1alpha3_resource_claim_statusJSON){
+v1alpha3_resource_claim_status_t *v1alpha3_resource_claim_status_parseFromJSON(mazu_cJSON *v1alpha3_resource_claim_statusJSON){
 
     v1alpha3_resource_claim_status_t *v1alpha3_resource_claim_status_local_var = NULL;
 
@@ -103,33 +103,33 @@ v1alpha3_resource_claim_status_t *v1alpha3_resource_claim_status_parseFromJSON(c
     list_t *reserved_forList = NULL;
 
     // v1alpha3_resource_claim_status->allocation
-    cJSON *allocation = cJSON_GetObjectItemCaseSensitive(v1alpha3_resource_claim_statusJSON, "allocation");
+    mazu_cJSON *allocation = mazu_cJSON_GetObjectItemCaseSensitive(v1alpha3_resource_claim_statusJSON, "allocation");
     if (allocation) { 
     allocation_local_nonprim = v1alpha3_allocation_result_parseFromJSON(allocation); //nonprimitive
     }
 
     // v1alpha3_resource_claim_status->deallocation_requested
-    cJSON *deallocation_requested = cJSON_GetObjectItemCaseSensitive(v1alpha3_resource_claim_statusJSON, "deallocationRequested");
+    mazu_cJSON *deallocation_requested = mazu_cJSON_GetObjectItemCaseSensitive(v1alpha3_resource_claim_statusJSON, "deallocationRequested");
     if (deallocation_requested) { 
-    if(!cJSON_IsBool(deallocation_requested))
+    if(!mazu_cJSON_IsBool(deallocation_requested))
     {
     goto end; //Bool
     }
     }
 
     // v1alpha3_resource_claim_status->reserved_for
-    cJSON *reserved_for = cJSON_GetObjectItemCaseSensitive(v1alpha3_resource_claim_statusJSON, "reservedFor");
+    mazu_cJSON *reserved_for = mazu_cJSON_GetObjectItemCaseSensitive(v1alpha3_resource_claim_statusJSON, "reservedFor");
     if (reserved_for) { 
-    cJSON *reserved_for_local_nonprimitive = NULL;
-    if(!cJSON_IsArray(reserved_for)){
+    mazu_cJSON *reserved_for_local_nonprimitive = NULL;
+    if(!mazu_cJSON_IsArray(reserved_for)){
         goto end; //nonprimitive container
     }
 
     reserved_forList = list_createList();
 
-    cJSON_ArrayForEach(reserved_for_local_nonprimitive,reserved_for )
+    mazu_cJSON_ArrayForEach(reserved_for_local_nonprimitive,reserved_for )
     {
-        if(!cJSON_IsObject(reserved_for_local_nonprimitive)){
+        if(!mazu_cJSON_IsObject(reserved_for_local_nonprimitive)){
             goto end;
         }
         v1alpha3_resource_claim_consumer_reference_t *reserved_forItem = v1alpha3_resource_claim_consumer_reference_parseFromJSON(reserved_for_local_nonprimitive);

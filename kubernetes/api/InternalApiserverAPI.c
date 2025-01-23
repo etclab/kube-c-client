@@ -53,9 +53,9 @@ InternalApiserverAPI_getAPIGroup_12(apiClient_t *apiClient)
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *InternalApiserverAPIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    mazu_cJSON *InternalApiserverAPIlocalVarJSON = mazu_cJSON_Parse(apiClient->dataReceived);
     v1_api_group_t *elementToReturn = v1_api_group_parseFromJSON(InternalApiserverAPIlocalVarJSON);
-    cJSON_Delete(InternalApiserverAPIlocalVarJSON);
+    mazu_cJSON_Delete(InternalApiserverAPIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
     }

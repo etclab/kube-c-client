@@ -1,5 +1,5 @@
 /*
-  Copyright (c) 2009-2017 Dave Gamble and cJSON contributors
+  Copyright (c) 2009-2017 Dave Gamble and mazu_cJSON contributors
 
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
@@ -20,7 +20,7 @@
   THE SOFTWARE.
 */
 
-/* cJSON */
+/* mazu_cJSON */
 /* JSON parser in C. */
 
 /* disable warnings about old C89 functions in MSVC */
@@ -55,11 +55,11 @@
 #pragma GCC visibility pop
 #endif
 
-#include "cJSON.h"
+#include "mazu_cJSON.h"
 
 /* define our own boolean type */
-#define true ((cJSON_bool)1)
-#define false ((cJSON_bool)0)
+#define true ((mazu_cJSON_bool)1)
+#define false ((mazu_cJSON_bool)0)
 
 typedef struct {
     const unsigned char *json;
@@ -67,13 +67,13 @@ typedef struct {
 } error;
 static error global_error = { NULL, 0 };
 
-CJSON_PUBLIC(const char *) cJSON_GetErrorPtr(void)
+CJSON_PUBLIC(const char *) mazu_cJSON_GetErrorPtr(void)
 {
     return (const char*) (global_error.json + global_error.position);
 }
 
-CJSON_PUBLIC(char *) cJSON_GetStringValue(cJSON *item) {
-    if (!cJSON_IsString(item)) {
+CJSON_PUBLIC(char *) mazu_cJSON_GetStringValue(mazu_cJSON *item) {
+    if (!mazu_cJSON_IsString(item)) {
         return NULL;
     }
 
@@ -82,10 +82,10 @@ CJSON_PUBLIC(char *) cJSON_GetStringValue(cJSON *item) {
 
 /* This is a safeguard to prevent copy-pasters from using incompatible C and header files */
 #if (CJSON_VERSION_MAJOR != 1) || (CJSON_VERSION_MINOR != 7) || (CJSON_VERSION_PATCH != 7)
-    #error cJSON.h and cJSON.c have different versions. Make sure that both have the same.
+    #error mazu_cJSON.h and mazu_cJSON.c have different versions. Make sure that both have the same.
 #endif
 
-CJSON_PUBLIC(const char*) cJSON_Version(void)
+CJSON_PUBLIC(const char*) mazu_cJSON_Version(void)
 {
     static char version[15];
     sprintf(version, "%i.%i.%i", CJSON_VERSION_MAJOR, CJSON_VERSION_MINOR, CJSON_VERSION_PATCH);
@@ -146,7 +146,7 @@ static void *internal_realloc(void *pointer, size_t size)
 
 static internal_hooks global_hooks = { internal_malloc, internal_free, internal_realloc };
 
-static unsigned char* cJSON_strdup(const unsigned char* string, const internal_hooks * const hooks)
+static unsigned char* mazu_cJSON_strdup(const unsigned char* string, const internal_hooks * const hooks)
 {
     size_t length = 0;
     unsigned char *copy = NULL;
@@ -167,7 +167,7 @@ static unsigned char* cJSON_strdup(const unsigned char* string, const internal_h
     return copy;
 }
 
-CJSON_PUBLIC(void) cJSON_InitHooks(cJSON_Hooks* hooks)
+CJSON_PUBLIC(void) mazu_cJSON_InitHooks(mazu_cJSON_Hooks* hooks)
 {
     if (hooks == NULL)
     {
@@ -199,33 +199,33 @@ CJSON_PUBLIC(void) cJSON_InitHooks(cJSON_Hooks* hooks)
 }
 
 /* Internal constructor. */
-static cJSON *cJSON_New_Item(const internal_hooks * const hooks)
+static mazu_cJSON *mazu_cJSON_New_Item(const internal_hooks * const hooks)
 {
-    cJSON* node = (cJSON*)hooks->allocate(sizeof(cJSON));
+    mazu_cJSON* node = (mazu_cJSON*)hooks->allocate(sizeof(mazu_cJSON));
     if (node)
     {
-        memset(node, '\0', sizeof(cJSON));
+        memset(node, '\0', sizeof(mazu_cJSON));
     }
 
     return node;
 }
 
-/* Delete a cJSON structure. */
-CJSON_PUBLIC(void) cJSON_Delete(cJSON *item)
+/* Delete a mazu_cJSON structure. */
+CJSON_PUBLIC(void) mazu_cJSON_Delete(mazu_cJSON *item)
 {
-    cJSON *next = NULL;
+    mazu_cJSON *next = NULL;
     while (item != NULL)
     {
         next = item->next;
-        if (!(item->type & cJSON_IsReference) && (item->child != NULL))
+        if (!(item->type & mazu_cJSON_IsReference) && (item->child != NULL))
         {
-            cJSON_Delete(item->child);
+            mazu_cJSON_Delete(item->child);
         }
-        if (!(item->type & cJSON_IsReference) && (item->valuestring != NULL))
+        if (!(item->type & mazu_cJSON_IsReference) && (item->valuestring != NULL))
         {
             global_hooks.deallocate(item->valuestring);
         }
-        if (!(item->type & cJSON_StringIsConst) && (item->string != NULL))
+        if (!(item->type & mazu_cJSON_StringIsConst) && (item->string != NULL))
         {
             global_hooks.deallocate(item->string);
         }
@@ -263,7 +263,7 @@ typedef struct
 #define buffer_at_offset(buffer) ((buffer)->content + (buffer)->offset)
 
 /* Parse the input text to generate a number, and populate the result into item. */
-static cJSON_bool parse_number(cJSON * const item, parse_buffer * const input_buffer)
+static mazu_cJSON_bool parse_number(mazu_cJSON * const item, parse_buffer * const input_buffer)
 {
     double number = 0;
     unsigned char *after_end = NULL;
@@ -333,14 +333,14 @@ loop_end:
         item->valueint = (int)number;
     }
 
-    item->type = cJSON_Number;
+    item->type = mazu_cJSON_Number;
 
     input_buffer->offset += (size_t)(after_end - number_c_string);
     return true;
 }
 
-/* don't ask me, but the original cJSON_SetNumberValue returns an integer or double */
-CJSON_PUBLIC(double) cJSON_SetNumberHelper(cJSON *object, double number)
+/* don't ask me, but the original mazu_cJSON_SetNumberValue returns an integer or double */
+CJSON_PUBLIC(double) mazu_cJSON_SetNumberHelper(mazu_cJSON *object, double number)
 {
     if (number >= INT_MAX)
     {
@@ -364,8 +364,8 @@ typedef struct
     size_t length;
     size_t offset;
     size_t depth; /* current nesting depth (for formatted printing) */
-    cJSON_bool noalloc;
-    cJSON_bool format; /* is this print a formatted print */
+    mazu_cJSON_bool noalloc;
+    mazu_cJSON_bool format; /* is this print a formatted print */
     internal_hooks hooks;
 } printbuffer;
 
@@ -471,7 +471,7 @@ static void update_offset(printbuffer * const buffer)
 }
 
 /* Render the number nicely from the given item into a string. */
-static cJSON_bool print_number(const cJSON * const item, printbuffer * const output_buffer)
+static mazu_cJSON_bool print_number(const mazu_cJSON * const item, printbuffer * const output_buffer)
 {
     unsigned char *output_pointer = NULL;
     double d = item->valuedouble;
@@ -695,7 +695,7 @@ fail:
 }
 
 /* Parse the input text into an unescaped cinput, and populate item. */
-static cJSON_bool parse_string(cJSON * const item, parse_buffer * const input_buffer)
+static mazu_cJSON_bool parse_string(mazu_cJSON * const item, parse_buffer * const input_buffer)
 {
     const unsigned char *input_pointer = buffer_at_offset(input_buffer) + 1;
     const unsigned char *input_end = buffer_at_offset(input_buffer) + 1;
@@ -801,7 +801,7 @@ static cJSON_bool parse_string(cJSON * const item, parse_buffer * const input_bu
     /* zero terminate the output */
     *output_pointer = '\0';
 
-    item->type = cJSON_String;
+    item->type = mazu_cJSON_String;
     item->valuestring = (char*)output;
 
     input_buffer->offset = (size_t) (input_end - input_buffer->content);
@@ -824,7 +824,7 @@ fail:
 }
 
 /* Render the cstring provided to an escaped version that can be printed. */
-static cJSON_bool print_string_ptr(const unsigned char * const input, printbuffer * const output_buffer)
+static mazu_cJSON_bool print_string_ptr(const unsigned char * const input, printbuffer * const output_buffer)
 {
     const unsigned char *input_pointer = NULL;
     unsigned char *output = NULL;
@@ -946,18 +946,18 @@ static cJSON_bool print_string_ptr(const unsigned char * const input, printbuffe
 }
 
 /* Invoke print_string_ptr (which is useful) on an item. */
-static cJSON_bool print_string(const cJSON * const item, printbuffer * const p)
+static mazu_cJSON_bool print_string(const mazu_cJSON * const item, printbuffer * const p)
 {
     return print_string_ptr((unsigned char*)item->valuestring, p);
 }
 
 /* Predeclare these prototypes. */
-static cJSON_bool parse_value(cJSON * const item, parse_buffer * const input_buffer);
-static cJSON_bool print_value(const cJSON * const item, printbuffer * const output_buffer);
-static cJSON_bool parse_array(cJSON * const item, parse_buffer * const input_buffer);
-static cJSON_bool print_array(const cJSON * const item, printbuffer * const output_buffer);
-static cJSON_bool parse_object(cJSON * const item, parse_buffer * const input_buffer);
-static cJSON_bool print_object(const cJSON * const item, printbuffer * const output_buffer);
+static mazu_cJSON_bool parse_value(mazu_cJSON * const item, parse_buffer * const input_buffer);
+static mazu_cJSON_bool print_value(const mazu_cJSON * const item, printbuffer * const output_buffer);
+static mazu_cJSON_bool parse_array(mazu_cJSON * const item, parse_buffer * const input_buffer);
+static mazu_cJSON_bool print_array(const mazu_cJSON * const item, printbuffer * const output_buffer);
+static mazu_cJSON_bool parse_object(mazu_cJSON * const item, parse_buffer * const input_buffer);
+static mazu_cJSON_bool print_object(const mazu_cJSON * const item, printbuffer * const output_buffer);
 
 /* Utility to jump whitespace and cr/lf */
 static parse_buffer *buffer_skip_whitespace(parse_buffer * const buffer)
@@ -997,10 +997,10 @@ static parse_buffer *skip_utf8_bom(parse_buffer * const buffer)
 }
 
 /* Parse an object - create a new root, and populate. */
-CJSON_PUBLIC(cJSON *) cJSON_ParseWithOpts(const char *value, const char **return_parse_end, cJSON_bool require_null_terminated)
+CJSON_PUBLIC(mazu_cJSON *) mazu_cJSON_ParseWithOpts(const char *value, const char **return_parse_end, mazu_cJSON_bool require_null_terminated)
 {
     parse_buffer buffer = { 0, 0, 0, 0, { 0, 0, 0 } };
-    cJSON *item = NULL;
+    mazu_cJSON *item = NULL;
 
     /* reset error position */
     global_error.json = NULL;
@@ -1016,7 +1016,7 @@ CJSON_PUBLIC(cJSON *) cJSON_ParseWithOpts(const char *value, const char **return
     buffer.offset = 0;
     buffer.hooks = global_hooks;
 
-    item = cJSON_New_Item(&global_hooks);
+    item = mazu_cJSON_New_Item(&global_hooks);
     if (item == NULL) /* memory fail */
     {
         goto fail;
@@ -1047,7 +1047,7 @@ CJSON_PUBLIC(cJSON *) cJSON_ParseWithOpts(const char *value, const char **return
 fail:
     if (item != NULL)
     {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
 
     if (value != NULL)
@@ -1076,15 +1076,15 @@ fail:
     return NULL;
 }
 
-/* Default options for cJSON_Parse */
-CJSON_PUBLIC(cJSON *) cJSON_Parse(const char *value)
+/* Default options for mazu_cJSON_Parse */
+CJSON_PUBLIC(mazu_cJSON *) mazu_cJSON_Parse(const char *value)
 {
-    return cJSON_ParseWithOpts(value, 0, 0);
+    return mazu_cJSON_ParseWithOpts(value, 0, 0);
 }
 
 #define cjson_min(a, b) ((a < b) ? a : b)
 
-static unsigned char *print(const cJSON * const item, cJSON_bool format, const internal_hooks * const hooks)
+static unsigned char *print(const mazu_cJSON * const item, mazu_cJSON_bool format, const internal_hooks * const hooks)
 {
     static const size_t default_buffer_size = 256;
     printbuffer buffer[1];
@@ -1148,18 +1148,18 @@ fail:
     return NULL;
 }
 
-/* Render a cJSON item/entity/structure to text. */
-CJSON_PUBLIC(char *) cJSON_Print(const cJSON *item)
+/* Render a mazu_cJSON item/entity/structure to text. */
+CJSON_PUBLIC(char *) mazu_cJSON_Print(const mazu_cJSON *item)
 {
     return (char*)print(item, true, &global_hooks);
 }
 
-CJSON_PUBLIC(char *) cJSON_PrintUnformatted(const cJSON *item)
+CJSON_PUBLIC(char *) mazu_cJSON_PrintUnformatted(const mazu_cJSON *item)
 {
     return (char*)print(item, false, &global_hooks);
 }
 
-CJSON_PUBLIC(char *) cJSON_PrintBuffered(const cJSON *item, int prebuffer, cJSON_bool fmt)
+CJSON_PUBLIC(char *) mazu_cJSON_PrintBuffered(const mazu_cJSON *item, int prebuffer, mazu_cJSON_bool fmt)
 {
     printbuffer p = { 0, 0, 0, 0, 0, 0, { 0, 0, 0 } };
 
@@ -1189,7 +1189,7 @@ CJSON_PUBLIC(char *) cJSON_PrintBuffered(const cJSON *item, int prebuffer, cJSON
     return (char*)p.buffer;
 }
 
-CJSON_PUBLIC(cJSON_bool) cJSON_PrintPreallocated(cJSON *item, char *buf, const int len, const cJSON_bool fmt)
+CJSON_PUBLIC(mazu_cJSON_bool) mazu_cJSON_PrintPreallocated(mazu_cJSON *item, char *buf, const int len, const mazu_cJSON_bool fmt)
 {
     printbuffer p = { 0, 0, 0, 0, 0, 0, { 0, 0, 0 } };
 
@@ -1209,7 +1209,7 @@ CJSON_PUBLIC(cJSON_bool) cJSON_PrintPreallocated(cJSON *item, char *buf, const i
 }
 
 /* Parser core - when encountering text, process appropriately. */
-static cJSON_bool parse_value(cJSON * const item, parse_buffer * const input_buffer)
+static mazu_cJSON_bool parse_value(mazu_cJSON * const item, parse_buffer * const input_buffer)
 {
     if ((input_buffer == NULL) || (input_buffer->content == NULL))
     {
@@ -1220,21 +1220,21 @@ static cJSON_bool parse_value(cJSON * const item, parse_buffer * const input_buf
     /* null */
     if (can_read(input_buffer, 4) && (strncmp((const char*)buffer_at_offset(input_buffer), "null", 4) == 0))
     {
-        item->type = cJSON_NULL;
+        item->type = mazu_cJSON_NULL;
         input_buffer->offset += 4;
         return true;
     }
     /* false */
     if (can_read(input_buffer, 5) && (strncmp((const char*)buffer_at_offset(input_buffer), "false", 5) == 0))
     {
-        item->type = cJSON_False;
+        item->type = mazu_cJSON_False;
         input_buffer->offset += 5;
         return true;
     }
     /* true */
     if (can_read(input_buffer, 4) && (strncmp((const char*)buffer_at_offset(input_buffer), "true", 4) == 0))
     {
-        item->type = cJSON_True;
+        item->type = mazu_cJSON_True;
         item->valueint = 1;
         input_buffer->offset += 4;
         return true;
@@ -1264,7 +1264,7 @@ static cJSON_bool parse_value(cJSON * const item, parse_buffer * const input_buf
 }
 
 /* Render a value to text. */
-static cJSON_bool print_value(const cJSON * const item, printbuffer * const output_buffer)
+static mazu_cJSON_bool print_value(const mazu_cJSON * const item, printbuffer * const output_buffer)
 {
     unsigned char *output = NULL;
 
@@ -1275,7 +1275,7 @@ static cJSON_bool print_value(const cJSON * const item, printbuffer * const outp
 
     switch ((item->type) & 0xFF)
     {
-        case cJSON_NULL:
+        case mazu_cJSON_NULL:
             output = ensure(output_buffer, 5);
             if (output == NULL)
             {
@@ -1284,7 +1284,7 @@ static cJSON_bool print_value(const cJSON * const item, printbuffer * const outp
             strcpy((char*)output, "null");
             return true;
 
-        case cJSON_False:
+        case mazu_cJSON_False:
             output = ensure(output_buffer, 6);
             if (output == NULL)
             {
@@ -1293,7 +1293,7 @@ static cJSON_bool print_value(const cJSON * const item, printbuffer * const outp
             strcpy((char*)output, "false");
             return true;
 
-        case cJSON_True:
+        case mazu_cJSON_True:
             output = ensure(output_buffer, 5);
             if (output == NULL)
             {
@@ -1302,10 +1302,10 @@ static cJSON_bool print_value(const cJSON * const item, printbuffer * const outp
             strcpy((char*)output, "true");
             return true;
 
-        case cJSON_Number:
+        case mazu_cJSON_Number:
             return print_number(item, output_buffer);
 
-        case cJSON_Raw:
+        case mazu_cJSON_Raw:
         {
             size_t raw_length = 0;
             if (item->valuestring == NULL)
@@ -1323,13 +1323,13 @@ static cJSON_bool print_value(const cJSON * const item, printbuffer * const outp
             return true;
         }
 
-        case cJSON_String:
+        case mazu_cJSON_String:
             return print_string(item, output_buffer);
 
-        case cJSON_Array:
+        case mazu_cJSON_Array:
             return print_array(item, output_buffer);
 
-        case cJSON_Object:
+        case mazu_cJSON_Object:
             return print_object(item, output_buffer);
 
         default:
@@ -1338,10 +1338,10 @@ static cJSON_bool print_value(const cJSON * const item, printbuffer * const outp
 }
 
 /* Build an array from input text. */
-static cJSON_bool parse_array(cJSON * const item, parse_buffer * const input_buffer)
+static mazu_cJSON_bool parse_array(mazu_cJSON * const item, parse_buffer * const input_buffer)
 {
-    cJSON *head = NULL; /* head of the linked list */
-    cJSON *current_item = NULL;
+    mazu_cJSON *head = NULL; /* head of the linked list */
+    mazu_cJSON *current_item = NULL;
 
     if (input_buffer->depth >= CJSON_NESTING_LIMIT)
     {
@@ -1376,7 +1376,7 @@ static cJSON_bool parse_array(cJSON * const item, parse_buffer * const input_buf
     do
     {
         /* allocate next item */
-        cJSON *new_item = cJSON_New_Item(&(input_buffer->hooks));
+        mazu_cJSON *new_item = mazu_cJSON_New_Item(&(input_buffer->hooks));
         if (new_item == NULL)
         {
             goto fail; /* allocation failure */
@@ -1415,7 +1415,7 @@ static cJSON_bool parse_array(cJSON * const item, parse_buffer * const input_buf
 success:
     input_buffer->depth--;
 
-    item->type = cJSON_Array;
+    item->type = mazu_cJSON_Array;
     item->child = head;
 
     input_buffer->offset++;
@@ -1425,18 +1425,18 @@ success:
 fail:
     if (head != NULL)
     {
-        cJSON_Delete(head);
+        mazu_cJSON_Delete(head);
     }
 
     return false;
 }
 
 /* Render an array to text */
-static cJSON_bool print_array(const cJSON * const item, printbuffer * const output_buffer)
+static mazu_cJSON_bool print_array(const mazu_cJSON * const item, printbuffer * const output_buffer)
 {
     unsigned char *output_pointer = NULL;
     size_t length = 0;
-    cJSON *current_element = item->child;
+    mazu_cJSON *current_element = item->child;
 
     if (output_buffer == NULL)
     {
@@ -1494,10 +1494,10 @@ static cJSON_bool print_array(const cJSON * const item, printbuffer * const outp
 }
 
 /* Build an object from the text. */
-static cJSON_bool parse_object(cJSON * const item, parse_buffer * const input_buffer)
+static mazu_cJSON_bool parse_object(mazu_cJSON * const item, parse_buffer * const input_buffer)
 {
-    cJSON *head = NULL; /* linked list head */
-    cJSON *current_item = NULL;
+    mazu_cJSON *head = NULL; /* linked list head */
+    mazu_cJSON *current_item = NULL;
 
     if (input_buffer->depth >= CJSON_NESTING_LIMIT)
     {
@@ -1530,7 +1530,7 @@ static cJSON_bool parse_object(cJSON * const item, parse_buffer * const input_bu
     do
     {
         /* allocate next item */
-        cJSON *new_item = cJSON_New_Item(&(input_buffer->hooks));
+        mazu_cJSON *new_item = mazu_cJSON_New_Item(&(input_buffer->hooks));
         if (new_item == NULL)
         {
             goto fail; /* allocation failure */
@@ -1587,7 +1587,7 @@ static cJSON_bool parse_object(cJSON * const item, parse_buffer * const input_bu
 success:
     input_buffer->depth--;
 
-    item->type = cJSON_Object;
+    item->type = mazu_cJSON_Object;
     item->child = head;
 
     input_buffer->offset++;
@@ -1596,18 +1596,18 @@ success:
 fail:
     if (head != NULL)
     {
-        cJSON_Delete(head);
+        mazu_cJSON_Delete(head);
     }
 
     return false;
 }
 
 /* Render an object to text. */
-static cJSON_bool print_object(const cJSON * const item, printbuffer * const output_buffer)
+static mazu_cJSON_bool print_object(const mazu_cJSON * const item, printbuffer * const output_buffer)
 {
     unsigned char *output_pointer = NULL;
     size_t length = 0;
-    cJSON *current_item = item->child;
+    mazu_cJSON *current_item = item->child;
 
     if (output_buffer == NULL)
     {
@@ -1717,9 +1717,9 @@ static cJSON_bool print_object(const cJSON * const item, printbuffer * const out
 }
 
 /* Get Array size/item / object item. */
-CJSON_PUBLIC(int) cJSON_GetArraySize(const cJSON *array)
+CJSON_PUBLIC(int) mazu_cJSON_GetArraySize(const mazu_cJSON *array)
 {
-    cJSON *child = NULL;
+    mazu_cJSON *child = NULL;
     size_t size = 0;
 
     if (array == NULL)
@@ -1740,9 +1740,9 @@ CJSON_PUBLIC(int) cJSON_GetArraySize(const cJSON *array)
     return (int)size;
 }
 
-static cJSON* get_array_item(const cJSON *array, size_t index)
+static mazu_cJSON* get_array_item(const mazu_cJSON *array, size_t index)
 {
-    cJSON *current_child = NULL;
+    mazu_cJSON *current_child = NULL;
 
     if (array == NULL)
     {
@@ -1759,7 +1759,7 @@ static cJSON* get_array_item(const cJSON *array, size_t index)
     return current_child;
 }
 
-CJSON_PUBLIC(cJSON *) cJSON_GetArrayItem(const cJSON *array, int index)
+CJSON_PUBLIC(mazu_cJSON *) mazu_cJSON_GetArrayItem(const mazu_cJSON *array, int index)
 {
     if (index < 0)
     {
@@ -1769,9 +1769,9 @@ CJSON_PUBLIC(cJSON *) cJSON_GetArrayItem(const cJSON *array, int index)
     return get_array_item(array, (size_t)index);
 }
 
-static cJSON *get_object_item(const cJSON * const object, const char * const name, const cJSON_bool case_sensitive)
+static mazu_cJSON *get_object_item(const mazu_cJSON * const object, const char * const name, const mazu_cJSON_bool case_sensitive)
 {
-    cJSON *current_element = NULL;
+    mazu_cJSON *current_element = NULL;
 
     if ((object == NULL) || (name == NULL))
     {
@@ -1797,53 +1797,53 @@ static cJSON *get_object_item(const cJSON * const object, const char * const nam
     return current_element;
 }
 
-CJSON_PUBLIC(cJSON *) cJSON_GetObjectItem(const cJSON * const object, const char * const string)
+CJSON_PUBLIC(mazu_cJSON *) mazu_cJSON_GetObjectItem(const mazu_cJSON * const object, const char * const string)
 {
     return get_object_item(object, string, false);
 }
 
-CJSON_PUBLIC(cJSON *) cJSON_GetObjectItemCaseSensitive(const cJSON * const object, const char * const string)
+CJSON_PUBLIC(mazu_cJSON *) mazu_cJSON_GetObjectItemCaseSensitive(const mazu_cJSON * const object, const char * const string)
 {
     return get_object_item(object, string, true);
 }
 
-CJSON_PUBLIC(cJSON_bool) cJSON_HasObjectItem(const cJSON *object, const char *string)
+CJSON_PUBLIC(mazu_cJSON_bool) mazu_cJSON_HasObjectItem(const mazu_cJSON *object, const char *string)
 {
-    return cJSON_GetObjectItem(object, string) ? 1 : 0;
+    return mazu_cJSON_GetObjectItem(object, string) ? 1 : 0;
 }
 
 /* Utility for array list handling. */
-static void suffix_object(cJSON *prev, cJSON *item)
+static void suffix_object(mazu_cJSON *prev, mazu_cJSON *item)
 {
     prev->next = item;
     item->prev = prev;
 }
 
 /* Utility for handling references. */
-static cJSON *create_reference(const cJSON *item, const internal_hooks * const hooks)
+static mazu_cJSON *create_reference(const mazu_cJSON *item, const internal_hooks * const hooks)
 {
-    cJSON *reference = NULL;
+    mazu_cJSON *reference = NULL;
     if (item == NULL)
     {
         return NULL;
     }
 
-    reference = cJSON_New_Item(hooks);
+    reference = mazu_cJSON_New_Item(hooks);
     if (reference == NULL)
     {
         return NULL;
     }
 
-    memcpy(reference, item, sizeof(cJSON));
+    memcpy(reference, item, sizeof(mazu_cJSON));
     reference->string = NULL;
-    reference->type |= cJSON_IsReference;
+    reference->type |= mazu_cJSON_IsReference;
     reference->next = reference->prev = NULL;
     return reference;
 }
 
-static cJSON_bool add_item_to_array(cJSON *array, cJSON *item)
+static mazu_cJSON_bool add_item_to_array(mazu_cJSON *array, mazu_cJSON *item)
 {
-    cJSON *child = NULL;
+    mazu_cJSON *child = NULL;
 
     if ((item == NULL) || (array == NULL))
     {
@@ -1871,7 +1871,7 @@ static cJSON_bool add_item_to_array(cJSON *array, cJSON *item)
 }
 
 /* Add item to array/object. */
-CJSON_PUBLIC(void) cJSON_AddItemToArray(cJSON *array, cJSON *item)
+CJSON_PUBLIC(void) mazu_cJSON_AddItemToArray(mazu_cJSON *array, mazu_cJSON *item)
 {
     add_item_to_array(array, item);
 }
@@ -1892,10 +1892,10 @@ static void* cast_away_const(const void* string)
 #endif
 
 
-static cJSON_bool add_item_to_object(cJSON * const object, const char * const string, cJSON * const item, const internal_hooks * const hooks, const cJSON_bool constant_key)
+static mazu_cJSON_bool add_item_to_object(mazu_cJSON * const object, const char * const string, mazu_cJSON * const item, const internal_hooks * const hooks, const mazu_cJSON_bool constant_key)
 {
     char *new_key = NULL;
-    int new_type = cJSON_Invalid;
+    int new_type = mazu_cJSON_Invalid;
 
     if ((object == NULL) || (string == NULL) || (item == NULL))
     {
@@ -1905,20 +1905,20 @@ static cJSON_bool add_item_to_object(cJSON * const object, const char * const st
     if (constant_key)
     {
         new_key = (char*)cast_away_const(string);
-        new_type = item->type | cJSON_StringIsConst;
+        new_type = item->type | mazu_cJSON_StringIsConst;
     }
     else
     {
-        new_key = (char*)cJSON_strdup((const unsigned char*)string, hooks);
+        new_key = (char*)mazu_cJSON_strdup((const unsigned char*)string, hooks);
         if (new_key == NULL)
         {
             return false;
         }
 
-        new_type = item->type & ~cJSON_StringIsConst;
+        new_type = item->type & ~mazu_cJSON_StringIsConst;
     }
 
-    if (!(item->type & cJSON_StringIsConst) && (item->string != NULL))
+    if (!(item->type & mazu_cJSON_StringIsConst) && (item->string != NULL))
     {
         hooks->deallocate(item->string);
     }
@@ -1929,18 +1929,18 @@ static cJSON_bool add_item_to_object(cJSON * const object, const char * const st
     return add_item_to_array(object, item);
 }
 
-CJSON_PUBLIC(void) cJSON_AddItemToObject(cJSON *object, const char *string, cJSON *item)
+CJSON_PUBLIC(void) mazu_cJSON_AddItemToObject(mazu_cJSON *object, const char *string, mazu_cJSON *item)
 {
     add_item_to_object(object, string, item, &global_hooks, false);
 }
 
 /* Add an item to an object with constant string as key */
-CJSON_PUBLIC(void) cJSON_AddItemToObjectCS(cJSON *object, const char *string, cJSON *item)
+CJSON_PUBLIC(void) mazu_cJSON_AddItemToObjectCS(mazu_cJSON *object, const char *string, mazu_cJSON *item)
 {
     add_item_to_object(object, string, item, &global_hooks, true);
 }
 
-CJSON_PUBLIC(void) cJSON_AddItemReferenceToArray(cJSON *array, cJSON *item)
+CJSON_PUBLIC(void) mazu_cJSON_AddItemReferenceToArray(mazu_cJSON *array, mazu_cJSON *item)
 {
     if (array == NULL)
     {
@@ -1950,7 +1950,7 @@ CJSON_PUBLIC(void) cJSON_AddItemReferenceToArray(cJSON *array, cJSON *item)
     add_item_to_array(array, create_reference(item, &global_hooks));
 }
 
-CJSON_PUBLIC(void) cJSON_AddItemReferenceToObject(cJSON *object, const char *string, cJSON *item)
+CJSON_PUBLIC(void) mazu_cJSON_AddItemReferenceToObject(mazu_cJSON *object, const char *string, mazu_cJSON *item)
 {
     if ((object == NULL) || (string == NULL))
     {
@@ -1960,115 +1960,115 @@ CJSON_PUBLIC(void) cJSON_AddItemReferenceToObject(cJSON *object, const char *str
     add_item_to_object(object, string, create_reference(item, &global_hooks), &global_hooks, false);
 }
 
-CJSON_PUBLIC(cJSON*) cJSON_AddNullToObject(cJSON * const object, const char * const name)
+CJSON_PUBLIC(mazu_cJSON*) mazu_cJSON_AddNullToObject(mazu_cJSON * const object, const char * const name)
 {
-    cJSON *null = cJSON_CreateNull();
+    mazu_cJSON *null = mazu_cJSON_CreateNull();
     if (add_item_to_object(object, name, null, &global_hooks, false))
     {
         return null;
     }
 
-    cJSON_Delete(null);
+    mazu_cJSON_Delete(null);
     return NULL;
 }
 
-CJSON_PUBLIC(cJSON*) cJSON_AddTrueToObject(cJSON * const object, const char * const name)
+CJSON_PUBLIC(mazu_cJSON*) mazu_cJSON_AddTrueToObject(mazu_cJSON * const object, const char * const name)
 {
-    cJSON *true_item = cJSON_CreateTrue();
+    mazu_cJSON *true_item = mazu_cJSON_CreateTrue();
     if (add_item_to_object(object, name, true_item, &global_hooks, false))
     {
         return true_item;
     }
 
-    cJSON_Delete(true_item);
+    mazu_cJSON_Delete(true_item);
     return NULL;
 }
 
-CJSON_PUBLIC(cJSON*) cJSON_AddFalseToObject(cJSON * const object, const char * const name)
+CJSON_PUBLIC(mazu_cJSON*) mazu_cJSON_AddFalseToObject(mazu_cJSON * const object, const char * const name)
 {
-    cJSON *false_item = cJSON_CreateFalse();
+    mazu_cJSON *false_item = mazu_cJSON_CreateFalse();
     if (add_item_to_object(object, name, false_item, &global_hooks, false))
     {
         return false_item;
     }
 
-    cJSON_Delete(false_item);
+    mazu_cJSON_Delete(false_item);
     return NULL;
 }
 
-CJSON_PUBLIC(cJSON*) cJSON_AddBoolToObject(cJSON * const object, const char * const name, const cJSON_bool boolean)
+CJSON_PUBLIC(mazu_cJSON*) mazu_cJSON_AddBoolToObject(mazu_cJSON * const object, const char * const name, const mazu_cJSON_bool boolean)
 {
-    cJSON *bool_item = cJSON_CreateBool(boolean);
+    mazu_cJSON *bool_item = mazu_cJSON_CreateBool(boolean);
     if (add_item_to_object(object, name, bool_item, &global_hooks, false))
     {
         return bool_item;
     }
 
-    cJSON_Delete(bool_item);
+    mazu_cJSON_Delete(bool_item);
     return NULL;
 }
 
-CJSON_PUBLIC(cJSON*) cJSON_AddNumberToObject(cJSON * const object, const char * const name, const double number)
+CJSON_PUBLIC(mazu_cJSON*) mazu_cJSON_AddNumberToObject(mazu_cJSON * const object, const char * const name, const double number)
 {
-    cJSON *number_item = cJSON_CreateNumber(number);
+    mazu_cJSON *number_item = mazu_cJSON_CreateNumber(number);
     if (add_item_to_object(object, name, number_item, &global_hooks, false))
     {
         return number_item;
     }
 
-    cJSON_Delete(number_item);
+    mazu_cJSON_Delete(number_item);
     return NULL;
 }
 
-CJSON_PUBLIC(cJSON*) cJSON_AddStringToObject(cJSON * const object, const char * const name, const char * const string)
+CJSON_PUBLIC(mazu_cJSON*) mazu_cJSON_AddStringToObject(mazu_cJSON * const object, const char * const name, const char * const string)
 {
-    cJSON *string_item = cJSON_CreateString(string);
+    mazu_cJSON *string_item = mazu_cJSON_CreateString(string);
     if (add_item_to_object(object, name, string_item, &global_hooks, false))
     {
         return string_item;
     }
 
-    cJSON_Delete(string_item);
+    mazu_cJSON_Delete(string_item);
     return NULL;
 }
 
-CJSON_PUBLIC(cJSON*) cJSON_AddRawToObject(cJSON * const object, const char * const name, const char * const raw)
+CJSON_PUBLIC(mazu_cJSON*) mazu_cJSON_AddRawToObject(mazu_cJSON * const object, const char * const name, const char * const raw)
 {
-    cJSON *raw_item = cJSON_CreateRaw(raw);
+    mazu_cJSON *raw_item = mazu_cJSON_CreateRaw(raw);
     if (add_item_to_object(object, name, raw_item, &global_hooks, false))
     {
         return raw_item;
     }
 
-    cJSON_Delete(raw_item);
+    mazu_cJSON_Delete(raw_item);
     return NULL;
 }
 
-CJSON_PUBLIC(cJSON*) cJSON_AddObjectToObject(cJSON * const object, const char * const name)
+CJSON_PUBLIC(mazu_cJSON*) mazu_cJSON_AddObjectToObject(mazu_cJSON * const object, const char * const name)
 {
-    cJSON *object_item = cJSON_CreateObject();
+    mazu_cJSON *object_item = mazu_cJSON_CreateObject();
     if (add_item_to_object(object, name, object_item, &global_hooks, false))
     {
         return object_item;
     }
 
-    cJSON_Delete(object_item);
+    mazu_cJSON_Delete(object_item);
     return NULL;
 }
 
-CJSON_PUBLIC(cJSON*) cJSON_AddArrayToObject(cJSON * const object, const char * const name)
+CJSON_PUBLIC(mazu_cJSON*) mazu_cJSON_AddArrayToObject(mazu_cJSON * const object, const char * const name)
 {
-    cJSON *array = cJSON_CreateArray();
+    mazu_cJSON *array = mazu_cJSON_CreateArray();
     if (add_item_to_object(object, name, array, &global_hooks, false))
     {
         return array;
     }
 
-    cJSON_Delete(array);
+    mazu_cJSON_Delete(array);
     return NULL;
 }
 
-CJSON_PUBLIC(cJSON *) cJSON_DetachItemViaPointer(cJSON *parent, cJSON * const item)
+CJSON_PUBLIC(mazu_cJSON *) mazu_cJSON_DetachItemViaPointer(mazu_cJSON *parent, mazu_cJSON * const item)
 {
     if ((parent == NULL) || (item == NULL))
     {
@@ -2098,49 +2098,49 @@ CJSON_PUBLIC(cJSON *) cJSON_DetachItemViaPointer(cJSON *parent, cJSON * const it
     return item;
 }
 
-CJSON_PUBLIC(cJSON *) cJSON_DetachItemFromArray(cJSON *array, int which)
+CJSON_PUBLIC(mazu_cJSON *) mazu_cJSON_DetachItemFromArray(mazu_cJSON *array, int which)
 {
     if (which < 0)
     {
         return NULL;
     }
 
-    return cJSON_DetachItemViaPointer(array, get_array_item(array, (size_t)which));
+    return mazu_cJSON_DetachItemViaPointer(array, get_array_item(array, (size_t)which));
 }
 
-CJSON_PUBLIC(void) cJSON_DeleteItemFromArray(cJSON *array, int which)
+CJSON_PUBLIC(void) mazu_cJSON_DeleteItemFromArray(mazu_cJSON *array, int which)
 {
-    cJSON_Delete(cJSON_DetachItemFromArray(array, which));
+    mazu_cJSON_Delete(mazu_cJSON_DetachItemFromArray(array, which));
 }
 
-CJSON_PUBLIC(cJSON *) cJSON_DetachItemFromObject(cJSON *object, const char *string)
+CJSON_PUBLIC(mazu_cJSON *) mazu_cJSON_DetachItemFromObject(mazu_cJSON *object, const char *string)
 {
-    cJSON *to_detach = cJSON_GetObjectItem(object, string);
+    mazu_cJSON *to_detach = mazu_cJSON_GetObjectItem(object, string);
 
-    return cJSON_DetachItemViaPointer(object, to_detach);
+    return mazu_cJSON_DetachItemViaPointer(object, to_detach);
 }
 
-CJSON_PUBLIC(cJSON *) cJSON_DetachItemFromObjectCaseSensitive(cJSON *object, const char *string)
+CJSON_PUBLIC(mazu_cJSON *) mazu_cJSON_DetachItemFromObjectCaseSensitive(mazu_cJSON *object, const char *string)
 {
-    cJSON *to_detach = cJSON_GetObjectItemCaseSensitive(object, string);
+    mazu_cJSON *to_detach = mazu_cJSON_GetObjectItemCaseSensitive(object, string);
 
-    return cJSON_DetachItemViaPointer(object, to_detach);
+    return mazu_cJSON_DetachItemViaPointer(object, to_detach);
 }
 
-CJSON_PUBLIC(void) cJSON_DeleteItemFromObject(cJSON *object, const char *string)
+CJSON_PUBLIC(void) mazu_cJSON_DeleteItemFromObject(mazu_cJSON *object, const char *string)
 {
-    cJSON_Delete(cJSON_DetachItemFromObject(object, string));
+    mazu_cJSON_Delete(mazu_cJSON_DetachItemFromObject(object, string));
 }
 
-CJSON_PUBLIC(void) cJSON_DeleteItemFromObjectCaseSensitive(cJSON *object, const char *string)
+CJSON_PUBLIC(void) mazu_cJSON_DeleteItemFromObjectCaseSensitive(mazu_cJSON *object, const char *string)
 {
-    cJSON_Delete(cJSON_DetachItemFromObjectCaseSensitive(object, string));
+    mazu_cJSON_Delete(mazu_cJSON_DetachItemFromObjectCaseSensitive(object, string));
 }
 
 /* Replace array/object items with new ones. */
-CJSON_PUBLIC(void) cJSON_InsertItemInArray(cJSON *array, int which, cJSON *newitem)
+CJSON_PUBLIC(void) mazu_cJSON_InsertItemInArray(mazu_cJSON *array, int which, mazu_cJSON *newitem)
 {
-    cJSON *after_inserted = NULL;
+    mazu_cJSON *after_inserted = NULL;
 
     if (which < 0)
     {
@@ -2167,7 +2167,7 @@ CJSON_PUBLIC(void) cJSON_InsertItemInArray(cJSON *array, int which, cJSON *newit
     }
 }
 
-CJSON_PUBLIC(cJSON_bool) cJSON_ReplaceItemViaPointer(cJSON * const parent, cJSON * const item, cJSON * replacement)
+CJSON_PUBLIC(mazu_cJSON_bool) mazu_cJSON_ReplaceItemViaPointer(mazu_cJSON * const parent, mazu_cJSON * const item, mazu_cJSON * replacement)
 {
     if ((parent == NULL) || (replacement == NULL) || (item == NULL))
     {
@@ -2197,22 +2197,22 @@ CJSON_PUBLIC(cJSON_bool) cJSON_ReplaceItemViaPointer(cJSON * const parent, cJSON
 
     item->next = NULL;
     item->prev = NULL;
-    cJSON_Delete(item);
+    mazu_cJSON_Delete(item);
 
     return true;
 }
 
-CJSON_PUBLIC(void) cJSON_ReplaceItemInArray(cJSON *array, int which, cJSON *newitem)
+CJSON_PUBLIC(void) mazu_cJSON_ReplaceItemInArray(mazu_cJSON *array, int which, mazu_cJSON *newitem)
 {
     if (which < 0)
     {
         return;
     }
 
-    cJSON_ReplaceItemViaPointer(array, get_array_item(array, (size_t)which), newitem);
+    mazu_cJSON_ReplaceItemViaPointer(array, get_array_item(array, (size_t)which), newitem);
 }
 
-static cJSON_bool replace_item_in_object(cJSON *object, const char *string, cJSON *replacement, cJSON_bool case_sensitive)
+static mazu_cJSON_bool replace_item_in_object(mazu_cJSON *object, const char *string, mazu_cJSON *replacement, mazu_cJSON_bool case_sensitive)
 {
     if ((replacement == NULL) || (string == NULL))
     {
@@ -2220,79 +2220,79 @@ static cJSON_bool replace_item_in_object(cJSON *object, const char *string, cJSO
     }
 
     /* replace the name in the replacement */
-    if (!(replacement->type & cJSON_StringIsConst) && (replacement->string != NULL))
+    if (!(replacement->type & mazu_cJSON_StringIsConst) && (replacement->string != NULL))
     {
-        cJSON_free(replacement->string);
+        mazu_cJSON_free(replacement->string);
     }
-    replacement->string = (char*)cJSON_strdup((const unsigned char*)string, &global_hooks);
-    replacement->type &= ~cJSON_StringIsConst;
+    replacement->string = (char*)mazu_cJSON_strdup((const unsigned char*)string, &global_hooks);
+    replacement->type &= ~mazu_cJSON_StringIsConst;
 
-    cJSON_ReplaceItemViaPointer(object, get_object_item(object, string, case_sensitive), replacement);
+    mazu_cJSON_ReplaceItemViaPointer(object, get_object_item(object, string, case_sensitive), replacement);
 
     return true;
 }
 
-CJSON_PUBLIC(void) cJSON_ReplaceItemInObject(cJSON *object, const char *string, cJSON *newitem)
+CJSON_PUBLIC(void) mazu_cJSON_ReplaceItemInObject(mazu_cJSON *object, const char *string, mazu_cJSON *newitem)
 {
     replace_item_in_object(object, string, newitem, false);
 }
 
-CJSON_PUBLIC(void) cJSON_ReplaceItemInObjectCaseSensitive(cJSON *object, const char *string, cJSON *newitem)
+CJSON_PUBLIC(void) mazu_cJSON_ReplaceItemInObjectCaseSensitive(mazu_cJSON *object, const char *string, mazu_cJSON *newitem)
 {
     replace_item_in_object(object, string, newitem, true);
 }
 
 /* Create basic types: */
-CJSON_PUBLIC(cJSON *) cJSON_CreateNull(void)
+CJSON_PUBLIC(mazu_cJSON *) mazu_cJSON_CreateNull(void)
 {
-    cJSON *item = cJSON_New_Item(&global_hooks);
+    mazu_cJSON *item = mazu_cJSON_New_Item(&global_hooks);
     if(item)
     {
-        item->type = cJSON_NULL;
+        item->type = mazu_cJSON_NULL;
     }
 
     return item;
 }
 
-CJSON_PUBLIC(cJSON *) cJSON_CreateTrue(void)
+CJSON_PUBLIC(mazu_cJSON *) mazu_cJSON_CreateTrue(void)
 {
-    cJSON *item = cJSON_New_Item(&global_hooks);
+    mazu_cJSON *item = mazu_cJSON_New_Item(&global_hooks);
     if(item)
     {
-        item->type = cJSON_True;
+        item->type = mazu_cJSON_True;
     }
 
     return item;
 }
 
-CJSON_PUBLIC(cJSON *) cJSON_CreateFalse(void)
+CJSON_PUBLIC(mazu_cJSON *) mazu_cJSON_CreateFalse(void)
 {
-    cJSON *item = cJSON_New_Item(&global_hooks);
+    mazu_cJSON *item = mazu_cJSON_New_Item(&global_hooks);
     if(item)
     {
-        item->type = cJSON_False;
+        item->type = mazu_cJSON_False;
     }
 
     return item;
 }
 
-CJSON_PUBLIC(cJSON *) cJSON_CreateBool(cJSON_bool b)
+CJSON_PUBLIC(mazu_cJSON *) mazu_cJSON_CreateBool(mazu_cJSON_bool b)
 {
-    cJSON *item = cJSON_New_Item(&global_hooks);
+    mazu_cJSON *item = mazu_cJSON_New_Item(&global_hooks);
     if(item)
     {
-        item->type = b ? cJSON_True : cJSON_False;
+        item->type = b ? mazu_cJSON_True : mazu_cJSON_False;
     }
 
     return item;
 }
 
-CJSON_PUBLIC(cJSON *) cJSON_CreateNumber(double num)
+CJSON_PUBLIC(mazu_cJSON *) mazu_cJSON_CreateNumber(double num)
 {
-    cJSON *item = cJSON_New_Item(&global_hooks);
+    mazu_cJSON *item = mazu_cJSON_New_Item(&global_hooks);
     if(item)
     {
-        item->type = cJSON_Number;
+        item->type = mazu_cJSON_Number;
         item->valuedouble = num;
 
         /* use saturation in case of overflow */
@@ -2313,16 +2313,16 @@ CJSON_PUBLIC(cJSON *) cJSON_CreateNumber(double num)
     return item;
 }
 
-CJSON_PUBLIC(cJSON *) cJSON_CreateString(const char *string)
+CJSON_PUBLIC(mazu_cJSON *) mazu_cJSON_CreateString(const char *string)
 {
-    cJSON *item = cJSON_New_Item(&global_hooks);
+    mazu_cJSON *item = mazu_cJSON_New_Item(&global_hooks);
     if(item)
     {
-        item->type = cJSON_String;
-        item->valuestring = (char*)cJSON_strdup((const unsigned char*)string, &global_hooks);
+        item->type = mazu_cJSON_String;
+        item->valuestring = (char*)mazu_cJSON_strdup((const unsigned char*)string, &global_hooks);
         if(!item->valuestring)
         {
-            cJSON_Delete(item);
+            mazu_cJSON_Delete(item);
             return NULL;
         }
     }
@@ -2330,49 +2330,49 @@ CJSON_PUBLIC(cJSON *) cJSON_CreateString(const char *string)
     return item;
 }
 
-CJSON_PUBLIC(cJSON *) cJSON_CreateStringReference(const char *string)
+CJSON_PUBLIC(mazu_cJSON *) mazu_cJSON_CreateStringReference(const char *string)
 {
-    cJSON *item = cJSON_New_Item(&global_hooks);
+    mazu_cJSON *item = mazu_cJSON_New_Item(&global_hooks);
     if (item != NULL)
     {
-        item->type = cJSON_String | cJSON_IsReference;
+        item->type = mazu_cJSON_String | mazu_cJSON_IsReference;
         item->valuestring = (char*)cast_away_const(string);
     }
 
     return item;
 }
 
-CJSON_PUBLIC(cJSON *) cJSON_CreateObjectReference(const cJSON *child)
+CJSON_PUBLIC(mazu_cJSON *) mazu_cJSON_CreateObjectReference(const mazu_cJSON *child)
 {
-    cJSON *item = cJSON_New_Item(&global_hooks);
+    mazu_cJSON *item = mazu_cJSON_New_Item(&global_hooks);
     if (item != NULL) {
-        item->type = cJSON_Object | cJSON_IsReference;
-        item->child = (cJSON*)cast_away_const(child);
+        item->type = mazu_cJSON_Object | mazu_cJSON_IsReference;
+        item->child = (mazu_cJSON*)cast_away_const(child);
     }
 
     return item;
 }
 
-CJSON_PUBLIC(cJSON *) cJSON_CreateArrayReference(const cJSON *child) {
-    cJSON *item = cJSON_New_Item(&global_hooks);
+CJSON_PUBLIC(mazu_cJSON *) mazu_cJSON_CreateArrayReference(const mazu_cJSON *child) {
+    mazu_cJSON *item = mazu_cJSON_New_Item(&global_hooks);
     if (item != NULL) {
-        item->type = cJSON_Array | cJSON_IsReference;
-        item->child = (cJSON*)cast_away_const(child);
+        item->type = mazu_cJSON_Array | mazu_cJSON_IsReference;
+        item->child = (mazu_cJSON*)cast_away_const(child);
     }
 
     return item;
 }
 
-CJSON_PUBLIC(cJSON *) cJSON_CreateRaw(const char *raw)
+CJSON_PUBLIC(mazu_cJSON *) mazu_cJSON_CreateRaw(const char *raw)
 {
-    cJSON *item = cJSON_New_Item(&global_hooks);
+    mazu_cJSON *item = mazu_cJSON_New_Item(&global_hooks);
     if(item)
     {
-        item->type = cJSON_Raw;
-        item->valuestring = (char*)cJSON_strdup((const unsigned char*)raw, &global_hooks);
+        item->type = mazu_cJSON_Raw;
+        item->valuestring = (char*)mazu_cJSON_strdup((const unsigned char*)raw, &global_hooks);
         if(!item->valuestring)
         {
-            cJSON_Delete(item);
+            mazu_cJSON_Delete(item);
             return NULL;
         }
     }
@@ -2380,48 +2380,48 @@ CJSON_PUBLIC(cJSON *) cJSON_CreateRaw(const char *raw)
     return item;
 }
 
-CJSON_PUBLIC(cJSON *) cJSON_CreateArray(void)
+CJSON_PUBLIC(mazu_cJSON *) mazu_cJSON_CreateArray(void)
 {
-    cJSON *item = cJSON_New_Item(&global_hooks);
+    mazu_cJSON *item = mazu_cJSON_New_Item(&global_hooks);
     if(item)
     {
-        item->type=cJSON_Array;
+        item->type=mazu_cJSON_Array;
     }
 
     return item;
 }
 
-CJSON_PUBLIC(cJSON *) cJSON_CreateObject(void)
+CJSON_PUBLIC(mazu_cJSON *) mazu_cJSON_CreateObject(void)
 {
-    cJSON *item = cJSON_New_Item(&global_hooks);
+    mazu_cJSON *item = mazu_cJSON_New_Item(&global_hooks);
     if (item)
     {
-        item->type = cJSON_Object;
+        item->type = mazu_cJSON_Object;
     }
 
     return item;
 }
 
 /* Create Arrays: */
-CJSON_PUBLIC(cJSON *) cJSON_CreateIntArray(const int *numbers, int count)
+CJSON_PUBLIC(mazu_cJSON *) mazu_cJSON_CreateIntArray(const int *numbers, int count)
 {
     size_t i = 0;
-    cJSON *n = NULL;
-    cJSON *p = NULL;
-    cJSON *a = NULL;
+    mazu_cJSON *n = NULL;
+    mazu_cJSON *p = NULL;
+    mazu_cJSON *a = NULL;
 
     if ((count < 0) || (numbers == NULL))
     {
         return NULL;
     }
 
-    a = cJSON_CreateArray();
+    a = mazu_cJSON_CreateArray();
     for(i = 0; a && (i < (size_t)count); i++)
     {
-        n = cJSON_CreateNumber(numbers[i]);
+        n = mazu_cJSON_CreateNumber(numbers[i]);
         if (!n)
         {
-            cJSON_Delete(a);
+            mazu_cJSON_Delete(a);
             return NULL;
         }
         if(!i)
@@ -2438,26 +2438,26 @@ CJSON_PUBLIC(cJSON *) cJSON_CreateIntArray(const int *numbers, int count)
     return a;
 }
 
-CJSON_PUBLIC(cJSON *) cJSON_CreateFloatArray(const float *numbers, int count)
+CJSON_PUBLIC(mazu_cJSON *) mazu_cJSON_CreateFloatArray(const float *numbers, int count)
 {
     size_t i = 0;
-    cJSON *n = NULL;
-    cJSON *p = NULL;
-    cJSON *a = NULL;
+    mazu_cJSON *n = NULL;
+    mazu_cJSON *p = NULL;
+    mazu_cJSON *a = NULL;
 
     if ((count < 0) || (numbers == NULL))
     {
         return NULL;
     }
 
-    a = cJSON_CreateArray();
+    a = mazu_cJSON_CreateArray();
 
     for(i = 0; a && (i < (size_t)count); i++)
     {
-        n = cJSON_CreateNumber((double)numbers[i]);
+        n = mazu_cJSON_CreateNumber((double)numbers[i]);
         if(!n)
         {
-            cJSON_Delete(a);
+            mazu_cJSON_Delete(a);
             return NULL;
         }
         if(!i)
@@ -2474,26 +2474,26 @@ CJSON_PUBLIC(cJSON *) cJSON_CreateFloatArray(const float *numbers, int count)
     return a;
 }
 
-CJSON_PUBLIC(cJSON *) cJSON_CreateDoubleArray(const double *numbers, int count)
+CJSON_PUBLIC(mazu_cJSON *) mazu_cJSON_CreateDoubleArray(const double *numbers, int count)
 {
     size_t i = 0;
-    cJSON *n = NULL;
-    cJSON *p = NULL;
-    cJSON *a = NULL;
+    mazu_cJSON *n = NULL;
+    mazu_cJSON *p = NULL;
+    mazu_cJSON *a = NULL;
 
     if ((count < 0) || (numbers == NULL))
     {
         return NULL;
     }
 
-    a = cJSON_CreateArray();
+    a = mazu_cJSON_CreateArray();
 
     for(i = 0;a && (i < (size_t)count); i++)
     {
-        n = cJSON_CreateNumber(numbers[i]);
+        n = mazu_cJSON_CreateNumber(numbers[i]);
         if(!n)
         {
-            cJSON_Delete(a);
+            mazu_cJSON_Delete(a);
             return NULL;
         }
         if(!i)
@@ -2510,26 +2510,26 @@ CJSON_PUBLIC(cJSON *) cJSON_CreateDoubleArray(const double *numbers, int count)
     return a;
 }
 
-CJSON_PUBLIC(cJSON *) cJSON_CreateStringArray(const char **strings, int count)
+CJSON_PUBLIC(mazu_cJSON *) mazu_cJSON_CreateStringArray(const char **strings, int count)
 {
     size_t i = 0;
-    cJSON *n = NULL;
-    cJSON *p = NULL;
-    cJSON *a = NULL;
+    mazu_cJSON *n = NULL;
+    mazu_cJSON *p = NULL;
+    mazu_cJSON *a = NULL;
 
     if ((count < 0) || (strings == NULL))
     {
         return NULL;
     }
 
-    a = cJSON_CreateArray();
+    a = mazu_cJSON_CreateArray();
 
     for (i = 0; a && (i < (size_t)count); i++)
     {
-        n = cJSON_CreateString(strings[i]);
+        n = mazu_cJSON_CreateString(strings[i]);
         if(!n)
         {
-            cJSON_Delete(a);
+            mazu_cJSON_Delete(a);
             return NULL;
         }
         if(!i)
@@ -2547,12 +2547,12 @@ CJSON_PUBLIC(cJSON *) cJSON_CreateStringArray(const char **strings, int count)
 }
 
 /* Duplication */
-CJSON_PUBLIC(cJSON *) cJSON_Duplicate(const cJSON *item, cJSON_bool recurse)
+CJSON_PUBLIC(mazu_cJSON *) mazu_cJSON_Duplicate(const mazu_cJSON *item, mazu_cJSON_bool recurse)
 {
-    cJSON *newitem = NULL;
-    cJSON *child = NULL;
-    cJSON *next = NULL;
-    cJSON *newchild = NULL;
+    mazu_cJSON *newitem = NULL;
+    mazu_cJSON *child = NULL;
+    mazu_cJSON *next = NULL;
+    mazu_cJSON *newchild = NULL;
 
     /* Bail on bad ptr */
     if (!item)
@@ -2560,18 +2560,18 @@ CJSON_PUBLIC(cJSON *) cJSON_Duplicate(const cJSON *item, cJSON_bool recurse)
         goto fail;
     }
     /* Create new item */
-    newitem = cJSON_New_Item(&global_hooks);
+    newitem = mazu_cJSON_New_Item(&global_hooks);
     if (!newitem)
     {
         goto fail;
     }
     /* Copy over all vars */
-    newitem->type = item->type & (~cJSON_IsReference);
+    newitem->type = item->type & (~mazu_cJSON_IsReference);
     newitem->valueint = item->valueint;
     newitem->valuedouble = item->valuedouble;
     if (item->valuestring)
     {
-        newitem->valuestring = (char*)cJSON_strdup((unsigned char*)item->valuestring, &global_hooks);
+        newitem->valuestring = (char*)mazu_cJSON_strdup((unsigned char*)item->valuestring, &global_hooks);
         if (!newitem->valuestring)
         {
             goto fail;
@@ -2579,7 +2579,7 @@ CJSON_PUBLIC(cJSON *) cJSON_Duplicate(const cJSON *item, cJSON_bool recurse)
     }
     if (item->string)
     {
-        newitem->string = (item->type&cJSON_StringIsConst) ? item->string : (char*)cJSON_strdup((unsigned char*)item->string, &global_hooks);
+        newitem->string = (item->type&mazu_cJSON_StringIsConst) ? item->string : (char*)mazu_cJSON_strdup((unsigned char*)item->string, &global_hooks);
         if (!newitem->string)
         {
             goto fail;
@@ -2594,7 +2594,7 @@ CJSON_PUBLIC(cJSON *) cJSON_Duplicate(const cJSON *item, cJSON_bool recurse)
     child = item->child;
     while (child != NULL)
     {
-        newchild = cJSON_Duplicate(child, true); /* Duplicate (with recurse) each item in the ->next chain */
+        newchild = mazu_cJSON_Duplicate(child, true); /* Duplicate (with recurse) each item in the ->next chain */
         if (!newchild)
         {
             goto fail;
@@ -2620,13 +2620,13 @@ CJSON_PUBLIC(cJSON *) cJSON_Duplicate(const cJSON *item, cJSON_bool recurse)
 fail:
     if (newitem != NULL)
     {
-        cJSON_Delete(newitem);
+        mazu_cJSON_Delete(newitem);
     }
 
     return NULL;
 }
 
-CJSON_PUBLIC(void) cJSON_Minify(char *json)
+CJSON_PUBLIC(void) mazu_cJSON_Minify(char *json)
 {
     unsigned char *into = (unsigned char*)json;
 
@@ -2696,109 +2696,109 @@ CJSON_PUBLIC(void) cJSON_Minify(char *json)
     *into = '\0';
 }
 
-CJSON_PUBLIC(cJSON_bool) cJSON_IsInvalid(const cJSON * const item)
+CJSON_PUBLIC(mazu_cJSON_bool) mazu_cJSON_IsInvalid(const mazu_cJSON * const item)
 {
     if (item == NULL)
     {
         return false;
     }
 
-    return (item->type & 0xFF) == cJSON_Invalid;
+    return (item->type & 0xFF) == mazu_cJSON_Invalid;
 }
 
-CJSON_PUBLIC(cJSON_bool) cJSON_IsFalse(const cJSON * const item)
+CJSON_PUBLIC(mazu_cJSON_bool) mazu_cJSON_IsFalse(const mazu_cJSON * const item)
 {
     if (item == NULL)
     {
         return false;
     }
 
-    return (item->type & 0xFF) == cJSON_False;
+    return (item->type & 0xFF) == mazu_cJSON_False;
 }
 
-CJSON_PUBLIC(cJSON_bool) cJSON_IsTrue(const cJSON * const item)
+CJSON_PUBLIC(mazu_cJSON_bool) mazu_cJSON_IsTrue(const mazu_cJSON * const item)
 {
     if (item == NULL)
     {
         return false;
     }
 
-    return (item->type & 0xff) == cJSON_True;
+    return (item->type & 0xff) == mazu_cJSON_True;
 }
 
 
-CJSON_PUBLIC(cJSON_bool) cJSON_IsBool(const cJSON * const item)
+CJSON_PUBLIC(mazu_cJSON_bool) mazu_cJSON_IsBool(const mazu_cJSON * const item)
 {
     if (item == NULL)
     {
         return false;
     }
 
-    return (item->type & (cJSON_True | cJSON_False)) != 0;
+    return (item->type & (mazu_cJSON_True | mazu_cJSON_False)) != 0;
 }
-CJSON_PUBLIC(cJSON_bool) cJSON_IsNull(const cJSON * const item)
+CJSON_PUBLIC(mazu_cJSON_bool) mazu_cJSON_IsNull(const mazu_cJSON * const item)
 {
     if (item == NULL)
     {
         return false;
     }
 
-    return (item->type & 0xFF) == cJSON_NULL;
+    return (item->type & 0xFF) == mazu_cJSON_NULL;
 }
 
-CJSON_PUBLIC(cJSON_bool) cJSON_IsNumber(const cJSON * const item)
+CJSON_PUBLIC(mazu_cJSON_bool) mazu_cJSON_IsNumber(const mazu_cJSON * const item)
 {
     if (item == NULL)
     {
         return false;
     }
 
-    return (item->type & 0xFF) == cJSON_Number;
+    return (item->type & 0xFF) == mazu_cJSON_Number;
 }
 
-CJSON_PUBLIC(cJSON_bool) cJSON_IsString(const cJSON * const item)
+CJSON_PUBLIC(mazu_cJSON_bool) mazu_cJSON_IsString(const mazu_cJSON * const item)
 {
     if (item == NULL)
     {
         return false;
     }
 
-    return (item->type & 0xFF) == cJSON_String;
+    return (item->type & 0xFF) == mazu_cJSON_String;
 }
 
-CJSON_PUBLIC(cJSON_bool) cJSON_IsArray(const cJSON * const item)
+CJSON_PUBLIC(mazu_cJSON_bool) mazu_cJSON_IsArray(const mazu_cJSON * const item)
 {
     if (item == NULL)
     {
         return false;
     }
 
-    return (item->type & 0xFF) == cJSON_Array;
+    return (item->type & 0xFF) == mazu_cJSON_Array;
 }
 
-CJSON_PUBLIC(cJSON_bool) cJSON_IsObject(const cJSON * const item)
+CJSON_PUBLIC(mazu_cJSON_bool) mazu_cJSON_IsObject(const mazu_cJSON * const item)
 {
     if (item == NULL)
     {
         return false;
     }
 
-    return (item->type & 0xFF) == cJSON_Object;
+    return (item->type & 0xFF) == mazu_cJSON_Object;
 }
 
-CJSON_PUBLIC(cJSON_bool) cJSON_IsRaw(const cJSON * const item)
+CJSON_PUBLIC(mazu_cJSON_bool) mazu_cJSON_IsRaw(const mazu_cJSON * const item)
 {
     if (item == NULL)
     {
         return false;
     }
 
-    return (item->type & 0xFF) == cJSON_Raw;
+    return (item->type & 0xFF) == mazu_cJSON_Raw;
 }
 
-CJSON_PUBLIC(cJSON_bool) cJSON_Compare(const cJSON * const a, const cJSON * const b, const cJSON_bool case_sensitive)
+CJSON_PUBLIC(mazu_cJSON_bool) mazu_cJSON_Compare(const mazu_cJSON * const a, const mazu_cJSON * const b, const mazu_cJSON_bool case_sensitive)
 {
-    if ((a == NULL) || (b == NULL) || ((a->type & 0xFF) != (b->type & 0xFF)) || cJSON_IsInvalid(a))
+    if ((a == NULL) || (b == NULL) || ((a->type & 0xFF) != (b->type & 0xFF)) || mazu_cJSON_IsInvalid(a))
     {
         return false;
     }
@@ -2806,14 +2806,14 @@ CJSON_PUBLIC(cJSON_bool) cJSON_Compare(const cJSON * const a, const cJSON * cons
     /* check if type is valid */
     switch (a->type & 0xFF)
     {
-        case cJSON_False:
-        case cJSON_True:
-        case cJSON_NULL:
-        case cJSON_Number:
-        case cJSON_String:
-        case cJSON_Raw:
-        case cJSON_Array:
-        case cJSON_Object:
+        case mazu_cJSON_False:
+        case mazu_cJSON_True:
+        case mazu_cJSON_NULL:
+        case mazu_cJSON_Number:
+        case mazu_cJSON_String:
+        case mazu_cJSON_Raw:
+        case mazu_cJSON_Array:
+        case mazu_cJSON_Object:
             break;
 
         default:
@@ -2829,20 +2829,20 @@ CJSON_PUBLIC(cJSON_bool) cJSON_Compare(const cJSON * const a, const cJSON * cons
     switch (a->type & 0xFF)
     {
         /* in these cases and equal type is enough */
-        case cJSON_False:
-        case cJSON_True:
-        case cJSON_NULL:
+        case mazu_cJSON_False:
+        case mazu_cJSON_True:
+        case mazu_cJSON_NULL:
             return true;
 
-        case cJSON_Number:
+        case mazu_cJSON_Number:
             if (a->valuedouble == b->valuedouble)
             {
                 return true;
             }
             return false;
 
-        case cJSON_String:
-        case cJSON_Raw:
+        case mazu_cJSON_String:
+        case mazu_cJSON_Raw:
             if ((a->valuestring == NULL) || (b->valuestring == NULL))
             {
                 return false;
@@ -2854,14 +2854,14 @@ CJSON_PUBLIC(cJSON_bool) cJSON_Compare(const cJSON * const a, const cJSON * cons
 
             return false;
 
-        case cJSON_Array:
+        case mazu_cJSON_Array:
         {
-            cJSON *a_element = a->child;
-            cJSON *b_element = b->child;
+            mazu_cJSON *a_element = a->child;
+            mazu_cJSON *b_element = b->child;
 
             for (; (a_element != NULL) && (b_element != NULL);)
             {
-                if (!cJSON_Compare(a_element, b_element, case_sensitive))
+                if (!mazu_cJSON_Compare(a_element, b_element, case_sensitive))
                 {
                     return false;
                 }
@@ -2878,11 +2878,11 @@ CJSON_PUBLIC(cJSON_bool) cJSON_Compare(const cJSON * const a, const cJSON * cons
             return true;
         }
 
-        case cJSON_Object:
+        case mazu_cJSON_Object:
         {
-            cJSON *a_element = NULL;
-            cJSON *b_element = NULL;
-            cJSON_ArrayForEach(a_element, a)
+            mazu_cJSON *a_element = NULL;
+            mazu_cJSON *b_element = NULL;
+            mazu_cJSON_ArrayForEach(a_element, a)
             {
                 /* TODO This has O(n^2) runtime, which is horrible! */
                 b_element = get_object_item(b, a_element->string, case_sensitive);
@@ -2891,7 +2891,7 @@ CJSON_PUBLIC(cJSON_bool) cJSON_Compare(const cJSON * const a, const cJSON * cons
                     return false;
                 }
 
-                if (!cJSON_Compare(a_element, b_element, case_sensitive))
+                if (!mazu_cJSON_Compare(a_element, b_element, case_sensitive))
                 {
                     return false;
                 }
@@ -2899,7 +2899,7 @@ CJSON_PUBLIC(cJSON_bool) cJSON_Compare(const cJSON * const a, const cJSON * cons
 
             /* doing this twice, once on a and b to prevent true comparison if a subset of b
              * TODO: Do this the proper way, this is just a fix for now */
-            cJSON_ArrayForEach(b_element, b)
+            mazu_cJSON_ArrayForEach(b_element, b)
             {
                 a_element = get_object_item(a, b_element->string, case_sensitive);
                 if (a_element == NULL)
@@ -2907,7 +2907,7 @@ CJSON_PUBLIC(cJSON_bool) cJSON_Compare(const cJSON * const a, const cJSON * cons
                     return false;
                 }
 
-                if (!cJSON_Compare(b_element, a_element, case_sensitive))
+                if (!mazu_cJSON_Compare(b_element, a_element, case_sensitive))
                 {
                     return false;
                 }
@@ -2921,12 +2921,12 @@ CJSON_PUBLIC(cJSON_bool) cJSON_Compare(const cJSON * const a, const cJSON * cons
     }
 }
 
-CJSON_PUBLIC(void *) cJSON_malloc(size_t size)
+CJSON_PUBLIC(void *) mazu_cJSON_malloc(size_t size)
 {
     return global_hooks.allocate(size);
 }
 
-CJSON_PUBLIC(void) cJSON_free(void *object)
+CJSON_PUBLIC(void) mazu_cJSON_free(void *object)
 {
     global_hooks.deallocate(object);
 }

@@ -39,19 +39,19 @@ void v1_ingress_tls_free(v1_ingress_tls_t *v1_ingress_tls) {
     free(v1_ingress_tls);
 }
 
-cJSON *v1_ingress_tls_convertToJSON(v1_ingress_tls_t *v1_ingress_tls) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_ingress_tls_convertToJSON(v1_ingress_tls_t *v1_ingress_tls) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_ingress_tls->hosts
     if(v1_ingress_tls->hosts) {
-    cJSON *hosts = cJSON_AddArrayToObject(item, "hosts");
+    mazu_cJSON *hosts = mazu_cJSON_AddArrayToObject(item, "hosts");
     if(hosts == NULL) {
         goto fail; //primitive container
     }
 
     listEntry_t *hostsListEntry;
     list_ForEach(hostsListEntry, v1_ingress_tls->hosts) {
-    if(cJSON_AddStringToObject(hosts, "", (char*)hostsListEntry->data) == NULL)
+    if(mazu_cJSON_AddStringToObject(hosts, "", (char*)hostsListEntry->data) == NULL)
     {
         goto fail;
     }
@@ -61,7 +61,7 @@ cJSON *v1_ingress_tls_convertToJSON(v1_ingress_tls_t *v1_ingress_tls) {
 
     // v1_ingress_tls->secret_name
     if(v1_ingress_tls->secret_name) {
-    if(cJSON_AddStringToObject(item, "secretName", v1_ingress_tls->secret_name) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "secretName", v1_ingress_tls->secret_name) == NULL) {
     goto fail; //String
     }
     }
@@ -69,12 +69,12 @@ cJSON *v1_ingress_tls_convertToJSON(v1_ingress_tls_t *v1_ingress_tls) {
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_ingress_tls_t *v1_ingress_tls_parseFromJSON(cJSON *v1_ingress_tlsJSON){
+v1_ingress_tls_t *v1_ingress_tls_parseFromJSON(mazu_cJSON *v1_ingress_tlsJSON){
 
     v1_ingress_tls_t *v1_ingress_tls_local_var = NULL;
 
@@ -82,17 +82,17 @@ v1_ingress_tls_t *v1_ingress_tls_parseFromJSON(cJSON *v1_ingress_tlsJSON){
     list_t *hostsList = NULL;
 
     // v1_ingress_tls->hosts
-    cJSON *hosts = cJSON_GetObjectItemCaseSensitive(v1_ingress_tlsJSON, "hosts");
+    mazu_cJSON *hosts = mazu_cJSON_GetObjectItemCaseSensitive(v1_ingress_tlsJSON, "hosts");
     if (hosts) { 
-    cJSON *hosts_local = NULL;
-    if(!cJSON_IsArray(hosts)) {
+    mazu_cJSON *hosts_local = NULL;
+    if(!mazu_cJSON_IsArray(hosts)) {
         goto end;//primitive container
     }
     hostsList = list_createList();
 
-    cJSON_ArrayForEach(hosts_local, hosts)
+    mazu_cJSON_ArrayForEach(hosts_local, hosts)
     {
-        if(!cJSON_IsString(hosts_local))
+        if(!mazu_cJSON_IsString(hosts_local))
         {
             goto end;
         }
@@ -101,9 +101,9 @@ v1_ingress_tls_t *v1_ingress_tls_parseFromJSON(cJSON *v1_ingress_tlsJSON){
     }
 
     // v1_ingress_tls->secret_name
-    cJSON *secret_name = cJSON_GetObjectItemCaseSensitive(v1_ingress_tlsJSON, "secretName");
+    mazu_cJSON *secret_name = mazu_cJSON_GetObjectItemCaseSensitive(v1_ingress_tlsJSON, "secretName");
     if (secret_name) { 
-    if(!cJSON_IsString(secret_name) && !cJSON_IsNull(secret_name))
+    if(!mazu_cJSON_IsString(secret_name) && !mazu_cJSON_IsNull(secret_name))
     {
     goto end; //String
     }
@@ -112,7 +112,7 @@ v1_ingress_tls_t *v1_ingress_tls_parseFromJSON(cJSON *v1_ingress_tlsJSON){
 
     v1_ingress_tls_local_var = v1_ingress_tls_create (
         hosts ? hostsList : NULL,
-        secret_name && !cJSON_IsNull(secret_name) ? strdup(secret_name->valuestring) : NULL
+        secret_name && !mazu_cJSON_IsNull(secret_name) ? strdup(secret_name->valuestring) : NULL
         );
 
     return v1_ingress_tls_local_var;

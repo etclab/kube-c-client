@@ -8,7 +8,7 @@
 #define _v1_priority_level_configuration_status_H_
 
 #include <string.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
 #include "../include/binary.h"
@@ -30,9 +30,9 @@ v1_priority_level_configuration_status_t *v1_priority_level_configuration_status
 
 void v1_priority_level_configuration_status_free(v1_priority_level_configuration_status_t *v1_priority_level_configuration_status);
 
-v1_priority_level_configuration_status_t *v1_priority_level_configuration_status_parseFromJSON(cJSON *v1_priority_level_configuration_statusJSON);
+v1_priority_level_configuration_status_t *v1_priority_level_configuration_status_parseFromJSON(mazu_cJSON *v1_priority_level_configuration_statusJSON);
 
-cJSON *v1_priority_level_configuration_status_convertToJSON(v1_priority_level_configuration_status_t *v1_priority_level_configuration_status);
+mazu_cJSON *v1_priority_level_configuration_status_convertToJSON(v1_priority_level_configuration_status_t *v1_priority_level_configuration_status);
 
 #endif /* _v1_priority_level_configuration_status_H_ */
 

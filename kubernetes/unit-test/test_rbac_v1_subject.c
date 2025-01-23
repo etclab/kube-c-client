@@ -11,7 +11,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdbool.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 
 #include "../model/rbac_v1_subject.h"
 rbac_v1_subject_t* instantiate_rbac_v1_subject(int include_optional);
@@ -45,11 +45,11 @@ rbac_v1_subject_t* instantiate_rbac_v1_subject(int include_optional) {
 void test_rbac_v1_subject(int include_optional) {
     rbac_v1_subject_t* rbac_v1_subject_1 = instantiate_rbac_v1_subject(include_optional);
 
-	cJSON* jsonrbac_v1_subject_1 = rbac_v1_subject_convertToJSON(rbac_v1_subject_1);
-	printf("rbac_v1_subject :\n%s\n", cJSON_Print(jsonrbac_v1_subject_1));
+	mazu_cJSON* jsonrbac_v1_subject_1 = rbac_v1_subject_convertToJSON(rbac_v1_subject_1);
+	printf("rbac_v1_subject :\n%s\n", mazu_cJSON_Print(jsonrbac_v1_subject_1));
 	rbac_v1_subject_t* rbac_v1_subject_2 = rbac_v1_subject_parseFromJSON(jsonrbac_v1_subject_1);
-	cJSON* jsonrbac_v1_subject_2 = rbac_v1_subject_convertToJSON(rbac_v1_subject_2);
-	printf("repeating rbac_v1_subject:\n%s\n", cJSON_Print(jsonrbac_v1_subject_2));
+	mazu_cJSON* jsonrbac_v1_subject_2 = rbac_v1_subject_convertToJSON(rbac_v1_subject_2);
+	printf("repeating rbac_v1_subject:\n%s\n", mazu_cJSON_Print(jsonrbac_v1_subject_2));
 }
 
 int main() {

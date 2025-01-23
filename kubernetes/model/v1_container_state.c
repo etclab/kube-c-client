@@ -42,16 +42,16 @@ void v1_container_state_free(v1_container_state_t *v1_container_state) {
     free(v1_container_state);
 }
 
-cJSON *v1_container_state_convertToJSON(v1_container_state_t *v1_container_state) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_container_state_convertToJSON(v1_container_state_t *v1_container_state) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_container_state->running
     if(v1_container_state->running) {
-    cJSON *running_local_JSON = v1_container_state_running_convertToJSON(v1_container_state->running);
+    mazu_cJSON *running_local_JSON = v1_container_state_running_convertToJSON(v1_container_state->running);
     if(running_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "running", running_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "running", running_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -60,11 +60,11 @@ cJSON *v1_container_state_convertToJSON(v1_container_state_t *v1_container_state
 
     // v1_container_state->terminated
     if(v1_container_state->terminated) {
-    cJSON *terminated_local_JSON = v1_container_state_terminated_convertToJSON(v1_container_state->terminated);
+    mazu_cJSON *terminated_local_JSON = v1_container_state_terminated_convertToJSON(v1_container_state->terminated);
     if(terminated_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "terminated", terminated_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "terminated", terminated_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -73,11 +73,11 @@ cJSON *v1_container_state_convertToJSON(v1_container_state_t *v1_container_state
 
     // v1_container_state->waiting
     if(v1_container_state->waiting) {
-    cJSON *waiting_local_JSON = v1_container_state_waiting_convertToJSON(v1_container_state->waiting);
+    mazu_cJSON *waiting_local_JSON = v1_container_state_waiting_convertToJSON(v1_container_state->waiting);
     if(waiting_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "waiting", waiting_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "waiting", waiting_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -86,12 +86,12 @@ cJSON *v1_container_state_convertToJSON(v1_container_state_t *v1_container_state
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_container_state_t *v1_container_state_parseFromJSON(cJSON *v1_container_stateJSON){
+v1_container_state_t *v1_container_state_parseFromJSON(mazu_cJSON *v1_container_stateJSON){
 
     v1_container_state_t *v1_container_state_local_var = NULL;
 
@@ -105,19 +105,19 @@ v1_container_state_t *v1_container_state_parseFromJSON(cJSON *v1_container_state
     v1_container_state_waiting_t *waiting_local_nonprim = NULL;
 
     // v1_container_state->running
-    cJSON *running = cJSON_GetObjectItemCaseSensitive(v1_container_stateJSON, "running");
+    mazu_cJSON *running = mazu_cJSON_GetObjectItemCaseSensitive(v1_container_stateJSON, "running");
     if (running) { 
     running_local_nonprim = v1_container_state_running_parseFromJSON(running); //nonprimitive
     }
 
     // v1_container_state->terminated
-    cJSON *terminated = cJSON_GetObjectItemCaseSensitive(v1_container_stateJSON, "terminated");
+    mazu_cJSON *terminated = mazu_cJSON_GetObjectItemCaseSensitive(v1_container_stateJSON, "terminated");
     if (terminated) { 
     terminated_local_nonprim = v1_container_state_terminated_parseFromJSON(terminated); //nonprimitive
     }
 
     // v1_container_state->waiting
-    cJSON *waiting = cJSON_GetObjectItemCaseSensitive(v1_container_stateJSON, "waiting");
+    mazu_cJSON *waiting = mazu_cJSON_GetObjectItemCaseSensitive(v1_container_stateJSON, "waiting");
     if (waiting) { 
     waiting_local_nonprim = v1_container_state_waiting_parseFromJSON(waiting); //nonprimitive
     }

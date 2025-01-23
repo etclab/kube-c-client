@@ -8,7 +8,7 @@
 #define _v1beta1_ip_address_H_
 
 #include <string.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
 #include "../include/binary.h"
@@ -37,9 +37,9 @@ v1beta1_ip_address_t *v1beta1_ip_address_create(
 
 void v1beta1_ip_address_free(v1beta1_ip_address_t *v1beta1_ip_address);
 
-v1beta1_ip_address_t *v1beta1_ip_address_parseFromJSON(cJSON *v1beta1_ip_addressJSON);
+v1beta1_ip_address_t *v1beta1_ip_address_parseFromJSON(mazu_cJSON *v1beta1_ip_addressJSON);
 
-cJSON *v1beta1_ip_address_convertToJSON(v1beta1_ip_address_t *v1beta1_ip_address);
+mazu_cJSON *v1beta1_ip_address_convertToJSON(v1beta1_ip_address_t *v1beta1_ip_address);
 
 #endif /* _v1beta1_ip_address_H_ */
 

@@ -8,7 +8,7 @@
 #define _core_v1_endpoint_port_H_
 
 #include <string.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
 #include "../include/binary.h"
@@ -35,9 +35,9 @@ core_v1_endpoint_port_t *core_v1_endpoint_port_create(
 
 void core_v1_endpoint_port_free(core_v1_endpoint_port_t *core_v1_endpoint_port);
 
-core_v1_endpoint_port_t *core_v1_endpoint_port_parseFromJSON(cJSON *core_v1_endpoint_portJSON);
+core_v1_endpoint_port_t *core_v1_endpoint_port_parseFromJSON(mazu_cJSON *core_v1_endpoint_portJSON);
 
-cJSON *core_v1_endpoint_port_convertToJSON(core_v1_endpoint_port_t *core_v1_endpoint_port);
+mazu_cJSON *core_v1_endpoint_port_convertToJSON(core_v1_endpoint_port_t *core_v1_endpoint_port);
 
 #endif /* _core_v1_endpoint_port_H_ */
 

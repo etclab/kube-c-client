@@ -8,7 +8,7 @@
 #define _v1_replica_set_H_
 
 #include <string.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
 #include "../include/binary.h"
@@ -40,9 +40,9 @@ v1_replica_set_t *v1_replica_set_create(
 
 void v1_replica_set_free(v1_replica_set_t *v1_replica_set);
 
-v1_replica_set_t *v1_replica_set_parseFromJSON(cJSON *v1_replica_setJSON);
+v1_replica_set_t *v1_replica_set_parseFromJSON(mazu_cJSON *v1_replica_setJSON);
 
-cJSON *v1_replica_set_convertToJSON(v1_replica_set_t *v1_replica_set);
+mazu_cJSON *v1_replica_set_convertToJSON(v1_replica_set_t *v1_replica_set);
 
 #endif /* _v1_replica_set_H_ */
 

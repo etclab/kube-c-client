@@ -90,21 +90,21 @@ void v1_limit_range_item_free(v1_limit_range_item_t *v1_limit_range_item) {
     free(v1_limit_range_item);
 }
 
-cJSON *v1_limit_range_item_convertToJSON(v1_limit_range_item_t *v1_limit_range_item) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_limit_range_item_convertToJSON(v1_limit_range_item_t *v1_limit_range_item) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_limit_range_item->_default
     if(v1_limit_range_item->_default) {
-    cJSON *_default = cJSON_AddObjectToObject(item, "default");
+    mazu_cJSON *_default = mazu_cJSON_AddObjectToObject(item, "default");
     if(_default == NULL) {
         goto fail; //primitive map container
     }
-    cJSON *localMapObject = _default;
+    mazu_cJSON *localMapObject = _default;
     listEntry_t *_defaultListEntry;
     if (v1_limit_range_item->_default) {
     list_ForEach(_defaultListEntry, v1_limit_range_item->_default) {
         keyValuePair_t *localKeyValue = (keyValuePair_t*)_defaultListEntry->data;
-        if(cJSON_AddStringToObject(localMapObject, localKeyValue->key, (char*)localKeyValue->value) == NULL)
+        if(mazu_cJSON_AddStringToObject(localMapObject, localKeyValue->key, (char*)localKeyValue->value) == NULL)
         {
             goto fail;
         }
@@ -115,16 +115,16 @@ cJSON *v1_limit_range_item_convertToJSON(v1_limit_range_item_t *v1_limit_range_i
 
     // v1_limit_range_item->default_request
     if(v1_limit_range_item->default_request) {
-    cJSON *default_request = cJSON_AddObjectToObject(item, "defaultRequest");
+    mazu_cJSON *default_request = mazu_cJSON_AddObjectToObject(item, "defaultRequest");
     if(default_request == NULL) {
         goto fail; //primitive map container
     }
-    cJSON *localMapObject = default_request;
+    mazu_cJSON *localMapObject = default_request;
     listEntry_t *default_requestListEntry;
     if (v1_limit_range_item->default_request) {
     list_ForEach(default_requestListEntry, v1_limit_range_item->default_request) {
         keyValuePair_t *localKeyValue = (keyValuePair_t*)default_requestListEntry->data;
-        if(cJSON_AddStringToObject(localMapObject, localKeyValue->key, (char*)localKeyValue->value) == NULL)
+        if(mazu_cJSON_AddStringToObject(localMapObject, localKeyValue->key, (char*)localKeyValue->value) == NULL)
         {
             goto fail;
         }
@@ -135,16 +135,16 @@ cJSON *v1_limit_range_item_convertToJSON(v1_limit_range_item_t *v1_limit_range_i
 
     // v1_limit_range_item->max
     if(v1_limit_range_item->max) {
-    cJSON *max = cJSON_AddObjectToObject(item, "max");
+    mazu_cJSON *max = mazu_cJSON_AddObjectToObject(item, "max");
     if(max == NULL) {
         goto fail; //primitive map container
     }
-    cJSON *localMapObject = max;
+    mazu_cJSON *localMapObject = max;
     listEntry_t *maxListEntry;
     if (v1_limit_range_item->max) {
     list_ForEach(maxListEntry, v1_limit_range_item->max) {
         keyValuePair_t *localKeyValue = (keyValuePair_t*)maxListEntry->data;
-        if(cJSON_AddStringToObject(localMapObject, localKeyValue->key, (char*)localKeyValue->value) == NULL)
+        if(mazu_cJSON_AddStringToObject(localMapObject, localKeyValue->key, (char*)localKeyValue->value) == NULL)
         {
             goto fail;
         }
@@ -155,16 +155,16 @@ cJSON *v1_limit_range_item_convertToJSON(v1_limit_range_item_t *v1_limit_range_i
 
     // v1_limit_range_item->max_limit_request_ratio
     if(v1_limit_range_item->max_limit_request_ratio) {
-    cJSON *max_limit_request_ratio = cJSON_AddObjectToObject(item, "maxLimitRequestRatio");
+    mazu_cJSON *max_limit_request_ratio = mazu_cJSON_AddObjectToObject(item, "maxLimitRequestRatio");
     if(max_limit_request_ratio == NULL) {
         goto fail; //primitive map container
     }
-    cJSON *localMapObject = max_limit_request_ratio;
+    mazu_cJSON *localMapObject = max_limit_request_ratio;
     listEntry_t *max_limit_request_ratioListEntry;
     if (v1_limit_range_item->max_limit_request_ratio) {
     list_ForEach(max_limit_request_ratioListEntry, v1_limit_range_item->max_limit_request_ratio) {
         keyValuePair_t *localKeyValue = (keyValuePair_t*)max_limit_request_ratioListEntry->data;
-        if(cJSON_AddStringToObject(localMapObject, localKeyValue->key, (char*)localKeyValue->value) == NULL)
+        if(mazu_cJSON_AddStringToObject(localMapObject, localKeyValue->key, (char*)localKeyValue->value) == NULL)
         {
             goto fail;
         }
@@ -175,16 +175,16 @@ cJSON *v1_limit_range_item_convertToJSON(v1_limit_range_item_t *v1_limit_range_i
 
     // v1_limit_range_item->min
     if(v1_limit_range_item->min) {
-    cJSON *min = cJSON_AddObjectToObject(item, "min");
+    mazu_cJSON *min = mazu_cJSON_AddObjectToObject(item, "min");
     if(min == NULL) {
         goto fail; //primitive map container
     }
-    cJSON *localMapObject = min;
+    mazu_cJSON *localMapObject = min;
     listEntry_t *minListEntry;
     if (v1_limit_range_item->min) {
     list_ForEach(minListEntry, v1_limit_range_item->min) {
         keyValuePair_t *localKeyValue = (keyValuePair_t*)minListEntry->data;
-        if(cJSON_AddStringToObject(localMapObject, localKeyValue->key, (char*)localKeyValue->value) == NULL)
+        if(mazu_cJSON_AddStringToObject(localMapObject, localKeyValue->key, (char*)localKeyValue->value) == NULL)
         {
             goto fail;
         }
@@ -197,19 +197,19 @@ cJSON *v1_limit_range_item_convertToJSON(v1_limit_range_item_t *v1_limit_range_i
     if (!v1_limit_range_item->type) {
         goto fail;
     }
-    if(cJSON_AddStringToObject(item, "type", v1_limit_range_item->type) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "type", v1_limit_range_item->type) == NULL) {
     goto fail; //String
     }
 
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_limit_range_item_t *v1_limit_range_item_parseFromJSON(cJSON *v1_limit_range_itemJSON){
+v1_limit_range_item_t *v1_limit_range_item_parseFromJSON(mazu_cJSON *v1_limit_range_itemJSON){
 
     v1_limit_range_item_t *v1_limit_range_item_local_var = NULL;
 
@@ -229,21 +229,21 @@ v1_limit_range_item_t *v1_limit_range_item_parseFromJSON(cJSON *v1_limit_range_i
     list_t *minList = NULL;
 
     // v1_limit_range_item->_default
-    cJSON *_default = cJSON_GetObjectItemCaseSensitive(v1_limit_range_itemJSON, "default");
+    mazu_cJSON *_default = mazu_cJSON_GetObjectItemCaseSensitive(v1_limit_range_itemJSON, "default");
     if (_default) { 
-    cJSON *_default_local_map = NULL;
-    if(!cJSON_IsObject(_default) && !cJSON_IsNull(_default))
+    mazu_cJSON *_default_local_map = NULL;
+    if(!mazu_cJSON_IsObject(_default) && !mazu_cJSON_IsNull(_default))
     {
         goto end;//primitive map container
     }
-    if(cJSON_IsObject(_default))
+    if(mazu_cJSON_IsObject(_default))
     {
         _defaultList = list_createList();
         keyValuePair_t *localMapKeyPair;
-        cJSON_ArrayForEach(_default_local_map, _default)
+        mazu_cJSON_ArrayForEach(_default_local_map, _default)
         {
-            cJSON *localMapObject = _default_local_map;
-            if(!cJSON_IsString(localMapObject))
+            mazu_cJSON *localMapObject = _default_local_map;
+            if(!mazu_cJSON_IsString(localMapObject))
             {
                 goto end;
             }
@@ -254,21 +254,21 @@ v1_limit_range_item_t *v1_limit_range_item_parseFromJSON(cJSON *v1_limit_range_i
     }
 
     // v1_limit_range_item->default_request
-    cJSON *default_request = cJSON_GetObjectItemCaseSensitive(v1_limit_range_itemJSON, "defaultRequest");
+    mazu_cJSON *default_request = mazu_cJSON_GetObjectItemCaseSensitive(v1_limit_range_itemJSON, "defaultRequest");
     if (default_request) { 
-    cJSON *default_request_local_map = NULL;
-    if(!cJSON_IsObject(default_request) && !cJSON_IsNull(default_request))
+    mazu_cJSON *default_request_local_map = NULL;
+    if(!mazu_cJSON_IsObject(default_request) && !mazu_cJSON_IsNull(default_request))
     {
         goto end;//primitive map container
     }
-    if(cJSON_IsObject(default_request))
+    if(mazu_cJSON_IsObject(default_request))
     {
         default_requestList = list_createList();
         keyValuePair_t *localMapKeyPair;
-        cJSON_ArrayForEach(default_request_local_map, default_request)
+        mazu_cJSON_ArrayForEach(default_request_local_map, default_request)
         {
-            cJSON *localMapObject = default_request_local_map;
-            if(!cJSON_IsString(localMapObject))
+            mazu_cJSON *localMapObject = default_request_local_map;
+            if(!mazu_cJSON_IsString(localMapObject))
             {
                 goto end;
             }
@@ -279,21 +279,21 @@ v1_limit_range_item_t *v1_limit_range_item_parseFromJSON(cJSON *v1_limit_range_i
     }
 
     // v1_limit_range_item->max
-    cJSON *max = cJSON_GetObjectItemCaseSensitive(v1_limit_range_itemJSON, "max");
+    mazu_cJSON *max = mazu_cJSON_GetObjectItemCaseSensitive(v1_limit_range_itemJSON, "max");
     if (max) { 
-    cJSON *max_local_map = NULL;
-    if(!cJSON_IsObject(max) && !cJSON_IsNull(max))
+    mazu_cJSON *max_local_map = NULL;
+    if(!mazu_cJSON_IsObject(max) && !mazu_cJSON_IsNull(max))
     {
         goto end;//primitive map container
     }
-    if(cJSON_IsObject(max))
+    if(mazu_cJSON_IsObject(max))
     {
         maxList = list_createList();
         keyValuePair_t *localMapKeyPair;
-        cJSON_ArrayForEach(max_local_map, max)
+        mazu_cJSON_ArrayForEach(max_local_map, max)
         {
-            cJSON *localMapObject = max_local_map;
-            if(!cJSON_IsString(localMapObject))
+            mazu_cJSON *localMapObject = max_local_map;
+            if(!mazu_cJSON_IsString(localMapObject))
             {
                 goto end;
             }
@@ -304,21 +304,21 @@ v1_limit_range_item_t *v1_limit_range_item_parseFromJSON(cJSON *v1_limit_range_i
     }
 
     // v1_limit_range_item->max_limit_request_ratio
-    cJSON *max_limit_request_ratio = cJSON_GetObjectItemCaseSensitive(v1_limit_range_itemJSON, "maxLimitRequestRatio");
+    mazu_cJSON *max_limit_request_ratio = mazu_cJSON_GetObjectItemCaseSensitive(v1_limit_range_itemJSON, "maxLimitRequestRatio");
     if (max_limit_request_ratio) { 
-    cJSON *max_limit_request_ratio_local_map = NULL;
-    if(!cJSON_IsObject(max_limit_request_ratio) && !cJSON_IsNull(max_limit_request_ratio))
+    mazu_cJSON *max_limit_request_ratio_local_map = NULL;
+    if(!mazu_cJSON_IsObject(max_limit_request_ratio) && !mazu_cJSON_IsNull(max_limit_request_ratio))
     {
         goto end;//primitive map container
     }
-    if(cJSON_IsObject(max_limit_request_ratio))
+    if(mazu_cJSON_IsObject(max_limit_request_ratio))
     {
         max_limit_request_ratioList = list_createList();
         keyValuePair_t *localMapKeyPair;
-        cJSON_ArrayForEach(max_limit_request_ratio_local_map, max_limit_request_ratio)
+        mazu_cJSON_ArrayForEach(max_limit_request_ratio_local_map, max_limit_request_ratio)
         {
-            cJSON *localMapObject = max_limit_request_ratio_local_map;
-            if(!cJSON_IsString(localMapObject))
+            mazu_cJSON *localMapObject = max_limit_request_ratio_local_map;
+            if(!mazu_cJSON_IsString(localMapObject))
             {
                 goto end;
             }
@@ -329,21 +329,21 @@ v1_limit_range_item_t *v1_limit_range_item_parseFromJSON(cJSON *v1_limit_range_i
     }
 
     // v1_limit_range_item->min
-    cJSON *min = cJSON_GetObjectItemCaseSensitive(v1_limit_range_itemJSON, "min");
+    mazu_cJSON *min = mazu_cJSON_GetObjectItemCaseSensitive(v1_limit_range_itemJSON, "min");
     if (min) { 
-    cJSON *min_local_map = NULL;
-    if(!cJSON_IsObject(min) && !cJSON_IsNull(min))
+    mazu_cJSON *min_local_map = NULL;
+    if(!mazu_cJSON_IsObject(min) && !mazu_cJSON_IsNull(min))
     {
         goto end;//primitive map container
     }
-    if(cJSON_IsObject(min))
+    if(mazu_cJSON_IsObject(min))
     {
         minList = list_createList();
         keyValuePair_t *localMapKeyPair;
-        cJSON_ArrayForEach(min_local_map, min)
+        mazu_cJSON_ArrayForEach(min_local_map, min)
         {
-            cJSON *localMapObject = min_local_map;
-            if(!cJSON_IsString(localMapObject))
+            mazu_cJSON *localMapObject = min_local_map;
+            if(!mazu_cJSON_IsString(localMapObject))
             {
                 goto end;
             }
@@ -354,13 +354,13 @@ v1_limit_range_item_t *v1_limit_range_item_parseFromJSON(cJSON *v1_limit_range_i
     }
 
     // v1_limit_range_item->type
-    cJSON *type = cJSON_GetObjectItemCaseSensitive(v1_limit_range_itemJSON, "type");
+    mazu_cJSON *type = mazu_cJSON_GetObjectItemCaseSensitive(v1_limit_range_itemJSON, "type");
     if (!type) {
         goto end;
     }
 
     
-    if(!cJSON_IsString(type))
+    if(!mazu_cJSON_IsString(type))
     {
     goto end; //String
     }

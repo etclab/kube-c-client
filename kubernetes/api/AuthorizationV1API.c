@@ -91,12 +91,12 @@ AuthorizationV1API_createNamespacedLocalSubjectAccessReview(apiClient_t *apiClie
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body = NULL;
+    mazu_cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
         localVarSingleItemJSON_body = v1_local_subject_access_review_convertToJSON(body);
-        localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyParameters = mazu_cJSON_Print(localVarSingleItemJSON_body);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
@@ -128,9 +128,9 @@ AuthorizationV1API_createNamespacedLocalSubjectAccessReview(apiClient_t *apiClie
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *AuthorizationV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    mazu_cJSON *AuthorizationV1APIlocalVarJSON = mazu_cJSON_Parse(apiClient->dataReceived);
     v1_local_subject_access_review_t *elementToReturn = v1_local_subject_access_review_parseFromJSON(AuthorizationV1APIlocalVarJSON);
-    cJSON_Delete(AuthorizationV1APIlocalVarJSON);
+    mazu_cJSON_Delete(AuthorizationV1APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
     }
@@ -149,7 +149,7 @@ AuthorizationV1API_createNamespacedLocalSubjectAccessReview(apiClient_t *apiClie
     free(localVarPath);
     free(localVarToReplace__namespace);
     if (localVarSingleItemJSON_body) {
-        cJSON_Delete(localVarSingleItemJSON_body);
+        mazu_cJSON_Delete(localVarSingleItemJSON_body);
         localVarSingleItemJSON_body = NULL;
     }
     free(localVarBodyParameters);
@@ -277,12 +277,12 @@ AuthorizationV1API_createSelfSubjectAccessReview(apiClient_t *apiClient, v1_self
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body = NULL;
+    mazu_cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
         localVarSingleItemJSON_body = v1_self_subject_access_review_convertToJSON(body);
-        localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyParameters = mazu_cJSON_Print(localVarSingleItemJSON_body);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
@@ -314,9 +314,9 @@ AuthorizationV1API_createSelfSubjectAccessReview(apiClient_t *apiClient, v1_self
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *AuthorizationV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    mazu_cJSON *AuthorizationV1APIlocalVarJSON = mazu_cJSON_Parse(apiClient->dataReceived);
     v1_self_subject_access_review_t *elementToReturn = v1_self_subject_access_review_parseFromJSON(AuthorizationV1APIlocalVarJSON);
-    cJSON_Delete(AuthorizationV1APIlocalVarJSON);
+    mazu_cJSON_Delete(AuthorizationV1APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
     }
@@ -334,7 +334,7 @@ AuthorizationV1API_createSelfSubjectAccessReview(apiClient_t *apiClient, v1_self
     
     free(localVarPath);
     if (localVarSingleItemJSON_body) {
-        cJSON_Delete(localVarSingleItemJSON_body);
+        mazu_cJSON_Delete(localVarSingleItemJSON_body);
         localVarSingleItemJSON_body = NULL;
     }
     free(localVarBodyParameters);
@@ -462,12 +462,12 @@ AuthorizationV1API_createSelfSubjectRulesReview(apiClient_t *apiClient, v1_self_
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body = NULL;
+    mazu_cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
         localVarSingleItemJSON_body = v1_self_subject_rules_review_convertToJSON(body);
-        localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyParameters = mazu_cJSON_Print(localVarSingleItemJSON_body);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
@@ -499,9 +499,9 @@ AuthorizationV1API_createSelfSubjectRulesReview(apiClient_t *apiClient, v1_self_
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *AuthorizationV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    mazu_cJSON *AuthorizationV1APIlocalVarJSON = mazu_cJSON_Parse(apiClient->dataReceived);
     v1_self_subject_rules_review_t *elementToReturn = v1_self_subject_rules_review_parseFromJSON(AuthorizationV1APIlocalVarJSON);
-    cJSON_Delete(AuthorizationV1APIlocalVarJSON);
+    mazu_cJSON_Delete(AuthorizationV1APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
     }
@@ -519,7 +519,7 @@ AuthorizationV1API_createSelfSubjectRulesReview(apiClient_t *apiClient, v1_self_
     
     free(localVarPath);
     if (localVarSingleItemJSON_body) {
-        cJSON_Delete(localVarSingleItemJSON_body);
+        mazu_cJSON_Delete(localVarSingleItemJSON_body);
         localVarSingleItemJSON_body = NULL;
     }
     free(localVarBodyParameters);
@@ -647,12 +647,12 @@ AuthorizationV1API_createSubjectAccessReview(apiClient_t *apiClient, v1_subject_
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body = NULL;
+    mazu_cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
         localVarSingleItemJSON_body = v1_subject_access_review_convertToJSON(body);
-        localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyParameters = mazu_cJSON_Print(localVarSingleItemJSON_body);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
@@ -684,9 +684,9 @@ AuthorizationV1API_createSubjectAccessReview(apiClient_t *apiClient, v1_subject_
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *AuthorizationV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    mazu_cJSON *AuthorizationV1APIlocalVarJSON = mazu_cJSON_Parse(apiClient->dataReceived);
     v1_subject_access_review_t *elementToReturn = v1_subject_access_review_parseFromJSON(AuthorizationV1APIlocalVarJSON);
-    cJSON_Delete(AuthorizationV1APIlocalVarJSON);
+    mazu_cJSON_Delete(AuthorizationV1APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
     }
@@ -704,7 +704,7 @@ AuthorizationV1API_createSubjectAccessReview(apiClient_t *apiClient, v1_subject_
     
     free(localVarPath);
     if (localVarSingleItemJSON_body) {
-        cJSON_Delete(localVarSingleItemJSON_body);
+        mazu_cJSON_Delete(localVarSingleItemJSON_body);
         localVarSingleItemJSON_body = NULL;
     }
     free(localVarBodyParameters);
@@ -804,9 +804,9 @@ AuthorizationV1API_getAPIResources_9(apiClient_t *apiClient)
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *AuthorizationV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    mazu_cJSON *AuthorizationV1APIlocalVarJSON = mazu_cJSON_Parse(apiClient->dataReceived);
     v1_api_resource_list_t *elementToReturn = v1_api_resource_list_parseFromJSON(AuthorizationV1APIlocalVarJSON);
-    cJSON_Delete(AuthorizationV1APIlocalVarJSON);
+    mazu_cJSON_Delete(AuthorizationV1APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
     }

@@ -59,16 +59,16 @@ void v1_custom_resource_definition_spec_free(v1_custom_resource_definition_spec_
     free(v1_custom_resource_definition_spec);
 }
 
-cJSON *v1_custom_resource_definition_spec_convertToJSON(v1_custom_resource_definition_spec_t *v1_custom_resource_definition_spec) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_custom_resource_definition_spec_convertToJSON(v1_custom_resource_definition_spec_t *v1_custom_resource_definition_spec) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_custom_resource_definition_spec->conversion
     if(v1_custom_resource_definition_spec->conversion) {
-    cJSON *conversion_local_JSON = v1_custom_resource_conversion_convertToJSON(v1_custom_resource_definition_spec->conversion);
+    mazu_cJSON *conversion_local_JSON = v1_custom_resource_conversion_convertToJSON(v1_custom_resource_definition_spec->conversion);
     if(conversion_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "conversion", conversion_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "conversion", conversion_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -79,7 +79,7 @@ cJSON *v1_custom_resource_definition_spec_convertToJSON(v1_custom_resource_defin
     if (!v1_custom_resource_definition_spec->group) {
         goto fail;
     }
-    if(cJSON_AddStringToObject(item, "group", v1_custom_resource_definition_spec->group) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "group", v1_custom_resource_definition_spec->group) == NULL) {
     goto fail; //String
     }
 
@@ -88,11 +88,11 @@ cJSON *v1_custom_resource_definition_spec_convertToJSON(v1_custom_resource_defin
     if (!v1_custom_resource_definition_spec->names) {
         goto fail;
     }
-    cJSON *names_local_JSON = v1_custom_resource_definition_names_convertToJSON(v1_custom_resource_definition_spec->names);
+    mazu_cJSON *names_local_JSON = v1_custom_resource_definition_names_convertToJSON(v1_custom_resource_definition_spec->names);
     if(names_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "names", names_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "names", names_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -100,7 +100,7 @@ cJSON *v1_custom_resource_definition_spec_convertToJSON(v1_custom_resource_defin
 
     // v1_custom_resource_definition_spec->preserve_unknown_fields
     if(v1_custom_resource_definition_spec->preserve_unknown_fields) {
-    if(cJSON_AddBoolToObject(item, "preserveUnknownFields", v1_custom_resource_definition_spec->preserve_unknown_fields) == NULL) {
+    if(mazu_cJSON_AddBoolToObject(item, "preserveUnknownFields", v1_custom_resource_definition_spec->preserve_unknown_fields) == NULL) {
     goto fail; //Bool
     }
     }
@@ -110,7 +110,7 @@ cJSON *v1_custom_resource_definition_spec_convertToJSON(v1_custom_resource_defin
     if (!v1_custom_resource_definition_spec->scope) {
         goto fail;
     }
-    if(cJSON_AddStringToObject(item, "scope", v1_custom_resource_definition_spec->scope) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "scope", v1_custom_resource_definition_spec->scope) == NULL) {
     goto fail; //String
     }
 
@@ -119,7 +119,7 @@ cJSON *v1_custom_resource_definition_spec_convertToJSON(v1_custom_resource_defin
     if (!v1_custom_resource_definition_spec->versions) {
         goto fail;
     }
-    cJSON *versions = cJSON_AddArrayToObject(item, "versions");
+    mazu_cJSON *versions = mazu_cJSON_AddArrayToObject(item, "versions");
     if(versions == NULL) {
     goto fail; //nonprimitive container
     }
@@ -127,23 +127,23 @@ cJSON *v1_custom_resource_definition_spec_convertToJSON(v1_custom_resource_defin
     listEntry_t *versionsListEntry;
     if (v1_custom_resource_definition_spec->versions) {
     list_ForEach(versionsListEntry, v1_custom_resource_definition_spec->versions) {
-    cJSON *itemLocal = v1_custom_resource_definition_version_convertToJSON(versionsListEntry->data);
+    mazu_cJSON *itemLocal = v1_custom_resource_definition_version_convertToJSON(versionsListEntry->data);
     if(itemLocal == NULL) {
     goto fail;
     }
-    cJSON_AddItemToArray(versions, itemLocal);
+    mazu_cJSON_AddItemToArray(versions, itemLocal);
     }
     }
 
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_custom_resource_definition_spec_t *v1_custom_resource_definition_spec_parseFromJSON(cJSON *v1_custom_resource_definition_specJSON){
+v1_custom_resource_definition_spec_t *v1_custom_resource_definition_spec_parseFromJSON(mazu_cJSON *v1_custom_resource_definition_specJSON){
 
     v1_custom_resource_definition_spec_t *v1_custom_resource_definition_spec_local_var = NULL;
 
@@ -157,25 +157,25 @@ v1_custom_resource_definition_spec_t *v1_custom_resource_definition_spec_parseFr
     list_t *versionsList = NULL;
 
     // v1_custom_resource_definition_spec->conversion
-    cJSON *conversion = cJSON_GetObjectItemCaseSensitive(v1_custom_resource_definition_specJSON, "conversion");
+    mazu_cJSON *conversion = mazu_cJSON_GetObjectItemCaseSensitive(v1_custom_resource_definition_specJSON, "conversion");
     if (conversion) { 
     conversion_local_nonprim = v1_custom_resource_conversion_parseFromJSON(conversion); //nonprimitive
     }
 
     // v1_custom_resource_definition_spec->group
-    cJSON *group = cJSON_GetObjectItemCaseSensitive(v1_custom_resource_definition_specJSON, "group");
+    mazu_cJSON *group = mazu_cJSON_GetObjectItemCaseSensitive(v1_custom_resource_definition_specJSON, "group");
     if (!group) {
         goto end;
     }
 
     
-    if(!cJSON_IsString(group))
+    if(!mazu_cJSON_IsString(group))
     {
     goto end; //String
     }
 
     // v1_custom_resource_definition_spec->names
-    cJSON *names = cJSON_GetObjectItemCaseSensitive(v1_custom_resource_definition_specJSON, "names");
+    mazu_cJSON *names = mazu_cJSON_GetObjectItemCaseSensitive(v1_custom_resource_definition_specJSON, "names");
     if (!names) {
         goto end;
     }
@@ -184,43 +184,43 @@ v1_custom_resource_definition_spec_t *v1_custom_resource_definition_spec_parseFr
     names_local_nonprim = v1_custom_resource_definition_names_parseFromJSON(names); //nonprimitive
 
     // v1_custom_resource_definition_spec->preserve_unknown_fields
-    cJSON *preserve_unknown_fields = cJSON_GetObjectItemCaseSensitive(v1_custom_resource_definition_specJSON, "preserveUnknownFields");
+    mazu_cJSON *preserve_unknown_fields = mazu_cJSON_GetObjectItemCaseSensitive(v1_custom_resource_definition_specJSON, "preserveUnknownFields");
     if (preserve_unknown_fields) { 
-    if(!cJSON_IsBool(preserve_unknown_fields))
+    if(!mazu_cJSON_IsBool(preserve_unknown_fields))
     {
     goto end; //Bool
     }
     }
 
     // v1_custom_resource_definition_spec->scope
-    cJSON *scope = cJSON_GetObjectItemCaseSensitive(v1_custom_resource_definition_specJSON, "scope");
+    mazu_cJSON *scope = mazu_cJSON_GetObjectItemCaseSensitive(v1_custom_resource_definition_specJSON, "scope");
     if (!scope) {
         goto end;
     }
 
     
-    if(!cJSON_IsString(scope))
+    if(!mazu_cJSON_IsString(scope))
     {
     goto end; //String
     }
 
     // v1_custom_resource_definition_spec->versions
-    cJSON *versions = cJSON_GetObjectItemCaseSensitive(v1_custom_resource_definition_specJSON, "versions");
+    mazu_cJSON *versions = mazu_cJSON_GetObjectItemCaseSensitive(v1_custom_resource_definition_specJSON, "versions");
     if (!versions) {
         goto end;
     }
 
     
-    cJSON *versions_local_nonprimitive = NULL;
-    if(!cJSON_IsArray(versions)){
+    mazu_cJSON *versions_local_nonprimitive = NULL;
+    if(!mazu_cJSON_IsArray(versions)){
         goto end; //nonprimitive container
     }
 
     versionsList = list_createList();
 
-    cJSON_ArrayForEach(versions_local_nonprimitive,versions )
+    mazu_cJSON_ArrayForEach(versions_local_nonprimitive,versions )
     {
-        if(!cJSON_IsObject(versions_local_nonprimitive)){
+        if(!mazu_cJSON_IsObject(versions_local_nonprimitive)){
             goto end;
         }
         v1_custom_resource_definition_version_t *versionsItem = v1_custom_resource_definition_version_parseFromJSON(versions_local_nonprimitive);

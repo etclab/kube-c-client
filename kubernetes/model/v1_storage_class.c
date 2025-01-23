@@ -92,12 +92,12 @@ void v1_storage_class_free(v1_storage_class_t *v1_storage_class) {
     free(v1_storage_class);
 }
 
-cJSON *v1_storage_class_convertToJSON(v1_storage_class_t *v1_storage_class) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_storage_class_convertToJSON(v1_storage_class_t *v1_storage_class) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_storage_class->allow_volume_expansion
     if(v1_storage_class->allow_volume_expansion) {
-    if(cJSON_AddBoolToObject(item, "allowVolumeExpansion", v1_storage_class->allow_volume_expansion) == NULL) {
+    if(mazu_cJSON_AddBoolToObject(item, "allowVolumeExpansion", v1_storage_class->allow_volume_expansion) == NULL) {
     goto fail; //Bool
     }
     }
@@ -105,7 +105,7 @@ cJSON *v1_storage_class_convertToJSON(v1_storage_class_t *v1_storage_class) {
 
     // v1_storage_class->allowed_topologies
     if(v1_storage_class->allowed_topologies) {
-    cJSON *allowed_topologies = cJSON_AddArrayToObject(item, "allowedTopologies");
+    mazu_cJSON *allowed_topologies = mazu_cJSON_AddArrayToObject(item, "allowedTopologies");
     if(allowed_topologies == NULL) {
     goto fail; //nonprimitive container
     }
@@ -113,11 +113,11 @@ cJSON *v1_storage_class_convertToJSON(v1_storage_class_t *v1_storage_class) {
     listEntry_t *allowed_topologiesListEntry;
     if (v1_storage_class->allowed_topologies) {
     list_ForEach(allowed_topologiesListEntry, v1_storage_class->allowed_topologies) {
-    cJSON *itemLocal = v1_topology_selector_term_convertToJSON(allowed_topologiesListEntry->data);
+    mazu_cJSON *itemLocal = v1_topology_selector_term_convertToJSON(allowed_topologiesListEntry->data);
     if(itemLocal == NULL) {
     goto fail;
     }
-    cJSON_AddItemToArray(allowed_topologies, itemLocal);
+    mazu_cJSON_AddItemToArray(allowed_topologies, itemLocal);
     }
     }
     }
@@ -125,7 +125,7 @@ cJSON *v1_storage_class_convertToJSON(v1_storage_class_t *v1_storage_class) {
 
     // v1_storage_class->api_version
     if(v1_storage_class->api_version) {
-    if(cJSON_AddStringToObject(item, "apiVersion", v1_storage_class->api_version) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "apiVersion", v1_storage_class->api_version) == NULL) {
     goto fail; //String
     }
     }
@@ -133,7 +133,7 @@ cJSON *v1_storage_class_convertToJSON(v1_storage_class_t *v1_storage_class) {
 
     // v1_storage_class->kind
     if(v1_storage_class->kind) {
-    if(cJSON_AddStringToObject(item, "kind", v1_storage_class->kind) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "kind", v1_storage_class->kind) == NULL) {
     goto fail; //String
     }
     }
@@ -141,11 +141,11 @@ cJSON *v1_storage_class_convertToJSON(v1_storage_class_t *v1_storage_class) {
 
     // v1_storage_class->metadata
     if(v1_storage_class->metadata) {
-    cJSON *metadata_local_JSON = v1_object_meta_convertToJSON(v1_storage_class->metadata);
+    mazu_cJSON *metadata_local_JSON = v1_object_meta_convertToJSON(v1_storage_class->metadata);
     if(metadata_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "metadata", metadata_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "metadata", metadata_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -154,14 +154,14 @@ cJSON *v1_storage_class_convertToJSON(v1_storage_class_t *v1_storage_class) {
 
     // v1_storage_class->mount_options
     if(v1_storage_class->mount_options) {
-    cJSON *mount_options = cJSON_AddArrayToObject(item, "mountOptions");
+    mazu_cJSON *mount_options = mazu_cJSON_AddArrayToObject(item, "mountOptions");
     if(mount_options == NULL) {
         goto fail; //primitive container
     }
 
     listEntry_t *mount_optionsListEntry;
     list_ForEach(mount_optionsListEntry, v1_storage_class->mount_options) {
-    if(cJSON_AddStringToObject(mount_options, "", (char*)mount_optionsListEntry->data) == NULL)
+    if(mazu_cJSON_AddStringToObject(mount_options, "", (char*)mount_optionsListEntry->data) == NULL)
     {
         goto fail;
     }
@@ -171,16 +171,16 @@ cJSON *v1_storage_class_convertToJSON(v1_storage_class_t *v1_storage_class) {
 
     // v1_storage_class->parameters
     if(v1_storage_class->parameters) {
-    cJSON *parameters = cJSON_AddObjectToObject(item, "parameters");
+    mazu_cJSON *parameters = mazu_cJSON_AddObjectToObject(item, "parameters");
     if(parameters == NULL) {
         goto fail; //primitive map container
     }
-    cJSON *localMapObject = parameters;
+    mazu_cJSON *localMapObject = parameters;
     listEntry_t *parametersListEntry;
     if (v1_storage_class->parameters) {
     list_ForEach(parametersListEntry, v1_storage_class->parameters) {
         keyValuePair_t *localKeyValue = (keyValuePair_t*)parametersListEntry->data;
-        if(cJSON_AddStringToObject(localMapObject, localKeyValue->key, (char*)localKeyValue->value) == NULL)
+        if(mazu_cJSON_AddStringToObject(localMapObject, localKeyValue->key, (char*)localKeyValue->value) == NULL)
         {
             goto fail;
         }
@@ -193,14 +193,14 @@ cJSON *v1_storage_class_convertToJSON(v1_storage_class_t *v1_storage_class) {
     if (!v1_storage_class->provisioner) {
         goto fail;
     }
-    if(cJSON_AddStringToObject(item, "provisioner", v1_storage_class->provisioner) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "provisioner", v1_storage_class->provisioner) == NULL) {
     goto fail; //String
     }
 
 
     // v1_storage_class->reclaim_policy
     if(v1_storage_class->reclaim_policy) {
-    if(cJSON_AddStringToObject(item, "reclaimPolicy", v1_storage_class->reclaim_policy) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "reclaimPolicy", v1_storage_class->reclaim_policy) == NULL) {
     goto fail; //String
     }
     }
@@ -208,7 +208,7 @@ cJSON *v1_storage_class_convertToJSON(v1_storage_class_t *v1_storage_class) {
 
     // v1_storage_class->volume_binding_mode
     if(v1_storage_class->volume_binding_mode) {
-    if(cJSON_AddStringToObject(item, "volumeBindingMode", v1_storage_class->volume_binding_mode) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "volumeBindingMode", v1_storage_class->volume_binding_mode) == NULL) {
     goto fail; //String
     }
     }
@@ -216,12 +216,12 @@ cJSON *v1_storage_class_convertToJSON(v1_storage_class_t *v1_storage_class) {
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_storage_class_t *v1_storage_class_parseFromJSON(cJSON *v1_storage_classJSON){
+v1_storage_class_t *v1_storage_class_parseFromJSON(mazu_cJSON *v1_storage_classJSON){
 
     v1_storage_class_t *v1_storage_class_local_var = NULL;
 
@@ -238,27 +238,27 @@ v1_storage_class_t *v1_storage_class_parseFromJSON(cJSON *v1_storage_classJSON){
     list_t *parametersList = NULL;
 
     // v1_storage_class->allow_volume_expansion
-    cJSON *allow_volume_expansion = cJSON_GetObjectItemCaseSensitive(v1_storage_classJSON, "allowVolumeExpansion");
+    mazu_cJSON *allow_volume_expansion = mazu_cJSON_GetObjectItemCaseSensitive(v1_storage_classJSON, "allowVolumeExpansion");
     if (allow_volume_expansion) { 
-    if(!cJSON_IsBool(allow_volume_expansion))
+    if(!mazu_cJSON_IsBool(allow_volume_expansion))
     {
     goto end; //Bool
     }
     }
 
     // v1_storage_class->allowed_topologies
-    cJSON *allowed_topologies = cJSON_GetObjectItemCaseSensitive(v1_storage_classJSON, "allowedTopologies");
+    mazu_cJSON *allowed_topologies = mazu_cJSON_GetObjectItemCaseSensitive(v1_storage_classJSON, "allowedTopologies");
     if (allowed_topologies) { 
-    cJSON *allowed_topologies_local_nonprimitive = NULL;
-    if(!cJSON_IsArray(allowed_topologies)){
+    mazu_cJSON *allowed_topologies_local_nonprimitive = NULL;
+    if(!mazu_cJSON_IsArray(allowed_topologies)){
         goto end; //nonprimitive container
     }
 
     allowed_topologiesList = list_createList();
 
-    cJSON_ArrayForEach(allowed_topologies_local_nonprimitive,allowed_topologies )
+    mazu_cJSON_ArrayForEach(allowed_topologies_local_nonprimitive,allowed_topologies )
     {
-        if(!cJSON_IsObject(allowed_topologies_local_nonprimitive)){
+        if(!mazu_cJSON_IsObject(allowed_topologies_local_nonprimitive)){
             goto end;
         }
         v1_topology_selector_term_t *allowed_topologiesItem = v1_topology_selector_term_parseFromJSON(allowed_topologies_local_nonprimitive);
@@ -268,41 +268,41 @@ v1_storage_class_t *v1_storage_class_parseFromJSON(cJSON *v1_storage_classJSON){
     }
 
     // v1_storage_class->api_version
-    cJSON *api_version = cJSON_GetObjectItemCaseSensitive(v1_storage_classJSON, "apiVersion");
+    mazu_cJSON *api_version = mazu_cJSON_GetObjectItemCaseSensitive(v1_storage_classJSON, "apiVersion");
     if (api_version) { 
-    if(!cJSON_IsString(api_version) && !cJSON_IsNull(api_version))
+    if(!mazu_cJSON_IsString(api_version) && !mazu_cJSON_IsNull(api_version))
     {
     goto end; //String
     }
     }
 
     // v1_storage_class->kind
-    cJSON *kind = cJSON_GetObjectItemCaseSensitive(v1_storage_classJSON, "kind");
+    mazu_cJSON *kind = mazu_cJSON_GetObjectItemCaseSensitive(v1_storage_classJSON, "kind");
     if (kind) { 
-    if(!cJSON_IsString(kind) && !cJSON_IsNull(kind))
+    if(!mazu_cJSON_IsString(kind) && !mazu_cJSON_IsNull(kind))
     {
     goto end; //String
     }
     }
 
     // v1_storage_class->metadata
-    cJSON *metadata = cJSON_GetObjectItemCaseSensitive(v1_storage_classJSON, "metadata");
+    mazu_cJSON *metadata = mazu_cJSON_GetObjectItemCaseSensitive(v1_storage_classJSON, "metadata");
     if (metadata) { 
     metadata_local_nonprim = v1_object_meta_parseFromJSON(metadata); //nonprimitive
     }
 
     // v1_storage_class->mount_options
-    cJSON *mount_options = cJSON_GetObjectItemCaseSensitive(v1_storage_classJSON, "mountOptions");
+    mazu_cJSON *mount_options = mazu_cJSON_GetObjectItemCaseSensitive(v1_storage_classJSON, "mountOptions");
     if (mount_options) { 
-    cJSON *mount_options_local = NULL;
-    if(!cJSON_IsArray(mount_options)) {
+    mazu_cJSON *mount_options_local = NULL;
+    if(!mazu_cJSON_IsArray(mount_options)) {
         goto end;//primitive container
     }
     mount_optionsList = list_createList();
 
-    cJSON_ArrayForEach(mount_options_local, mount_options)
+    mazu_cJSON_ArrayForEach(mount_options_local, mount_options)
     {
-        if(!cJSON_IsString(mount_options_local))
+        if(!mazu_cJSON_IsString(mount_options_local))
         {
             goto end;
         }
@@ -311,21 +311,21 @@ v1_storage_class_t *v1_storage_class_parseFromJSON(cJSON *v1_storage_classJSON){
     }
 
     // v1_storage_class->parameters
-    cJSON *parameters = cJSON_GetObjectItemCaseSensitive(v1_storage_classJSON, "parameters");
+    mazu_cJSON *parameters = mazu_cJSON_GetObjectItemCaseSensitive(v1_storage_classJSON, "parameters");
     if (parameters) { 
-    cJSON *parameters_local_map = NULL;
-    if(!cJSON_IsObject(parameters) && !cJSON_IsNull(parameters))
+    mazu_cJSON *parameters_local_map = NULL;
+    if(!mazu_cJSON_IsObject(parameters) && !mazu_cJSON_IsNull(parameters))
     {
         goto end;//primitive map container
     }
-    if(cJSON_IsObject(parameters))
+    if(mazu_cJSON_IsObject(parameters))
     {
         parametersList = list_createList();
         keyValuePair_t *localMapKeyPair;
-        cJSON_ArrayForEach(parameters_local_map, parameters)
+        mazu_cJSON_ArrayForEach(parameters_local_map, parameters)
         {
-            cJSON *localMapObject = parameters_local_map;
-            if(!cJSON_IsString(localMapObject))
+            mazu_cJSON *localMapObject = parameters_local_map;
+            if(!mazu_cJSON_IsString(localMapObject))
             {
                 goto end;
             }
@@ -336,30 +336,30 @@ v1_storage_class_t *v1_storage_class_parseFromJSON(cJSON *v1_storage_classJSON){
     }
 
     // v1_storage_class->provisioner
-    cJSON *provisioner = cJSON_GetObjectItemCaseSensitive(v1_storage_classJSON, "provisioner");
+    mazu_cJSON *provisioner = mazu_cJSON_GetObjectItemCaseSensitive(v1_storage_classJSON, "provisioner");
     if (!provisioner) {
         goto end;
     }
 
     
-    if(!cJSON_IsString(provisioner))
+    if(!mazu_cJSON_IsString(provisioner))
     {
     goto end; //String
     }
 
     // v1_storage_class->reclaim_policy
-    cJSON *reclaim_policy = cJSON_GetObjectItemCaseSensitive(v1_storage_classJSON, "reclaimPolicy");
+    mazu_cJSON *reclaim_policy = mazu_cJSON_GetObjectItemCaseSensitive(v1_storage_classJSON, "reclaimPolicy");
     if (reclaim_policy) { 
-    if(!cJSON_IsString(reclaim_policy) && !cJSON_IsNull(reclaim_policy))
+    if(!mazu_cJSON_IsString(reclaim_policy) && !mazu_cJSON_IsNull(reclaim_policy))
     {
     goto end; //String
     }
     }
 
     // v1_storage_class->volume_binding_mode
-    cJSON *volume_binding_mode = cJSON_GetObjectItemCaseSensitive(v1_storage_classJSON, "volumeBindingMode");
+    mazu_cJSON *volume_binding_mode = mazu_cJSON_GetObjectItemCaseSensitive(v1_storage_classJSON, "volumeBindingMode");
     if (volume_binding_mode) { 
-    if(!cJSON_IsString(volume_binding_mode) && !cJSON_IsNull(volume_binding_mode))
+    if(!mazu_cJSON_IsString(volume_binding_mode) && !mazu_cJSON_IsNull(volume_binding_mode))
     {
     goto end; //String
     }
@@ -369,14 +369,14 @@ v1_storage_class_t *v1_storage_class_parseFromJSON(cJSON *v1_storage_classJSON){
     v1_storage_class_local_var = v1_storage_class_create (
         allow_volume_expansion ? allow_volume_expansion->valueint : 0,
         allowed_topologies ? allowed_topologiesList : NULL,
-        api_version && !cJSON_IsNull(api_version) ? strdup(api_version->valuestring) : NULL,
-        kind && !cJSON_IsNull(kind) ? strdup(kind->valuestring) : NULL,
+        api_version && !mazu_cJSON_IsNull(api_version) ? strdup(api_version->valuestring) : NULL,
+        kind && !mazu_cJSON_IsNull(kind) ? strdup(kind->valuestring) : NULL,
         metadata ? metadata_local_nonprim : NULL,
         mount_options ? mount_optionsList : NULL,
         parameters ? parametersList : NULL,
         strdup(provisioner->valuestring),
-        reclaim_policy && !cJSON_IsNull(reclaim_policy) ? strdup(reclaim_policy->valuestring) : NULL,
-        volume_binding_mode && !cJSON_IsNull(volume_binding_mode) ? strdup(volume_binding_mode->valuestring) : NULL
+        reclaim_policy && !mazu_cJSON_IsNull(reclaim_policy) ? strdup(reclaim_policy->valuestring) : NULL,
+        volume_binding_mode && !mazu_cJSON_IsNull(volume_binding_mode) ? strdup(volume_binding_mode->valuestring) : NULL
         );
 
     return v1_storage_class_local_var;

@@ -41,21 +41,21 @@ void v1_token_request_spec_free(v1_token_request_spec_t *v1_token_request_spec) 
     free(v1_token_request_spec);
 }
 
-cJSON *v1_token_request_spec_convertToJSON(v1_token_request_spec_t *v1_token_request_spec) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_token_request_spec_convertToJSON(v1_token_request_spec_t *v1_token_request_spec) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_token_request_spec->audiences
     if (!v1_token_request_spec->audiences) {
         goto fail;
     }
-    cJSON *audiences = cJSON_AddArrayToObject(item, "audiences");
+    mazu_cJSON *audiences = mazu_cJSON_AddArrayToObject(item, "audiences");
     if(audiences == NULL) {
         goto fail; //primitive container
     }
 
     listEntry_t *audiencesListEntry;
     list_ForEach(audiencesListEntry, v1_token_request_spec->audiences) {
-    if(cJSON_AddStringToObject(audiences, "", (char*)audiencesListEntry->data) == NULL)
+    if(mazu_cJSON_AddStringToObject(audiences, "", (char*)audiencesListEntry->data) == NULL)
     {
         goto fail;
     }
@@ -64,11 +64,11 @@ cJSON *v1_token_request_spec_convertToJSON(v1_token_request_spec_t *v1_token_req
 
     // v1_token_request_spec->bound_object_ref
     if(v1_token_request_spec->bound_object_ref) {
-    cJSON *bound_object_ref_local_JSON = v1_bound_object_reference_convertToJSON(v1_token_request_spec->bound_object_ref);
+    mazu_cJSON *bound_object_ref_local_JSON = v1_bound_object_reference_convertToJSON(v1_token_request_spec->bound_object_ref);
     if(bound_object_ref_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "boundObjectRef", bound_object_ref_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "boundObjectRef", bound_object_ref_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -77,7 +77,7 @@ cJSON *v1_token_request_spec_convertToJSON(v1_token_request_spec_t *v1_token_req
 
     // v1_token_request_spec->expiration_seconds
     if(v1_token_request_spec->expiration_seconds) {
-    if(cJSON_AddNumberToObject(item, "expirationSeconds", v1_token_request_spec->expiration_seconds) == NULL) {
+    if(mazu_cJSON_AddNumberToObject(item, "expirationSeconds", v1_token_request_spec->expiration_seconds) == NULL) {
     goto fail; //Numeric
     }
     }
@@ -85,12 +85,12 @@ cJSON *v1_token_request_spec_convertToJSON(v1_token_request_spec_t *v1_token_req
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_token_request_spec_t *v1_token_request_spec_parseFromJSON(cJSON *v1_token_request_specJSON){
+v1_token_request_spec_t *v1_token_request_spec_parseFromJSON(mazu_cJSON *v1_token_request_specJSON){
 
     v1_token_request_spec_t *v1_token_request_spec_local_var = NULL;
 
@@ -101,21 +101,21 @@ v1_token_request_spec_t *v1_token_request_spec_parseFromJSON(cJSON *v1_token_req
     v1_bound_object_reference_t *bound_object_ref_local_nonprim = NULL;
 
     // v1_token_request_spec->audiences
-    cJSON *audiences = cJSON_GetObjectItemCaseSensitive(v1_token_request_specJSON, "audiences");
+    mazu_cJSON *audiences = mazu_cJSON_GetObjectItemCaseSensitive(v1_token_request_specJSON, "audiences");
     if (!audiences) {
         goto end;
     }
 
     
-    cJSON *audiences_local = NULL;
-    if(!cJSON_IsArray(audiences)) {
+    mazu_cJSON *audiences_local = NULL;
+    if(!mazu_cJSON_IsArray(audiences)) {
         goto end;//primitive container
     }
     audiencesList = list_createList();
 
-    cJSON_ArrayForEach(audiences_local, audiences)
+    mazu_cJSON_ArrayForEach(audiences_local, audiences)
     {
-        if(!cJSON_IsString(audiences_local))
+        if(!mazu_cJSON_IsString(audiences_local))
         {
             goto end;
         }
@@ -123,15 +123,15 @@ v1_token_request_spec_t *v1_token_request_spec_parseFromJSON(cJSON *v1_token_req
     }
 
     // v1_token_request_spec->bound_object_ref
-    cJSON *bound_object_ref = cJSON_GetObjectItemCaseSensitive(v1_token_request_specJSON, "boundObjectRef");
+    mazu_cJSON *bound_object_ref = mazu_cJSON_GetObjectItemCaseSensitive(v1_token_request_specJSON, "boundObjectRef");
     if (bound_object_ref) { 
     bound_object_ref_local_nonprim = v1_bound_object_reference_parseFromJSON(bound_object_ref); //nonprimitive
     }
 
     // v1_token_request_spec->expiration_seconds
-    cJSON *expiration_seconds = cJSON_GetObjectItemCaseSensitive(v1_token_request_specJSON, "expirationSeconds");
+    mazu_cJSON *expiration_seconds = mazu_cJSON_GetObjectItemCaseSensitive(v1_token_request_specJSON, "expirationSeconds");
     if (expiration_seconds) { 
-    if(!cJSON_IsNumber(expiration_seconds))
+    if(!mazu_cJSON_IsNumber(expiration_seconds))
     {
     goto end; //Numeric
     }

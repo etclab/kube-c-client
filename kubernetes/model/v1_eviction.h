@@ -8,7 +8,7 @@
 #define _v1_eviction_H_
 
 #include <string.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
 #include "../include/binary.h"
@@ -37,9 +37,9 @@ v1_eviction_t *v1_eviction_create(
 
 void v1_eviction_free(v1_eviction_t *v1_eviction);
 
-v1_eviction_t *v1_eviction_parseFromJSON(cJSON *v1_evictionJSON);
+v1_eviction_t *v1_eviction_parseFromJSON(mazu_cJSON *v1_evictionJSON);
 
-cJSON *v1_eviction_convertToJSON(v1_eviction_t *v1_eviction);
+mazu_cJSON *v1_eviction_convertToJSON(v1_eviction_t *v1_eviction);
 
 #endif /* _v1_eviction_H_ */
 

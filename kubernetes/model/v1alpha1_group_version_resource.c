@@ -42,12 +42,12 @@ void v1alpha1_group_version_resource_free(v1alpha1_group_version_resource_t *v1a
     free(v1alpha1_group_version_resource);
 }
 
-cJSON *v1alpha1_group_version_resource_convertToJSON(v1alpha1_group_version_resource_t *v1alpha1_group_version_resource) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1alpha1_group_version_resource_convertToJSON(v1alpha1_group_version_resource_t *v1alpha1_group_version_resource) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1alpha1_group_version_resource->group
     if(v1alpha1_group_version_resource->group) {
-    if(cJSON_AddStringToObject(item, "group", v1alpha1_group_version_resource->group) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "group", v1alpha1_group_version_resource->group) == NULL) {
     goto fail; //String
     }
     }
@@ -55,7 +55,7 @@ cJSON *v1alpha1_group_version_resource_convertToJSON(v1alpha1_group_version_reso
 
     // v1alpha1_group_version_resource->resource
     if(v1alpha1_group_version_resource->resource) {
-    if(cJSON_AddStringToObject(item, "resource", v1alpha1_group_version_resource->resource) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "resource", v1alpha1_group_version_resource->resource) == NULL) {
     goto fail; //String
     }
     }
@@ -63,7 +63,7 @@ cJSON *v1alpha1_group_version_resource_convertToJSON(v1alpha1_group_version_reso
 
     // v1alpha1_group_version_resource->version
     if(v1alpha1_group_version_resource->version) {
-    if(cJSON_AddStringToObject(item, "version", v1alpha1_group_version_resource->version) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "version", v1alpha1_group_version_resource->version) == NULL) {
     goto fail; //String
     }
     }
@@ -71,37 +71,37 @@ cJSON *v1alpha1_group_version_resource_convertToJSON(v1alpha1_group_version_reso
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1alpha1_group_version_resource_t *v1alpha1_group_version_resource_parseFromJSON(cJSON *v1alpha1_group_version_resourceJSON){
+v1alpha1_group_version_resource_t *v1alpha1_group_version_resource_parseFromJSON(mazu_cJSON *v1alpha1_group_version_resourceJSON){
 
     v1alpha1_group_version_resource_t *v1alpha1_group_version_resource_local_var = NULL;
 
     // v1alpha1_group_version_resource->group
-    cJSON *group = cJSON_GetObjectItemCaseSensitive(v1alpha1_group_version_resourceJSON, "group");
+    mazu_cJSON *group = mazu_cJSON_GetObjectItemCaseSensitive(v1alpha1_group_version_resourceJSON, "group");
     if (group) { 
-    if(!cJSON_IsString(group) && !cJSON_IsNull(group))
+    if(!mazu_cJSON_IsString(group) && !mazu_cJSON_IsNull(group))
     {
     goto end; //String
     }
     }
 
     // v1alpha1_group_version_resource->resource
-    cJSON *resource = cJSON_GetObjectItemCaseSensitive(v1alpha1_group_version_resourceJSON, "resource");
+    mazu_cJSON *resource = mazu_cJSON_GetObjectItemCaseSensitive(v1alpha1_group_version_resourceJSON, "resource");
     if (resource) { 
-    if(!cJSON_IsString(resource) && !cJSON_IsNull(resource))
+    if(!mazu_cJSON_IsString(resource) && !mazu_cJSON_IsNull(resource))
     {
     goto end; //String
     }
     }
 
     // v1alpha1_group_version_resource->version
-    cJSON *version = cJSON_GetObjectItemCaseSensitive(v1alpha1_group_version_resourceJSON, "version");
+    mazu_cJSON *version = mazu_cJSON_GetObjectItemCaseSensitive(v1alpha1_group_version_resourceJSON, "version");
     if (version) { 
-    if(!cJSON_IsString(version) && !cJSON_IsNull(version))
+    if(!mazu_cJSON_IsString(version) && !mazu_cJSON_IsNull(version))
     {
     goto end; //String
     }
@@ -109,9 +109,9 @@ v1alpha1_group_version_resource_t *v1alpha1_group_version_resource_parseFromJSON
 
 
     v1alpha1_group_version_resource_local_var = v1alpha1_group_version_resource_create (
-        group && !cJSON_IsNull(group) ? strdup(group->valuestring) : NULL,
-        resource && !cJSON_IsNull(resource) ? strdup(resource->valuestring) : NULL,
-        version && !cJSON_IsNull(version) ? strdup(version->valuestring) : NULL
+        group && !mazu_cJSON_IsNull(group) ? strdup(group->valuestring) : NULL,
+        resource && !mazu_cJSON_IsNull(resource) ? strdup(resource->valuestring) : NULL,
+        version && !mazu_cJSON_IsNull(version) ? strdup(version->valuestring) : NULL
         );
 
     return v1alpha1_group_version_resource_local_var;

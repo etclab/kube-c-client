@@ -8,7 +8,7 @@
 #define _v1_scheduling_H_
 
 #include <string.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
 #include "../include/binary.h"
@@ -32,9 +32,9 @@ v1_scheduling_t *v1_scheduling_create(
 
 void v1_scheduling_free(v1_scheduling_t *v1_scheduling);
 
-v1_scheduling_t *v1_scheduling_parseFromJSON(cJSON *v1_schedulingJSON);
+v1_scheduling_t *v1_scheduling_parseFromJSON(mazu_cJSON *v1_schedulingJSON);
 
-cJSON *v1_scheduling_convertToJSON(v1_scheduling_t *v1_scheduling);
+mazu_cJSON *v1_scheduling_convertToJSON(v1_scheduling_t *v1_scheduling);
 
 #endif /* _v1_scheduling_H_ */
 

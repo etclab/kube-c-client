@@ -53,9 +53,9 @@ DiscoveryAPI_getAPIGroup_9(apiClient_t *apiClient)
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *DiscoveryAPIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    mazu_cJSON *DiscoveryAPIlocalVarJSON = mazu_cJSON_Parse(apiClient->dataReceived);
     v1_api_group_t *elementToReturn = v1_api_group_parseFromJSON(DiscoveryAPIlocalVarJSON);
-    cJSON_Delete(DiscoveryAPIlocalVarJSON);
+    mazu_cJSON_Delete(DiscoveryAPIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
     }

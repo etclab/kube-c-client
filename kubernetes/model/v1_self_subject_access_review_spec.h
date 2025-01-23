@@ -8,7 +8,7 @@
 #define _v1_self_subject_access_review_spec_H_
 
 #include <string.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
 #include "../include/binary.h"
@@ -33,9 +33,9 @@ v1_self_subject_access_review_spec_t *v1_self_subject_access_review_spec_create(
 
 void v1_self_subject_access_review_spec_free(v1_self_subject_access_review_spec_t *v1_self_subject_access_review_spec);
 
-v1_self_subject_access_review_spec_t *v1_self_subject_access_review_spec_parseFromJSON(cJSON *v1_self_subject_access_review_specJSON);
+v1_self_subject_access_review_spec_t *v1_self_subject_access_review_spec_parseFromJSON(mazu_cJSON *v1_self_subject_access_review_specJSON);
 
-cJSON *v1_self_subject_access_review_spec_convertToJSON(v1_self_subject_access_review_spec_t *v1_self_subject_access_review_spec);
+mazu_cJSON *v1_self_subject_access_review_spec_convertToJSON(v1_self_subject_access_review_spec_t *v1_self_subject_access_review_spec);
 
 #endif /* _v1_self_subject_access_review_spec_H_ */
 

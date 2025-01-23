@@ -3,7 +3,7 @@
 #include "kube_config_util.h"
 #include "kube_config_common.h"
 #include "binary.h"
-#include "cJSON.h"
+#include "mazu_cJSON.h"
 #include <time.h>
 #include <errno.h>
 
@@ -71,13 +71,13 @@ static time_t get_token_expiration_time(const char *token_string)
     }
 
     const char *parse_end = NULL;
-    cJSON *payload_JSON = cJSON_ParseWithOpts(b64decode, &parse_end, 1);
+    mazu_cJSON *payload_JSON = mazu_cJSON_ParseWithOpts(b64decode, &parse_end, 1);
     if (!payload_JSON) {
         fprintf(stderr, "%s: Cannot create JSON from string.[%s].\n", fname, parse_end);
         goto end;
     }
-    cJSON *json_value = cJSON_GetObjectItem(payload_JSON, OIDC_ID_TOKEN_EXP);
-    if (!json_value || json_value->type != cJSON_Number) {
+    mazu_cJSON *json_value = mazu_cJSON_GetObjectItem(payload_JSON, OIDC_ID_TOKEN_EXP);
+    if (!json_value || json_value->type != mazu_cJSON_Number) {
         fprintf(stderr, "%s: Cannot get expiration time in id token.\n", fname);
         goto end;
     }
@@ -85,7 +85,7 @@ static time_t get_token_expiration_time(const char *token_string)
 
   end:
     if (payload_JSON) {
-        cJSON_Delete(payload_JSON);
+        mazu_cJSON_Delete(payload_JSON);
         payload_JSON = NULL;
     }
     if (b64decode) {

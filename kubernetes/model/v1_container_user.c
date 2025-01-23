@@ -30,16 +30,16 @@ void v1_container_user_free(v1_container_user_t *v1_container_user) {
     free(v1_container_user);
 }
 
-cJSON *v1_container_user_convertToJSON(v1_container_user_t *v1_container_user) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_container_user_convertToJSON(v1_container_user_t *v1_container_user) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_container_user->_linux
     if(v1_container_user->_linux) {
-    cJSON *_linux_local_JSON = v1_linux_container_user_convertToJSON(v1_container_user->_linux);
+    mazu_cJSON *_linux_local_JSON = v1_linux_container_user_convertToJSON(v1_container_user->_linux);
     if(_linux_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "linux", _linux_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "linux", _linux_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -48,12 +48,12 @@ cJSON *v1_container_user_convertToJSON(v1_container_user_t *v1_container_user) {
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_container_user_t *v1_container_user_parseFromJSON(cJSON *v1_container_userJSON){
+v1_container_user_t *v1_container_user_parseFromJSON(mazu_cJSON *v1_container_userJSON){
 
     v1_container_user_t *v1_container_user_local_var = NULL;
 
@@ -61,7 +61,7 @@ v1_container_user_t *v1_container_user_parseFromJSON(cJSON *v1_container_userJSO
     v1_linux_container_user_t *_linux_local_nonprim = NULL;
 
     // v1_container_user->_linux
-    cJSON *_linux = cJSON_GetObjectItemCaseSensitive(v1_container_userJSON, "linux");
+    mazu_cJSON *_linux = mazu_cJSON_GetObjectItemCaseSensitive(v1_container_userJSON, "linux");
     if (_linux) { 
     _linux_local_nonprim = v1_linux_container_user_parseFromJSON(_linux); //nonprimitive
     }

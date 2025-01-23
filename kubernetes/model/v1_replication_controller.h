@@ -8,7 +8,7 @@
 #define _v1_replication_controller_H_
 
 #include <string.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
 #include "../include/binary.h"
@@ -40,9 +40,9 @@ v1_replication_controller_t *v1_replication_controller_create(
 
 void v1_replication_controller_free(v1_replication_controller_t *v1_replication_controller);
 
-v1_replication_controller_t *v1_replication_controller_parseFromJSON(cJSON *v1_replication_controllerJSON);
+v1_replication_controller_t *v1_replication_controller_parseFromJSON(mazu_cJSON *v1_replication_controllerJSON);
 
-cJSON *v1_replication_controller_convertToJSON(v1_replication_controller_t *v1_replication_controller);
+mazu_cJSON *v1_replication_controller_convertToJSON(v1_replication_controller_t *v1_replication_controller);
 
 #endif /* _v1_replication_controller_H_ */
 

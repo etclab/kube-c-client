@@ -8,7 +8,7 @@
 #define _v1_namespace_spec_H_
 
 #include <string.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
 #include "../include/binary.h"
@@ -29,9 +29,9 @@ v1_namespace_spec_t *v1_namespace_spec_create(
 
 void v1_namespace_spec_free(v1_namespace_spec_t *v1_namespace_spec);
 
-v1_namespace_spec_t *v1_namespace_spec_parseFromJSON(cJSON *v1_namespace_specJSON);
+v1_namespace_spec_t *v1_namespace_spec_parseFromJSON(mazu_cJSON *v1_namespace_specJSON);
 
-cJSON *v1_namespace_spec_convertToJSON(v1_namespace_spec_t *v1_namespace_spec);
+mazu_cJSON *v1_namespace_spec_convertToJSON(v1_namespace_spec_t *v1_namespace_spec);
 
 #endif /* _v1_namespace_spec_H_ */
 

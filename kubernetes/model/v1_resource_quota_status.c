@@ -48,21 +48,21 @@ void v1_resource_quota_status_free(v1_resource_quota_status_t *v1_resource_quota
     free(v1_resource_quota_status);
 }
 
-cJSON *v1_resource_quota_status_convertToJSON(v1_resource_quota_status_t *v1_resource_quota_status) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_resource_quota_status_convertToJSON(v1_resource_quota_status_t *v1_resource_quota_status) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_resource_quota_status->hard
     if(v1_resource_quota_status->hard) {
-    cJSON *hard = cJSON_AddObjectToObject(item, "hard");
+    mazu_cJSON *hard = mazu_cJSON_AddObjectToObject(item, "hard");
     if(hard == NULL) {
         goto fail; //primitive map container
     }
-    cJSON *localMapObject = hard;
+    mazu_cJSON *localMapObject = hard;
     listEntry_t *hardListEntry;
     if (v1_resource_quota_status->hard) {
     list_ForEach(hardListEntry, v1_resource_quota_status->hard) {
         keyValuePair_t *localKeyValue = (keyValuePair_t*)hardListEntry->data;
-        if(cJSON_AddStringToObject(localMapObject, localKeyValue->key, (char*)localKeyValue->value) == NULL)
+        if(mazu_cJSON_AddStringToObject(localMapObject, localKeyValue->key, (char*)localKeyValue->value) == NULL)
         {
             goto fail;
         }
@@ -73,16 +73,16 @@ cJSON *v1_resource_quota_status_convertToJSON(v1_resource_quota_status_t *v1_res
 
     // v1_resource_quota_status->used
     if(v1_resource_quota_status->used) {
-    cJSON *used = cJSON_AddObjectToObject(item, "used");
+    mazu_cJSON *used = mazu_cJSON_AddObjectToObject(item, "used");
     if(used == NULL) {
         goto fail; //primitive map container
     }
-    cJSON *localMapObject = used;
+    mazu_cJSON *localMapObject = used;
     listEntry_t *usedListEntry;
     if (v1_resource_quota_status->used) {
     list_ForEach(usedListEntry, v1_resource_quota_status->used) {
         keyValuePair_t *localKeyValue = (keyValuePair_t*)usedListEntry->data;
-        if(cJSON_AddStringToObject(localMapObject, localKeyValue->key, (char*)localKeyValue->value) == NULL)
+        if(mazu_cJSON_AddStringToObject(localMapObject, localKeyValue->key, (char*)localKeyValue->value) == NULL)
         {
             goto fail;
         }
@@ -93,12 +93,12 @@ cJSON *v1_resource_quota_status_convertToJSON(v1_resource_quota_status_t *v1_res
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_resource_quota_status_t *v1_resource_quota_status_parseFromJSON(cJSON *v1_resource_quota_statusJSON){
+v1_resource_quota_status_t *v1_resource_quota_status_parseFromJSON(mazu_cJSON *v1_resource_quota_statusJSON){
 
     v1_resource_quota_status_t *v1_resource_quota_status_local_var = NULL;
 
@@ -109,21 +109,21 @@ v1_resource_quota_status_t *v1_resource_quota_status_parseFromJSON(cJSON *v1_res
     list_t *usedList = NULL;
 
     // v1_resource_quota_status->hard
-    cJSON *hard = cJSON_GetObjectItemCaseSensitive(v1_resource_quota_statusJSON, "hard");
+    mazu_cJSON *hard = mazu_cJSON_GetObjectItemCaseSensitive(v1_resource_quota_statusJSON, "hard");
     if (hard) { 
-    cJSON *hard_local_map = NULL;
-    if(!cJSON_IsObject(hard) && !cJSON_IsNull(hard))
+    mazu_cJSON *hard_local_map = NULL;
+    if(!mazu_cJSON_IsObject(hard) && !mazu_cJSON_IsNull(hard))
     {
         goto end;//primitive map container
     }
-    if(cJSON_IsObject(hard))
+    if(mazu_cJSON_IsObject(hard))
     {
         hardList = list_createList();
         keyValuePair_t *localMapKeyPair;
-        cJSON_ArrayForEach(hard_local_map, hard)
+        mazu_cJSON_ArrayForEach(hard_local_map, hard)
         {
-            cJSON *localMapObject = hard_local_map;
-            if(!cJSON_IsString(localMapObject))
+            mazu_cJSON *localMapObject = hard_local_map;
+            if(!mazu_cJSON_IsString(localMapObject))
             {
                 goto end;
             }
@@ -134,21 +134,21 @@ v1_resource_quota_status_t *v1_resource_quota_status_parseFromJSON(cJSON *v1_res
     }
 
     // v1_resource_quota_status->used
-    cJSON *used = cJSON_GetObjectItemCaseSensitive(v1_resource_quota_statusJSON, "used");
+    mazu_cJSON *used = mazu_cJSON_GetObjectItemCaseSensitive(v1_resource_quota_statusJSON, "used");
     if (used) { 
-    cJSON *used_local_map = NULL;
-    if(!cJSON_IsObject(used) && !cJSON_IsNull(used))
+    mazu_cJSON *used_local_map = NULL;
+    if(!mazu_cJSON_IsObject(used) && !mazu_cJSON_IsNull(used))
     {
         goto end;//primitive map container
     }
-    if(cJSON_IsObject(used))
+    if(mazu_cJSON_IsObject(used))
     {
         usedList = list_createList();
         keyValuePair_t *localMapKeyPair;
-        cJSON_ArrayForEach(used_local_map, used)
+        mazu_cJSON_ArrayForEach(used_local_map, used)
         {
-            cJSON *localMapObject = used_local_map;
-            if(!cJSON_IsString(localMapObject))
+            mazu_cJSON *localMapObject = used_local_map;
+            if(!mazu_cJSON_IsString(localMapObject))
             {
                 goto end;
             }

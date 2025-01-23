@@ -32,12 +32,12 @@ void v1_success_policy_rule_free(v1_success_policy_rule_t *v1_success_policy_rul
     free(v1_success_policy_rule);
 }
 
-cJSON *v1_success_policy_rule_convertToJSON(v1_success_policy_rule_t *v1_success_policy_rule) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_success_policy_rule_convertToJSON(v1_success_policy_rule_t *v1_success_policy_rule) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_success_policy_rule->succeeded_count
     if(v1_success_policy_rule->succeeded_count) {
-    if(cJSON_AddNumberToObject(item, "succeededCount", v1_success_policy_rule->succeeded_count) == NULL) {
+    if(mazu_cJSON_AddNumberToObject(item, "succeededCount", v1_success_policy_rule->succeeded_count) == NULL) {
     goto fail; //Numeric
     }
     }
@@ -45,7 +45,7 @@ cJSON *v1_success_policy_rule_convertToJSON(v1_success_policy_rule_t *v1_success
 
     // v1_success_policy_rule->succeeded_indexes
     if(v1_success_policy_rule->succeeded_indexes) {
-    if(cJSON_AddStringToObject(item, "succeededIndexes", v1_success_policy_rule->succeeded_indexes) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "succeededIndexes", v1_success_policy_rule->succeeded_indexes) == NULL) {
     goto fail; //String
     }
     }
@@ -53,28 +53,28 @@ cJSON *v1_success_policy_rule_convertToJSON(v1_success_policy_rule_t *v1_success
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_success_policy_rule_t *v1_success_policy_rule_parseFromJSON(cJSON *v1_success_policy_ruleJSON){
+v1_success_policy_rule_t *v1_success_policy_rule_parseFromJSON(mazu_cJSON *v1_success_policy_ruleJSON){
 
     v1_success_policy_rule_t *v1_success_policy_rule_local_var = NULL;
 
     // v1_success_policy_rule->succeeded_count
-    cJSON *succeeded_count = cJSON_GetObjectItemCaseSensitive(v1_success_policy_ruleJSON, "succeededCount");
+    mazu_cJSON *succeeded_count = mazu_cJSON_GetObjectItemCaseSensitive(v1_success_policy_ruleJSON, "succeededCount");
     if (succeeded_count) { 
-    if(!cJSON_IsNumber(succeeded_count))
+    if(!mazu_cJSON_IsNumber(succeeded_count))
     {
     goto end; //Numeric
     }
     }
 
     // v1_success_policy_rule->succeeded_indexes
-    cJSON *succeeded_indexes = cJSON_GetObjectItemCaseSensitive(v1_success_policy_ruleJSON, "succeededIndexes");
+    mazu_cJSON *succeeded_indexes = mazu_cJSON_GetObjectItemCaseSensitive(v1_success_policy_ruleJSON, "succeededIndexes");
     if (succeeded_indexes) { 
-    if(!cJSON_IsString(succeeded_indexes) && !cJSON_IsNull(succeeded_indexes))
+    if(!mazu_cJSON_IsString(succeeded_indexes) && !mazu_cJSON_IsNull(succeeded_indexes))
     {
     goto end; //String
     }
@@ -83,7 +83,7 @@ v1_success_policy_rule_t *v1_success_policy_rule_parseFromJSON(cJSON *v1_success
 
     v1_success_policy_rule_local_var = v1_success_policy_rule_create (
         succeeded_count ? succeeded_count->valuedouble : 0,
-        succeeded_indexes && !cJSON_IsNull(succeeded_indexes) ? strdup(succeeded_indexes->valuestring) : NULL
+        succeeded_indexes && !mazu_cJSON_IsNull(succeeded_indexes) ? strdup(succeeded_indexes->valuestring) : NULL
         );
 
     return v1_success_policy_rule_local_var;

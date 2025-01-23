@@ -33,14 +33,14 @@ void v1_pod_failure_policy_free(v1_pod_failure_policy_t *v1_pod_failure_policy) 
     free(v1_pod_failure_policy);
 }
 
-cJSON *v1_pod_failure_policy_convertToJSON(v1_pod_failure_policy_t *v1_pod_failure_policy) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_pod_failure_policy_convertToJSON(v1_pod_failure_policy_t *v1_pod_failure_policy) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_pod_failure_policy->rules
     if (!v1_pod_failure_policy->rules) {
         goto fail;
     }
-    cJSON *rules = cJSON_AddArrayToObject(item, "rules");
+    mazu_cJSON *rules = mazu_cJSON_AddArrayToObject(item, "rules");
     if(rules == NULL) {
     goto fail; //nonprimitive container
     }
@@ -48,23 +48,23 @@ cJSON *v1_pod_failure_policy_convertToJSON(v1_pod_failure_policy_t *v1_pod_failu
     listEntry_t *rulesListEntry;
     if (v1_pod_failure_policy->rules) {
     list_ForEach(rulesListEntry, v1_pod_failure_policy->rules) {
-    cJSON *itemLocal = v1_pod_failure_policy_rule_convertToJSON(rulesListEntry->data);
+    mazu_cJSON *itemLocal = v1_pod_failure_policy_rule_convertToJSON(rulesListEntry->data);
     if(itemLocal == NULL) {
     goto fail;
     }
-    cJSON_AddItemToArray(rules, itemLocal);
+    mazu_cJSON_AddItemToArray(rules, itemLocal);
     }
     }
 
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_pod_failure_policy_t *v1_pod_failure_policy_parseFromJSON(cJSON *v1_pod_failure_policyJSON){
+v1_pod_failure_policy_t *v1_pod_failure_policy_parseFromJSON(mazu_cJSON *v1_pod_failure_policyJSON){
 
     v1_pod_failure_policy_t *v1_pod_failure_policy_local_var = NULL;
 
@@ -72,22 +72,22 @@ v1_pod_failure_policy_t *v1_pod_failure_policy_parseFromJSON(cJSON *v1_pod_failu
     list_t *rulesList = NULL;
 
     // v1_pod_failure_policy->rules
-    cJSON *rules = cJSON_GetObjectItemCaseSensitive(v1_pod_failure_policyJSON, "rules");
+    mazu_cJSON *rules = mazu_cJSON_GetObjectItemCaseSensitive(v1_pod_failure_policyJSON, "rules");
     if (!rules) {
         goto end;
     }
 
     
-    cJSON *rules_local_nonprimitive = NULL;
-    if(!cJSON_IsArray(rules)){
+    mazu_cJSON *rules_local_nonprimitive = NULL;
+    if(!mazu_cJSON_IsArray(rules)){
         goto end; //nonprimitive container
     }
 
     rulesList = list_createList();
 
-    cJSON_ArrayForEach(rules_local_nonprimitive,rules )
+    mazu_cJSON_ArrayForEach(rules_local_nonprimitive,rules )
     {
-        if(!cJSON_IsObject(rules_local_nonprimitive)){
+        if(!mazu_cJSON_IsObject(rules_local_nonprimitive)){
             goto end;
         }
         v1_pod_failure_policy_rule_t *rulesItem = v1_pod_failure_policy_rule_parseFromJSON(rules_local_nonprimitive);

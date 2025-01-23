@@ -36,16 +36,16 @@ void v2_horizontal_pod_autoscaler_behavior_free(v2_horizontal_pod_autoscaler_beh
     free(v2_horizontal_pod_autoscaler_behavior);
 }
 
-cJSON *v2_horizontal_pod_autoscaler_behavior_convertToJSON(v2_horizontal_pod_autoscaler_behavior_t *v2_horizontal_pod_autoscaler_behavior) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v2_horizontal_pod_autoscaler_behavior_convertToJSON(v2_horizontal_pod_autoscaler_behavior_t *v2_horizontal_pod_autoscaler_behavior) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v2_horizontal_pod_autoscaler_behavior->scale_down
     if(v2_horizontal_pod_autoscaler_behavior->scale_down) {
-    cJSON *scale_down_local_JSON = v2_hpa_scaling_rules_convertToJSON(v2_horizontal_pod_autoscaler_behavior->scale_down);
+    mazu_cJSON *scale_down_local_JSON = v2_hpa_scaling_rules_convertToJSON(v2_horizontal_pod_autoscaler_behavior->scale_down);
     if(scale_down_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "scaleDown", scale_down_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "scaleDown", scale_down_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -54,11 +54,11 @@ cJSON *v2_horizontal_pod_autoscaler_behavior_convertToJSON(v2_horizontal_pod_aut
 
     // v2_horizontal_pod_autoscaler_behavior->scale_up
     if(v2_horizontal_pod_autoscaler_behavior->scale_up) {
-    cJSON *scale_up_local_JSON = v2_hpa_scaling_rules_convertToJSON(v2_horizontal_pod_autoscaler_behavior->scale_up);
+    mazu_cJSON *scale_up_local_JSON = v2_hpa_scaling_rules_convertToJSON(v2_horizontal_pod_autoscaler_behavior->scale_up);
     if(scale_up_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "scaleUp", scale_up_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "scaleUp", scale_up_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -67,12 +67,12 @@ cJSON *v2_horizontal_pod_autoscaler_behavior_convertToJSON(v2_horizontal_pod_aut
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v2_horizontal_pod_autoscaler_behavior_t *v2_horizontal_pod_autoscaler_behavior_parseFromJSON(cJSON *v2_horizontal_pod_autoscaler_behaviorJSON){
+v2_horizontal_pod_autoscaler_behavior_t *v2_horizontal_pod_autoscaler_behavior_parseFromJSON(mazu_cJSON *v2_horizontal_pod_autoscaler_behaviorJSON){
 
     v2_horizontal_pod_autoscaler_behavior_t *v2_horizontal_pod_autoscaler_behavior_local_var = NULL;
 
@@ -83,13 +83,13 @@ v2_horizontal_pod_autoscaler_behavior_t *v2_horizontal_pod_autoscaler_behavior_p
     v2_hpa_scaling_rules_t *scale_up_local_nonprim = NULL;
 
     // v2_horizontal_pod_autoscaler_behavior->scale_down
-    cJSON *scale_down = cJSON_GetObjectItemCaseSensitive(v2_horizontal_pod_autoscaler_behaviorJSON, "scaleDown");
+    mazu_cJSON *scale_down = mazu_cJSON_GetObjectItemCaseSensitive(v2_horizontal_pod_autoscaler_behaviorJSON, "scaleDown");
     if (scale_down) { 
     scale_down_local_nonprim = v2_hpa_scaling_rules_parseFromJSON(scale_down); //nonprimitive
     }
 
     // v2_horizontal_pod_autoscaler_behavior->scale_up
-    cJSON *scale_up = cJSON_GetObjectItemCaseSensitive(v2_horizontal_pod_autoscaler_behaviorJSON, "scaleUp");
+    mazu_cJSON *scale_up = mazu_cJSON_GetObjectItemCaseSensitive(v2_horizontal_pod_autoscaler_behaviorJSON, "scaleUp");
     if (scale_up) { 
     scale_up_local_nonprim = v2_hpa_scaling_rules_parseFromJSON(scale_up); //nonprimitive
     }

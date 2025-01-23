@@ -11,7 +11,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdbool.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 
 #include "../model/v1_json_schema_props.h"
 v1_json_schema_props_t* instantiate_v1_json_schema_props(int include_optional);
@@ -129,11 +129,11 @@ v1_json_schema_props_t* instantiate_v1_json_schema_props(int include_optional) {
 void test_v1_json_schema_props(int include_optional) {
     v1_json_schema_props_t* v1_json_schema_props_1 = instantiate_v1_json_schema_props(include_optional);
 
-	cJSON* jsonv1_json_schema_props_1 = v1_json_schema_props_convertToJSON(v1_json_schema_props_1);
-	printf("v1_json_schema_props :\n%s\n", cJSON_Print(jsonv1_json_schema_props_1));
+	mazu_cJSON* jsonv1_json_schema_props_1 = v1_json_schema_props_convertToJSON(v1_json_schema_props_1);
+	printf("v1_json_schema_props :\n%s\n", mazu_cJSON_Print(jsonv1_json_schema_props_1));
 	v1_json_schema_props_t* v1_json_schema_props_2 = v1_json_schema_props_parseFromJSON(jsonv1_json_schema_props_1);
-	cJSON* jsonv1_json_schema_props_2 = v1_json_schema_props_convertToJSON(v1_json_schema_props_2);
-	printf("repeating v1_json_schema_props:\n%s\n", cJSON_Print(jsonv1_json_schema_props_2));
+	mazu_cJSON* jsonv1_json_schema_props_2 = v1_json_schema_props_convertToJSON(v1_json_schema_props_2);
+	printf("repeating v1_json_schema_props:\n%s\n", mazu_cJSON_Print(jsonv1_json_schema_props_2));
 }
 
 int main() {

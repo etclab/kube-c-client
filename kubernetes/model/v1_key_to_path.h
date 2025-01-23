@@ -8,7 +8,7 @@
 #define _v1_key_to_path_H_
 
 #include <string.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
 #include "../include/binary.h"
@@ -33,9 +33,9 @@ v1_key_to_path_t *v1_key_to_path_create(
 
 void v1_key_to_path_free(v1_key_to_path_t *v1_key_to_path);
 
-v1_key_to_path_t *v1_key_to_path_parseFromJSON(cJSON *v1_key_to_pathJSON);
+v1_key_to_path_t *v1_key_to_path_parseFromJSON(mazu_cJSON *v1_key_to_pathJSON);
 
-cJSON *v1_key_to_path_convertToJSON(v1_key_to_path_t *v1_key_to_path);
+mazu_cJSON *v1_key_to_path_convertToJSON(v1_key_to_path_t *v1_key_to_path);
 
 #endif /* _v1_key_to_path_H_ */
 

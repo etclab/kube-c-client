@@ -54,16 +54,16 @@ void v1_volume_projection_free(v1_volume_projection_t *v1_volume_projection) {
     free(v1_volume_projection);
 }
 
-cJSON *v1_volume_projection_convertToJSON(v1_volume_projection_t *v1_volume_projection) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_volume_projection_convertToJSON(v1_volume_projection_t *v1_volume_projection) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_volume_projection->cluster_trust_bundle
     if(v1_volume_projection->cluster_trust_bundle) {
-    cJSON *cluster_trust_bundle_local_JSON = v1_cluster_trust_bundle_projection_convertToJSON(v1_volume_projection->cluster_trust_bundle);
+    mazu_cJSON *cluster_trust_bundle_local_JSON = v1_cluster_trust_bundle_projection_convertToJSON(v1_volume_projection->cluster_trust_bundle);
     if(cluster_trust_bundle_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "clusterTrustBundle", cluster_trust_bundle_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "clusterTrustBundle", cluster_trust_bundle_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -72,11 +72,11 @@ cJSON *v1_volume_projection_convertToJSON(v1_volume_projection_t *v1_volume_proj
 
     // v1_volume_projection->config_map
     if(v1_volume_projection->config_map) {
-    cJSON *config_map_local_JSON = v1_config_map_projection_convertToJSON(v1_volume_projection->config_map);
+    mazu_cJSON *config_map_local_JSON = v1_config_map_projection_convertToJSON(v1_volume_projection->config_map);
     if(config_map_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "configMap", config_map_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "configMap", config_map_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -85,11 +85,11 @@ cJSON *v1_volume_projection_convertToJSON(v1_volume_projection_t *v1_volume_proj
 
     // v1_volume_projection->downward_api
     if(v1_volume_projection->downward_api) {
-    cJSON *downward_api_local_JSON = v1_downward_api_projection_convertToJSON(v1_volume_projection->downward_api);
+    mazu_cJSON *downward_api_local_JSON = v1_downward_api_projection_convertToJSON(v1_volume_projection->downward_api);
     if(downward_api_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "downwardAPI", downward_api_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "downwardAPI", downward_api_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -98,11 +98,11 @@ cJSON *v1_volume_projection_convertToJSON(v1_volume_projection_t *v1_volume_proj
 
     // v1_volume_projection->secret
     if(v1_volume_projection->secret) {
-    cJSON *secret_local_JSON = v1_secret_projection_convertToJSON(v1_volume_projection->secret);
+    mazu_cJSON *secret_local_JSON = v1_secret_projection_convertToJSON(v1_volume_projection->secret);
     if(secret_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "secret", secret_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "secret", secret_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -111,11 +111,11 @@ cJSON *v1_volume_projection_convertToJSON(v1_volume_projection_t *v1_volume_proj
 
     // v1_volume_projection->service_account_token
     if(v1_volume_projection->service_account_token) {
-    cJSON *service_account_token_local_JSON = v1_service_account_token_projection_convertToJSON(v1_volume_projection->service_account_token);
+    mazu_cJSON *service_account_token_local_JSON = v1_service_account_token_projection_convertToJSON(v1_volume_projection->service_account_token);
     if(service_account_token_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "serviceAccountToken", service_account_token_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "serviceAccountToken", service_account_token_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -124,12 +124,12 @@ cJSON *v1_volume_projection_convertToJSON(v1_volume_projection_t *v1_volume_proj
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_volume_projection_t *v1_volume_projection_parseFromJSON(cJSON *v1_volume_projectionJSON){
+v1_volume_projection_t *v1_volume_projection_parseFromJSON(mazu_cJSON *v1_volume_projectionJSON){
 
     v1_volume_projection_t *v1_volume_projection_local_var = NULL;
 
@@ -149,31 +149,31 @@ v1_volume_projection_t *v1_volume_projection_parseFromJSON(cJSON *v1_volume_proj
     v1_service_account_token_projection_t *service_account_token_local_nonprim = NULL;
 
     // v1_volume_projection->cluster_trust_bundle
-    cJSON *cluster_trust_bundle = cJSON_GetObjectItemCaseSensitive(v1_volume_projectionJSON, "clusterTrustBundle");
+    mazu_cJSON *cluster_trust_bundle = mazu_cJSON_GetObjectItemCaseSensitive(v1_volume_projectionJSON, "clusterTrustBundle");
     if (cluster_trust_bundle) { 
     cluster_trust_bundle_local_nonprim = v1_cluster_trust_bundle_projection_parseFromJSON(cluster_trust_bundle); //nonprimitive
     }
 
     // v1_volume_projection->config_map
-    cJSON *config_map = cJSON_GetObjectItemCaseSensitive(v1_volume_projectionJSON, "configMap");
+    mazu_cJSON *config_map = mazu_cJSON_GetObjectItemCaseSensitive(v1_volume_projectionJSON, "configMap");
     if (config_map) { 
     config_map_local_nonprim = v1_config_map_projection_parseFromJSON(config_map); //nonprimitive
     }
 
     // v1_volume_projection->downward_api
-    cJSON *downward_api = cJSON_GetObjectItemCaseSensitive(v1_volume_projectionJSON, "downwardAPI");
+    mazu_cJSON *downward_api = mazu_cJSON_GetObjectItemCaseSensitive(v1_volume_projectionJSON, "downwardAPI");
     if (downward_api) { 
     downward_api_local_nonprim = v1_downward_api_projection_parseFromJSON(downward_api); //nonprimitive
     }
 
     // v1_volume_projection->secret
-    cJSON *secret = cJSON_GetObjectItemCaseSensitive(v1_volume_projectionJSON, "secret");
+    mazu_cJSON *secret = mazu_cJSON_GetObjectItemCaseSensitive(v1_volume_projectionJSON, "secret");
     if (secret) { 
     secret_local_nonprim = v1_secret_projection_parseFromJSON(secret); //nonprimitive
     }
 
     // v1_volume_projection->service_account_token
-    cJSON *service_account_token = cJSON_GetObjectItemCaseSensitive(v1_volume_projectionJSON, "serviceAccountToken");
+    mazu_cJSON *service_account_token = mazu_cJSON_GetObjectItemCaseSensitive(v1_volume_projectionJSON, "serviceAccountToken");
     if (service_account_token) { 
     service_account_token_local_nonprim = v1_service_account_token_projection_parseFromJSON(service_account_token); //nonprimitive
     }

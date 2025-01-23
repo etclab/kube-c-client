@@ -8,7 +8,7 @@
 #define _v1_topology_spread_constraint_H_
 
 #include <string.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
 #include "../include/binary.h"
@@ -44,9 +44,9 @@ v1_topology_spread_constraint_t *v1_topology_spread_constraint_create(
 
 void v1_topology_spread_constraint_free(v1_topology_spread_constraint_t *v1_topology_spread_constraint);
 
-v1_topology_spread_constraint_t *v1_topology_spread_constraint_parseFromJSON(cJSON *v1_topology_spread_constraintJSON);
+v1_topology_spread_constraint_t *v1_topology_spread_constraint_parseFromJSON(mazu_cJSON *v1_topology_spread_constraintJSON);
 
-cJSON *v1_topology_spread_constraint_convertToJSON(v1_topology_spread_constraint_t *v1_topology_spread_constraint);
+mazu_cJSON *v1_topology_spread_constraint_convertToJSON(v1_topology_spread_constraint_t *v1_topology_spread_constraint);
 
 #endif /* _v1_topology_spread_constraint_H_ */
 

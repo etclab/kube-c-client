@@ -63,12 +63,12 @@ void v1alpha1_lease_candidate_spec_free(v1alpha1_lease_candidate_spec_t *v1alpha
     free(v1alpha1_lease_candidate_spec);
 }
 
-cJSON *v1alpha1_lease_candidate_spec_convertToJSON(v1alpha1_lease_candidate_spec_t *v1alpha1_lease_candidate_spec) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1alpha1_lease_candidate_spec_convertToJSON(v1alpha1_lease_candidate_spec_t *v1alpha1_lease_candidate_spec) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1alpha1_lease_candidate_spec->binary_version
     if(v1alpha1_lease_candidate_spec->binary_version) {
-    if(cJSON_AddStringToObject(item, "binaryVersion", v1alpha1_lease_candidate_spec->binary_version) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "binaryVersion", v1alpha1_lease_candidate_spec->binary_version) == NULL) {
     goto fail; //String
     }
     }
@@ -76,7 +76,7 @@ cJSON *v1alpha1_lease_candidate_spec_convertToJSON(v1alpha1_lease_candidate_spec
 
     // v1alpha1_lease_candidate_spec->emulation_version
     if(v1alpha1_lease_candidate_spec->emulation_version) {
-    if(cJSON_AddStringToObject(item, "emulationVersion", v1alpha1_lease_candidate_spec->emulation_version) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "emulationVersion", v1alpha1_lease_candidate_spec->emulation_version) == NULL) {
     goto fail; //String
     }
     }
@@ -86,14 +86,14 @@ cJSON *v1alpha1_lease_candidate_spec_convertToJSON(v1alpha1_lease_candidate_spec
     if (!v1alpha1_lease_candidate_spec->lease_name) {
         goto fail;
     }
-    if(cJSON_AddStringToObject(item, "leaseName", v1alpha1_lease_candidate_spec->lease_name) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "leaseName", v1alpha1_lease_candidate_spec->lease_name) == NULL) {
     goto fail; //String
     }
 
 
     // v1alpha1_lease_candidate_spec->ping_time
     if(v1alpha1_lease_candidate_spec->ping_time) {
-    if(cJSON_AddStringToObject(item, "pingTime", v1alpha1_lease_candidate_spec->ping_time) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "pingTime", v1alpha1_lease_candidate_spec->ping_time) == NULL) {
     goto fail; //Date-Time
     }
     }
@@ -103,14 +103,14 @@ cJSON *v1alpha1_lease_candidate_spec_convertToJSON(v1alpha1_lease_candidate_spec
     if (!v1alpha1_lease_candidate_spec->preferred_strategies) {
         goto fail;
     }
-    cJSON *preferred_strategies = cJSON_AddArrayToObject(item, "preferredStrategies");
+    mazu_cJSON *preferred_strategies = mazu_cJSON_AddArrayToObject(item, "preferredStrategies");
     if(preferred_strategies == NULL) {
         goto fail; //primitive container
     }
 
     listEntry_t *preferred_strategiesListEntry;
     list_ForEach(preferred_strategiesListEntry, v1alpha1_lease_candidate_spec->preferred_strategies) {
-    if(cJSON_AddStringToObject(preferred_strategies, "", (char*)preferred_strategiesListEntry->data) == NULL)
+    if(mazu_cJSON_AddStringToObject(preferred_strategies, "", (char*)preferred_strategiesListEntry->data) == NULL)
     {
         goto fail;
     }
@@ -119,7 +119,7 @@ cJSON *v1alpha1_lease_candidate_spec_convertToJSON(v1alpha1_lease_candidate_spec
 
     // v1alpha1_lease_candidate_spec->renew_time
     if(v1alpha1_lease_candidate_spec->renew_time) {
-    if(cJSON_AddStringToObject(item, "renewTime", v1alpha1_lease_candidate_spec->renew_time) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "renewTime", v1alpha1_lease_candidate_spec->renew_time) == NULL) {
     goto fail; //Date-Time
     }
     }
@@ -127,12 +127,12 @@ cJSON *v1alpha1_lease_candidate_spec_convertToJSON(v1alpha1_lease_candidate_spec
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1alpha1_lease_candidate_spec_t *v1alpha1_lease_candidate_spec_parseFromJSON(cJSON *v1alpha1_lease_candidate_specJSON){
+v1alpha1_lease_candidate_spec_t *v1alpha1_lease_candidate_spec_parseFromJSON(mazu_cJSON *v1alpha1_lease_candidate_specJSON){
 
     v1alpha1_lease_candidate_spec_t *v1alpha1_lease_candidate_spec_local_var = NULL;
 
@@ -140,60 +140,60 @@ v1alpha1_lease_candidate_spec_t *v1alpha1_lease_candidate_spec_parseFromJSON(cJS
     list_t *preferred_strategiesList = NULL;
 
     // v1alpha1_lease_candidate_spec->binary_version
-    cJSON *binary_version = cJSON_GetObjectItemCaseSensitive(v1alpha1_lease_candidate_specJSON, "binaryVersion");
+    mazu_cJSON *binary_version = mazu_cJSON_GetObjectItemCaseSensitive(v1alpha1_lease_candidate_specJSON, "binaryVersion");
     if (binary_version) { 
-    if(!cJSON_IsString(binary_version) && !cJSON_IsNull(binary_version))
+    if(!mazu_cJSON_IsString(binary_version) && !mazu_cJSON_IsNull(binary_version))
     {
     goto end; //String
     }
     }
 
     // v1alpha1_lease_candidate_spec->emulation_version
-    cJSON *emulation_version = cJSON_GetObjectItemCaseSensitive(v1alpha1_lease_candidate_specJSON, "emulationVersion");
+    mazu_cJSON *emulation_version = mazu_cJSON_GetObjectItemCaseSensitive(v1alpha1_lease_candidate_specJSON, "emulationVersion");
     if (emulation_version) { 
-    if(!cJSON_IsString(emulation_version) && !cJSON_IsNull(emulation_version))
+    if(!mazu_cJSON_IsString(emulation_version) && !mazu_cJSON_IsNull(emulation_version))
     {
     goto end; //String
     }
     }
 
     // v1alpha1_lease_candidate_spec->lease_name
-    cJSON *lease_name = cJSON_GetObjectItemCaseSensitive(v1alpha1_lease_candidate_specJSON, "leaseName");
+    mazu_cJSON *lease_name = mazu_cJSON_GetObjectItemCaseSensitive(v1alpha1_lease_candidate_specJSON, "leaseName");
     if (!lease_name) {
         goto end;
     }
 
     
-    if(!cJSON_IsString(lease_name))
+    if(!mazu_cJSON_IsString(lease_name))
     {
     goto end; //String
     }
 
     // v1alpha1_lease_candidate_spec->ping_time
-    cJSON *ping_time = cJSON_GetObjectItemCaseSensitive(v1alpha1_lease_candidate_specJSON, "pingTime");
+    mazu_cJSON *ping_time = mazu_cJSON_GetObjectItemCaseSensitive(v1alpha1_lease_candidate_specJSON, "pingTime");
     if (ping_time) { 
-    if(!cJSON_IsString(ping_time) && !cJSON_IsNull(ping_time))
+    if(!mazu_cJSON_IsString(ping_time) && !mazu_cJSON_IsNull(ping_time))
     {
     goto end; //DateTime
     }
     }
 
     // v1alpha1_lease_candidate_spec->preferred_strategies
-    cJSON *preferred_strategies = cJSON_GetObjectItemCaseSensitive(v1alpha1_lease_candidate_specJSON, "preferredStrategies");
+    mazu_cJSON *preferred_strategies = mazu_cJSON_GetObjectItemCaseSensitive(v1alpha1_lease_candidate_specJSON, "preferredStrategies");
     if (!preferred_strategies) {
         goto end;
     }
 
     
-    cJSON *preferred_strategies_local = NULL;
-    if(!cJSON_IsArray(preferred_strategies)) {
+    mazu_cJSON *preferred_strategies_local = NULL;
+    if(!mazu_cJSON_IsArray(preferred_strategies)) {
         goto end;//primitive container
     }
     preferred_strategiesList = list_createList();
 
-    cJSON_ArrayForEach(preferred_strategies_local, preferred_strategies)
+    mazu_cJSON_ArrayForEach(preferred_strategies_local, preferred_strategies)
     {
-        if(!cJSON_IsString(preferred_strategies_local))
+        if(!mazu_cJSON_IsString(preferred_strategies_local))
         {
             goto end;
         }
@@ -201,9 +201,9 @@ v1alpha1_lease_candidate_spec_t *v1alpha1_lease_candidate_spec_parseFromJSON(cJS
     }
 
     // v1alpha1_lease_candidate_spec->renew_time
-    cJSON *renew_time = cJSON_GetObjectItemCaseSensitive(v1alpha1_lease_candidate_specJSON, "renewTime");
+    mazu_cJSON *renew_time = mazu_cJSON_GetObjectItemCaseSensitive(v1alpha1_lease_candidate_specJSON, "renewTime");
     if (renew_time) { 
-    if(!cJSON_IsString(renew_time) && !cJSON_IsNull(renew_time))
+    if(!mazu_cJSON_IsString(renew_time) && !mazu_cJSON_IsNull(renew_time))
     {
     goto end; //DateTime
     }
@@ -211,12 +211,12 @@ v1alpha1_lease_candidate_spec_t *v1alpha1_lease_candidate_spec_parseFromJSON(cJS
 
 
     v1alpha1_lease_candidate_spec_local_var = v1alpha1_lease_candidate_spec_create (
-        binary_version && !cJSON_IsNull(binary_version) ? strdup(binary_version->valuestring) : NULL,
-        emulation_version && !cJSON_IsNull(emulation_version) ? strdup(emulation_version->valuestring) : NULL,
+        binary_version && !mazu_cJSON_IsNull(binary_version) ? strdup(binary_version->valuestring) : NULL,
+        emulation_version && !mazu_cJSON_IsNull(emulation_version) ? strdup(emulation_version->valuestring) : NULL,
         strdup(lease_name->valuestring),
-        ping_time && !cJSON_IsNull(ping_time) ? strdup(ping_time->valuestring) : NULL,
+        ping_time && !mazu_cJSON_IsNull(ping_time) ? strdup(ping_time->valuestring) : NULL,
         preferred_strategiesList,
-        renew_time && !cJSON_IsNull(renew_time) ? strdup(renew_time->valuestring) : NULL
+        renew_time && !mazu_cJSON_IsNull(renew_time) ? strdup(renew_time->valuestring) : NULL
         );
 
     return v1alpha1_lease_candidate_spec_local_var;

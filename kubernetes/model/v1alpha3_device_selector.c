@@ -30,16 +30,16 @@ void v1alpha3_device_selector_free(v1alpha3_device_selector_t *v1alpha3_device_s
     free(v1alpha3_device_selector);
 }
 
-cJSON *v1alpha3_device_selector_convertToJSON(v1alpha3_device_selector_t *v1alpha3_device_selector) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1alpha3_device_selector_convertToJSON(v1alpha3_device_selector_t *v1alpha3_device_selector) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1alpha3_device_selector->cel
     if(v1alpha3_device_selector->cel) {
-    cJSON *cel_local_JSON = v1alpha3_cel_device_selector_convertToJSON(v1alpha3_device_selector->cel);
+    mazu_cJSON *cel_local_JSON = v1alpha3_cel_device_selector_convertToJSON(v1alpha3_device_selector->cel);
     if(cel_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "cel", cel_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "cel", cel_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -48,12 +48,12 @@ cJSON *v1alpha3_device_selector_convertToJSON(v1alpha3_device_selector_t *v1alph
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1alpha3_device_selector_t *v1alpha3_device_selector_parseFromJSON(cJSON *v1alpha3_device_selectorJSON){
+v1alpha3_device_selector_t *v1alpha3_device_selector_parseFromJSON(mazu_cJSON *v1alpha3_device_selectorJSON){
 
     v1alpha3_device_selector_t *v1alpha3_device_selector_local_var = NULL;
 
@@ -61,7 +61,7 @@ v1alpha3_device_selector_t *v1alpha3_device_selector_parseFromJSON(cJSON *v1alph
     v1alpha3_cel_device_selector_t *cel_local_nonprim = NULL;
 
     // v1alpha3_device_selector->cel
-    cJSON *cel = cJSON_GetObjectItemCaseSensitive(v1alpha3_device_selectorJSON, "cel");
+    mazu_cJSON *cel = mazu_cJSON_GetObjectItemCaseSensitive(v1alpha3_device_selectorJSON, "cel");
     if (cel) { 
     cel_local_nonprim = v1alpha3_cel_device_selector_parseFromJSON(cel); //nonprimitive
     }

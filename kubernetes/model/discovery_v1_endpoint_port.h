@@ -8,7 +8,7 @@
 #define _discovery_v1_endpoint_port_H_
 
 #include <string.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
 #include "../include/binary.h"
@@ -35,9 +35,9 @@ discovery_v1_endpoint_port_t *discovery_v1_endpoint_port_create(
 
 void discovery_v1_endpoint_port_free(discovery_v1_endpoint_port_t *discovery_v1_endpoint_port);
 
-discovery_v1_endpoint_port_t *discovery_v1_endpoint_port_parseFromJSON(cJSON *discovery_v1_endpoint_portJSON);
+discovery_v1_endpoint_port_t *discovery_v1_endpoint_port_parseFromJSON(mazu_cJSON *discovery_v1_endpoint_portJSON);
 
-cJSON *discovery_v1_endpoint_port_convertToJSON(discovery_v1_endpoint_port_t *discovery_v1_endpoint_port);
+mazu_cJSON *discovery_v1_endpoint_port_convertToJSON(discovery_v1_endpoint_port_t *discovery_v1_endpoint_port);
 
 #endif /* _discovery_v1_endpoint_port_H_ */
 

@@ -56,21 +56,21 @@ void v1_flex_persistent_volume_source_free(v1_flex_persistent_volume_source_t *v
     free(v1_flex_persistent_volume_source);
 }
 
-cJSON *v1_flex_persistent_volume_source_convertToJSON(v1_flex_persistent_volume_source_t *v1_flex_persistent_volume_source) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_flex_persistent_volume_source_convertToJSON(v1_flex_persistent_volume_source_t *v1_flex_persistent_volume_source) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_flex_persistent_volume_source->driver
     if (!v1_flex_persistent_volume_source->driver) {
         goto fail;
     }
-    if(cJSON_AddStringToObject(item, "driver", v1_flex_persistent_volume_source->driver) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "driver", v1_flex_persistent_volume_source->driver) == NULL) {
     goto fail; //String
     }
 
 
     // v1_flex_persistent_volume_source->fs_type
     if(v1_flex_persistent_volume_source->fs_type) {
-    if(cJSON_AddStringToObject(item, "fsType", v1_flex_persistent_volume_source->fs_type) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "fsType", v1_flex_persistent_volume_source->fs_type) == NULL) {
     goto fail; //String
     }
     }
@@ -78,16 +78,16 @@ cJSON *v1_flex_persistent_volume_source_convertToJSON(v1_flex_persistent_volume_
 
     // v1_flex_persistent_volume_source->options
     if(v1_flex_persistent_volume_source->options) {
-    cJSON *options = cJSON_AddObjectToObject(item, "options");
+    mazu_cJSON *options = mazu_cJSON_AddObjectToObject(item, "options");
     if(options == NULL) {
         goto fail; //primitive map container
     }
-    cJSON *localMapObject = options;
+    mazu_cJSON *localMapObject = options;
     listEntry_t *optionsListEntry;
     if (v1_flex_persistent_volume_source->options) {
     list_ForEach(optionsListEntry, v1_flex_persistent_volume_source->options) {
         keyValuePair_t *localKeyValue = (keyValuePair_t*)optionsListEntry->data;
-        if(cJSON_AddStringToObject(localMapObject, localKeyValue->key, (char*)localKeyValue->value) == NULL)
+        if(mazu_cJSON_AddStringToObject(localMapObject, localKeyValue->key, (char*)localKeyValue->value) == NULL)
         {
             goto fail;
         }
@@ -98,7 +98,7 @@ cJSON *v1_flex_persistent_volume_source_convertToJSON(v1_flex_persistent_volume_
 
     // v1_flex_persistent_volume_source->read_only
     if(v1_flex_persistent_volume_source->read_only) {
-    if(cJSON_AddBoolToObject(item, "readOnly", v1_flex_persistent_volume_source->read_only) == NULL) {
+    if(mazu_cJSON_AddBoolToObject(item, "readOnly", v1_flex_persistent_volume_source->read_only) == NULL) {
     goto fail; //Bool
     }
     }
@@ -106,11 +106,11 @@ cJSON *v1_flex_persistent_volume_source_convertToJSON(v1_flex_persistent_volume_
 
     // v1_flex_persistent_volume_source->secret_ref
     if(v1_flex_persistent_volume_source->secret_ref) {
-    cJSON *secret_ref_local_JSON = v1_secret_reference_convertToJSON(v1_flex_persistent_volume_source->secret_ref);
+    mazu_cJSON *secret_ref_local_JSON = v1_secret_reference_convertToJSON(v1_flex_persistent_volume_source->secret_ref);
     if(secret_ref_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "secretRef", secret_ref_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "secretRef", secret_ref_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -119,12 +119,12 @@ cJSON *v1_flex_persistent_volume_source_convertToJSON(v1_flex_persistent_volume_
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_flex_persistent_volume_source_t *v1_flex_persistent_volume_source_parseFromJSON(cJSON *v1_flex_persistent_volume_sourceJSON){
+v1_flex_persistent_volume_source_t *v1_flex_persistent_volume_source_parseFromJSON(mazu_cJSON *v1_flex_persistent_volume_sourceJSON){
 
     v1_flex_persistent_volume_source_t *v1_flex_persistent_volume_source_local_var = NULL;
 
@@ -135,42 +135,42 @@ v1_flex_persistent_volume_source_t *v1_flex_persistent_volume_source_parseFromJS
     v1_secret_reference_t *secret_ref_local_nonprim = NULL;
 
     // v1_flex_persistent_volume_source->driver
-    cJSON *driver = cJSON_GetObjectItemCaseSensitive(v1_flex_persistent_volume_sourceJSON, "driver");
+    mazu_cJSON *driver = mazu_cJSON_GetObjectItemCaseSensitive(v1_flex_persistent_volume_sourceJSON, "driver");
     if (!driver) {
         goto end;
     }
 
     
-    if(!cJSON_IsString(driver))
+    if(!mazu_cJSON_IsString(driver))
     {
     goto end; //String
     }
 
     // v1_flex_persistent_volume_source->fs_type
-    cJSON *fs_type = cJSON_GetObjectItemCaseSensitive(v1_flex_persistent_volume_sourceJSON, "fsType");
+    mazu_cJSON *fs_type = mazu_cJSON_GetObjectItemCaseSensitive(v1_flex_persistent_volume_sourceJSON, "fsType");
     if (fs_type) { 
-    if(!cJSON_IsString(fs_type) && !cJSON_IsNull(fs_type))
+    if(!mazu_cJSON_IsString(fs_type) && !mazu_cJSON_IsNull(fs_type))
     {
     goto end; //String
     }
     }
 
     // v1_flex_persistent_volume_source->options
-    cJSON *options = cJSON_GetObjectItemCaseSensitive(v1_flex_persistent_volume_sourceJSON, "options");
+    mazu_cJSON *options = mazu_cJSON_GetObjectItemCaseSensitive(v1_flex_persistent_volume_sourceJSON, "options");
     if (options) { 
-    cJSON *options_local_map = NULL;
-    if(!cJSON_IsObject(options) && !cJSON_IsNull(options))
+    mazu_cJSON *options_local_map = NULL;
+    if(!mazu_cJSON_IsObject(options) && !mazu_cJSON_IsNull(options))
     {
         goto end;//primitive map container
     }
-    if(cJSON_IsObject(options))
+    if(mazu_cJSON_IsObject(options))
     {
         optionsList = list_createList();
         keyValuePair_t *localMapKeyPair;
-        cJSON_ArrayForEach(options_local_map, options)
+        mazu_cJSON_ArrayForEach(options_local_map, options)
         {
-            cJSON *localMapObject = options_local_map;
-            if(!cJSON_IsString(localMapObject))
+            mazu_cJSON *localMapObject = options_local_map;
+            if(!mazu_cJSON_IsString(localMapObject))
             {
                 goto end;
             }
@@ -181,16 +181,16 @@ v1_flex_persistent_volume_source_t *v1_flex_persistent_volume_source_parseFromJS
     }
 
     // v1_flex_persistent_volume_source->read_only
-    cJSON *read_only = cJSON_GetObjectItemCaseSensitive(v1_flex_persistent_volume_sourceJSON, "readOnly");
+    mazu_cJSON *read_only = mazu_cJSON_GetObjectItemCaseSensitive(v1_flex_persistent_volume_sourceJSON, "readOnly");
     if (read_only) { 
-    if(!cJSON_IsBool(read_only))
+    if(!mazu_cJSON_IsBool(read_only))
     {
     goto end; //Bool
     }
     }
 
     // v1_flex_persistent_volume_source->secret_ref
-    cJSON *secret_ref = cJSON_GetObjectItemCaseSensitive(v1_flex_persistent_volume_sourceJSON, "secretRef");
+    mazu_cJSON *secret_ref = mazu_cJSON_GetObjectItemCaseSensitive(v1_flex_persistent_volume_sourceJSON, "secretRef");
     if (secret_ref) { 
     secret_ref_local_nonprim = v1_secret_reference_parseFromJSON(secret_ref); //nonprimitive
     }
@@ -198,7 +198,7 @@ v1_flex_persistent_volume_source_t *v1_flex_persistent_volume_source_parseFromJS
 
     v1_flex_persistent_volume_source_local_var = v1_flex_persistent_volume_source_create (
         strdup(driver->valuestring),
-        fs_type && !cJSON_IsNull(fs_type) ? strdup(fs_type->valuestring) : NULL,
+        fs_type && !mazu_cJSON_IsNull(fs_type) ? strdup(fs_type->valuestring) : NULL,
         options ? optionsList : NULL,
         read_only ? read_only->valueint : 0,
         secret_ref ? secret_ref_local_nonprim : NULL

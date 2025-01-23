@@ -60,12 +60,12 @@ void v1alpha1_volume_attributes_class_free(v1alpha1_volume_attributes_class_t *v
     free(v1alpha1_volume_attributes_class);
 }
 
-cJSON *v1alpha1_volume_attributes_class_convertToJSON(v1alpha1_volume_attributes_class_t *v1alpha1_volume_attributes_class) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1alpha1_volume_attributes_class_convertToJSON(v1alpha1_volume_attributes_class_t *v1alpha1_volume_attributes_class) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1alpha1_volume_attributes_class->api_version
     if(v1alpha1_volume_attributes_class->api_version) {
-    if(cJSON_AddStringToObject(item, "apiVersion", v1alpha1_volume_attributes_class->api_version) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "apiVersion", v1alpha1_volume_attributes_class->api_version) == NULL) {
     goto fail; //String
     }
     }
@@ -75,14 +75,14 @@ cJSON *v1alpha1_volume_attributes_class_convertToJSON(v1alpha1_volume_attributes
     if (!v1alpha1_volume_attributes_class->driver_name) {
         goto fail;
     }
-    if(cJSON_AddStringToObject(item, "driverName", v1alpha1_volume_attributes_class->driver_name) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "driverName", v1alpha1_volume_attributes_class->driver_name) == NULL) {
     goto fail; //String
     }
 
 
     // v1alpha1_volume_attributes_class->kind
     if(v1alpha1_volume_attributes_class->kind) {
-    if(cJSON_AddStringToObject(item, "kind", v1alpha1_volume_attributes_class->kind) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "kind", v1alpha1_volume_attributes_class->kind) == NULL) {
     goto fail; //String
     }
     }
@@ -90,11 +90,11 @@ cJSON *v1alpha1_volume_attributes_class_convertToJSON(v1alpha1_volume_attributes
 
     // v1alpha1_volume_attributes_class->metadata
     if(v1alpha1_volume_attributes_class->metadata) {
-    cJSON *metadata_local_JSON = v1_object_meta_convertToJSON(v1alpha1_volume_attributes_class->metadata);
+    mazu_cJSON *metadata_local_JSON = v1_object_meta_convertToJSON(v1alpha1_volume_attributes_class->metadata);
     if(metadata_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "metadata", metadata_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "metadata", metadata_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -103,16 +103,16 @@ cJSON *v1alpha1_volume_attributes_class_convertToJSON(v1alpha1_volume_attributes
 
     // v1alpha1_volume_attributes_class->parameters
     if(v1alpha1_volume_attributes_class->parameters) {
-    cJSON *parameters = cJSON_AddObjectToObject(item, "parameters");
+    mazu_cJSON *parameters = mazu_cJSON_AddObjectToObject(item, "parameters");
     if(parameters == NULL) {
         goto fail; //primitive map container
     }
-    cJSON *localMapObject = parameters;
+    mazu_cJSON *localMapObject = parameters;
     listEntry_t *parametersListEntry;
     if (v1alpha1_volume_attributes_class->parameters) {
     list_ForEach(parametersListEntry, v1alpha1_volume_attributes_class->parameters) {
         keyValuePair_t *localKeyValue = (keyValuePair_t*)parametersListEntry->data;
-        if(cJSON_AddStringToObject(localMapObject, localKeyValue->key, (char*)localKeyValue->value) == NULL)
+        if(mazu_cJSON_AddStringToObject(localMapObject, localKeyValue->key, (char*)localKeyValue->value) == NULL)
         {
             goto fail;
         }
@@ -123,12 +123,12 @@ cJSON *v1alpha1_volume_attributes_class_convertToJSON(v1alpha1_volume_attributes
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1alpha1_volume_attributes_class_t *v1alpha1_volume_attributes_class_parseFromJSON(cJSON *v1alpha1_volume_attributes_classJSON){
+v1alpha1_volume_attributes_class_t *v1alpha1_volume_attributes_class_parseFromJSON(mazu_cJSON *v1alpha1_volume_attributes_classJSON){
 
     v1alpha1_volume_attributes_class_t *v1alpha1_volume_attributes_class_local_var = NULL;
 
@@ -139,57 +139,57 @@ v1alpha1_volume_attributes_class_t *v1alpha1_volume_attributes_class_parseFromJS
     list_t *parametersList = NULL;
 
     // v1alpha1_volume_attributes_class->api_version
-    cJSON *api_version = cJSON_GetObjectItemCaseSensitive(v1alpha1_volume_attributes_classJSON, "apiVersion");
+    mazu_cJSON *api_version = mazu_cJSON_GetObjectItemCaseSensitive(v1alpha1_volume_attributes_classJSON, "apiVersion");
     if (api_version) { 
-    if(!cJSON_IsString(api_version) && !cJSON_IsNull(api_version))
+    if(!mazu_cJSON_IsString(api_version) && !mazu_cJSON_IsNull(api_version))
     {
     goto end; //String
     }
     }
 
     // v1alpha1_volume_attributes_class->driver_name
-    cJSON *driver_name = cJSON_GetObjectItemCaseSensitive(v1alpha1_volume_attributes_classJSON, "driverName");
+    mazu_cJSON *driver_name = mazu_cJSON_GetObjectItemCaseSensitive(v1alpha1_volume_attributes_classJSON, "driverName");
     if (!driver_name) {
         goto end;
     }
 
     
-    if(!cJSON_IsString(driver_name))
+    if(!mazu_cJSON_IsString(driver_name))
     {
     goto end; //String
     }
 
     // v1alpha1_volume_attributes_class->kind
-    cJSON *kind = cJSON_GetObjectItemCaseSensitive(v1alpha1_volume_attributes_classJSON, "kind");
+    mazu_cJSON *kind = mazu_cJSON_GetObjectItemCaseSensitive(v1alpha1_volume_attributes_classJSON, "kind");
     if (kind) { 
-    if(!cJSON_IsString(kind) && !cJSON_IsNull(kind))
+    if(!mazu_cJSON_IsString(kind) && !mazu_cJSON_IsNull(kind))
     {
     goto end; //String
     }
     }
 
     // v1alpha1_volume_attributes_class->metadata
-    cJSON *metadata = cJSON_GetObjectItemCaseSensitive(v1alpha1_volume_attributes_classJSON, "metadata");
+    mazu_cJSON *metadata = mazu_cJSON_GetObjectItemCaseSensitive(v1alpha1_volume_attributes_classJSON, "metadata");
     if (metadata) { 
     metadata_local_nonprim = v1_object_meta_parseFromJSON(metadata); //nonprimitive
     }
 
     // v1alpha1_volume_attributes_class->parameters
-    cJSON *parameters = cJSON_GetObjectItemCaseSensitive(v1alpha1_volume_attributes_classJSON, "parameters");
+    mazu_cJSON *parameters = mazu_cJSON_GetObjectItemCaseSensitive(v1alpha1_volume_attributes_classJSON, "parameters");
     if (parameters) { 
-    cJSON *parameters_local_map = NULL;
-    if(!cJSON_IsObject(parameters) && !cJSON_IsNull(parameters))
+    mazu_cJSON *parameters_local_map = NULL;
+    if(!mazu_cJSON_IsObject(parameters) && !mazu_cJSON_IsNull(parameters))
     {
         goto end;//primitive map container
     }
-    if(cJSON_IsObject(parameters))
+    if(mazu_cJSON_IsObject(parameters))
     {
         parametersList = list_createList();
         keyValuePair_t *localMapKeyPair;
-        cJSON_ArrayForEach(parameters_local_map, parameters)
+        mazu_cJSON_ArrayForEach(parameters_local_map, parameters)
         {
-            cJSON *localMapObject = parameters_local_map;
-            if(!cJSON_IsString(localMapObject))
+            mazu_cJSON *localMapObject = parameters_local_map;
+            if(!mazu_cJSON_IsString(localMapObject))
             {
                 goto end;
             }
@@ -201,9 +201,9 @@ v1alpha1_volume_attributes_class_t *v1alpha1_volume_attributes_class_parseFromJS
 
 
     v1alpha1_volume_attributes_class_local_var = v1alpha1_volume_attributes_class_create (
-        api_version && !cJSON_IsNull(api_version) ? strdup(api_version->valuestring) : NULL,
+        api_version && !mazu_cJSON_IsNull(api_version) ? strdup(api_version->valuestring) : NULL,
         strdup(driver_name->valuestring),
-        kind && !cJSON_IsNull(kind) ? strdup(kind->valuestring) : NULL,
+        kind && !mazu_cJSON_IsNull(kind) ? strdup(kind->valuestring) : NULL,
         metadata ? metadata_local_nonprim : NULL,
         parameters ? parametersList : NULL
         );

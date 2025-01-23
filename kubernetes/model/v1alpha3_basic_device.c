@@ -48,16 +48,16 @@ void v1alpha3_basic_device_free(v1alpha3_basic_device_t *v1alpha3_basic_device) 
     free(v1alpha3_basic_device);
 }
 
-cJSON *v1alpha3_basic_device_convertToJSON(v1alpha3_basic_device_t *v1alpha3_basic_device) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1alpha3_basic_device_convertToJSON(v1alpha3_basic_device_t *v1alpha3_basic_device) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1alpha3_basic_device->attributes
     if(v1alpha3_basic_device->attributes) {
-    cJSON *attributes = cJSON_AddObjectToObject(item, "attributes");
+    mazu_cJSON *attributes = mazu_cJSON_AddObjectToObject(item, "attributes");
     if(attributes == NULL) {
         goto fail; //primitive map container
     }
-    cJSON *localMapObject = attributes;
+    mazu_cJSON *localMapObject = attributes;
     listEntry_t *attributesListEntry;
     if (v1alpha3_basic_device->attributes) {
     list_ForEach(attributesListEntry, v1alpha3_basic_device->attributes) {
@@ -69,16 +69,16 @@ cJSON *v1alpha3_basic_device_convertToJSON(v1alpha3_basic_device_t *v1alpha3_bas
 
     // v1alpha3_basic_device->capacity
     if(v1alpha3_basic_device->capacity) {
-    cJSON *capacity = cJSON_AddObjectToObject(item, "capacity");
+    mazu_cJSON *capacity = mazu_cJSON_AddObjectToObject(item, "capacity");
     if(capacity == NULL) {
         goto fail; //primitive map container
     }
-    cJSON *localMapObject = capacity;
+    mazu_cJSON *localMapObject = capacity;
     listEntry_t *capacityListEntry;
     if (v1alpha3_basic_device->capacity) {
     list_ForEach(capacityListEntry, v1alpha3_basic_device->capacity) {
         keyValuePair_t *localKeyValue = (keyValuePair_t*)capacityListEntry->data;
-        if(cJSON_AddStringToObject(localMapObject, localKeyValue->key, (char*)localKeyValue->value) == NULL)
+        if(mazu_cJSON_AddStringToObject(localMapObject, localKeyValue->key, (char*)localKeyValue->value) == NULL)
         {
             goto fail;
         }
@@ -89,12 +89,12 @@ cJSON *v1alpha3_basic_device_convertToJSON(v1alpha3_basic_device_t *v1alpha3_bas
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1alpha3_basic_device_t *v1alpha3_basic_device_parseFromJSON(cJSON *v1alpha3_basic_deviceJSON){
+v1alpha3_basic_device_t *v1alpha3_basic_device_parseFromJSON(mazu_cJSON *v1alpha3_basic_deviceJSON){
 
     v1alpha3_basic_device_t *v1alpha3_basic_device_local_var = NULL;
 
@@ -105,7 +105,7 @@ v1alpha3_basic_device_t *v1alpha3_basic_device_parseFromJSON(cJSON *v1alpha3_bas
     list_t *capacityList = NULL;
 
     // v1alpha3_basic_device->attributes
-    cJSON *attributes = cJSON_GetObjectItemCaseSensitive(v1alpha3_basic_deviceJSON, "attributes");
+    mazu_cJSON *attributes = mazu_cJSON_GetObjectItemCaseSensitive(v1alpha3_basic_deviceJSON, "attributes");
     if (attributes) { 
 
     // The data type of the elements in v1alpha3_basic_device->attributes is currently not supported.
@@ -113,21 +113,21 @@ v1alpha3_basic_device_t *v1alpha3_basic_device_parseFromJSON(cJSON *v1alpha3_bas
     }
 
     // v1alpha3_basic_device->capacity
-    cJSON *capacity = cJSON_GetObjectItemCaseSensitive(v1alpha3_basic_deviceJSON, "capacity");
+    mazu_cJSON *capacity = mazu_cJSON_GetObjectItemCaseSensitive(v1alpha3_basic_deviceJSON, "capacity");
     if (capacity) { 
-    cJSON *capacity_local_map = NULL;
-    if(!cJSON_IsObject(capacity) && !cJSON_IsNull(capacity))
+    mazu_cJSON *capacity_local_map = NULL;
+    if(!mazu_cJSON_IsObject(capacity) && !mazu_cJSON_IsNull(capacity))
     {
         goto end;//primitive map container
     }
-    if(cJSON_IsObject(capacity))
+    if(mazu_cJSON_IsObject(capacity))
     {
         capacityList = list_createList();
         keyValuePair_t *localMapKeyPair;
-        cJSON_ArrayForEach(capacity_local_map, capacity)
+        mazu_cJSON_ArrayForEach(capacity_local_map, capacity)
         {
-            cJSON *localMapObject = capacity_local_map;
-            if(!cJSON_IsString(localMapObject))
+            mazu_cJSON *localMapObject = capacity_local_map;
+            if(!mazu_cJSON_IsString(localMapObject))
             {
                 goto end;
             }

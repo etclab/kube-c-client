@@ -8,7 +8,7 @@
 #define _rbac_v1_subject_H_
 
 #include <string.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
 #include "../include/binary.h"
@@ -35,9 +35,9 @@ rbac_v1_subject_t *rbac_v1_subject_create(
 
 void rbac_v1_subject_free(rbac_v1_subject_t *rbac_v1_subject);
 
-rbac_v1_subject_t *rbac_v1_subject_parseFromJSON(cJSON *rbac_v1_subjectJSON);
+rbac_v1_subject_t *rbac_v1_subject_parseFromJSON(mazu_cJSON *rbac_v1_subjectJSON);
 
-cJSON *rbac_v1_subject_convertToJSON(rbac_v1_subject_t *rbac_v1_subject);
+mazu_cJSON *rbac_v1_subject_convertToJSON(rbac_v1_subject_t *rbac_v1_subject);
 
 #endif /* _rbac_v1_subject_H_ */
 

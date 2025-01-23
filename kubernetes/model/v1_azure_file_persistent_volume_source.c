@@ -44,12 +44,12 @@ void v1_azure_file_persistent_volume_source_free(v1_azure_file_persistent_volume
     free(v1_azure_file_persistent_volume_source);
 }
 
-cJSON *v1_azure_file_persistent_volume_source_convertToJSON(v1_azure_file_persistent_volume_source_t *v1_azure_file_persistent_volume_source) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_azure_file_persistent_volume_source_convertToJSON(v1_azure_file_persistent_volume_source_t *v1_azure_file_persistent_volume_source) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_azure_file_persistent_volume_source->read_only
     if(v1_azure_file_persistent_volume_source->read_only) {
-    if(cJSON_AddBoolToObject(item, "readOnly", v1_azure_file_persistent_volume_source->read_only) == NULL) {
+    if(mazu_cJSON_AddBoolToObject(item, "readOnly", v1_azure_file_persistent_volume_source->read_only) == NULL) {
     goto fail; //Bool
     }
     }
@@ -59,14 +59,14 @@ cJSON *v1_azure_file_persistent_volume_source_convertToJSON(v1_azure_file_persis
     if (!v1_azure_file_persistent_volume_source->secret_name) {
         goto fail;
     }
-    if(cJSON_AddStringToObject(item, "secretName", v1_azure_file_persistent_volume_source->secret_name) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "secretName", v1_azure_file_persistent_volume_source->secret_name) == NULL) {
     goto fail; //String
     }
 
 
     // v1_azure_file_persistent_volume_source->secret_namespace
     if(v1_azure_file_persistent_volume_source->secret_namespace) {
-    if(cJSON_AddStringToObject(item, "secretNamespace", v1_azure_file_persistent_volume_source->secret_namespace) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "secretNamespace", v1_azure_file_persistent_volume_source->secret_namespace) == NULL) {
     goto fail; //String
     }
     }
@@ -76,60 +76,60 @@ cJSON *v1_azure_file_persistent_volume_source_convertToJSON(v1_azure_file_persis
     if (!v1_azure_file_persistent_volume_source->share_name) {
         goto fail;
     }
-    if(cJSON_AddStringToObject(item, "shareName", v1_azure_file_persistent_volume_source->share_name) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "shareName", v1_azure_file_persistent_volume_source->share_name) == NULL) {
     goto fail; //String
     }
 
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_azure_file_persistent_volume_source_t *v1_azure_file_persistent_volume_source_parseFromJSON(cJSON *v1_azure_file_persistent_volume_sourceJSON){
+v1_azure_file_persistent_volume_source_t *v1_azure_file_persistent_volume_source_parseFromJSON(mazu_cJSON *v1_azure_file_persistent_volume_sourceJSON){
 
     v1_azure_file_persistent_volume_source_t *v1_azure_file_persistent_volume_source_local_var = NULL;
 
     // v1_azure_file_persistent_volume_source->read_only
-    cJSON *read_only = cJSON_GetObjectItemCaseSensitive(v1_azure_file_persistent_volume_sourceJSON, "readOnly");
+    mazu_cJSON *read_only = mazu_cJSON_GetObjectItemCaseSensitive(v1_azure_file_persistent_volume_sourceJSON, "readOnly");
     if (read_only) { 
-    if(!cJSON_IsBool(read_only))
+    if(!mazu_cJSON_IsBool(read_only))
     {
     goto end; //Bool
     }
     }
 
     // v1_azure_file_persistent_volume_source->secret_name
-    cJSON *secret_name = cJSON_GetObjectItemCaseSensitive(v1_azure_file_persistent_volume_sourceJSON, "secretName");
+    mazu_cJSON *secret_name = mazu_cJSON_GetObjectItemCaseSensitive(v1_azure_file_persistent_volume_sourceJSON, "secretName");
     if (!secret_name) {
         goto end;
     }
 
     
-    if(!cJSON_IsString(secret_name))
+    if(!mazu_cJSON_IsString(secret_name))
     {
     goto end; //String
     }
 
     // v1_azure_file_persistent_volume_source->secret_namespace
-    cJSON *secret_namespace = cJSON_GetObjectItemCaseSensitive(v1_azure_file_persistent_volume_sourceJSON, "secretNamespace");
+    mazu_cJSON *secret_namespace = mazu_cJSON_GetObjectItemCaseSensitive(v1_azure_file_persistent_volume_sourceJSON, "secretNamespace");
     if (secret_namespace) { 
-    if(!cJSON_IsString(secret_namespace) && !cJSON_IsNull(secret_namespace))
+    if(!mazu_cJSON_IsString(secret_namespace) && !mazu_cJSON_IsNull(secret_namespace))
     {
     goto end; //String
     }
     }
 
     // v1_azure_file_persistent_volume_source->share_name
-    cJSON *share_name = cJSON_GetObjectItemCaseSensitive(v1_azure_file_persistent_volume_sourceJSON, "shareName");
+    mazu_cJSON *share_name = mazu_cJSON_GetObjectItemCaseSensitive(v1_azure_file_persistent_volume_sourceJSON, "shareName");
     if (!share_name) {
         goto end;
     }
 
     
-    if(!cJSON_IsString(share_name))
+    if(!mazu_cJSON_IsString(share_name))
     {
     goto end; //String
     }
@@ -138,7 +138,7 @@ v1_azure_file_persistent_volume_source_t *v1_azure_file_persistent_volume_source
     v1_azure_file_persistent_volume_source_local_var = v1_azure_file_persistent_volume_source_create (
         read_only ? read_only->valueint : 0,
         strdup(secret_name->valuestring),
-        secret_namespace && !cJSON_IsNull(secret_namespace) ? strdup(secret_namespace->valuestring) : NULL,
+        secret_namespace && !mazu_cJSON_IsNull(secret_namespace) ? strdup(secret_namespace->valuestring) : NULL,
         strdup(share_name->valuestring)
         );
 

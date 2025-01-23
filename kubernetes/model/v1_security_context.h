@@ -8,7 +8,7 @@
 #define _v1_security_context_H_
 
 #include <string.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
 #include "../include/binary.h"
@@ -56,9 +56,9 @@ v1_security_context_t *v1_security_context_create(
 
 void v1_security_context_free(v1_security_context_t *v1_security_context);
 
-v1_security_context_t *v1_security_context_parseFromJSON(cJSON *v1_security_contextJSON);
+v1_security_context_t *v1_security_context_parseFromJSON(mazu_cJSON *v1_security_contextJSON);
 
-cJSON *v1_security_context_convertToJSON(v1_security_context_t *v1_security_context);
+mazu_cJSON *v1_security_context_convertToJSON(v1_security_context_t *v1_security_context);
 
 #endif /* _v1_security_context_H_ */
 

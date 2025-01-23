@@ -33,12 +33,12 @@ void v1_aggregation_rule_free(v1_aggregation_rule_t *v1_aggregation_rule) {
     free(v1_aggregation_rule);
 }
 
-cJSON *v1_aggregation_rule_convertToJSON(v1_aggregation_rule_t *v1_aggregation_rule) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_aggregation_rule_convertToJSON(v1_aggregation_rule_t *v1_aggregation_rule) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_aggregation_rule->cluster_role_selectors
     if(v1_aggregation_rule->cluster_role_selectors) {
-    cJSON *cluster_role_selectors = cJSON_AddArrayToObject(item, "clusterRoleSelectors");
+    mazu_cJSON *cluster_role_selectors = mazu_cJSON_AddArrayToObject(item, "clusterRoleSelectors");
     if(cluster_role_selectors == NULL) {
     goto fail; //nonprimitive container
     }
@@ -46,11 +46,11 @@ cJSON *v1_aggregation_rule_convertToJSON(v1_aggregation_rule_t *v1_aggregation_r
     listEntry_t *cluster_role_selectorsListEntry;
     if (v1_aggregation_rule->cluster_role_selectors) {
     list_ForEach(cluster_role_selectorsListEntry, v1_aggregation_rule->cluster_role_selectors) {
-    cJSON *itemLocal = v1_label_selector_convertToJSON(cluster_role_selectorsListEntry->data);
+    mazu_cJSON *itemLocal = v1_label_selector_convertToJSON(cluster_role_selectorsListEntry->data);
     if(itemLocal == NULL) {
     goto fail;
     }
-    cJSON_AddItemToArray(cluster_role_selectors, itemLocal);
+    mazu_cJSON_AddItemToArray(cluster_role_selectors, itemLocal);
     }
     }
     }
@@ -58,12 +58,12 @@ cJSON *v1_aggregation_rule_convertToJSON(v1_aggregation_rule_t *v1_aggregation_r
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_aggregation_rule_t *v1_aggregation_rule_parseFromJSON(cJSON *v1_aggregation_ruleJSON){
+v1_aggregation_rule_t *v1_aggregation_rule_parseFromJSON(mazu_cJSON *v1_aggregation_ruleJSON){
 
     v1_aggregation_rule_t *v1_aggregation_rule_local_var = NULL;
 
@@ -71,18 +71,18 @@ v1_aggregation_rule_t *v1_aggregation_rule_parseFromJSON(cJSON *v1_aggregation_r
     list_t *cluster_role_selectorsList = NULL;
 
     // v1_aggregation_rule->cluster_role_selectors
-    cJSON *cluster_role_selectors = cJSON_GetObjectItemCaseSensitive(v1_aggregation_ruleJSON, "clusterRoleSelectors");
+    mazu_cJSON *cluster_role_selectors = mazu_cJSON_GetObjectItemCaseSensitive(v1_aggregation_ruleJSON, "clusterRoleSelectors");
     if (cluster_role_selectors) { 
-    cJSON *cluster_role_selectors_local_nonprimitive = NULL;
-    if(!cJSON_IsArray(cluster_role_selectors)){
+    mazu_cJSON *cluster_role_selectors_local_nonprimitive = NULL;
+    if(!mazu_cJSON_IsArray(cluster_role_selectors)){
         goto end; //nonprimitive container
     }
 
     cluster_role_selectorsList = list_createList();
 
-    cJSON_ArrayForEach(cluster_role_selectors_local_nonprimitive,cluster_role_selectors )
+    mazu_cJSON_ArrayForEach(cluster_role_selectors_local_nonprimitive,cluster_role_selectors )
     {
-        if(!cJSON_IsObject(cluster_role_selectors_local_nonprimitive)){
+        if(!mazu_cJSON_IsObject(cluster_role_selectors_local_nonprimitive)){
             goto end;
         }
         v1_label_selector_t *cluster_role_selectorsItem = v1_label_selector_parseFromJSON(cluster_role_selectors_local_nonprimitive);

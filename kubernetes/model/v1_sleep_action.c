@@ -26,37 +26,37 @@ void v1_sleep_action_free(v1_sleep_action_t *v1_sleep_action) {
     free(v1_sleep_action);
 }
 
-cJSON *v1_sleep_action_convertToJSON(v1_sleep_action_t *v1_sleep_action) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_sleep_action_convertToJSON(v1_sleep_action_t *v1_sleep_action) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_sleep_action->seconds
     if (!v1_sleep_action->seconds) {
         goto fail;
     }
-    if(cJSON_AddNumberToObject(item, "seconds", v1_sleep_action->seconds) == NULL) {
+    if(mazu_cJSON_AddNumberToObject(item, "seconds", v1_sleep_action->seconds) == NULL) {
     goto fail; //Numeric
     }
 
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_sleep_action_t *v1_sleep_action_parseFromJSON(cJSON *v1_sleep_actionJSON){
+v1_sleep_action_t *v1_sleep_action_parseFromJSON(mazu_cJSON *v1_sleep_actionJSON){
 
     v1_sleep_action_t *v1_sleep_action_local_var = NULL;
 
     // v1_sleep_action->seconds
-    cJSON *seconds = cJSON_GetObjectItemCaseSensitive(v1_sleep_actionJSON, "seconds");
+    mazu_cJSON *seconds = mazu_cJSON_GetObjectItemCaseSensitive(v1_sleep_actionJSON, "seconds");
     if (!seconds) {
         goto end;
     }
 
     
-    if(!cJSON_IsNumber(seconds))
+    if(!mazu_cJSON_IsNumber(seconds))
     {
     goto end; //Numeric
     }

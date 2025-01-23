@@ -54,14 +54,14 @@ void v1_config_map_node_config_source_free(v1_config_map_node_config_source_t *v
     free(v1_config_map_node_config_source);
 }
 
-cJSON *v1_config_map_node_config_source_convertToJSON(v1_config_map_node_config_source_t *v1_config_map_node_config_source) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_config_map_node_config_source_convertToJSON(v1_config_map_node_config_source_t *v1_config_map_node_config_source) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_config_map_node_config_source->kubelet_config_key
     if (!v1_config_map_node_config_source->kubelet_config_key) {
         goto fail;
     }
-    if(cJSON_AddStringToObject(item, "kubeletConfigKey", v1_config_map_node_config_source->kubelet_config_key) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "kubeletConfigKey", v1_config_map_node_config_source->kubelet_config_key) == NULL) {
     goto fail; //String
     }
 
@@ -70,7 +70,7 @@ cJSON *v1_config_map_node_config_source_convertToJSON(v1_config_map_node_config_
     if (!v1_config_map_node_config_source->name) {
         goto fail;
     }
-    if(cJSON_AddStringToObject(item, "name", v1_config_map_node_config_source->name) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "name", v1_config_map_node_config_source->name) == NULL) {
     goto fail; //String
     }
 
@@ -79,14 +79,14 @@ cJSON *v1_config_map_node_config_source_convertToJSON(v1_config_map_node_config_
     if (!v1_config_map_node_config_source->_namespace) {
         goto fail;
     }
-    if(cJSON_AddStringToObject(item, "namespace", v1_config_map_node_config_source->_namespace) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "namespace", v1_config_map_node_config_source->_namespace) == NULL) {
     goto fail; //String
     }
 
 
     // v1_config_map_node_config_source->resource_version
     if(v1_config_map_node_config_source->resource_version) {
-    if(cJSON_AddStringToObject(item, "resourceVersion", v1_config_map_node_config_source->resource_version) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "resourceVersion", v1_config_map_node_config_source->resource_version) == NULL) {
     goto fail; //String
     }
     }
@@ -94,7 +94,7 @@ cJSON *v1_config_map_node_config_source_convertToJSON(v1_config_map_node_config_
 
     // v1_config_map_node_config_source->uid
     if(v1_config_map_node_config_source->uid) {
-    if(cJSON_AddStringToObject(item, "uid", v1_config_map_node_config_source->uid) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "uid", v1_config_map_node_config_source->uid) == NULL) {
     goto fail; //String
     }
     }
@@ -102,64 +102,64 @@ cJSON *v1_config_map_node_config_source_convertToJSON(v1_config_map_node_config_
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_config_map_node_config_source_t *v1_config_map_node_config_source_parseFromJSON(cJSON *v1_config_map_node_config_sourceJSON){
+v1_config_map_node_config_source_t *v1_config_map_node_config_source_parseFromJSON(mazu_cJSON *v1_config_map_node_config_sourceJSON){
 
     v1_config_map_node_config_source_t *v1_config_map_node_config_source_local_var = NULL;
 
     // v1_config_map_node_config_source->kubelet_config_key
-    cJSON *kubelet_config_key = cJSON_GetObjectItemCaseSensitive(v1_config_map_node_config_sourceJSON, "kubeletConfigKey");
+    mazu_cJSON *kubelet_config_key = mazu_cJSON_GetObjectItemCaseSensitive(v1_config_map_node_config_sourceJSON, "kubeletConfigKey");
     if (!kubelet_config_key) {
         goto end;
     }
 
     
-    if(!cJSON_IsString(kubelet_config_key))
+    if(!mazu_cJSON_IsString(kubelet_config_key))
     {
     goto end; //String
     }
 
     // v1_config_map_node_config_source->name
-    cJSON *name = cJSON_GetObjectItemCaseSensitive(v1_config_map_node_config_sourceJSON, "name");
+    mazu_cJSON *name = mazu_cJSON_GetObjectItemCaseSensitive(v1_config_map_node_config_sourceJSON, "name");
     if (!name) {
         goto end;
     }
 
     
-    if(!cJSON_IsString(name))
+    if(!mazu_cJSON_IsString(name))
     {
     goto end; //String
     }
 
     // v1_config_map_node_config_source->_namespace
-    cJSON *_namespace = cJSON_GetObjectItemCaseSensitive(v1_config_map_node_config_sourceJSON, "namespace");
+    mazu_cJSON *_namespace = mazu_cJSON_GetObjectItemCaseSensitive(v1_config_map_node_config_sourceJSON, "namespace");
     if (!_namespace) {
         goto end;
     }
 
     
-    if(!cJSON_IsString(_namespace))
+    if(!mazu_cJSON_IsString(_namespace))
     {
     goto end; //String
     }
 
     // v1_config_map_node_config_source->resource_version
-    cJSON *resource_version = cJSON_GetObjectItemCaseSensitive(v1_config_map_node_config_sourceJSON, "resourceVersion");
+    mazu_cJSON *resource_version = mazu_cJSON_GetObjectItemCaseSensitive(v1_config_map_node_config_sourceJSON, "resourceVersion");
     if (resource_version) { 
-    if(!cJSON_IsString(resource_version) && !cJSON_IsNull(resource_version))
+    if(!mazu_cJSON_IsString(resource_version) && !mazu_cJSON_IsNull(resource_version))
     {
     goto end; //String
     }
     }
 
     // v1_config_map_node_config_source->uid
-    cJSON *uid = cJSON_GetObjectItemCaseSensitive(v1_config_map_node_config_sourceJSON, "uid");
+    mazu_cJSON *uid = mazu_cJSON_GetObjectItemCaseSensitive(v1_config_map_node_config_sourceJSON, "uid");
     if (uid) { 
-    if(!cJSON_IsString(uid) && !cJSON_IsNull(uid))
+    if(!mazu_cJSON_IsString(uid) && !mazu_cJSON_IsNull(uid))
     {
     goto end; //String
     }
@@ -170,8 +170,8 @@ v1_config_map_node_config_source_t *v1_config_map_node_config_source_parseFromJS
         strdup(kubelet_config_key->valuestring),
         strdup(name->valuestring),
         strdup(_namespace->valuestring),
-        resource_version && !cJSON_IsNull(resource_version) ? strdup(resource_version->valuestring) : NULL,
-        uid && !cJSON_IsNull(uid) ? strdup(uid->valuestring) : NULL
+        resource_version && !mazu_cJSON_IsNull(resource_version) ? strdup(resource_version->valuestring) : NULL,
+        uid && !mazu_cJSON_IsNull(uid) ? strdup(uid->valuestring) : NULL
         );
 
     return v1_config_map_node_config_source_local_var;

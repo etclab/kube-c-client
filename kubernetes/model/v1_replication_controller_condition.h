@@ -8,7 +8,7 @@
 #define _v1_replication_controller_condition_H_
 
 #include <string.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
 #include "../include/binary.h"
@@ -37,9 +37,9 @@ v1_replication_controller_condition_t *v1_replication_controller_condition_creat
 
 void v1_replication_controller_condition_free(v1_replication_controller_condition_t *v1_replication_controller_condition);
 
-v1_replication_controller_condition_t *v1_replication_controller_condition_parseFromJSON(cJSON *v1_replication_controller_conditionJSON);
+v1_replication_controller_condition_t *v1_replication_controller_condition_parseFromJSON(mazu_cJSON *v1_replication_controller_conditionJSON);
 
-cJSON *v1_replication_controller_condition_convertToJSON(v1_replication_controller_condition_t *v1_replication_controller_condition);
+mazu_cJSON *v1_replication_controller_condition_convertToJSON(v1_replication_controller_condition_t *v1_replication_controller_condition);
 
 #endif /* _v1_replication_controller_condition_H_ */
 

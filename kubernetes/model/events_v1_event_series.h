@@ -8,7 +8,7 @@
 #define _events_v1_event_series_H_
 
 #include <string.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
 #include "../include/binary.h"
@@ -31,9 +31,9 @@ events_v1_event_series_t *events_v1_event_series_create(
 
 void events_v1_event_series_free(events_v1_event_series_t *events_v1_event_series);
 
-events_v1_event_series_t *events_v1_event_series_parseFromJSON(cJSON *events_v1_event_seriesJSON);
+events_v1_event_series_t *events_v1_event_series_parseFromJSON(mazu_cJSON *events_v1_event_seriesJSON);
 
-cJSON *events_v1_event_series_convertToJSON(events_v1_event_series_t *events_v1_event_series);
+mazu_cJSON *events_v1_event_series_convertToJSON(events_v1_event_series_t *events_v1_event_series);
 
 #endif /* _events_v1_event_series_H_ */
 

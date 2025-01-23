@@ -51,12 +51,12 @@ void v1_daemon_set_status_free(v1_daemon_set_status_t *v1_daemon_set_status) {
     free(v1_daemon_set_status);
 }
 
-cJSON *v1_daemon_set_status_convertToJSON(v1_daemon_set_status_t *v1_daemon_set_status) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_daemon_set_status_convertToJSON(v1_daemon_set_status_t *v1_daemon_set_status) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_daemon_set_status->collision_count
     if(v1_daemon_set_status->collision_count) {
-    if(cJSON_AddNumberToObject(item, "collisionCount", v1_daemon_set_status->collision_count) == NULL) {
+    if(mazu_cJSON_AddNumberToObject(item, "collisionCount", v1_daemon_set_status->collision_count) == NULL) {
     goto fail; //Numeric
     }
     }
@@ -64,7 +64,7 @@ cJSON *v1_daemon_set_status_convertToJSON(v1_daemon_set_status_t *v1_daemon_set_
 
     // v1_daemon_set_status->conditions
     if(v1_daemon_set_status->conditions) {
-    cJSON *conditions = cJSON_AddArrayToObject(item, "conditions");
+    mazu_cJSON *conditions = mazu_cJSON_AddArrayToObject(item, "conditions");
     if(conditions == NULL) {
     goto fail; //nonprimitive container
     }
@@ -72,11 +72,11 @@ cJSON *v1_daemon_set_status_convertToJSON(v1_daemon_set_status_t *v1_daemon_set_
     listEntry_t *conditionsListEntry;
     if (v1_daemon_set_status->conditions) {
     list_ForEach(conditionsListEntry, v1_daemon_set_status->conditions) {
-    cJSON *itemLocal = v1_daemon_set_condition_convertToJSON(conditionsListEntry->data);
+    mazu_cJSON *itemLocal = v1_daemon_set_condition_convertToJSON(conditionsListEntry->data);
     if(itemLocal == NULL) {
     goto fail;
     }
-    cJSON_AddItemToArray(conditions, itemLocal);
+    mazu_cJSON_AddItemToArray(conditions, itemLocal);
     }
     }
     }
@@ -86,7 +86,7 @@ cJSON *v1_daemon_set_status_convertToJSON(v1_daemon_set_status_t *v1_daemon_set_
     if (!v1_daemon_set_status->current_number_scheduled) {
         goto fail;
     }
-    if(cJSON_AddNumberToObject(item, "currentNumberScheduled", v1_daemon_set_status->current_number_scheduled) == NULL) {
+    if(mazu_cJSON_AddNumberToObject(item, "currentNumberScheduled", v1_daemon_set_status->current_number_scheduled) == NULL) {
     goto fail; //Numeric
     }
 
@@ -95,14 +95,14 @@ cJSON *v1_daemon_set_status_convertToJSON(v1_daemon_set_status_t *v1_daemon_set_
     if (!v1_daemon_set_status->desired_number_scheduled) {
         goto fail;
     }
-    if(cJSON_AddNumberToObject(item, "desiredNumberScheduled", v1_daemon_set_status->desired_number_scheduled) == NULL) {
+    if(mazu_cJSON_AddNumberToObject(item, "desiredNumberScheduled", v1_daemon_set_status->desired_number_scheduled) == NULL) {
     goto fail; //Numeric
     }
 
 
     // v1_daemon_set_status->number_available
     if(v1_daemon_set_status->number_available) {
-    if(cJSON_AddNumberToObject(item, "numberAvailable", v1_daemon_set_status->number_available) == NULL) {
+    if(mazu_cJSON_AddNumberToObject(item, "numberAvailable", v1_daemon_set_status->number_available) == NULL) {
     goto fail; //Numeric
     }
     }
@@ -112,7 +112,7 @@ cJSON *v1_daemon_set_status_convertToJSON(v1_daemon_set_status_t *v1_daemon_set_
     if (!v1_daemon_set_status->number_misscheduled) {
         goto fail;
     }
-    if(cJSON_AddNumberToObject(item, "numberMisscheduled", v1_daemon_set_status->number_misscheduled) == NULL) {
+    if(mazu_cJSON_AddNumberToObject(item, "numberMisscheduled", v1_daemon_set_status->number_misscheduled) == NULL) {
     goto fail; //Numeric
     }
 
@@ -121,14 +121,14 @@ cJSON *v1_daemon_set_status_convertToJSON(v1_daemon_set_status_t *v1_daemon_set_
     if (!v1_daemon_set_status->number_ready) {
         goto fail;
     }
-    if(cJSON_AddNumberToObject(item, "numberReady", v1_daemon_set_status->number_ready) == NULL) {
+    if(mazu_cJSON_AddNumberToObject(item, "numberReady", v1_daemon_set_status->number_ready) == NULL) {
     goto fail; //Numeric
     }
 
 
     // v1_daemon_set_status->number_unavailable
     if(v1_daemon_set_status->number_unavailable) {
-    if(cJSON_AddNumberToObject(item, "numberUnavailable", v1_daemon_set_status->number_unavailable) == NULL) {
+    if(mazu_cJSON_AddNumberToObject(item, "numberUnavailable", v1_daemon_set_status->number_unavailable) == NULL) {
     goto fail; //Numeric
     }
     }
@@ -136,7 +136,7 @@ cJSON *v1_daemon_set_status_convertToJSON(v1_daemon_set_status_t *v1_daemon_set_
 
     // v1_daemon_set_status->observed_generation
     if(v1_daemon_set_status->observed_generation) {
-    if(cJSON_AddNumberToObject(item, "observedGeneration", v1_daemon_set_status->observed_generation) == NULL) {
+    if(mazu_cJSON_AddNumberToObject(item, "observedGeneration", v1_daemon_set_status->observed_generation) == NULL) {
     goto fail; //Numeric
     }
     }
@@ -144,7 +144,7 @@ cJSON *v1_daemon_set_status_convertToJSON(v1_daemon_set_status_t *v1_daemon_set_
 
     // v1_daemon_set_status->updated_number_scheduled
     if(v1_daemon_set_status->updated_number_scheduled) {
-    if(cJSON_AddNumberToObject(item, "updatedNumberScheduled", v1_daemon_set_status->updated_number_scheduled) == NULL) {
+    if(mazu_cJSON_AddNumberToObject(item, "updatedNumberScheduled", v1_daemon_set_status->updated_number_scheduled) == NULL) {
     goto fail; //Numeric
     }
     }
@@ -152,12 +152,12 @@ cJSON *v1_daemon_set_status_convertToJSON(v1_daemon_set_status_t *v1_daemon_set_
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_daemon_set_status_t *v1_daemon_set_status_parseFromJSON(cJSON *v1_daemon_set_statusJSON){
+v1_daemon_set_status_t *v1_daemon_set_status_parseFromJSON(mazu_cJSON *v1_daemon_set_statusJSON){
 
     v1_daemon_set_status_t *v1_daemon_set_status_local_var = NULL;
 
@@ -165,27 +165,27 @@ v1_daemon_set_status_t *v1_daemon_set_status_parseFromJSON(cJSON *v1_daemon_set_
     list_t *conditionsList = NULL;
 
     // v1_daemon_set_status->collision_count
-    cJSON *collision_count = cJSON_GetObjectItemCaseSensitive(v1_daemon_set_statusJSON, "collisionCount");
+    mazu_cJSON *collision_count = mazu_cJSON_GetObjectItemCaseSensitive(v1_daemon_set_statusJSON, "collisionCount");
     if (collision_count) { 
-    if(!cJSON_IsNumber(collision_count))
+    if(!mazu_cJSON_IsNumber(collision_count))
     {
     goto end; //Numeric
     }
     }
 
     // v1_daemon_set_status->conditions
-    cJSON *conditions = cJSON_GetObjectItemCaseSensitive(v1_daemon_set_statusJSON, "conditions");
+    mazu_cJSON *conditions = mazu_cJSON_GetObjectItemCaseSensitive(v1_daemon_set_statusJSON, "conditions");
     if (conditions) { 
-    cJSON *conditions_local_nonprimitive = NULL;
-    if(!cJSON_IsArray(conditions)){
+    mazu_cJSON *conditions_local_nonprimitive = NULL;
+    if(!mazu_cJSON_IsArray(conditions)){
         goto end; //nonprimitive container
     }
 
     conditionsList = list_createList();
 
-    cJSON_ArrayForEach(conditions_local_nonprimitive,conditions )
+    mazu_cJSON_ArrayForEach(conditions_local_nonprimitive,conditions )
     {
-        if(!cJSON_IsObject(conditions_local_nonprimitive)){
+        if(!mazu_cJSON_IsObject(conditions_local_nonprimitive)){
             goto end;
         }
         v1_daemon_set_condition_t *conditionsItem = v1_daemon_set_condition_parseFromJSON(conditions_local_nonprimitive);
@@ -195,84 +195,84 @@ v1_daemon_set_status_t *v1_daemon_set_status_parseFromJSON(cJSON *v1_daemon_set_
     }
 
     // v1_daemon_set_status->current_number_scheduled
-    cJSON *current_number_scheduled = cJSON_GetObjectItemCaseSensitive(v1_daemon_set_statusJSON, "currentNumberScheduled");
+    mazu_cJSON *current_number_scheduled = mazu_cJSON_GetObjectItemCaseSensitive(v1_daemon_set_statusJSON, "currentNumberScheduled");
     if (!current_number_scheduled) {
         goto end;
     }
 
     
-    if(!cJSON_IsNumber(current_number_scheduled))
+    if(!mazu_cJSON_IsNumber(current_number_scheduled))
     {
     goto end; //Numeric
     }
 
     // v1_daemon_set_status->desired_number_scheduled
-    cJSON *desired_number_scheduled = cJSON_GetObjectItemCaseSensitive(v1_daemon_set_statusJSON, "desiredNumberScheduled");
+    mazu_cJSON *desired_number_scheduled = mazu_cJSON_GetObjectItemCaseSensitive(v1_daemon_set_statusJSON, "desiredNumberScheduled");
     if (!desired_number_scheduled) {
         goto end;
     }
 
     
-    if(!cJSON_IsNumber(desired_number_scheduled))
+    if(!mazu_cJSON_IsNumber(desired_number_scheduled))
     {
     goto end; //Numeric
     }
 
     // v1_daemon_set_status->number_available
-    cJSON *number_available = cJSON_GetObjectItemCaseSensitive(v1_daemon_set_statusJSON, "numberAvailable");
+    mazu_cJSON *number_available = mazu_cJSON_GetObjectItemCaseSensitive(v1_daemon_set_statusJSON, "numberAvailable");
     if (number_available) { 
-    if(!cJSON_IsNumber(number_available))
+    if(!mazu_cJSON_IsNumber(number_available))
     {
     goto end; //Numeric
     }
     }
 
     // v1_daemon_set_status->number_misscheduled
-    cJSON *number_misscheduled = cJSON_GetObjectItemCaseSensitive(v1_daemon_set_statusJSON, "numberMisscheduled");
+    mazu_cJSON *number_misscheduled = mazu_cJSON_GetObjectItemCaseSensitive(v1_daemon_set_statusJSON, "numberMisscheduled");
     if (!number_misscheduled) {
         goto end;
     }
 
     
-    if(!cJSON_IsNumber(number_misscheduled))
+    if(!mazu_cJSON_IsNumber(number_misscheduled))
     {
     goto end; //Numeric
     }
 
     // v1_daemon_set_status->number_ready
-    cJSON *number_ready = cJSON_GetObjectItemCaseSensitive(v1_daemon_set_statusJSON, "numberReady");
+    mazu_cJSON *number_ready = mazu_cJSON_GetObjectItemCaseSensitive(v1_daemon_set_statusJSON, "numberReady");
     if (!number_ready) {
         goto end;
     }
 
     
-    if(!cJSON_IsNumber(number_ready))
+    if(!mazu_cJSON_IsNumber(number_ready))
     {
     goto end; //Numeric
     }
 
     // v1_daemon_set_status->number_unavailable
-    cJSON *number_unavailable = cJSON_GetObjectItemCaseSensitive(v1_daemon_set_statusJSON, "numberUnavailable");
+    mazu_cJSON *number_unavailable = mazu_cJSON_GetObjectItemCaseSensitive(v1_daemon_set_statusJSON, "numberUnavailable");
     if (number_unavailable) { 
-    if(!cJSON_IsNumber(number_unavailable))
+    if(!mazu_cJSON_IsNumber(number_unavailable))
     {
     goto end; //Numeric
     }
     }
 
     // v1_daemon_set_status->observed_generation
-    cJSON *observed_generation = cJSON_GetObjectItemCaseSensitive(v1_daemon_set_statusJSON, "observedGeneration");
+    mazu_cJSON *observed_generation = mazu_cJSON_GetObjectItemCaseSensitive(v1_daemon_set_statusJSON, "observedGeneration");
     if (observed_generation) { 
-    if(!cJSON_IsNumber(observed_generation))
+    if(!mazu_cJSON_IsNumber(observed_generation))
     {
     goto end; //Numeric
     }
     }
 
     // v1_daemon_set_status->updated_number_scheduled
-    cJSON *updated_number_scheduled = cJSON_GetObjectItemCaseSensitive(v1_daemon_set_statusJSON, "updatedNumberScheduled");
+    mazu_cJSON *updated_number_scheduled = mazu_cJSON_GetObjectItemCaseSensitive(v1_daemon_set_statusJSON, "updatedNumberScheduled");
     if (updated_number_scheduled) { 
-    if(!cJSON_IsNumber(updated_number_scheduled))
+    if(!mazu_cJSON_IsNumber(updated_number_scheduled))
     {
     goto end; //Numeric
     }

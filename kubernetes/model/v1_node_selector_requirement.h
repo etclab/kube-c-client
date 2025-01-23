@@ -8,7 +8,7 @@
 #define _v1_node_selector_requirement_H_
 
 #include <string.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
 #include "../include/binary.h"
@@ -33,9 +33,9 @@ v1_node_selector_requirement_t *v1_node_selector_requirement_create(
 
 void v1_node_selector_requirement_free(v1_node_selector_requirement_t *v1_node_selector_requirement);
 
-v1_node_selector_requirement_t *v1_node_selector_requirement_parseFromJSON(cJSON *v1_node_selector_requirementJSON);
+v1_node_selector_requirement_t *v1_node_selector_requirement_parseFromJSON(mazu_cJSON *v1_node_selector_requirementJSON);
 
-cJSON *v1_node_selector_requirement_convertToJSON(v1_node_selector_requirement_t *v1_node_selector_requirement);
+mazu_cJSON *v1_node_selector_requirement_convertToJSON(v1_node_selector_requirement_t *v1_node_selector_requirement);
 
 #endif /* _v1_node_selector_requirement_H_ */
 

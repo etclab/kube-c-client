@@ -69,16 +69,16 @@ void v1_pod_affinity_term_free(v1_pod_affinity_term_t *v1_pod_affinity_term) {
     free(v1_pod_affinity_term);
 }
 
-cJSON *v1_pod_affinity_term_convertToJSON(v1_pod_affinity_term_t *v1_pod_affinity_term) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_pod_affinity_term_convertToJSON(v1_pod_affinity_term_t *v1_pod_affinity_term) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_pod_affinity_term->label_selector
     if(v1_pod_affinity_term->label_selector) {
-    cJSON *label_selector_local_JSON = v1_label_selector_convertToJSON(v1_pod_affinity_term->label_selector);
+    mazu_cJSON *label_selector_local_JSON = v1_label_selector_convertToJSON(v1_pod_affinity_term->label_selector);
     if(label_selector_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "labelSelector", label_selector_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "labelSelector", label_selector_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -87,14 +87,14 @@ cJSON *v1_pod_affinity_term_convertToJSON(v1_pod_affinity_term_t *v1_pod_affinit
 
     // v1_pod_affinity_term->match_label_keys
     if(v1_pod_affinity_term->match_label_keys) {
-    cJSON *match_label_keys = cJSON_AddArrayToObject(item, "matchLabelKeys");
+    mazu_cJSON *match_label_keys = mazu_cJSON_AddArrayToObject(item, "matchLabelKeys");
     if(match_label_keys == NULL) {
         goto fail; //primitive container
     }
 
     listEntry_t *match_label_keysListEntry;
     list_ForEach(match_label_keysListEntry, v1_pod_affinity_term->match_label_keys) {
-    if(cJSON_AddStringToObject(match_label_keys, "", (char*)match_label_keysListEntry->data) == NULL)
+    if(mazu_cJSON_AddStringToObject(match_label_keys, "", (char*)match_label_keysListEntry->data) == NULL)
     {
         goto fail;
     }
@@ -104,14 +104,14 @@ cJSON *v1_pod_affinity_term_convertToJSON(v1_pod_affinity_term_t *v1_pod_affinit
 
     // v1_pod_affinity_term->mismatch_label_keys
     if(v1_pod_affinity_term->mismatch_label_keys) {
-    cJSON *mismatch_label_keys = cJSON_AddArrayToObject(item, "mismatchLabelKeys");
+    mazu_cJSON *mismatch_label_keys = mazu_cJSON_AddArrayToObject(item, "mismatchLabelKeys");
     if(mismatch_label_keys == NULL) {
         goto fail; //primitive container
     }
 
     listEntry_t *mismatch_label_keysListEntry;
     list_ForEach(mismatch_label_keysListEntry, v1_pod_affinity_term->mismatch_label_keys) {
-    if(cJSON_AddStringToObject(mismatch_label_keys, "", (char*)mismatch_label_keysListEntry->data) == NULL)
+    if(mazu_cJSON_AddStringToObject(mismatch_label_keys, "", (char*)mismatch_label_keysListEntry->data) == NULL)
     {
         goto fail;
     }
@@ -121,11 +121,11 @@ cJSON *v1_pod_affinity_term_convertToJSON(v1_pod_affinity_term_t *v1_pod_affinit
 
     // v1_pod_affinity_term->namespace_selector
     if(v1_pod_affinity_term->namespace_selector) {
-    cJSON *namespace_selector_local_JSON = v1_label_selector_convertToJSON(v1_pod_affinity_term->namespace_selector);
+    mazu_cJSON *namespace_selector_local_JSON = v1_label_selector_convertToJSON(v1_pod_affinity_term->namespace_selector);
     if(namespace_selector_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "namespaceSelector", namespace_selector_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "namespaceSelector", namespace_selector_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -134,14 +134,14 @@ cJSON *v1_pod_affinity_term_convertToJSON(v1_pod_affinity_term_t *v1_pod_affinit
 
     // v1_pod_affinity_term->namespaces
     if(v1_pod_affinity_term->namespaces) {
-    cJSON *namespaces = cJSON_AddArrayToObject(item, "namespaces");
+    mazu_cJSON *namespaces = mazu_cJSON_AddArrayToObject(item, "namespaces");
     if(namespaces == NULL) {
         goto fail; //primitive container
     }
 
     listEntry_t *namespacesListEntry;
     list_ForEach(namespacesListEntry, v1_pod_affinity_term->namespaces) {
-    if(cJSON_AddStringToObject(namespaces, "", (char*)namespacesListEntry->data) == NULL)
+    if(mazu_cJSON_AddStringToObject(namespaces, "", (char*)namespacesListEntry->data) == NULL)
     {
         goto fail;
     }
@@ -153,19 +153,19 @@ cJSON *v1_pod_affinity_term_convertToJSON(v1_pod_affinity_term_t *v1_pod_affinit
     if (!v1_pod_affinity_term->topology_key) {
         goto fail;
     }
-    if(cJSON_AddStringToObject(item, "topologyKey", v1_pod_affinity_term->topology_key) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "topologyKey", v1_pod_affinity_term->topology_key) == NULL) {
     goto fail; //String
     }
 
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_pod_affinity_term_t *v1_pod_affinity_term_parseFromJSON(cJSON *v1_pod_affinity_termJSON){
+v1_pod_affinity_term_t *v1_pod_affinity_term_parseFromJSON(mazu_cJSON *v1_pod_affinity_termJSON){
 
     v1_pod_affinity_term_t *v1_pod_affinity_term_local_var = NULL;
 
@@ -185,23 +185,23 @@ v1_pod_affinity_term_t *v1_pod_affinity_term_parseFromJSON(cJSON *v1_pod_affinit
     list_t *namespacesList = NULL;
 
     // v1_pod_affinity_term->label_selector
-    cJSON *label_selector = cJSON_GetObjectItemCaseSensitive(v1_pod_affinity_termJSON, "labelSelector");
+    mazu_cJSON *label_selector = mazu_cJSON_GetObjectItemCaseSensitive(v1_pod_affinity_termJSON, "labelSelector");
     if (label_selector) { 
     label_selector_local_nonprim = v1_label_selector_parseFromJSON(label_selector); //nonprimitive
     }
 
     // v1_pod_affinity_term->match_label_keys
-    cJSON *match_label_keys = cJSON_GetObjectItemCaseSensitive(v1_pod_affinity_termJSON, "matchLabelKeys");
+    mazu_cJSON *match_label_keys = mazu_cJSON_GetObjectItemCaseSensitive(v1_pod_affinity_termJSON, "matchLabelKeys");
     if (match_label_keys) { 
-    cJSON *match_label_keys_local = NULL;
-    if(!cJSON_IsArray(match_label_keys)) {
+    mazu_cJSON *match_label_keys_local = NULL;
+    if(!mazu_cJSON_IsArray(match_label_keys)) {
         goto end;//primitive container
     }
     match_label_keysList = list_createList();
 
-    cJSON_ArrayForEach(match_label_keys_local, match_label_keys)
+    mazu_cJSON_ArrayForEach(match_label_keys_local, match_label_keys)
     {
-        if(!cJSON_IsString(match_label_keys_local))
+        if(!mazu_cJSON_IsString(match_label_keys_local))
         {
             goto end;
         }
@@ -210,17 +210,17 @@ v1_pod_affinity_term_t *v1_pod_affinity_term_parseFromJSON(cJSON *v1_pod_affinit
     }
 
     // v1_pod_affinity_term->mismatch_label_keys
-    cJSON *mismatch_label_keys = cJSON_GetObjectItemCaseSensitive(v1_pod_affinity_termJSON, "mismatchLabelKeys");
+    mazu_cJSON *mismatch_label_keys = mazu_cJSON_GetObjectItemCaseSensitive(v1_pod_affinity_termJSON, "mismatchLabelKeys");
     if (mismatch_label_keys) { 
-    cJSON *mismatch_label_keys_local = NULL;
-    if(!cJSON_IsArray(mismatch_label_keys)) {
+    mazu_cJSON *mismatch_label_keys_local = NULL;
+    if(!mazu_cJSON_IsArray(mismatch_label_keys)) {
         goto end;//primitive container
     }
     mismatch_label_keysList = list_createList();
 
-    cJSON_ArrayForEach(mismatch_label_keys_local, mismatch_label_keys)
+    mazu_cJSON_ArrayForEach(mismatch_label_keys_local, mismatch_label_keys)
     {
-        if(!cJSON_IsString(mismatch_label_keys_local))
+        if(!mazu_cJSON_IsString(mismatch_label_keys_local))
         {
             goto end;
         }
@@ -229,23 +229,23 @@ v1_pod_affinity_term_t *v1_pod_affinity_term_parseFromJSON(cJSON *v1_pod_affinit
     }
 
     // v1_pod_affinity_term->namespace_selector
-    cJSON *namespace_selector = cJSON_GetObjectItemCaseSensitive(v1_pod_affinity_termJSON, "namespaceSelector");
+    mazu_cJSON *namespace_selector = mazu_cJSON_GetObjectItemCaseSensitive(v1_pod_affinity_termJSON, "namespaceSelector");
     if (namespace_selector) { 
     namespace_selector_local_nonprim = v1_label_selector_parseFromJSON(namespace_selector); //nonprimitive
     }
 
     // v1_pod_affinity_term->namespaces
-    cJSON *namespaces = cJSON_GetObjectItemCaseSensitive(v1_pod_affinity_termJSON, "namespaces");
+    mazu_cJSON *namespaces = mazu_cJSON_GetObjectItemCaseSensitive(v1_pod_affinity_termJSON, "namespaces");
     if (namespaces) { 
-    cJSON *namespaces_local = NULL;
-    if(!cJSON_IsArray(namespaces)) {
+    mazu_cJSON *namespaces_local = NULL;
+    if(!mazu_cJSON_IsArray(namespaces)) {
         goto end;//primitive container
     }
     namespacesList = list_createList();
 
-    cJSON_ArrayForEach(namespaces_local, namespaces)
+    mazu_cJSON_ArrayForEach(namespaces_local, namespaces)
     {
-        if(!cJSON_IsString(namespaces_local))
+        if(!mazu_cJSON_IsString(namespaces_local))
         {
             goto end;
         }
@@ -254,13 +254,13 @@ v1_pod_affinity_term_t *v1_pod_affinity_term_parseFromJSON(cJSON *v1_pod_affinit
     }
 
     // v1_pod_affinity_term->topology_key
-    cJSON *topology_key = cJSON_GetObjectItemCaseSensitive(v1_pod_affinity_termJSON, "topologyKey");
+    mazu_cJSON *topology_key = mazu_cJSON_GetObjectItemCaseSensitive(v1_pod_affinity_termJSON, "topologyKey");
     if (!topology_key) {
         goto end;
     }
 
     
-    if(!cJSON_IsString(topology_key))
+    if(!mazu_cJSON_IsString(topology_key))
     {
     goto end; //String
     }

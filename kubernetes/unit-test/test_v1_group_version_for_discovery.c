@@ -11,7 +11,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdbool.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 
 #include "../model/v1_group_version_for_discovery.h"
 v1_group_version_for_discovery_t* instantiate_v1_group_version_for_discovery(int include_optional);
@@ -41,11 +41,11 @@ v1_group_version_for_discovery_t* instantiate_v1_group_version_for_discovery(int
 void test_v1_group_version_for_discovery(int include_optional) {
     v1_group_version_for_discovery_t* v1_group_version_for_discovery_1 = instantiate_v1_group_version_for_discovery(include_optional);
 
-	cJSON* jsonv1_group_version_for_discovery_1 = v1_group_version_for_discovery_convertToJSON(v1_group_version_for_discovery_1);
-	printf("v1_group_version_for_discovery :\n%s\n", cJSON_Print(jsonv1_group_version_for_discovery_1));
+	mazu_cJSON* jsonv1_group_version_for_discovery_1 = v1_group_version_for_discovery_convertToJSON(v1_group_version_for_discovery_1);
+	printf("v1_group_version_for_discovery :\n%s\n", mazu_cJSON_Print(jsonv1_group_version_for_discovery_1));
 	v1_group_version_for_discovery_t* v1_group_version_for_discovery_2 = v1_group_version_for_discovery_parseFromJSON(jsonv1_group_version_for_discovery_1);
-	cJSON* jsonv1_group_version_for_discovery_2 = v1_group_version_for_discovery_convertToJSON(v1_group_version_for_discovery_2);
-	printf("repeating v1_group_version_for_discovery:\n%s\n", cJSON_Print(jsonv1_group_version_for_discovery_2));
+	mazu_cJSON* jsonv1_group_version_for_discovery_2 = v1_group_version_for_discovery_convertToJSON(v1_group_version_for_discovery_2);
+	printf("repeating v1_group_version_for_discovery:\n%s\n", mazu_cJSON_Print(jsonv1_group_version_for_discovery_2));
 }
 
 int main() {

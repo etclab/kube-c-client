@@ -1,5 +1,4 @@
 kubernetes/build/
-bazel-*
 .vs/
 .vscode/
 

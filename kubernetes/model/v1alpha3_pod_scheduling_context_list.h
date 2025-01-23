@@ -8,7 +8,7 @@
 #define _v1alpha3_pod_scheduling_context_list_H_
 
 #include <string.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
 #include "../include/binary.h"
@@ -37,9 +37,9 @@ v1alpha3_pod_scheduling_context_list_t *v1alpha3_pod_scheduling_context_list_cre
 
 void v1alpha3_pod_scheduling_context_list_free(v1alpha3_pod_scheduling_context_list_t *v1alpha3_pod_scheduling_context_list);
 
-v1alpha3_pod_scheduling_context_list_t *v1alpha3_pod_scheduling_context_list_parseFromJSON(cJSON *v1alpha3_pod_scheduling_context_listJSON);
+v1alpha3_pod_scheduling_context_list_t *v1alpha3_pod_scheduling_context_list_parseFromJSON(mazu_cJSON *v1alpha3_pod_scheduling_context_listJSON);
 
-cJSON *v1alpha3_pod_scheduling_context_list_convertToJSON(v1alpha3_pod_scheduling_context_list_t *v1alpha3_pod_scheduling_context_list);
+mazu_cJSON *v1alpha3_pod_scheduling_context_list_convertToJSON(v1alpha3_pod_scheduling_context_list_t *v1alpha3_pod_scheduling_context_list);
 
 #endif /* _v1alpha3_pod_scheduling_context_list_H_ */
 

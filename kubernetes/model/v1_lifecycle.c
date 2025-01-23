@@ -36,16 +36,16 @@ void v1_lifecycle_free(v1_lifecycle_t *v1_lifecycle) {
     free(v1_lifecycle);
 }
 
-cJSON *v1_lifecycle_convertToJSON(v1_lifecycle_t *v1_lifecycle) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_lifecycle_convertToJSON(v1_lifecycle_t *v1_lifecycle) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_lifecycle->post_start
     if(v1_lifecycle->post_start) {
-    cJSON *post_start_local_JSON = v1_lifecycle_handler_convertToJSON(v1_lifecycle->post_start);
+    mazu_cJSON *post_start_local_JSON = v1_lifecycle_handler_convertToJSON(v1_lifecycle->post_start);
     if(post_start_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "postStart", post_start_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "postStart", post_start_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -54,11 +54,11 @@ cJSON *v1_lifecycle_convertToJSON(v1_lifecycle_t *v1_lifecycle) {
 
     // v1_lifecycle->pre_stop
     if(v1_lifecycle->pre_stop) {
-    cJSON *pre_stop_local_JSON = v1_lifecycle_handler_convertToJSON(v1_lifecycle->pre_stop);
+    mazu_cJSON *pre_stop_local_JSON = v1_lifecycle_handler_convertToJSON(v1_lifecycle->pre_stop);
     if(pre_stop_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "preStop", pre_stop_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "preStop", pre_stop_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -67,12 +67,12 @@ cJSON *v1_lifecycle_convertToJSON(v1_lifecycle_t *v1_lifecycle) {
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_lifecycle_t *v1_lifecycle_parseFromJSON(cJSON *v1_lifecycleJSON){
+v1_lifecycle_t *v1_lifecycle_parseFromJSON(mazu_cJSON *v1_lifecycleJSON){
 
     v1_lifecycle_t *v1_lifecycle_local_var = NULL;
 
@@ -83,13 +83,13 @@ v1_lifecycle_t *v1_lifecycle_parseFromJSON(cJSON *v1_lifecycleJSON){
     v1_lifecycle_handler_t *pre_stop_local_nonprim = NULL;
 
     // v1_lifecycle->post_start
-    cJSON *post_start = cJSON_GetObjectItemCaseSensitive(v1_lifecycleJSON, "postStart");
+    mazu_cJSON *post_start = mazu_cJSON_GetObjectItemCaseSensitive(v1_lifecycleJSON, "postStart");
     if (post_start) { 
     post_start_local_nonprim = v1_lifecycle_handler_parseFromJSON(post_start); //nonprimitive
     }
 
     // v1_lifecycle->pre_stop
-    cJSON *pre_stop = cJSON_GetObjectItemCaseSensitive(v1_lifecycleJSON, "preStop");
+    mazu_cJSON *pre_stop = mazu_cJSON_GetObjectItemCaseSensitive(v1_lifecycleJSON, "preStop");
     if (pre_stop) { 
     pre_stop_local_nonprim = v1_lifecycle_handler_parseFromJSON(pre_stop); //nonprimitive
     }

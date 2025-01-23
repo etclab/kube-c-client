@@ -28,12 +28,12 @@ void v1_exempt_priority_level_configuration_free(v1_exempt_priority_level_config
     free(v1_exempt_priority_level_configuration);
 }
 
-cJSON *v1_exempt_priority_level_configuration_convertToJSON(v1_exempt_priority_level_configuration_t *v1_exempt_priority_level_configuration) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_exempt_priority_level_configuration_convertToJSON(v1_exempt_priority_level_configuration_t *v1_exempt_priority_level_configuration) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_exempt_priority_level_configuration->lendable_percent
     if(v1_exempt_priority_level_configuration->lendable_percent) {
-    if(cJSON_AddNumberToObject(item, "lendablePercent", v1_exempt_priority_level_configuration->lendable_percent) == NULL) {
+    if(mazu_cJSON_AddNumberToObject(item, "lendablePercent", v1_exempt_priority_level_configuration->lendable_percent) == NULL) {
     goto fail; //Numeric
     }
     }
@@ -41,7 +41,7 @@ cJSON *v1_exempt_priority_level_configuration_convertToJSON(v1_exempt_priority_l
 
     // v1_exempt_priority_level_configuration->nominal_concurrency_shares
     if(v1_exempt_priority_level_configuration->nominal_concurrency_shares) {
-    if(cJSON_AddNumberToObject(item, "nominalConcurrencyShares", v1_exempt_priority_level_configuration->nominal_concurrency_shares) == NULL) {
+    if(mazu_cJSON_AddNumberToObject(item, "nominalConcurrencyShares", v1_exempt_priority_level_configuration->nominal_concurrency_shares) == NULL) {
     goto fail; //Numeric
     }
     }
@@ -49,28 +49,28 @@ cJSON *v1_exempt_priority_level_configuration_convertToJSON(v1_exempt_priority_l
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_exempt_priority_level_configuration_t *v1_exempt_priority_level_configuration_parseFromJSON(cJSON *v1_exempt_priority_level_configurationJSON){
+v1_exempt_priority_level_configuration_t *v1_exempt_priority_level_configuration_parseFromJSON(mazu_cJSON *v1_exempt_priority_level_configurationJSON){
 
     v1_exempt_priority_level_configuration_t *v1_exempt_priority_level_configuration_local_var = NULL;
 
     // v1_exempt_priority_level_configuration->lendable_percent
-    cJSON *lendable_percent = cJSON_GetObjectItemCaseSensitive(v1_exempt_priority_level_configurationJSON, "lendablePercent");
+    mazu_cJSON *lendable_percent = mazu_cJSON_GetObjectItemCaseSensitive(v1_exempt_priority_level_configurationJSON, "lendablePercent");
     if (lendable_percent) { 
-    if(!cJSON_IsNumber(lendable_percent))
+    if(!mazu_cJSON_IsNumber(lendable_percent))
     {
     goto end; //Numeric
     }
     }
 
     // v1_exempt_priority_level_configuration->nominal_concurrency_shares
-    cJSON *nominal_concurrency_shares = cJSON_GetObjectItemCaseSensitive(v1_exempt_priority_level_configurationJSON, "nominalConcurrencyShares");
+    mazu_cJSON *nominal_concurrency_shares = mazu_cJSON_GetObjectItemCaseSensitive(v1_exempt_priority_level_configurationJSON, "nominalConcurrencyShares");
     if (nominal_concurrency_shares) { 
-    if(!cJSON_IsNumber(nominal_concurrency_shares))
+    if(!mazu_cJSON_IsNumber(nominal_concurrency_shares))
     {
     goto end; //Numeric
     }

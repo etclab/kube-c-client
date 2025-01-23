@@ -8,7 +8,7 @@
 #define _v1_service_account_H_
 
 #include <string.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
 #include "../include/binary.h"
@@ -42,9 +42,9 @@ v1_service_account_t *v1_service_account_create(
 
 void v1_service_account_free(v1_service_account_t *v1_service_account);
 
-v1_service_account_t *v1_service_account_parseFromJSON(cJSON *v1_service_accountJSON);
+v1_service_account_t *v1_service_account_parseFromJSON(mazu_cJSON *v1_service_accountJSON);
 
-cJSON *v1_service_account_convertToJSON(v1_service_account_t *v1_service_account);
+mazu_cJSON *v1_service_account_convertToJSON(v1_service_account_t *v1_service_account);
 
 #endif /* _v1_service_account_H_ */
 

@@ -48,12 +48,12 @@ void v1_binding_free(v1_binding_t *v1_binding) {
     free(v1_binding);
 }
 
-cJSON *v1_binding_convertToJSON(v1_binding_t *v1_binding) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_binding_convertToJSON(v1_binding_t *v1_binding) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_binding->api_version
     if(v1_binding->api_version) {
-    if(cJSON_AddStringToObject(item, "apiVersion", v1_binding->api_version) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "apiVersion", v1_binding->api_version) == NULL) {
     goto fail; //String
     }
     }
@@ -61,7 +61,7 @@ cJSON *v1_binding_convertToJSON(v1_binding_t *v1_binding) {
 
     // v1_binding->kind
     if(v1_binding->kind) {
-    if(cJSON_AddStringToObject(item, "kind", v1_binding->kind) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "kind", v1_binding->kind) == NULL) {
     goto fail; //String
     }
     }
@@ -69,11 +69,11 @@ cJSON *v1_binding_convertToJSON(v1_binding_t *v1_binding) {
 
     // v1_binding->metadata
     if(v1_binding->metadata) {
-    cJSON *metadata_local_JSON = v1_object_meta_convertToJSON(v1_binding->metadata);
+    mazu_cJSON *metadata_local_JSON = v1_object_meta_convertToJSON(v1_binding->metadata);
     if(metadata_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "metadata", metadata_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "metadata", metadata_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -84,11 +84,11 @@ cJSON *v1_binding_convertToJSON(v1_binding_t *v1_binding) {
     if (!v1_binding->target) {
         goto fail;
     }
-    cJSON *target_local_JSON = v1_object_reference_convertToJSON(v1_binding->target);
+    mazu_cJSON *target_local_JSON = v1_object_reference_convertToJSON(v1_binding->target);
     if(target_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "target", target_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "target", target_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -96,12 +96,12 @@ cJSON *v1_binding_convertToJSON(v1_binding_t *v1_binding) {
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_binding_t *v1_binding_parseFromJSON(cJSON *v1_bindingJSON){
+v1_binding_t *v1_binding_parseFromJSON(mazu_cJSON *v1_bindingJSON){
 
     v1_binding_t *v1_binding_local_var = NULL;
 
@@ -112,31 +112,31 @@ v1_binding_t *v1_binding_parseFromJSON(cJSON *v1_bindingJSON){
     v1_object_reference_t *target_local_nonprim = NULL;
 
     // v1_binding->api_version
-    cJSON *api_version = cJSON_GetObjectItemCaseSensitive(v1_bindingJSON, "apiVersion");
+    mazu_cJSON *api_version = mazu_cJSON_GetObjectItemCaseSensitive(v1_bindingJSON, "apiVersion");
     if (api_version) { 
-    if(!cJSON_IsString(api_version) && !cJSON_IsNull(api_version))
+    if(!mazu_cJSON_IsString(api_version) && !mazu_cJSON_IsNull(api_version))
     {
     goto end; //String
     }
     }
 
     // v1_binding->kind
-    cJSON *kind = cJSON_GetObjectItemCaseSensitive(v1_bindingJSON, "kind");
+    mazu_cJSON *kind = mazu_cJSON_GetObjectItemCaseSensitive(v1_bindingJSON, "kind");
     if (kind) { 
-    if(!cJSON_IsString(kind) && !cJSON_IsNull(kind))
+    if(!mazu_cJSON_IsString(kind) && !mazu_cJSON_IsNull(kind))
     {
     goto end; //String
     }
     }
 
     // v1_binding->metadata
-    cJSON *metadata = cJSON_GetObjectItemCaseSensitive(v1_bindingJSON, "metadata");
+    mazu_cJSON *metadata = mazu_cJSON_GetObjectItemCaseSensitive(v1_bindingJSON, "metadata");
     if (metadata) { 
     metadata_local_nonprim = v1_object_meta_parseFromJSON(metadata); //nonprimitive
     }
 
     // v1_binding->target
-    cJSON *target = cJSON_GetObjectItemCaseSensitive(v1_bindingJSON, "target");
+    mazu_cJSON *target = mazu_cJSON_GetObjectItemCaseSensitive(v1_bindingJSON, "target");
     if (!target) {
         goto end;
     }
@@ -146,8 +146,8 @@ v1_binding_t *v1_binding_parseFromJSON(cJSON *v1_bindingJSON){
 
 
     v1_binding_local_var = v1_binding_create (
-        api_version && !cJSON_IsNull(api_version) ? strdup(api_version->valuestring) : NULL,
-        kind && !cJSON_IsNull(kind) ? strdup(kind->valuestring) : NULL,
+        api_version && !mazu_cJSON_IsNull(api_version) ? strdup(api_version->valuestring) : NULL,
+        kind && !mazu_cJSON_IsNull(kind) ? strdup(kind->valuestring) : NULL,
         metadata ? metadata_local_nonprim : NULL,
         target_local_nonprim
         );

@@ -11,7 +11,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdbool.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 
 #include "../model/v1_rolling_update_stateful_set_strategy.h"
 v1_rolling_update_stateful_set_strategy_t* instantiate_v1_rolling_update_stateful_set_strategy(int include_optional);
@@ -41,11 +41,11 @@ v1_rolling_update_stateful_set_strategy_t* instantiate_v1_rolling_update_statefu
 void test_v1_rolling_update_stateful_set_strategy(int include_optional) {
     v1_rolling_update_stateful_set_strategy_t* v1_rolling_update_stateful_set_strategy_1 = instantiate_v1_rolling_update_stateful_set_strategy(include_optional);
 
-	cJSON* jsonv1_rolling_update_stateful_set_strategy_1 = v1_rolling_update_stateful_set_strategy_convertToJSON(v1_rolling_update_stateful_set_strategy_1);
-	printf("v1_rolling_update_stateful_set_strategy :\n%s\n", cJSON_Print(jsonv1_rolling_update_stateful_set_strategy_1));
+	mazu_cJSON* jsonv1_rolling_update_stateful_set_strategy_1 = v1_rolling_update_stateful_set_strategy_convertToJSON(v1_rolling_update_stateful_set_strategy_1);
+	printf("v1_rolling_update_stateful_set_strategy :\n%s\n", mazu_cJSON_Print(jsonv1_rolling_update_stateful_set_strategy_1));
 	v1_rolling_update_stateful_set_strategy_t* v1_rolling_update_stateful_set_strategy_2 = v1_rolling_update_stateful_set_strategy_parseFromJSON(jsonv1_rolling_update_stateful_set_strategy_1);
-	cJSON* jsonv1_rolling_update_stateful_set_strategy_2 = v1_rolling_update_stateful_set_strategy_convertToJSON(v1_rolling_update_stateful_set_strategy_2);
-	printf("repeating v1_rolling_update_stateful_set_strategy:\n%s\n", cJSON_Print(jsonv1_rolling_update_stateful_set_strategy_2));
+	mazu_cJSON* jsonv1_rolling_update_stateful_set_strategy_2 = v1_rolling_update_stateful_set_strategy_convertToJSON(v1_rolling_update_stateful_set_strategy_2);
+	printf("repeating v1_rolling_update_stateful_set_strategy:\n%s\n", mazu_cJSON_Print(jsonv1_rolling_update_stateful_set_strategy_2));
 }
 
 int main() {

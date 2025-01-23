@@ -81,21 +81,21 @@ void v1_endpoint_free(v1_endpoint_t *v1_endpoint) {
     free(v1_endpoint);
 }
 
-cJSON *v1_endpoint_convertToJSON(v1_endpoint_t *v1_endpoint) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_endpoint_convertToJSON(v1_endpoint_t *v1_endpoint) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_endpoint->addresses
     if (!v1_endpoint->addresses) {
         goto fail;
     }
-    cJSON *addresses = cJSON_AddArrayToObject(item, "addresses");
+    mazu_cJSON *addresses = mazu_cJSON_AddArrayToObject(item, "addresses");
     if(addresses == NULL) {
         goto fail; //primitive container
     }
 
     listEntry_t *addressesListEntry;
     list_ForEach(addressesListEntry, v1_endpoint->addresses) {
-    if(cJSON_AddStringToObject(addresses, "", (char*)addressesListEntry->data) == NULL)
+    if(mazu_cJSON_AddStringToObject(addresses, "", (char*)addressesListEntry->data) == NULL)
     {
         goto fail;
     }
@@ -104,11 +104,11 @@ cJSON *v1_endpoint_convertToJSON(v1_endpoint_t *v1_endpoint) {
 
     // v1_endpoint->conditions
     if(v1_endpoint->conditions) {
-    cJSON *conditions_local_JSON = v1_endpoint_conditions_convertToJSON(v1_endpoint->conditions);
+    mazu_cJSON *conditions_local_JSON = v1_endpoint_conditions_convertToJSON(v1_endpoint->conditions);
     if(conditions_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "conditions", conditions_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "conditions", conditions_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -117,16 +117,16 @@ cJSON *v1_endpoint_convertToJSON(v1_endpoint_t *v1_endpoint) {
 
     // v1_endpoint->deprecated_topology
     if(v1_endpoint->deprecated_topology) {
-    cJSON *deprecated_topology = cJSON_AddObjectToObject(item, "deprecatedTopology");
+    mazu_cJSON *deprecated_topology = mazu_cJSON_AddObjectToObject(item, "deprecatedTopology");
     if(deprecated_topology == NULL) {
         goto fail; //primitive map container
     }
-    cJSON *localMapObject = deprecated_topology;
+    mazu_cJSON *localMapObject = deprecated_topology;
     listEntry_t *deprecated_topologyListEntry;
     if (v1_endpoint->deprecated_topology) {
     list_ForEach(deprecated_topologyListEntry, v1_endpoint->deprecated_topology) {
         keyValuePair_t *localKeyValue = (keyValuePair_t*)deprecated_topologyListEntry->data;
-        if(cJSON_AddStringToObject(localMapObject, localKeyValue->key, (char*)localKeyValue->value) == NULL)
+        if(mazu_cJSON_AddStringToObject(localMapObject, localKeyValue->key, (char*)localKeyValue->value) == NULL)
         {
             goto fail;
         }
@@ -137,11 +137,11 @@ cJSON *v1_endpoint_convertToJSON(v1_endpoint_t *v1_endpoint) {
 
     // v1_endpoint->hints
     if(v1_endpoint->hints) {
-    cJSON *hints_local_JSON = v1_endpoint_hints_convertToJSON(v1_endpoint->hints);
+    mazu_cJSON *hints_local_JSON = v1_endpoint_hints_convertToJSON(v1_endpoint->hints);
     if(hints_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "hints", hints_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "hints", hints_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -150,7 +150,7 @@ cJSON *v1_endpoint_convertToJSON(v1_endpoint_t *v1_endpoint) {
 
     // v1_endpoint->hostname
     if(v1_endpoint->hostname) {
-    if(cJSON_AddStringToObject(item, "hostname", v1_endpoint->hostname) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "hostname", v1_endpoint->hostname) == NULL) {
     goto fail; //String
     }
     }
@@ -158,7 +158,7 @@ cJSON *v1_endpoint_convertToJSON(v1_endpoint_t *v1_endpoint) {
 
     // v1_endpoint->node_name
     if(v1_endpoint->node_name) {
-    if(cJSON_AddStringToObject(item, "nodeName", v1_endpoint->node_name) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "nodeName", v1_endpoint->node_name) == NULL) {
     goto fail; //String
     }
     }
@@ -166,11 +166,11 @@ cJSON *v1_endpoint_convertToJSON(v1_endpoint_t *v1_endpoint) {
 
     // v1_endpoint->target_ref
     if(v1_endpoint->target_ref) {
-    cJSON *target_ref_local_JSON = v1_object_reference_convertToJSON(v1_endpoint->target_ref);
+    mazu_cJSON *target_ref_local_JSON = v1_object_reference_convertToJSON(v1_endpoint->target_ref);
     if(target_ref_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "targetRef", target_ref_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "targetRef", target_ref_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -179,7 +179,7 @@ cJSON *v1_endpoint_convertToJSON(v1_endpoint_t *v1_endpoint) {
 
     // v1_endpoint->zone
     if(v1_endpoint->zone) {
-    if(cJSON_AddStringToObject(item, "zone", v1_endpoint->zone) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "zone", v1_endpoint->zone) == NULL) {
     goto fail; //String
     }
     }
@@ -187,12 +187,12 @@ cJSON *v1_endpoint_convertToJSON(v1_endpoint_t *v1_endpoint) {
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_endpoint_t *v1_endpoint_parseFromJSON(cJSON *v1_endpointJSON){
+v1_endpoint_t *v1_endpoint_parseFromJSON(mazu_cJSON *v1_endpointJSON){
 
     v1_endpoint_t *v1_endpoint_local_var = NULL;
 
@@ -212,21 +212,21 @@ v1_endpoint_t *v1_endpoint_parseFromJSON(cJSON *v1_endpointJSON){
     v1_object_reference_t *target_ref_local_nonprim = NULL;
 
     // v1_endpoint->addresses
-    cJSON *addresses = cJSON_GetObjectItemCaseSensitive(v1_endpointJSON, "addresses");
+    mazu_cJSON *addresses = mazu_cJSON_GetObjectItemCaseSensitive(v1_endpointJSON, "addresses");
     if (!addresses) {
         goto end;
     }
 
     
-    cJSON *addresses_local = NULL;
-    if(!cJSON_IsArray(addresses)) {
+    mazu_cJSON *addresses_local = NULL;
+    if(!mazu_cJSON_IsArray(addresses)) {
         goto end;//primitive container
     }
     addressesList = list_createList();
 
-    cJSON_ArrayForEach(addresses_local, addresses)
+    mazu_cJSON_ArrayForEach(addresses_local, addresses)
     {
-        if(!cJSON_IsString(addresses_local))
+        if(!mazu_cJSON_IsString(addresses_local))
         {
             goto end;
         }
@@ -234,27 +234,27 @@ v1_endpoint_t *v1_endpoint_parseFromJSON(cJSON *v1_endpointJSON){
     }
 
     // v1_endpoint->conditions
-    cJSON *conditions = cJSON_GetObjectItemCaseSensitive(v1_endpointJSON, "conditions");
+    mazu_cJSON *conditions = mazu_cJSON_GetObjectItemCaseSensitive(v1_endpointJSON, "conditions");
     if (conditions) { 
     conditions_local_nonprim = v1_endpoint_conditions_parseFromJSON(conditions); //nonprimitive
     }
 
     // v1_endpoint->deprecated_topology
-    cJSON *deprecated_topology = cJSON_GetObjectItemCaseSensitive(v1_endpointJSON, "deprecatedTopology");
+    mazu_cJSON *deprecated_topology = mazu_cJSON_GetObjectItemCaseSensitive(v1_endpointJSON, "deprecatedTopology");
     if (deprecated_topology) { 
-    cJSON *deprecated_topology_local_map = NULL;
-    if(!cJSON_IsObject(deprecated_topology) && !cJSON_IsNull(deprecated_topology))
+    mazu_cJSON *deprecated_topology_local_map = NULL;
+    if(!mazu_cJSON_IsObject(deprecated_topology) && !mazu_cJSON_IsNull(deprecated_topology))
     {
         goto end;//primitive map container
     }
-    if(cJSON_IsObject(deprecated_topology))
+    if(mazu_cJSON_IsObject(deprecated_topology))
     {
         deprecated_topologyList = list_createList();
         keyValuePair_t *localMapKeyPair;
-        cJSON_ArrayForEach(deprecated_topology_local_map, deprecated_topology)
+        mazu_cJSON_ArrayForEach(deprecated_topology_local_map, deprecated_topology)
         {
-            cJSON *localMapObject = deprecated_topology_local_map;
-            if(!cJSON_IsString(localMapObject))
+            mazu_cJSON *localMapObject = deprecated_topology_local_map;
+            if(!mazu_cJSON_IsString(localMapObject))
             {
                 goto end;
             }
@@ -265,39 +265,39 @@ v1_endpoint_t *v1_endpoint_parseFromJSON(cJSON *v1_endpointJSON){
     }
 
     // v1_endpoint->hints
-    cJSON *hints = cJSON_GetObjectItemCaseSensitive(v1_endpointJSON, "hints");
+    mazu_cJSON *hints = mazu_cJSON_GetObjectItemCaseSensitive(v1_endpointJSON, "hints");
     if (hints) { 
     hints_local_nonprim = v1_endpoint_hints_parseFromJSON(hints); //nonprimitive
     }
 
     // v1_endpoint->hostname
-    cJSON *hostname = cJSON_GetObjectItemCaseSensitive(v1_endpointJSON, "hostname");
+    mazu_cJSON *hostname = mazu_cJSON_GetObjectItemCaseSensitive(v1_endpointJSON, "hostname");
     if (hostname) { 
-    if(!cJSON_IsString(hostname) && !cJSON_IsNull(hostname))
+    if(!mazu_cJSON_IsString(hostname) && !mazu_cJSON_IsNull(hostname))
     {
     goto end; //String
     }
     }
 
     // v1_endpoint->node_name
-    cJSON *node_name = cJSON_GetObjectItemCaseSensitive(v1_endpointJSON, "nodeName");
+    mazu_cJSON *node_name = mazu_cJSON_GetObjectItemCaseSensitive(v1_endpointJSON, "nodeName");
     if (node_name) { 
-    if(!cJSON_IsString(node_name) && !cJSON_IsNull(node_name))
+    if(!mazu_cJSON_IsString(node_name) && !mazu_cJSON_IsNull(node_name))
     {
     goto end; //String
     }
     }
 
     // v1_endpoint->target_ref
-    cJSON *target_ref = cJSON_GetObjectItemCaseSensitive(v1_endpointJSON, "targetRef");
+    mazu_cJSON *target_ref = mazu_cJSON_GetObjectItemCaseSensitive(v1_endpointJSON, "targetRef");
     if (target_ref) { 
     target_ref_local_nonprim = v1_object_reference_parseFromJSON(target_ref); //nonprimitive
     }
 
     // v1_endpoint->zone
-    cJSON *zone = cJSON_GetObjectItemCaseSensitive(v1_endpointJSON, "zone");
+    mazu_cJSON *zone = mazu_cJSON_GetObjectItemCaseSensitive(v1_endpointJSON, "zone");
     if (zone) { 
-    if(!cJSON_IsString(zone) && !cJSON_IsNull(zone))
+    if(!mazu_cJSON_IsString(zone) && !mazu_cJSON_IsNull(zone))
     {
     goto end; //String
     }
@@ -309,10 +309,10 @@ v1_endpoint_t *v1_endpoint_parseFromJSON(cJSON *v1_endpointJSON){
         conditions ? conditions_local_nonprim : NULL,
         deprecated_topology ? deprecated_topologyList : NULL,
         hints ? hints_local_nonprim : NULL,
-        hostname && !cJSON_IsNull(hostname) ? strdup(hostname->valuestring) : NULL,
-        node_name && !cJSON_IsNull(node_name) ? strdup(node_name->valuestring) : NULL,
+        hostname && !mazu_cJSON_IsNull(hostname) ? strdup(hostname->valuestring) : NULL,
+        node_name && !mazu_cJSON_IsNull(node_name) ? strdup(node_name->valuestring) : NULL,
         target_ref ? target_ref_local_nonprim : NULL,
-        zone && !cJSON_IsNull(zone) ? strdup(zone->valuestring) : NULL
+        zone && !mazu_cJSON_IsNull(zone) ? strdup(zone->valuestring) : NULL
         );
 
     return v1_endpoint_local_var;

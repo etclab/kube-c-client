@@ -11,7 +11,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdbool.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 
 #include "../model/v1_aggregation_rule.h"
 v1_aggregation_rule_t* instantiate_v1_aggregation_rule(int include_optional);
@@ -39,11 +39,11 @@ v1_aggregation_rule_t* instantiate_v1_aggregation_rule(int include_optional) {
 void test_v1_aggregation_rule(int include_optional) {
     v1_aggregation_rule_t* v1_aggregation_rule_1 = instantiate_v1_aggregation_rule(include_optional);
 
-	cJSON* jsonv1_aggregation_rule_1 = v1_aggregation_rule_convertToJSON(v1_aggregation_rule_1);
-	printf("v1_aggregation_rule :\n%s\n", cJSON_Print(jsonv1_aggregation_rule_1));
+	mazu_cJSON* jsonv1_aggregation_rule_1 = v1_aggregation_rule_convertToJSON(v1_aggregation_rule_1);
+	printf("v1_aggregation_rule :\n%s\n", mazu_cJSON_Print(jsonv1_aggregation_rule_1));
 	v1_aggregation_rule_t* v1_aggregation_rule_2 = v1_aggregation_rule_parseFromJSON(jsonv1_aggregation_rule_1);
-	cJSON* jsonv1_aggregation_rule_2 = v1_aggregation_rule_convertToJSON(v1_aggregation_rule_2);
-	printf("repeating v1_aggregation_rule:\n%s\n", cJSON_Print(jsonv1_aggregation_rule_2));
+	mazu_cJSON* jsonv1_aggregation_rule_2 = v1_aggregation_rule_convertToJSON(v1_aggregation_rule_2);
+	printf("repeating v1_aggregation_rule:\n%s\n", mazu_cJSON_Print(jsonv1_aggregation_rule_2));
 }
 
 int main() {

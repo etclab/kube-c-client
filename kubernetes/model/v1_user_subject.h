@@ -8,7 +8,7 @@
 #define _v1_user_subject_H_
 
 #include <string.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
 #include "../include/binary.h"
@@ -29,9 +29,9 @@ v1_user_subject_t *v1_user_subject_create(
 
 void v1_user_subject_free(v1_user_subject_t *v1_user_subject);
 
-v1_user_subject_t *v1_user_subject_parseFromJSON(cJSON *v1_user_subjectJSON);
+v1_user_subject_t *v1_user_subject_parseFromJSON(mazu_cJSON *v1_user_subjectJSON);
 
-cJSON *v1_user_subject_convertToJSON(v1_user_subject_t *v1_user_subject);
+mazu_cJSON *v1_user_subject_convertToJSON(v1_user_subject_t *v1_user_subject);
 
 #endif /* _v1_user_subject_H_ */
 

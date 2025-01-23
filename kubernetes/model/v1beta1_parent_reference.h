@@ -8,7 +8,7 @@
 #define _v1beta1_parent_reference_H_
 
 #include <string.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
 #include "../include/binary.h"
@@ -35,9 +35,9 @@ v1beta1_parent_reference_t *v1beta1_parent_reference_create(
 
 void v1beta1_parent_reference_free(v1beta1_parent_reference_t *v1beta1_parent_reference);
 
-v1beta1_parent_reference_t *v1beta1_parent_reference_parseFromJSON(cJSON *v1beta1_parent_referenceJSON);
+v1beta1_parent_reference_t *v1beta1_parent_reference_parseFromJSON(mazu_cJSON *v1beta1_parent_referenceJSON);
 
-cJSON *v1beta1_parent_reference_convertToJSON(v1beta1_parent_reference_t *v1beta1_parent_reference);
+mazu_cJSON *v1beta1_parent_reference_convertToJSON(v1beta1_parent_reference_t *v1beta1_parent_reference);
 
 #endif /* _v1beta1_parent_reference_H_ */
 

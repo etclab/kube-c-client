@@ -8,7 +8,7 @@
 #define _v1_watch_event_H_
 
 #include <string.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
 #include "../include/binary.h"
@@ -32,9 +32,9 @@ v1_watch_event_t *v1_watch_event_create(
 
 void v1_watch_event_free(v1_watch_event_t *v1_watch_event);
 
-v1_watch_event_t *v1_watch_event_parseFromJSON(cJSON *v1_watch_eventJSON);
+v1_watch_event_t *v1_watch_event_parseFromJSON(mazu_cJSON *v1_watch_eventJSON);
 
-cJSON *v1_watch_event_convertToJSON(v1_watch_event_t *v1_watch_event);
+mazu_cJSON *v1_watch_event_convertToJSON(v1_watch_event_t *v1_watch_event);
 
 #endif /* _v1_watch_event_H_ */
 

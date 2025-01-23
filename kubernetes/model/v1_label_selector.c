@@ -45,12 +45,12 @@ void v1_label_selector_free(v1_label_selector_t *v1_label_selector) {
     free(v1_label_selector);
 }
 
-cJSON *v1_label_selector_convertToJSON(v1_label_selector_t *v1_label_selector) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_label_selector_convertToJSON(v1_label_selector_t *v1_label_selector) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_label_selector->match_expressions
     if(v1_label_selector->match_expressions) {
-    cJSON *match_expressions = cJSON_AddArrayToObject(item, "matchExpressions");
+    mazu_cJSON *match_expressions = mazu_cJSON_AddArrayToObject(item, "matchExpressions");
     if(match_expressions == NULL) {
     goto fail; //nonprimitive container
     }
@@ -58,11 +58,11 @@ cJSON *v1_label_selector_convertToJSON(v1_label_selector_t *v1_label_selector) {
     listEntry_t *match_expressionsListEntry;
     if (v1_label_selector->match_expressions) {
     list_ForEach(match_expressionsListEntry, v1_label_selector->match_expressions) {
-    cJSON *itemLocal = v1_label_selector_requirement_convertToJSON(match_expressionsListEntry->data);
+    mazu_cJSON *itemLocal = v1_label_selector_requirement_convertToJSON(match_expressionsListEntry->data);
     if(itemLocal == NULL) {
     goto fail;
     }
-    cJSON_AddItemToArray(match_expressions, itemLocal);
+    mazu_cJSON_AddItemToArray(match_expressions, itemLocal);
     }
     }
     }
@@ -70,16 +70,16 @@ cJSON *v1_label_selector_convertToJSON(v1_label_selector_t *v1_label_selector) {
 
     // v1_label_selector->match_labels
     if(v1_label_selector->match_labels) {
-    cJSON *match_labels = cJSON_AddObjectToObject(item, "matchLabels");
+    mazu_cJSON *match_labels = mazu_cJSON_AddObjectToObject(item, "matchLabels");
     if(match_labels == NULL) {
         goto fail; //primitive map container
     }
-    cJSON *localMapObject = match_labels;
+    mazu_cJSON *localMapObject = match_labels;
     listEntry_t *match_labelsListEntry;
     if (v1_label_selector->match_labels) {
     list_ForEach(match_labelsListEntry, v1_label_selector->match_labels) {
         keyValuePair_t *localKeyValue = (keyValuePair_t*)match_labelsListEntry->data;
-        if(cJSON_AddStringToObject(localMapObject, localKeyValue->key, (char*)localKeyValue->value) == NULL)
+        if(mazu_cJSON_AddStringToObject(localMapObject, localKeyValue->key, (char*)localKeyValue->value) == NULL)
         {
             goto fail;
         }
@@ -90,12 +90,12 @@ cJSON *v1_label_selector_convertToJSON(v1_label_selector_t *v1_label_selector) {
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_label_selector_t *v1_label_selector_parseFromJSON(cJSON *v1_label_selectorJSON){
+v1_label_selector_t *v1_label_selector_parseFromJSON(mazu_cJSON *v1_label_selectorJSON){
 
     v1_label_selector_t *v1_label_selector_local_var = NULL;
 
@@ -106,18 +106,18 @@ v1_label_selector_t *v1_label_selector_parseFromJSON(cJSON *v1_label_selectorJSO
     list_t *match_labelsList = NULL;
 
     // v1_label_selector->match_expressions
-    cJSON *match_expressions = cJSON_GetObjectItemCaseSensitive(v1_label_selectorJSON, "matchExpressions");
+    mazu_cJSON *match_expressions = mazu_cJSON_GetObjectItemCaseSensitive(v1_label_selectorJSON, "matchExpressions");
     if (match_expressions) { 
-    cJSON *match_expressions_local_nonprimitive = NULL;
-    if(!cJSON_IsArray(match_expressions)){
+    mazu_cJSON *match_expressions_local_nonprimitive = NULL;
+    if(!mazu_cJSON_IsArray(match_expressions)){
         goto end; //nonprimitive container
     }
 
     match_expressionsList = list_createList();
 
-    cJSON_ArrayForEach(match_expressions_local_nonprimitive,match_expressions )
+    mazu_cJSON_ArrayForEach(match_expressions_local_nonprimitive,match_expressions )
     {
-        if(!cJSON_IsObject(match_expressions_local_nonprimitive)){
+        if(!mazu_cJSON_IsObject(match_expressions_local_nonprimitive)){
             goto end;
         }
         v1_label_selector_requirement_t *match_expressionsItem = v1_label_selector_requirement_parseFromJSON(match_expressions_local_nonprimitive);
@@ -127,21 +127,21 @@ v1_label_selector_t *v1_label_selector_parseFromJSON(cJSON *v1_label_selectorJSO
     }
 
     // v1_label_selector->match_labels
-    cJSON *match_labels = cJSON_GetObjectItemCaseSensitive(v1_label_selectorJSON, "matchLabels");
+    mazu_cJSON *match_labels = mazu_cJSON_GetObjectItemCaseSensitive(v1_label_selectorJSON, "matchLabels");
     if (match_labels) { 
-    cJSON *match_labels_local_map = NULL;
-    if(!cJSON_IsObject(match_labels) && !cJSON_IsNull(match_labels))
+    mazu_cJSON *match_labels_local_map = NULL;
+    if(!mazu_cJSON_IsObject(match_labels) && !mazu_cJSON_IsNull(match_labels))
     {
         goto end;//primitive map container
     }
-    if(cJSON_IsObject(match_labels))
+    if(mazu_cJSON_IsObject(match_labels))
     {
         match_labelsList = list_createList();
         keyValuePair_t *localMapKeyPair;
-        cJSON_ArrayForEach(match_labels_local_map, match_labels)
+        mazu_cJSON_ArrayForEach(match_labels_local_map, match_labels)
         {
-            cJSON *localMapObject = match_labels_local_map;
-            if(!cJSON_IsString(localMapObject))
+            mazu_cJSON *localMapObject = match_labels_local_map;
+            if(!mazu_cJSON_IsString(localMapObject))
             {
                 goto end;
             }

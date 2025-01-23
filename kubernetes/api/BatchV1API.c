@@ -91,12 +91,12 @@ BatchV1API_createNamespacedCronJob(apiClient_t *apiClient, char *_namespace, v1_
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body = NULL;
+    mazu_cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
         localVarSingleItemJSON_body = v1_cron_job_convertToJSON(body);
-        localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyParameters = mazu_cJSON_Print(localVarSingleItemJSON_body);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
@@ -128,9 +128,9 @@ BatchV1API_createNamespacedCronJob(apiClient_t *apiClient, char *_namespace, v1_
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *BatchV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    mazu_cJSON *BatchV1APIlocalVarJSON = mazu_cJSON_Parse(apiClient->dataReceived);
     v1_cron_job_t *elementToReturn = v1_cron_job_parseFromJSON(BatchV1APIlocalVarJSON);
-    cJSON_Delete(BatchV1APIlocalVarJSON);
+    mazu_cJSON_Delete(BatchV1APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
     }
@@ -149,7 +149,7 @@ BatchV1API_createNamespacedCronJob(apiClient_t *apiClient, char *_namespace, v1_
     free(localVarPath);
     free(localVarToReplace__namespace);
     if (localVarSingleItemJSON_body) {
-        cJSON_Delete(localVarSingleItemJSON_body);
+        mazu_cJSON_Delete(localVarSingleItemJSON_body);
         localVarSingleItemJSON_body = NULL;
     }
     free(localVarBodyParameters);
@@ -287,12 +287,12 @@ BatchV1API_createNamespacedJob(apiClient_t *apiClient, char *_namespace, v1_job_
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body = NULL;
+    mazu_cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
         localVarSingleItemJSON_body = v1_job_convertToJSON(body);
-        localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyParameters = mazu_cJSON_Print(localVarSingleItemJSON_body);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
@@ -324,9 +324,9 @@ BatchV1API_createNamespacedJob(apiClient_t *apiClient, char *_namespace, v1_job_
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *BatchV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    mazu_cJSON *BatchV1APIlocalVarJSON = mazu_cJSON_Parse(apiClient->dataReceived);
     v1_job_t *elementToReturn = v1_job_parseFromJSON(BatchV1APIlocalVarJSON);
-    cJSON_Delete(BatchV1APIlocalVarJSON);
+    mazu_cJSON_Delete(BatchV1APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
     }
@@ -345,7 +345,7 @@ BatchV1API_createNamespacedJob(apiClient_t *apiClient, char *_namespace, v1_job_
     free(localVarPath);
     free(localVarToReplace__namespace);
     if (localVarSingleItemJSON_body) {
-        cJSON_Delete(localVarSingleItemJSON_body);
+        mazu_cJSON_Delete(localVarSingleItemJSON_body);
         localVarSingleItemJSON_body = NULL;
     }
     free(localVarBodyParameters);
@@ -596,12 +596,12 @@ BatchV1API_deleteCollectionNamespacedCronJob(apiClient_t *apiClient, char *_name
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body = NULL;
+    mazu_cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
         localVarSingleItemJSON_body = v1_delete_options_convertToJSON(body);
-        localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyParameters = mazu_cJSON_Print(localVarSingleItemJSON_body);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
@@ -625,9 +625,9 @@ BatchV1API_deleteCollectionNamespacedCronJob(apiClient_t *apiClient, char *_name
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *BatchV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    mazu_cJSON *BatchV1APIlocalVarJSON = mazu_cJSON_Parse(apiClient->dataReceived);
     v1_status_t *elementToReturn = v1_status_parseFromJSON(BatchV1APIlocalVarJSON);
-    cJSON_Delete(BatchV1APIlocalVarJSON);
+    mazu_cJSON_Delete(BatchV1APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
     }
@@ -646,7 +646,7 @@ BatchV1API_deleteCollectionNamespacedCronJob(apiClient_t *apiClient, char *_name
     free(localVarPath);
     free(localVarToReplace__namespace);
     if (localVarSingleItemJSON_body) {
-        cJSON_Delete(localVarSingleItemJSON_body);
+        mazu_cJSON_Delete(localVarSingleItemJSON_body);
         localVarSingleItemJSON_body = NULL;
     }
     free(localVarBodyParameters);
@@ -1005,12 +1005,12 @@ BatchV1API_deleteCollectionNamespacedJob(apiClient_t *apiClient, char *_namespac
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body = NULL;
+    mazu_cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
         localVarSingleItemJSON_body = v1_delete_options_convertToJSON(body);
-        localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyParameters = mazu_cJSON_Print(localVarSingleItemJSON_body);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
@@ -1034,9 +1034,9 @@ BatchV1API_deleteCollectionNamespacedJob(apiClient_t *apiClient, char *_namespac
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *BatchV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    mazu_cJSON *BatchV1APIlocalVarJSON = mazu_cJSON_Parse(apiClient->dataReceived);
     v1_status_t *elementToReturn = v1_status_parseFromJSON(BatchV1APIlocalVarJSON);
-    cJSON_Delete(BatchV1APIlocalVarJSON);
+    mazu_cJSON_Delete(BatchV1APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
     }
@@ -1055,7 +1055,7 @@ BatchV1API_deleteCollectionNamespacedJob(apiClient_t *apiClient, char *_namespac
     free(localVarPath);
     free(localVarToReplace__namespace);
     if (localVarSingleItemJSON_body) {
-        cJSON_Delete(localVarSingleItemJSON_body);
+        mazu_cJSON_Delete(localVarSingleItemJSON_body);
         localVarSingleItemJSON_body = NULL;
     }
     free(localVarBodyParameters);
@@ -1325,12 +1325,12 @@ BatchV1API_deleteNamespacedCronJob(apiClient_t *apiClient, char *name, char *_na
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body = NULL;
+    mazu_cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
         localVarSingleItemJSON_body = v1_delete_options_convertToJSON(body);
-        localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyParameters = mazu_cJSON_Print(localVarSingleItemJSON_body);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
@@ -1358,9 +1358,9 @@ BatchV1API_deleteNamespacedCronJob(apiClient_t *apiClient, char *name, char *_na
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *BatchV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    mazu_cJSON *BatchV1APIlocalVarJSON = mazu_cJSON_Parse(apiClient->dataReceived);
     v1_status_t *elementToReturn = v1_status_parseFromJSON(BatchV1APIlocalVarJSON);
-    cJSON_Delete(BatchV1APIlocalVarJSON);
+    mazu_cJSON_Delete(BatchV1APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
     }
@@ -1380,7 +1380,7 @@ BatchV1API_deleteNamespacedCronJob(apiClient_t *apiClient, char *name, char *_na
     free(localVarToReplace_name);
     free(localVarToReplace__namespace);
     if (localVarSingleItemJSON_body) {
-        cJSON_Delete(localVarSingleItemJSON_body);
+        mazu_cJSON_Delete(localVarSingleItemJSON_body);
         localVarSingleItemJSON_body = NULL;
     }
     free(localVarBodyParameters);
@@ -1554,12 +1554,12 @@ BatchV1API_deleteNamespacedJob(apiClient_t *apiClient, char *name, char *_namesp
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body = NULL;
+    mazu_cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
         localVarSingleItemJSON_body = v1_delete_options_convertToJSON(body);
-        localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyParameters = mazu_cJSON_Print(localVarSingleItemJSON_body);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
@@ -1587,9 +1587,9 @@ BatchV1API_deleteNamespacedJob(apiClient_t *apiClient, char *name, char *_namesp
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *BatchV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    mazu_cJSON *BatchV1APIlocalVarJSON = mazu_cJSON_Parse(apiClient->dataReceived);
     v1_status_t *elementToReturn = v1_status_parseFromJSON(BatchV1APIlocalVarJSON);
-    cJSON_Delete(BatchV1APIlocalVarJSON);
+    mazu_cJSON_Delete(BatchV1APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
     }
@@ -1609,7 +1609,7 @@ BatchV1API_deleteNamespacedJob(apiClient_t *apiClient, char *name, char *_namesp
     free(localVarToReplace_name);
     free(localVarToReplace__namespace);
     if (localVarSingleItemJSON_body) {
-        cJSON_Delete(localVarSingleItemJSON_body);
+        mazu_cJSON_Delete(localVarSingleItemJSON_body);
         localVarSingleItemJSON_body = NULL;
     }
     free(localVarBodyParameters);
@@ -1721,9 +1721,9 @@ BatchV1API_getAPIResources_12(apiClient_t *apiClient)
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *BatchV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    mazu_cJSON *BatchV1APIlocalVarJSON = mazu_cJSON_Parse(apiClient->dataReceived);
     v1_api_resource_list_t *elementToReturn = v1_api_resource_list_parseFromJSON(BatchV1APIlocalVarJSON);
-    cJSON_Delete(BatchV1APIlocalVarJSON);
+    mazu_cJSON_Delete(BatchV1APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
     }
@@ -1927,9 +1927,9 @@ BatchV1API_listCronJobForAllNamespaces(apiClient_t *apiClient, int *allowWatchBo
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *BatchV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    mazu_cJSON *BatchV1APIlocalVarJSON = mazu_cJSON_Parse(apiClient->dataReceived);
     v1_cron_job_list_t *elementToReturn = v1_cron_job_list_parseFromJSON(BatchV1APIlocalVarJSON);
-    cJSON_Delete(BatchV1APIlocalVarJSON);
+    mazu_cJSON_Delete(BatchV1APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
     }
@@ -2265,9 +2265,9 @@ BatchV1API_listJobForAllNamespaces(apiClient_t *apiClient, int *allowWatchBookma
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *BatchV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    mazu_cJSON *BatchV1APIlocalVarJSON = mazu_cJSON_Parse(apiClient->dataReceived);
     v1_job_list_t *elementToReturn = v1_job_list_parseFromJSON(BatchV1APIlocalVarJSON);
-    cJSON_Delete(BatchV1APIlocalVarJSON);
+    mazu_cJSON_Delete(BatchV1APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
     }
@@ -2613,9 +2613,9 @@ BatchV1API_listNamespacedCronJob(apiClient_t *apiClient, char *_namespace, char 
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *BatchV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    mazu_cJSON *BatchV1APIlocalVarJSON = mazu_cJSON_Parse(apiClient->dataReceived);
     v1_cron_job_list_t *elementToReturn = v1_cron_job_list_parseFromJSON(BatchV1APIlocalVarJSON);
-    cJSON_Delete(BatchV1APIlocalVarJSON);
+    mazu_cJSON_Delete(BatchV1APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
     }
@@ -2962,9 +2962,9 @@ BatchV1API_listNamespacedJob(apiClient_t *apiClient, char *_namespace, char *pre
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *BatchV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    mazu_cJSON *BatchV1APIlocalVarJSON = mazu_cJSON_Parse(apiClient->dataReceived);
     v1_job_list_t *elementToReturn = v1_job_list_parseFromJSON(BatchV1APIlocalVarJSON);
-    cJSON_Delete(BatchV1APIlocalVarJSON);
+    mazu_cJSON_Delete(BatchV1APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
     }
@@ -3223,12 +3223,12 @@ BatchV1API_patchNamespacedCronJob(apiClient_t *apiClient, char *name, char *_nam
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body = NULL;
+    mazu_cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
         localVarSingleItemJSON_body = object_convertToJSON(body);
-        localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyParameters = mazu_cJSON_Print(localVarSingleItemJSON_body);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
@@ -3260,9 +3260,9 @@ BatchV1API_patchNamespacedCronJob(apiClient_t *apiClient, char *name, char *_nam
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *BatchV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    mazu_cJSON *BatchV1APIlocalVarJSON = mazu_cJSON_Parse(apiClient->dataReceived);
     v1_cron_job_t *elementToReturn = v1_cron_job_parseFromJSON(BatchV1APIlocalVarJSON);
-    cJSON_Delete(BatchV1APIlocalVarJSON);
+    mazu_cJSON_Delete(BatchV1APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
     }
@@ -3282,7 +3282,7 @@ BatchV1API_patchNamespacedCronJob(apiClient_t *apiClient, char *name, char *_nam
     free(localVarToReplace_name);
     free(localVarToReplace__namespace);
     if (localVarSingleItemJSON_body) {
-        cJSON_Delete(localVarSingleItemJSON_body);
+        mazu_cJSON_Delete(localVarSingleItemJSON_body);
         localVarSingleItemJSON_body = NULL;
     }
     free(localVarBodyParameters);
@@ -3455,12 +3455,12 @@ BatchV1API_patchNamespacedCronJobStatus(apiClient_t *apiClient, char *name, char
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body = NULL;
+    mazu_cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
         localVarSingleItemJSON_body = object_convertToJSON(body);
-        localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyParameters = mazu_cJSON_Print(localVarSingleItemJSON_body);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
@@ -3492,9 +3492,9 @@ BatchV1API_patchNamespacedCronJobStatus(apiClient_t *apiClient, char *name, char
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *BatchV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    mazu_cJSON *BatchV1APIlocalVarJSON = mazu_cJSON_Parse(apiClient->dataReceived);
     v1_cron_job_t *elementToReturn = v1_cron_job_parseFromJSON(BatchV1APIlocalVarJSON);
-    cJSON_Delete(BatchV1APIlocalVarJSON);
+    mazu_cJSON_Delete(BatchV1APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
     }
@@ -3514,7 +3514,7 @@ BatchV1API_patchNamespacedCronJobStatus(apiClient_t *apiClient, char *name, char
     free(localVarToReplace_name);
     free(localVarToReplace__namespace);
     if (localVarSingleItemJSON_body) {
-        cJSON_Delete(localVarSingleItemJSON_body);
+        mazu_cJSON_Delete(localVarSingleItemJSON_body);
         localVarSingleItemJSON_body = NULL;
     }
     free(localVarBodyParameters);
@@ -3687,12 +3687,12 @@ BatchV1API_patchNamespacedJob(apiClient_t *apiClient, char *name, char *_namespa
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body = NULL;
+    mazu_cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
         localVarSingleItemJSON_body = object_convertToJSON(body);
-        localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyParameters = mazu_cJSON_Print(localVarSingleItemJSON_body);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
@@ -3724,9 +3724,9 @@ BatchV1API_patchNamespacedJob(apiClient_t *apiClient, char *name, char *_namespa
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *BatchV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    mazu_cJSON *BatchV1APIlocalVarJSON = mazu_cJSON_Parse(apiClient->dataReceived);
     v1_job_t *elementToReturn = v1_job_parseFromJSON(BatchV1APIlocalVarJSON);
-    cJSON_Delete(BatchV1APIlocalVarJSON);
+    mazu_cJSON_Delete(BatchV1APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
     }
@@ -3746,7 +3746,7 @@ BatchV1API_patchNamespacedJob(apiClient_t *apiClient, char *name, char *_namespa
     free(localVarToReplace_name);
     free(localVarToReplace__namespace);
     if (localVarSingleItemJSON_body) {
-        cJSON_Delete(localVarSingleItemJSON_body);
+        mazu_cJSON_Delete(localVarSingleItemJSON_body);
         localVarSingleItemJSON_body = NULL;
     }
     free(localVarBodyParameters);
@@ -3919,12 +3919,12 @@ BatchV1API_patchNamespacedJobStatus(apiClient_t *apiClient, char *name, char *_n
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body = NULL;
+    mazu_cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
         localVarSingleItemJSON_body = object_convertToJSON(body);
-        localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyParameters = mazu_cJSON_Print(localVarSingleItemJSON_body);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
@@ -3956,9 +3956,9 @@ BatchV1API_patchNamespacedJobStatus(apiClient_t *apiClient, char *name, char *_n
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *BatchV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    mazu_cJSON *BatchV1APIlocalVarJSON = mazu_cJSON_Parse(apiClient->dataReceived);
     v1_job_t *elementToReturn = v1_job_parseFromJSON(BatchV1APIlocalVarJSON);
-    cJSON_Delete(BatchV1APIlocalVarJSON);
+    mazu_cJSON_Delete(BatchV1APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
     }
@@ -3978,7 +3978,7 @@ BatchV1API_patchNamespacedJobStatus(apiClient_t *apiClient, char *name, char *_n
     free(localVarToReplace_name);
     free(localVarToReplace__namespace);
     if (localVarSingleItemJSON_body) {
-        cJSON_Delete(localVarSingleItemJSON_body);
+        mazu_cJSON_Delete(localVarSingleItemJSON_body);
         localVarSingleItemJSON_body = NULL;
     }
     free(localVarBodyParameters);
@@ -4122,9 +4122,9 @@ BatchV1API_readNamespacedCronJob(apiClient_t *apiClient, char *name, char *_name
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *BatchV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    mazu_cJSON *BatchV1APIlocalVarJSON = mazu_cJSON_Parse(apiClient->dataReceived);
     v1_cron_job_t *elementToReturn = v1_cron_job_parseFromJSON(BatchV1APIlocalVarJSON);
-    cJSON_Delete(BatchV1APIlocalVarJSON);
+    mazu_cJSON_Delete(BatchV1APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
     }
@@ -4235,9 +4235,9 @@ BatchV1API_readNamespacedCronJobStatus(apiClient_t *apiClient, char *name, char 
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *BatchV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    mazu_cJSON *BatchV1APIlocalVarJSON = mazu_cJSON_Parse(apiClient->dataReceived);
     v1_cron_job_t *elementToReturn = v1_cron_job_parseFromJSON(BatchV1APIlocalVarJSON);
-    cJSON_Delete(BatchV1APIlocalVarJSON);
+    mazu_cJSON_Delete(BatchV1APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
     }
@@ -4348,9 +4348,9 @@ BatchV1API_readNamespacedJob(apiClient_t *apiClient, char *name, char *_namespac
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *BatchV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    mazu_cJSON *BatchV1APIlocalVarJSON = mazu_cJSON_Parse(apiClient->dataReceived);
     v1_job_t *elementToReturn = v1_job_parseFromJSON(BatchV1APIlocalVarJSON);
-    cJSON_Delete(BatchV1APIlocalVarJSON);
+    mazu_cJSON_Delete(BatchV1APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
     }
@@ -4461,9 +4461,9 @@ BatchV1API_readNamespacedJobStatus(apiClient_t *apiClient, char *name, char *_na
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *BatchV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    mazu_cJSON *BatchV1APIlocalVarJSON = mazu_cJSON_Parse(apiClient->dataReceived);
     v1_job_t *elementToReturn = v1_job_parseFromJSON(BatchV1APIlocalVarJSON);
-    cJSON_Delete(BatchV1APIlocalVarJSON);
+    mazu_cJSON_Delete(BatchV1APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
     }
@@ -4590,12 +4590,12 @@ BatchV1API_replaceNamespacedCronJob(apiClient_t *apiClient, char *name, char *_n
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body = NULL;
+    mazu_cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
         localVarSingleItemJSON_body = v1_cron_job_convertToJSON(body);
-        localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyParameters = mazu_cJSON_Print(localVarSingleItemJSON_body);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
@@ -4623,9 +4623,9 @@ BatchV1API_replaceNamespacedCronJob(apiClient_t *apiClient, char *name, char *_n
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *BatchV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    mazu_cJSON *BatchV1APIlocalVarJSON = mazu_cJSON_Parse(apiClient->dataReceived);
     v1_cron_job_t *elementToReturn = v1_cron_job_parseFromJSON(BatchV1APIlocalVarJSON);
-    cJSON_Delete(BatchV1APIlocalVarJSON);
+    mazu_cJSON_Delete(BatchV1APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
     }
@@ -4645,7 +4645,7 @@ BatchV1API_replaceNamespacedCronJob(apiClient_t *apiClient, char *name, char *_n
     free(localVarToReplace_name);
     free(localVarToReplace__namespace);
     if (localVarSingleItemJSON_body) {
-        cJSON_Delete(localVarSingleItemJSON_body);
+        mazu_cJSON_Delete(localVarSingleItemJSON_body);
         localVarSingleItemJSON_body = NULL;
     }
     free(localVarBodyParameters);
@@ -4793,12 +4793,12 @@ BatchV1API_replaceNamespacedCronJobStatus(apiClient_t *apiClient, char *name, ch
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body = NULL;
+    mazu_cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
         localVarSingleItemJSON_body = v1_cron_job_convertToJSON(body);
-        localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyParameters = mazu_cJSON_Print(localVarSingleItemJSON_body);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
@@ -4826,9 +4826,9 @@ BatchV1API_replaceNamespacedCronJobStatus(apiClient_t *apiClient, char *name, ch
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *BatchV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    mazu_cJSON *BatchV1APIlocalVarJSON = mazu_cJSON_Parse(apiClient->dataReceived);
     v1_cron_job_t *elementToReturn = v1_cron_job_parseFromJSON(BatchV1APIlocalVarJSON);
-    cJSON_Delete(BatchV1APIlocalVarJSON);
+    mazu_cJSON_Delete(BatchV1APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
     }
@@ -4848,7 +4848,7 @@ BatchV1API_replaceNamespacedCronJobStatus(apiClient_t *apiClient, char *name, ch
     free(localVarToReplace_name);
     free(localVarToReplace__namespace);
     if (localVarSingleItemJSON_body) {
-        cJSON_Delete(localVarSingleItemJSON_body);
+        mazu_cJSON_Delete(localVarSingleItemJSON_body);
         localVarSingleItemJSON_body = NULL;
     }
     free(localVarBodyParameters);
@@ -4996,12 +4996,12 @@ BatchV1API_replaceNamespacedJob(apiClient_t *apiClient, char *name, char *_names
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body = NULL;
+    mazu_cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
         localVarSingleItemJSON_body = v1_job_convertToJSON(body);
-        localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyParameters = mazu_cJSON_Print(localVarSingleItemJSON_body);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
@@ -5029,9 +5029,9 @@ BatchV1API_replaceNamespacedJob(apiClient_t *apiClient, char *name, char *_names
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *BatchV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    mazu_cJSON *BatchV1APIlocalVarJSON = mazu_cJSON_Parse(apiClient->dataReceived);
     v1_job_t *elementToReturn = v1_job_parseFromJSON(BatchV1APIlocalVarJSON);
-    cJSON_Delete(BatchV1APIlocalVarJSON);
+    mazu_cJSON_Delete(BatchV1APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
     }
@@ -5051,7 +5051,7 @@ BatchV1API_replaceNamespacedJob(apiClient_t *apiClient, char *name, char *_names
     free(localVarToReplace_name);
     free(localVarToReplace__namespace);
     if (localVarSingleItemJSON_body) {
-        cJSON_Delete(localVarSingleItemJSON_body);
+        mazu_cJSON_Delete(localVarSingleItemJSON_body);
         localVarSingleItemJSON_body = NULL;
     }
     free(localVarBodyParameters);
@@ -5199,12 +5199,12 @@ BatchV1API_replaceNamespacedJobStatus(apiClient_t *apiClient, char *name, char *
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body = NULL;
+    mazu_cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
         localVarSingleItemJSON_body = v1_job_convertToJSON(body);
-        localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyParameters = mazu_cJSON_Print(localVarSingleItemJSON_body);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
@@ -5232,9 +5232,9 @@ BatchV1API_replaceNamespacedJobStatus(apiClient_t *apiClient, char *name, char *
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *BatchV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    mazu_cJSON *BatchV1APIlocalVarJSON = mazu_cJSON_Parse(apiClient->dataReceived);
     v1_job_t *elementToReturn = v1_job_parseFromJSON(BatchV1APIlocalVarJSON);
-    cJSON_Delete(BatchV1APIlocalVarJSON);
+    mazu_cJSON_Delete(BatchV1APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
     }
@@ -5254,7 +5254,7 @@ BatchV1API_replaceNamespacedJobStatus(apiClient_t *apiClient, char *name, char *
     free(localVarToReplace_name);
     free(localVarToReplace__namespace);
     if (localVarSingleItemJSON_body) {
-        cJSON_Delete(localVarSingleItemJSON_body);
+        mazu_cJSON_Delete(localVarSingleItemJSON_body);
         localVarSingleItemJSON_body = NULL;
     }
     free(localVarBodyParameters);

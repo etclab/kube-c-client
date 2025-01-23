@@ -8,7 +8,7 @@
 #define _v2_cross_version_object_reference_H_
 
 #include <string.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
 #include "../include/binary.h"
@@ -33,9 +33,9 @@ v2_cross_version_object_reference_t *v2_cross_version_object_reference_create(
 
 void v2_cross_version_object_reference_free(v2_cross_version_object_reference_t *v2_cross_version_object_reference);
 
-v2_cross_version_object_reference_t *v2_cross_version_object_reference_parseFromJSON(cJSON *v2_cross_version_object_referenceJSON);
+v2_cross_version_object_reference_t *v2_cross_version_object_reference_parseFromJSON(mazu_cJSON *v2_cross_version_object_referenceJSON);
 
-cJSON *v2_cross_version_object_reference_convertToJSON(v2_cross_version_object_reference_t *v2_cross_version_object_reference);
+mazu_cJSON *v2_cross_version_object_reference_convertToJSON(v2_cross_version_object_reference_t *v2_cross_version_object_reference);
 
 #endif /* _v2_cross_version_object_reference_H_ */
 

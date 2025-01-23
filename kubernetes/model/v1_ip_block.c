@@ -39,28 +39,28 @@ void v1_ip_block_free(v1_ip_block_t *v1_ip_block) {
     free(v1_ip_block);
 }
 
-cJSON *v1_ip_block_convertToJSON(v1_ip_block_t *v1_ip_block) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_ip_block_convertToJSON(v1_ip_block_t *v1_ip_block) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_ip_block->cidr
     if (!v1_ip_block->cidr) {
         goto fail;
     }
-    if(cJSON_AddStringToObject(item, "cidr", v1_ip_block->cidr) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "cidr", v1_ip_block->cidr) == NULL) {
     goto fail; //String
     }
 
 
     // v1_ip_block->except
     if(v1_ip_block->except) {
-    cJSON *except = cJSON_AddArrayToObject(item, "except");
+    mazu_cJSON *except = mazu_cJSON_AddArrayToObject(item, "except");
     if(except == NULL) {
         goto fail; //primitive container
     }
 
     listEntry_t *exceptListEntry;
     list_ForEach(exceptListEntry, v1_ip_block->except) {
-    if(cJSON_AddStringToObject(except, "", (char*)exceptListEntry->data) == NULL)
+    if(mazu_cJSON_AddStringToObject(except, "", (char*)exceptListEntry->data) == NULL)
     {
         goto fail;
     }
@@ -70,12 +70,12 @@ cJSON *v1_ip_block_convertToJSON(v1_ip_block_t *v1_ip_block) {
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_ip_block_t *v1_ip_block_parseFromJSON(cJSON *v1_ip_blockJSON){
+v1_ip_block_t *v1_ip_block_parseFromJSON(mazu_cJSON *v1_ip_blockJSON){
 
     v1_ip_block_t *v1_ip_block_local_var = NULL;
 
@@ -83,29 +83,29 @@ v1_ip_block_t *v1_ip_block_parseFromJSON(cJSON *v1_ip_blockJSON){
     list_t *exceptList = NULL;
 
     // v1_ip_block->cidr
-    cJSON *cidr = cJSON_GetObjectItemCaseSensitive(v1_ip_blockJSON, "cidr");
+    mazu_cJSON *cidr = mazu_cJSON_GetObjectItemCaseSensitive(v1_ip_blockJSON, "cidr");
     if (!cidr) {
         goto end;
     }
 
     
-    if(!cJSON_IsString(cidr))
+    if(!mazu_cJSON_IsString(cidr))
     {
     goto end; //String
     }
 
     // v1_ip_block->except
-    cJSON *except = cJSON_GetObjectItemCaseSensitive(v1_ip_blockJSON, "except");
+    mazu_cJSON *except = mazu_cJSON_GetObjectItemCaseSensitive(v1_ip_blockJSON, "except");
     if (except) { 
-    cJSON *except_local = NULL;
-    if(!cJSON_IsArray(except)) {
+    mazu_cJSON *except_local = NULL;
+    if(!mazu_cJSON_IsArray(except)) {
         goto end;//primitive container
     }
     exceptList = list_createList();
 
-    cJSON_ArrayForEach(except_local, except)
+    mazu_cJSON_ArrayForEach(except_local, except)
     {
-        if(!cJSON_IsString(except_local))
+        if(!mazu_cJSON_IsString(except_local))
         {
             goto end;
         }

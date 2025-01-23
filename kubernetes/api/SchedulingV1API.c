@@ -81,12 +81,12 @@ SchedulingV1API_createPriorityClass(apiClient_t *apiClient, v1_priority_class_t 
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body = NULL;
+    mazu_cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
         localVarSingleItemJSON_body = v1_priority_class_convertToJSON(body);
-        localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyParameters = mazu_cJSON_Print(localVarSingleItemJSON_body);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
@@ -118,9 +118,9 @@ SchedulingV1API_createPriorityClass(apiClient_t *apiClient, v1_priority_class_t 
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *SchedulingV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    mazu_cJSON *SchedulingV1APIlocalVarJSON = mazu_cJSON_Parse(apiClient->dataReceived);
     v1_priority_class_t *elementToReturn = v1_priority_class_parseFromJSON(SchedulingV1APIlocalVarJSON);
-    cJSON_Delete(SchedulingV1APIlocalVarJSON);
+    mazu_cJSON_Delete(SchedulingV1APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
     }
@@ -138,7 +138,7 @@ SchedulingV1API_createPriorityClass(apiClient_t *apiClient, v1_priority_class_t 
     
     free(localVarPath);
     if (localVarSingleItemJSON_body) {
-        cJSON_Delete(localVarSingleItemJSON_body);
+        mazu_cJSON_Delete(localVarSingleItemJSON_body);
         localVarSingleItemJSON_body = NULL;
     }
     free(localVarBodyParameters);
@@ -379,12 +379,12 @@ SchedulingV1API_deleteCollectionPriorityClass(apiClient_t *apiClient, char *pret
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body = NULL;
+    mazu_cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
         localVarSingleItemJSON_body = v1_delete_options_convertToJSON(body);
-        localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyParameters = mazu_cJSON_Print(localVarSingleItemJSON_body);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
@@ -408,9 +408,9 @@ SchedulingV1API_deleteCollectionPriorityClass(apiClient_t *apiClient, char *pret
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *SchedulingV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    mazu_cJSON *SchedulingV1APIlocalVarJSON = mazu_cJSON_Parse(apiClient->dataReceived);
     v1_status_t *elementToReturn = v1_status_parseFromJSON(SchedulingV1APIlocalVarJSON);
-    cJSON_Delete(SchedulingV1APIlocalVarJSON);
+    mazu_cJSON_Delete(SchedulingV1APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
     }
@@ -428,7 +428,7 @@ SchedulingV1API_deleteCollectionPriorityClass(apiClient_t *apiClient, char *pret
     
     free(localVarPath);
     if (localVarSingleItemJSON_body) {
-        cJSON_Delete(localVarSingleItemJSON_body);
+        mazu_cJSON_Delete(localVarSingleItemJSON_body);
         localVarSingleItemJSON_body = NULL;
     }
     free(localVarBodyParameters);
@@ -688,12 +688,12 @@ SchedulingV1API_deletePriorityClass(apiClient_t *apiClient, char *name, char *pr
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body = NULL;
+    mazu_cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
         localVarSingleItemJSON_body = v1_delete_options_convertToJSON(body);
-        localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyParameters = mazu_cJSON_Print(localVarSingleItemJSON_body);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
@@ -721,9 +721,9 @@ SchedulingV1API_deletePriorityClass(apiClient_t *apiClient, char *name, char *pr
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *SchedulingV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    mazu_cJSON *SchedulingV1APIlocalVarJSON = mazu_cJSON_Parse(apiClient->dataReceived);
     v1_status_t *elementToReturn = v1_status_parseFromJSON(SchedulingV1APIlocalVarJSON);
-    cJSON_Delete(SchedulingV1APIlocalVarJSON);
+    mazu_cJSON_Delete(SchedulingV1APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
     }
@@ -742,7 +742,7 @@ SchedulingV1API_deletePriorityClass(apiClient_t *apiClient, char *name, char *pr
     free(localVarPath);
     free(localVarToReplace_name);
     if (localVarSingleItemJSON_body) {
-        cJSON_Delete(localVarSingleItemJSON_body);
+        mazu_cJSON_Delete(localVarSingleItemJSON_body);
         localVarSingleItemJSON_body = NULL;
     }
     free(localVarBodyParameters);
@@ -854,9 +854,9 @@ SchedulingV1API_getAPIResources_28(apiClient_t *apiClient)
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *SchedulingV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    mazu_cJSON *SchedulingV1APIlocalVarJSON = mazu_cJSON_Parse(apiClient->dataReceived);
     v1_api_resource_list_t *elementToReturn = v1_api_resource_list_parseFromJSON(SchedulingV1APIlocalVarJSON);
-    cJSON_Delete(SchedulingV1APIlocalVarJSON);
+    mazu_cJSON_Delete(SchedulingV1APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
     }
@@ -1060,9 +1060,9 @@ SchedulingV1API_listPriorityClass(apiClient_t *apiClient, char *pretty, int *all
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *SchedulingV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    mazu_cJSON *SchedulingV1APIlocalVarJSON = mazu_cJSON_Parse(apiClient->dataReceived);
     v1_priority_class_list_t *elementToReturn = v1_priority_class_list_parseFromJSON(SchedulingV1APIlocalVarJSON);
-    cJSON_Delete(SchedulingV1APIlocalVarJSON);
+    mazu_cJSON_Delete(SchedulingV1APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
     }
@@ -1310,12 +1310,12 @@ SchedulingV1API_patchPriorityClass(apiClient_t *apiClient, char *name, object_t 
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body = NULL;
+    mazu_cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
         localVarSingleItemJSON_body = object_convertToJSON(body);
-        localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyParameters = mazu_cJSON_Print(localVarSingleItemJSON_body);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
@@ -1347,9 +1347,9 @@ SchedulingV1API_patchPriorityClass(apiClient_t *apiClient, char *name, object_t 
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *SchedulingV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    mazu_cJSON *SchedulingV1APIlocalVarJSON = mazu_cJSON_Parse(apiClient->dataReceived);
     v1_priority_class_t *elementToReturn = v1_priority_class_parseFromJSON(SchedulingV1APIlocalVarJSON);
-    cJSON_Delete(SchedulingV1APIlocalVarJSON);
+    mazu_cJSON_Delete(SchedulingV1APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
     }
@@ -1368,7 +1368,7 @@ SchedulingV1API_patchPriorityClass(apiClient_t *apiClient, char *name, object_t 
     free(localVarPath);
     free(localVarToReplace_name);
     if (localVarSingleItemJSON_body) {
-        cJSON_Delete(localVarSingleItemJSON_body);
+        mazu_cJSON_Delete(localVarSingleItemJSON_body);
         localVarSingleItemJSON_body = NULL;
     }
     free(localVarBodyParameters);
@@ -1502,9 +1502,9 @@ SchedulingV1API_readPriorityClass(apiClient_t *apiClient, char *name, char *pret
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *SchedulingV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    mazu_cJSON *SchedulingV1APIlocalVarJSON = mazu_cJSON_Parse(apiClient->dataReceived);
     v1_priority_class_t *elementToReturn = v1_priority_class_parseFromJSON(SchedulingV1APIlocalVarJSON);
-    cJSON_Delete(SchedulingV1APIlocalVarJSON);
+    mazu_cJSON_Delete(SchedulingV1APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
     }
@@ -1620,12 +1620,12 @@ SchedulingV1API_replacePriorityClass(apiClient_t *apiClient, char *name, v1_prio
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body = NULL;
+    mazu_cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
         localVarSingleItemJSON_body = v1_priority_class_convertToJSON(body);
-        localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyParameters = mazu_cJSON_Print(localVarSingleItemJSON_body);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
@@ -1653,9 +1653,9 @@ SchedulingV1API_replacePriorityClass(apiClient_t *apiClient, char *name, v1_prio
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *SchedulingV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    mazu_cJSON *SchedulingV1APIlocalVarJSON = mazu_cJSON_Parse(apiClient->dataReceived);
     v1_priority_class_t *elementToReturn = v1_priority_class_parseFromJSON(SchedulingV1APIlocalVarJSON);
-    cJSON_Delete(SchedulingV1APIlocalVarJSON);
+    mazu_cJSON_Delete(SchedulingV1APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
     }
@@ -1674,7 +1674,7 @@ SchedulingV1API_replacePriorityClass(apiClient_t *apiClient, char *name, v1_prio
     free(localVarPath);
     free(localVarToReplace_name);
     if (localVarSingleItemJSON_body) {
-        cJSON_Delete(localVarSingleItemJSON_body);
+        mazu_cJSON_Delete(localVarSingleItemJSON_body);
         localVarSingleItemJSON_body = NULL;
     }
     free(localVarBodyParameters);

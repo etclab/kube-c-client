@@ -62,21 +62,21 @@ void v1_resource_policy_rule_free(v1_resource_policy_rule_t *v1_resource_policy_
     free(v1_resource_policy_rule);
 }
 
-cJSON *v1_resource_policy_rule_convertToJSON(v1_resource_policy_rule_t *v1_resource_policy_rule) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_resource_policy_rule_convertToJSON(v1_resource_policy_rule_t *v1_resource_policy_rule) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_resource_policy_rule->api_groups
     if (!v1_resource_policy_rule->api_groups) {
         goto fail;
     }
-    cJSON *api_groups = cJSON_AddArrayToObject(item, "apiGroups");
+    mazu_cJSON *api_groups = mazu_cJSON_AddArrayToObject(item, "apiGroups");
     if(api_groups == NULL) {
         goto fail; //primitive container
     }
 
     listEntry_t *api_groupsListEntry;
     list_ForEach(api_groupsListEntry, v1_resource_policy_rule->api_groups) {
-    if(cJSON_AddStringToObject(api_groups, "", (char*)api_groupsListEntry->data) == NULL)
+    if(mazu_cJSON_AddStringToObject(api_groups, "", (char*)api_groupsListEntry->data) == NULL)
     {
         goto fail;
     }
@@ -85,7 +85,7 @@ cJSON *v1_resource_policy_rule_convertToJSON(v1_resource_policy_rule_t *v1_resou
 
     // v1_resource_policy_rule->cluster_scope
     if(v1_resource_policy_rule->cluster_scope) {
-    if(cJSON_AddBoolToObject(item, "clusterScope", v1_resource_policy_rule->cluster_scope) == NULL) {
+    if(mazu_cJSON_AddBoolToObject(item, "clusterScope", v1_resource_policy_rule->cluster_scope) == NULL) {
     goto fail; //Bool
     }
     }
@@ -93,14 +93,14 @@ cJSON *v1_resource_policy_rule_convertToJSON(v1_resource_policy_rule_t *v1_resou
 
     // v1_resource_policy_rule->namespaces
     if(v1_resource_policy_rule->namespaces) {
-    cJSON *namespaces = cJSON_AddArrayToObject(item, "namespaces");
+    mazu_cJSON *namespaces = mazu_cJSON_AddArrayToObject(item, "namespaces");
     if(namespaces == NULL) {
         goto fail; //primitive container
     }
 
     listEntry_t *namespacesListEntry;
     list_ForEach(namespacesListEntry, v1_resource_policy_rule->namespaces) {
-    if(cJSON_AddStringToObject(namespaces, "", (char*)namespacesListEntry->data) == NULL)
+    if(mazu_cJSON_AddStringToObject(namespaces, "", (char*)namespacesListEntry->data) == NULL)
     {
         goto fail;
     }
@@ -112,14 +112,14 @@ cJSON *v1_resource_policy_rule_convertToJSON(v1_resource_policy_rule_t *v1_resou
     if (!v1_resource_policy_rule->resources) {
         goto fail;
     }
-    cJSON *resources = cJSON_AddArrayToObject(item, "resources");
+    mazu_cJSON *resources = mazu_cJSON_AddArrayToObject(item, "resources");
     if(resources == NULL) {
         goto fail; //primitive container
     }
 
     listEntry_t *resourcesListEntry;
     list_ForEach(resourcesListEntry, v1_resource_policy_rule->resources) {
-    if(cJSON_AddStringToObject(resources, "", (char*)resourcesListEntry->data) == NULL)
+    if(mazu_cJSON_AddStringToObject(resources, "", (char*)resourcesListEntry->data) == NULL)
     {
         goto fail;
     }
@@ -130,14 +130,14 @@ cJSON *v1_resource_policy_rule_convertToJSON(v1_resource_policy_rule_t *v1_resou
     if (!v1_resource_policy_rule->verbs) {
         goto fail;
     }
-    cJSON *verbs = cJSON_AddArrayToObject(item, "verbs");
+    mazu_cJSON *verbs = mazu_cJSON_AddArrayToObject(item, "verbs");
     if(verbs == NULL) {
         goto fail; //primitive container
     }
 
     listEntry_t *verbsListEntry;
     list_ForEach(verbsListEntry, v1_resource_policy_rule->verbs) {
-    if(cJSON_AddStringToObject(verbs, "", (char*)verbsListEntry->data) == NULL)
+    if(mazu_cJSON_AddStringToObject(verbs, "", (char*)verbsListEntry->data) == NULL)
     {
         goto fail;
     }
@@ -146,12 +146,12 @@ cJSON *v1_resource_policy_rule_convertToJSON(v1_resource_policy_rule_t *v1_resou
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_resource_policy_rule_t *v1_resource_policy_rule_parseFromJSON(cJSON *v1_resource_policy_ruleJSON){
+v1_resource_policy_rule_t *v1_resource_policy_rule_parseFromJSON(mazu_cJSON *v1_resource_policy_ruleJSON){
 
     v1_resource_policy_rule_t *v1_resource_policy_rule_local_var = NULL;
 
@@ -168,21 +168,21 @@ v1_resource_policy_rule_t *v1_resource_policy_rule_parseFromJSON(cJSON *v1_resou
     list_t *verbsList = NULL;
 
     // v1_resource_policy_rule->api_groups
-    cJSON *api_groups = cJSON_GetObjectItemCaseSensitive(v1_resource_policy_ruleJSON, "apiGroups");
+    mazu_cJSON *api_groups = mazu_cJSON_GetObjectItemCaseSensitive(v1_resource_policy_ruleJSON, "apiGroups");
     if (!api_groups) {
         goto end;
     }
 
     
-    cJSON *api_groups_local = NULL;
-    if(!cJSON_IsArray(api_groups)) {
+    mazu_cJSON *api_groups_local = NULL;
+    if(!mazu_cJSON_IsArray(api_groups)) {
         goto end;//primitive container
     }
     api_groupsList = list_createList();
 
-    cJSON_ArrayForEach(api_groups_local, api_groups)
+    mazu_cJSON_ArrayForEach(api_groups_local, api_groups)
     {
-        if(!cJSON_IsString(api_groups_local))
+        if(!mazu_cJSON_IsString(api_groups_local))
         {
             goto end;
         }
@@ -190,26 +190,26 @@ v1_resource_policy_rule_t *v1_resource_policy_rule_parseFromJSON(cJSON *v1_resou
     }
 
     // v1_resource_policy_rule->cluster_scope
-    cJSON *cluster_scope = cJSON_GetObjectItemCaseSensitive(v1_resource_policy_ruleJSON, "clusterScope");
+    mazu_cJSON *cluster_scope = mazu_cJSON_GetObjectItemCaseSensitive(v1_resource_policy_ruleJSON, "clusterScope");
     if (cluster_scope) { 
-    if(!cJSON_IsBool(cluster_scope))
+    if(!mazu_cJSON_IsBool(cluster_scope))
     {
     goto end; //Bool
     }
     }
 
     // v1_resource_policy_rule->namespaces
-    cJSON *namespaces = cJSON_GetObjectItemCaseSensitive(v1_resource_policy_ruleJSON, "namespaces");
+    mazu_cJSON *namespaces = mazu_cJSON_GetObjectItemCaseSensitive(v1_resource_policy_ruleJSON, "namespaces");
     if (namespaces) { 
-    cJSON *namespaces_local = NULL;
-    if(!cJSON_IsArray(namespaces)) {
+    mazu_cJSON *namespaces_local = NULL;
+    if(!mazu_cJSON_IsArray(namespaces)) {
         goto end;//primitive container
     }
     namespacesList = list_createList();
 
-    cJSON_ArrayForEach(namespaces_local, namespaces)
+    mazu_cJSON_ArrayForEach(namespaces_local, namespaces)
     {
-        if(!cJSON_IsString(namespaces_local))
+        if(!mazu_cJSON_IsString(namespaces_local))
         {
             goto end;
         }
@@ -218,21 +218,21 @@ v1_resource_policy_rule_t *v1_resource_policy_rule_parseFromJSON(cJSON *v1_resou
     }
 
     // v1_resource_policy_rule->resources
-    cJSON *resources = cJSON_GetObjectItemCaseSensitive(v1_resource_policy_ruleJSON, "resources");
+    mazu_cJSON *resources = mazu_cJSON_GetObjectItemCaseSensitive(v1_resource_policy_ruleJSON, "resources");
     if (!resources) {
         goto end;
     }
 
     
-    cJSON *resources_local = NULL;
-    if(!cJSON_IsArray(resources)) {
+    mazu_cJSON *resources_local = NULL;
+    if(!mazu_cJSON_IsArray(resources)) {
         goto end;//primitive container
     }
     resourcesList = list_createList();
 
-    cJSON_ArrayForEach(resources_local, resources)
+    mazu_cJSON_ArrayForEach(resources_local, resources)
     {
-        if(!cJSON_IsString(resources_local))
+        if(!mazu_cJSON_IsString(resources_local))
         {
             goto end;
         }
@@ -240,21 +240,21 @@ v1_resource_policy_rule_t *v1_resource_policy_rule_parseFromJSON(cJSON *v1_resou
     }
 
     // v1_resource_policy_rule->verbs
-    cJSON *verbs = cJSON_GetObjectItemCaseSensitive(v1_resource_policy_ruleJSON, "verbs");
+    mazu_cJSON *verbs = mazu_cJSON_GetObjectItemCaseSensitive(v1_resource_policy_ruleJSON, "verbs");
     if (!verbs) {
         goto end;
     }
 
     
-    cJSON *verbs_local = NULL;
-    if(!cJSON_IsArray(verbs)) {
+    mazu_cJSON *verbs_local = NULL;
+    if(!mazu_cJSON_IsArray(verbs)) {
         goto end;//primitive container
     }
     verbsList = list_createList();
 
-    cJSON_ArrayForEach(verbs_local, verbs)
+    mazu_cJSON_ArrayForEach(verbs_local, verbs)
     {
-        if(!cJSON_IsString(verbs_local))
+        if(!mazu_cJSON_IsString(verbs_local))
         {
             goto end;
         }

@@ -42,12 +42,12 @@ void v1_git_repo_volume_source_free(v1_git_repo_volume_source_t *v1_git_repo_vol
     free(v1_git_repo_volume_source);
 }
 
-cJSON *v1_git_repo_volume_source_convertToJSON(v1_git_repo_volume_source_t *v1_git_repo_volume_source) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_git_repo_volume_source_convertToJSON(v1_git_repo_volume_source_t *v1_git_repo_volume_source) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_git_repo_volume_source->directory
     if(v1_git_repo_volume_source->directory) {
-    if(cJSON_AddStringToObject(item, "directory", v1_git_repo_volume_source->directory) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "directory", v1_git_repo_volume_source->directory) == NULL) {
     goto fail; //String
     }
     }
@@ -57,14 +57,14 @@ cJSON *v1_git_repo_volume_source_convertToJSON(v1_git_repo_volume_source_t *v1_g
     if (!v1_git_repo_volume_source->repository) {
         goto fail;
     }
-    if(cJSON_AddStringToObject(item, "repository", v1_git_repo_volume_source->repository) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "repository", v1_git_repo_volume_source->repository) == NULL) {
     goto fail; //String
     }
 
 
     // v1_git_repo_volume_source->revision
     if(v1_git_repo_volume_source->revision) {
-    if(cJSON_AddStringToObject(item, "revision", v1_git_repo_volume_source->revision) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "revision", v1_git_repo_volume_source->revision) == NULL) {
     goto fail; //String
     }
     }
@@ -72,40 +72,40 @@ cJSON *v1_git_repo_volume_source_convertToJSON(v1_git_repo_volume_source_t *v1_g
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_git_repo_volume_source_t *v1_git_repo_volume_source_parseFromJSON(cJSON *v1_git_repo_volume_sourceJSON){
+v1_git_repo_volume_source_t *v1_git_repo_volume_source_parseFromJSON(mazu_cJSON *v1_git_repo_volume_sourceJSON){
 
     v1_git_repo_volume_source_t *v1_git_repo_volume_source_local_var = NULL;
 
     // v1_git_repo_volume_source->directory
-    cJSON *directory = cJSON_GetObjectItemCaseSensitive(v1_git_repo_volume_sourceJSON, "directory");
+    mazu_cJSON *directory = mazu_cJSON_GetObjectItemCaseSensitive(v1_git_repo_volume_sourceJSON, "directory");
     if (directory) { 
-    if(!cJSON_IsString(directory) && !cJSON_IsNull(directory))
+    if(!mazu_cJSON_IsString(directory) && !mazu_cJSON_IsNull(directory))
     {
     goto end; //String
     }
     }
 
     // v1_git_repo_volume_source->repository
-    cJSON *repository = cJSON_GetObjectItemCaseSensitive(v1_git_repo_volume_sourceJSON, "repository");
+    mazu_cJSON *repository = mazu_cJSON_GetObjectItemCaseSensitive(v1_git_repo_volume_sourceJSON, "repository");
     if (!repository) {
         goto end;
     }
 
     
-    if(!cJSON_IsString(repository))
+    if(!mazu_cJSON_IsString(repository))
     {
     goto end; //String
     }
 
     // v1_git_repo_volume_source->revision
-    cJSON *revision = cJSON_GetObjectItemCaseSensitive(v1_git_repo_volume_sourceJSON, "revision");
+    mazu_cJSON *revision = mazu_cJSON_GetObjectItemCaseSensitive(v1_git_repo_volume_sourceJSON, "revision");
     if (revision) { 
-    if(!cJSON_IsString(revision) && !cJSON_IsNull(revision))
+    if(!mazu_cJSON_IsString(revision) && !mazu_cJSON_IsNull(revision))
     {
     goto end; //String
     }
@@ -113,9 +113,9 @@ v1_git_repo_volume_source_t *v1_git_repo_volume_source_parseFromJSON(cJSON *v1_g
 
 
     v1_git_repo_volume_source_local_var = v1_git_repo_volume_source_create (
-        directory && !cJSON_IsNull(directory) ? strdup(directory->valuestring) : NULL,
+        directory && !mazu_cJSON_IsNull(directory) ? strdup(directory->valuestring) : NULL,
         strdup(repository->valuestring),
-        revision && !cJSON_IsNull(revision) ? strdup(revision->valuestring) : NULL
+        revision && !mazu_cJSON_IsNull(revision) ? strdup(revision->valuestring) : NULL
         );
 
     return v1_git_repo_volume_source_local_var;

@@ -57,12 +57,12 @@ void v1_resource_requirements_free(v1_resource_requirements_t *v1_resource_requi
     free(v1_resource_requirements);
 }
 
-cJSON *v1_resource_requirements_convertToJSON(v1_resource_requirements_t *v1_resource_requirements) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_resource_requirements_convertToJSON(v1_resource_requirements_t *v1_resource_requirements) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_resource_requirements->claims
     if(v1_resource_requirements->claims) {
-    cJSON *claims = cJSON_AddArrayToObject(item, "claims");
+    mazu_cJSON *claims = mazu_cJSON_AddArrayToObject(item, "claims");
     if(claims == NULL) {
     goto fail; //nonprimitive container
     }
@@ -70,11 +70,11 @@ cJSON *v1_resource_requirements_convertToJSON(v1_resource_requirements_t *v1_res
     listEntry_t *claimsListEntry;
     if (v1_resource_requirements->claims) {
     list_ForEach(claimsListEntry, v1_resource_requirements->claims) {
-    cJSON *itemLocal = v1_resource_claim_convertToJSON(claimsListEntry->data);
+    mazu_cJSON *itemLocal = v1_resource_claim_convertToJSON(claimsListEntry->data);
     if(itemLocal == NULL) {
     goto fail;
     }
-    cJSON_AddItemToArray(claims, itemLocal);
+    mazu_cJSON_AddItemToArray(claims, itemLocal);
     }
     }
     }
@@ -82,16 +82,16 @@ cJSON *v1_resource_requirements_convertToJSON(v1_resource_requirements_t *v1_res
 
     // v1_resource_requirements->limits
     if(v1_resource_requirements->limits) {
-    cJSON *limits = cJSON_AddObjectToObject(item, "limits");
+    mazu_cJSON *limits = mazu_cJSON_AddObjectToObject(item, "limits");
     if(limits == NULL) {
         goto fail; //primitive map container
     }
-    cJSON *localMapObject = limits;
+    mazu_cJSON *localMapObject = limits;
     listEntry_t *limitsListEntry;
     if (v1_resource_requirements->limits) {
     list_ForEach(limitsListEntry, v1_resource_requirements->limits) {
         keyValuePair_t *localKeyValue = (keyValuePair_t*)limitsListEntry->data;
-        if(cJSON_AddStringToObject(localMapObject, localKeyValue->key, (char*)localKeyValue->value) == NULL)
+        if(mazu_cJSON_AddStringToObject(localMapObject, localKeyValue->key, (char*)localKeyValue->value) == NULL)
         {
             goto fail;
         }
@@ -102,16 +102,16 @@ cJSON *v1_resource_requirements_convertToJSON(v1_resource_requirements_t *v1_res
 
     // v1_resource_requirements->requests
     if(v1_resource_requirements->requests) {
-    cJSON *requests = cJSON_AddObjectToObject(item, "requests");
+    mazu_cJSON *requests = mazu_cJSON_AddObjectToObject(item, "requests");
     if(requests == NULL) {
         goto fail; //primitive map container
     }
-    cJSON *localMapObject = requests;
+    mazu_cJSON *localMapObject = requests;
     listEntry_t *requestsListEntry;
     if (v1_resource_requirements->requests) {
     list_ForEach(requestsListEntry, v1_resource_requirements->requests) {
         keyValuePair_t *localKeyValue = (keyValuePair_t*)requestsListEntry->data;
-        if(cJSON_AddStringToObject(localMapObject, localKeyValue->key, (char*)localKeyValue->value) == NULL)
+        if(mazu_cJSON_AddStringToObject(localMapObject, localKeyValue->key, (char*)localKeyValue->value) == NULL)
         {
             goto fail;
         }
@@ -122,12 +122,12 @@ cJSON *v1_resource_requirements_convertToJSON(v1_resource_requirements_t *v1_res
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_resource_requirements_t *v1_resource_requirements_parseFromJSON(cJSON *v1_resource_requirementsJSON){
+v1_resource_requirements_t *v1_resource_requirements_parseFromJSON(mazu_cJSON *v1_resource_requirementsJSON){
 
     v1_resource_requirements_t *v1_resource_requirements_local_var = NULL;
 
@@ -141,18 +141,18 @@ v1_resource_requirements_t *v1_resource_requirements_parseFromJSON(cJSON *v1_res
     list_t *requestsList = NULL;
 
     // v1_resource_requirements->claims
-    cJSON *claims = cJSON_GetObjectItemCaseSensitive(v1_resource_requirementsJSON, "claims");
+    mazu_cJSON *claims = mazu_cJSON_GetObjectItemCaseSensitive(v1_resource_requirementsJSON, "claims");
     if (claims) { 
-    cJSON *claims_local_nonprimitive = NULL;
-    if(!cJSON_IsArray(claims)){
+    mazu_cJSON *claims_local_nonprimitive = NULL;
+    if(!mazu_cJSON_IsArray(claims)){
         goto end; //nonprimitive container
     }
 
     claimsList = list_createList();
 
-    cJSON_ArrayForEach(claims_local_nonprimitive,claims )
+    mazu_cJSON_ArrayForEach(claims_local_nonprimitive,claims )
     {
-        if(!cJSON_IsObject(claims_local_nonprimitive)){
+        if(!mazu_cJSON_IsObject(claims_local_nonprimitive)){
             goto end;
         }
         v1_resource_claim_t *claimsItem = v1_resource_claim_parseFromJSON(claims_local_nonprimitive);
@@ -162,21 +162,21 @@ v1_resource_requirements_t *v1_resource_requirements_parseFromJSON(cJSON *v1_res
     }
 
     // v1_resource_requirements->limits
-    cJSON *limits = cJSON_GetObjectItemCaseSensitive(v1_resource_requirementsJSON, "limits");
+    mazu_cJSON *limits = mazu_cJSON_GetObjectItemCaseSensitive(v1_resource_requirementsJSON, "limits");
     if (limits) { 
-    cJSON *limits_local_map = NULL;
-    if(!cJSON_IsObject(limits) && !cJSON_IsNull(limits))
+    mazu_cJSON *limits_local_map = NULL;
+    if(!mazu_cJSON_IsObject(limits) && !mazu_cJSON_IsNull(limits))
     {
         goto end;//primitive map container
     }
-    if(cJSON_IsObject(limits))
+    if(mazu_cJSON_IsObject(limits))
     {
         limitsList = list_createList();
         keyValuePair_t *localMapKeyPair;
-        cJSON_ArrayForEach(limits_local_map, limits)
+        mazu_cJSON_ArrayForEach(limits_local_map, limits)
         {
-            cJSON *localMapObject = limits_local_map;
-            if(!cJSON_IsString(localMapObject))
+            mazu_cJSON *localMapObject = limits_local_map;
+            if(!mazu_cJSON_IsString(localMapObject))
             {
                 goto end;
             }
@@ -187,21 +187,21 @@ v1_resource_requirements_t *v1_resource_requirements_parseFromJSON(cJSON *v1_res
     }
 
     // v1_resource_requirements->requests
-    cJSON *requests = cJSON_GetObjectItemCaseSensitive(v1_resource_requirementsJSON, "requests");
+    mazu_cJSON *requests = mazu_cJSON_GetObjectItemCaseSensitive(v1_resource_requirementsJSON, "requests");
     if (requests) { 
-    cJSON *requests_local_map = NULL;
-    if(!cJSON_IsObject(requests) && !cJSON_IsNull(requests))
+    mazu_cJSON *requests_local_map = NULL;
+    if(!mazu_cJSON_IsObject(requests) && !mazu_cJSON_IsNull(requests))
     {
         goto end;//primitive map container
     }
-    if(cJSON_IsObject(requests))
+    if(mazu_cJSON_IsObject(requests))
     {
         requestsList = list_createList();
         keyValuePair_t *localMapKeyPair;
-        cJSON_ArrayForEach(requests_local_map, requests)
+        mazu_cJSON_ArrayForEach(requests_local_map, requests)
         {
-            cJSON *localMapObject = requests_local_map;
-            if(!cJSON_IsString(localMapObject))
+            mazu_cJSON *localMapObject = requests_local_map;
+            if(!mazu_cJSON_IsString(localMapObject))
             {
                 goto end;
             }

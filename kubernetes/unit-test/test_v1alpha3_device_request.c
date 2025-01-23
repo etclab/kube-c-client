@@ -11,7 +11,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdbool.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 
 #include "../model/v1alpha3_device_request.h"
 v1alpha3_device_request_t* instantiate_v1alpha3_device_request(int include_optional);
@@ -49,11 +49,11 @@ v1alpha3_device_request_t* instantiate_v1alpha3_device_request(int include_optio
 void test_v1alpha3_device_request(int include_optional) {
     v1alpha3_device_request_t* v1alpha3_device_request_1 = instantiate_v1alpha3_device_request(include_optional);
 
-	cJSON* jsonv1alpha3_device_request_1 = v1alpha3_device_request_convertToJSON(v1alpha3_device_request_1);
-	printf("v1alpha3_device_request :\n%s\n", cJSON_Print(jsonv1alpha3_device_request_1));
+	mazu_cJSON* jsonv1alpha3_device_request_1 = v1alpha3_device_request_convertToJSON(v1alpha3_device_request_1);
+	printf("v1alpha3_device_request :\n%s\n", mazu_cJSON_Print(jsonv1alpha3_device_request_1));
 	v1alpha3_device_request_t* v1alpha3_device_request_2 = v1alpha3_device_request_parseFromJSON(jsonv1alpha3_device_request_1);
-	cJSON* jsonv1alpha3_device_request_2 = v1alpha3_device_request_convertToJSON(v1alpha3_device_request_2);
-	printf("repeating v1alpha3_device_request:\n%s\n", cJSON_Print(jsonv1alpha3_device_request_2));
+	mazu_cJSON* jsonv1alpha3_device_request_2 = v1alpha3_device_request_convertToJSON(v1alpha3_device_request_2);
+	printf("repeating v1alpha3_device_request:\n%s\n", mazu_cJSON_Print(jsonv1alpha3_device_request_2));
 }
 
 int main() {

@@ -50,16 +50,16 @@ void v1_cluster_trust_bundle_projection_free(v1_cluster_trust_bundle_projection_
     free(v1_cluster_trust_bundle_projection);
 }
 
-cJSON *v1_cluster_trust_bundle_projection_convertToJSON(v1_cluster_trust_bundle_projection_t *v1_cluster_trust_bundle_projection) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_cluster_trust_bundle_projection_convertToJSON(v1_cluster_trust_bundle_projection_t *v1_cluster_trust_bundle_projection) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_cluster_trust_bundle_projection->label_selector
     if(v1_cluster_trust_bundle_projection->label_selector) {
-    cJSON *label_selector_local_JSON = v1_label_selector_convertToJSON(v1_cluster_trust_bundle_projection->label_selector);
+    mazu_cJSON *label_selector_local_JSON = v1_label_selector_convertToJSON(v1_cluster_trust_bundle_projection->label_selector);
     if(label_selector_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "labelSelector", label_selector_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "labelSelector", label_selector_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -68,7 +68,7 @@ cJSON *v1_cluster_trust_bundle_projection_convertToJSON(v1_cluster_trust_bundle_
 
     // v1_cluster_trust_bundle_projection->name
     if(v1_cluster_trust_bundle_projection->name) {
-    if(cJSON_AddStringToObject(item, "name", v1_cluster_trust_bundle_projection->name) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "name", v1_cluster_trust_bundle_projection->name) == NULL) {
     goto fail; //String
     }
     }
@@ -76,7 +76,7 @@ cJSON *v1_cluster_trust_bundle_projection_convertToJSON(v1_cluster_trust_bundle_
 
     // v1_cluster_trust_bundle_projection->optional
     if(v1_cluster_trust_bundle_projection->optional) {
-    if(cJSON_AddBoolToObject(item, "optional", v1_cluster_trust_bundle_projection->optional) == NULL) {
+    if(mazu_cJSON_AddBoolToObject(item, "optional", v1_cluster_trust_bundle_projection->optional) == NULL) {
     goto fail; //Bool
     }
     }
@@ -86,14 +86,14 @@ cJSON *v1_cluster_trust_bundle_projection_convertToJSON(v1_cluster_trust_bundle_
     if (!v1_cluster_trust_bundle_projection->path) {
         goto fail;
     }
-    if(cJSON_AddStringToObject(item, "path", v1_cluster_trust_bundle_projection->path) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "path", v1_cluster_trust_bundle_projection->path) == NULL) {
     goto fail; //String
     }
 
 
     // v1_cluster_trust_bundle_projection->signer_name
     if(v1_cluster_trust_bundle_projection->signer_name) {
-    if(cJSON_AddStringToObject(item, "signerName", v1_cluster_trust_bundle_projection->signer_name) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "signerName", v1_cluster_trust_bundle_projection->signer_name) == NULL) {
     goto fail; //String
     }
     }
@@ -101,12 +101,12 @@ cJSON *v1_cluster_trust_bundle_projection_convertToJSON(v1_cluster_trust_bundle_
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_cluster_trust_bundle_projection_t *v1_cluster_trust_bundle_projection_parseFromJSON(cJSON *v1_cluster_trust_bundle_projectionJSON){
+v1_cluster_trust_bundle_projection_t *v1_cluster_trust_bundle_projection_parseFromJSON(mazu_cJSON *v1_cluster_trust_bundle_projectionJSON){
 
     v1_cluster_trust_bundle_projection_t *v1_cluster_trust_bundle_projection_local_var = NULL;
 
@@ -114,45 +114,45 @@ v1_cluster_trust_bundle_projection_t *v1_cluster_trust_bundle_projection_parseFr
     v1_label_selector_t *label_selector_local_nonprim = NULL;
 
     // v1_cluster_trust_bundle_projection->label_selector
-    cJSON *label_selector = cJSON_GetObjectItemCaseSensitive(v1_cluster_trust_bundle_projectionJSON, "labelSelector");
+    mazu_cJSON *label_selector = mazu_cJSON_GetObjectItemCaseSensitive(v1_cluster_trust_bundle_projectionJSON, "labelSelector");
     if (label_selector) { 
     label_selector_local_nonprim = v1_label_selector_parseFromJSON(label_selector); //nonprimitive
     }
 
     // v1_cluster_trust_bundle_projection->name
-    cJSON *name = cJSON_GetObjectItemCaseSensitive(v1_cluster_trust_bundle_projectionJSON, "name");
+    mazu_cJSON *name = mazu_cJSON_GetObjectItemCaseSensitive(v1_cluster_trust_bundle_projectionJSON, "name");
     if (name) { 
-    if(!cJSON_IsString(name) && !cJSON_IsNull(name))
+    if(!mazu_cJSON_IsString(name) && !mazu_cJSON_IsNull(name))
     {
     goto end; //String
     }
     }
 
     // v1_cluster_trust_bundle_projection->optional
-    cJSON *optional = cJSON_GetObjectItemCaseSensitive(v1_cluster_trust_bundle_projectionJSON, "optional");
+    mazu_cJSON *optional = mazu_cJSON_GetObjectItemCaseSensitive(v1_cluster_trust_bundle_projectionJSON, "optional");
     if (optional) { 
-    if(!cJSON_IsBool(optional))
+    if(!mazu_cJSON_IsBool(optional))
     {
     goto end; //Bool
     }
     }
 
     // v1_cluster_trust_bundle_projection->path
-    cJSON *path = cJSON_GetObjectItemCaseSensitive(v1_cluster_trust_bundle_projectionJSON, "path");
+    mazu_cJSON *path = mazu_cJSON_GetObjectItemCaseSensitive(v1_cluster_trust_bundle_projectionJSON, "path");
     if (!path) {
         goto end;
     }
 
     
-    if(!cJSON_IsString(path))
+    if(!mazu_cJSON_IsString(path))
     {
     goto end; //String
     }
 
     // v1_cluster_trust_bundle_projection->signer_name
-    cJSON *signer_name = cJSON_GetObjectItemCaseSensitive(v1_cluster_trust_bundle_projectionJSON, "signerName");
+    mazu_cJSON *signer_name = mazu_cJSON_GetObjectItemCaseSensitive(v1_cluster_trust_bundle_projectionJSON, "signerName");
     if (signer_name) { 
-    if(!cJSON_IsString(signer_name) && !cJSON_IsNull(signer_name))
+    if(!mazu_cJSON_IsString(signer_name) && !mazu_cJSON_IsNull(signer_name))
     {
     goto end; //String
     }
@@ -161,10 +161,10 @@ v1_cluster_trust_bundle_projection_t *v1_cluster_trust_bundle_projection_parseFr
 
     v1_cluster_trust_bundle_projection_local_var = v1_cluster_trust_bundle_projection_create (
         label_selector ? label_selector_local_nonprim : NULL,
-        name && !cJSON_IsNull(name) ? strdup(name->valuestring) : NULL,
+        name && !mazu_cJSON_IsNull(name) ? strdup(name->valuestring) : NULL,
         optional ? optional->valueint : 0,
         strdup(path->valuestring),
-        signer_name && !cJSON_IsNull(signer_name) ? strdup(signer_name->valuestring) : NULL
+        signer_name && !mazu_cJSON_IsNull(signer_name) ? strdup(signer_name->valuestring) : NULL
         );
 
     return v1_cluster_trust_bundle_projection_local_var;

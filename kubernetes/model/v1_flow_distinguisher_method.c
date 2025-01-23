@@ -30,37 +30,37 @@ void v1_flow_distinguisher_method_free(v1_flow_distinguisher_method_t *v1_flow_d
     free(v1_flow_distinguisher_method);
 }
 
-cJSON *v1_flow_distinguisher_method_convertToJSON(v1_flow_distinguisher_method_t *v1_flow_distinguisher_method) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_flow_distinguisher_method_convertToJSON(v1_flow_distinguisher_method_t *v1_flow_distinguisher_method) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_flow_distinguisher_method->type
     if (!v1_flow_distinguisher_method->type) {
         goto fail;
     }
-    if(cJSON_AddStringToObject(item, "type", v1_flow_distinguisher_method->type) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "type", v1_flow_distinguisher_method->type) == NULL) {
     goto fail; //String
     }
 
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_flow_distinguisher_method_t *v1_flow_distinguisher_method_parseFromJSON(cJSON *v1_flow_distinguisher_methodJSON){
+v1_flow_distinguisher_method_t *v1_flow_distinguisher_method_parseFromJSON(mazu_cJSON *v1_flow_distinguisher_methodJSON){
 
     v1_flow_distinguisher_method_t *v1_flow_distinguisher_method_local_var = NULL;
 
     // v1_flow_distinguisher_method->type
-    cJSON *type = cJSON_GetObjectItemCaseSensitive(v1_flow_distinguisher_methodJSON, "type");
+    mazu_cJSON *type = mazu_cJSON_GetObjectItemCaseSensitive(v1_flow_distinguisher_methodJSON, "type");
     if (!type) {
         goto end;
     }
 
     
-    if(!cJSON_IsString(type))
+    if(!mazu_cJSON_IsString(type))
     {
     goto end; //String
     }

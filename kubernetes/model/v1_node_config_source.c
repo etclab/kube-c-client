@@ -30,16 +30,16 @@ void v1_node_config_source_free(v1_node_config_source_t *v1_node_config_source) 
     free(v1_node_config_source);
 }
 
-cJSON *v1_node_config_source_convertToJSON(v1_node_config_source_t *v1_node_config_source) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_node_config_source_convertToJSON(v1_node_config_source_t *v1_node_config_source) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_node_config_source->config_map
     if(v1_node_config_source->config_map) {
-    cJSON *config_map_local_JSON = v1_config_map_node_config_source_convertToJSON(v1_node_config_source->config_map);
+    mazu_cJSON *config_map_local_JSON = v1_config_map_node_config_source_convertToJSON(v1_node_config_source->config_map);
     if(config_map_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "configMap", config_map_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "configMap", config_map_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -48,12 +48,12 @@ cJSON *v1_node_config_source_convertToJSON(v1_node_config_source_t *v1_node_conf
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_node_config_source_t *v1_node_config_source_parseFromJSON(cJSON *v1_node_config_sourceJSON){
+v1_node_config_source_t *v1_node_config_source_parseFromJSON(mazu_cJSON *v1_node_config_sourceJSON){
 
     v1_node_config_source_t *v1_node_config_source_local_var = NULL;
 
@@ -61,7 +61,7 @@ v1_node_config_source_t *v1_node_config_source_parseFromJSON(cJSON *v1_node_conf
     v1_config_map_node_config_source_t *config_map_local_nonprim = NULL;
 
     // v1_node_config_source->config_map
-    cJSON *config_map = cJSON_GetObjectItemCaseSensitive(v1_node_config_sourceJSON, "configMap");
+    mazu_cJSON *config_map = mazu_cJSON_GetObjectItemCaseSensitive(v1_node_config_sourceJSON, "configMap");
     if (config_map) { 
     config_map_local_nonprim = v1_config_map_node_config_source_parseFromJSON(config_map); //nonprimitive
     }

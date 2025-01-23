@@ -32,21 +32,21 @@ void v1_scale_status_free(v1_scale_status_t *v1_scale_status) {
     free(v1_scale_status);
 }
 
-cJSON *v1_scale_status_convertToJSON(v1_scale_status_t *v1_scale_status) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_scale_status_convertToJSON(v1_scale_status_t *v1_scale_status) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_scale_status->replicas
     if (!v1_scale_status->replicas) {
         goto fail;
     }
-    if(cJSON_AddNumberToObject(item, "replicas", v1_scale_status->replicas) == NULL) {
+    if(mazu_cJSON_AddNumberToObject(item, "replicas", v1_scale_status->replicas) == NULL) {
     goto fail; //Numeric
     }
 
 
     // v1_scale_status->selector
     if(v1_scale_status->selector) {
-    if(cJSON_AddStringToObject(item, "selector", v1_scale_status->selector) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "selector", v1_scale_status->selector) == NULL) {
     goto fail; //String
     }
     }
@@ -54,31 +54,31 @@ cJSON *v1_scale_status_convertToJSON(v1_scale_status_t *v1_scale_status) {
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_scale_status_t *v1_scale_status_parseFromJSON(cJSON *v1_scale_statusJSON){
+v1_scale_status_t *v1_scale_status_parseFromJSON(mazu_cJSON *v1_scale_statusJSON){
 
     v1_scale_status_t *v1_scale_status_local_var = NULL;
 
     // v1_scale_status->replicas
-    cJSON *replicas = cJSON_GetObjectItemCaseSensitive(v1_scale_statusJSON, "replicas");
+    mazu_cJSON *replicas = mazu_cJSON_GetObjectItemCaseSensitive(v1_scale_statusJSON, "replicas");
     if (!replicas) {
         goto end;
     }
 
     
-    if(!cJSON_IsNumber(replicas))
+    if(!mazu_cJSON_IsNumber(replicas))
     {
     goto end; //Numeric
     }
 
     // v1_scale_status->selector
-    cJSON *selector = cJSON_GetObjectItemCaseSensitive(v1_scale_statusJSON, "selector");
+    mazu_cJSON *selector = mazu_cJSON_GetObjectItemCaseSensitive(v1_scale_statusJSON, "selector");
     if (selector) { 
-    if(!cJSON_IsString(selector) && !cJSON_IsNull(selector))
+    if(!mazu_cJSON_IsString(selector) && !mazu_cJSON_IsNull(selector))
     {
     goto end; //String
     }
@@ -87,7 +87,7 @@ v1_scale_status_t *v1_scale_status_parseFromJSON(cJSON *v1_scale_statusJSON){
 
     v1_scale_status_local_var = v1_scale_status_create (
         replicas->valuedouble,
-        selector && !cJSON_IsNull(selector) ? strdup(selector->valuestring) : NULL
+        selector && !mazu_cJSON_IsNull(selector) ? strdup(selector->valuestring) : NULL
         );
 
     return v1_scale_status_local_var;

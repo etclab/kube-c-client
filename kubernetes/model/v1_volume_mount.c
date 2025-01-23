@@ -62,21 +62,21 @@ void v1_volume_mount_free(v1_volume_mount_t *v1_volume_mount) {
     free(v1_volume_mount);
 }
 
-cJSON *v1_volume_mount_convertToJSON(v1_volume_mount_t *v1_volume_mount) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_volume_mount_convertToJSON(v1_volume_mount_t *v1_volume_mount) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_volume_mount->mount_path
     if (!v1_volume_mount->mount_path) {
         goto fail;
     }
-    if(cJSON_AddStringToObject(item, "mountPath", v1_volume_mount->mount_path) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "mountPath", v1_volume_mount->mount_path) == NULL) {
     goto fail; //String
     }
 
 
     // v1_volume_mount->mount_propagation
     if(v1_volume_mount->mount_propagation) {
-    if(cJSON_AddStringToObject(item, "mountPropagation", v1_volume_mount->mount_propagation) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "mountPropagation", v1_volume_mount->mount_propagation) == NULL) {
     goto fail; //String
     }
     }
@@ -86,14 +86,14 @@ cJSON *v1_volume_mount_convertToJSON(v1_volume_mount_t *v1_volume_mount) {
     if (!v1_volume_mount->name) {
         goto fail;
     }
-    if(cJSON_AddStringToObject(item, "name", v1_volume_mount->name) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "name", v1_volume_mount->name) == NULL) {
     goto fail; //String
     }
 
 
     // v1_volume_mount->read_only
     if(v1_volume_mount->read_only) {
-    if(cJSON_AddBoolToObject(item, "readOnly", v1_volume_mount->read_only) == NULL) {
+    if(mazu_cJSON_AddBoolToObject(item, "readOnly", v1_volume_mount->read_only) == NULL) {
     goto fail; //Bool
     }
     }
@@ -101,7 +101,7 @@ cJSON *v1_volume_mount_convertToJSON(v1_volume_mount_t *v1_volume_mount) {
 
     // v1_volume_mount->recursive_read_only
     if(v1_volume_mount->recursive_read_only) {
-    if(cJSON_AddStringToObject(item, "recursiveReadOnly", v1_volume_mount->recursive_read_only) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "recursiveReadOnly", v1_volume_mount->recursive_read_only) == NULL) {
     goto fail; //String
     }
     }
@@ -109,7 +109,7 @@ cJSON *v1_volume_mount_convertToJSON(v1_volume_mount_t *v1_volume_mount) {
 
     // v1_volume_mount->sub_path
     if(v1_volume_mount->sub_path) {
-    if(cJSON_AddStringToObject(item, "subPath", v1_volume_mount->sub_path) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "subPath", v1_volume_mount->sub_path) == NULL) {
     goto fail; //String
     }
     }
@@ -117,7 +117,7 @@ cJSON *v1_volume_mount_convertToJSON(v1_volume_mount_t *v1_volume_mount) {
 
     // v1_volume_mount->sub_path_expr
     if(v1_volume_mount->sub_path_expr) {
-    if(cJSON_AddStringToObject(item, "subPathExpr", v1_volume_mount->sub_path_expr) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "subPathExpr", v1_volume_mount->sub_path_expr) == NULL) {
     goto fail; //String
     }
     }
@@ -125,79 +125,79 @@ cJSON *v1_volume_mount_convertToJSON(v1_volume_mount_t *v1_volume_mount) {
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_volume_mount_t *v1_volume_mount_parseFromJSON(cJSON *v1_volume_mountJSON){
+v1_volume_mount_t *v1_volume_mount_parseFromJSON(mazu_cJSON *v1_volume_mountJSON){
 
     v1_volume_mount_t *v1_volume_mount_local_var = NULL;
 
     // v1_volume_mount->mount_path
-    cJSON *mount_path = cJSON_GetObjectItemCaseSensitive(v1_volume_mountJSON, "mountPath");
+    mazu_cJSON *mount_path = mazu_cJSON_GetObjectItemCaseSensitive(v1_volume_mountJSON, "mountPath");
     if (!mount_path) {
         goto end;
     }
 
     
-    if(!cJSON_IsString(mount_path))
+    if(!mazu_cJSON_IsString(mount_path))
     {
     goto end; //String
     }
 
     // v1_volume_mount->mount_propagation
-    cJSON *mount_propagation = cJSON_GetObjectItemCaseSensitive(v1_volume_mountJSON, "mountPropagation");
+    mazu_cJSON *mount_propagation = mazu_cJSON_GetObjectItemCaseSensitive(v1_volume_mountJSON, "mountPropagation");
     if (mount_propagation) { 
-    if(!cJSON_IsString(mount_propagation) && !cJSON_IsNull(mount_propagation))
+    if(!mazu_cJSON_IsString(mount_propagation) && !mazu_cJSON_IsNull(mount_propagation))
     {
     goto end; //String
     }
     }
 
     // v1_volume_mount->name
-    cJSON *name = cJSON_GetObjectItemCaseSensitive(v1_volume_mountJSON, "name");
+    mazu_cJSON *name = mazu_cJSON_GetObjectItemCaseSensitive(v1_volume_mountJSON, "name");
     if (!name) {
         goto end;
     }
 
     
-    if(!cJSON_IsString(name))
+    if(!mazu_cJSON_IsString(name))
     {
     goto end; //String
     }
 
     // v1_volume_mount->read_only
-    cJSON *read_only = cJSON_GetObjectItemCaseSensitive(v1_volume_mountJSON, "readOnly");
+    mazu_cJSON *read_only = mazu_cJSON_GetObjectItemCaseSensitive(v1_volume_mountJSON, "readOnly");
     if (read_only) { 
-    if(!cJSON_IsBool(read_only))
+    if(!mazu_cJSON_IsBool(read_only))
     {
     goto end; //Bool
     }
     }
 
     // v1_volume_mount->recursive_read_only
-    cJSON *recursive_read_only = cJSON_GetObjectItemCaseSensitive(v1_volume_mountJSON, "recursiveReadOnly");
+    mazu_cJSON *recursive_read_only = mazu_cJSON_GetObjectItemCaseSensitive(v1_volume_mountJSON, "recursiveReadOnly");
     if (recursive_read_only) { 
-    if(!cJSON_IsString(recursive_read_only) && !cJSON_IsNull(recursive_read_only))
+    if(!mazu_cJSON_IsString(recursive_read_only) && !mazu_cJSON_IsNull(recursive_read_only))
     {
     goto end; //String
     }
     }
 
     // v1_volume_mount->sub_path
-    cJSON *sub_path = cJSON_GetObjectItemCaseSensitive(v1_volume_mountJSON, "subPath");
+    mazu_cJSON *sub_path = mazu_cJSON_GetObjectItemCaseSensitive(v1_volume_mountJSON, "subPath");
     if (sub_path) { 
-    if(!cJSON_IsString(sub_path) && !cJSON_IsNull(sub_path))
+    if(!mazu_cJSON_IsString(sub_path) && !mazu_cJSON_IsNull(sub_path))
     {
     goto end; //String
     }
     }
 
     // v1_volume_mount->sub_path_expr
-    cJSON *sub_path_expr = cJSON_GetObjectItemCaseSensitive(v1_volume_mountJSON, "subPathExpr");
+    mazu_cJSON *sub_path_expr = mazu_cJSON_GetObjectItemCaseSensitive(v1_volume_mountJSON, "subPathExpr");
     if (sub_path_expr) { 
-    if(!cJSON_IsString(sub_path_expr) && !cJSON_IsNull(sub_path_expr))
+    if(!mazu_cJSON_IsString(sub_path_expr) && !mazu_cJSON_IsNull(sub_path_expr))
     {
     goto end; //String
     }
@@ -206,12 +206,12 @@ v1_volume_mount_t *v1_volume_mount_parseFromJSON(cJSON *v1_volume_mountJSON){
 
     v1_volume_mount_local_var = v1_volume_mount_create (
         strdup(mount_path->valuestring),
-        mount_propagation && !cJSON_IsNull(mount_propagation) ? strdup(mount_propagation->valuestring) : NULL,
+        mount_propagation && !mazu_cJSON_IsNull(mount_propagation) ? strdup(mount_propagation->valuestring) : NULL,
         strdup(name->valuestring),
         read_only ? read_only->valueint : 0,
-        recursive_read_only && !cJSON_IsNull(recursive_read_only) ? strdup(recursive_read_only->valuestring) : NULL,
-        sub_path && !cJSON_IsNull(sub_path) ? strdup(sub_path->valuestring) : NULL,
-        sub_path_expr && !cJSON_IsNull(sub_path_expr) ? strdup(sub_path_expr->valuestring) : NULL
+        recursive_read_only && !mazu_cJSON_IsNull(recursive_read_only) ? strdup(recursive_read_only->valuestring) : NULL,
+        sub_path && !mazu_cJSON_IsNull(sub_path) ? strdup(sub_path->valuestring) : NULL,
+        sub_path_expr && !mazu_cJSON_IsNull(sub_path_expr) ? strdup(sub_path_expr->valuestring) : NULL
         );
 
     return v1_volume_mount_local_var;

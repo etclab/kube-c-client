@@ -39,12 +39,12 @@ void v1_label_selector_attributes_free(v1_label_selector_attributes_t *v1_label_
     free(v1_label_selector_attributes);
 }
 
-cJSON *v1_label_selector_attributes_convertToJSON(v1_label_selector_attributes_t *v1_label_selector_attributes) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_label_selector_attributes_convertToJSON(v1_label_selector_attributes_t *v1_label_selector_attributes) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_label_selector_attributes->raw_selector
     if(v1_label_selector_attributes->raw_selector) {
-    if(cJSON_AddStringToObject(item, "rawSelector", v1_label_selector_attributes->raw_selector) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "rawSelector", v1_label_selector_attributes->raw_selector) == NULL) {
     goto fail; //String
     }
     }
@@ -52,7 +52,7 @@ cJSON *v1_label_selector_attributes_convertToJSON(v1_label_selector_attributes_t
 
     // v1_label_selector_attributes->requirements
     if(v1_label_selector_attributes->requirements) {
-    cJSON *requirements = cJSON_AddArrayToObject(item, "requirements");
+    mazu_cJSON *requirements = mazu_cJSON_AddArrayToObject(item, "requirements");
     if(requirements == NULL) {
     goto fail; //nonprimitive container
     }
@@ -60,11 +60,11 @@ cJSON *v1_label_selector_attributes_convertToJSON(v1_label_selector_attributes_t
     listEntry_t *requirementsListEntry;
     if (v1_label_selector_attributes->requirements) {
     list_ForEach(requirementsListEntry, v1_label_selector_attributes->requirements) {
-    cJSON *itemLocal = v1_label_selector_requirement_convertToJSON(requirementsListEntry->data);
+    mazu_cJSON *itemLocal = v1_label_selector_requirement_convertToJSON(requirementsListEntry->data);
     if(itemLocal == NULL) {
     goto fail;
     }
-    cJSON_AddItemToArray(requirements, itemLocal);
+    mazu_cJSON_AddItemToArray(requirements, itemLocal);
     }
     }
     }
@@ -72,12 +72,12 @@ cJSON *v1_label_selector_attributes_convertToJSON(v1_label_selector_attributes_t
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_label_selector_attributes_t *v1_label_selector_attributes_parseFromJSON(cJSON *v1_label_selector_attributesJSON){
+v1_label_selector_attributes_t *v1_label_selector_attributes_parseFromJSON(mazu_cJSON *v1_label_selector_attributesJSON){
 
     v1_label_selector_attributes_t *v1_label_selector_attributes_local_var = NULL;
 
@@ -85,27 +85,27 @@ v1_label_selector_attributes_t *v1_label_selector_attributes_parseFromJSON(cJSON
     list_t *requirementsList = NULL;
 
     // v1_label_selector_attributes->raw_selector
-    cJSON *raw_selector = cJSON_GetObjectItemCaseSensitive(v1_label_selector_attributesJSON, "rawSelector");
+    mazu_cJSON *raw_selector = mazu_cJSON_GetObjectItemCaseSensitive(v1_label_selector_attributesJSON, "rawSelector");
     if (raw_selector) { 
-    if(!cJSON_IsString(raw_selector) && !cJSON_IsNull(raw_selector))
+    if(!mazu_cJSON_IsString(raw_selector) && !mazu_cJSON_IsNull(raw_selector))
     {
     goto end; //String
     }
     }
 
     // v1_label_selector_attributes->requirements
-    cJSON *requirements = cJSON_GetObjectItemCaseSensitive(v1_label_selector_attributesJSON, "requirements");
+    mazu_cJSON *requirements = mazu_cJSON_GetObjectItemCaseSensitive(v1_label_selector_attributesJSON, "requirements");
     if (requirements) { 
-    cJSON *requirements_local_nonprimitive = NULL;
-    if(!cJSON_IsArray(requirements)){
+    mazu_cJSON *requirements_local_nonprimitive = NULL;
+    if(!mazu_cJSON_IsArray(requirements)){
         goto end; //nonprimitive container
     }
 
     requirementsList = list_createList();
 
-    cJSON_ArrayForEach(requirements_local_nonprimitive,requirements )
+    mazu_cJSON_ArrayForEach(requirements_local_nonprimitive,requirements )
     {
-        if(!cJSON_IsObject(requirements_local_nonprimitive)){
+        if(!mazu_cJSON_IsObject(requirements_local_nonprimitive)){
             goto end;
         }
         v1_label_selector_requirement_t *requirementsItem = v1_label_selector_requirement_parseFromJSON(requirements_local_nonprimitive);
@@ -116,7 +116,7 @@ v1_label_selector_attributes_t *v1_label_selector_attributes_parseFromJSON(cJSON
 
 
     v1_label_selector_attributes_local_var = v1_label_selector_attributes_create (
-        raw_selector && !cJSON_IsNull(raw_selector) ? strdup(raw_selector->valuestring) : NULL,
+        raw_selector && !mazu_cJSON_IsNull(raw_selector) ? strdup(raw_selector->valuestring) : NULL,
         requirements ? requirementsList : NULL
         );
 

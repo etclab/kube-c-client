@@ -36,18 +36,18 @@ void v1_watch_event_free(v1_watch_event_t *v1_watch_event) {
     free(v1_watch_event);
 }
 
-cJSON *v1_watch_event_convertToJSON(v1_watch_event_t *v1_watch_event) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_watch_event_convertToJSON(v1_watch_event_t *v1_watch_event) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_watch_event->object
     if (!v1_watch_event->object) {
         goto fail;
     }
-    cJSON *object_object = object_convertToJSON(v1_watch_event->object);
+    mazu_cJSON *object_object = object_convertToJSON(v1_watch_event->object);
     if(object_object == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "object", object_object);
+    mazu_cJSON_AddItemToObject(item, "object", object_object);
     if(item->child == NULL) {
     goto fail;
     }
@@ -57,24 +57,24 @@ cJSON *v1_watch_event_convertToJSON(v1_watch_event_t *v1_watch_event) {
     if (!v1_watch_event->type) {
         goto fail;
     }
-    if(cJSON_AddStringToObject(item, "type", v1_watch_event->type) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "type", v1_watch_event->type) == NULL) {
     goto fail; //String
     }
 
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_watch_event_t *v1_watch_event_parseFromJSON(cJSON *v1_watch_eventJSON){
+v1_watch_event_t *v1_watch_event_parseFromJSON(mazu_cJSON *v1_watch_eventJSON){
 
     v1_watch_event_t *v1_watch_event_local_var = NULL;
 
     // v1_watch_event->object
-    cJSON *object = cJSON_GetObjectItemCaseSensitive(v1_watch_eventJSON, "object");
+    mazu_cJSON *object = mazu_cJSON_GetObjectItemCaseSensitive(v1_watch_eventJSON, "object");
     if (!object) {
         goto end;
     }
@@ -84,13 +84,13 @@ v1_watch_event_t *v1_watch_event_parseFromJSON(cJSON *v1_watch_eventJSON){
     object_local_object = object_parseFromJSON(object); //object
 
     // v1_watch_event->type
-    cJSON *type = cJSON_GetObjectItemCaseSensitive(v1_watch_eventJSON, "type");
+    mazu_cJSON *type = mazu_cJSON_GetObjectItemCaseSensitive(v1_watch_eventJSON, "type");
     if (!type) {
         goto end;
     }
 
     
-    if(!cJSON_IsString(type))
+    if(!mazu_cJSON_IsString(type))
     {
     goto end; //String
     }

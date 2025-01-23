@@ -11,7 +11,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdbool.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 
 #include "../model/v1_replication_controller.h"
 v1_replication_controller_t* instantiate_v1_replication_controller(int include_optional);
@@ -53,11 +53,11 @@ v1_replication_controller_t* instantiate_v1_replication_controller(int include_o
 void test_v1_replication_controller(int include_optional) {
     v1_replication_controller_t* v1_replication_controller_1 = instantiate_v1_replication_controller(include_optional);
 
-	cJSON* jsonv1_replication_controller_1 = v1_replication_controller_convertToJSON(v1_replication_controller_1);
-	printf("v1_replication_controller :\n%s\n", cJSON_Print(jsonv1_replication_controller_1));
+	mazu_cJSON* jsonv1_replication_controller_1 = v1_replication_controller_convertToJSON(v1_replication_controller_1);
+	printf("v1_replication_controller :\n%s\n", mazu_cJSON_Print(jsonv1_replication_controller_1));
 	v1_replication_controller_t* v1_replication_controller_2 = v1_replication_controller_parseFromJSON(jsonv1_replication_controller_1);
-	cJSON* jsonv1_replication_controller_2 = v1_replication_controller_convertToJSON(v1_replication_controller_2);
-	printf("repeating v1_replication_controller:\n%s\n", cJSON_Print(jsonv1_replication_controller_2));
+	mazu_cJSON* jsonv1_replication_controller_2 = v1_replication_controller_convertToJSON(v1_replication_controller_2);
+	printf("repeating v1_replication_controller:\n%s\n", mazu_cJSON_Print(jsonv1_replication_controller_2));
 }
 
 int main() {

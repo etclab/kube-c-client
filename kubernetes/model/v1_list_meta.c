@@ -44,12 +44,12 @@ void v1_list_meta_free(v1_list_meta_t *v1_list_meta) {
     free(v1_list_meta);
 }
 
-cJSON *v1_list_meta_convertToJSON(v1_list_meta_t *v1_list_meta) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_list_meta_convertToJSON(v1_list_meta_t *v1_list_meta) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_list_meta->_continue
     if(v1_list_meta->_continue) {
-    if(cJSON_AddStringToObject(item, "continue", v1_list_meta->_continue) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "continue", v1_list_meta->_continue) == NULL) {
     goto fail; //String
     }
     }
@@ -57,7 +57,7 @@ cJSON *v1_list_meta_convertToJSON(v1_list_meta_t *v1_list_meta) {
 
     // v1_list_meta->remaining_item_count
     if(v1_list_meta->remaining_item_count) {
-    if(cJSON_AddNumberToObject(item, "remainingItemCount", v1_list_meta->remaining_item_count) == NULL) {
+    if(mazu_cJSON_AddNumberToObject(item, "remainingItemCount", v1_list_meta->remaining_item_count) == NULL) {
     goto fail; //Numeric
     }
     }
@@ -65,7 +65,7 @@ cJSON *v1_list_meta_convertToJSON(v1_list_meta_t *v1_list_meta) {
 
     // v1_list_meta->resource_version
     if(v1_list_meta->resource_version) {
-    if(cJSON_AddStringToObject(item, "resourceVersion", v1_list_meta->resource_version) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "resourceVersion", v1_list_meta->resource_version) == NULL) {
     goto fail; //String
     }
     }
@@ -73,7 +73,7 @@ cJSON *v1_list_meta_convertToJSON(v1_list_meta_t *v1_list_meta) {
 
     // v1_list_meta->self_link
     if(v1_list_meta->self_link) {
-    if(cJSON_AddStringToObject(item, "selfLink", v1_list_meta->self_link) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "selfLink", v1_list_meta->self_link) == NULL) {
     goto fail; //String
     }
     }
@@ -81,46 +81,46 @@ cJSON *v1_list_meta_convertToJSON(v1_list_meta_t *v1_list_meta) {
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_list_meta_t *v1_list_meta_parseFromJSON(cJSON *v1_list_metaJSON){
+v1_list_meta_t *v1_list_meta_parseFromJSON(mazu_cJSON *v1_list_metaJSON){
 
     v1_list_meta_t *v1_list_meta_local_var = NULL;
 
     // v1_list_meta->_continue
-    cJSON *_continue = cJSON_GetObjectItemCaseSensitive(v1_list_metaJSON, "continue");
+    mazu_cJSON *_continue = mazu_cJSON_GetObjectItemCaseSensitive(v1_list_metaJSON, "continue");
     if (_continue) { 
-    if(!cJSON_IsString(_continue) && !cJSON_IsNull(_continue))
+    if(!mazu_cJSON_IsString(_continue) && !mazu_cJSON_IsNull(_continue))
     {
     goto end; //String
     }
     }
 
     // v1_list_meta->remaining_item_count
-    cJSON *remaining_item_count = cJSON_GetObjectItemCaseSensitive(v1_list_metaJSON, "remainingItemCount");
+    mazu_cJSON *remaining_item_count = mazu_cJSON_GetObjectItemCaseSensitive(v1_list_metaJSON, "remainingItemCount");
     if (remaining_item_count) { 
-    if(!cJSON_IsNumber(remaining_item_count))
+    if(!mazu_cJSON_IsNumber(remaining_item_count))
     {
     goto end; //Numeric
     }
     }
 
     // v1_list_meta->resource_version
-    cJSON *resource_version = cJSON_GetObjectItemCaseSensitive(v1_list_metaJSON, "resourceVersion");
+    mazu_cJSON *resource_version = mazu_cJSON_GetObjectItemCaseSensitive(v1_list_metaJSON, "resourceVersion");
     if (resource_version) { 
-    if(!cJSON_IsString(resource_version) && !cJSON_IsNull(resource_version))
+    if(!mazu_cJSON_IsString(resource_version) && !mazu_cJSON_IsNull(resource_version))
     {
     goto end; //String
     }
     }
 
     // v1_list_meta->self_link
-    cJSON *self_link = cJSON_GetObjectItemCaseSensitive(v1_list_metaJSON, "selfLink");
+    mazu_cJSON *self_link = mazu_cJSON_GetObjectItemCaseSensitive(v1_list_metaJSON, "selfLink");
     if (self_link) { 
-    if(!cJSON_IsString(self_link) && !cJSON_IsNull(self_link))
+    if(!mazu_cJSON_IsString(self_link) && !mazu_cJSON_IsNull(self_link))
     {
     goto end; //String
     }
@@ -128,10 +128,10 @@ v1_list_meta_t *v1_list_meta_parseFromJSON(cJSON *v1_list_metaJSON){
 
 
     v1_list_meta_local_var = v1_list_meta_create (
-        _continue && !cJSON_IsNull(_continue) ? strdup(_continue->valuestring) : NULL,
+        _continue && !mazu_cJSON_IsNull(_continue) ? strdup(_continue->valuestring) : NULL,
         remaining_item_count ? remaining_item_count->valuedouble : 0,
-        resource_version && !cJSON_IsNull(resource_version) ? strdup(resource_version->valuestring) : NULL,
-        self_link && !cJSON_IsNull(self_link) ? strdup(self_link->valuestring) : NULL
+        resource_version && !mazu_cJSON_IsNull(resource_version) ? strdup(resource_version->valuestring) : NULL,
+        self_link && !mazu_cJSON_IsNull(self_link) ? strdup(self_link->valuestring) : NULL
         );
 
     return v1_list_meta_local_var;

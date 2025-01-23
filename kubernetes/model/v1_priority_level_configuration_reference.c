@@ -30,37 +30,37 @@ void v1_priority_level_configuration_reference_free(v1_priority_level_configurat
     free(v1_priority_level_configuration_reference);
 }
 
-cJSON *v1_priority_level_configuration_reference_convertToJSON(v1_priority_level_configuration_reference_t *v1_priority_level_configuration_reference) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_priority_level_configuration_reference_convertToJSON(v1_priority_level_configuration_reference_t *v1_priority_level_configuration_reference) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_priority_level_configuration_reference->name
     if (!v1_priority_level_configuration_reference->name) {
         goto fail;
     }
-    if(cJSON_AddStringToObject(item, "name", v1_priority_level_configuration_reference->name) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "name", v1_priority_level_configuration_reference->name) == NULL) {
     goto fail; //String
     }
 
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_priority_level_configuration_reference_t *v1_priority_level_configuration_reference_parseFromJSON(cJSON *v1_priority_level_configuration_referenceJSON){
+v1_priority_level_configuration_reference_t *v1_priority_level_configuration_reference_parseFromJSON(mazu_cJSON *v1_priority_level_configuration_referenceJSON){
 
     v1_priority_level_configuration_reference_t *v1_priority_level_configuration_reference_local_var = NULL;
 
     // v1_priority_level_configuration_reference->name
-    cJSON *name = cJSON_GetObjectItemCaseSensitive(v1_priority_level_configuration_referenceJSON, "name");
+    mazu_cJSON *name = mazu_cJSON_GetObjectItemCaseSensitive(v1_priority_level_configuration_referenceJSON, "name");
     if (!name) {
         goto end;
     }
 
     
-    if(!cJSON_IsString(name))
+    if(!mazu_cJSON_IsString(name))
     {
     goto end; //String
     }

@@ -36,12 +36,12 @@ void v1_empty_dir_volume_source_free(v1_empty_dir_volume_source_t *v1_empty_dir_
     free(v1_empty_dir_volume_source);
 }
 
-cJSON *v1_empty_dir_volume_source_convertToJSON(v1_empty_dir_volume_source_t *v1_empty_dir_volume_source) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_empty_dir_volume_source_convertToJSON(v1_empty_dir_volume_source_t *v1_empty_dir_volume_source) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_empty_dir_volume_source->medium
     if(v1_empty_dir_volume_source->medium) {
-    if(cJSON_AddStringToObject(item, "medium", v1_empty_dir_volume_source->medium) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "medium", v1_empty_dir_volume_source->medium) == NULL) {
     goto fail; //String
     }
     }
@@ -49,7 +49,7 @@ cJSON *v1_empty_dir_volume_source_convertToJSON(v1_empty_dir_volume_source_t *v1
 
     // v1_empty_dir_volume_source->size_limit
     if(v1_empty_dir_volume_source->size_limit) {
-    if(cJSON_AddStringToObject(item, "sizeLimit", v1_empty_dir_volume_source->size_limit) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "sizeLimit", v1_empty_dir_volume_source->size_limit) == NULL) {
     goto fail; //String
     }
     }
@@ -57,28 +57,28 @@ cJSON *v1_empty_dir_volume_source_convertToJSON(v1_empty_dir_volume_source_t *v1
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_empty_dir_volume_source_t *v1_empty_dir_volume_source_parseFromJSON(cJSON *v1_empty_dir_volume_sourceJSON){
+v1_empty_dir_volume_source_t *v1_empty_dir_volume_source_parseFromJSON(mazu_cJSON *v1_empty_dir_volume_sourceJSON){
 
     v1_empty_dir_volume_source_t *v1_empty_dir_volume_source_local_var = NULL;
 
     // v1_empty_dir_volume_source->medium
-    cJSON *medium = cJSON_GetObjectItemCaseSensitive(v1_empty_dir_volume_sourceJSON, "medium");
+    mazu_cJSON *medium = mazu_cJSON_GetObjectItemCaseSensitive(v1_empty_dir_volume_sourceJSON, "medium");
     if (medium) { 
-    if(!cJSON_IsString(medium) && !cJSON_IsNull(medium))
+    if(!mazu_cJSON_IsString(medium) && !mazu_cJSON_IsNull(medium))
     {
     goto end; //String
     }
     }
 
     // v1_empty_dir_volume_source->size_limit
-    cJSON *size_limit = cJSON_GetObjectItemCaseSensitive(v1_empty_dir_volume_sourceJSON, "sizeLimit");
+    mazu_cJSON *size_limit = mazu_cJSON_GetObjectItemCaseSensitive(v1_empty_dir_volume_sourceJSON, "sizeLimit");
     if (size_limit) { 
-    if(!cJSON_IsString(size_limit) && !cJSON_IsNull(size_limit))
+    if(!mazu_cJSON_IsString(size_limit) && !mazu_cJSON_IsNull(size_limit))
     {
     goto end; //String
     }
@@ -86,8 +86,8 @@ v1_empty_dir_volume_source_t *v1_empty_dir_volume_source_parseFromJSON(cJSON *v1
 
 
     v1_empty_dir_volume_source_local_var = v1_empty_dir_volume_source_create (
-        medium && !cJSON_IsNull(medium) ? strdup(medium->valuestring) : NULL,
-        size_limit && !cJSON_IsNull(size_limit) ? strdup(size_limit->valuestring) : NULL
+        medium && !mazu_cJSON_IsNull(medium) ? strdup(medium->valuestring) : NULL,
+        size_limit && !mazu_cJSON_IsNull(size_limit) ? strdup(size_limit->valuestring) : NULL
         );
 
     return v1_empty_dir_volume_source_local_var;

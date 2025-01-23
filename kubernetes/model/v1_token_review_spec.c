@@ -39,19 +39,19 @@ void v1_token_review_spec_free(v1_token_review_spec_t *v1_token_review_spec) {
     free(v1_token_review_spec);
 }
 
-cJSON *v1_token_review_spec_convertToJSON(v1_token_review_spec_t *v1_token_review_spec) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_token_review_spec_convertToJSON(v1_token_review_spec_t *v1_token_review_spec) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_token_review_spec->audiences
     if(v1_token_review_spec->audiences) {
-    cJSON *audiences = cJSON_AddArrayToObject(item, "audiences");
+    mazu_cJSON *audiences = mazu_cJSON_AddArrayToObject(item, "audiences");
     if(audiences == NULL) {
         goto fail; //primitive container
     }
 
     listEntry_t *audiencesListEntry;
     list_ForEach(audiencesListEntry, v1_token_review_spec->audiences) {
-    if(cJSON_AddStringToObject(audiences, "", (char*)audiencesListEntry->data) == NULL)
+    if(mazu_cJSON_AddStringToObject(audiences, "", (char*)audiencesListEntry->data) == NULL)
     {
         goto fail;
     }
@@ -61,7 +61,7 @@ cJSON *v1_token_review_spec_convertToJSON(v1_token_review_spec_t *v1_token_revie
 
     // v1_token_review_spec->token
     if(v1_token_review_spec->token) {
-    if(cJSON_AddStringToObject(item, "token", v1_token_review_spec->token) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "token", v1_token_review_spec->token) == NULL) {
     goto fail; //String
     }
     }
@@ -69,12 +69,12 @@ cJSON *v1_token_review_spec_convertToJSON(v1_token_review_spec_t *v1_token_revie
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_token_review_spec_t *v1_token_review_spec_parseFromJSON(cJSON *v1_token_review_specJSON){
+v1_token_review_spec_t *v1_token_review_spec_parseFromJSON(mazu_cJSON *v1_token_review_specJSON){
 
     v1_token_review_spec_t *v1_token_review_spec_local_var = NULL;
 
@@ -82,17 +82,17 @@ v1_token_review_spec_t *v1_token_review_spec_parseFromJSON(cJSON *v1_token_revie
     list_t *audiencesList = NULL;
 
     // v1_token_review_spec->audiences
-    cJSON *audiences = cJSON_GetObjectItemCaseSensitive(v1_token_review_specJSON, "audiences");
+    mazu_cJSON *audiences = mazu_cJSON_GetObjectItemCaseSensitive(v1_token_review_specJSON, "audiences");
     if (audiences) { 
-    cJSON *audiences_local = NULL;
-    if(!cJSON_IsArray(audiences)) {
+    mazu_cJSON *audiences_local = NULL;
+    if(!mazu_cJSON_IsArray(audiences)) {
         goto end;//primitive container
     }
     audiencesList = list_createList();
 
-    cJSON_ArrayForEach(audiences_local, audiences)
+    mazu_cJSON_ArrayForEach(audiences_local, audiences)
     {
-        if(!cJSON_IsString(audiences_local))
+        if(!mazu_cJSON_IsString(audiences_local))
         {
             goto end;
         }
@@ -101,9 +101,9 @@ v1_token_review_spec_t *v1_token_review_spec_parseFromJSON(cJSON *v1_token_revie
     }
 
     // v1_token_review_spec->token
-    cJSON *token = cJSON_GetObjectItemCaseSensitive(v1_token_review_specJSON, "token");
+    mazu_cJSON *token = mazu_cJSON_GetObjectItemCaseSensitive(v1_token_review_specJSON, "token");
     if (token) { 
-    if(!cJSON_IsString(token) && !cJSON_IsNull(token))
+    if(!mazu_cJSON_IsString(token) && !mazu_cJSON_IsNull(token))
     {
     goto end; //String
     }
@@ -112,7 +112,7 @@ v1_token_review_spec_t *v1_token_review_spec_parseFromJSON(cJSON *v1_token_revie
 
     v1_token_review_spec_local_var = v1_token_review_spec_create (
         audiences ? audiencesList : NULL,
-        token && !cJSON_IsNull(token) ? strdup(token->valuestring) : NULL
+        token && !mazu_cJSON_IsNull(token) ? strdup(token->valuestring) : NULL
         );
 
     return v1_token_review_spec_local_var;

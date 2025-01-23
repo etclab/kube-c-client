@@ -59,12 +59,12 @@ void v1_status_details_free(v1_status_details_t *v1_status_details) {
     free(v1_status_details);
 }
 
-cJSON *v1_status_details_convertToJSON(v1_status_details_t *v1_status_details) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_status_details_convertToJSON(v1_status_details_t *v1_status_details) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_status_details->causes
     if(v1_status_details->causes) {
-    cJSON *causes = cJSON_AddArrayToObject(item, "causes");
+    mazu_cJSON *causes = mazu_cJSON_AddArrayToObject(item, "causes");
     if(causes == NULL) {
     goto fail; //nonprimitive container
     }
@@ -72,11 +72,11 @@ cJSON *v1_status_details_convertToJSON(v1_status_details_t *v1_status_details) {
     listEntry_t *causesListEntry;
     if (v1_status_details->causes) {
     list_ForEach(causesListEntry, v1_status_details->causes) {
-    cJSON *itemLocal = v1_status_cause_convertToJSON(causesListEntry->data);
+    mazu_cJSON *itemLocal = v1_status_cause_convertToJSON(causesListEntry->data);
     if(itemLocal == NULL) {
     goto fail;
     }
-    cJSON_AddItemToArray(causes, itemLocal);
+    mazu_cJSON_AddItemToArray(causes, itemLocal);
     }
     }
     }
@@ -84,7 +84,7 @@ cJSON *v1_status_details_convertToJSON(v1_status_details_t *v1_status_details) {
 
     // v1_status_details->group
     if(v1_status_details->group) {
-    if(cJSON_AddStringToObject(item, "group", v1_status_details->group) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "group", v1_status_details->group) == NULL) {
     goto fail; //String
     }
     }
@@ -92,7 +92,7 @@ cJSON *v1_status_details_convertToJSON(v1_status_details_t *v1_status_details) {
 
     // v1_status_details->kind
     if(v1_status_details->kind) {
-    if(cJSON_AddStringToObject(item, "kind", v1_status_details->kind) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "kind", v1_status_details->kind) == NULL) {
     goto fail; //String
     }
     }
@@ -100,7 +100,7 @@ cJSON *v1_status_details_convertToJSON(v1_status_details_t *v1_status_details) {
 
     // v1_status_details->name
     if(v1_status_details->name) {
-    if(cJSON_AddStringToObject(item, "name", v1_status_details->name) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "name", v1_status_details->name) == NULL) {
     goto fail; //String
     }
     }
@@ -108,7 +108,7 @@ cJSON *v1_status_details_convertToJSON(v1_status_details_t *v1_status_details) {
 
     // v1_status_details->retry_after_seconds
     if(v1_status_details->retry_after_seconds) {
-    if(cJSON_AddNumberToObject(item, "retryAfterSeconds", v1_status_details->retry_after_seconds) == NULL) {
+    if(mazu_cJSON_AddNumberToObject(item, "retryAfterSeconds", v1_status_details->retry_after_seconds) == NULL) {
     goto fail; //Numeric
     }
     }
@@ -116,7 +116,7 @@ cJSON *v1_status_details_convertToJSON(v1_status_details_t *v1_status_details) {
 
     // v1_status_details->uid
     if(v1_status_details->uid) {
-    if(cJSON_AddStringToObject(item, "uid", v1_status_details->uid) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "uid", v1_status_details->uid) == NULL) {
     goto fail; //String
     }
     }
@@ -124,12 +124,12 @@ cJSON *v1_status_details_convertToJSON(v1_status_details_t *v1_status_details) {
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_status_details_t *v1_status_details_parseFromJSON(cJSON *v1_status_detailsJSON){
+v1_status_details_t *v1_status_details_parseFromJSON(mazu_cJSON *v1_status_detailsJSON){
 
     v1_status_details_t *v1_status_details_local_var = NULL;
 
@@ -137,18 +137,18 @@ v1_status_details_t *v1_status_details_parseFromJSON(cJSON *v1_status_detailsJSO
     list_t *causesList = NULL;
 
     // v1_status_details->causes
-    cJSON *causes = cJSON_GetObjectItemCaseSensitive(v1_status_detailsJSON, "causes");
+    mazu_cJSON *causes = mazu_cJSON_GetObjectItemCaseSensitive(v1_status_detailsJSON, "causes");
     if (causes) { 
-    cJSON *causes_local_nonprimitive = NULL;
-    if(!cJSON_IsArray(causes)){
+    mazu_cJSON *causes_local_nonprimitive = NULL;
+    if(!mazu_cJSON_IsArray(causes)){
         goto end; //nonprimitive container
     }
 
     causesList = list_createList();
 
-    cJSON_ArrayForEach(causes_local_nonprimitive,causes )
+    mazu_cJSON_ArrayForEach(causes_local_nonprimitive,causes )
     {
-        if(!cJSON_IsObject(causes_local_nonprimitive)){
+        if(!mazu_cJSON_IsObject(causes_local_nonprimitive)){
             goto end;
         }
         v1_status_cause_t *causesItem = v1_status_cause_parseFromJSON(causes_local_nonprimitive);
@@ -158,45 +158,45 @@ v1_status_details_t *v1_status_details_parseFromJSON(cJSON *v1_status_detailsJSO
     }
 
     // v1_status_details->group
-    cJSON *group = cJSON_GetObjectItemCaseSensitive(v1_status_detailsJSON, "group");
+    mazu_cJSON *group = mazu_cJSON_GetObjectItemCaseSensitive(v1_status_detailsJSON, "group");
     if (group) { 
-    if(!cJSON_IsString(group) && !cJSON_IsNull(group))
+    if(!mazu_cJSON_IsString(group) && !mazu_cJSON_IsNull(group))
     {
     goto end; //String
     }
     }
 
     // v1_status_details->kind
-    cJSON *kind = cJSON_GetObjectItemCaseSensitive(v1_status_detailsJSON, "kind");
+    mazu_cJSON *kind = mazu_cJSON_GetObjectItemCaseSensitive(v1_status_detailsJSON, "kind");
     if (kind) { 
-    if(!cJSON_IsString(kind) && !cJSON_IsNull(kind))
+    if(!mazu_cJSON_IsString(kind) && !mazu_cJSON_IsNull(kind))
     {
     goto end; //String
     }
     }
 
     // v1_status_details->name
-    cJSON *name = cJSON_GetObjectItemCaseSensitive(v1_status_detailsJSON, "name");
+    mazu_cJSON *name = mazu_cJSON_GetObjectItemCaseSensitive(v1_status_detailsJSON, "name");
     if (name) { 
-    if(!cJSON_IsString(name) && !cJSON_IsNull(name))
+    if(!mazu_cJSON_IsString(name) && !mazu_cJSON_IsNull(name))
     {
     goto end; //String
     }
     }
 
     // v1_status_details->retry_after_seconds
-    cJSON *retry_after_seconds = cJSON_GetObjectItemCaseSensitive(v1_status_detailsJSON, "retryAfterSeconds");
+    mazu_cJSON *retry_after_seconds = mazu_cJSON_GetObjectItemCaseSensitive(v1_status_detailsJSON, "retryAfterSeconds");
     if (retry_after_seconds) { 
-    if(!cJSON_IsNumber(retry_after_seconds))
+    if(!mazu_cJSON_IsNumber(retry_after_seconds))
     {
     goto end; //Numeric
     }
     }
 
     // v1_status_details->uid
-    cJSON *uid = cJSON_GetObjectItemCaseSensitive(v1_status_detailsJSON, "uid");
+    mazu_cJSON *uid = mazu_cJSON_GetObjectItemCaseSensitive(v1_status_detailsJSON, "uid");
     if (uid) { 
-    if(!cJSON_IsString(uid) && !cJSON_IsNull(uid))
+    if(!mazu_cJSON_IsString(uid) && !mazu_cJSON_IsNull(uid))
     {
     goto end; //String
     }
@@ -205,11 +205,11 @@ v1_status_details_t *v1_status_details_parseFromJSON(cJSON *v1_status_detailsJSO
 
     v1_status_details_local_var = v1_status_details_create (
         causes ? causesList : NULL,
-        group && !cJSON_IsNull(group) ? strdup(group->valuestring) : NULL,
-        kind && !cJSON_IsNull(kind) ? strdup(kind->valuestring) : NULL,
-        name && !cJSON_IsNull(name) ? strdup(name->valuestring) : NULL,
+        group && !mazu_cJSON_IsNull(group) ? strdup(group->valuestring) : NULL,
+        kind && !mazu_cJSON_IsNull(kind) ? strdup(kind->valuestring) : NULL,
+        name && !mazu_cJSON_IsNull(name) ? strdup(name->valuestring) : NULL,
         retry_after_seconds ? retry_after_seconds->valuedouble : 0,
-        uid && !cJSON_IsNull(uid) ? strdup(uid->valuestring) : NULL
+        uid && !mazu_cJSON_IsNull(uid) ? strdup(uid->valuestring) : NULL
         );
 
     return v1_status_details_local_var;

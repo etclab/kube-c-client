@@ -53,9 +53,9 @@ PolicyAPI_getAPIGroup_15(apiClient_t *apiClient)
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *PolicyAPIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    mazu_cJSON *PolicyAPIlocalVarJSON = mazu_cJSON_Parse(apiClient->dataReceived);
     v1_api_group_t *elementToReturn = v1_api_group_parseFromJSON(PolicyAPIlocalVarJSON);
-    cJSON_Delete(PolicyAPIlocalVarJSON);
+    mazu_cJSON_Delete(PolicyAPIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
     }

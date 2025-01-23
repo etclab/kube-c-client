@@ -11,7 +11,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdbool.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 
 #include "../model/v1_container_state_terminated.h"
 v1_container_state_terminated_t* instantiate_v1_container_state_terminated(int include_optional);
@@ -51,11 +51,11 @@ v1_container_state_terminated_t* instantiate_v1_container_state_terminated(int i
 void test_v1_container_state_terminated(int include_optional) {
     v1_container_state_terminated_t* v1_container_state_terminated_1 = instantiate_v1_container_state_terminated(include_optional);
 
-	cJSON* jsonv1_container_state_terminated_1 = v1_container_state_terminated_convertToJSON(v1_container_state_terminated_1);
-	printf("v1_container_state_terminated :\n%s\n", cJSON_Print(jsonv1_container_state_terminated_1));
+	mazu_cJSON* jsonv1_container_state_terminated_1 = v1_container_state_terminated_convertToJSON(v1_container_state_terminated_1);
+	printf("v1_container_state_terminated :\n%s\n", mazu_cJSON_Print(jsonv1_container_state_terminated_1));
 	v1_container_state_terminated_t* v1_container_state_terminated_2 = v1_container_state_terminated_parseFromJSON(jsonv1_container_state_terminated_1);
-	cJSON* jsonv1_container_state_terminated_2 = v1_container_state_terminated_convertToJSON(v1_container_state_terminated_2);
-	printf("repeating v1_container_state_terminated:\n%s\n", cJSON_Print(jsonv1_container_state_terminated_2));
+	mazu_cJSON* jsonv1_container_state_terminated_2 = v1_container_state_terminated_convertToJSON(v1_container_state_terminated_2);
+	printf("repeating v1_container_state_terminated:\n%s\n", mazu_cJSON_Print(jsonv1_container_state_terminated_2));
 }
 
 int main() {

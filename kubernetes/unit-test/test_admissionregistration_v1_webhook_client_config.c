@@ -11,7 +11,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdbool.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 
 #include "../model/admissionregistration_v1_webhook_client_config.h"
 admissionregistration_v1_webhook_client_config_t* instantiate_admissionregistration_v1_webhook_client_config(int include_optional);
@@ -45,11 +45,11 @@ admissionregistration_v1_webhook_client_config_t* instantiate_admissionregistrat
 void test_admissionregistration_v1_webhook_client_config(int include_optional) {
     admissionregistration_v1_webhook_client_config_t* admissionregistration_v1_webhook_client_config_1 = instantiate_admissionregistration_v1_webhook_client_config(include_optional);
 
-	cJSON* jsonadmissionregistration_v1_webhook_client_config_1 = admissionregistration_v1_webhook_client_config_convertToJSON(admissionregistration_v1_webhook_client_config_1);
-	printf("admissionregistration_v1_webhook_client_config :\n%s\n", cJSON_Print(jsonadmissionregistration_v1_webhook_client_config_1));
+	mazu_cJSON* jsonadmissionregistration_v1_webhook_client_config_1 = admissionregistration_v1_webhook_client_config_convertToJSON(admissionregistration_v1_webhook_client_config_1);
+	printf("admissionregistration_v1_webhook_client_config :\n%s\n", mazu_cJSON_Print(jsonadmissionregistration_v1_webhook_client_config_1));
 	admissionregistration_v1_webhook_client_config_t* admissionregistration_v1_webhook_client_config_2 = admissionregistration_v1_webhook_client_config_parseFromJSON(jsonadmissionregistration_v1_webhook_client_config_1);
-	cJSON* jsonadmissionregistration_v1_webhook_client_config_2 = admissionregistration_v1_webhook_client_config_convertToJSON(admissionregistration_v1_webhook_client_config_2);
-	printf("repeating admissionregistration_v1_webhook_client_config:\n%s\n", cJSON_Print(jsonadmissionregistration_v1_webhook_client_config_2));
+	mazu_cJSON* jsonadmissionregistration_v1_webhook_client_config_2 = admissionregistration_v1_webhook_client_config_convertToJSON(admissionregistration_v1_webhook_client_config_2);
+	printf("repeating admissionregistration_v1_webhook_client_config:\n%s\n", mazu_cJSON_Print(jsonadmissionregistration_v1_webhook_client_config_2));
 }
 
 int main() {

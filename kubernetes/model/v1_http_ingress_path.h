@@ -8,7 +8,7 @@
 #define _v1_http_ingress_path_H_
 
 #include <string.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
 #include "../include/binary.h"
@@ -34,9 +34,9 @@ v1_http_ingress_path_t *v1_http_ingress_path_create(
 
 void v1_http_ingress_path_free(v1_http_ingress_path_t *v1_http_ingress_path);
 
-v1_http_ingress_path_t *v1_http_ingress_path_parseFromJSON(cJSON *v1_http_ingress_pathJSON);
+v1_http_ingress_path_t *v1_http_ingress_path_parseFromJSON(mazu_cJSON *v1_http_ingress_pathJSON);
 
-cJSON *v1_http_ingress_path_convertToJSON(v1_http_ingress_path_t *v1_http_ingress_path);
+mazu_cJSON *v1_http_ingress_path_convertToJSON(v1_http_ingress_path_t *v1_http_ingress_path);
 
 #endif /* _v1_http_ingress_path_H_ */
 

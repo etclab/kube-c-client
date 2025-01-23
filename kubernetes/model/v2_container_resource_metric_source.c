@@ -42,14 +42,14 @@ void v2_container_resource_metric_source_free(v2_container_resource_metric_sourc
     free(v2_container_resource_metric_source);
 }
 
-cJSON *v2_container_resource_metric_source_convertToJSON(v2_container_resource_metric_source_t *v2_container_resource_metric_source) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v2_container_resource_metric_source_convertToJSON(v2_container_resource_metric_source_t *v2_container_resource_metric_source) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v2_container_resource_metric_source->container
     if (!v2_container_resource_metric_source->container) {
         goto fail;
     }
-    if(cJSON_AddStringToObject(item, "container", v2_container_resource_metric_source->container) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "container", v2_container_resource_metric_source->container) == NULL) {
     goto fail; //String
     }
 
@@ -58,7 +58,7 @@ cJSON *v2_container_resource_metric_source_convertToJSON(v2_container_resource_m
     if (!v2_container_resource_metric_source->name) {
         goto fail;
     }
-    if(cJSON_AddStringToObject(item, "name", v2_container_resource_metric_source->name) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "name", v2_container_resource_metric_source->name) == NULL) {
     goto fail; //String
     }
 
@@ -67,11 +67,11 @@ cJSON *v2_container_resource_metric_source_convertToJSON(v2_container_resource_m
     if (!v2_container_resource_metric_source->target) {
         goto fail;
     }
-    cJSON *target_local_JSON = v2_metric_target_convertToJSON(v2_container_resource_metric_source->target);
+    mazu_cJSON *target_local_JSON = v2_metric_target_convertToJSON(v2_container_resource_metric_source->target);
     if(target_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "target", target_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "target", target_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -79,12 +79,12 @@ cJSON *v2_container_resource_metric_source_convertToJSON(v2_container_resource_m
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v2_container_resource_metric_source_t *v2_container_resource_metric_source_parseFromJSON(cJSON *v2_container_resource_metric_sourceJSON){
+v2_container_resource_metric_source_t *v2_container_resource_metric_source_parseFromJSON(mazu_cJSON *v2_container_resource_metric_sourceJSON){
 
     v2_container_resource_metric_source_t *v2_container_resource_metric_source_local_var = NULL;
 
@@ -92,31 +92,31 @@ v2_container_resource_metric_source_t *v2_container_resource_metric_source_parse
     v2_metric_target_t *target_local_nonprim = NULL;
 
     // v2_container_resource_metric_source->container
-    cJSON *container = cJSON_GetObjectItemCaseSensitive(v2_container_resource_metric_sourceJSON, "container");
+    mazu_cJSON *container = mazu_cJSON_GetObjectItemCaseSensitive(v2_container_resource_metric_sourceJSON, "container");
     if (!container) {
         goto end;
     }
 
     
-    if(!cJSON_IsString(container))
+    if(!mazu_cJSON_IsString(container))
     {
     goto end; //String
     }
 
     // v2_container_resource_metric_source->name
-    cJSON *name = cJSON_GetObjectItemCaseSensitive(v2_container_resource_metric_sourceJSON, "name");
+    mazu_cJSON *name = mazu_cJSON_GetObjectItemCaseSensitive(v2_container_resource_metric_sourceJSON, "name");
     if (!name) {
         goto end;
     }
 
     
-    if(!cJSON_IsString(name))
+    if(!mazu_cJSON_IsString(name))
     {
     goto end; //String
     }
 
     // v2_container_resource_metric_source->target
-    cJSON *target = cJSON_GetObjectItemCaseSensitive(v2_container_resource_metric_sourceJSON, "target");
+    mazu_cJSON *target = mazu_cJSON_GetObjectItemCaseSensitive(v2_container_resource_metric_sourceJSON, "target");
     if (!target) {
         goto end;
     }

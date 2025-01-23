@@ -8,7 +8,7 @@
 #define _v1_preferred_scheduling_term_H_
 
 #include <string.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
 #include "../include/binary.h"
@@ -32,9 +32,9 @@ v1_preferred_scheduling_term_t *v1_preferred_scheduling_term_create(
 
 void v1_preferred_scheduling_term_free(v1_preferred_scheduling_term_t *v1_preferred_scheduling_term);
 
-v1_preferred_scheduling_term_t *v1_preferred_scheduling_term_parseFromJSON(cJSON *v1_preferred_scheduling_termJSON);
+v1_preferred_scheduling_term_t *v1_preferred_scheduling_term_parseFromJSON(mazu_cJSON *v1_preferred_scheduling_termJSON);
 
-cJSON *v1_preferred_scheduling_term_convertToJSON(v1_preferred_scheduling_term_t *v1_preferred_scheduling_term);
+mazu_cJSON *v1_preferred_scheduling_term_convertToJSON(v1_preferred_scheduling_term_t *v1_preferred_scheduling_term);
 
 #endif /* _v1_preferred_scheduling_term_H_ */
 

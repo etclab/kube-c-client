@@ -60,12 +60,12 @@ void v1_runtime_class_free(v1_runtime_class_t *v1_runtime_class) {
     free(v1_runtime_class);
 }
 
-cJSON *v1_runtime_class_convertToJSON(v1_runtime_class_t *v1_runtime_class) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_runtime_class_convertToJSON(v1_runtime_class_t *v1_runtime_class) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_runtime_class->api_version
     if(v1_runtime_class->api_version) {
-    if(cJSON_AddStringToObject(item, "apiVersion", v1_runtime_class->api_version) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "apiVersion", v1_runtime_class->api_version) == NULL) {
     goto fail; //String
     }
     }
@@ -75,14 +75,14 @@ cJSON *v1_runtime_class_convertToJSON(v1_runtime_class_t *v1_runtime_class) {
     if (!v1_runtime_class->handler) {
         goto fail;
     }
-    if(cJSON_AddStringToObject(item, "handler", v1_runtime_class->handler) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "handler", v1_runtime_class->handler) == NULL) {
     goto fail; //String
     }
 
 
     // v1_runtime_class->kind
     if(v1_runtime_class->kind) {
-    if(cJSON_AddStringToObject(item, "kind", v1_runtime_class->kind) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "kind", v1_runtime_class->kind) == NULL) {
     goto fail; //String
     }
     }
@@ -90,11 +90,11 @@ cJSON *v1_runtime_class_convertToJSON(v1_runtime_class_t *v1_runtime_class) {
 
     // v1_runtime_class->metadata
     if(v1_runtime_class->metadata) {
-    cJSON *metadata_local_JSON = v1_object_meta_convertToJSON(v1_runtime_class->metadata);
+    mazu_cJSON *metadata_local_JSON = v1_object_meta_convertToJSON(v1_runtime_class->metadata);
     if(metadata_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "metadata", metadata_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "metadata", metadata_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -103,11 +103,11 @@ cJSON *v1_runtime_class_convertToJSON(v1_runtime_class_t *v1_runtime_class) {
 
     // v1_runtime_class->overhead
     if(v1_runtime_class->overhead) {
-    cJSON *overhead_local_JSON = v1_overhead_convertToJSON(v1_runtime_class->overhead);
+    mazu_cJSON *overhead_local_JSON = v1_overhead_convertToJSON(v1_runtime_class->overhead);
     if(overhead_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "overhead", overhead_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "overhead", overhead_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -116,11 +116,11 @@ cJSON *v1_runtime_class_convertToJSON(v1_runtime_class_t *v1_runtime_class) {
 
     // v1_runtime_class->scheduling
     if(v1_runtime_class->scheduling) {
-    cJSON *scheduling_local_JSON = v1_scheduling_convertToJSON(v1_runtime_class->scheduling);
+    mazu_cJSON *scheduling_local_JSON = v1_scheduling_convertToJSON(v1_runtime_class->scheduling);
     if(scheduling_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "scheduling", scheduling_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "scheduling", scheduling_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -129,12 +129,12 @@ cJSON *v1_runtime_class_convertToJSON(v1_runtime_class_t *v1_runtime_class) {
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_runtime_class_t *v1_runtime_class_parseFromJSON(cJSON *v1_runtime_classJSON){
+v1_runtime_class_t *v1_runtime_class_parseFromJSON(mazu_cJSON *v1_runtime_classJSON){
 
     v1_runtime_class_t *v1_runtime_class_local_var = NULL;
 
@@ -148,58 +148,58 @@ v1_runtime_class_t *v1_runtime_class_parseFromJSON(cJSON *v1_runtime_classJSON){
     v1_scheduling_t *scheduling_local_nonprim = NULL;
 
     // v1_runtime_class->api_version
-    cJSON *api_version = cJSON_GetObjectItemCaseSensitive(v1_runtime_classJSON, "apiVersion");
+    mazu_cJSON *api_version = mazu_cJSON_GetObjectItemCaseSensitive(v1_runtime_classJSON, "apiVersion");
     if (api_version) { 
-    if(!cJSON_IsString(api_version) && !cJSON_IsNull(api_version))
+    if(!mazu_cJSON_IsString(api_version) && !mazu_cJSON_IsNull(api_version))
     {
     goto end; //String
     }
     }
 
     // v1_runtime_class->handler
-    cJSON *handler = cJSON_GetObjectItemCaseSensitive(v1_runtime_classJSON, "handler");
+    mazu_cJSON *handler = mazu_cJSON_GetObjectItemCaseSensitive(v1_runtime_classJSON, "handler");
     if (!handler) {
         goto end;
     }
 
     
-    if(!cJSON_IsString(handler))
+    if(!mazu_cJSON_IsString(handler))
     {
     goto end; //String
     }
 
     // v1_runtime_class->kind
-    cJSON *kind = cJSON_GetObjectItemCaseSensitive(v1_runtime_classJSON, "kind");
+    mazu_cJSON *kind = mazu_cJSON_GetObjectItemCaseSensitive(v1_runtime_classJSON, "kind");
     if (kind) { 
-    if(!cJSON_IsString(kind) && !cJSON_IsNull(kind))
+    if(!mazu_cJSON_IsString(kind) && !mazu_cJSON_IsNull(kind))
     {
     goto end; //String
     }
     }
 
     // v1_runtime_class->metadata
-    cJSON *metadata = cJSON_GetObjectItemCaseSensitive(v1_runtime_classJSON, "metadata");
+    mazu_cJSON *metadata = mazu_cJSON_GetObjectItemCaseSensitive(v1_runtime_classJSON, "metadata");
     if (metadata) { 
     metadata_local_nonprim = v1_object_meta_parseFromJSON(metadata); //nonprimitive
     }
 
     // v1_runtime_class->overhead
-    cJSON *overhead = cJSON_GetObjectItemCaseSensitive(v1_runtime_classJSON, "overhead");
+    mazu_cJSON *overhead = mazu_cJSON_GetObjectItemCaseSensitive(v1_runtime_classJSON, "overhead");
     if (overhead) { 
     overhead_local_nonprim = v1_overhead_parseFromJSON(overhead); //nonprimitive
     }
 
     // v1_runtime_class->scheduling
-    cJSON *scheduling = cJSON_GetObjectItemCaseSensitive(v1_runtime_classJSON, "scheduling");
+    mazu_cJSON *scheduling = mazu_cJSON_GetObjectItemCaseSensitive(v1_runtime_classJSON, "scheduling");
     if (scheduling) { 
     scheduling_local_nonprim = v1_scheduling_parseFromJSON(scheduling); //nonprimitive
     }
 
 
     v1_runtime_class_local_var = v1_runtime_class_create (
-        api_version && !cJSON_IsNull(api_version) ? strdup(api_version->valuestring) : NULL,
+        api_version && !mazu_cJSON_IsNull(api_version) ? strdup(api_version->valuestring) : NULL,
         strdup(handler->valuestring),
-        kind && !cJSON_IsNull(kind) ? strdup(kind->valuestring) : NULL,
+        kind && !mazu_cJSON_IsNull(kind) ? strdup(kind->valuestring) : NULL,
         metadata ? metadata_local_nonprim : NULL,
         overhead ? overhead_local_nonprim : NULL,
         scheduling ? scheduling_local_nonprim : NULL

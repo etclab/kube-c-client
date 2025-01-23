@@ -11,7 +11,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdbool.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 
 #include "../model/v1_capabilities.h"
 v1_capabilities_t* instantiate_v1_capabilities(int include_optional);
@@ -41,11 +41,11 @@ v1_capabilities_t* instantiate_v1_capabilities(int include_optional) {
 void test_v1_capabilities(int include_optional) {
     v1_capabilities_t* v1_capabilities_1 = instantiate_v1_capabilities(include_optional);
 
-	cJSON* jsonv1_capabilities_1 = v1_capabilities_convertToJSON(v1_capabilities_1);
-	printf("v1_capabilities :\n%s\n", cJSON_Print(jsonv1_capabilities_1));
+	mazu_cJSON* jsonv1_capabilities_1 = v1_capabilities_convertToJSON(v1_capabilities_1);
+	printf("v1_capabilities :\n%s\n", mazu_cJSON_Print(jsonv1_capabilities_1));
 	v1_capabilities_t* v1_capabilities_2 = v1_capabilities_parseFromJSON(jsonv1_capabilities_1);
-	cJSON* jsonv1_capabilities_2 = v1_capabilities_convertToJSON(v1_capabilities_2);
-	printf("repeating v1_capabilities:\n%s\n", cJSON_Print(jsonv1_capabilities_2));
+	mazu_cJSON* jsonv1_capabilities_2 = v1_capabilities_convertToJSON(v1_capabilities_2);
+	printf("repeating v1_capabilities:\n%s\n", mazu_cJSON_Print(jsonv1_capabilities_2));
 }
 
 int main() {

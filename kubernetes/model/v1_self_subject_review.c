@@ -48,12 +48,12 @@ void v1_self_subject_review_free(v1_self_subject_review_t *v1_self_subject_revie
     free(v1_self_subject_review);
 }
 
-cJSON *v1_self_subject_review_convertToJSON(v1_self_subject_review_t *v1_self_subject_review) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_self_subject_review_convertToJSON(v1_self_subject_review_t *v1_self_subject_review) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_self_subject_review->api_version
     if(v1_self_subject_review->api_version) {
-    if(cJSON_AddStringToObject(item, "apiVersion", v1_self_subject_review->api_version) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "apiVersion", v1_self_subject_review->api_version) == NULL) {
     goto fail; //String
     }
     }
@@ -61,7 +61,7 @@ cJSON *v1_self_subject_review_convertToJSON(v1_self_subject_review_t *v1_self_su
 
     // v1_self_subject_review->kind
     if(v1_self_subject_review->kind) {
-    if(cJSON_AddStringToObject(item, "kind", v1_self_subject_review->kind) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "kind", v1_self_subject_review->kind) == NULL) {
     goto fail; //String
     }
     }
@@ -69,11 +69,11 @@ cJSON *v1_self_subject_review_convertToJSON(v1_self_subject_review_t *v1_self_su
 
     // v1_self_subject_review->metadata
     if(v1_self_subject_review->metadata) {
-    cJSON *metadata_local_JSON = v1_object_meta_convertToJSON(v1_self_subject_review->metadata);
+    mazu_cJSON *metadata_local_JSON = v1_object_meta_convertToJSON(v1_self_subject_review->metadata);
     if(metadata_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "metadata", metadata_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "metadata", metadata_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -82,11 +82,11 @@ cJSON *v1_self_subject_review_convertToJSON(v1_self_subject_review_t *v1_self_su
 
     // v1_self_subject_review->status
     if(v1_self_subject_review->status) {
-    cJSON *status_local_JSON = v1_self_subject_review_status_convertToJSON(v1_self_subject_review->status);
+    mazu_cJSON *status_local_JSON = v1_self_subject_review_status_convertToJSON(v1_self_subject_review->status);
     if(status_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "status", status_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "status", status_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -95,12 +95,12 @@ cJSON *v1_self_subject_review_convertToJSON(v1_self_subject_review_t *v1_self_su
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_self_subject_review_t *v1_self_subject_review_parseFromJSON(cJSON *v1_self_subject_reviewJSON){
+v1_self_subject_review_t *v1_self_subject_review_parseFromJSON(mazu_cJSON *v1_self_subject_reviewJSON){
 
     v1_self_subject_review_t *v1_self_subject_review_local_var = NULL;
 
@@ -111,39 +111,39 @@ v1_self_subject_review_t *v1_self_subject_review_parseFromJSON(cJSON *v1_self_su
     v1_self_subject_review_status_t *status_local_nonprim = NULL;
 
     // v1_self_subject_review->api_version
-    cJSON *api_version = cJSON_GetObjectItemCaseSensitive(v1_self_subject_reviewJSON, "apiVersion");
+    mazu_cJSON *api_version = mazu_cJSON_GetObjectItemCaseSensitive(v1_self_subject_reviewJSON, "apiVersion");
     if (api_version) { 
-    if(!cJSON_IsString(api_version) && !cJSON_IsNull(api_version))
+    if(!mazu_cJSON_IsString(api_version) && !mazu_cJSON_IsNull(api_version))
     {
     goto end; //String
     }
     }
 
     // v1_self_subject_review->kind
-    cJSON *kind = cJSON_GetObjectItemCaseSensitive(v1_self_subject_reviewJSON, "kind");
+    mazu_cJSON *kind = mazu_cJSON_GetObjectItemCaseSensitive(v1_self_subject_reviewJSON, "kind");
     if (kind) { 
-    if(!cJSON_IsString(kind) && !cJSON_IsNull(kind))
+    if(!mazu_cJSON_IsString(kind) && !mazu_cJSON_IsNull(kind))
     {
     goto end; //String
     }
     }
 
     // v1_self_subject_review->metadata
-    cJSON *metadata = cJSON_GetObjectItemCaseSensitive(v1_self_subject_reviewJSON, "metadata");
+    mazu_cJSON *metadata = mazu_cJSON_GetObjectItemCaseSensitive(v1_self_subject_reviewJSON, "metadata");
     if (metadata) { 
     metadata_local_nonprim = v1_object_meta_parseFromJSON(metadata); //nonprimitive
     }
 
     // v1_self_subject_review->status
-    cJSON *status = cJSON_GetObjectItemCaseSensitive(v1_self_subject_reviewJSON, "status");
+    mazu_cJSON *status = mazu_cJSON_GetObjectItemCaseSensitive(v1_self_subject_reviewJSON, "status");
     if (status) { 
     status_local_nonprim = v1_self_subject_review_status_parseFromJSON(status); //nonprimitive
     }
 
 
     v1_self_subject_review_local_var = v1_self_subject_review_create (
-        api_version && !cJSON_IsNull(api_version) ? strdup(api_version->valuestring) : NULL,
-        kind && !cJSON_IsNull(kind) ? strdup(kind->valuestring) : NULL,
+        api_version && !mazu_cJSON_IsNull(api_version) ? strdup(api_version->valuestring) : NULL,
+        kind && !mazu_cJSON_IsNull(kind) ? strdup(kind->valuestring) : NULL,
         metadata ? metadata_local_nonprim : NULL,
         status ? status_local_nonprim : NULL
         );

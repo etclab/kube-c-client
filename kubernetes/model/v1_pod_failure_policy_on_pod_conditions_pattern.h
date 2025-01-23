@@ -8,7 +8,7 @@
 #define _v1_pod_failure_policy_on_pod_conditions_pattern_H_
 
 #include <string.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
 #include "../include/binary.h"
@@ -31,9 +31,9 @@ v1_pod_failure_policy_on_pod_conditions_pattern_t *v1_pod_failure_policy_on_pod_
 
 void v1_pod_failure_policy_on_pod_conditions_pattern_free(v1_pod_failure_policy_on_pod_conditions_pattern_t *v1_pod_failure_policy_on_pod_conditions_pattern);
 
-v1_pod_failure_policy_on_pod_conditions_pattern_t *v1_pod_failure_policy_on_pod_conditions_pattern_parseFromJSON(cJSON *v1_pod_failure_policy_on_pod_conditions_patternJSON);
+v1_pod_failure_policy_on_pod_conditions_pattern_t *v1_pod_failure_policy_on_pod_conditions_pattern_parseFromJSON(mazu_cJSON *v1_pod_failure_policy_on_pod_conditions_patternJSON);
 
-cJSON *v1_pod_failure_policy_on_pod_conditions_pattern_convertToJSON(v1_pod_failure_policy_on_pod_conditions_pattern_t *v1_pod_failure_policy_on_pod_conditions_pattern);
+mazu_cJSON *v1_pod_failure_policy_on_pod_conditions_pattern_convertToJSON(v1_pod_failure_policy_on_pod_conditions_pattern_t *v1_pod_failure_policy_on_pod_conditions_pattern);
 
 #endif /* _v1_pod_failure_policy_on_pod_conditions_pattern_H_ */
 

@@ -8,7 +8,7 @@
 #define _apiextensions_v1_webhook_client_config_H_
 
 #include <string.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
 #include "../include/binary.h"
@@ -34,9 +34,9 @@ apiextensions_v1_webhook_client_config_t *apiextensions_v1_webhook_client_config
 
 void apiextensions_v1_webhook_client_config_free(apiextensions_v1_webhook_client_config_t *apiextensions_v1_webhook_client_config);
 
-apiextensions_v1_webhook_client_config_t *apiextensions_v1_webhook_client_config_parseFromJSON(cJSON *apiextensions_v1_webhook_client_configJSON);
+apiextensions_v1_webhook_client_config_t *apiextensions_v1_webhook_client_config_parseFromJSON(mazu_cJSON *apiextensions_v1_webhook_client_configJSON);
 
-cJSON *apiextensions_v1_webhook_client_config_convertToJSON(apiextensions_v1_webhook_client_config_t *apiextensions_v1_webhook_client_config);
+mazu_cJSON *apiextensions_v1_webhook_client_config_convertToJSON(apiextensions_v1_webhook_client_config_t *apiextensions_v1_webhook_client_config);
 
 #endif /* _apiextensions_v1_webhook_client_config_H_ */
 

@@ -36,12 +36,12 @@ void v1_event_source_free(v1_event_source_t *v1_event_source) {
     free(v1_event_source);
 }
 
-cJSON *v1_event_source_convertToJSON(v1_event_source_t *v1_event_source) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_event_source_convertToJSON(v1_event_source_t *v1_event_source) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_event_source->component
     if(v1_event_source->component) {
-    if(cJSON_AddStringToObject(item, "component", v1_event_source->component) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "component", v1_event_source->component) == NULL) {
     goto fail; //String
     }
     }
@@ -49,7 +49,7 @@ cJSON *v1_event_source_convertToJSON(v1_event_source_t *v1_event_source) {
 
     // v1_event_source->host
     if(v1_event_source->host) {
-    if(cJSON_AddStringToObject(item, "host", v1_event_source->host) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "host", v1_event_source->host) == NULL) {
     goto fail; //String
     }
     }
@@ -57,28 +57,28 @@ cJSON *v1_event_source_convertToJSON(v1_event_source_t *v1_event_source) {
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_event_source_t *v1_event_source_parseFromJSON(cJSON *v1_event_sourceJSON){
+v1_event_source_t *v1_event_source_parseFromJSON(mazu_cJSON *v1_event_sourceJSON){
 
     v1_event_source_t *v1_event_source_local_var = NULL;
 
     // v1_event_source->component
-    cJSON *component = cJSON_GetObjectItemCaseSensitive(v1_event_sourceJSON, "component");
+    mazu_cJSON *component = mazu_cJSON_GetObjectItemCaseSensitive(v1_event_sourceJSON, "component");
     if (component) { 
-    if(!cJSON_IsString(component) && !cJSON_IsNull(component))
+    if(!mazu_cJSON_IsString(component) && !mazu_cJSON_IsNull(component))
     {
     goto end; //String
     }
     }
 
     // v1_event_source->host
-    cJSON *host = cJSON_GetObjectItemCaseSensitive(v1_event_sourceJSON, "host");
+    mazu_cJSON *host = mazu_cJSON_GetObjectItemCaseSensitive(v1_event_sourceJSON, "host");
     if (host) { 
-    if(!cJSON_IsString(host) && !cJSON_IsNull(host))
+    if(!mazu_cJSON_IsString(host) && !mazu_cJSON_IsNull(host))
     {
     goto end; //String
     }
@@ -86,8 +86,8 @@ v1_event_source_t *v1_event_source_parseFromJSON(cJSON *v1_event_sourceJSON){
 
 
     v1_event_source_local_var = v1_event_source_create (
-        component && !cJSON_IsNull(component) ? strdup(component->valuestring) : NULL,
-        host && !cJSON_IsNull(host) ? strdup(host->valuestring) : NULL
+        component && !mazu_cJSON_IsNull(component) ? strdup(component->valuestring) : NULL,
+        host && !mazu_cJSON_IsNull(host) ? strdup(host->valuestring) : NULL
         );
 
     return v1_event_source_local_var;

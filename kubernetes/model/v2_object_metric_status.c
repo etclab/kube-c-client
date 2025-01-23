@@ -42,18 +42,18 @@ void v2_object_metric_status_free(v2_object_metric_status_t *v2_object_metric_st
     free(v2_object_metric_status);
 }
 
-cJSON *v2_object_metric_status_convertToJSON(v2_object_metric_status_t *v2_object_metric_status) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v2_object_metric_status_convertToJSON(v2_object_metric_status_t *v2_object_metric_status) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v2_object_metric_status->current
     if (!v2_object_metric_status->current) {
         goto fail;
     }
-    cJSON *current_local_JSON = v2_metric_value_status_convertToJSON(v2_object_metric_status->current);
+    mazu_cJSON *current_local_JSON = v2_metric_value_status_convertToJSON(v2_object_metric_status->current);
     if(current_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "current", current_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "current", current_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -63,11 +63,11 @@ cJSON *v2_object_metric_status_convertToJSON(v2_object_metric_status_t *v2_objec
     if (!v2_object_metric_status->described_object) {
         goto fail;
     }
-    cJSON *described_object_local_JSON = v2_cross_version_object_reference_convertToJSON(v2_object_metric_status->described_object);
+    mazu_cJSON *described_object_local_JSON = v2_cross_version_object_reference_convertToJSON(v2_object_metric_status->described_object);
     if(described_object_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "describedObject", described_object_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "describedObject", described_object_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -77,11 +77,11 @@ cJSON *v2_object_metric_status_convertToJSON(v2_object_metric_status_t *v2_objec
     if (!v2_object_metric_status->metric) {
         goto fail;
     }
-    cJSON *metric_local_JSON = v2_metric_identifier_convertToJSON(v2_object_metric_status->metric);
+    mazu_cJSON *metric_local_JSON = v2_metric_identifier_convertToJSON(v2_object_metric_status->metric);
     if(metric_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "metric", metric_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "metric", metric_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -89,12 +89,12 @@ cJSON *v2_object_metric_status_convertToJSON(v2_object_metric_status_t *v2_objec
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v2_object_metric_status_t *v2_object_metric_status_parseFromJSON(cJSON *v2_object_metric_statusJSON){
+v2_object_metric_status_t *v2_object_metric_status_parseFromJSON(mazu_cJSON *v2_object_metric_statusJSON){
 
     v2_object_metric_status_t *v2_object_metric_status_local_var = NULL;
 
@@ -108,7 +108,7 @@ v2_object_metric_status_t *v2_object_metric_status_parseFromJSON(cJSON *v2_objec
     v2_metric_identifier_t *metric_local_nonprim = NULL;
 
     // v2_object_metric_status->current
-    cJSON *current = cJSON_GetObjectItemCaseSensitive(v2_object_metric_statusJSON, "current");
+    mazu_cJSON *current = mazu_cJSON_GetObjectItemCaseSensitive(v2_object_metric_statusJSON, "current");
     if (!current) {
         goto end;
     }
@@ -117,7 +117,7 @@ v2_object_metric_status_t *v2_object_metric_status_parseFromJSON(cJSON *v2_objec
     current_local_nonprim = v2_metric_value_status_parseFromJSON(current); //nonprimitive
 
     // v2_object_metric_status->described_object
-    cJSON *described_object = cJSON_GetObjectItemCaseSensitive(v2_object_metric_statusJSON, "describedObject");
+    mazu_cJSON *described_object = mazu_cJSON_GetObjectItemCaseSensitive(v2_object_metric_statusJSON, "describedObject");
     if (!described_object) {
         goto end;
     }
@@ -126,7 +126,7 @@ v2_object_metric_status_t *v2_object_metric_status_parseFromJSON(cJSON *v2_objec
     described_object_local_nonprim = v2_cross_version_object_reference_parseFromJSON(described_object); //nonprimitive
 
     // v2_object_metric_status->metric
-    cJSON *metric = cJSON_GetObjectItemCaseSensitive(v2_object_metric_statusJSON, "metric");
+    mazu_cJSON *metric = mazu_cJSON_GetObjectItemCaseSensitive(v2_object_metric_statusJSON, "metric");
     if (!metric) {
         goto end;
     }

@@ -11,7 +11,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdbool.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 
 #include "../model/flowcontrol_v1_subject.h"
 flowcontrol_v1_subject_t* instantiate_flowcontrol_v1_subject(int include_optional);
@@ -51,11 +51,11 @@ flowcontrol_v1_subject_t* instantiate_flowcontrol_v1_subject(int include_optiona
 void test_flowcontrol_v1_subject(int include_optional) {
     flowcontrol_v1_subject_t* flowcontrol_v1_subject_1 = instantiate_flowcontrol_v1_subject(include_optional);
 
-	cJSON* jsonflowcontrol_v1_subject_1 = flowcontrol_v1_subject_convertToJSON(flowcontrol_v1_subject_1);
-	printf("flowcontrol_v1_subject :\n%s\n", cJSON_Print(jsonflowcontrol_v1_subject_1));
+	mazu_cJSON* jsonflowcontrol_v1_subject_1 = flowcontrol_v1_subject_convertToJSON(flowcontrol_v1_subject_1);
+	printf("flowcontrol_v1_subject :\n%s\n", mazu_cJSON_Print(jsonflowcontrol_v1_subject_1));
 	flowcontrol_v1_subject_t* flowcontrol_v1_subject_2 = flowcontrol_v1_subject_parseFromJSON(jsonflowcontrol_v1_subject_1);
-	cJSON* jsonflowcontrol_v1_subject_2 = flowcontrol_v1_subject_convertToJSON(flowcontrol_v1_subject_2);
-	printf("repeating flowcontrol_v1_subject:\n%s\n", cJSON_Print(jsonflowcontrol_v1_subject_2));
+	mazu_cJSON* jsonflowcontrol_v1_subject_2 = flowcontrol_v1_subject_convertToJSON(flowcontrol_v1_subject_2);
+	printf("repeating flowcontrol_v1_subject:\n%s\n", mazu_cJSON_Print(jsonflowcontrol_v1_subject_2));
 }
 
 int main() {

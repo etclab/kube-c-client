@@ -8,7 +8,7 @@
 #define _v1_stateful_set_H_
 
 #include <string.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
 #include "../include/binary.h"
@@ -40,9 +40,9 @@ v1_stateful_set_t *v1_stateful_set_create(
 
 void v1_stateful_set_free(v1_stateful_set_t *v1_stateful_set);
 
-v1_stateful_set_t *v1_stateful_set_parseFromJSON(cJSON *v1_stateful_setJSON);
+v1_stateful_set_t *v1_stateful_set_parseFromJSON(mazu_cJSON *v1_stateful_setJSON);
 
-cJSON *v1_stateful_set_convertToJSON(v1_stateful_set_t *v1_stateful_set);
+mazu_cJSON *v1_stateful_set_convertToJSON(v1_stateful_set_t *v1_stateful_set);
 
 #endif /* _v1_stateful_set_H_ */
 

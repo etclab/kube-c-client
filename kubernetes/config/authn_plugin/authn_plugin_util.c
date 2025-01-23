@@ -52,17 +52,17 @@ char *shc_get_string_from_json(const char *json_string, const char *key)
     }
 
     const char *parse_end = NULL;
-    cJSON *json = cJSON_ParseWithOpts(json_string, &parse_end, 1);
+    mazu_cJSON *json = mazu_cJSON_ParseWithOpts(json_string, &parse_end, 1);
     if (!json) {
         fprintf(stderr, "%s: Cannot create JSON from string: [%s].\n", fname, parse_end);
         return NULL;
     }
-    cJSON *value = cJSON_GetObjectItem(json, key);
+    mazu_cJSON *value = mazu_cJSON_GetObjectItem(json, key);
     if (!value) {
         fprintf(stderr, "%s: Cannot get the value for %s.\n", fname, key);
         goto end;
     }
-    if (value->type != cJSON_String && value->type != cJSON_Object) {
+    if (value->type != mazu_cJSON_String && value->type != mazu_cJSON_Object) {
         fprintf(stderr, "%s: The value for %s is invalid.\n", fname, key);
         goto end;
     }
@@ -70,7 +70,7 @@ char *shc_get_string_from_json(const char *json_string, const char *key)
 
   end:
     if (json) {
-        cJSON_Delete(json);
+        mazu_cJSON_Delete(json);
         json = NULL;
     }
 

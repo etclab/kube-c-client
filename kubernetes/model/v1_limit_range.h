@@ -8,7 +8,7 @@
 #define _v1_limit_range_H_
 
 #include <string.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
 #include "../include/binary.h"
@@ -37,9 +37,9 @@ v1_limit_range_t *v1_limit_range_create(
 
 void v1_limit_range_free(v1_limit_range_t *v1_limit_range);
 
-v1_limit_range_t *v1_limit_range_parseFromJSON(cJSON *v1_limit_rangeJSON);
+v1_limit_range_t *v1_limit_range_parseFromJSON(mazu_cJSON *v1_limit_rangeJSON);
 
-cJSON *v1_limit_range_convertToJSON(v1_limit_range_t *v1_limit_range);
+mazu_cJSON *v1_limit_range_convertToJSON(v1_limit_range_t *v1_limit_range);
 
 #endif /* _v1_limit_range_H_ */
 

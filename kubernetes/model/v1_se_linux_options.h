@@ -8,7 +8,7 @@
 #define _v1_se_linux_options_H_
 
 #include <string.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
 #include "../include/binary.h"
@@ -35,9 +35,9 @@ v1_se_linux_options_t *v1_se_linux_options_create(
 
 void v1_se_linux_options_free(v1_se_linux_options_t *v1_se_linux_options);
 
-v1_se_linux_options_t *v1_se_linux_options_parseFromJSON(cJSON *v1_se_linux_optionsJSON);
+v1_se_linux_options_t *v1_se_linux_options_parseFromJSON(mazu_cJSON *v1_se_linux_optionsJSON);
 
-cJSON *v1_se_linux_options_convertToJSON(v1_se_linux_options_t *v1_se_linux_options);
+mazu_cJSON *v1_se_linux_options_convertToJSON(v1_se_linux_options_t *v1_se_linux_options);
 
 #endif /* _v1_se_linux_options_H_ */
 

@@ -8,7 +8,7 @@
 #define _v1alpha1_match_condition_H_
 
 #include <string.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
 #include "../include/binary.h"
@@ -31,9 +31,9 @@ v1alpha1_match_condition_t *v1alpha1_match_condition_create(
 
 void v1alpha1_match_condition_free(v1alpha1_match_condition_t *v1alpha1_match_condition);
 
-v1alpha1_match_condition_t *v1alpha1_match_condition_parseFromJSON(cJSON *v1alpha1_match_conditionJSON);
+v1alpha1_match_condition_t *v1alpha1_match_condition_parseFromJSON(mazu_cJSON *v1alpha1_match_conditionJSON);
 
-cJSON *v1alpha1_match_condition_convertToJSON(v1alpha1_match_condition_t *v1alpha1_match_condition);
+mazu_cJSON *v1alpha1_match_condition_convertToJSON(v1alpha1_match_condition_t *v1alpha1_match_condition);
 
 #endif /* _v1alpha1_match_condition_H_ */
 

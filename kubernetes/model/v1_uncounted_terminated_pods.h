@@ -8,7 +8,7 @@
 #define _v1_uncounted_terminated_pods_H_
 
 #include <string.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
 #include "../include/binary.h"
@@ -31,9 +31,9 @@ v1_uncounted_terminated_pods_t *v1_uncounted_terminated_pods_create(
 
 void v1_uncounted_terminated_pods_free(v1_uncounted_terminated_pods_t *v1_uncounted_terminated_pods);
 
-v1_uncounted_terminated_pods_t *v1_uncounted_terminated_pods_parseFromJSON(cJSON *v1_uncounted_terminated_podsJSON);
+v1_uncounted_terminated_pods_t *v1_uncounted_terminated_pods_parseFromJSON(mazu_cJSON *v1_uncounted_terminated_podsJSON);
 
-cJSON *v1_uncounted_terminated_pods_convertToJSON(v1_uncounted_terminated_pods_t *v1_uncounted_terminated_pods);
+mazu_cJSON *v1_uncounted_terminated_pods_convertToJSON(v1_uncounted_terminated_pods_t *v1_uncounted_terminated_pods);
 
 #endif /* _v1_uncounted_terminated_pods_H_ */
 

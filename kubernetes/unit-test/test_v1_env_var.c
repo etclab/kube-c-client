@@ -11,7 +11,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdbool.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 
 #include "../model/v1_env_var.h"
 v1_env_var_t* instantiate_v1_env_var(int include_optional);
@@ -45,11 +45,11 @@ v1_env_var_t* instantiate_v1_env_var(int include_optional) {
 void test_v1_env_var(int include_optional) {
     v1_env_var_t* v1_env_var_1 = instantiate_v1_env_var(include_optional);
 
-	cJSON* jsonv1_env_var_1 = v1_env_var_convertToJSON(v1_env_var_1);
-	printf("v1_env_var :\n%s\n", cJSON_Print(jsonv1_env_var_1));
+	mazu_cJSON* jsonv1_env_var_1 = v1_env_var_convertToJSON(v1_env_var_1);
+	printf("v1_env_var :\n%s\n", mazu_cJSON_Print(jsonv1_env_var_1));
 	v1_env_var_t* v1_env_var_2 = v1_env_var_parseFromJSON(jsonv1_env_var_1);
-	cJSON* jsonv1_env_var_2 = v1_env_var_convertToJSON(v1_env_var_2);
-	printf("repeating v1_env_var:\n%s\n", cJSON_Print(jsonv1_env_var_2));
+	mazu_cJSON* jsonv1_env_var_2 = v1_env_var_convertToJSON(v1_env_var_2);
+	printf("repeating v1_env_var:\n%s\n", mazu_cJSON_Print(jsonv1_env_var_2));
 }
 
 int main() {

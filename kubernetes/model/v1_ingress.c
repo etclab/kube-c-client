@@ -54,12 +54,12 @@ void v1_ingress_free(v1_ingress_t *v1_ingress) {
     free(v1_ingress);
 }
 
-cJSON *v1_ingress_convertToJSON(v1_ingress_t *v1_ingress) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_ingress_convertToJSON(v1_ingress_t *v1_ingress) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_ingress->api_version
     if(v1_ingress->api_version) {
-    if(cJSON_AddStringToObject(item, "apiVersion", v1_ingress->api_version) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "apiVersion", v1_ingress->api_version) == NULL) {
     goto fail; //String
     }
     }
@@ -67,7 +67,7 @@ cJSON *v1_ingress_convertToJSON(v1_ingress_t *v1_ingress) {
 
     // v1_ingress->kind
     if(v1_ingress->kind) {
-    if(cJSON_AddStringToObject(item, "kind", v1_ingress->kind) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "kind", v1_ingress->kind) == NULL) {
     goto fail; //String
     }
     }
@@ -75,11 +75,11 @@ cJSON *v1_ingress_convertToJSON(v1_ingress_t *v1_ingress) {
 
     // v1_ingress->metadata
     if(v1_ingress->metadata) {
-    cJSON *metadata_local_JSON = v1_object_meta_convertToJSON(v1_ingress->metadata);
+    mazu_cJSON *metadata_local_JSON = v1_object_meta_convertToJSON(v1_ingress->metadata);
     if(metadata_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "metadata", metadata_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "metadata", metadata_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -88,11 +88,11 @@ cJSON *v1_ingress_convertToJSON(v1_ingress_t *v1_ingress) {
 
     // v1_ingress->spec
     if(v1_ingress->spec) {
-    cJSON *spec_local_JSON = v1_ingress_spec_convertToJSON(v1_ingress->spec);
+    mazu_cJSON *spec_local_JSON = v1_ingress_spec_convertToJSON(v1_ingress->spec);
     if(spec_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "spec", spec_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "spec", spec_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -101,11 +101,11 @@ cJSON *v1_ingress_convertToJSON(v1_ingress_t *v1_ingress) {
 
     // v1_ingress->status
     if(v1_ingress->status) {
-    cJSON *status_local_JSON = v1_ingress_status_convertToJSON(v1_ingress->status);
+    mazu_cJSON *status_local_JSON = v1_ingress_status_convertToJSON(v1_ingress->status);
     if(status_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "status", status_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "status", status_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -114,12 +114,12 @@ cJSON *v1_ingress_convertToJSON(v1_ingress_t *v1_ingress) {
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_ingress_t *v1_ingress_parseFromJSON(cJSON *v1_ingressJSON){
+v1_ingress_t *v1_ingress_parseFromJSON(mazu_cJSON *v1_ingressJSON){
 
     v1_ingress_t *v1_ingress_local_var = NULL;
 
@@ -133,45 +133,45 @@ v1_ingress_t *v1_ingress_parseFromJSON(cJSON *v1_ingressJSON){
     v1_ingress_status_t *status_local_nonprim = NULL;
 
     // v1_ingress->api_version
-    cJSON *api_version = cJSON_GetObjectItemCaseSensitive(v1_ingressJSON, "apiVersion");
+    mazu_cJSON *api_version = mazu_cJSON_GetObjectItemCaseSensitive(v1_ingressJSON, "apiVersion");
     if (api_version) { 
-    if(!cJSON_IsString(api_version) && !cJSON_IsNull(api_version))
+    if(!mazu_cJSON_IsString(api_version) && !mazu_cJSON_IsNull(api_version))
     {
     goto end; //String
     }
     }
 
     // v1_ingress->kind
-    cJSON *kind = cJSON_GetObjectItemCaseSensitive(v1_ingressJSON, "kind");
+    mazu_cJSON *kind = mazu_cJSON_GetObjectItemCaseSensitive(v1_ingressJSON, "kind");
     if (kind) { 
-    if(!cJSON_IsString(kind) && !cJSON_IsNull(kind))
+    if(!mazu_cJSON_IsString(kind) && !mazu_cJSON_IsNull(kind))
     {
     goto end; //String
     }
     }
 
     // v1_ingress->metadata
-    cJSON *metadata = cJSON_GetObjectItemCaseSensitive(v1_ingressJSON, "metadata");
+    mazu_cJSON *metadata = mazu_cJSON_GetObjectItemCaseSensitive(v1_ingressJSON, "metadata");
     if (metadata) { 
     metadata_local_nonprim = v1_object_meta_parseFromJSON(metadata); //nonprimitive
     }
 
     // v1_ingress->spec
-    cJSON *spec = cJSON_GetObjectItemCaseSensitive(v1_ingressJSON, "spec");
+    mazu_cJSON *spec = mazu_cJSON_GetObjectItemCaseSensitive(v1_ingressJSON, "spec");
     if (spec) { 
     spec_local_nonprim = v1_ingress_spec_parseFromJSON(spec); //nonprimitive
     }
 
     // v1_ingress->status
-    cJSON *status = cJSON_GetObjectItemCaseSensitive(v1_ingressJSON, "status");
+    mazu_cJSON *status = mazu_cJSON_GetObjectItemCaseSensitive(v1_ingressJSON, "status");
     if (status) { 
     status_local_nonprim = v1_ingress_status_parseFromJSON(status); //nonprimitive
     }
 
 
     v1_ingress_local_var = v1_ingress_create (
-        api_version && !cJSON_IsNull(api_version) ? strdup(api_version->valuestring) : NULL,
-        kind && !cJSON_IsNull(kind) ? strdup(kind->valuestring) : NULL,
+        api_version && !mazu_cJSON_IsNull(api_version) ? strdup(api_version->valuestring) : NULL,
+        kind && !mazu_cJSON_IsNull(kind) ? strdup(kind->valuestring) : NULL,
         metadata ? metadata_local_nonprim : NULL,
         spec ? spec_local_nonprim : NULL,
         status ? status_local_nonprim : NULL

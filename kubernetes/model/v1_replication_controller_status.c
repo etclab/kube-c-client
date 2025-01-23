@@ -43,12 +43,12 @@ void v1_replication_controller_status_free(v1_replication_controller_status_t *v
     free(v1_replication_controller_status);
 }
 
-cJSON *v1_replication_controller_status_convertToJSON(v1_replication_controller_status_t *v1_replication_controller_status) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_replication_controller_status_convertToJSON(v1_replication_controller_status_t *v1_replication_controller_status) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_replication_controller_status->available_replicas
     if(v1_replication_controller_status->available_replicas) {
-    if(cJSON_AddNumberToObject(item, "availableReplicas", v1_replication_controller_status->available_replicas) == NULL) {
+    if(mazu_cJSON_AddNumberToObject(item, "availableReplicas", v1_replication_controller_status->available_replicas) == NULL) {
     goto fail; //Numeric
     }
     }
@@ -56,7 +56,7 @@ cJSON *v1_replication_controller_status_convertToJSON(v1_replication_controller_
 
     // v1_replication_controller_status->conditions
     if(v1_replication_controller_status->conditions) {
-    cJSON *conditions = cJSON_AddArrayToObject(item, "conditions");
+    mazu_cJSON *conditions = mazu_cJSON_AddArrayToObject(item, "conditions");
     if(conditions == NULL) {
     goto fail; //nonprimitive container
     }
@@ -64,11 +64,11 @@ cJSON *v1_replication_controller_status_convertToJSON(v1_replication_controller_
     listEntry_t *conditionsListEntry;
     if (v1_replication_controller_status->conditions) {
     list_ForEach(conditionsListEntry, v1_replication_controller_status->conditions) {
-    cJSON *itemLocal = v1_replication_controller_condition_convertToJSON(conditionsListEntry->data);
+    mazu_cJSON *itemLocal = v1_replication_controller_condition_convertToJSON(conditionsListEntry->data);
     if(itemLocal == NULL) {
     goto fail;
     }
-    cJSON_AddItemToArray(conditions, itemLocal);
+    mazu_cJSON_AddItemToArray(conditions, itemLocal);
     }
     }
     }
@@ -76,7 +76,7 @@ cJSON *v1_replication_controller_status_convertToJSON(v1_replication_controller_
 
     // v1_replication_controller_status->fully_labeled_replicas
     if(v1_replication_controller_status->fully_labeled_replicas) {
-    if(cJSON_AddNumberToObject(item, "fullyLabeledReplicas", v1_replication_controller_status->fully_labeled_replicas) == NULL) {
+    if(mazu_cJSON_AddNumberToObject(item, "fullyLabeledReplicas", v1_replication_controller_status->fully_labeled_replicas) == NULL) {
     goto fail; //Numeric
     }
     }
@@ -84,7 +84,7 @@ cJSON *v1_replication_controller_status_convertToJSON(v1_replication_controller_
 
     // v1_replication_controller_status->observed_generation
     if(v1_replication_controller_status->observed_generation) {
-    if(cJSON_AddNumberToObject(item, "observedGeneration", v1_replication_controller_status->observed_generation) == NULL) {
+    if(mazu_cJSON_AddNumberToObject(item, "observedGeneration", v1_replication_controller_status->observed_generation) == NULL) {
     goto fail; //Numeric
     }
     }
@@ -92,7 +92,7 @@ cJSON *v1_replication_controller_status_convertToJSON(v1_replication_controller_
 
     // v1_replication_controller_status->ready_replicas
     if(v1_replication_controller_status->ready_replicas) {
-    if(cJSON_AddNumberToObject(item, "readyReplicas", v1_replication_controller_status->ready_replicas) == NULL) {
+    if(mazu_cJSON_AddNumberToObject(item, "readyReplicas", v1_replication_controller_status->ready_replicas) == NULL) {
     goto fail; //Numeric
     }
     }
@@ -102,19 +102,19 @@ cJSON *v1_replication_controller_status_convertToJSON(v1_replication_controller_
     if (!v1_replication_controller_status->replicas) {
         goto fail;
     }
-    if(cJSON_AddNumberToObject(item, "replicas", v1_replication_controller_status->replicas) == NULL) {
+    if(mazu_cJSON_AddNumberToObject(item, "replicas", v1_replication_controller_status->replicas) == NULL) {
     goto fail; //Numeric
     }
 
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_replication_controller_status_t *v1_replication_controller_status_parseFromJSON(cJSON *v1_replication_controller_statusJSON){
+v1_replication_controller_status_t *v1_replication_controller_status_parseFromJSON(mazu_cJSON *v1_replication_controller_statusJSON){
 
     v1_replication_controller_status_t *v1_replication_controller_status_local_var = NULL;
 
@@ -122,27 +122,27 @@ v1_replication_controller_status_t *v1_replication_controller_status_parseFromJS
     list_t *conditionsList = NULL;
 
     // v1_replication_controller_status->available_replicas
-    cJSON *available_replicas = cJSON_GetObjectItemCaseSensitive(v1_replication_controller_statusJSON, "availableReplicas");
+    mazu_cJSON *available_replicas = mazu_cJSON_GetObjectItemCaseSensitive(v1_replication_controller_statusJSON, "availableReplicas");
     if (available_replicas) { 
-    if(!cJSON_IsNumber(available_replicas))
+    if(!mazu_cJSON_IsNumber(available_replicas))
     {
     goto end; //Numeric
     }
     }
 
     // v1_replication_controller_status->conditions
-    cJSON *conditions = cJSON_GetObjectItemCaseSensitive(v1_replication_controller_statusJSON, "conditions");
+    mazu_cJSON *conditions = mazu_cJSON_GetObjectItemCaseSensitive(v1_replication_controller_statusJSON, "conditions");
     if (conditions) { 
-    cJSON *conditions_local_nonprimitive = NULL;
-    if(!cJSON_IsArray(conditions)){
+    mazu_cJSON *conditions_local_nonprimitive = NULL;
+    if(!mazu_cJSON_IsArray(conditions)){
         goto end; //nonprimitive container
     }
 
     conditionsList = list_createList();
 
-    cJSON_ArrayForEach(conditions_local_nonprimitive,conditions )
+    mazu_cJSON_ArrayForEach(conditions_local_nonprimitive,conditions )
     {
-        if(!cJSON_IsObject(conditions_local_nonprimitive)){
+        if(!mazu_cJSON_IsObject(conditions_local_nonprimitive)){
             goto end;
         }
         v1_replication_controller_condition_t *conditionsItem = v1_replication_controller_condition_parseFromJSON(conditions_local_nonprimitive);
@@ -152,40 +152,40 @@ v1_replication_controller_status_t *v1_replication_controller_status_parseFromJS
     }
 
     // v1_replication_controller_status->fully_labeled_replicas
-    cJSON *fully_labeled_replicas = cJSON_GetObjectItemCaseSensitive(v1_replication_controller_statusJSON, "fullyLabeledReplicas");
+    mazu_cJSON *fully_labeled_replicas = mazu_cJSON_GetObjectItemCaseSensitive(v1_replication_controller_statusJSON, "fullyLabeledReplicas");
     if (fully_labeled_replicas) { 
-    if(!cJSON_IsNumber(fully_labeled_replicas))
+    if(!mazu_cJSON_IsNumber(fully_labeled_replicas))
     {
     goto end; //Numeric
     }
     }
 
     // v1_replication_controller_status->observed_generation
-    cJSON *observed_generation = cJSON_GetObjectItemCaseSensitive(v1_replication_controller_statusJSON, "observedGeneration");
+    mazu_cJSON *observed_generation = mazu_cJSON_GetObjectItemCaseSensitive(v1_replication_controller_statusJSON, "observedGeneration");
     if (observed_generation) { 
-    if(!cJSON_IsNumber(observed_generation))
+    if(!mazu_cJSON_IsNumber(observed_generation))
     {
     goto end; //Numeric
     }
     }
 
     // v1_replication_controller_status->ready_replicas
-    cJSON *ready_replicas = cJSON_GetObjectItemCaseSensitive(v1_replication_controller_statusJSON, "readyReplicas");
+    mazu_cJSON *ready_replicas = mazu_cJSON_GetObjectItemCaseSensitive(v1_replication_controller_statusJSON, "readyReplicas");
     if (ready_replicas) { 
-    if(!cJSON_IsNumber(ready_replicas))
+    if(!mazu_cJSON_IsNumber(ready_replicas))
     {
     goto end; //Numeric
     }
     }
 
     // v1_replication_controller_status->replicas
-    cJSON *replicas = cJSON_GetObjectItemCaseSensitive(v1_replication_controller_statusJSON, "replicas");
+    mazu_cJSON *replicas = mazu_cJSON_GetObjectItemCaseSensitive(v1_replication_controller_statusJSON, "replicas");
     if (!replicas) {
         goto end;
     }
 
     
-    if(!cJSON_IsNumber(replicas))
+    if(!mazu_cJSON_IsNumber(replicas))
     {
     goto end; //Numeric
     }

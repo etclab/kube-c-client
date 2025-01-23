@@ -32,21 +32,21 @@ void storage_v1_token_request_free(storage_v1_token_request_t *storage_v1_token_
     free(storage_v1_token_request);
 }
 
-cJSON *storage_v1_token_request_convertToJSON(storage_v1_token_request_t *storage_v1_token_request) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *storage_v1_token_request_convertToJSON(storage_v1_token_request_t *storage_v1_token_request) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // storage_v1_token_request->audience
     if (!storage_v1_token_request->audience) {
         goto fail;
     }
-    if(cJSON_AddStringToObject(item, "audience", storage_v1_token_request->audience) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "audience", storage_v1_token_request->audience) == NULL) {
     goto fail; //String
     }
 
 
     // storage_v1_token_request->expiration_seconds
     if(storage_v1_token_request->expiration_seconds) {
-    if(cJSON_AddNumberToObject(item, "expirationSeconds", storage_v1_token_request->expiration_seconds) == NULL) {
+    if(mazu_cJSON_AddNumberToObject(item, "expirationSeconds", storage_v1_token_request->expiration_seconds) == NULL) {
     goto fail; //Numeric
     }
     }
@@ -54,31 +54,31 @@ cJSON *storage_v1_token_request_convertToJSON(storage_v1_token_request_t *storag
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-storage_v1_token_request_t *storage_v1_token_request_parseFromJSON(cJSON *storage_v1_token_requestJSON){
+storage_v1_token_request_t *storage_v1_token_request_parseFromJSON(mazu_cJSON *storage_v1_token_requestJSON){
 
     storage_v1_token_request_t *storage_v1_token_request_local_var = NULL;
 
     // storage_v1_token_request->audience
-    cJSON *audience = cJSON_GetObjectItemCaseSensitive(storage_v1_token_requestJSON, "audience");
+    mazu_cJSON *audience = mazu_cJSON_GetObjectItemCaseSensitive(storage_v1_token_requestJSON, "audience");
     if (!audience) {
         goto end;
     }
 
     
-    if(!cJSON_IsString(audience))
+    if(!mazu_cJSON_IsString(audience))
     {
     goto end; //String
     }
 
     // storage_v1_token_request->expiration_seconds
-    cJSON *expiration_seconds = cJSON_GetObjectItemCaseSensitive(storage_v1_token_requestJSON, "expirationSeconds");
+    mazu_cJSON *expiration_seconds = mazu_cJSON_GetObjectItemCaseSensitive(storage_v1_token_requestJSON, "expirationSeconds");
     if (expiration_seconds) { 
-    if(!cJSON_IsNumber(expiration_seconds))
+    if(!mazu_cJSON_IsNumber(expiration_seconds))
     {
     goto end; //Numeric
     }

@@ -42,12 +42,12 @@ void v1_network_policy_ingress_rule_free(v1_network_policy_ingress_rule_t *v1_ne
     free(v1_network_policy_ingress_rule);
 }
 
-cJSON *v1_network_policy_ingress_rule_convertToJSON(v1_network_policy_ingress_rule_t *v1_network_policy_ingress_rule) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_network_policy_ingress_rule_convertToJSON(v1_network_policy_ingress_rule_t *v1_network_policy_ingress_rule) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_network_policy_ingress_rule->from
     if(v1_network_policy_ingress_rule->from) {
-    cJSON *from = cJSON_AddArrayToObject(item, "from");
+    mazu_cJSON *from = mazu_cJSON_AddArrayToObject(item, "from");
     if(from == NULL) {
     goto fail; //nonprimitive container
     }
@@ -55,11 +55,11 @@ cJSON *v1_network_policy_ingress_rule_convertToJSON(v1_network_policy_ingress_ru
     listEntry_t *fromListEntry;
     if (v1_network_policy_ingress_rule->from) {
     list_ForEach(fromListEntry, v1_network_policy_ingress_rule->from) {
-    cJSON *itemLocal = v1_network_policy_peer_convertToJSON(fromListEntry->data);
+    mazu_cJSON *itemLocal = v1_network_policy_peer_convertToJSON(fromListEntry->data);
     if(itemLocal == NULL) {
     goto fail;
     }
-    cJSON_AddItemToArray(from, itemLocal);
+    mazu_cJSON_AddItemToArray(from, itemLocal);
     }
     }
     }
@@ -67,7 +67,7 @@ cJSON *v1_network_policy_ingress_rule_convertToJSON(v1_network_policy_ingress_ru
 
     // v1_network_policy_ingress_rule->ports
     if(v1_network_policy_ingress_rule->ports) {
-    cJSON *ports = cJSON_AddArrayToObject(item, "ports");
+    mazu_cJSON *ports = mazu_cJSON_AddArrayToObject(item, "ports");
     if(ports == NULL) {
     goto fail; //nonprimitive container
     }
@@ -75,11 +75,11 @@ cJSON *v1_network_policy_ingress_rule_convertToJSON(v1_network_policy_ingress_ru
     listEntry_t *portsListEntry;
     if (v1_network_policy_ingress_rule->ports) {
     list_ForEach(portsListEntry, v1_network_policy_ingress_rule->ports) {
-    cJSON *itemLocal = v1_network_policy_port_convertToJSON(portsListEntry->data);
+    mazu_cJSON *itemLocal = v1_network_policy_port_convertToJSON(portsListEntry->data);
     if(itemLocal == NULL) {
     goto fail;
     }
-    cJSON_AddItemToArray(ports, itemLocal);
+    mazu_cJSON_AddItemToArray(ports, itemLocal);
     }
     }
     }
@@ -87,12 +87,12 @@ cJSON *v1_network_policy_ingress_rule_convertToJSON(v1_network_policy_ingress_ru
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_network_policy_ingress_rule_t *v1_network_policy_ingress_rule_parseFromJSON(cJSON *v1_network_policy_ingress_ruleJSON){
+v1_network_policy_ingress_rule_t *v1_network_policy_ingress_rule_parseFromJSON(mazu_cJSON *v1_network_policy_ingress_ruleJSON){
 
     v1_network_policy_ingress_rule_t *v1_network_policy_ingress_rule_local_var = NULL;
 
@@ -103,18 +103,18 @@ v1_network_policy_ingress_rule_t *v1_network_policy_ingress_rule_parseFromJSON(c
     list_t *portsList = NULL;
 
     // v1_network_policy_ingress_rule->from
-    cJSON *from = cJSON_GetObjectItemCaseSensitive(v1_network_policy_ingress_ruleJSON, "from");
+    mazu_cJSON *from = mazu_cJSON_GetObjectItemCaseSensitive(v1_network_policy_ingress_ruleJSON, "from");
     if (from) { 
-    cJSON *from_local_nonprimitive = NULL;
-    if(!cJSON_IsArray(from)){
+    mazu_cJSON *from_local_nonprimitive = NULL;
+    if(!mazu_cJSON_IsArray(from)){
         goto end; //nonprimitive container
     }
 
     fromList = list_createList();
 
-    cJSON_ArrayForEach(from_local_nonprimitive,from )
+    mazu_cJSON_ArrayForEach(from_local_nonprimitive,from )
     {
-        if(!cJSON_IsObject(from_local_nonprimitive)){
+        if(!mazu_cJSON_IsObject(from_local_nonprimitive)){
             goto end;
         }
         v1_network_policy_peer_t *fromItem = v1_network_policy_peer_parseFromJSON(from_local_nonprimitive);
@@ -124,18 +124,18 @@ v1_network_policy_ingress_rule_t *v1_network_policy_ingress_rule_parseFromJSON(c
     }
 
     // v1_network_policy_ingress_rule->ports
-    cJSON *ports = cJSON_GetObjectItemCaseSensitive(v1_network_policy_ingress_ruleJSON, "ports");
+    mazu_cJSON *ports = mazu_cJSON_GetObjectItemCaseSensitive(v1_network_policy_ingress_ruleJSON, "ports");
     if (ports) { 
-    cJSON *ports_local_nonprimitive = NULL;
-    if(!cJSON_IsArray(ports)){
+    mazu_cJSON *ports_local_nonprimitive = NULL;
+    if(!mazu_cJSON_IsArray(ports)){
         goto end; //nonprimitive container
     }
 
     portsList = list_createList();
 
-    cJSON_ArrayForEach(ports_local_nonprimitive,ports )
+    mazu_cJSON_ArrayForEach(ports_local_nonprimitive,ports )
     {
-        if(!cJSON_IsObject(ports_local_nonprimitive)){
+        if(!mazu_cJSON_IsObject(ports_local_nonprimitive)){
             goto end;
         }
         v1_network_policy_port_t *portsItem = v1_network_policy_port_parseFromJSON(ports_local_nonprimitive);

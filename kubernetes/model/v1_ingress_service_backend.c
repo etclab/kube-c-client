@@ -36,25 +36,25 @@ void v1_ingress_service_backend_free(v1_ingress_service_backend_t *v1_ingress_se
     free(v1_ingress_service_backend);
 }
 
-cJSON *v1_ingress_service_backend_convertToJSON(v1_ingress_service_backend_t *v1_ingress_service_backend) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_ingress_service_backend_convertToJSON(v1_ingress_service_backend_t *v1_ingress_service_backend) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_ingress_service_backend->name
     if (!v1_ingress_service_backend->name) {
         goto fail;
     }
-    if(cJSON_AddStringToObject(item, "name", v1_ingress_service_backend->name) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "name", v1_ingress_service_backend->name) == NULL) {
     goto fail; //String
     }
 
 
     // v1_ingress_service_backend->port
     if(v1_ingress_service_backend->port) {
-    cJSON *port_local_JSON = v1_service_backend_port_convertToJSON(v1_ingress_service_backend->port);
+    mazu_cJSON *port_local_JSON = v1_service_backend_port_convertToJSON(v1_ingress_service_backend->port);
     if(port_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "port", port_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "port", port_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -63,12 +63,12 @@ cJSON *v1_ingress_service_backend_convertToJSON(v1_ingress_service_backend_t *v1
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_ingress_service_backend_t *v1_ingress_service_backend_parseFromJSON(cJSON *v1_ingress_service_backendJSON){
+v1_ingress_service_backend_t *v1_ingress_service_backend_parseFromJSON(mazu_cJSON *v1_ingress_service_backendJSON){
 
     v1_ingress_service_backend_t *v1_ingress_service_backend_local_var = NULL;
 
@@ -76,19 +76,19 @@ v1_ingress_service_backend_t *v1_ingress_service_backend_parseFromJSON(cJSON *v1
     v1_service_backend_port_t *port_local_nonprim = NULL;
 
     // v1_ingress_service_backend->name
-    cJSON *name = cJSON_GetObjectItemCaseSensitive(v1_ingress_service_backendJSON, "name");
+    mazu_cJSON *name = mazu_cJSON_GetObjectItemCaseSensitive(v1_ingress_service_backendJSON, "name");
     if (!name) {
         goto end;
     }
 
     
-    if(!cJSON_IsString(name))
+    if(!mazu_cJSON_IsString(name))
     {
     goto end; //String
     }
 
     // v1_ingress_service_backend->port
-    cJSON *port = cJSON_GetObjectItemCaseSensitive(v1_ingress_service_backendJSON, "port");
+    mazu_cJSON *port = mazu_cJSON_GetObjectItemCaseSensitive(v1_ingress_service_backendJSON, "port");
     if (port) { 
     port_local_nonprim = v1_service_backend_port_parseFromJSON(port); //nonprimitive
     }

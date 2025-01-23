@@ -8,7 +8,7 @@
 #define _v1_pod_dns_config_option_H_
 
 #include <string.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
 #include "../include/binary.h"
@@ -31,9 +31,9 @@ v1_pod_dns_config_option_t *v1_pod_dns_config_option_create(
 
 void v1_pod_dns_config_option_free(v1_pod_dns_config_option_t *v1_pod_dns_config_option);
 
-v1_pod_dns_config_option_t *v1_pod_dns_config_option_parseFromJSON(cJSON *v1_pod_dns_config_optionJSON);
+v1_pod_dns_config_option_t *v1_pod_dns_config_option_parseFromJSON(mazu_cJSON *v1_pod_dns_config_optionJSON);
 
-cJSON *v1_pod_dns_config_option_convertToJSON(v1_pod_dns_config_option_t *v1_pod_dns_config_option);
+mazu_cJSON *v1_pod_dns_config_option_convertToJSON(v1_pod_dns_config_option_t *v1_pod_dns_config_option);
 
 #endif /* _v1_pod_dns_config_option_H_ */
 

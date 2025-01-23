@@ -11,7 +11,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdbool.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 
 #include "../model/v2_object_metric_source.h"
 v2_object_metric_source_t* instantiate_v2_object_metric_source(int include_optional);
@@ -49,11 +49,11 @@ v2_object_metric_source_t* instantiate_v2_object_metric_source(int include_optio
 void test_v2_object_metric_source(int include_optional) {
     v2_object_metric_source_t* v2_object_metric_source_1 = instantiate_v2_object_metric_source(include_optional);
 
-	cJSON* jsonv2_object_metric_source_1 = v2_object_metric_source_convertToJSON(v2_object_metric_source_1);
-	printf("v2_object_metric_source :\n%s\n", cJSON_Print(jsonv2_object_metric_source_1));
+	mazu_cJSON* jsonv2_object_metric_source_1 = v2_object_metric_source_convertToJSON(v2_object_metric_source_1);
+	printf("v2_object_metric_source :\n%s\n", mazu_cJSON_Print(jsonv2_object_metric_source_1));
 	v2_object_metric_source_t* v2_object_metric_source_2 = v2_object_metric_source_parseFromJSON(jsonv2_object_metric_source_1);
-	cJSON* jsonv2_object_metric_source_2 = v2_object_metric_source_convertToJSON(v2_object_metric_source_2);
-	printf("repeating v2_object_metric_source:\n%s\n", cJSON_Print(jsonv2_object_metric_source_2));
+	mazu_cJSON* jsonv2_object_metric_source_2 = v2_object_metric_source_convertToJSON(v2_object_metric_source_2);
+	printf("repeating v2_object_metric_source:\n%s\n", mazu_cJSON_Print(jsonv2_object_metric_source_2));
 }
 
 int main() {

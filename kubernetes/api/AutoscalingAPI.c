@@ -53,9 +53,9 @@ AutoscalingAPI_getAPIGroup_5(apiClient_t *apiClient)
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *AutoscalingAPIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    mazu_cJSON *AutoscalingAPIlocalVarJSON = mazu_cJSON_Parse(apiClient->dataReceived);
     v1_api_group_t *elementToReturn = v1_api_group_parseFromJSON(AutoscalingAPIlocalVarJSON);
-    cJSON_Delete(AutoscalingAPIlocalVarJSON);
+    mazu_cJSON_Delete(AutoscalingAPIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
     }

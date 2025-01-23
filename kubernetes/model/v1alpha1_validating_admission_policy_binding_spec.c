@@ -51,16 +51,16 @@ void v1alpha1_validating_admission_policy_binding_spec_free(v1alpha1_validating_
     free(v1alpha1_validating_admission_policy_binding_spec);
 }
 
-cJSON *v1alpha1_validating_admission_policy_binding_spec_convertToJSON(v1alpha1_validating_admission_policy_binding_spec_t *v1alpha1_validating_admission_policy_binding_spec) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1alpha1_validating_admission_policy_binding_spec_convertToJSON(v1alpha1_validating_admission_policy_binding_spec_t *v1alpha1_validating_admission_policy_binding_spec) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1alpha1_validating_admission_policy_binding_spec->match_resources
     if(v1alpha1_validating_admission_policy_binding_spec->match_resources) {
-    cJSON *match_resources_local_JSON = v1alpha1_match_resources_convertToJSON(v1alpha1_validating_admission_policy_binding_spec->match_resources);
+    mazu_cJSON *match_resources_local_JSON = v1alpha1_match_resources_convertToJSON(v1alpha1_validating_admission_policy_binding_spec->match_resources);
     if(match_resources_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "matchResources", match_resources_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "matchResources", match_resources_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -69,11 +69,11 @@ cJSON *v1alpha1_validating_admission_policy_binding_spec_convertToJSON(v1alpha1_
 
     // v1alpha1_validating_admission_policy_binding_spec->param_ref
     if(v1alpha1_validating_admission_policy_binding_spec->param_ref) {
-    cJSON *param_ref_local_JSON = v1alpha1_param_ref_convertToJSON(v1alpha1_validating_admission_policy_binding_spec->param_ref);
+    mazu_cJSON *param_ref_local_JSON = v1alpha1_param_ref_convertToJSON(v1alpha1_validating_admission_policy_binding_spec->param_ref);
     if(param_ref_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "paramRef", param_ref_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "paramRef", param_ref_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -82,7 +82,7 @@ cJSON *v1alpha1_validating_admission_policy_binding_spec_convertToJSON(v1alpha1_
 
     // v1alpha1_validating_admission_policy_binding_spec->policy_name
     if(v1alpha1_validating_admission_policy_binding_spec->policy_name) {
-    if(cJSON_AddStringToObject(item, "policyName", v1alpha1_validating_admission_policy_binding_spec->policy_name) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "policyName", v1alpha1_validating_admission_policy_binding_spec->policy_name) == NULL) {
     goto fail; //String
     }
     }
@@ -90,14 +90,14 @@ cJSON *v1alpha1_validating_admission_policy_binding_spec_convertToJSON(v1alpha1_
 
     // v1alpha1_validating_admission_policy_binding_spec->validation_actions
     if(v1alpha1_validating_admission_policy_binding_spec->validation_actions) {
-    cJSON *validation_actions = cJSON_AddArrayToObject(item, "validationActions");
+    mazu_cJSON *validation_actions = mazu_cJSON_AddArrayToObject(item, "validationActions");
     if(validation_actions == NULL) {
         goto fail; //primitive container
     }
 
     listEntry_t *validation_actionsListEntry;
     list_ForEach(validation_actionsListEntry, v1alpha1_validating_admission_policy_binding_spec->validation_actions) {
-    if(cJSON_AddStringToObject(validation_actions, "", (char*)validation_actionsListEntry->data) == NULL)
+    if(mazu_cJSON_AddStringToObject(validation_actions, "", (char*)validation_actionsListEntry->data) == NULL)
     {
         goto fail;
     }
@@ -107,12 +107,12 @@ cJSON *v1alpha1_validating_admission_policy_binding_spec_convertToJSON(v1alpha1_
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1alpha1_validating_admission_policy_binding_spec_t *v1alpha1_validating_admission_policy_binding_spec_parseFromJSON(cJSON *v1alpha1_validating_admission_policy_binding_specJSON){
+v1alpha1_validating_admission_policy_binding_spec_t *v1alpha1_validating_admission_policy_binding_spec_parseFromJSON(mazu_cJSON *v1alpha1_validating_admission_policy_binding_specJSON){
 
     v1alpha1_validating_admission_policy_binding_spec_t *v1alpha1_validating_admission_policy_binding_spec_local_var = NULL;
 
@@ -126,38 +126,38 @@ v1alpha1_validating_admission_policy_binding_spec_t *v1alpha1_validating_admissi
     list_t *validation_actionsList = NULL;
 
     // v1alpha1_validating_admission_policy_binding_spec->match_resources
-    cJSON *match_resources = cJSON_GetObjectItemCaseSensitive(v1alpha1_validating_admission_policy_binding_specJSON, "matchResources");
+    mazu_cJSON *match_resources = mazu_cJSON_GetObjectItemCaseSensitive(v1alpha1_validating_admission_policy_binding_specJSON, "matchResources");
     if (match_resources) { 
     match_resources_local_nonprim = v1alpha1_match_resources_parseFromJSON(match_resources); //nonprimitive
     }
 
     // v1alpha1_validating_admission_policy_binding_spec->param_ref
-    cJSON *param_ref = cJSON_GetObjectItemCaseSensitive(v1alpha1_validating_admission_policy_binding_specJSON, "paramRef");
+    mazu_cJSON *param_ref = mazu_cJSON_GetObjectItemCaseSensitive(v1alpha1_validating_admission_policy_binding_specJSON, "paramRef");
     if (param_ref) { 
     param_ref_local_nonprim = v1alpha1_param_ref_parseFromJSON(param_ref); //nonprimitive
     }
 
     // v1alpha1_validating_admission_policy_binding_spec->policy_name
-    cJSON *policy_name = cJSON_GetObjectItemCaseSensitive(v1alpha1_validating_admission_policy_binding_specJSON, "policyName");
+    mazu_cJSON *policy_name = mazu_cJSON_GetObjectItemCaseSensitive(v1alpha1_validating_admission_policy_binding_specJSON, "policyName");
     if (policy_name) { 
-    if(!cJSON_IsString(policy_name) && !cJSON_IsNull(policy_name))
+    if(!mazu_cJSON_IsString(policy_name) && !mazu_cJSON_IsNull(policy_name))
     {
     goto end; //String
     }
     }
 
     // v1alpha1_validating_admission_policy_binding_spec->validation_actions
-    cJSON *validation_actions = cJSON_GetObjectItemCaseSensitive(v1alpha1_validating_admission_policy_binding_specJSON, "validationActions");
+    mazu_cJSON *validation_actions = mazu_cJSON_GetObjectItemCaseSensitive(v1alpha1_validating_admission_policy_binding_specJSON, "validationActions");
     if (validation_actions) { 
-    cJSON *validation_actions_local = NULL;
-    if(!cJSON_IsArray(validation_actions)) {
+    mazu_cJSON *validation_actions_local = NULL;
+    if(!mazu_cJSON_IsArray(validation_actions)) {
         goto end;//primitive container
     }
     validation_actionsList = list_createList();
 
-    cJSON_ArrayForEach(validation_actions_local, validation_actions)
+    mazu_cJSON_ArrayForEach(validation_actions_local, validation_actions)
     {
-        if(!cJSON_IsString(validation_actions_local))
+        if(!mazu_cJSON_IsString(validation_actions_local))
         {
             goto end;
         }
@@ -169,7 +169,7 @@ v1alpha1_validating_admission_policy_binding_spec_t *v1alpha1_validating_admissi
     v1alpha1_validating_admission_policy_binding_spec_local_var = v1alpha1_validating_admission_policy_binding_spec_create (
         match_resources ? match_resources_local_nonprim : NULL,
         param_ref ? param_ref_local_nonprim : NULL,
-        policy_name && !cJSON_IsNull(policy_name) ? strdup(policy_name->valuestring) : NULL,
+        policy_name && !mazu_cJSON_IsNull(policy_name) ? strdup(policy_name->valuestring) : NULL,
         validation_actions ? validation_actionsList : NULL
         );
 

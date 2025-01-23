@@ -8,7 +8,7 @@
 #define _v1_overhead_H_
 
 #include <string.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
 #include "../include/binary.h"
@@ -29,9 +29,9 @@ v1_overhead_t *v1_overhead_create(
 
 void v1_overhead_free(v1_overhead_t *v1_overhead);
 
-v1_overhead_t *v1_overhead_parseFromJSON(cJSON *v1_overheadJSON);
+v1_overhead_t *v1_overhead_parseFromJSON(mazu_cJSON *v1_overheadJSON);
 
-cJSON *v1_overhead_convertToJSON(v1_overhead_t *v1_overhead);
+mazu_cJSON *v1_overhead_convertToJSON(v1_overhead_t *v1_overhead);
 
 #endif /* _v1_overhead_H_ */
 

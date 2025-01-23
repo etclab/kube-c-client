@@ -26,12 +26,12 @@ void v1_node_features_free(v1_node_features_t *v1_node_features) {
     free(v1_node_features);
 }
 
-cJSON *v1_node_features_convertToJSON(v1_node_features_t *v1_node_features) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_node_features_convertToJSON(v1_node_features_t *v1_node_features) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_node_features->supplemental_groups_policy
     if(v1_node_features->supplemental_groups_policy) {
-    if(cJSON_AddBoolToObject(item, "supplementalGroupsPolicy", v1_node_features->supplemental_groups_policy) == NULL) {
+    if(mazu_cJSON_AddBoolToObject(item, "supplementalGroupsPolicy", v1_node_features->supplemental_groups_policy) == NULL) {
     goto fail; //Bool
     }
     }
@@ -39,19 +39,19 @@ cJSON *v1_node_features_convertToJSON(v1_node_features_t *v1_node_features) {
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_node_features_t *v1_node_features_parseFromJSON(cJSON *v1_node_featuresJSON){
+v1_node_features_t *v1_node_features_parseFromJSON(mazu_cJSON *v1_node_featuresJSON){
 
     v1_node_features_t *v1_node_features_local_var = NULL;
 
     // v1_node_features->supplemental_groups_policy
-    cJSON *supplemental_groups_policy = cJSON_GetObjectItemCaseSensitive(v1_node_featuresJSON, "supplementalGroupsPolicy");
+    mazu_cJSON *supplemental_groups_policy = mazu_cJSON_GetObjectItemCaseSensitive(v1_node_featuresJSON, "supplementalGroupsPolicy");
     if (supplemental_groups_policy) { 
-    if(!cJSON_IsBool(supplemental_groups_policy))
+    if(!mazu_cJSON_IsBool(supplemental_groups_policy))
     {
     goto end; //Bool
     }

@@ -38,21 +38,21 @@ void v1_key_to_path_free(v1_key_to_path_t *v1_key_to_path) {
     free(v1_key_to_path);
 }
 
-cJSON *v1_key_to_path_convertToJSON(v1_key_to_path_t *v1_key_to_path) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_key_to_path_convertToJSON(v1_key_to_path_t *v1_key_to_path) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_key_to_path->key
     if (!v1_key_to_path->key) {
         goto fail;
     }
-    if(cJSON_AddStringToObject(item, "key", v1_key_to_path->key) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "key", v1_key_to_path->key) == NULL) {
     goto fail; //String
     }
 
 
     // v1_key_to_path->mode
     if(v1_key_to_path->mode) {
-    if(cJSON_AddNumberToObject(item, "mode", v1_key_to_path->mode) == NULL) {
+    if(mazu_cJSON_AddNumberToObject(item, "mode", v1_key_to_path->mode) == NULL) {
     goto fail; //Numeric
     }
     }
@@ -62,51 +62,51 @@ cJSON *v1_key_to_path_convertToJSON(v1_key_to_path_t *v1_key_to_path) {
     if (!v1_key_to_path->path) {
         goto fail;
     }
-    if(cJSON_AddStringToObject(item, "path", v1_key_to_path->path) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "path", v1_key_to_path->path) == NULL) {
     goto fail; //String
     }
 
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_key_to_path_t *v1_key_to_path_parseFromJSON(cJSON *v1_key_to_pathJSON){
+v1_key_to_path_t *v1_key_to_path_parseFromJSON(mazu_cJSON *v1_key_to_pathJSON){
 
     v1_key_to_path_t *v1_key_to_path_local_var = NULL;
 
     // v1_key_to_path->key
-    cJSON *key = cJSON_GetObjectItemCaseSensitive(v1_key_to_pathJSON, "key");
+    mazu_cJSON *key = mazu_cJSON_GetObjectItemCaseSensitive(v1_key_to_pathJSON, "key");
     if (!key) {
         goto end;
     }
 
     
-    if(!cJSON_IsString(key))
+    if(!mazu_cJSON_IsString(key))
     {
     goto end; //String
     }
 
     // v1_key_to_path->mode
-    cJSON *mode = cJSON_GetObjectItemCaseSensitive(v1_key_to_pathJSON, "mode");
+    mazu_cJSON *mode = mazu_cJSON_GetObjectItemCaseSensitive(v1_key_to_pathJSON, "mode");
     if (mode) { 
-    if(!cJSON_IsNumber(mode))
+    if(!mazu_cJSON_IsNumber(mode))
     {
     goto end; //Numeric
     }
     }
 
     // v1_key_to_path->path
-    cJSON *path = cJSON_GetObjectItemCaseSensitive(v1_key_to_pathJSON, "path");
+    mazu_cJSON *path = mazu_cJSON_GetObjectItemCaseSensitive(v1_key_to_pathJSON, "path");
     if (!path) {
         goto end;
     }
 
     
-    if(!cJSON_IsString(path))
+    if(!mazu_cJSON_IsString(path))
     {
     goto end; //String
     }

@@ -8,7 +8,7 @@
 #define _v1_custom_resource_subresources_H_
 
 #include <string.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
 #include "../include/binary.h"
@@ -33,9 +33,9 @@ v1_custom_resource_subresources_t *v1_custom_resource_subresources_create(
 
 void v1_custom_resource_subresources_free(v1_custom_resource_subresources_t *v1_custom_resource_subresources);
 
-v1_custom_resource_subresources_t *v1_custom_resource_subresources_parseFromJSON(cJSON *v1_custom_resource_subresourcesJSON);
+v1_custom_resource_subresources_t *v1_custom_resource_subresources_parseFromJSON(mazu_cJSON *v1_custom_resource_subresourcesJSON);
 
-cJSON *v1_custom_resource_subresources_convertToJSON(v1_custom_resource_subresources_t *v1_custom_resource_subresources);
+mazu_cJSON *v1_custom_resource_subresources_convertToJSON(v1_custom_resource_subresources_t *v1_custom_resource_subresources);
 
 #endif /* _v1_custom_resource_subresources_H_ */
 

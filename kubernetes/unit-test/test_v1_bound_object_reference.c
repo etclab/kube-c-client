@@ -11,7 +11,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdbool.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 
 #include "../model/v1_bound_object_reference.h"
 v1_bound_object_reference_t* instantiate_v1_bound_object_reference(int include_optional);
@@ -45,11 +45,11 @@ v1_bound_object_reference_t* instantiate_v1_bound_object_reference(int include_o
 void test_v1_bound_object_reference(int include_optional) {
     v1_bound_object_reference_t* v1_bound_object_reference_1 = instantiate_v1_bound_object_reference(include_optional);
 
-	cJSON* jsonv1_bound_object_reference_1 = v1_bound_object_reference_convertToJSON(v1_bound_object_reference_1);
-	printf("v1_bound_object_reference :\n%s\n", cJSON_Print(jsonv1_bound_object_reference_1));
+	mazu_cJSON* jsonv1_bound_object_reference_1 = v1_bound_object_reference_convertToJSON(v1_bound_object_reference_1);
+	printf("v1_bound_object_reference :\n%s\n", mazu_cJSON_Print(jsonv1_bound_object_reference_1));
 	v1_bound_object_reference_t* v1_bound_object_reference_2 = v1_bound_object_reference_parseFromJSON(jsonv1_bound_object_reference_1);
-	cJSON* jsonv1_bound_object_reference_2 = v1_bound_object_reference_convertToJSON(v1_bound_object_reference_2);
-	printf("repeating v1_bound_object_reference:\n%s\n", cJSON_Print(jsonv1_bound_object_reference_2));
+	mazu_cJSON* jsonv1_bound_object_reference_2 = v1_bound_object_reference_convertToJSON(v1_bound_object_reference_2);
+	printf("repeating v1_bound_object_reference:\n%s\n", mazu_cJSON_Print(jsonv1_bound_object_reference_2));
 }
 
 int main() {

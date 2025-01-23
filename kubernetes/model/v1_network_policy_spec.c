@@ -57,12 +57,12 @@ void v1_network_policy_spec_free(v1_network_policy_spec_t *v1_network_policy_spe
     free(v1_network_policy_spec);
 }
 
-cJSON *v1_network_policy_spec_convertToJSON(v1_network_policy_spec_t *v1_network_policy_spec) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_network_policy_spec_convertToJSON(v1_network_policy_spec_t *v1_network_policy_spec) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_network_policy_spec->egress
     if(v1_network_policy_spec->egress) {
-    cJSON *egress = cJSON_AddArrayToObject(item, "egress");
+    mazu_cJSON *egress = mazu_cJSON_AddArrayToObject(item, "egress");
     if(egress == NULL) {
     goto fail; //nonprimitive container
     }
@@ -70,11 +70,11 @@ cJSON *v1_network_policy_spec_convertToJSON(v1_network_policy_spec_t *v1_network
     listEntry_t *egressListEntry;
     if (v1_network_policy_spec->egress) {
     list_ForEach(egressListEntry, v1_network_policy_spec->egress) {
-    cJSON *itemLocal = v1_network_policy_egress_rule_convertToJSON(egressListEntry->data);
+    mazu_cJSON *itemLocal = v1_network_policy_egress_rule_convertToJSON(egressListEntry->data);
     if(itemLocal == NULL) {
     goto fail;
     }
-    cJSON_AddItemToArray(egress, itemLocal);
+    mazu_cJSON_AddItemToArray(egress, itemLocal);
     }
     }
     }
@@ -82,7 +82,7 @@ cJSON *v1_network_policy_spec_convertToJSON(v1_network_policy_spec_t *v1_network
 
     // v1_network_policy_spec->ingress
     if(v1_network_policy_spec->ingress) {
-    cJSON *ingress = cJSON_AddArrayToObject(item, "ingress");
+    mazu_cJSON *ingress = mazu_cJSON_AddArrayToObject(item, "ingress");
     if(ingress == NULL) {
     goto fail; //nonprimitive container
     }
@@ -90,11 +90,11 @@ cJSON *v1_network_policy_spec_convertToJSON(v1_network_policy_spec_t *v1_network
     listEntry_t *ingressListEntry;
     if (v1_network_policy_spec->ingress) {
     list_ForEach(ingressListEntry, v1_network_policy_spec->ingress) {
-    cJSON *itemLocal = v1_network_policy_ingress_rule_convertToJSON(ingressListEntry->data);
+    mazu_cJSON *itemLocal = v1_network_policy_ingress_rule_convertToJSON(ingressListEntry->data);
     if(itemLocal == NULL) {
     goto fail;
     }
-    cJSON_AddItemToArray(ingress, itemLocal);
+    mazu_cJSON_AddItemToArray(ingress, itemLocal);
     }
     }
     }
@@ -104,11 +104,11 @@ cJSON *v1_network_policy_spec_convertToJSON(v1_network_policy_spec_t *v1_network
     if (!v1_network_policy_spec->pod_selector) {
         goto fail;
     }
-    cJSON *pod_selector_local_JSON = v1_label_selector_convertToJSON(v1_network_policy_spec->pod_selector);
+    mazu_cJSON *pod_selector_local_JSON = v1_label_selector_convertToJSON(v1_network_policy_spec->pod_selector);
     if(pod_selector_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "podSelector", pod_selector_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "podSelector", pod_selector_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -116,14 +116,14 @@ cJSON *v1_network_policy_spec_convertToJSON(v1_network_policy_spec_t *v1_network
 
     // v1_network_policy_spec->policy_types
     if(v1_network_policy_spec->policy_types) {
-    cJSON *policy_types = cJSON_AddArrayToObject(item, "policyTypes");
+    mazu_cJSON *policy_types = mazu_cJSON_AddArrayToObject(item, "policyTypes");
     if(policy_types == NULL) {
         goto fail; //primitive container
     }
 
     listEntry_t *policy_typesListEntry;
     list_ForEach(policy_typesListEntry, v1_network_policy_spec->policy_types) {
-    if(cJSON_AddStringToObject(policy_types, "", (char*)policy_typesListEntry->data) == NULL)
+    if(mazu_cJSON_AddStringToObject(policy_types, "", (char*)policy_typesListEntry->data) == NULL)
     {
         goto fail;
     }
@@ -133,12 +133,12 @@ cJSON *v1_network_policy_spec_convertToJSON(v1_network_policy_spec_t *v1_network
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_network_policy_spec_t *v1_network_policy_spec_parseFromJSON(cJSON *v1_network_policy_specJSON){
+v1_network_policy_spec_t *v1_network_policy_spec_parseFromJSON(mazu_cJSON *v1_network_policy_specJSON){
 
     v1_network_policy_spec_t *v1_network_policy_spec_local_var = NULL;
 
@@ -155,18 +155,18 @@ v1_network_policy_spec_t *v1_network_policy_spec_parseFromJSON(cJSON *v1_network
     list_t *policy_typesList = NULL;
 
     // v1_network_policy_spec->egress
-    cJSON *egress = cJSON_GetObjectItemCaseSensitive(v1_network_policy_specJSON, "egress");
+    mazu_cJSON *egress = mazu_cJSON_GetObjectItemCaseSensitive(v1_network_policy_specJSON, "egress");
     if (egress) { 
-    cJSON *egress_local_nonprimitive = NULL;
-    if(!cJSON_IsArray(egress)){
+    mazu_cJSON *egress_local_nonprimitive = NULL;
+    if(!mazu_cJSON_IsArray(egress)){
         goto end; //nonprimitive container
     }
 
     egressList = list_createList();
 
-    cJSON_ArrayForEach(egress_local_nonprimitive,egress )
+    mazu_cJSON_ArrayForEach(egress_local_nonprimitive,egress )
     {
-        if(!cJSON_IsObject(egress_local_nonprimitive)){
+        if(!mazu_cJSON_IsObject(egress_local_nonprimitive)){
             goto end;
         }
         v1_network_policy_egress_rule_t *egressItem = v1_network_policy_egress_rule_parseFromJSON(egress_local_nonprimitive);
@@ -176,18 +176,18 @@ v1_network_policy_spec_t *v1_network_policy_spec_parseFromJSON(cJSON *v1_network
     }
 
     // v1_network_policy_spec->ingress
-    cJSON *ingress = cJSON_GetObjectItemCaseSensitive(v1_network_policy_specJSON, "ingress");
+    mazu_cJSON *ingress = mazu_cJSON_GetObjectItemCaseSensitive(v1_network_policy_specJSON, "ingress");
     if (ingress) { 
-    cJSON *ingress_local_nonprimitive = NULL;
-    if(!cJSON_IsArray(ingress)){
+    mazu_cJSON *ingress_local_nonprimitive = NULL;
+    if(!mazu_cJSON_IsArray(ingress)){
         goto end; //nonprimitive container
     }
 
     ingressList = list_createList();
 
-    cJSON_ArrayForEach(ingress_local_nonprimitive,ingress )
+    mazu_cJSON_ArrayForEach(ingress_local_nonprimitive,ingress )
     {
-        if(!cJSON_IsObject(ingress_local_nonprimitive)){
+        if(!mazu_cJSON_IsObject(ingress_local_nonprimitive)){
             goto end;
         }
         v1_network_policy_ingress_rule_t *ingressItem = v1_network_policy_ingress_rule_parseFromJSON(ingress_local_nonprimitive);
@@ -197,7 +197,7 @@ v1_network_policy_spec_t *v1_network_policy_spec_parseFromJSON(cJSON *v1_network
     }
 
     // v1_network_policy_spec->pod_selector
-    cJSON *pod_selector = cJSON_GetObjectItemCaseSensitive(v1_network_policy_specJSON, "podSelector");
+    mazu_cJSON *pod_selector = mazu_cJSON_GetObjectItemCaseSensitive(v1_network_policy_specJSON, "podSelector");
     if (!pod_selector) {
         goto end;
     }
@@ -206,17 +206,17 @@ v1_network_policy_spec_t *v1_network_policy_spec_parseFromJSON(cJSON *v1_network
     pod_selector_local_nonprim = v1_label_selector_parseFromJSON(pod_selector); //nonprimitive
 
     // v1_network_policy_spec->policy_types
-    cJSON *policy_types = cJSON_GetObjectItemCaseSensitive(v1_network_policy_specJSON, "policyTypes");
+    mazu_cJSON *policy_types = mazu_cJSON_GetObjectItemCaseSensitive(v1_network_policy_specJSON, "policyTypes");
     if (policy_types) { 
-    cJSON *policy_types_local = NULL;
-    if(!cJSON_IsArray(policy_types)) {
+    mazu_cJSON *policy_types_local = NULL;
+    if(!mazu_cJSON_IsArray(policy_types)) {
         goto end;//primitive container
     }
     policy_typesList = list_createList();
 
-    cJSON_ArrayForEach(policy_types_local, policy_types)
+    mazu_cJSON_ArrayForEach(policy_types_local, policy_types)
     {
-        if(!cJSON_IsString(policy_types_local))
+        if(!mazu_cJSON_IsString(policy_types_local))
         {
             goto end;
         }

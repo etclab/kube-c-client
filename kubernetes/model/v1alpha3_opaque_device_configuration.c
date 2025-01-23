@@ -36,14 +36,14 @@ void v1alpha3_opaque_device_configuration_free(v1alpha3_opaque_device_configurat
     free(v1alpha3_opaque_device_configuration);
 }
 
-cJSON *v1alpha3_opaque_device_configuration_convertToJSON(v1alpha3_opaque_device_configuration_t *v1alpha3_opaque_device_configuration) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1alpha3_opaque_device_configuration_convertToJSON(v1alpha3_opaque_device_configuration_t *v1alpha3_opaque_device_configuration) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1alpha3_opaque_device_configuration->driver
     if (!v1alpha3_opaque_device_configuration->driver) {
         goto fail;
     }
-    if(cJSON_AddStringToObject(item, "driver", v1alpha3_opaque_device_configuration->driver) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "driver", v1alpha3_opaque_device_configuration->driver) == NULL) {
     goto fail; //String
     }
 
@@ -52,11 +52,11 @@ cJSON *v1alpha3_opaque_device_configuration_convertToJSON(v1alpha3_opaque_device
     if (!v1alpha3_opaque_device_configuration->parameters) {
         goto fail;
     }
-    cJSON *parameters_object = object_convertToJSON(v1alpha3_opaque_device_configuration->parameters);
+    mazu_cJSON *parameters_object = object_convertToJSON(v1alpha3_opaque_device_configuration->parameters);
     if(parameters_object == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "parameters", parameters_object);
+    mazu_cJSON_AddItemToObject(item, "parameters", parameters_object);
     if(item->child == NULL) {
     goto fail;
     }
@@ -64,29 +64,29 @@ cJSON *v1alpha3_opaque_device_configuration_convertToJSON(v1alpha3_opaque_device
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1alpha3_opaque_device_configuration_t *v1alpha3_opaque_device_configuration_parseFromJSON(cJSON *v1alpha3_opaque_device_configurationJSON){
+v1alpha3_opaque_device_configuration_t *v1alpha3_opaque_device_configuration_parseFromJSON(mazu_cJSON *v1alpha3_opaque_device_configurationJSON){
 
     v1alpha3_opaque_device_configuration_t *v1alpha3_opaque_device_configuration_local_var = NULL;
 
     // v1alpha3_opaque_device_configuration->driver
-    cJSON *driver = cJSON_GetObjectItemCaseSensitive(v1alpha3_opaque_device_configurationJSON, "driver");
+    mazu_cJSON *driver = mazu_cJSON_GetObjectItemCaseSensitive(v1alpha3_opaque_device_configurationJSON, "driver");
     if (!driver) {
         goto end;
     }
 
     
-    if(!cJSON_IsString(driver))
+    if(!mazu_cJSON_IsString(driver))
     {
     goto end; //String
     }
 
     // v1alpha3_opaque_device_configuration->parameters
-    cJSON *parameters = cJSON_GetObjectItemCaseSensitive(v1alpha3_opaque_device_configurationJSON, "parameters");
+    mazu_cJSON *parameters = mazu_cJSON_GetObjectItemCaseSensitive(v1alpha3_opaque_device_configurationJSON, "parameters");
     if (!parameters) {
         goto end;
     }

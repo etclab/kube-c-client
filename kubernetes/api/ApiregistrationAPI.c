@@ -53,9 +53,9 @@ ApiregistrationAPI_getAPIGroup_1(apiClient_t *apiClient)
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *ApiregistrationAPIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    mazu_cJSON *ApiregistrationAPIlocalVarJSON = mazu_cJSON_Parse(apiClient->dataReceived);
     v1_api_group_t *elementToReturn = v1_api_group_parseFromJSON(ApiregistrationAPIlocalVarJSON);
-    cJSON_Delete(ApiregistrationAPIlocalVarJSON);
+    mazu_cJSON_Delete(ApiregistrationAPIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
     }

@@ -11,7 +11,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdbool.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 
 #include "../model/v1_stateful_set_ordinals.h"
 v1_stateful_set_ordinals_t* instantiate_v1_stateful_set_ordinals(int include_optional);
@@ -39,11 +39,11 @@ v1_stateful_set_ordinals_t* instantiate_v1_stateful_set_ordinals(int include_opt
 void test_v1_stateful_set_ordinals(int include_optional) {
     v1_stateful_set_ordinals_t* v1_stateful_set_ordinals_1 = instantiate_v1_stateful_set_ordinals(include_optional);
 
-	cJSON* jsonv1_stateful_set_ordinals_1 = v1_stateful_set_ordinals_convertToJSON(v1_stateful_set_ordinals_1);
-	printf("v1_stateful_set_ordinals :\n%s\n", cJSON_Print(jsonv1_stateful_set_ordinals_1));
+	mazu_cJSON* jsonv1_stateful_set_ordinals_1 = v1_stateful_set_ordinals_convertToJSON(v1_stateful_set_ordinals_1);
+	printf("v1_stateful_set_ordinals :\n%s\n", mazu_cJSON_Print(jsonv1_stateful_set_ordinals_1));
 	v1_stateful_set_ordinals_t* v1_stateful_set_ordinals_2 = v1_stateful_set_ordinals_parseFromJSON(jsonv1_stateful_set_ordinals_1);
-	cJSON* jsonv1_stateful_set_ordinals_2 = v1_stateful_set_ordinals_convertToJSON(v1_stateful_set_ordinals_2);
-	printf("repeating v1_stateful_set_ordinals:\n%s\n", cJSON_Print(jsonv1_stateful_set_ordinals_2));
+	mazu_cJSON* jsonv1_stateful_set_ordinals_2 = v1_stateful_set_ordinals_convertToJSON(v1_stateful_set_ordinals_2);
+	printf("repeating v1_stateful_set_ordinals:\n%s\n", mazu_cJSON_Print(jsonv1_stateful_set_ordinals_2));
 }
 
 int main() {

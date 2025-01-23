@@ -8,7 +8,7 @@
 #define _v1beta3_priority_level_configuration_reference_H_
 
 #include <string.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
 #include "../include/binary.h"
@@ -29,9 +29,9 @@ v1beta3_priority_level_configuration_reference_t *v1beta3_priority_level_configu
 
 void v1beta3_priority_level_configuration_reference_free(v1beta3_priority_level_configuration_reference_t *v1beta3_priority_level_configuration_reference);
 
-v1beta3_priority_level_configuration_reference_t *v1beta3_priority_level_configuration_reference_parseFromJSON(cJSON *v1beta3_priority_level_configuration_referenceJSON);
+v1beta3_priority_level_configuration_reference_t *v1beta3_priority_level_configuration_reference_parseFromJSON(mazu_cJSON *v1beta3_priority_level_configuration_referenceJSON);
 
-cJSON *v1beta3_priority_level_configuration_reference_convertToJSON(v1beta3_priority_level_configuration_reference_t *v1beta3_priority_level_configuration_reference);
+mazu_cJSON *v1beta3_priority_level_configuration_reference_convertToJSON(v1beta3_priority_level_configuration_reference_t *v1beta3_priority_level_configuration_reference);
 
 #endif /* _v1beta3_priority_level_configuration_reference_H_ */
 

@@ -8,7 +8,7 @@
 #define _v1_linux_container_user_H_
 
 #include <string.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
 #include "../include/binary.h"
@@ -33,9 +33,9 @@ v1_linux_container_user_t *v1_linux_container_user_create(
 
 void v1_linux_container_user_free(v1_linux_container_user_t *v1_linux_container_user);
 
-v1_linux_container_user_t *v1_linux_container_user_parseFromJSON(cJSON *v1_linux_container_userJSON);
+v1_linux_container_user_t *v1_linux_container_user_parseFromJSON(mazu_cJSON *v1_linux_container_userJSON);
 
-cJSON *v1_linux_container_user_convertToJSON(v1_linux_container_user_t *v1_linux_container_user);
+mazu_cJSON *v1_linux_container_user_convertToJSON(v1_linux_container_user_t *v1_linux_container_user);
 
 #endif /* _v1_linux_container_user_H_ */
 

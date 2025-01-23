@@ -8,7 +8,7 @@
 #define _v1_pod_failure_policy_on_exit_codes_requirement_H_
 
 #include <string.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
 #include "../include/binary.h"
@@ -33,9 +33,9 @@ v1_pod_failure_policy_on_exit_codes_requirement_t *v1_pod_failure_policy_on_exit
 
 void v1_pod_failure_policy_on_exit_codes_requirement_free(v1_pod_failure_policy_on_exit_codes_requirement_t *v1_pod_failure_policy_on_exit_codes_requirement);
 
-v1_pod_failure_policy_on_exit_codes_requirement_t *v1_pod_failure_policy_on_exit_codes_requirement_parseFromJSON(cJSON *v1_pod_failure_policy_on_exit_codes_requirementJSON);
+v1_pod_failure_policy_on_exit_codes_requirement_t *v1_pod_failure_policy_on_exit_codes_requirement_parseFromJSON(mazu_cJSON *v1_pod_failure_policy_on_exit_codes_requirementJSON);
 
-cJSON *v1_pod_failure_policy_on_exit_codes_requirement_convertToJSON(v1_pod_failure_policy_on_exit_codes_requirement_t *v1_pod_failure_policy_on_exit_codes_requirement);
+mazu_cJSON *v1_pod_failure_policy_on_exit_codes_requirement_convertToJSON(v1_pod_failure_policy_on_exit_codes_requirement_t *v1_pod_failure_policy_on_exit_codes_requirement);
 
 #endif /* _v1_pod_failure_policy_on_exit_codes_requirement_H_ */
 

@@ -36,16 +36,16 @@ void v1_self_subject_access_review_spec_free(v1_self_subject_access_review_spec_
     free(v1_self_subject_access_review_spec);
 }
 
-cJSON *v1_self_subject_access_review_spec_convertToJSON(v1_self_subject_access_review_spec_t *v1_self_subject_access_review_spec) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_self_subject_access_review_spec_convertToJSON(v1_self_subject_access_review_spec_t *v1_self_subject_access_review_spec) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_self_subject_access_review_spec->non_resource_attributes
     if(v1_self_subject_access_review_spec->non_resource_attributes) {
-    cJSON *non_resource_attributes_local_JSON = v1_non_resource_attributes_convertToJSON(v1_self_subject_access_review_spec->non_resource_attributes);
+    mazu_cJSON *non_resource_attributes_local_JSON = v1_non_resource_attributes_convertToJSON(v1_self_subject_access_review_spec->non_resource_attributes);
     if(non_resource_attributes_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "nonResourceAttributes", non_resource_attributes_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "nonResourceAttributes", non_resource_attributes_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -54,11 +54,11 @@ cJSON *v1_self_subject_access_review_spec_convertToJSON(v1_self_subject_access_r
 
     // v1_self_subject_access_review_spec->resource_attributes
     if(v1_self_subject_access_review_spec->resource_attributes) {
-    cJSON *resource_attributes_local_JSON = v1_resource_attributes_convertToJSON(v1_self_subject_access_review_spec->resource_attributes);
+    mazu_cJSON *resource_attributes_local_JSON = v1_resource_attributes_convertToJSON(v1_self_subject_access_review_spec->resource_attributes);
     if(resource_attributes_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "resourceAttributes", resource_attributes_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "resourceAttributes", resource_attributes_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -67,12 +67,12 @@ cJSON *v1_self_subject_access_review_spec_convertToJSON(v1_self_subject_access_r
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_self_subject_access_review_spec_t *v1_self_subject_access_review_spec_parseFromJSON(cJSON *v1_self_subject_access_review_specJSON){
+v1_self_subject_access_review_spec_t *v1_self_subject_access_review_spec_parseFromJSON(mazu_cJSON *v1_self_subject_access_review_specJSON){
 
     v1_self_subject_access_review_spec_t *v1_self_subject_access_review_spec_local_var = NULL;
 
@@ -83,13 +83,13 @@ v1_self_subject_access_review_spec_t *v1_self_subject_access_review_spec_parseFr
     v1_resource_attributes_t *resource_attributes_local_nonprim = NULL;
 
     // v1_self_subject_access_review_spec->non_resource_attributes
-    cJSON *non_resource_attributes = cJSON_GetObjectItemCaseSensitive(v1_self_subject_access_review_specJSON, "nonResourceAttributes");
+    mazu_cJSON *non_resource_attributes = mazu_cJSON_GetObjectItemCaseSensitive(v1_self_subject_access_review_specJSON, "nonResourceAttributes");
     if (non_resource_attributes) { 
     non_resource_attributes_local_nonprim = v1_non_resource_attributes_parseFromJSON(non_resource_attributes); //nonprimitive
     }
 
     // v1_self_subject_access_review_spec->resource_attributes
-    cJSON *resource_attributes = cJSON_GetObjectItemCaseSensitive(v1_self_subject_access_review_specJSON, "resourceAttributes");
+    mazu_cJSON *resource_attributes = mazu_cJSON_GetObjectItemCaseSensitive(v1_self_subject_access_review_specJSON, "resourceAttributes");
     if (resource_attributes) { 
     resource_attributes_local_nonprim = v1_resource_attributes_parseFromJSON(resource_attributes); //nonprimitive
     }

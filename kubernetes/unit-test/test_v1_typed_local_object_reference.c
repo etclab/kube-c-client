@@ -11,7 +11,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdbool.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 
 #include "../model/v1_typed_local_object_reference.h"
 v1_typed_local_object_reference_t* instantiate_v1_typed_local_object_reference(int include_optional);
@@ -43,11 +43,11 @@ v1_typed_local_object_reference_t* instantiate_v1_typed_local_object_reference(i
 void test_v1_typed_local_object_reference(int include_optional) {
     v1_typed_local_object_reference_t* v1_typed_local_object_reference_1 = instantiate_v1_typed_local_object_reference(include_optional);
 
-	cJSON* jsonv1_typed_local_object_reference_1 = v1_typed_local_object_reference_convertToJSON(v1_typed_local_object_reference_1);
-	printf("v1_typed_local_object_reference :\n%s\n", cJSON_Print(jsonv1_typed_local_object_reference_1));
+	mazu_cJSON* jsonv1_typed_local_object_reference_1 = v1_typed_local_object_reference_convertToJSON(v1_typed_local_object_reference_1);
+	printf("v1_typed_local_object_reference :\n%s\n", mazu_cJSON_Print(jsonv1_typed_local_object_reference_1));
 	v1_typed_local_object_reference_t* v1_typed_local_object_reference_2 = v1_typed_local_object_reference_parseFromJSON(jsonv1_typed_local_object_reference_1);
-	cJSON* jsonv1_typed_local_object_reference_2 = v1_typed_local_object_reference_convertToJSON(v1_typed_local_object_reference_2);
-	printf("repeating v1_typed_local_object_reference:\n%s\n", cJSON_Print(jsonv1_typed_local_object_reference_2));
+	mazu_cJSON* jsonv1_typed_local_object_reference_2 = v1_typed_local_object_reference_convertToJSON(v1_typed_local_object_reference_2);
+	printf("repeating v1_typed_local_object_reference:\n%s\n", mazu_cJSON_Print(jsonv1_typed_local_object_reference_2));
 }
 
 int main() {

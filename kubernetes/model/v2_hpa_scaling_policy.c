@@ -34,14 +34,14 @@ void v2_hpa_scaling_policy_free(v2_hpa_scaling_policy_t *v2_hpa_scaling_policy) 
     free(v2_hpa_scaling_policy);
 }
 
-cJSON *v2_hpa_scaling_policy_convertToJSON(v2_hpa_scaling_policy_t *v2_hpa_scaling_policy) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v2_hpa_scaling_policy_convertToJSON(v2_hpa_scaling_policy_t *v2_hpa_scaling_policy) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v2_hpa_scaling_policy->period_seconds
     if (!v2_hpa_scaling_policy->period_seconds) {
         goto fail;
     }
-    if(cJSON_AddNumberToObject(item, "periodSeconds", v2_hpa_scaling_policy->period_seconds) == NULL) {
+    if(mazu_cJSON_AddNumberToObject(item, "periodSeconds", v2_hpa_scaling_policy->period_seconds) == NULL) {
     goto fail; //Numeric
     }
 
@@ -50,7 +50,7 @@ cJSON *v2_hpa_scaling_policy_convertToJSON(v2_hpa_scaling_policy_t *v2_hpa_scali
     if (!v2_hpa_scaling_policy->type) {
         goto fail;
     }
-    if(cJSON_AddStringToObject(item, "type", v2_hpa_scaling_policy->type) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "type", v2_hpa_scaling_policy->type) == NULL) {
     goto fail; //String
     }
 
@@ -59,54 +59,54 @@ cJSON *v2_hpa_scaling_policy_convertToJSON(v2_hpa_scaling_policy_t *v2_hpa_scali
     if (!v2_hpa_scaling_policy->value) {
         goto fail;
     }
-    if(cJSON_AddNumberToObject(item, "value", v2_hpa_scaling_policy->value) == NULL) {
+    if(mazu_cJSON_AddNumberToObject(item, "value", v2_hpa_scaling_policy->value) == NULL) {
     goto fail; //Numeric
     }
 
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v2_hpa_scaling_policy_t *v2_hpa_scaling_policy_parseFromJSON(cJSON *v2_hpa_scaling_policyJSON){
+v2_hpa_scaling_policy_t *v2_hpa_scaling_policy_parseFromJSON(mazu_cJSON *v2_hpa_scaling_policyJSON){
 
     v2_hpa_scaling_policy_t *v2_hpa_scaling_policy_local_var = NULL;
 
     // v2_hpa_scaling_policy->period_seconds
-    cJSON *period_seconds = cJSON_GetObjectItemCaseSensitive(v2_hpa_scaling_policyJSON, "periodSeconds");
+    mazu_cJSON *period_seconds = mazu_cJSON_GetObjectItemCaseSensitive(v2_hpa_scaling_policyJSON, "periodSeconds");
     if (!period_seconds) {
         goto end;
     }
 
     
-    if(!cJSON_IsNumber(period_seconds))
+    if(!mazu_cJSON_IsNumber(period_seconds))
     {
     goto end; //Numeric
     }
 
     // v2_hpa_scaling_policy->type
-    cJSON *type = cJSON_GetObjectItemCaseSensitive(v2_hpa_scaling_policyJSON, "type");
+    mazu_cJSON *type = mazu_cJSON_GetObjectItemCaseSensitive(v2_hpa_scaling_policyJSON, "type");
     if (!type) {
         goto end;
     }
 
     
-    if(!cJSON_IsString(type))
+    if(!mazu_cJSON_IsString(type))
     {
     goto end; //String
     }
 
     // v2_hpa_scaling_policy->value
-    cJSON *value = cJSON_GetObjectItemCaseSensitive(v2_hpa_scaling_policyJSON, "value");
+    mazu_cJSON *value = mazu_cJSON_GetObjectItemCaseSensitive(v2_hpa_scaling_policyJSON, "value");
     if (!value) {
         goto end;
     }
 
     
-    if(!cJSON_IsNumber(value))
+    if(!mazu_cJSON_IsNumber(value))
     {
     goto end; //Numeric
     }

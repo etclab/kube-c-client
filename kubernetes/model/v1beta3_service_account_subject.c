@@ -36,14 +36,14 @@ void v1beta3_service_account_subject_free(v1beta3_service_account_subject_t *v1b
     free(v1beta3_service_account_subject);
 }
 
-cJSON *v1beta3_service_account_subject_convertToJSON(v1beta3_service_account_subject_t *v1beta3_service_account_subject) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1beta3_service_account_subject_convertToJSON(v1beta3_service_account_subject_t *v1beta3_service_account_subject) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1beta3_service_account_subject->name
     if (!v1beta3_service_account_subject->name) {
         goto fail;
     }
-    if(cJSON_AddStringToObject(item, "name", v1beta3_service_account_subject->name) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "name", v1beta3_service_account_subject->name) == NULL) {
     goto fail; //String
     }
 
@@ -52,42 +52,42 @@ cJSON *v1beta3_service_account_subject_convertToJSON(v1beta3_service_account_sub
     if (!v1beta3_service_account_subject->_namespace) {
         goto fail;
     }
-    if(cJSON_AddStringToObject(item, "namespace", v1beta3_service_account_subject->_namespace) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "namespace", v1beta3_service_account_subject->_namespace) == NULL) {
     goto fail; //String
     }
 
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1beta3_service_account_subject_t *v1beta3_service_account_subject_parseFromJSON(cJSON *v1beta3_service_account_subjectJSON){
+v1beta3_service_account_subject_t *v1beta3_service_account_subject_parseFromJSON(mazu_cJSON *v1beta3_service_account_subjectJSON){
 
     v1beta3_service_account_subject_t *v1beta3_service_account_subject_local_var = NULL;
 
     // v1beta3_service_account_subject->name
-    cJSON *name = cJSON_GetObjectItemCaseSensitive(v1beta3_service_account_subjectJSON, "name");
+    mazu_cJSON *name = mazu_cJSON_GetObjectItemCaseSensitive(v1beta3_service_account_subjectJSON, "name");
     if (!name) {
         goto end;
     }
 
     
-    if(!cJSON_IsString(name))
+    if(!mazu_cJSON_IsString(name))
     {
     goto end; //String
     }
 
     // v1beta3_service_account_subject->_namespace
-    cJSON *_namespace = cJSON_GetObjectItemCaseSensitive(v1beta3_service_account_subjectJSON, "namespace");
+    mazu_cJSON *_namespace = mazu_cJSON_GetObjectItemCaseSensitive(v1beta3_service_account_subjectJSON, "namespace");
     if (!_namespace) {
         goto end;
     }
 
     
-    if(!cJSON_IsString(_namespace))
+    if(!mazu_cJSON_IsString(_namespace))
     {
     goto end; //String
     }

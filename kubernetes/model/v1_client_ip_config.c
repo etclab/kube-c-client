@@ -26,12 +26,12 @@ void v1_client_ip_config_free(v1_client_ip_config_t *v1_client_ip_config) {
     free(v1_client_ip_config);
 }
 
-cJSON *v1_client_ip_config_convertToJSON(v1_client_ip_config_t *v1_client_ip_config) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_client_ip_config_convertToJSON(v1_client_ip_config_t *v1_client_ip_config) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_client_ip_config->timeout_seconds
     if(v1_client_ip_config->timeout_seconds) {
-    if(cJSON_AddNumberToObject(item, "timeoutSeconds", v1_client_ip_config->timeout_seconds) == NULL) {
+    if(mazu_cJSON_AddNumberToObject(item, "timeoutSeconds", v1_client_ip_config->timeout_seconds) == NULL) {
     goto fail; //Numeric
     }
     }
@@ -39,19 +39,19 @@ cJSON *v1_client_ip_config_convertToJSON(v1_client_ip_config_t *v1_client_ip_con
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_client_ip_config_t *v1_client_ip_config_parseFromJSON(cJSON *v1_client_ip_configJSON){
+v1_client_ip_config_t *v1_client_ip_config_parseFromJSON(mazu_cJSON *v1_client_ip_configJSON){
 
     v1_client_ip_config_t *v1_client_ip_config_local_var = NULL;
 
     // v1_client_ip_config->timeout_seconds
-    cJSON *timeout_seconds = cJSON_GetObjectItemCaseSensitive(v1_client_ip_configJSON, "timeoutSeconds");
+    mazu_cJSON *timeout_seconds = mazu_cJSON_GetObjectItemCaseSensitive(v1_client_ip_configJSON, "timeoutSeconds");
     if (timeout_seconds) { 
-    if(!cJSON_IsNumber(timeout_seconds))
+    if(!mazu_cJSON_IsNumber(timeout_seconds))
     {
     goto end; //Numeric
     }

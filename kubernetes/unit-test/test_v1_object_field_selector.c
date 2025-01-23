@@ -11,7 +11,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdbool.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 
 #include "../model/v1_object_field_selector.h"
 v1_object_field_selector_t* instantiate_v1_object_field_selector(int include_optional);
@@ -41,11 +41,11 @@ v1_object_field_selector_t* instantiate_v1_object_field_selector(int include_opt
 void test_v1_object_field_selector(int include_optional) {
     v1_object_field_selector_t* v1_object_field_selector_1 = instantiate_v1_object_field_selector(include_optional);
 
-	cJSON* jsonv1_object_field_selector_1 = v1_object_field_selector_convertToJSON(v1_object_field_selector_1);
-	printf("v1_object_field_selector :\n%s\n", cJSON_Print(jsonv1_object_field_selector_1));
+	mazu_cJSON* jsonv1_object_field_selector_1 = v1_object_field_selector_convertToJSON(v1_object_field_selector_1);
+	printf("v1_object_field_selector :\n%s\n", mazu_cJSON_Print(jsonv1_object_field_selector_1));
 	v1_object_field_selector_t* v1_object_field_selector_2 = v1_object_field_selector_parseFromJSON(jsonv1_object_field_selector_1);
-	cJSON* jsonv1_object_field_selector_2 = v1_object_field_selector_convertToJSON(v1_object_field_selector_2);
-	printf("repeating v1_object_field_selector:\n%s\n", cJSON_Print(jsonv1_object_field_selector_2));
+	mazu_cJSON* jsonv1_object_field_selector_2 = v1_object_field_selector_convertToJSON(v1_object_field_selector_2);
+	printf("repeating v1_object_field_selector:\n%s\n", mazu_cJSON_Print(jsonv1_object_field_selector_2));
 }
 
 int main() {

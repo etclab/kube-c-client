@@ -11,7 +11,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdbool.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 
 #include "../model/v1_affinity.h"
 v1_affinity_t* instantiate_v1_affinity(int include_optional);
@@ -49,11 +49,11 @@ v1_affinity_t* instantiate_v1_affinity(int include_optional) {
 void test_v1_affinity(int include_optional) {
     v1_affinity_t* v1_affinity_1 = instantiate_v1_affinity(include_optional);
 
-	cJSON* jsonv1_affinity_1 = v1_affinity_convertToJSON(v1_affinity_1);
-	printf("v1_affinity :\n%s\n", cJSON_Print(jsonv1_affinity_1));
+	mazu_cJSON* jsonv1_affinity_1 = v1_affinity_convertToJSON(v1_affinity_1);
+	printf("v1_affinity :\n%s\n", mazu_cJSON_Print(jsonv1_affinity_1));
 	v1_affinity_t* v1_affinity_2 = v1_affinity_parseFromJSON(jsonv1_affinity_1);
-	cJSON* jsonv1_affinity_2 = v1_affinity_convertToJSON(v1_affinity_2);
-	printf("repeating v1_affinity:\n%s\n", cJSON_Print(jsonv1_affinity_2));
+	mazu_cJSON* jsonv1_affinity_2 = v1_affinity_convertToJSON(v1_affinity_2);
+	printf("repeating v1_affinity:\n%s\n", mazu_cJSON_Print(jsonv1_affinity_2));
 }
 
 int main() {

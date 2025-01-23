@@ -50,12 +50,12 @@ void v1_toleration_free(v1_toleration_t *v1_toleration) {
     free(v1_toleration);
 }
 
-cJSON *v1_toleration_convertToJSON(v1_toleration_t *v1_toleration) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_toleration_convertToJSON(v1_toleration_t *v1_toleration) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_toleration->effect
     if(v1_toleration->effect) {
-    if(cJSON_AddStringToObject(item, "effect", v1_toleration->effect) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "effect", v1_toleration->effect) == NULL) {
     goto fail; //String
     }
     }
@@ -63,7 +63,7 @@ cJSON *v1_toleration_convertToJSON(v1_toleration_t *v1_toleration) {
 
     // v1_toleration->key
     if(v1_toleration->key) {
-    if(cJSON_AddStringToObject(item, "key", v1_toleration->key) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "key", v1_toleration->key) == NULL) {
     goto fail; //String
     }
     }
@@ -71,7 +71,7 @@ cJSON *v1_toleration_convertToJSON(v1_toleration_t *v1_toleration) {
 
     // v1_toleration->_operator
     if(v1_toleration->_operator) {
-    if(cJSON_AddStringToObject(item, "operator", v1_toleration->_operator) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "operator", v1_toleration->_operator) == NULL) {
     goto fail; //String
     }
     }
@@ -79,7 +79,7 @@ cJSON *v1_toleration_convertToJSON(v1_toleration_t *v1_toleration) {
 
     // v1_toleration->toleration_seconds
     if(v1_toleration->toleration_seconds) {
-    if(cJSON_AddNumberToObject(item, "tolerationSeconds", v1_toleration->toleration_seconds) == NULL) {
+    if(mazu_cJSON_AddNumberToObject(item, "tolerationSeconds", v1_toleration->toleration_seconds) == NULL) {
     goto fail; //Numeric
     }
     }
@@ -87,7 +87,7 @@ cJSON *v1_toleration_convertToJSON(v1_toleration_t *v1_toleration) {
 
     // v1_toleration->value
     if(v1_toleration->value) {
-    if(cJSON_AddStringToObject(item, "value", v1_toleration->value) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "value", v1_toleration->value) == NULL) {
     goto fail; //String
     }
     }
@@ -95,55 +95,55 @@ cJSON *v1_toleration_convertToJSON(v1_toleration_t *v1_toleration) {
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_toleration_t *v1_toleration_parseFromJSON(cJSON *v1_tolerationJSON){
+v1_toleration_t *v1_toleration_parseFromJSON(mazu_cJSON *v1_tolerationJSON){
 
     v1_toleration_t *v1_toleration_local_var = NULL;
 
     // v1_toleration->effect
-    cJSON *effect = cJSON_GetObjectItemCaseSensitive(v1_tolerationJSON, "effect");
+    mazu_cJSON *effect = mazu_cJSON_GetObjectItemCaseSensitive(v1_tolerationJSON, "effect");
     if (effect) { 
-    if(!cJSON_IsString(effect) && !cJSON_IsNull(effect))
+    if(!mazu_cJSON_IsString(effect) && !mazu_cJSON_IsNull(effect))
     {
     goto end; //String
     }
     }
 
     // v1_toleration->key
-    cJSON *key = cJSON_GetObjectItemCaseSensitive(v1_tolerationJSON, "key");
+    mazu_cJSON *key = mazu_cJSON_GetObjectItemCaseSensitive(v1_tolerationJSON, "key");
     if (key) { 
-    if(!cJSON_IsString(key) && !cJSON_IsNull(key))
+    if(!mazu_cJSON_IsString(key) && !mazu_cJSON_IsNull(key))
     {
     goto end; //String
     }
     }
 
     // v1_toleration->_operator
-    cJSON *_operator = cJSON_GetObjectItemCaseSensitive(v1_tolerationJSON, "operator");
+    mazu_cJSON *_operator = mazu_cJSON_GetObjectItemCaseSensitive(v1_tolerationJSON, "operator");
     if (_operator) { 
-    if(!cJSON_IsString(_operator) && !cJSON_IsNull(_operator))
+    if(!mazu_cJSON_IsString(_operator) && !mazu_cJSON_IsNull(_operator))
     {
     goto end; //String
     }
     }
 
     // v1_toleration->toleration_seconds
-    cJSON *toleration_seconds = cJSON_GetObjectItemCaseSensitive(v1_tolerationJSON, "tolerationSeconds");
+    mazu_cJSON *toleration_seconds = mazu_cJSON_GetObjectItemCaseSensitive(v1_tolerationJSON, "tolerationSeconds");
     if (toleration_seconds) { 
-    if(!cJSON_IsNumber(toleration_seconds))
+    if(!mazu_cJSON_IsNumber(toleration_seconds))
     {
     goto end; //Numeric
     }
     }
 
     // v1_toleration->value
-    cJSON *value = cJSON_GetObjectItemCaseSensitive(v1_tolerationJSON, "value");
+    mazu_cJSON *value = mazu_cJSON_GetObjectItemCaseSensitive(v1_tolerationJSON, "value");
     if (value) { 
-    if(!cJSON_IsString(value) && !cJSON_IsNull(value))
+    if(!mazu_cJSON_IsString(value) && !mazu_cJSON_IsNull(value))
     {
     goto end; //String
     }
@@ -151,11 +151,11 @@ v1_toleration_t *v1_toleration_parseFromJSON(cJSON *v1_tolerationJSON){
 
 
     v1_toleration_local_var = v1_toleration_create (
-        effect && !cJSON_IsNull(effect) ? strdup(effect->valuestring) : NULL,
-        key && !cJSON_IsNull(key) ? strdup(key->valuestring) : NULL,
-        _operator && !cJSON_IsNull(_operator) ? strdup(_operator->valuestring) : NULL,
+        effect && !mazu_cJSON_IsNull(effect) ? strdup(effect->valuestring) : NULL,
+        key && !mazu_cJSON_IsNull(key) ? strdup(key->valuestring) : NULL,
+        _operator && !mazu_cJSON_IsNull(_operator) ? strdup(_operator->valuestring) : NULL,
         toleration_seconds ? toleration_seconds->valuedouble : 0,
-        value && !cJSON_IsNull(value) ? strdup(value->valuestring) : NULL
+        value && !mazu_cJSON_IsNull(value) ? strdup(value->valuestring) : NULL
         );
 
     return v1_toleration_local_var;

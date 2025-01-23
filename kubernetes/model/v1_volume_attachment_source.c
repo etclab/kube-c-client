@@ -36,16 +36,16 @@ void v1_volume_attachment_source_free(v1_volume_attachment_source_t *v1_volume_a
     free(v1_volume_attachment_source);
 }
 
-cJSON *v1_volume_attachment_source_convertToJSON(v1_volume_attachment_source_t *v1_volume_attachment_source) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_volume_attachment_source_convertToJSON(v1_volume_attachment_source_t *v1_volume_attachment_source) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_volume_attachment_source->inline_volume_spec
     if(v1_volume_attachment_source->inline_volume_spec) {
-    cJSON *inline_volume_spec_local_JSON = v1_persistent_volume_spec_convertToJSON(v1_volume_attachment_source->inline_volume_spec);
+    mazu_cJSON *inline_volume_spec_local_JSON = v1_persistent_volume_spec_convertToJSON(v1_volume_attachment_source->inline_volume_spec);
     if(inline_volume_spec_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "inlineVolumeSpec", inline_volume_spec_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "inlineVolumeSpec", inline_volume_spec_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -54,7 +54,7 @@ cJSON *v1_volume_attachment_source_convertToJSON(v1_volume_attachment_source_t *
 
     // v1_volume_attachment_source->persistent_volume_name
     if(v1_volume_attachment_source->persistent_volume_name) {
-    if(cJSON_AddStringToObject(item, "persistentVolumeName", v1_volume_attachment_source->persistent_volume_name) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "persistentVolumeName", v1_volume_attachment_source->persistent_volume_name) == NULL) {
     goto fail; //String
     }
     }
@@ -62,12 +62,12 @@ cJSON *v1_volume_attachment_source_convertToJSON(v1_volume_attachment_source_t *
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_volume_attachment_source_t *v1_volume_attachment_source_parseFromJSON(cJSON *v1_volume_attachment_sourceJSON){
+v1_volume_attachment_source_t *v1_volume_attachment_source_parseFromJSON(mazu_cJSON *v1_volume_attachment_sourceJSON){
 
     v1_volume_attachment_source_t *v1_volume_attachment_source_local_var = NULL;
 
@@ -75,15 +75,15 @@ v1_volume_attachment_source_t *v1_volume_attachment_source_parseFromJSON(cJSON *
     v1_persistent_volume_spec_t *inline_volume_spec_local_nonprim = NULL;
 
     // v1_volume_attachment_source->inline_volume_spec
-    cJSON *inline_volume_spec = cJSON_GetObjectItemCaseSensitive(v1_volume_attachment_sourceJSON, "inlineVolumeSpec");
+    mazu_cJSON *inline_volume_spec = mazu_cJSON_GetObjectItemCaseSensitive(v1_volume_attachment_sourceJSON, "inlineVolumeSpec");
     if (inline_volume_spec) { 
     inline_volume_spec_local_nonprim = v1_persistent_volume_spec_parseFromJSON(inline_volume_spec); //nonprimitive
     }
 
     // v1_volume_attachment_source->persistent_volume_name
-    cJSON *persistent_volume_name = cJSON_GetObjectItemCaseSensitive(v1_volume_attachment_sourceJSON, "persistentVolumeName");
+    mazu_cJSON *persistent_volume_name = mazu_cJSON_GetObjectItemCaseSensitive(v1_volume_attachment_sourceJSON, "persistentVolumeName");
     if (persistent_volume_name) { 
-    if(!cJSON_IsString(persistent_volume_name) && !cJSON_IsNull(persistent_volume_name))
+    if(!mazu_cJSON_IsString(persistent_volume_name) && !mazu_cJSON_IsNull(persistent_volume_name))
     {
     goto end; //String
     }
@@ -92,7 +92,7 @@ v1_volume_attachment_source_t *v1_volume_attachment_source_parseFromJSON(cJSON *
 
     v1_volume_attachment_source_local_var = v1_volume_attachment_source_create (
         inline_volume_spec ? inline_volume_spec_local_nonprim : NULL,
-        persistent_volume_name && !cJSON_IsNull(persistent_volume_name) ? strdup(persistent_volume_name->valuestring) : NULL
+        persistent_volume_name && !mazu_cJSON_IsNull(persistent_volume_name) ? strdup(persistent_volume_name->valuestring) : NULL
         );
 
     return v1_volume_attachment_source_local_var;

@@ -48,12 +48,12 @@ void v1_lease_free(v1_lease_t *v1_lease) {
     free(v1_lease);
 }
 
-cJSON *v1_lease_convertToJSON(v1_lease_t *v1_lease) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_lease_convertToJSON(v1_lease_t *v1_lease) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_lease->api_version
     if(v1_lease->api_version) {
-    if(cJSON_AddStringToObject(item, "apiVersion", v1_lease->api_version) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "apiVersion", v1_lease->api_version) == NULL) {
     goto fail; //String
     }
     }
@@ -61,7 +61,7 @@ cJSON *v1_lease_convertToJSON(v1_lease_t *v1_lease) {
 
     // v1_lease->kind
     if(v1_lease->kind) {
-    if(cJSON_AddStringToObject(item, "kind", v1_lease->kind) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "kind", v1_lease->kind) == NULL) {
     goto fail; //String
     }
     }
@@ -69,11 +69,11 @@ cJSON *v1_lease_convertToJSON(v1_lease_t *v1_lease) {
 
     // v1_lease->metadata
     if(v1_lease->metadata) {
-    cJSON *metadata_local_JSON = v1_object_meta_convertToJSON(v1_lease->metadata);
+    mazu_cJSON *metadata_local_JSON = v1_object_meta_convertToJSON(v1_lease->metadata);
     if(metadata_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "metadata", metadata_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "metadata", metadata_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -82,11 +82,11 @@ cJSON *v1_lease_convertToJSON(v1_lease_t *v1_lease) {
 
     // v1_lease->spec
     if(v1_lease->spec) {
-    cJSON *spec_local_JSON = v1_lease_spec_convertToJSON(v1_lease->spec);
+    mazu_cJSON *spec_local_JSON = v1_lease_spec_convertToJSON(v1_lease->spec);
     if(spec_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "spec", spec_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "spec", spec_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -95,12 +95,12 @@ cJSON *v1_lease_convertToJSON(v1_lease_t *v1_lease) {
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_lease_t *v1_lease_parseFromJSON(cJSON *v1_leaseJSON){
+v1_lease_t *v1_lease_parseFromJSON(mazu_cJSON *v1_leaseJSON){
 
     v1_lease_t *v1_lease_local_var = NULL;
 
@@ -111,39 +111,39 @@ v1_lease_t *v1_lease_parseFromJSON(cJSON *v1_leaseJSON){
     v1_lease_spec_t *spec_local_nonprim = NULL;
 
     // v1_lease->api_version
-    cJSON *api_version = cJSON_GetObjectItemCaseSensitive(v1_leaseJSON, "apiVersion");
+    mazu_cJSON *api_version = mazu_cJSON_GetObjectItemCaseSensitive(v1_leaseJSON, "apiVersion");
     if (api_version) { 
-    if(!cJSON_IsString(api_version) && !cJSON_IsNull(api_version))
+    if(!mazu_cJSON_IsString(api_version) && !mazu_cJSON_IsNull(api_version))
     {
     goto end; //String
     }
     }
 
     // v1_lease->kind
-    cJSON *kind = cJSON_GetObjectItemCaseSensitive(v1_leaseJSON, "kind");
+    mazu_cJSON *kind = mazu_cJSON_GetObjectItemCaseSensitive(v1_leaseJSON, "kind");
     if (kind) { 
-    if(!cJSON_IsString(kind) && !cJSON_IsNull(kind))
+    if(!mazu_cJSON_IsString(kind) && !mazu_cJSON_IsNull(kind))
     {
     goto end; //String
     }
     }
 
     // v1_lease->metadata
-    cJSON *metadata = cJSON_GetObjectItemCaseSensitive(v1_leaseJSON, "metadata");
+    mazu_cJSON *metadata = mazu_cJSON_GetObjectItemCaseSensitive(v1_leaseJSON, "metadata");
     if (metadata) { 
     metadata_local_nonprim = v1_object_meta_parseFromJSON(metadata); //nonprimitive
     }
 
     // v1_lease->spec
-    cJSON *spec = cJSON_GetObjectItemCaseSensitive(v1_leaseJSON, "spec");
+    mazu_cJSON *spec = mazu_cJSON_GetObjectItemCaseSensitive(v1_leaseJSON, "spec");
     if (spec) { 
     spec_local_nonprim = v1_lease_spec_parseFromJSON(spec); //nonprimitive
     }
 
 
     v1_lease_local_var = v1_lease_create (
-        api_version && !cJSON_IsNull(api_version) ? strdup(api_version->valuestring) : NULL,
-        kind && !cJSON_IsNull(kind) ? strdup(kind->valuestring) : NULL,
+        api_version && !mazu_cJSON_IsNull(api_version) ? strdup(api_version->valuestring) : NULL,
+        kind && !mazu_cJSON_IsNull(kind) ? strdup(kind->valuestring) : NULL,
         metadata ? metadata_local_nonprim : NULL,
         spec ? spec_local_nonprim : NULL
         );

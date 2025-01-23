@@ -36,12 +36,12 @@ void v1_pod_dns_config_option_free(v1_pod_dns_config_option_t *v1_pod_dns_config
     free(v1_pod_dns_config_option);
 }
 
-cJSON *v1_pod_dns_config_option_convertToJSON(v1_pod_dns_config_option_t *v1_pod_dns_config_option) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_pod_dns_config_option_convertToJSON(v1_pod_dns_config_option_t *v1_pod_dns_config_option) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_pod_dns_config_option->name
     if(v1_pod_dns_config_option->name) {
-    if(cJSON_AddStringToObject(item, "name", v1_pod_dns_config_option->name) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "name", v1_pod_dns_config_option->name) == NULL) {
     goto fail; //String
     }
     }
@@ -49,7 +49,7 @@ cJSON *v1_pod_dns_config_option_convertToJSON(v1_pod_dns_config_option_t *v1_pod
 
     // v1_pod_dns_config_option->value
     if(v1_pod_dns_config_option->value) {
-    if(cJSON_AddStringToObject(item, "value", v1_pod_dns_config_option->value) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "value", v1_pod_dns_config_option->value) == NULL) {
     goto fail; //String
     }
     }
@@ -57,28 +57,28 @@ cJSON *v1_pod_dns_config_option_convertToJSON(v1_pod_dns_config_option_t *v1_pod
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_pod_dns_config_option_t *v1_pod_dns_config_option_parseFromJSON(cJSON *v1_pod_dns_config_optionJSON){
+v1_pod_dns_config_option_t *v1_pod_dns_config_option_parseFromJSON(mazu_cJSON *v1_pod_dns_config_optionJSON){
 
     v1_pod_dns_config_option_t *v1_pod_dns_config_option_local_var = NULL;
 
     // v1_pod_dns_config_option->name
-    cJSON *name = cJSON_GetObjectItemCaseSensitive(v1_pod_dns_config_optionJSON, "name");
+    mazu_cJSON *name = mazu_cJSON_GetObjectItemCaseSensitive(v1_pod_dns_config_optionJSON, "name");
     if (name) { 
-    if(!cJSON_IsString(name) && !cJSON_IsNull(name))
+    if(!mazu_cJSON_IsString(name) && !mazu_cJSON_IsNull(name))
     {
     goto end; //String
     }
     }
 
     // v1_pod_dns_config_option->value
-    cJSON *value = cJSON_GetObjectItemCaseSensitive(v1_pod_dns_config_optionJSON, "value");
+    mazu_cJSON *value = mazu_cJSON_GetObjectItemCaseSensitive(v1_pod_dns_config_optionJSON, "value");
     if (value) { 
-    if(!cJSON_IsString(value) && !cJSON_IsNull(value))
+    if(!mazu_cJSON_IsString(value) && !mazu_cJSON_IsNull(value))
     {
     goto end; //String
     }
@@ -86,8 +86,8 @@ v1_pod_dns_config_option_t *v1_pod_dns_config_option_parseFromJSON(cJSON *v1_pod
 
 
     v1_pod_dns_config_option_local_var = v1_pod_dns_config_option_create (
-        name && !cJSON_IsNull(name) ? strdup(name->valuestring) : NULL,
-        value && !cJSON_IsNull(value) ? strdup(value->valuestring) : NULL
+        name && !mazu_cJSON_IsNull(name) ? strdup(name->valuestring) : NULL,
+        value && !mazu_cJSON_IsNull(value) ? strdup(value->valuestring) : NULL
         );
 
     return v1_pod_dns_config_option_local_var;

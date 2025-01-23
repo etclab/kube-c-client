@@ -30,12 +30,12 @@ void v1_local_object_reference_free(v1_local_object_reference_t *v1_local_object
     free(v1_local_object_reference);
 }
 
-cJSON *v1_local_object_reference_convertToJSON(v1_local_object_reference_t *v1_local_object_reference) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_local_object_reference_convertToJSON(v1_local_object_reference_t *v1_local_object_reference) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_local_object_reference->name
     if(v1_local_object_reference->name) {
-    if(cJSON_AddStringToObject(item, "name", v1_local_object_reference->name) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "name", v1_local_object_reference->name) == NULL) {
     goto fail; //String
     }
     }
@@ -43,19 +43,19 @@ cJSON *v1_local_object_reference_convertToJSON(v1_local_object_reference_t *v1_l
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_local_object_reference_t *v1_local_object_reference_parseFromJSON(cJSON *v1_local_object_referenceJSON){
+v1_local_object_reference_t *v1_local_object_reference_parseFromJSON(mazu_cJSON *v1_local_object_referenceJSON){
 
     v1_local_object_reference_t *v1_local_object_reference_local_var = NULL;
 
     // v1_local_object_reference->name
-    cJSON *name = cJSON_GetObjectItemCaseSensitive(v1_local_object_referenceJSON, "name");
+    mazu_cJSON *name = mazu_cJSON_GetObjectItemCaseSensitive(v1_local_object_referenceJSON, "name");
     if (name) { 
-    if(!cJSON_IsString(name) && !cJSON_IsNull(name))
+    if(!mazu_cJSON_IsString(name) && !mazu_cJSON_IsNull(name))
     {
     goto end; //String
     }
@@ -63,7 +63,7 @@ v1_local_object_reference_t *v1_local_object_reference_parseFromJSON(cJSON *v1_l
 
 
     v1_local_object_reference_local_var = v1_local_object_reference_create (
-        name && !cJSON_IsNull(name) ? strdup(name->valuestring) : NULL
+        name && !mazu_cJSON_IsNull(name) ? strdup(name->valuestring) : NULL
         );
 
     return v1_local_object_reference_local_var;

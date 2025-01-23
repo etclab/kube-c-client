@@ -11,7 +11,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdbool.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 
 #include "../model/v1_resource_quota.h"
 v1_resource_quota_t* instantiate_v1_resource_quota(int include_optional);
@@ -53,11 +53,11 @@ v1_resource_quota_t* instantiate_v1_resource_quota(int include_optional) {
 void test_v1_resource_quota(int include_optional) {
     v1_resource_quota_t* v1_resource_quota_1 = instantiate_v1_resource_quota(include_optional);
 
-	cJSON* jsonv1_resource_quota_1 = v1_resource_quota_convertToJSON(v1_resource_quota_1);
-	printf("v1_resource_quota :\n%s\n", cJSON_Print(jsonv1_resource_quota_1));
+	mazu_cJSON* jsonv1_resource_quota_1 = v1_resource_quota_convertToJSON(v1_resource_quota_1);
+	printf("v1_resource_quota :\n%s\n", mazu_cJSON_Print(jsonv1_resource_quota_1));
 	v1_resource_quota_t* v1_resource_quota_2 = v1_resource_quota_parseFromJSON(jsonv1_resource_quota_1);
-	cJSON* jsonv1_resource_quota_2 = v1_resource_quota_convertToJSON(v1_resource_quota_2);
-	printf("repeating v1_resource_quota:\n%s\n", cJSON_Print(jsonv1_resource_quota_2));
+	mazu_cJSON* jsonv1_resource_quota_2 = v1_resource_quota_convertToJSON(v1_resource_quota_2);
+	printf("repeating v1_resource_quota:\n%s\n", mazu_cJSON_Print(jsonv1_resource_quota_2));
 }
 
 int main() {

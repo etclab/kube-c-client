@@ -39,19 +39,19 @@ void v1_host_alias_free(v1_host_alias_t *v1_host_alias) {
     free(v1_host_alias);
 }
 
-cJSON *v1_host_alias_convertToJSON(v1_host_alias_t *v1_host_alias) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_host_alias_convertToJSON(v1_host_alias_t *v1_host_alias) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_host_alias->hostnames
     if(v1_host_alias->hostnames) {
-    cJSON *hostnames = cJSON_AddArrayToObject(item, "hostnames");
+    mazu_cJSON *hostnames = mazu_cJSON_AddArrayToObject(item, "hostnames");
     if(hostnames == NULL) {
         goto fail; //primitive container
     }
 
     listEntry_t *hostnamesListEntry;
     list_ForEach(hostnamesListEntry, v1_host_alias->hostnames) {
-    if(cJSON_AddStringToObject(hostnames, "", (char*)hostnamesListEntry->data) == NULL)
+    if(mazu_cJSON_AddStringToObject(hostnames, "", (char*)hostnamesListEntry->data) == NULL)
     {
         goto fail;
     }
@@ -63,19 +63,19 @@ cJSON *v1_host_alias_convertToJSON(v1_host_alias_t *v1_host_alias) {
     if (!v1_host_alias->ip) {
         goto fail;
     }
-    if(cJSON_AddStringToObject(item, "ip", v1_host_alias->ip) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "ip", v1_host_alias->ip) == NULL) {
     goto fail; //String
     }
 
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_host_alias_t *v1_host_alias_parseFromJSON(cJSON *v1_host_aliasJSON){
+v1_host_alias_t *v1_host_alias_parseFromJSON(mazu_cJSON *v1_host_aliasJSON){
 
     v1_host_alias_t *v1_host_alias_local_var = NULL;
 
@@ -83,17 +83,17 @@ v1_host_alias_t *v1_host_alias_parseFromJSON(cJSON *v1_host_aliasJSON){
     list_t *hostnamesList = NULL;
 
     // v1_host_alias->hostnames
-    cJSON *hostnames = cJSON_GetObjectItemCaseSensitive(v1_host_aliasJSON, "hostnames");
+    mazu_cJSON *hostnames = mazu_cJSON_GetObjectItemCaseSensitive(v1_host_aliasJSON, "hostnames");
     if (hostnames) { 
-    cJSON *hostnames_local = NULL;
-    if(!cJSON_IsArray(hostnames)) {
+    mazu_cJSON *hostnames_local = NULL;
+    if(!mazu_cJSON_IsArray(hostnames)) {
         goto end;//primitive container
     }
     hostnamesList = list_createList();
 
-    cJSON_ArrayForEach(hostnames_local, hostnames)
+    mazu_cJSON_ArrayForEach(hostnames_local, hostnames)
     {
-        if(!cJSON_IsString(hostnames_local))
+        if(!mazu_cJSON_IsString(hostnames_local))
         {
             goto end;
         }
@@ -102,13 +102,13 @@ v1_host_alias_t *v1_host_alias_parseFromJSON(cJSON *v1_host_aliasJSON){
     }
 
     // v1_host_alias->ip
-    cJSON *ip = cJSON_GetObjectItemCaseSensitive(v1_host_aliasJSON, "ip");
+    mazu_cJSON *ip = mazu_cJSON_GetObjectItemCaseSensitive(v1_host_aliasJSON, "ip");
     if (!ip) {
         goto end;
     }
 
     
-    if(!cJSON_IsString(ip))
+    if(!mazu_cJSON_IsString(ip))
     {
     goto end; //String
     }

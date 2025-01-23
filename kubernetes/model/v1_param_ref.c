@@ -48,12 +48,12 @@ void v1_param_ref_free(v1_param_ref_t *v1_param_ref) {
     free(v1_param_ref);
 }
 
-cJSON *v1_param_ref_convertToJSON(v1_param_ref_t *v1_param_ref) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_param_ref_convertToJSON(v1_param_ref_t *v1_param_ref) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_param_ref->name
     if(v1_param_ref->name) {
-    if(cJSON_AddStringToObject(item, "name", v1_param_ref->name) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "name", v1_param_ref->name) == NULL) {
     goto fail; //String
     }
     }
@@ -61,7 +61,7 @@ cJSON *v1_param_ref_convertToJSON(v1_param_ref_t *v1_param_ref) {
 
     // v1_param_ref->_namespace
     if(v1_param_ref->_namespace) {
-    if(cJSON_AddStringToObject(item, "namespace", v1_param_ref->_namespace) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "namespace", v1_param_ref->_namespace) == NULL) {
     goto fail; //String
     }
     }
@@ -69,7 +69,7 @@ cJSON *v1_param_ref_convertToJSON(v1_param_ref_t *v1_param_ref) {
 
     // v1_param_ref->parameter_not_found_action
     if(v1_param_ref->parameter_not_found_action) {
-    if(cJSON_AddStringToObject(item, "parameterNotFoundAction", v1_param_ref->parameter_not_found_action) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "parameterNotFoundAction", v1_param_ref->parameter_not_found_action) == NULL) {
     goto fail; //String
     }
     }
@@ -77,11 +77,11 @@ cJSON *v1_param_ref_convertToJSON(v1_param_ref_t *v1_param_ref) {
 
     // v1_param_ref->selector
     if(v1_param_ref->selector) {
-    cJSON *selector_local_JSON = v1_label_selector_convertToJSON(v1_param_ref->selector);
+    mazu_cJSON *selector_local_JSON = v1_label_selector_convertToJSON(v1_param_ref->selector);
     if(selector_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "selector", selector_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "selector", selector_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -90,12 +90,12 @@ cJSON *v1_param_ref_convertToJSON(v1_param_ref_t *v1_param_ref) {
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_param_ref_t *v1_param_ref_parseFromJSON(cJSON *v1_param_refJSON){
+v1_param_ref_t *v1_param_ref_parseFromJSON(mazu_cJSON *v1_param_refJSON){
 
     v1_param_ref_t *v1_param_ref_local_var = NULL;
 
@@ -103,43 +103,43 @@ v1_param_ref_t *v1_param_ref_parseFromJSON(cJSON *v1_param_refJSON){
     v1_label_selector_t *selector_local_nonprim = NULL;
 
     // v1_param_ref->name
-    cJSON *name = cJSON_GetObjectItemCaseSensitive(v1_param_refJSON, "name");
+    mazu_cJSON *name = mazu_cJSON_GetObjectItemCaseSensitive(v1_param_refJSON, "name");
     if (name) { 
-    if(!cJSON_IsString(name) && !cJSON_IsNull(name))
+    if(!mazu_cJSON_IsString(name) && !mazu_cJSON_IsNull(name))
     {
     goto end; //String
     }
     }
 
     // v1_param_ref->_namespace
-    cJSON *_namespace = cJSON_GetObjectItemCaseSensitive(v1_param_refJSON, "namespace");
+    mazu_cJSON *_namespace = mazu_cJSON_GetObjectItemCaseSensitive(v1_param_refJSON, "namespace");
     if (_namespace) { 
-    if(!cJSON_IsString(_namespace) && !cJSON_IsNull(_namespace))
+    if(!mazu_cJSON_IsString(_namespace) && !mazu_cJSON_IsNull(_namespace))
     {
     goto end; //String
     }
     }
 
     // v1_param_ref->parameter_not_found_action
-    cJSON *parameter_not_found_action = cJSON_GetObjectItemCaseSensitive(v1_param_refJSON, "parameterNotFoundAction");
+    mazu_cJSON *parameter_not_found_action = mazu_cJSON_GetObjectItemCaseSensitive(v1_param_refJSON, "parameterNotFoundAction");
     if (parameter_not_found_action) { 
-    if(!cJSON_IsString(parameter_not_found_action) && !cJSON_IsNull(parameter_not_found_action))
+    if(!mazu_cJSON_IsString(parameter_not_found_action) && !mazu_cJSON_IsNull(parameter_not_found_action))
     {
     goto end; //String
     }
     }
 
     // v1_param_ref->selector
-    cJSON *selector = cJSON_GetObjectItemCaseSensitive(v1_param_refJSON, "selector");
+    mazu_cJSON *selector = mazu_cJSON_GetObjectItemCaseSensitive(v1_param_refJSON, "selector");
     if (selector) { 
     selector_local_nonprim = v1_label_selector_parseFromJSON(selector); //nonprimitive
     }
 
 
     v1_param_ref_local_var = v1_param_ref_create (
-        name && !cJSON_IsNull(name) ? strdup(name->valuestring) : NULL,
-        _namespace && !cJSON_IsNull(_namespace) ? strdup(_namespace->valuestring) : NULL,
-        parameter_not_found_action && !cJSON_IsNull(parameter_not_found_action) ? strdup(parameter_not_found_action->valuestring) : NULL,
+        name && !mazu_cJSON_IsNull(name) ? strdup(name->valuestring) : NULL,
+        _namespace && !mazu_cJSON_IsNull(_namespace) ? strdup(_namespace->valuestring) : NULL,
+        parameter_not_found_action && !mazu_cJSON_IsNull(parameter_not_found_action) ? strdup(parameter_not_found_action->valuestring) : NULL,
         selector ? selector_local_nonprim : NULL
         );
 

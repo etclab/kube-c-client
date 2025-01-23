@@ -8,7 +8,7 @@
 #define _v1_policy_rule_H_
 
 #include <string.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
 #include "../include/binary.h"
@@ -37,9 +37,9 @@ v1_policy_rule_t *v1_policy_rule_create(
 
 void v1_policy_rule_free(v1_policy_rule_t *v1_policy_rule);
 
-v1_policy_rule_t *v1_policy_rule_parseFromJSON(cJSON *v1_policy_ruleJSON);
+v1_policy_rule_t *v1_policy_rule_parseFromJSON(mazu_cJSON *v1_policy_ruleJSON);
 
-cJSON *v1_policy_rule_convertToJSON(v1_policy_rule_t *v1_policy_rule);
+mazu_cJSON *v1_policy_rule_convertToJSON(v1_policy_rule_t *v1_policy_rule);
 
 #endif /* _v1_policy_rule_H_ */
 

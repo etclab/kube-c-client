@@ -8,7 +8,7 @@
 #define _v1_job_H_
 
 #include <string.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
 #include "../include/binary.h"
@@ -40,9 +40,9 @@ v1_job_t *v1_job_create(
 
 void v1_job_free(v1_job_t *v1_job);
 
-v1_job_t *v1_job_parseFromJSON(cJSON *v1_jobJSON);
+v1_job_t *v1_job_parseFromJSON(mazu_cJSON *v1_jobJSON);
 
-cJSON *v1_job_convertToJSON(v1_job_t *v1_job);
+mazu_cJSON *v1_job_convertToJSON(v1_job_t *v1_job);
 
 #endif /* _v1_job_H_ */
 

@@ -11,7 +11,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdbool.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 
 #include "../model/v2_hpa_scaling_rules.h"
 v2_hpa_scaling_rules_t* instantiate_v2_hpa_scaling_rules(int include_optional);
@@ -43,11 +43,11 @@ v2_hpa_scaling_rules_t* instantiate_v2_hpa_scaling_rules(int include_optional) {
 void test_v2_hpa_scaling_rules(int include_optional) {
     v2_hpa_scaling_rules_t* v2_hpa_scaling_rules_1 = instantiate_v2_hpa_scaling_rules(include_optional);
 
-	cJSON* jsonv2_hpa_scaling_rules_1 = v2_hpa_scaling_rules_convertToJSON(v2_hpa_scaling_rules_1);
-	printf("v2_hpa_scaling_rules :\n%s\n", cJSON_Print(jsonv2_hpa_scaling_rules_1));
+	mazu_cJSON* jsonv2_hpa_scaling_rules_1 = v2_hpa_scaling_rules_convertToJSON(v2_hpa_scaling_rules_1);
+	printf("v2_hpa_scaling_rules :\n%s\n", mazu_cJSON_Print(jsonv2_hpa_scaling_rules_1));
 	v2_hpa_scaling_rules_t* v2_hpa_scaling_rules_2 = v2_hpa_scaling_rules_parseFromJSON(jsonv2_hpa_scaling_rules_1);
-	cJSON* jsonv2_hpa_scaling_rules_2 = v2_hpa_scaling_rules_convertToJSON(v2_hpa_scaling_rules_2);
-	printf("repeating v2_hpa_scaling_rules:\n%s\n", cJSON_Print(jsonv2_hpa_scaling_rules_2));
+	mazu_cJSON* jsonv2_hpa_scaling_rules_2 = v2_hpa_scaling_rules_convertToJSON(v2_hpa_scaling_rules_2);
+	printf("repeating v2_hpa_scaling_rules:\n%s\n", mazu_cJSON_Print(jsonv2_hpa_scaling_rules_2));
 }
 
 int main() {

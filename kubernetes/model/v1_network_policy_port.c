@@ -38,12 +38,12 @@ void v1_network_policy_port_free(v1_network_policy_port_t *v1_network_policy_por
     free(v1_network_policy_port);
 }
 
-cJSON *v1_network_policy_port_convertToJSON(v1_network_policy_port_t *v1_network_policy_port) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_network_policy_port_convertToJSON(v1_network_policy_port_t *v1_network_policy_port) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_network_policy_port->end_port
     if(v1_network_policy_port->end_port) {
-    if(cJSON_AddNumberToObject(item, "endPort", v1_network_policy_port->end_port) == NULL) {
+    if(mazu_cJSON_AddNumberToObject(item, "endPort", v1_network_policy_port->end_port) == NULL) {
     goto fail; //Numeric
     }
     }
@@ -51,11 +51,11 @@ cJSON *v1_network_policy_port_convertToJSON(v1_network_policy_port_t *v1_network
 
     // v1_network_policy_port->port
     if(v1_network_policy_port->port) {
-    cJSON *port_local_JSON = int_or_string_convertToJSON(v1_network_policy_port->port);
+    mazu_cJSON *port_local_JSON = int_or_string_convertToJSON(v1_network_policy_port->port);
     if(port_local_JSON == NULL) {
         goto fail; // custom
     }
-    cJSON_AddItemToObject(item, "port", port_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "port", port_local_JSON);
     if(item->child == NULL) {
         goto fail;
     }
@@ -64,7 +64,7 @@ cJSON *v1_network_policy_port_convertToJSON(v1_network_policy_port_t *v1_network
 
     // v1_network_policy_port->protocol
     if(v1_network_policy_port->protocol) {
-    if(cJSON_AddStringToObject(item, "protocol", v1_network_policy_port->protocol) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "protocol", v1_network_policy_port->protocol) == NULL) {
     goto fail; //String
     }
     }
@@ -72,12 +72,12 @@ cJSON *v1_network_policy_port_convertToJSON(v1_network_policy_port_t *v1_network
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_network_policy_port_t *v1_network_policy_port_parseFromJSON(cJSON *v1_network_policy_portJSON){
+v1_network_policy_port_t *v1_network_policy_port_parseFromJSON(mazu_cJSON *v1_network_policy_portJSON){
 
     v1_network_policy_port_t *v1_network_policy_port_local_var = NULL;
 
@@ -85,24 +85,24 @@ v1_network_policy_port_t *v1_network_policy_port_parseFromJSON(cJSON *v1_network
     int_or_string_t *port_local_nonprim = NULL;
 
     // v1_network_policy_port->end_port
-    cJSON *end_port = cJSON_GetObjectItemCaseSensitive(v1_network_policy_portJSON, "endPort");
+    mazu_cJSON *end_port = mazu_cJSON_GetObjectItemCaseSensitive(v1_network_policy_portJSON, "endPort");
     if (end_port) { 
-    if(!cJSON_IsNumber(end_port))
+    if(!mazu_cJSON_IsNumber(end_port))
     {
     goto end; //Numeric
     }
     }
 
     // v1_network_policy_port->port
-    cJSON *port = cJSON_GetObjectItemCaseSensitive(v1_network_policy_portJSON, "port");
+    mazu_cJSON *port = mazu_cJSON_GetObjectItemCaseSensitive(v1_network_policy_portJSON, "port");
     if (port) { 
     port_local_nonprim = int_or_string_parseFromJSON(port); //custom
     }
 
     // v1_network_policy_port->protocol
-    cJSON *protocol = cJSON_GetObjectItemCaseSensitive(v1_network_policy_portJSON, "protocol");
+    mazu_cJSON *protocol = mazu_cJSON_GetObjectItemCaseSensitive(v1_network_policy_portJSON, "protocol");
     if (protocol) { 
-    if(!cJSON_IsString(protocol) && !cJSON_IsNull(protocol))
+    if(!mazu_cJSON_IsString(protocol) && !mazu_cJSON_IsNull(protocol))
     {
     goto end; //String
     }
@@ -112,7 +112,7 @@ v1_network_policy_port_t *v1_network_policy_port_parseFromJSON(cJSON *v1_network
     v1_network_policy_port_local_var = v1_network_policy_port_create (
         end_port ? end_port->valuedouble : 0,
         port ? port_local_nonprim : NULL,
-        protocol && !cJSON_IsNull(protocol) ? strdup(protocol->valuestring) : NULL
+        protocol && !mazu_cJSON_IsNull(protocol) ? strdup(protocol->valuestring) : NULL
         );
 
     return v1_network_policy_port_local_var;

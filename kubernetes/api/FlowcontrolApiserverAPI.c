@@ -53,9 +53,9 @@ FlowcontrolApiserverAPI_getAPIGroup_11(apiClient_t *apiClient)
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *FlowcontrolApiserverAPIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    mazu_cJSON *FlowcontrolApiserverAPIlocalVarJSON = mazu_cJSON_Parse(apiClient->dataReceived);
     v1_api_group_t *elementToReturn = v1_api_group_parseFromJSON(FlowcontrolApiserverAPIlocalVarJSON);
-    cJSON_Delete(FlowcontrolApiserverAPIlocalVarJSON);
+    mazu_cJSON_Delete(FlowcontrolApiserverAPIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
     }

@@ -8,7 +8,7 @@
 #define _v1_endpoint_H_
 
 #include <string.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
 #include "../include/binary.h"
@@ -46,9 +46,9 @@ v1_endpoint_t *v1_endpoint_create(
 
 void v1_endpoint_free(v1_endpoint_t *v1_endpoint);
 
-v1_endpoint_t *v1_endpoint_parseFromJSON(cJSON *v1_endpointJSON);
+v1_endpoint_t *v1_endpoint_parseFromJSON(mazu_cJSON *v1_endpointJSON);
 
-cJSON *v1_endpoint_convertToJSON(v1_endpoint_t *v1_endpoint);
+mazu_cJSON *v1_endpoint_convertToJSON(v1_endpoint_t *v1_endpoint);
 
 #endif /* _v1_endpoint_H_ */
 

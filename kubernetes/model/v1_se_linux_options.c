@@ -48,12 +48,12 @@ void v1_se_linux_options_free(v1_se_linux_options_t *v1_se_linux_options) {
     free(v1_se_linux_options);
 }
 
-cJSON *v1_se_linux_options_convertToJSON(v1_se_linux_options_t *v1_se_linux_options) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_se_linux_options_convertToJSON(v1_se_linux_options_t *v1_se_linux_options) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_se_linux_options->level
     if(v1_se_linux_options->level) {
-    if(cJSON_AddStringToObject(item, "level", v1_se_linux_options->level) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "level", v1_se_linux_options->level) == NULL) {
     goto fail; //String
     }
     }
@@ -61,7 +61,7 @@ cJSON *v1_se_linux_options_convertToJSON(v1_se_linux_options_t *v1_se_linux_opti
 
     // v1_se_linux_options->role
     if(v1_se_linux_options->role) {
-    if(cJSON_AddStringToObject(item, "role", v1_se_linux_options->role) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "role", v1_se_linux_options->role) == NULL) {
     goto fail; //String
     }
     }
@@ -69,7 +69,7 @@ cJSON *v1_se_linux_options_convertToJSON(v1_se_linux_options_t *v1_se_linux_opti
 
     // v1_se_linux_options->type
     if(v1_se_linux_options->type) {
-    if(cJSON_AddStringToObject(item, "type", v1_se_linux_options->type) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "type", v1_se_linux_options->type) == NULL) {
     goto fail; //String
     }
     }
@@ -77,7 +77,7 @@ cJSON *v1_se_linux_options_convertToJSON(v1_se_linux_options_t *v1_se_linux_opti
 
     // v1_se_linux_options->user
     if(v1_se_linux_options->user) {
-    if(cJSON_AddStringToObject(item, "user", v1_se_linux_options->user) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "user", v1_se_linux_options->user) == NULL) {
     goto fail; //String
     }
     }
@@ -85,46 +85,46 @@ cJSON *v1_se_linux_options_convertToJSON(v1_se_linux_options_t *v1_se_linux_opti
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_se_linux_options_t *v1_se_linux_options_parseFromJSON(cJSON *v1_se_linux_optionsJSON){
+v1_se_linux_options_t *v1_se_linux_options_parseFromJSON(mazu_cJSON *v1_se_linux_optionsJSON){
 
     v1_se_linux_options_t *v1_se_linux_options_local_var = NULL;
 
     // v1_se_linux_options->level
-    cJSON *level = cJSON_GetObjectItemCaseSensitive(v1_se_linux_optionsJSON, "level");
+    mazu_cJSON *level = mazu_cJSON_GetObjectItemCaseSensitive(v1_se_linux_optionsJSON, "level");
     if (level) { 
-    if(!cJSON_IsString(level) && !cJSON_IsNull(level))
+    if(!mazu_cJSON_IsString(level) && !mazu_cJSON_IsNull(level))
     {
     goto end; //String
     }
     }
 
     // v1_se_linux_options->role
-    cJSON *role = cJSON_GetObjectItemCaseSensitive(v1_se_linux_optionsJSON, "role");
+    mazu_cJSON *role = mazu_cJSON_GetObjectItemCaseSensitive(v1_se_linux_optionsJSON, "role");
     if (role) { 
-    if(!cJSON_IsString(role) && !cJSON_IsNull(role))
+    if(!mazu_cJSON_IsString(role) && !mazu_cJSON_IsNull(role))
     {
     goto end; //String
     }
     }
 
     // v1_se_linux_options->type
-    cJSON *type = cJSON_GetObjectItemCaseSensitive(v1_se_linux_optionsJSON, "type");
+    mazu_cJSON *type = mazu_cJSON_GetObjectItemCaseSensitive(v1_se_linux_optionsJSON, "type");
     if (type) { 
-    if(!cJSON_IsString(type) && !cJSON_IsNull(type))
+    if(!mazu_cJSON_IsString(type) && !mazu_cJSON_IsNull(type))
     {
     goto end; //String
     }
     }
 
     // v1_se_linux_options->user
-    cJSON *user = cJSON_GetObjectItemCaseSensitive(v1_se_linux_optionsJSON, "user");
+    mazu_cJSON *user = mazu_cJSON_GetObjectItemCaseSensitive(v1_se_linux_optionsJSON, "user");
     if (user) { 
-    if(!cJSON_IsString(user) && !cJSON_IsNull(user))
+    if(!mazu_cJSON_IsString(user) && !mazu_cJSON_IsNull(user))
     {
     goto end; //String
     }
@@ -132,10 +132,10 @@ v1_se_linux_options_t *v1_se_linux_options_parseFromJSON(cJSON *v1_se_linux_opti
 
 
     v1_se_linux_options_local_var = v1_se_linux_options_create (
-        level && !cJSON_IsNull(level) ? strdup(level->valuestring) : NULL,
-        role && !cJSON_IsNull(role) ? strdup(role->valuestring) : NULL,
-        type && !cJSON_IsNull(type) ? strdup(type->valuestring) : NULL,
-        user && !cJSON_IsNull(user) ? strdup(user->valuestring) : NULL
+        level && !mazu_cJSON_IsNull(level) ? strdup(level->valuestring) : NULL,
+        role && !mazu_cJSON_IsNull(role) ? strdup(role->valuestring) : NULL,
+        type && !mazu_cJSON_IsNull(type) ? strdup(type->valuestring) : NULL,
+        user && !mazu_cJSON_IsNull(user) ? strdup(user->valuestring) : NULL
         );
 
     return v1_se_linux_options_local_var;

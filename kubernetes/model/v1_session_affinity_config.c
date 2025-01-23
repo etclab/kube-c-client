@@ -30,16 +30,16 @@ void v1_session_affinity_config_free(v1_session_affinity_config_t *v1_session_af
     free(v1_session_affinity_config);
 }
 
-cJSON *v1_session_affinity_config_convertToJSON(v1_session_affinity_config_t *v1_session_affinity_config) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_session_affinity_config_convertToJSON(v1_session_affinity_config_t *v1_session_affinity_config) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_session_affinity_config->client_ip
     if(v1_session_affinity_config->client_ip) {
-    cJSON *client_ip_local_JSON = v1_client_ip_config_convertToJSON(v1_session_affinity_config->client_ip);
+    mazu_cJSON *client_ip_local_JSON = v1_client_ip_config_convertToJSON(v1_session_affinity_config->client_ip);
     if(client_ip_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "clientIP", client_ip_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "clientIP", client_ip_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -48,12 +48,12 @@ cJSON *v1_session_affinity_config_convertToJSON(v1_session_affinity_config_t *v1
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_session_affinity_config_t *v1_session_affinity_config_parseFromJSON(cJSON *v1_session_affinity_configJSON){
+v1_session_affinity_config_t *v1_session_affinity_config_parseFromJSON(mazu_cJSON *v1_session_affinity_configJSON){
 
     v1_session_affinity_config_t *v1_session_affinity_config_local_var = NULL;
 
@@ -61,7 +61,7 @@ v1_session_affinity_config_t *v1_session_affinity_config_parseFromJSON(cJSON *v1
     v1_client_ip_config_t *client_ip_local_nonprim = NULL;
 
     // v1_session_affinity_config->client_ip
-    cJSON *client_ip = cJSON_GetObjectItemCaseSensitive(v1_session_affinity_configJSON, "clientIP");
+    mazu_cJSON *client_ip = mazu_cJSON_GetObjectItemCaseSensitive(v1_session_affinity_configJSON, "clientIP");
     if (client_ip) { 
     client_ip_local_nonprim = v1_client_ip_config_parseFromJSON(client_ip); //nonprimitive
     }

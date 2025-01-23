@@ -30,37 +30,37 @@ void v1_pod_scheduling_gate_free(v1_pod_scheduling_gate_t *v1_pod_scheduling_gat
     free(v1_pod_scheduling_gate);
 }
 
-cJSON *v1_pod_scheduling_gate_convertToJSON(v1_pod_scheduling_gate_t *v1_pod_scheduling_gate) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_pod_scheduling_gate_convertToJSON(v1_pod_scheduling_gate_t *v1_pod_scheduling_gate) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_pod_scheduling_gate->name
     if (!v1_pod_scheduling_gate->name) {
         goto fail;
     }
-    if(cJSON_AddStringToObject(item, "name", v1_pod_scheduling_gate->name) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "name", v1_pod_scheduling_gate->name) == NULL) {
     goto fail; //String
     }
 
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_pod_scheduling_gate_t *v1_pod_scheduling_gate_parseFromJSON(cJSON *v1_pod_scheduling_gateJSON){
+v1_pod_scheduling_gate_t *v1_pod_scheduling_gate_parseFromJSON(mazu_cJSON *v1_pod_scheduling_gateJSON){
 
     v1_pod_scheduling_gate_t *v1_pod_scheduling_gate_local_var = NULL;
 
     // v1_pod_scheduling_gate->name
-    cJSON *name = cJSON_GetObjectItemCaseSensitive(v1_pod_scheduling_gateJSON, "name");
+    mazu_cJSON *name = mazu_cJSON_GetObjectItemCaseSensitive(v1_pod_scheduling_gateJSON, "name");
     if (!name) {
         goto end;
     }
 
     
-    if(!cJSON_IsString(name))
+    if(!mazu_cJSON_IsString(name))
     {
     goto end; //String
     }

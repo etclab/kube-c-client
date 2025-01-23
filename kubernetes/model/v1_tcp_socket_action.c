@@ -36,12 +36,12 @@ void v1_tcp_socket_action_free(v1_tcp_socket_action_t *v1_tcp_socket_action) {
     free(v1_tcp_socket_action);
 }
 
-cJSON *v1_tcp_socket_action_convertToJSON(v1_tcp_socket_action_t *v1_tcp_socket_action) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_tcp_socket_action_convertToJSON(v1_tcp_socket_action_t *v1_tcp_socket_action) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_tcp_socket_action->host
     if(v1_tcp_socket_action->host) {
-    if(cJSON_AddStringToObject(item, "host", v1_tcp_socket_action->host) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "host", v1_tcp_socket_action->host) == NULL) {
     goto fail; //String
     }
     }
@@ -51,11 +51,11 @@ cJSON *v1_tcp_socket_action_convertToJSON(v1_tcp_socket_action_t *v1_tcp_socket_
     if (!v1_tcp_socket_action->port) {
         goto fail;
     }
-    cJSON *port_local_JSON = int_or_string_convertToJSON(v1_tcp_socket_action->port);
+    mazu_cJSON *port_local_JSON = int_or_string_convertToJSON(v1_tcp_socket_action->port);
     if(port_local_JSON == NULL) {
         goto fail; // custom
     }
-    cJSON_AddItemToObject(item, "port", port_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "port", port_local_JSON);
     if(item->child == NULL) {
         goto fail;
     }
@@ -63,12 +63,12 @@ cJSON *v1_tcp_socket_action_convertToJSON(v1_tcp_socket_action_t *v1_tcp_socket_
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_tcp_socket_action_t *v1_tcp_socket_action_parseFromJSON(cJSON *v1_tcp_socket_actionJSON){
+v1_tcp_socket_action_t *v1_tcp_socket_action_parseFromJSON(mazu_cJSON *v1_tcp_socket_actionJSON){
 
     v1_tcp_socket_action_t *v1_tcp_socket_action_local_var = NULL;
 
@@ -76,16 +76,16 @@ v1_tcp_socket_action_t *v1_tcp_socket_action_parseFromJSON(cJSON *v1_tcp_socket_
     int_or_string_t *port_local_nonprim = NULL;
 
     // v1_tcp_socket_action->host
-    cJSON *host = cJSON_GetObjectItemCaseSensitive(v1_tcp_socket_actionJSON, "host");
+    mazu_cJSON *host = mazu_cJSON_GetObjectItemCaseSensitive(v1_tcp_socket_actionJSON, "host");
     if (host) { 
-    if(!cJSON_IsString(host) && !cJSON_IsNull(host))
+    if(!mazu_cJSON_IsString(host) && !mazu_cJSON_IsNull(host))
     {
     goto end; //String
     }
     }
 
     // v1_tcp_socket_action->port
-    cJSON *port = cJSON_GetObjectItemCaseSensitive(v1_tcp_socket_actionJSON, "port");
+    mazu_cJSON *port = mazu_cJSON_GetObjectItemCaseSensitive(v1_tcp_socket_actionJSON, "port");
     if (!port) {
         goto end;
     }
@@ -95,7 +95,7 @@ v1_tcp_socket_action_t *v1_tcp_socket_action_parseFromJSON(cJSON *v1_tcp_socket_
 
 
     v1_tcp_socket_action_local_var = v1_tcp_socket_action_create (
-        host && !cJSON_IsNull(host) ? strdup(host->valuestring) : NULL,
+        host && !mazu_cJSON_IsNull(host) ? strdup(host->valuestring) : NULL,
         port_local_nonprim
         );
 

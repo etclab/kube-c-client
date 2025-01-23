@@ -8,7 +8,7 @@
 #define _v1_object_reference_H_
 
 #include <string.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
 #include "../include/binary.h"
@@ -41,9 +41,9 @@ v1_object_reference_t *v1_object_reference_create(
 
 void v1_object_reference_free(v1_object_reference_t *v1_object_reference);
 
-v1_object_reference_t *v1_object_reference_parseFromJSON(cJSON *v1_object_referenceJSON);
+v1_object_reference_t *v1_object_reference_parseFromJSON(mazu_cJSON *v1_object_referenceJSON);
 
-cJSON *v1_object_reference_convertToJSON(v1_object_reference_t *v1_object_reference);
+mazu_cJSON *v1_object_reference_convertToJSON(v1_object_reference_t *v1_object_reference);
 
 #endif /* _v1_object_reference_H_ */
 

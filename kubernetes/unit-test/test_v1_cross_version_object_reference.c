@@ -11,7 +11,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdbool.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 
 #include "../model/v1_cross_version_object_reference.h"
 v1_cross_version_object_reference_t* instantiate_v1_cross_version_object_reference(int include_optional);
@@ -43,11 +43,11 @@ v1_cross_version_object_reference_t* instantiate_v1_cross_version_object_referen
 void test_v1_cross_version_object_reference(int include_optional) {
     v1_cross_version_object_reference_t* v1_cross_version_object_reference_1 = instantiate_v1_cross_version_object_reference(include_optional);
 
-	cJSON* jsonv1_cross_version_object_reference_1 = v1_cross_version_object_reference_convertToJSON(v1_cross_version_object_reference_1);
-	printf("v1_cross_version_object_reference :\n%s\n", cJSON_Print(jsonv1_cross_version_object_reference_1));
+	mazu_cJSON* jsonv1_cross_version_object_reference_1 = v1_cross_version_object_reference_convertToJSON(v1_cross_version_object_reference_1);
+	printf("v1_cross_version_object_reference :\n%s\n", mazu_cJSON_Print(jsonv1_cross_version_object_reference_1));
 	v1_cross_version_object_reference_t* v1_cross_version_object_reference_2 = v1_cross_version_object_reference_parseFromJSON(jsonv1_cross_version_object_reference_1);
-	cJSON* jsonv1_cross_version_object_reference_2 = v1_cross_version_object_reference_convertToJSON(v1_cross_version_object_reference_2);
-	printf("repeating v1_cross_version_object_reference:\n%s\n", cJSON_Print(jsonv1_cross_version_object_reference_2));
+	mazu_cJSON* jsonv1_cross_version_object_reference_2 = v1_cross_version_object_reference_convertToJSON(v1_cross_version_object_reference_2);
+	printf("repeating v1_cross_version_object_reference:\n%s\n", mazu_cJSON_Print(jsonv1_cross_version_object_reference_2));
 }
 
 int main() {

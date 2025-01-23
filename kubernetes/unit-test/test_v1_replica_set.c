@@ -11,7 +11,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdbool.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 
 #include "../model/v1_replica_set.h"
 v1_replica_set_t* instantiate_v1_replica_set(int include_optional);
@@ -53,11 +53,11 @@ v1_replica_set_t* instantiate_v1_replica_set(int include_optional) {
 void test_v1_replica_set(int include_optional) {
     v1_replica_set_t* v1_replica_set_1 = instantiate_v1_replica_set(include_optional);
 
-	cJSON* jsonv1_replica_set_1 = v1_replica_set_convertToJSON(v1_replica_set_1);
-	printf("v1_replica_set :\n%s\n", cJSON_Print(jsonv1_replica_set_1));
+	mazu_cJSON* jsonv1_replica_set_1 = v1_replica_set_convertToJSON(v1_replica_set_1);
+	printf("v1_replica_set :\n%s\n", mazu_cJSON_Print(jsonv1_replica_set_1));
 	v1_replica_set_t* v1_replica_set_2 = v1_replica_set_parseFromJSON(jsonv1_replica_set_1);
-	cJSON* jsonv1_replica_set_2 = v1_replica_set_convertToJSON(v1_replica_set_2);
-	printf("repeating v1_replica_set:\n%s\n", cJSON_Print(jsonv1_replica_set_2));
+	mazu_cJSON* jsonv1_replica_set_2 = v1_replica_set_convertToJSON(v1_replica_set_2);
+	printf("repeating v1_replica_set:\n%s\n", mazu_cJSON_Print(jsonv1_replica_set_2));
 }
 
 int main() {

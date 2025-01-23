@@ -8,7 +8,7 @@
 #define _v1_load_balancer_ingress_H_
 
 #include <string.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
 #include "../include/binary.h"
@@ -36,9 +36,9 @@ v1_load_balancer_ingress_t *v1_load_balancer_ingress_create(
 
 void v1_load_balancer_ingress_free(v1_load_balancer_ingress_t *v1_load_balancer_ingress);
 
-v1_load_balancer_ingress_t *v1_load_balancer_ingress_parseFromJSON(cJSON *v1_load_balancer_ingressJSON);
+v1_load_balancer_ingress_t *v1_load_balancer_ingress_parseFromJSON(mazu_cJSON *v1_load_balancer_ingressJSON);
 
-cJSON *v1_load_balancer_ingress_convertToJSON(v1_load_balancer_ingress_t *v1_load_balancer_ingress);
+mazu_cJSON *v1_load_balancer_ingress_convertToJSON(v1_load_balancer_ingress_t *v1_load_balancer_ingress);
 
 #endif /* _v1_load_balancer_ingress_H_ */
 

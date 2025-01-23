@@ -30,12 +30,12 @@ void v1_endpoint_conditions_free(v1_endpoint_conditions_t *v1_endpoint_condition
     free(v1_endpoint_conditions);
 }
 
-cJSON *v1_endpoint_conditions_convertToJSON(v1_endpoint_conditions_t *v1_endpoint_conditions) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_endpoint_conditions_convertToJSON(v1_endpoint_conditions_t *v1_endpoint_conditions) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_endpoint_conditions->ready
     if(v1_endpoint_conditions->ready) {
-    if(cJSON_AddBoolToObject(item, "ready", v1_endpoint_conditions->ready) == NULL) {
+    if(mazu_cJSON_AddBoolToObject(item, "ready", v1_endpoint_conditions->ready) == NULL) {
     goto fail; //Bool
     }
     }
@@ -43,7 +43,7 @@ cJSON *v1_endpoint_conditions_convertToJSON(v1_endpoint_conditions_t *v1_endpoin
 
     // v1_endpoint_conditions->serving
     if(v1_endpoint_conditions->serving) {
-    if(cJSON_AddBoolToObject(item, "serving", v1_endpoint_conditions->serving) == NULL) {
+    if(mazu_cJSON_AddBoolToObject(item, "serving", v1_endpoint_conditions->serving) == NULL) {
     goto fail; //Bool
     }
     }
@@ -51,7 +51,7 @@ cJSON *v1_endpoint_conditions_convertToJSON(v1_endpoint_conditions_t *v1_endpoin
 
     // v1_endpoint_conditions->terminating
     if(v1_endpoint_conditions->terminating) {
-    if(cJSON_AddBoolToObject(item, "terminating", v1_endpoint_conditions->terminating) == NULL) {
+    if(mazu_cJSON_AddBoolToObject(item, "terminating", v1_endpoint_conditions->terminating) == NULL) {
     goto fail; //Bool
     }
     }
@@ -59,37 +59,37 @@ cJSON *v1_endpoint_conditions_convertToJSON(v1_endpoint_conditions_t *v1_endpoin
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_endpoint_conditions_t *v1_endpoint_conditions_parseFromJSON(cJSON *v1_endpoint_conditionsJSON){
+v1_endpoint_conditions_t *v1_endpoint_conditions_parseFromJSON(mazu_cJSON *v1_endpoint_conditionsJSON){
 
     v1_endpoint_conditions_t *v1_endpoint_conditions_local_var = NULL;
 
     // v1_endpoint_conditions->ready
-    cJSON *ready = cJSON_GetObjectItemCaseSensitive(v1_endpoint_conditionsJSON, "ready");
+    mazu_cJSON *ready = mazu_cJSON_GetObjectItemCaseSensitive(v1_endpoint_conditionsJSON, "ready");
     if (ready) { 
-    if(!cJSON_IsBool(ready))
+    if(!mazu_cJSON_IsBool(ready))
     {
     goto end; //Bool
     }
     }
 
     // v1_endpoint_conditions->serving
-    cJSON *serving = cJSON_GetObjectItemCaseSensitive(v1_endpoint_conditionsJSON, "serving");
+    mazu_cJSON *serving = mazu_cJSON_GetObjectItemCaseSensitive(v1_endpoint_conditionsJSON, "serving");
     if (serving) { 
-    if(!cJSON_IsBool(serving))
+    if(!mazu_cJSON_IsBool(serving))
     {
     goto end; //Bool
     }
     }
 
     // v1_endpoint_conditions->terminating
-    cJSON *terminating = cJSON_GetObjectItemCaseSensitive(v1_endpoint_conditionsJSON, "terminating");
+    mazu_cJSON *terminating = mazu_cJSON_GetObjectItemCaseSensitive(v1_endpoint_conditionsJSON, "terminating");
     if (terminating) { 
-    if(!cJSON_IsBool(terminating))
+    if(!mazu_cJSON_IsBool(terminating))
     {
     goto end; //Bool
     }

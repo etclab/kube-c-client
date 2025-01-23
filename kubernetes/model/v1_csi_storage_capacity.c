@@ -66,12 +66,12 @@ void v1_csi_storage_capacity_free(v1_csi_storage_capacity_t *v1_csi_storage_capa
     free(v1_csi_storage_capacity);
 }
 
-cJSON *v1_csi_storage_capacity_convertToJSON(v1_csi_storage_capacity_t *v1_csi_storage_capacity) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_csi_storage_capacity_convertToJSON(v1_csi_storage_capacity_t *v1_csi_storage_capacity) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_csi_storage_capacity->api_version
     if(v1_csi_storage_capacity->api_version) {
-    if(cJSON_AddStringToObject(item, "apiVersion", v1_csi_storage_capacity->api_version) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "apiVersion", v1_csi_storage_capacity->api_version) == NULL) {
     goto fail; //String
     }
     }
@@ -79,7 +79,7 @@ cJSON *v1_csi_storage_capacity_convertToJSON(v1_csi_storage_capacity_t *v1_csi_s
 
     // v1_csi_storage_capacity->capacity
     if(v1_csi_storage_capacity->capacity) {
-    if(cJSON_AddStringToObject(item, "capacity", v1_csi_storage_capacity->capacity) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "capacity", v1_csi_storage_capacity->capacity) == NULL) {
     goto fail; //String
     }
     }
@@ -87,7 +87,7 @@ cJSON *v1_csi_storage_capacity_convertToJSON(v1_csi_storage_capacity_t *v1_csi_s
 
     // v1_csi_storage_capacity->kind
     if(v1_csi_storage_capacity->kind) {
-    if(cJSON_AddStringToObject(item, "kind", v1_csi_storage_capacity->kind) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "kind", v1_csi_storage_capacity->kind) == NULL) {
     goto fail; //String
     }
     }
@@ -95,7 +95,7 @@ cJSON *v1_csi_storage_capacity_convertToJSON(v1_csi_storage_capacity_t *v1_csi_s
 
     // v1_csi_storage_capacity->maximum_volume_size
     if(v1_csi_storage_capacity->maximum_volume_size) {
-    if(cJSON_AddStringToObject(item, "maximumVolumeSize", v1_csi_storage_capacity->maximum_volume_size) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "maximumVolumeSize", v1_csi_storage_capacity->maximum_volume_size) == NULL) {
     goto fail; //String
     }
     }
@@ -103,11 +103,11 @@ cJSON *v1_csi_storage_capacity_convertToJSON(v1_csi_storage_capacity_t *v1_csi_s
 
     // v1_csi_storage_capacity->metadata
     if(v1_csi_storage_capacity->metadata) {
-    cJSON *metadata_local_JSON = v1_object_meta_convertToJSON(v1_csi_storage_capacity->metadata);
+    mazu_cJSON *metadata_local_JSON = v1_object_meta_convertToJSON(v1_csi_storage_capacity->metadata);
     if(metadata_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "metadata", metadata_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "metadata", metadata_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -116,11 +116,11 @@ cJSON *v1_csi_storage_capacity_convertToJSON(v1_csi_storage_capacity_t *v1_csi_s
 
     // v1_csi_storage_capacity->node_topology
     if(v1_csi_storage_capacity->node_topology) {
-    cJSON *node_topology_local_JSON = v1_label_selector_convertToJSON(v1_csi_storage_capacity->node_topology);
+    mazu_cJSON *node_topology_local_JSON = v1_label_selector_convertToJSON(v1_csi_storage_capacity->node_topology);
     if(node_topology_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "nodeTopology", node_topology_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "nodeTopology", node_topology_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -131,19 +131,19 @@ cJSON *v1_csi_storage_capacity_convertToJSON(v1_csi_storage_capacity_t *v1_csi_s
     if (!v1_csi_storage_capacity->storage_class_name) {
         goto fail;
     }
-    if(cJSON_AddStringToObject(item, "storageClassName", v1_csi_storage_capacity->storage_class_name) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "storageClassName", v1_csi_storage_capacity->storage_class_name) == NULL) {
     goto fail; //String
     }
 
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_csi_storage_capacity_t *v1_csi_storage_capacity_parseFromJSON(cJSON *v1_csi_storage_capacityJSON){
+v1_csi_storage_capacity_t *v1_csi_storage_capacity_parseFromJSON(mazu_cJSON *v1_csi_storage_capacityJSON){
 
     v1_csi_storage_capacity_t *v1_csi_storage_capacity_local_var = NULL;
 
@@ -154,71 +154,71 @@ v1_csi_storage_capacity_t *v1_csi_storage_capacity_parseFromJSON(cJSON *v1_csi_s
     v1_label_selector_t *node_topology_local_nonprim = NULL;
 
     // v1_csi_storage_capacity->api_version
-    cJSON *api_version = cJSON_GetObjectItemCaseSensitive(v1_csi_storage_capacityJSON, "apiVersion");
+    mazu_cJSON *api_version = mazu_cJSON_GetObjectItemCaseSensitive(v1_csi_storage_capacityJSON, "apiVersion");
     if (api_version) { 
-    if(!cJSON_IsString(api_version) && !cJSON_IsNull(api_version))
+    if(!mazu_cJSON_IsString(api_version) && !mazu_cJSON_IsNull(api_version))
     {
     goto end; //String
     }
     }
 
     // v1_csi_storage_capacity->capacity
-    cJSON *capacity = cJSON_GetObjectItemCaseSensitive(v1_csi_storage_capacityJSON, "capacity");
+    mazu_cJSON *capacity = mazu_cJSON_GetObjectItemCaseSensitive(v1_csi_storage_capacityJSON, "capacity");
     if (capacity) { 
-    if(!cJSON_IsString(capacity) && !cJSON_IsNull(capacity))
+    if(!mazu_cJSON_IsString(capacity) && !mazu_cJSON_IsNull(capacity))
     {
     goto end; //String
     }
     }
 
     // v1_csi_storage_capacity->kind
-    cJSON *kind = cJSON_GetObjectItemCaseSensitive(v1_csi_storage_capacityJSON, "kind");
+    mazu_cJSON *kind = mazu_cJSON_GetObjectItemCaseSensitive(v1_csi_storage_capacityJSON, "kind");
     if (kind) { 
-    if(!cJSON_IsString(kind) && !cJSON_IsNull(kind))
+    if(!mazu_cJSON_IsString(kind) && !mazu_cJSON_IsNull(kind))
     {
     goto end; //String
     }
     }
 
     // v1_csi_storage_capacity->maximum_volume_size
-    cJSON *maximum_volume_size = cJSON_GetObjectItemCaseSensitive(v1_csi_storage_capacityJSON, "maximumVolumeSize");
+    mazu_cJSON *maximum_volume_size = mazu_cJSON_GetObjectItemCaseSensitive(v1_csi_storage_capacityJSON, "maximumVolumeSize");
     if (maximum_volume_size) { 
-    if(!cJSON_IsString(maximum_volume_size) && !cJSON_IsNull(maximum_volume_size))
+    if(!mazu_cJSON_IsString(maximum_volume_size) && !mazu_cJSON_IsNull(maximum_volume_size))
     {
     goto end; //String
     }
     }
 
     // v1_csi_storage_capacity->metadata
-    cJSON *metadata = cJSON_GetObjectItemCaseSensitive(v1_csi_storage_capacityJSON, "metadata");
+    mazu_cJSON *metadata = mazu_cJSON_GetObjectItemCaseSensitive(v1_csi_storage_capacityJSON, "metadata");
     if (metadata) { 
     metadata_local_nonprim = v1_object_meta_parseFromJSON(metadata); //nonprimitive
     }
 
     // v1_csi_storage_capacity->node_topology
-    cJSON *node_topology = cJSON_GetObjectItemCaseSensitive(v1_csi_storage_capacityJSON, "nodeTopology");
+    mazu_cJSON *node_topology = mazu_cJSON_GetObjectItemCaseSensitive(v1_csi_storage_capacityJSON, "nodeTopology");
     if (node_topology) { 
     node_topology_local_nonprim = v1_label_selector_parseFromJSON(node_topology); //nonprimitive
     }
 
     // v1_csi_storage_capacity->storage_class_name
-    cJSON *storage_class_name = cJSON_GetObjectItemCaseSensitive(v1_csi_storage_capacityJSON, "storageClassName");
+    mazu_cJSON *storage_class_name = mazu_cJSON_GetObjectItemCaseSensitive(v1_csi_storage_capacityJSON, "storageClassName");
     if (!storage_class_name) {
         goto end;
     }
 
     
-    if(!cJSON_IsString(storage_class_name))
+    if(!mazu_cJSON_IsString(storage_class_name))
     {
     goto end; //String
     }
 
 
     v1_csi_storage_capacity_local_var = v1_csi_storage_capacity_create (
-        api_version && !cJSON_IsNull(api_version) ? strdup(api_version->valuestring) : NULL,
-        capacity && !cJSON_IsNull(capacity) ? strdup(capacity->valuestring) : NULL,
-        kind && !cJSON_IsNull(kind) ? strdup(kind->valuestring) : NULL,
-        maximum_volume_size && !cJSON_IsNull(maximum_volume_size) ? strdup(maximum_volume_size->valuestring) : NULL,
+        api_version && !mazu_cJSON_IsNull(api_version) ? strdup(api_version->valuestring) : NULL,
+        capacity && !mazu_cJSON_IsNull(capacity) ? strdup(capacity->valuestring) : NULL,
+        kind && !mazu_cJSON_IsNull(kind) ? strdup(kind->valuestring) : NULL,
+        maximum_volume_size && !mazu_cJSON_IsNull(maximum_volume_size) ? strdup(maximum_volume_size->valuestring) : NULL,
         metadata ? metadata_local_nonprim : NULL,
         node_topology ? node_topology_local_nonprim : NULL,
         strdup(storage_class_name->valuestring)

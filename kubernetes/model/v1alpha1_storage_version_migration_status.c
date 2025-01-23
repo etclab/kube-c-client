@@ -39,12 +39,12 @@ void v1alpha1_storage_version_migration_status_free(v1alpha1_storage_version_mig
     free(v1alpha1_storage_version_migration_status);
 }
 
-cJSON *v1alpha1_storage_version_migration_status_convertToJSON(v1alpha1_storage_version_migration_status_t *v1alpha1_storage_version_migration_status) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1alpha1_storage_version_migration_status_convertToJSON(v1alpha1_storage_version_migration_status_t *v1alpha1_storage_version_migration_status) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1alpha1_storage_version_migration_status->conditions
     if(v1alpha1_storage_version_migration_status->conditions) {
-    cJSON *conditions = cJSON_AddArrayToObject(item, "conditions");
+    mazu_cJSON *conditions = mazu_cJSON_AddArrayToObject(item, "conditions");
     if(conditions == NULL) {
     goto fail; //nonprimitive container
     }
@@ -52,11 +52,11 @@ cJSON *v1alpha1_storage_version_migration_status_convertToJSON(v1alpha1_storage_
     listEntry_t *conditionsListEntry;
     if (v1alpha1_storage_version_migration_status->conditions) {
     list_ForEach(conditionsListEntry, v1alpha1_storage_version_migration_status->conditions) {
-    cJSON *itemLocal = v1alpha1_migration_condition_convertToJSON(conditionsListEntry->data);
+    mazu_cJSON *itemLocal = v1alpha1_migration_condition_convertToJSON(conditionsListEntry->data);
     if(itemLocal == NULL) {
     goto fail;
     }
-    cJSON_AddItemToArray(conditions, itemLocal);
+    mazu_cJSON_AddItemToArray(conditions, itemLocal);
     }
     }
     }
@@ -64,7 +64,7 @@ cJSON *v1alpha1_storage_version_migration_status_convertToJSON(v1alpha1_storage_
 
     // v1alpha1_storage_version_migration_status->resource_version
     if(v1alpha1_storage_version_migration_status->resource_version) {
-    if(cJSON_AddStringToObject(item, "resourceVersion", v1alpha1_storage_version_migration_status->resource_version) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "resourceVersion", v1alpha1_storage_version_migration_status->resource_version) == NULL) {
     goto fail; //String
     }
     }
@@ -72,12 +72,12 @@ cJSON *v1alpha1_storage_version_migration_status_convertToJSON(v1alpha1_storage_
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1alpha1_storage_version_migration_status_t *v1alpha1_storage_version_migration_status_parseFromJSON(cJSON *v1alpha1_storage_version_migration_statusJSON){
+v1alpha1_storage_version_migration_status_t *v1alpha1_storage_version_migration_status_parseFromJSON(mazu_cJSON *v1alpha1_storage_version_migration_statusJSON){
 
     v1alpha1_storage_version_migration_status_t *v1alpha1_storage_version_migration_status_local_var = NULL;
 
@@ -85,18 +85,18 @@ v1alpha1_storage_version_migration_status_t *v1alpha1_storage_version_migration_
     list_t *conditionsList = NULL;
 
     // v1alpha1_storage_version_migration_status->conditions
-    cJSON *conditions = cJSON_GetObjectItemCaseSensitive(v1alpha1_storage_version_migration_statusJSON, "conditions");
+    mazu_cJSON *conditions = mazu_cJSON_GetObjectItemCaseSensitive(v1alpha1_storage_version_migration_statusJSON, "conditions");
     if (conditions) { 
-    cJSON *conditions_local_nonprimitive = NULL;
-    if(!cJSON_IsArray(conditions)){
+    mazu_cJSON *conditions_local_nonprimitive = NULL;
+    if(!mazu_cJSON_IsArray(conditions)){
         goto end; //nonprimitive container
     }
 
     conditionsList = list_createList();
 
-    cJSON_ArrayForEach(conditions_local_nonprimitive,conditions )
+    mazu_cJSON_ArrayForEach(conditions_local_nonprimitive,conditions )
     {
-        if(!cJSON_IsObject(conditions_local_nonprimitive)){
+        if(!mazu_cJSON_IsObject(conditions_local_nonprimitive)){
             goto end;
         }
         v1alpha1_migration_condition_t *conditionsItem = v1alpha1_migration_condition_parseFromJSON(conditions_local_nonprimitive);
@@ -106,9 +106,9 @@ v1alpha1_storage_version_migration_status_t *v1alpha1_storage_version_migration_
     }
 
     // v1alpha1_storage_version_migration_status->resource_version
-    cJSON *resource_version = cJSON_GetObjectItemCaseSensitive(v1alpha1_storage_version_migration_statusJSON, "resourceVersion");
+    mazu_cJSON *resource_version = mazu_cJSON_GetObjectItemCaseSensitive(v1alpha1_storage_version_migration_statusJSON, "resourceVersion");
     if (resource_version) { 
-    if(!cJSON_IsString(resource_version) && !cJSON_IsNull(resource_version))
+    if(!mazu_cJSON_IsString(resource_version) && !mazu_cJSON_IsNull(resource_version))
     {
     goto end; //String
     }
@@ -117,7 +117,7 @@ v1alpha1_storage_version_migration_status_t *v1alpha1_storage_version_migration_
 
     v1alpha1_storage_version_migration_status_local_var = v1alpha1_storage_version_migration_status_create (
         conditions ? conditionsList : NULL,
-        resource_version && !cJSON_IsNull(resource_version) ? strdup(resource_version->valuestring) : NULL
+        resource_version && !mazu_cJSON_IsNull(resource_version) ? strdup(resource_version->valuestring) : NULL
         );
 
     return v1alpha1_storage_version_migration_status_local_var;

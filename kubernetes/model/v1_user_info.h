@@ -8,7 +8,7 @@
 #define _v1_user_info_H_
 
 #include <string.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
 #include "../include/binary.h"
@@ -35,9 +35,9 @@ v1_user_info_t *v1_user_info_create(
 
 void v1_user_info_free(v1_user_info_t *v1_user_info);
 
-v1_user_info_t *v1_user_info_parseFromJSON(cJSON *v1_user_infoJSON);
+v1_user_info_t *v1_user_info_parseFromJSON(mazu_cJSON *v1_user_infoJSON);
 
-cJSON *v1_user_info_convertToJSON(v1_user_info_t *v1_user_info);
+mazu_cJSON *v1_user_info_convertToJSON(v1_user_info_t *v1_user_info);
 
 #endif /* _v1_user_info_H_ */
 

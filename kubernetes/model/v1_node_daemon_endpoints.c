@@ -30,16 +30,16 @@ void v1_node_daemon_endpoints_free(v1_node_daemon_endpoints_t *v1_node_daemon_en
     free(v1_node_daemon_endpoints);
 }
 
-cJSON *v1_node_daemon_endpoints_convertToJSON(v1_node_daemon_endpoints_t *v1_node_daemon_endpoints) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_node_daemon_endpoints_convertToJSON(v1_node_daemon_endpoints_t *v1_node_daemon_endpoints) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_node_daemon_endpoints->kubelet_endpoint
     if(v1_node_daemon_endpoints->kubelet_endpoint) {
-    cJSON *kubelet_endpoint_local_JSON = v1_daemon_endpoint_convertToJSON(v1_node_daemon_endpoints->kubelet_endpoint);
+    mazu_cJSON *kubelet_endpoint_local_JSON = v1_daemon_endpoint_convertToJSON(v1_node_daemon_endpoints->kubelet_endpoint);
     if(kubelet_endpoint_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "kubeletEndpoint", kubelet_endpoint_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "kubeletEndpoint", kubelet_endpoint_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -48,12 +48,12 @@ cJSON *v1_node_daemon_endpoints_convertToJSON(v1_node_daemon_endpoints_t *v1_nod
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_node_daemon_endpoints_t *v1_node_daemon_endpoints_parseFromJSON(cJSON *v1_node_daemon_endpointsJSON){
+v1_node_daemon_endpoints_t *v1_node_daemon_endpoints_parseFromJSON(mazu_cJSON *v1_node_daemon_endpointsJSON){
 
     v1_node_daemon_endpoints_t *v1_node_daemon_endpoints_local_var = NULL;
 
@@ -61,7 +61,7 @@ v1_node_daemon_endpoints_t *v1_node_daemon_endpoints_parseFromJSON(cJSON *v1_nod
     v1_daemon_endpoint_t *kubelet_endpoint_local_nonprim = NULL;
 
     // v1_node_daemon_endpoints->kubelet_endpoint
-    cJSON *kubelet_endpoint = cJSON_GetObjectItemCaseSensitive(v1_node_daemon_endpointsJSON, "kubeletEndpoint");
+    mazu_cJSON *kubelet_endpoint = mazu_cJSON_GetObjectItemCaseSensitive(v1_node_daemon_endpointsJSON, "kubeletEndpoint");
     if (kubelet_endpoint) { 
     kubelet_endpoint_local_nonprim = v1_daemon_endpoint_parseFromJSON(kubelet_endpoint); //nonprimitive
     }

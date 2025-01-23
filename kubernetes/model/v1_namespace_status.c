@@ -39,12 +39,12 @@ void v1_namespace_status_free(v1_namespace_status_t *v1_namespace_status) {
     free(v1_namespace_status);
 }
 
-cJSON *v1_namespace_status_convertToJSON(v1_namespace_status_t *v1_namespace_status) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_namespace_status_convertToJSON(v1_namespace_status_t *v1_namespace_status) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_namespace_status->conditions
     if(v1_namespace_status->conditions) {
-    cJSON *conditions = cJSON_AddArrayToObject(item, "conditions");
+    mazu_cJSON *conditions = mazu_cJSON_AddArrayToObject(item, "conditions");
     if(conditions == NULL) {
     goto fail; //nonprimitive container
     }
@@ -52,11 +52,11 @@ cJSON *v1_namespace_status_convertToJSON(v1_namespace_status_t *v1_namespace_sta
     listEntry_t *conditionsListEntry;
     if (v1_namespace_status->conditions) {
     list_ForEach(conditionsListEntry, v1_namespace_status->conditions) {
-    cJSON *itemLocal = v1_namespace_condition_convertToJSON(conditionsListEntry->data);
+    mazu_cJSON *itemLocal = v1_namespace_condition_convertToJSON(conditionsListEntry->data);
     if(itemLocal == NULL) {
     goto fail;
     }
-    cJSON_AddItemToArray(conditions, itemLocal);
+    mazu_cJSON_AddItemToArray(conditions, itemLocal);
     }
     }
     }
@@ -64,7 +64,7 @@ cJSON *v1_namespace_status_convertToJSON(v1_namespace_status_t *v1_namespace_sta
 
     // v1_namespace_status->phase
     if(v1_namespace_status->phase) {
-    if(cJSON_AddStringToObject(item, "phase", v1_namespace_status->phase) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "phase", v1_namespace_status->phase) == NULL) {
     goto fail; //String
     }
     }
@@ -72,12 +72,12 @@ cJSON *v1_namespace_status_convertToJSON(v1_namespace_status_t *v1_namespace_sta
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_namespace_status_t *v1_namespace_status_parseFromJSON(cJSON *v1_namespace_statusJSON){
+v1_namespace_status_t *v1_namespace_status_parseFromJSON(mazu_cJSON *v1_namespace_statusJSON){
 
     v1_namespace_status_t *v1_namespace_status_local_var = NULL;
 
@@ -85,18 +85,18 @@ v1_namespace_status_t *v1_namespace_status_parseFromJSON(cJSON *v1_namespace_sta
     list_t *conditionsList = NULL;
 
     // v1_namespace_status->conditions
-    cJSON *conditions = cJSON_GetObjectItemCaseSensitive(v1_namespace_statusJSON, "conditions");
+    mazu_cJSON *conditions = mazu_cJSON_GetObjectItemCaseSensitive(v1_namespace_statusJSON, "conditions");
     if (conditions) { 
-    cJSON *conditions_local_nonprimitive = NULL;
-    if(!cJSON_IsArray(conditions)){
+    mazu_cJSON *conditions_local_nonprimitive = NULL;
+    if(!mazu_cJSON_IsArray(conditions)){
         goto end; //nonprimitive container
     }
 
     conditionsList = list_createList();
 
-    cJSON_ArrayForEach(conditions_local_nonprimitive,conditions )
+    mazu_cJSON_ArrayForEach(conditions_local_nonprimitive,conditions )
     {
-        if(!cJSON_IsObject(conditions_local_nonprimitive)){
+        if(!mazu_cJSON_IsObject(conditions_local_nonprimitive)){
             goto end;
         }
         v1_namespace_condition_t *conditionsItem = v1_namespace_condition_parseFromJSON(conditions_local_nonprimitive);
@@ -106,9 +106,9 @@ v1_namespace_status_t *v1_namespace_status_parseFromJSON(cJSON *v1_namespace_sta
     }
 
     // v1_namespace_status->phase
-    cJSON *phase = cJSON_GetObjectItemCaseSensitive(v1_namespace_statusJSON, "phase");
+    mazu_cJSON *phase = mazu_cJSON_GetObjectItemCaseSensitive(v1_namespace_statusJSON, "phase");
     if (phase) { 
-    if(!cJSON_IsString(phase) && !cJSON_IsNull(phase))
+    if(!mazu_cJSON_IsString(phase) && !mazu_cJSON_IsNull(phase))
     {
     goto end; //String
     }
@@ -117,7 +117,7 @@ v1_namespace_status_t *v1_namespace_status_parseFromJSON(cJSON *v1_namespace_sta
 
     v1_namespace_status_local_var = v1_namespace_status_create (
         conditions ? conditionsList : NULL,
-        phase && !cJSON_IsNull(phase) ? strdup(phase->valuestring) : NULL
+        phase && !mazu_cJSON_IsNull(phase) ? strdup(phase->valuestring) : NULL
         );
 
     return v1_namespace_status_local_var;

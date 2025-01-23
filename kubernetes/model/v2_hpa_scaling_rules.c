@@ -41,12 +41,12 @@ void v2_hpa_scaling_rules_free(v2_hpa_scaling_rules_t *v2_hpa_scaling_rules) {
     free(v2_hpa_scaling_rules);
 }
 
-cJSON *v2_hpa_scaling_rules_convertToJSON(v2_hpa_scaling_rules_t *v2_hpa_scaling_rules) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v2_hpa_scaling_rules_convertToJSON(v2_hpa_scaling_rules_t *v2_hpa_scaling_rules) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v2_hpa_scaling_rules->policies
     if(v2_hpa_scaling_rules->policies) {
-    cJSON *policies = cJSON_AddArrayToObject(item, "policies");
+    mazu_cJSON *policies = mazu_cJSON_AddArrayToObject(item, "policies");
     if(policies == NULL) {
     goto fail; //nonprimitive container
     }
@@ -54,11 +54,11 @@ cJSON *v2_hpa_scaling_rules_convertToJSON(v2_hpa_scaling_rules_t *v2_hpa_scaling
     listEntry_t *policiesListEntry;
     if (v2_hpa_scaling_rules->policies) {
     list_ForEach(policiesListEntry, v2_hpa_scaling_rules->policies) {
-    cJSON *itemLocal = v2_hpa_scaling_policy_convertToJSON(policiesListEntry->data);
+    mazu_cJSON *itemLocal = v2_hpa_scaling_policy_convertToJSON(policiesListEntry->data);
     if(itemLocal == NULL) {
     goto fail;
     }
-    cJSON_AddItemToArray(policies, itemLocal);
+    mazu_cJSON_AddItemToArray(policies, itemLocal);
     }
     }
     }
@@ -66,7 +66,7 @@ cJSON *v2_hpa_scaling_rules_convertToJSON(v2_hpa_scaling_rules_t *v2_hpa_scaling
 
     // v2_hpa_scaling_rules->select_policy
     if(v2_hpa_scaling_rules->select_policy) {
-    if(cJSON_AddStringToObject(item, "selectPolicy", v2_hpa_scaling_rules->select_policy) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "selectPolicy", v2_hpa_scaling_rules->select_policy) == NULL) {
     goto fail; //String
     }
     }
@@ -74,7 +74,7 @@ cJSON *v2_hpa_scaling_rules_convertToJSON(v2_hpa_scaling_rules_t *v2_hpa_scaling
 
     // v2_hpa_scaling_rules->stabilization_window_seconds
     if(v2_hpa_scaling_rules->stabilization_window_seconds) {
-    if(cJSON_AddNumberToObject(item, "stabilizationWindowSeconds", v2_hpa_scaling_rules->stabilization_window_seconds) == NULL) {
+    if(mazu_cJSON_AddNumberToObject(item, "stabilizationWindowSeconds", v2_hpa_scaling_rules->stabilization_window_seconds) == NULL) {
     goto fail; //Numeric
     }
     }
@@ -82,12 +82,12 @@ cJSON *v2_hpa_scaling_rules_convertToJSON(v2_hpa_scaling_rules_t *v2_hpa_scaling
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v2_hpa_scaling_rules_t *v2_hpa_scaling_rules_parseFromJSON(cJSON *v2_hpa_scaling_rulesJSON){
+v2_hpa_scaling_rules_t *v2_hpa_scaling_rules_parseFromJSON(mazu_cJSON *v2_hpa_scaling_rulesJSON){
 
     v2_hpa_scaling_rules_t *v2_hpa_scaling_rules_local_var = NULL;
 
@@ -95,18 +95,18 @@ v2_hpa_scaling_rules_t *v2_hpa_scaling_rules_parseFromJSON(cJSON *v2_hpa_scaling
     list_t *policiesList = NULL;
 
     // v2_hpa_scaling_rules->policies
-    cJSON *policies = cJSON_GetObjectItemCaseSensitive(v2_hpa_scaling_rulesJSON, "policies");
+    mazu_cJSON *policies = mazu_cJSON_GetObjectItemCaseSensitive(v2_hpa_scaling_rulesJSON, "policies");
     if (policies) { 
-    cJSON *policies_local_nonprimitive = NULL;
-    if(!cJSON_IsArray(policies)){
+    mazu_cJSON *policies_local_nonprimitive = NULL;
+    if(!mazu_cJSON_IsArray(policies)){
         goto end; //nonprimitive container
     }
 
     policiesList = list_createList();
 
-    cJSON_ArrayForEach(policies_local_nonprimitive,policies )
+    mazu_cJSON_ArrayForEach(policies_local_nonprimitive,policies )
     {
-        if(!cJSON_IsObject(policies_local_nonprimitive)){
+        if(!mazu_cJSON_IsObject(policies_local_nonprimitive)){
             goto end;
         }
         v2_hpa_scaling_policy_t *policiesItem = v2_hpa_scaling_policy_parseFromJSON(policies_local_nonprimitive);
@@ -116,18 +116,18 @@ v2_hpa_scaling_rules_t *v2_hpa_scaling_rules_parseFromJSON(cJSON *v2_hpa_scaling
     }
 
     // v2_hpa_scaling_rules->select_policy
-    cJSON *select_policy = cJSON_GetObjectItemCaseSensitive(v2_hpa_scaling_rulesJSON, "selectPolicy");
+    mazu_cJSON *select_policy = mazu_cJSON_GetObjectItemCaseSensitive(v2_hpa_scaling_rulesJSON, "selectPolicy");
     if (select_policy) { 
-    if(!cJSON_IsString(select_policy) && !cJSON_IsNull(select_policy))
+    if(!mazu_cJSON_IsString(select_policy) && !mazu_cJSON_IsNull(select_policy))
     {
     goto end; //String
     }
     }
 
     // v2_hpa_scaling_rules->stabilization_window_seconds
-    cJSON *stabilization_window_seconds = cJSON_GetObjectItemCaseSensitive(v2_hpa_scaling_rulesJSON, "stabilizationWindowSeconds");
+    mazu_cJSON *stabilization_window_seconds = mazu_cJSON_GetObjectItemCaseSensitive(v2_hpa_scaling_rulesJSON, "stabilizationWindowSeconds");
     if (stabilization_window_seconds) { 
-    if(!cJSON_IsNumber(stabilization_window_seconds))
+    if(!mazu_cJSON_IsNumber(stabilization_window_seconds))
     {
     goto end; //Numeric
     }
@@ -136,7 +136,7 @@ v2_hpa_scaling_rules_t *v2_hpa_scaling_rules_parseFromJSON(cJSON *v2_hpa_scaling
 
     v2_hpa_scaling_rules_local_var = v2_hpa_scaling_rules_create (
         policies ? policiesList : NULL,
-        select_policy && !cJSON_IsNull(select_policy) ? strdup(select_policy->valuestring) : NULL,
+        select_policy && !mazu_cJSON_IsNull(select_policy) ? strdup(select_policy->valuestring) : NULL,
         stabilization_window_seconds ? stabilization_window_seconds->valuedouble : 0
         );
 

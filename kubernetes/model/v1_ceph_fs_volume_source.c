@@ -59,21 +59,21 @@ void v1_ceph_fs_volume_source_free(v1_ceph_fs_volume_source_t *v1_ceph_fs_volume
     free(v1_ceph_fs_volume_source);
 }
 
-cJSON *v1_ceph_fs_volume_source_convertToJSON(v1_ceph_fs_volume_source_t *v1_ceph_fs_volume_source) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_ceph_fs_volume_source_convertToJSON(v1_ceph_fs_volume_source_t *v1_ceph_fs_volume_source) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_ceph_fs_volume_source->monitors
     if (!v1_ceph_fs_volume_source->monitors) {
         goto fail;
     }
-    cJSON *monitors = cJSON_AddArrayToObject(item, "monitors");
+    mazu_cJSON *monitors = mazu_cJSON_AddArrayToObject(item, "monitors");
     if(monitors == NULL) {
         goto fail; //primitive container
     }
 
     listEntry_t *monitorsListEntry;
     list_ForEach(monitorsListEntry, v1_ceph_fs_volume_source->monitors) {
-    if(cJSON_AddStringToObject(monitors, "", (char*)monitorsListEntry->data) == NULL)
+    if(mazu_cJSON_AddStringToObject(monitors, "", (char*)monitorsListEntry->data) == NULL)
     {
         goto fail;
     }
@@ -82,7 +82,7 @@ cJSON *v1_ceph_fs_volume_source_convertToJSON(v1_ceph_fs_volume_source_t *v1_cep
 
     // v1_ceph_fs_volume_source->path
     if(v1_ceph_fs_volume_source->path) {
-    if(cJSON_AddStringToObject(item, "path", v1_ceph_fs_volume_source->path) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "path", v1_ceph_fs_volume_source->path) == NULL) {
     goto fail; //String
     }
     }
@@ -90,7 +90,7 @@ cJSON *v1_ceph_fs_volume_source_convertToJSON(v1_ceph_fs_volume_source_t *v1_cep
 
     // v1_ceph_fs_volume_source->read_only
     if(v1_ceph_fs_volume_source->read_only) {
-    if(cJSON_AddBoolToObject(item, "readOnly", v1_ceph_fs_volume_source->read_only) == NULL) {
+    if(mazu_cJSON_AddBoolToObject(item, "readOnly", v1_ceph_fs_volume_source->read_only) == NULL) {
     goto fail; //Bool
     }
     }
@@ -98,7 +98,7 @@ cJSON *v1_ceph_fs_volume_source_convertToJSON(v1_ceph_fs_volume_source_t *v1_cep
 
     // v1_ceph_fs_volume_source->secret_file
     if(v1_ceph_fs_volume_source->secret_file) {
-    if(cJSON_AddStringToObject(item, "secretFile", v1_ceph_fs_volume_source->secret_file) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "secretFile", v1_ceph_fs_volume_source->secret_file) == NULL) {
     goto fail; //String
     }
     }
@@ -106,11 +106,11 @@ cJSON *v1_ceph_fs_volume_source_convertToJSON(v1_ceph_fs_volume_source_t *v1_cep
 
     // v1_ceph_fs_volume_source->secret_ref
     if(v1_ceph_fs_volume_source->secret_ref) {
-    cJSON *secret_ref_local_JSON = v1_local_object_reference_convertToJSON(v1_ceph_fs_volume_source->secret_ref);
+    mazu_cJSON *secret_ref_local_JSON = v1_local_object_reference_convertToJSON(v1_ceph_fs_volume_source->secret_ref);
     if(secret_ref_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "secretRef", secret_ref_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "secretRef", secret_ref_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -119,7 +119,7 @@ cJSON *v1_ceph_fs_volume_source_convertToJSON(v1_ceph_fs_volume_source_t *v1_cep
 
     // v1_ceph_fs_volume_source->user
     if(v1_ceph_fs_volume_source->user) {
-    if(cJSON_AddStringToObject(item, "user", v1_ceph_fs_volume_source->user) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "user", v1_ceph_fs_volume_source->user) == NULL) {
     goto fail; //String
     }
     }
@@ -127,12 +127,12 @@ cJSON *v1_ceph_fs_volume_source_convertToJSON(v1_ceph_fs_volume_source_t *v1_cep
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_ceph_fs_volume_source_t *v1_ceph_fs_volume_source_parseFromJSON(cJSON *v1_ceph_fs_volume_sourceJSON){
+v1_ceph_fs_volume_source_t *v1_ceph_fs_volume_source_parseFromJSON(mazu_cJSON *v1_ceph_fs_volume_sourceJSON){
 
     v1_ceph_fs_volume_source_t *v1_ceph_fs_volume_source_local_var = NULL;
 
@@ -143,21 +143,21 @@ v1_ceph_fs_volume_source_t *v1_ceph_fs_volume_source_parseFromJSON(cJSON *v1_cep
     v1_local_object_reference_t *secret_ref_local_nonprim = NULL;
 
     // v1_ceph_fs_volume_source->monitors
-    cJSON *monitors = cJSON_GetObjectItemCaseSensitive(v1_ceph_fs_volume_sourceJSON, "monitors");
+    mazu_cJSON *monitors = mazu_cJSON_GetObjectItemCaseSensitive(v1_ceph_fs_volume_sourceJSON, "monitors");
     if (!monitors) {
         goto end;
     }
 
     
-    cJSON *monitors_local = NULL;
-    if(!cJSON_IsArray(monitors)) {
+    mazu_cJSON *monitors_local = NULL;
+    if(!mazu_cJSON_IsArray(monitors)) {
         goto end;//primitive container
     }
     monitorsList = list_createList();
 
-    cJSON_ArrayForEach(monitors_local, monitors)
+    mazu_cJSON_ArrayForEach(monitors_local, monitors)
     {
-        if(!cJSON_IsString(monitors_local))
+        if(!mazu_cJSON_IsString(monitors_local))
         {
             goto end;
         }
@@ -165,42 +165,42 @@ v1_ceph_fs_volume_source_t *v1_ceph_fs_volume_source_parseFromJSON(cJSON *v1_cep
     }
 
     // v1_ceph_fs_volume_source->path
-    cJSON *path = cJSON_GetObjectItemCaseSensitive(v1_ceph_fs_volume_sourceJSON, "path");
+    mazu_cJSON *path = mazu_cJSON_GetObjectItemCaseSensitive(v1_ceph_fs_volume_sourceJSON, "path");
     if (path) { 
-    if(!cJSON_IsString(path) && !cJSON_IsNull(path))
+    if(!mazu_cJSON_IsString(path) && !mazu_cJSON_IsNull(path))
     {
     goto end; //String
     }
     }
 
     // v1_ceph_fs_volume_source->read_only
-    cJSON *read_only = cJSON_GetObjectItemCaseSensitive(v1_ceph_fs_volume_sourceJSON, "readOnly");
+    mazu_cJSON *read_only = mazu_cJSON_GetObjectItemCaseSensitive(v1_ceph_fs_volume_sourceJSON, "readOnly");
     if (read_only) { 
-    if(!cJSON_IsBool(read_only))
+    if(!mazu_cJSON_IsBool(read_only))
     {
     goto end; //Bool
     }
     }
 
     // v1_ceph_fs_volume_source->secret_file
-    cJSON *secret_file = cJSON_GetObjectItemCaseSensitive(v1_ceph_fs_volume_sourceJSON, "secretFile");
+    mazu_cJSON *secret_file = mazu_cJSON_GetObjectItemCaseSensitive(v1_ceph_fs_volume_sourceJSON, "secretFile");
     if (secret_file) { 
-    if(!cJSON_IsString(secret_file) && !cJSON_IsNull(secret_file))
+    if(!mazu_cJSON_IsString(secret_file) && !mazu_cJSON_IsNull(secret_file))
     {
     goto end; //String
     }
     }
 
     // v1_ceph_fs_volume_source->secret_ref
-    cJSON *secret_ref = cJSON_GetObjectItemCaseSensitive(v1_ceph_fs_volume_sourceJSON, "secretRef");
+    mazu_cJSON *secret_ref = mazu_cJSON_GetObjectItemCaseSensitive(v1_ceph_fs_volume_sourceJSON, "secretRef");
     if (secret_ref) { 
     secret_ref_local_nonprim = v1_local_object_reference_parseFromJSON(secret_ref); //nonprimitive
     }
 
     // v1_ceph_fs_volume_source->user
-    cJSON *user = cJSON_GetObjectItemCaseSensitive(v1_ceph_fs_volume_sourceJSON, "user");
+    mazu_cJSON *user = mazu_cJSON_GetObjectItemCaseSensitive(v1_ceph_fs_volume_sourceJSON, "user");
     if (user) { 
-    if(!cJSON_IsString(user) && !cJSON_IsNull(user))
+    if(!mazu_cJSON_IsString(user) && !mazu_cJSON_IsNull(user))
     {
     goto end; //String
     }
@@ -209,11 +209,11 @@ v1_ceph_fs_volume_source_t *v1_ceph_fs_volume_source_parseFromJSON(cJSON *v1_cep
 
     v1_ceph_fs_volume_source_local_var = v1_ceph_fs_volume_source_create (
         monitorsList,
-        path && !cJSON_IsNull(path) ? strdup(path->valuestring) : NULL,
+        path && !mazu_cJSON_IsNull(path) ? strdup(path->valuestring) : NULL,
         read_only ? read_only->valueint : 0,
-        secret_file && !cJSON_IsNull(secret_file) ? strdup(secret_file->valuestring) : NULL,
+        secret_file && !mazu_cJSON_IsNull(secret_file) ? strdup(secret_file->valuestring) : NULL,
         secret_ref ? secret_ref_local_nonprim : NULL,
-        user && !cJSON_IsNull(user) ? strdup(user->valuestring) : NULL
+        user && !mazu_cJSON_IsNull(user) ? strdup(user->valuestring) : NULL
         );
 
     return v1_ceph_fs_volume_source_local_var;

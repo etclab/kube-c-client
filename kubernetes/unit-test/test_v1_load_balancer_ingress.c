@@ -11,7 +11,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdbool.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 
 #include "../model/v1_load_balancer_ingress.h"
 v1_load_balancer_ingress_t* instantiate_v1_load_balancer_ingress(int include_optional);
@@ -45,11 +45,11 @@ v1_load_balancer_ingress_t* instantiate_v1_load_balancer_ingress(int include_opt
 void test_v1_load_balancer_ingress(int include_optional) {
     v1_load_balancer_ingress_t* v1_load_balancer_ingress_1 = instantiate_v1_load_balancer_ingress(include_optional);
 
-	cJSON* jsonv1_load_balancer_ingress_1 = v1_load_balancer_ingress_convertToJSON(v1_load_balancer_ingress_1);
-	printf("v1_load_balancer_ingress :\n%s\n", cJSON_Print(jsonv1_load_balancer_ingress_1));
+	mazu_cJSON* jsonv1_load_balancer_ingress_1 = v1_load_balancer_ingress_convertToJSON(v1_load_balancer_ingress_1);
+	printf("v1_load_balancer_ingress :\n%s\n", mazu_cJSON_Print(jsonv1_load_balancer_ingress_1));
 	v1_load_balancer_ingress_t* v1_load_balancer_ingress_2 = v1_load_balancer_ingress_parseFromJSON(jsonv1_load_balancer_ingress_1);
-	cJSON* jsonv1_load_balancer_ingress_2 = v1_load_balancer_ingress_convertToJSON(v1_load_balancer_ingress_2);
-	printf("repeating v1_load_balancer_ingress:\n%s\n", cJSON_Print(jsonv1_load_balancer_ingress_2));
+	mazu_cJSON* jsonv1_load_balancer_ingress_2 = v1_load_balancer_ingress_convertToJSON(v1_load_balancer_ingress_2);
+	printf("repeating v1_load_balancer_ingress:\n%s\n", mazu_cJSON_Print(jsonv1_load_balancer_ingress_2));
 }
 
 int main() {

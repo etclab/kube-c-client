@@ -33,19 +33,19 @@ void v1beta1_service_cidr_spec_free(v1beta1_service_cidr_spec_t *v1beta1_service
     free(v1beta1_service_cidr_spec);
 }
 
-cJSON *v1beta1_service_cidr_spec_convertToJSON(v1beta1_service_cidr_spec_t *v1beta1_service_cidr_spec) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1beta1_service_cidr_spec_convertToJSON(v1beta1_service_cidr_spec_t *v1beta1_service_cidr_spec) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1beta1_service_cidr_spec->cidrs
     if(v1beta1_service_cidr_spec->cidrs) {
-    cJSON *cidrs = cJSON_AddArrayToObject(item, "cidrs");
+    mazu_cJSON *cidrs = mazu_cJSON_AddArrayToObject(item, "cidrs");
     if(cidrs == NULL) {
         goto fail; //primitive container
     }
 
     listEntry_t *cidrsListEntry;
     list_ForEach(cidrsListEntry, v1beta1_service_cidr_spec->cidrs) {
-    if(cJSON_AddStringToObject(cidrs, "", (char*)cidrsListEntry->data) == NULL)
+    if(mazu_cJSON_AddStringToObject(cidrs, "", (char*)cidrsListEntry->data) == NULL)
     {
         goto fail;
     }
@@ -55,12 +55,12 @@ cJSON *v1beta1_service_cidr_spec_convertToJSON(v1beta1_service_cidr_spec_t *v1be
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1beta1_service_cidr_spec_t *v1beta1_service_cidr_spec_parseFromJSON(cJSON *v1beta1_service_cidr_specJSON){
+v1beta1_service_cidr_spec_t *v1beta1_service_cidr_spec_parseFromJSON(mazu_cJSON *v1beta1_service_cidr_specJSON){
 
     v1beta1_service_cidr_spec_t *v1beta1_service_cidr_spec_local_var = NULL;
 
@@ -68,17 +68,17 @@ v1beta1_service_cidr_spec_t *v1beta1_service_cidr_spec_parseFromJSON(cJSON *v1be
     list_t *cidrsList = NULL;
 
     // v1beta1_service_cidr_spec->cidrs
-    cJSON *cidrs = cJSON_GetObjectItemCaseSensitive(v1beta1_service_cidr_specJSON, "cidrs");
+    mazu_cJSON *cidrs = mazu_cJSON_GetObjectItemCaseSensitive(v1beta1_service_cidr_specJSON, "cidrs");
     if (cidrs) { 
-    cJSON *cidrs_local = NULL;
-    if(!cJSON_IsArray(cidrs)) {
+    mazu_cJSON *cidrs_local = NULL;
+    if(!mazu_cJSON_IsArray(cidrs)) {
         goto end;//primitive container
     }
     cidrsList = list_createList();
 
-    cJSON_ArrayForEach(cidrs_local, cidrs)
+    mazu_cJSON_ArrayForEach(cidrs_local, cidrs)
     {
-        if(!cJSON_IsString(cidrs_local))
+        if(!mazu_cJSON_IsString(cidrs_local))
         {
             goto end;
         }

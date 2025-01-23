@@ -45,12 +45,12 @@ void v1_api_group_list_free(v1_api_group_list_t *v1_api_group_list) {
     free(v1_api_group_list);
 }
 
-cJSON *v1_api_group_list_convertToJSON(v1_api_group_list_t *v1_api_group_list) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_api_group_list_convertToJSON(v1_api_group_list_t *v1_api_group_list) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_api_group_list->api_version
     if(v1_api_group_list->api_version) {
-    if(cJSON_AddStringToObject(item, "apiVersion", v1_api_group_list->api_version) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "apiVersion", v1_api_group_list->api_version) == NULL) {
     goto fail; //String
     }
     }
@@ -60,7 +60,7 @@ cJSON *v1_api_group_list_convertToJSON(v1_api_group_list_t *v1_api_group_list) {
     if (!v1_api_group_list->groups) {
         goto fail;
     }
-    cJSON *groups = cJSON_AddArrayToObject(item, "groups");
+    mazu_cJSON *groups = mazu_cJSON_AddArrayToObject(item, "groups");
     if(groups == NULL) {
     goto fail; //nonprimitive container
     }
@@ -68,18 +68,18 @@ cJSON *v1_api_group_list_convertToJSON(v1_api_group_list_t *v1_api_group_list) {
     listEntry_t *groupsListEntry;
     if (v1_api_group_list->groups) {
     list_ForEach(groupsListEntry, v1_api_group_list->groups) {
-    cJSON *itemLocal = v1_api_group_convertToJSON(groupsListEntry->data);
+    mazu_cJSON *itemLocal = v1_api_group_convertToJSON(groupsListEntry->data);
     if(itemLocal == NULL) {
     goto fail;
     }
-    cJSON_AddItemToArray(groups, itemLocal);
+    mazu_cJSON_AddItemToArray(groups, itemLocal);
     }
     }
 
 
     // v1_api_group_list->kind
     if(v1_api_group_list->kind) {
-    if(cJSON_AddStringToObject(item, "kind", v1_api_group_list->kind) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "kind", v1_api_group_list->kind) == NULL) {
     goto fail; //String
     }
     }
@@ -87,12 +87,12 @@ cJSON *v1_api_group_list_convertToJSON(v1_api_group_list_t *v1_api_group_list) {
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_api_group_list_t *v1_api_group_list_parseFromJSON(cJSON *v1_api_group_listJSON){
+v1_api_group_list_t *v1_api_group_list_parseFromJSON(mazu_cJSON *v1_api_group_listJSON){
 
     v1_api_group_list_t *v1_api_group_list_local_var = NULL;
 
@@ -100,31 +100,31 @@ v1_api_group_list_t *v1_api_group_list_parseFromJSON(cJSON *v1_api_group_listJSO
     list_t *groupsList = NULL;
 
     // v1_api_group_list->api_version
-    cJSON *api_version = cJSON_GetObjectItemCaseSensitive(v1_api_group_listJSON, "apiVersion");
+    mazu_cJSON *api_version = mazu_cJSON_GetObjectItemCaseSensitive(v1_api_group_listJSON, "apiVersion");
     if (api_version) { 
-    if(!cJSON_IsString(api_version) && !cJSON_IsNull(api_version))
+    if(!mazu_cJSON_IsString(api_version) && !mazu_cJSON_IsNull(api_version))
     {
     goto end; //String
     }
     }
 
     // v1_api_group_list->groups
-    cJSON *groups = cJSON_GetObjectItemCaseSensitive(v1_api_group_listJSON, "groups");
+    mazu_cJSON *groups = mazu_cJSON_GetObjectItemCaseSensitive(v1_api_group_listJSON, "groups");
     if (!groups) {
         goto end;
     }
 
     
-    cJSON *groups_local_nonprimitive = NULL;
-    if(!cJSON_IsArray(groups)){
+    mazu_cJSON *groups_local_nonprimitive = NULL;
+    if(!mazu_cJSON_IsArray(groups)){
         goto end; //nonprimitive container
     }
 
     groupsList = list_createList();
 
-    cJSON_ArrayForEach(groups_local_nonprimitive,groups )
+    mazu_cJSON_ArrayForEach(groups_local_nonprimitive,groups )
     {
-        if(!cJSON_IsObject(groups_local_nonprimitive)){
+        if(!mazu_cJSON_IsObject(groups_local_nonprimitive)){
             goto end;
         }
         v1_api_group_t *groupsItem = v1_api_group_parseFromJSON(groups_local_nonprimitive);
@@ -133,9 +133,9 @@ v1_api_group_list_t *v1_api_group_list_parseFromJSON(cJSON *v1_api_group_listJSO
     }
 
     // v1_api_group_list->kind
-    cJSON *kind = cJSON_GetObjectItemCaseSensitive(v1_api_group_listJSON, "kind");
+    mazu_cJSON *kind = mazu_cJSON_GetObjectItemCaseSensitive(v1_api_group_listJSON, "kind");
     if (kind) { 
-    if(!cJSON_IsString(kind) && !cJSON_IsNull(kind))
+    if(!mazu_cJSON_IsString(kind) && !mazu_cJSON_IsNull(kind))
     {
     goto end; //String
     }
@@ -143,9 +143,9 @@ v1_api_group_list_t *v1_api_group_list_parseFromJSON(cJSON *v1_api_group_listJSO
 
 
     v1_api_group_list_local_var = v1_api_group_list_create (
-        api_version && !cJSON_IsNull(api_version) ? strdup(api_version->valuestring) : NULL,
+        api_version && !mazu_cJSON_IsNull(api_version) ? strdup(api_version->valuestring) : NULL,
         groupsList,
-        kind && !cJSON_IsNull(kind) ? strdup(kind->valuestring) : NULL
+        kind && !mazu_cJSON_IsNull(kind) ? strdup(kind->valuestring) : NULL
         );
 
     return v1_api_group_list_local_var;

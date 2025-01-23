@@ -61,12 +61,12 @@ void v1_delete_options_free(v1_delete_options_t *v1_delete_options) {
     free(v1_delete_options);
 }
 
-cJSON *v1_delete_options_convertToJSON(v1_delete_options_t *v1_delete_options) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_delete_options_convertToJSON(v1_delete_options_t *v1_delete_options) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_delete_options->api_version
     if(v1_delete_options->api_version) {
-    if(cJSON_AddStringToObject(item, "apiVersion", v1_delete_options->api_version) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "apiVersion", v1_delete_options->api_version) == NULL) {
     goto fail; //String
     }
     }
@@ -74,14 +74,14 @@ cJSON *v1_delete_options_convertToJSON(v1_delete_options_t *v1_delete_options) {
 
     // v1_delete_options->dry_run
     if(v1_delete_options->dry_run) {
-    cJSON *dry_run = cJSON_AddArrayToObject(item, "dryRun");
+    mazu_cJSON *dry_run = mazu_cJSON_AddArrayToObject(item, "dryRun");
     if(dry_run == NULL) {
         goto fail; //primitive container
     }
 
     listEntry_t *dry_runListEntry;
     list_ForEach(dry_runListEntry, v1_delete_options->dry_run) {
-    if(cJSON_AddStringToObject(dry_run, "", (char*)dry_runListEntry->data) == NULL)
+    if(mazu_cJSON_AddStringToObject(dry_run, "", (char*)dry_runListEntry->data) == NULL)
     {
         goto fail;
     }
@@ -91,7 +91,7 @@ cJSON *v1_delete_options_convertToJSON(v1_delete_options_t *v1_delete_options) {
 
     // v1_delete_options->grace_period_seconds
     if(v1_delete_options->grace_period_seconds) {
-    if(cJSON_AddNumberToObject(item, "gracePeriodSeconds", v1_delete_options->grace_period_seconds) == NULL) {
+    if(mazu_cJSON_AddNumberToObject(item, "gracePeriodSeconds", v1_delete_options->grace_period_seconds) == NULL) {
     goto fail; //Numeric
     }
     }
@@ -99,7 +99,7 @@ cJSON *v1_delete_options_convertToJSON(v1_delete_options_t *v1_delete_options) {
 
     // v1_delete_options->kind
     if(v1_delete_options->kind) {
-    if(cJSON_AddStringToObject(item, "kind", v1_delete_options->kind) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "kind", v1_delete_options->kind) == NULL) {
     goto fail; //String
     }
     }
@@ -107,7 +107,7 @@ cJSON *v1_delete_options_convertToJSON(v1_delete_options_t *v1_delete_options) {
 
     // v1_delete_options->orphan_dependents
     if(v1_delete_options->orphan_dependents) {
-    if(cJSON_AddBoolToObject(item, "orphanDependents", v1_delete_options->orphan_dependents) == NULL) {
+    if(mazu_cJSON_AddBoolToObject(item, "orphanDependents", v1_delete_options->orphan_dependents) == NULL) {
     goto fail; //Bool
     }
     }
@@ -115,11 +115,11 @@ cJSON *v1_delete_options_convertToJSON(v1_delete_options_t *v1_delete_options) {
 
     // v1_delete_options->preconditions
     if(v1_delete_options->preconditions) {
-    cJSON *preconditions_local_JSON = v1_preconditions_convertToJSON(v1_delete_options->preconditions);
+    mazu_cJSON *preconditions_local_JSON = v1_preconditions_convertToJSON(v1_delete_options->preconditions);
     if(preconditions_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "preconditions", preconditions_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "preconditions", preconditions_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -128,7 +128,7 @@ cJSON *v1_delete_options_convertToJSON(v1_delete_options_t *v1_delete_options) {
 
     // v1_delete_options->propagation_policy
     if(v1_delete_options->propagation_policy) {
-    if(cJSON_AddStringToObject(item, "propagationPolicy", v1_delete_options->propagation_policy) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "propagationPolicy", v1_delete_options->propagation_policy) == NULL) {
     goto fail; //String
     }
     }
@@ -136,12 +136,12 @@ cJSON *v1_delete_options_convertToJSON(v1_delete_options_t *v1_delete_options) {
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_delete_options_t *v1_delete_options_parseFromJSON(cJSON *v1_delete_optionsJSON){
+v1_delete_options_t *v1_delete_options_parseFromJSON(mazu_cJSON *v1_delete_optionsJSON){
 
     v1_delete_options_t *v1_delete_options_local_var = NULL;
 
@@ -152,26 +152,26 @@ v1_delete_options_t *v1_delete_options_parseFromJSON(cJSON *v1_delete_optionsJSO
     v1_preconditions_t *preconditions_local_nonprim = NULL;
 
     // v1_delete_options->api_version
-    cJSON *api_version = cJSON_GetObjectItemCaseSensitive(v1_delete_optionsJSON, "apiVersion");
+    mazu_cJSON *api_version = mazu_cJSON_GetObjectItemCaseSensitive(v1_delete_optionsJSON, "apiVersion");
     if (api_version) { 
-    if(!cJSON_IsString(api_version) && !cJSON_IsNull(api_version))
+    if(!mazu_cJSON_IsString(api_version) && !mazu_cJSON_IsNull(api_version))
     {
     goto end; //String
     }
     }
 
     // v1_delete_options->dry_run
-    cJSON *dry_run = cJSON_GetObjectItemCaseSensitive(v1_delete_optionsJSON, "dryRun");
+    mazu_cJSON *dry_run = mazu_cJSON_GetObjectItemCaseSensitive(v1_delete_optionsJSON, "dryRun");
     if (dry_run) { 
-    cJSON *dry_run_local = NULL;
-    if(!cJSON_IsArray(dry_run)) {
+    mazu_cJSON *dry_run_local = NULL;
+    if(!mazu_cJSON_IsArray(dry_run)) {
         goto end;//primitive container
     }
     dry_runList = list_createList();
 
-    cJSON_ArrayForEach(dry_run_local, dry_run)
+    mazu_cJSON_ArrayForEach(dry_run_local, dry_run)
     {
-        if(!cJSON_IsString(dry_run_local))
+        if(!mazu_cJSON_IsString(dry_run_local))
         {
             goto end;
         }
@@ -180,42 +180,42 @@ v1_delete_options_t *v1_delete_options_parseFromJSON(cJSON *v1_delete_optionsJSO
     }
 
     // v1_delete_options->grace_period_seconds
-    cJSON *grace_period_seconds = cJSON_GetObjectItemCaseSensitive(v1_delete_optionsJSON, "gracePeriodSeconds");
+    mazu_cJSON *grace_period_seconds = mazu_cJSON_GetObjectItemCaseSensitive(v1_delete_optionsJSON, "gracePeriodSeconds");
     if (grace_period_seconds) { 
-    if(!cJSON_IsNumber(grace_period_seconds))
+    if(!mazu_cJSON_IsNumber(grace_period_seconds))
     {
     goto end; //Numeric
     }
     }
 
     // v1_delete_options->kind
-    cJSON *kind = cJSON_GetObjectItemCaseSensitive(v1_delete_optionsJSON, "kind");
+    mazu_cJSON *kind = mazu_cJSON_GetObjectItemCaseSensitive(v1_delete_optionsJSON, "kind");
     if (kind) { 
-    if(!cJSON_IsString(kind) && !cJSON_IsNull(kind))
+    if(!mazu_cJSON_IsString(kind) && !mazu_cJSON_IsNull(kind))
     {
     goto end; //String
     }
     }
 
     // v1_delete_options->orphan_dependents
-    cJSON *orphan_dependents = cJSON_GetObjectItemCaseSensitive(v1_delete_optionsJSON, "orphanDependents");
+    mazu_cJSON *orphan_dependents = mazu_cJSON_GetObjectItemCaseSensitive(v1_delete_optionsJSON, "orphanDependents");
     if (orphan_dependents) { 
-    if(!cJSON_IsBool(orphan_dependents))
+    if(!mazu_cJSON_IsBool(orphan_dependents))
     {
     goto end; //Bool
     }
     }
 
     // v1_delete_options->preconditions
-    cJSON *preconditions = cJSON_GetObjectItemCaseSensitive(v1_delete_optionsJSON, "preconditions");
+    mazu_cJSON *preconditions = mazu_cJSON_GetObjectItemCaseSensitive(v1_delete_optionsJSON, "preconditions");
     if (preconditions) { 
     preconditions_local_nonprim = v1_preconditions_parseFromJSON(preconditions); //nonprimitive
     }
 
     // v1_delete_options->propagation_policy
-    cJSON *propagation_policy = cJSON_GetObjectItemCaseSensitive(v1_delete_optionsJSON, "propagationPolicy");
+    mazu_cJSON *propagation_policy = mazu_cJSON_GetObjectItemCaseSensitive(v1_delete_optionsJSON, "propagationPolicy");
     if (propagation_policy) { 
-    if(!cJSON_IsString(propagation_policy) && !cJSON_IsNull(propagation_policy))
+    if(!mazu_cJSON_IsString(propagation_policy) && !mazu_cJSON_IsNull(propagation_policy))
     {
     goto end; //String
     }
@@ -223,13 +223,13 @@ v1_delete_options_t *v1_delete_options_parseFromJSON(cJSON *v1_delete_optionsJSO
 
 
     v1_delete_options_local_var = v1_delete_options_create (
-        api_version && !cJSON_IsNull(api_version) ? strdup(api_version->valuestring) : NULL,
+        api_version && !mazu_cJSON_IsNull(api_version) ? strdup(api_version->valuestring) : NULL,
         dry_run ? dry_runList : NULL,
         grace_period_seconds ? grace_period_seconds->valuedouble : 0,
-        kind && !cJSON_IsNull(kind) ? strdup(kind->valuestring) : NULL,
+        kind && !mazu_cJSON_IsNull(kind) ? strdup(kind->valuestring) : NULL,
         orphan_dependents ? orphan_dependents->valueint : 0,
         preconditions ? preconditions_local_nonprim : NULL,
-        propagation_policy && !cJSON_IsNull(propagation_policy) ? strdup(propagation_policy->valuestring) : NULL
+        propagation_policy && !mazu_cJSON_IsNull(propagation_policy) ? strdup(propagation_policy->valuestring) : NULL
         );
 
     return v1_delete_options_local_var;

@@ -42,14 +42,14 @@ void v1_volume_attachment_spec_free(v1_volume_attachment_spec_t *v1_volume_attac
     free(v1_volume_attachment_spec);
 }
 
-cJSON *v1_volume_attachment_spec_convertToJSON(v1_volume_attachment_spec_t *v1_volume_attachment_spec) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_volume_attachment_spec_convertToJSON(v1_volume_attachment_spec_t *v1_volume_attachment_spec) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_volume_attachment_spec->attacher
     if (!v1_volume_attachment_spec->attacher) {
         goto fail;
     }
-    if(cJSON_AddStringToObject(item, "attacher", v1_volume_attachment_spec->attacher) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "attacher", v1_volume_attachment_spec->attacher) == NULL) {
     goto fail; //String
     }
 
@@ -58,7 +58,7 @@ cJSON *v1_volume_attachment_spec_convertToJSON(v1_volume_attachment_spec_t *v1_v
     if (!v1_volume_attachment_spec->node_name) {
         goto fail;
     }
-    if(cJSON_AddStringToObject(item, "nodeName", v1_volume_attachment_spec->node_name) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "nodeName", v1_volume_attachment_spec->node_name) == NULL) {
     goto fail; //String
     }
 
@@ -67,11 +67,11 @@ cJSON *v1_volume_attachment_spec_convertToJSON(v1_volume_attachment_spec_t *v1_v
     if (!v1_volume_attachment_spec->source) {
         goto fail;
     }
-    cJSON *source_local_JSON = v1_volume_attachment_source_convertToJSON(v1_volume_attachment_spec->source);
+    mazu_cJSON *source_local_JSON = v1_volume_attachment_source_convertToJSON(v1_volume_attachment_spec->source);
     if(source_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "source", source_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "source", source_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -79,12 +79,12 @@ cJSON *v1_volume_attachment_spec_convertToJSON(v1_volume_attachment_spec_t *v1_v
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_volume_attachment_spec_t *v1_volume_attachment_spec_parseFromJSON(cJSON *v1_volume_attachment_specJSON){
+v1_volume_attachment_spec_t *v1_volume_attachment_spec_parseFromJSON(mazu_cJSON *v1_volume_attachment_specJSON){
 
     v1_volume_attachment_spec_t *v1_volume_attachment_spec_local_var = NULL;
 
@@ -92,31 +92,31 @@ v1_volume_attachment_spec_t *v1_volume_attachment_spec_parseFromJSON(cJSON *v1_v
     v1_volume_attachment_source_t *source_local_nonprim = NULL;
 
     // v1_volume_attachment_spec->attacher
-    cJSON *attacher = cJSON_GetObjectItemCaseSensitive(v1_volume_attachment_specJSON, "attacher");
+    mazu_cJSON *attacher = mazu_cJSON_GetObjectItemCaseSensitive(v1_volume_attachment_specJSON, "attacher");
     if (!attacher) {
         goto end;
     }
 
     
-    if(!cJSON_IsString(attacher))
+    if(!mazu_cJSON_IsString(attacher))
     {
     goto end; //String
     }
 
     // v1_volume_attachment_spec->node_name
-    cJSON *node_name = cJSON_GetObjectItemCaseSensitive(v1_volume_attachment_specJSON, "nodeName");
+    mazu_cJSON *node_name = mazu_cJSON_GetObjectItemCaseSensitive(v1_volume_attachment_specJSON, "nodeName");
     if (!node_name) {
         goto end;
     }
 
     
-    if(!cJSON_IsString(node_name))
+    if(!mazu_cJSON_IsString(node_name))
     {
     goto end; //String
     }
 
     // v1_volume_attachment_spec->source
-    cJSON *source = cJSON_GetObjectItemCaseSensitive(v1_volume_attachment_specJSON, "source");
+    mazu_cJSON *source = mazu_cJSON_GetObjectItemCaseSensitive(v1_volume_attachment_specJSON, "source");
     if (!source) {
         goto end;
     }

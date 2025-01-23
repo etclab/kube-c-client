@@ -51,12 +51,12 @@ void v1_component_status_free(v1_component_status_t *v1_component_status) {
     free(v1_component_status);
 }
 
-cJSON *v1_component_status_convertToJSON(v1_component_status_t *v1_component_status) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_component_status_convertToJSON(v1_component_status_t *v1_component_status) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_component_status->api_version
     if(v1_component_status->api_version) {
-    if(cJSON_AddStringToObject(item, "apiVersion", v1_component_status->api_version) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "apiVersion", v1_component_status->api_version) == NULL) {
     goto fail; //String
     }
     }
@@ -64,7 +64,7 @@ cJSON *v1_component_status_convertToJSON(v1_component_status_t *v1_component_sta
 
     // v1_component_status->conditions
     if(v1_component_status->conditions) {
-    cJSON *conditions = cJSON_AddArrayToObject(item, "conditions");
+    mazu_cJSON *conditions = mazu_cJSON_AddArrayToObject(item, "conditions");
     if(conditions == NULL) {
     goto fail; //nonprimitive container
     }
@@ -72,11 +72,11 @@ cJSON *v1_component_status_convertToJSON(v1_component_status_t *v1_component_sta
     listEntry_t *conditionsListEntry;
     if (v1_component_status->conditions) {
     list_ForEach(conditionsListEntry, v1_component_status->conditions) {
-    cJSON *itemLocal = v1_component_condition_convertToJSON(conditionsListEntry->data);
+    mazu_cJSON *itemLocal = v1_component_condition_convertToJSON(conditionsListEntry->data);
     if(itemLocal == NULL) {
     goto fail;
     }
-    cJSON_AddItemToArray(conditions, itemLocal);
+    mazu_cJSON_AddItemToArray(conditions, itemLocal);
     }
     }
     }
@@ -84,7 +84,7 @@ cJSON *v1_component_status_convertToJSON(v1_component_status_t *v1_component_sta
 
     // v1_component_status->kind
     if(v1_component_status->kind) {
-    if(cJSON_AddStringToObject(item, "kind", v1_component_status->kind) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "kind", v1_component_status->kind) == NULL) {
     goto fail; //String
     }
     }
@@ -92,11 +92,11 @@ cJSON *v1_component_status_convertToJSON(v1_component_status_t *v1_component_sta
 
     // v1_component_status->metadata
     if(v1_component_status->metadata) {
-    cJSON *metadata_local_JSON = v1_object_meta_convertToJSON(v1_component_status->metadata);
+    mazu_cJSON *metadata_local_JSON = v1_object_meta_convertToJSON(v1_component_status->metadata);
     if(metadata_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "metadata", metadata_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "metadata", metadata_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -105,12 +105,12 @@ cJSON *v1_component_status_convertToJSON(v1_component_status_t *v1_component_sta
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_component_status_t *v1_component_status_parseFromJSON(cJSON *v1_component_statusJSON){
+v1_component_status_t *v1_component_status_parseFromJSON(mazu_cJSON *v1_component_statusJSON){
 
     v1_component_status_t *v1_component_status_local_var = NULL;
 
@@ -121,27 +121,27 @@ v1_component_status_t *v1_component_status_parseFromJSON(cJSON *v1_component_sta
     v1_object_meta_t *metadata_local_nonprim = NULL;
 
     // v1_component_status->api_version
-    cJSON *api_version = cJSON_GetObjectItemCaseSensitive(v1_component_statusJSON, "apiVersion");
+    mazu_cJSON *api_version = mazu_cJSON_GetObjectItemCaseSensitive(v1_component_statusJSON, "apiVersion");
     if (api_version) { 
-    if(!cJSON_IsString(api_version) && !cJSON_IsNull(api_version))
+    if(!mazu_cJSON_IsString(api_version) && !mazu_cJSON_IsNull(api_version))
     {
     goto end; //String
     }
     }
 
     // v1_component_status->conditions
-    cJSON *conditions = cJSON_GetObjectItemCaseSensitive(v1_component_statusJSON, "conditions");
+    mazu_cJSON *conditions = mazu_cJSON_GetObjectItemCaseSensitive(v1_component_statusJSON, "conditions");
     if (conditions) { 
-    cJSON *conditions_local_nonprimitive = NULL;
-    if(!cJSON_IsArray(conditions)){
+    mazu_cJSON *conditions_local_nonprimitive = NULL;
+    if(!mazu_cJSON_IsArray(conditions)){
         goto end; //nonprimitive container
     }
 
     conditionsList = list_createList();
 
-    cJSON_ArrayForEach(conditions_local_nonprimitive,conditions )
+    mazu_cJSON_ArrayForEach(conditions_local_nonprimitive,conditions )
     {
-        if(!cJSON_IsObject(conditions_local_nonprimitive)){
+        if(!mazu_cJSON_IsObject(conditions_local_nonprimitive)){
             goto end;
         }
         v1_component_condition_t *conditionsItem = v1_component_condition_parseFromJSON(conditions_local_nonprimitive);
@@ -151,25 +151,25 @@ v1_component_status_t *v1_component_status_parseFromJSON(cJSON *v1_component_sta
     }
 
     // v1_component_status->kind
-    cJSON *kind = cJSON_GetObjectItemCaseSensitive(v1_component_statusJSON, "kind");
+    mazu_cJSON *kind = mazu_cJSON_GetObjectItemCaseSensitive(v1_component_statusJSON, "kind");
     if (kind) { 
-    if(!cJSON_IsString(kind) && !cJSON_IsNull(kind))
+    if(!mazu_cJSON_IsString(kind) && !mazu_cJSON_IsNull(kind))
     {
     goto end; //String
     }
     }
 
     // v1_component_status->metadata
-    cJSON *metadata = cJSON_GetObjectItemCaseSensitive(v1_component_statusJSON, "metadata");
+    mazu_cJSON *metadata = mazu_cJSON_GetObjectItemCaseSensitive(v1_component_statusJSON, "metadata");
     if (metadata) { 
     metadata_local_nonprim = v1_object_meta_parseFromJSON(metadata); //nonprimitive
     }
 
 
     v1_component_status_local_var = v1_component_status_create (
-        api_version && !cJSON_IsNull(api_version) ? strdup(api_version->valuestring) : NULL,
+        api_version && !mazu_cJSON_IsNull(api_version) ? strdup(api_version->valuestring) : NULL,
         conditions ? conditionsList : NULL,
-        kind && !cJSON_IsNull(kind) ? strdup(kind->valuestring) : NULL,
+        kind && !mazu_cJSON_IsNull(kind) ? strdup(kind->valuestring) : NULL,
         metadata ? metadata_local_nonprim : NULL
         );
 

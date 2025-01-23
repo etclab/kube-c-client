@@ -8,7 +8,7 @@
 #define _v1_volume_projection_H_
 
 #include <string.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
 #include "../include/binary.h"
@@ -42,9 +42,9 @@ v1_volume_projection_t *v1_volume_projection_create(
 
 void v1_volume_projection_free(v1_volume_projection_t *v1_volume_projection);
 
-v1_volume_projection_t *v1_volume_projection_parseFromJSON(cJSON *v1_volume_projectionJSON);
+v1_volume_projection_t *v1_volume_projection_parseFromJSON(mazu_cJSON *v1_volume_projectionJSON);
 
-cJSON *v1_volume_projection_convertToJSON(v1_volume_projection_t *v1_volume_projection);
+mazu_cJSON *v1_volume_projection_convertToJSON(v1_volume_projection_t *v1_volume_projection);
 
 #endif /* _v1_volume_projection_H_ */
 

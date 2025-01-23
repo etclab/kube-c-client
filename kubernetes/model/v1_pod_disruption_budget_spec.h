@@ -8,7 +8,7 @@
 #define _v1_pod_disruption_budget_spec_H_
 
 #include <string.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
 #include "../include/binary.h"
@@ -37,9 +37,9 @@ v1_pod_disruption_budget_spec_t *v1_pod_disruption_budget_spec_create(
 
 void v1_pod_disruption_budget_spec_free(v1_pod_disruption_budget_spec_t *v1_pod_disruption_budget_spec);
 
-v1_pod_disruption_budget_spec_t *v1_pod_disruption_budget_spec_parseFromJSON(cJSON *v1_pod_disruption_budget_specJSON);
+v1_pod_disruption_budget_spec_t *v1_pod_disruption_budget_spec_parseFromJSON(mazu_cJSON *v1_pod_disruption_budget_specJSON);
 
-cJSON *v1_pod_disruption_budget_spec_convertToJSON(v1_pod_disruption_budget_spec_t *v1_pod_disruption_budget_spec);
+mazu_cJSON *v1_pod_disruption_budget_spec_convertToJSON(v1_pod_disruption_budget_spec_t *v1_pod_disruption_budget_spec);
 
 #endif /* _v1_pod_disruption_budget_spec_H_ */
 

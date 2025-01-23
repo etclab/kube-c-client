@@ -36,14 +36,14 @@ void v1_group_version_for_discovery_free(v1_group_version_for_discovery_t *v1_gr
     free(v1_group_version_for_discovery);
 }
 
-cJSON *v1_group_version_for_discovery_convertToJSON(v1_group_version_for_discovery_t *v1_group_version_for_discovery) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_group_version_for_discovery_convertToJSON(v1_group_version_for_discovery_t *v1_group_version_for_discovery) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_group_version_for_discovery->group_version
     if (!v1_group_version_for_discovery->group_version) {
         goto fail;
     }
-    if(cJSON_AddStringToObject(item, "groupVersion", v1_group_version_for_discovery->group_version) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "groupVersion", v1_group_version_for_discovery->group_version) == NULL) {
     goto fail; //String
     }
 
@@ -52,42 +52,42 @@ cJSON *v1_group_version_for_discovery_convertToJSON(v1_group_version_for_discove
     if (!v1_group_version_for_discovery->version) {
         goto fail;
     }
-    if(cJSON_AddStringToObject(item, "version", v1_group_version_for_discovery->version) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "version", v1_group_version_for_discovery->version) == NULL) {
     goto fail; //String
     }
 
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_group_version_for_discovery_t *v1_group_version_for_discovery_parseFromJSON(cJSON *v1_group_version_for_discoveryJSON){
+v1_group_version_for_discovery_t *v1_group_version_for_discovery_parseFromJSON(mazu_cJSON *v1_group_version_for_discoveryJSON){
 
     v1_group_version_for_discovery_t *v1_group_version_for_discovery_local_var = NULL;
 
     // v1_group_version_for_discovery->group_version
-    cJSON *group_version = cJSON_GetObjectItemCaseSensitive(v1_group_version_for_discoveryJSON, "groupVersion");
+    mazu_cJSON *group_version = mazu_cJSON_GetObjectItemCaseSensitive(v1_group_version_for_discoveryJSON, "groupVersion");
     if (!group_version) {
         goto end;
     }
 
     
-    if(!cJSON_IsString(group_version))
+    if(!mazu_cJSON_IsString(group_version))
     {
     goto end; //String
     }
 
     // v1_group_version_for_discovery->version
-    cJSON *version = cJSON_GetObjectItemCaseSensitive(v1_group_version_for_discoveryJSON, "version");
+    mazu_cJSON *version = mazu_cJSON_GetObjectItemCaseSensitive(v1_group_version_for_discoveryJSON, "version");
     if (!version) {
         goto end;
     }
 
     
-    if(!cJSON_IsString(version))
+    if(!mazu_cJSON_IsString(version))
     {
     goto end; //String
     }

@@ -8,7 +8,7 @@
 #define _v1_label_selector_H_
 
 #include <string.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
 #include "../include/binary.h"
@@ -32,9 +32,9 @@ v1_label_selector_t *v1_label_selector_create(
 
 void v1_label_selector_free(v1_label_selector_t *v1_label_selector);
 
-v1_label_selector_t *v1_label_selector_parseFromJSON(cJSON *v1_label_selectorJSON);
+v1_label_selector_t *v1_label_selector_parseFromJSON(mazu_cJSON *v1_label_selectorJSON);
 
-cJSON *v1_label_selector_convertToJSON(v1_label_selector_t *v1_label_selector);
+mazu_cJSON *v1_label_selector_convertToJSON(v1_label_selector_t *v1_label_selector);
 
 #endif /* _v1_label_selector_H_ */
 

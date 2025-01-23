@@ -54,12 +54,12 @@ void v1beta3_flow_schema_free(v1beta3_flow_schema_t *v1beta3_flow_schema) {
     free(v1beta3_flow_schema);
 }
 
-cJSON *v1beta3_flow_schema_convertToJSON(v1beta3_flow_schema_t *v1beta3_flow_schema) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1beta3_flow_schema_convertToJSON(v1beta3_flow_schema_t *v1beta3_flow_schema) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1beta3_flow_schema->api_version
     if(v1beta3_flow_schema->api_version) {
-    if(cJSON_AddStringToObject(item, "apiVersion", v1beta3_flow_schema->api_version) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "apiVersion", v1beta3_flow_schema->api_version) == NULL) {
     goto fail; //String
     }
     }
@@ -67,7 +67,7 @@ cJSON *v1beta3_flow_schema_convertToJSON(v1beta3_flow_schema_t *v1beta3_flow_sch
 
     // v1beta3_flow_schema->kind
     if(v1beta3_flow_schema->kind) {
-    if(cJSON_AddStringToObject(item, "kind", v1beta3_flow_schema->kind) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "kind", v1beta3_flow_schema->kind) == NULL) {
     goto fail; //String
     }
     }
@@ -75,11 +75,11 @@ cJSON *v1beta3_flow_schema_convertToJSON(v1beta3_flow_schema_t *v1beta3_flow_sch
 
     // v1beta3_flow_schema->metadata
     if(v1beta3_flow_schema->metadata) {
-    cJSON *metadata_local_JSON = v1_object_meta_convertToJSON(v1beta3_flow_schema->metadata);
+    mazu_cJSON *metadata_local_JSON = v1_object_meta_convertToJSON(v1beta3_flow_schema->metadata);
     if(metadata_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "metadata", metadata_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "metadata", metadata_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -88,11 +88,11 @@ cJSON *v1beta3_flow_schema_convertToJSON(v1beta3_flow_schema_t *v1beta3_flow_sch
 
     // v1beta3_flow_schema->spec
     if(v1beta3_flow_schema->spec) {
-    cJSON *spec_local_JSON = v1beta3_flow_schema_spec_convertToJSON(v1beta3_flow_schema->spec);
+    mazu_cJSON *spec_local_JSON = v1beta3_flow_schema_spec_convertToJSON(v1beta3_flow_schema->spec);
     if(spec_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "spec", spec_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "spec", spec_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -101,11 +101,11 @@ cJSON *v1beta3_flow_schema_convertToJSON(v1beta3_flow_schema_t *v1beta3_flow_sch
 
     // v1beta3_flow_schema->status
     if(v1beta3_flow_schema->status) {
-    cJSON *status_local_JSON = v1beta3_flow_schema_status_convertToJSON(v1beta3_flow_schema->status);
+    mazu_cJSON *status_local_JSON = v1beta3_flow_schema_status_convertToJSON(v1beta3_flow_schema->status);
     if(status_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "status", status_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "status", status_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -114,12 +114,12 @@ cJSON *v1beta3_flow_schema_convertToJSON(v1beta3_flow_schema_t *v1beta3_flow_sch
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1beta3_flow_schema_t *v1beta3_flow_schema_parseFromJSON(cJSON *v1beta3_flow_schemaJSON){
+v1beta3_flow_schema_t *v1beta3_flow_schema_parseFromJSON(mazu_cJSON *v1beta3_flow_schemaJSON){
 
     v1beta3_flow_schema_t *v1beta3_flow_schema_local_var = NULL;
 
@@ -133,45 +133,45 @@ v1beta3_flow_schema_t *v1beta3_flow_schema_parseFromJSON(cJSON *v1beta3_flow_sch
     v1beta3_flow_schema_status_t *status_local_nonprim = NULL;
 
     // v1beta3_flow_schema->api_version
-    cJSON *api_version = cJSON_GetObjectItemCaseSensitive(v1beta3_flow_schemaJSON, "apiVersion");
+    mazu_cJSON *api_version = mazu_cJSON_GetObjectItemCaseSensitive(v1beta3_flow_schemaJSON, "apiVersion");
     if (api_version) { 
-    if(!cJSON_IsString(api_version) && !cJSON_IsNull(api_version))
+    if(!mazu_cJSON_IsString(api_version) && !mazu_cJSON_IsNull(api_version))
     {
     goto end; //String
     }
     }
 
     // v1beta3_flow_schema->kind
-    cJSON *kind = cJSON_GetObjectItemCaseSensitive(v1beta3_flow_schemaJSON, "kind");
+    mazu_cJSON *kind = mazu_cJSON_GetObjectItemCaseSensitive(v1beta3_flow_schemaJSON, "kind");
     if (kind) { 
-    if(!cJSON_IsString(kind) && !cJSON_IsNull(kind))
+    if(!mazu_cJSON_IsString(kind) && !mazu_cJSON_IsNull(kind))
     {
     goto end; //String
     }
     }
 
     // v1beta3_flow_schema->metadata
-    cJSON *metadata = cJSON_GetObjectItemCaseSensitive(v1beta3_flow_schemaJSON, "metadata");
+    mazu_cJSON *metadata = mazu_cJSON_GetObjectItemCaseSensitive(v1beta3_flow_schemaJSON, "metadata");
     if (metadata) { 
     metadata_local_nonprim = v1_object_meta_parseFromJSON(metadata); //nonprimitive
     }
 
     // v1beta3_flow_schema->spec
-    cJSON *spec = cJSON_GetObjectItemCaseSensitive(v1beta3_flow_schemaJSON, "spec");
+    mazu_cJSON *spec = mazu_cJSON_GetObjectItemCaseSensitive(v1beta3_flow_schemaJSON, "spec");
     if (spec) { 
     spec_local_nonprim = v1beta3_flow_schema_spec_parseFromJSON(spec); //nonprimitive
     }
 
     // v1beta3_flow_schema->status
-    cJSON *status = cJSON_GetObjectItemCaseSensitive(v1beta3_flow_schemaJSON, "status");
+    mazu_cJSON *status = mazu_cJSON_GetObjectItemCaseSensitive(v1beta3_flow_schemaJSON, "status");
     if (status) { 
     status_local_nonprim = v1beta3_flow_schema_status_parseFromJSON(status); //nonprimitive
     }
 
 
     v1beta3_flow_schema_local_var = v1beta3_flow_schema_create (
-        api_version && !cJSON_IsNull(api_version) ? strdup(api_version->valuestring) : NULL,
-        kind && !cJSON_IsNull(kind) ? strdup(kind->valuestring) : NULL,
+        api_version && !mazu_cJSON_IsNull(api_version) ? strdup(api_version->valuestring) : NULL,
+        kind && !mazu_cJSON_IsNull(kind) ? strdup(kind->valuestring) : NULL,
         metadata ? metadata_local_nonprim : NULL,
         spec ? spec_local_nonprim : NULL,
         status ? status_local_nonprim : NULL

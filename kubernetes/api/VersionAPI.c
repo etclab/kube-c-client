@@ -51,9 +51,9 @@ VersionAPI_getCode(apiClient_t *apiClient)
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *VersionAPIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    mazu_cJSON *VersionAPIlocalVarJSON = mazu_cJSON_Parse(apiClient->dataReceived);
     version_info_t *elementToReturn = version_info_parseFromJSON(VersionAPIlocalVarJSON);
-    cJSON_Delete(VersionAPIlocalVarJSON);
+    mazu_cJSON_Delete(VersionAPIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
     }

@@ -8,7 +8,7 @@
 #define _v1_csi_storage_capacity_H_
 
 #include <string.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
 #include "../include/binary.h"
@@ -43,9 +43,9 @@ v1_csi_storage_capacity_t *v1_csi_storage_capacity_create(
 
 void v1_csi_storage_capacity_free(v1_csi_storage_capacity_t *v1_csi_storage_capacity);
 
-v1_csi_storage_capacity_t *v1_csi_storage_capacity_parseFromJSON(cJSON *v1_csi_storage_capacityJSON);
+v1_csi_storage_capacity_t *v1_csi_storage_capacity_parseFromJSON(mazu_cJSON *v1_csi_storage_capacityJSON);
 
-cJSON *v1_csi_storage_capacity_convertToJSON(v1_csi_storage_capacity_t *v1_csi_storage_capacity);
+mazu_cJSON *v1_csi_storage_capacity_convertToJSON(v1_csi_storage_capacity_t *v1_csi_storage_capacity);
 
 #endif /* _v1_csi_storage_capacity_H_ */
 

@@ -30,37 +30,37 @@ void v1_user_subject_free(v1_user_subject_t *v1_user_subject) {
     free(v1_user_subject);
 }
 
-cJSON *v1_user_subject_convertToJSON(v1_user_subject_t *v1_user_subject) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_user_subject_convertToJSON(v1_user_subject_t *v1_user_subject) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_user_subject->name
     if (!v1_user_subject->name) {
         goto fail;
     }
-    if(cJSON_AddStringToObject(item, "name", v1_user_subject->name) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "name", v1_user_subject->name) == NULL) {
     goto fail; //String
     }
 
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_user_subject_t *v1_user_subject_parseFromJSON(cJSON *v1_user_subjectJSON){
+v1_user_subject_t *v1_user_subject_parseFromJSON(mazu_cJSON *v1_user_subjectJSON){
 
     v1_user_subject_t *v1_user_subject_local_var = NULL;
 
     // v1_user_subject->name
-    cJSON *name = cJSON_GetObjectItemCaseSensitive(v1_user_subjectJSON, "name");
+    mazu_cJSON *name = mazu_cJSON_GetObjectItemCaseSensitive(v1_user_subjectJSON, "name");
     if (!name) {
         goto end;
     }
 
     
-    if(!cJSON_IsString(name))
+    if(!mazu_cJSON_IsString(name))
     {
     goto end; //String
     }

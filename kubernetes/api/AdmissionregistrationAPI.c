@@ -53,9 +53,9 @@ AdmissionregistrationAPI_getAPIGroup(apiClient_t *apiClient)
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *AdmissionregistrationAPIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    mazu_cJSON *AdmissionregistrationAPIlocalVarJSON = mazu_cJSON_Parse(apiClient->dataReceived);
     v1_api_group_t *elementToReturn = v1_api_group_parseFromJSON(AdmissionregistrationAPIlocalVarJSON);
-    cJSON_Delete(AdmissionregistrationAPIlocalVarJSON);
+    mazu_cJSON_Delete(AdmissionregistrationAPIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
     }

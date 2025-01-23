@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include "../include/apiClient.h"
 #include "../include/list.h"
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 #include "../include/keyValuePair.h"
 #include "../include/binary.h"
 #include "../model/v1_api_versions.h"

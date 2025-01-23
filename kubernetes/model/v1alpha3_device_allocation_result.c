@@ -42,12 +42,12 @@ void v1alpha3_device_allocation_result_free(v1alpha3_device_allocation_result_t 
     free(v1alpha3_device_allocation_result);
 }
 
-cJSON *v1alpha3_device_allocation_result_convertToJSON(v1alpha3_device_allocation_result_t *v1alpha3_device_allocation_result) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1alpha3_device_allocation_result_convertToJSON(v1alpha3_device_allocation_result_t *v1alpha3_device_allocation_result) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1alpha3_device_allocation_result->config
     if(v1alpha3_device_allocation_result->config) {
-    cJSON *config = cJSON_AddArrayToObject(item, "config");
+    mazu_cJSON *config = mazu_cJSON_AddArrayToObject(item, "config");
     if(config == NULL) {
     goto fail; //nonprimitive container
     }
@@ -55,11 +55,11 @@ cJSON *v1alpha3_device_allocation_result_convertToJSON(v1alpha3_device_allocatio
     listEntry_t *configListEntry;
     if (v1alpha3_device_allocation_result->config) {
     list_ForEach(configListEntry, v1alpha3_device_allocation_result->config) {
-    cJSON *itemLocal = v1alpha3_device_allocation_configuration_convertToJSON(configListEntry->data);
+    mazu_cJSON *itemLocal = v1alpha3_device_allocation_configuration_convertToJSON(configListEntry->data);
     if(itemLocal == NULL) {
     goto fail;
     }
-    cJSON_AddItemToArray(config, itemLocal);
+    mazu_cJSON_AddItemToArray(config, itemLocal);
     }
     }
     }
@@ -67,7 +67,7 @@ cJSON *v1alpha3_device_allocation_result_convertToJSON(v1alpha3_device_allocatio
 
     // v1alpha3_device_allocation_result->results
     if(v1alpha3_device_allocation_result->results) {
-    cJSON *results = cJSON_AddArrayToObject(item, "results");
+    mazu_cJSON *results = mazu_cJSON_AddArrayToObject(item, "results");
     if(results == NULL) {
     goto fail; //nonprimitive container
     }
@@ -75,11 +75,11 @@ cJSON *v1alpha3_device_allocation_result_convertToJSON(v1alpha3_device_allocatio
     listEntry_t *resultsListEntry;
     if (v1alpha3_device_allocation_result->results) {
     list_ForEach(resultsListEntry, v1alpha3_device_allocation_result->results) {
-    cJSON *itemLocal = v1alpha3_device_request_allocation_result_convertToJSON(resultsListEntry->data);
+    mazu_cJSON *itemLocal = v1alpha3_device_request_allocation_result_convertToJSON(resultsListEntry->data);
     if(itemLocal == NULL) {
     goto fail;
     }
-    cJSON_AddItemToArray(results, itemLocal);
+    mazu_cJSON_AddItemToArray(results, itemLocal);
     }
     }
     }
@@ -87,12 +87,12 @@ cJSON *v1alpha3_device_allocation_result_convertToJSON(v1alpha3_device_allocatio
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1alpha3_device_allocation_result_t *v1alpha3_device_allocation_result_parseFromJSON(cJSON *v1alpha3_device_allocation_resultJSON){
+v1alpha3_device_allocation_result_t *v1alpha3_device_allocation_result_parseFromJSON(mazu_cJSON *v1alpha3_device_allocation_resultJSON){
 
     v1alpha3_device_allocation_result_t *v1alpha3_device_allocation_result_local_var = NULL;
 
@@ -103,18 +103,18 @@ v1alpha3_device_allocation_result_t *v1alpha3_device_allocation_result_parseFrom
     list_t *resultsList = NULL;
 
     // v1alpha3_device_allocation_result->config
-    cJSON *config = cJSON_GetObjectItemCaseSensitive(v1alpha3_device_allocation_resultJSON, "config");
+    mazu_cJSON *config = mazu_cJSON_GetObjectItemCaseSensitive(v1alpha3_device_allocation_resultJSON, "config");
     if (config) { 
-    cJSON *config_local_nonprimitive = NULL;
-    if(!cJSON_IsArray(config)){
+    mazu_cJSON *config_local_nonprimitive = NULL;
+    if(!mazu_cJSON_IsArray(config)){
         goto end; //nonprimitive container
     }
 
     configList = list_createList();
 
-    cJSON_ArrayForEach(config_local_nonprimitive,config )
+    mazu_cJSON_ArrayForEach(config_local_nonprimitive,config )
     {
-        if(!cJSON_IsObject(config_local_nonprimitive)){
+        if(!mazu_cJSON_IsObject(config_local_nonprimitive)){
             goto end;
         }
         v1alpha3_device_allocation_configuration_t *configItem = v1alpha3_device_allocation_configuration_parseFromJSON(config_local_nonprimitive);
@@ -124,18 +124,18 @@ v1alpha3_device_allocation_result_t *v1alpha3_device_allocation_result_parseFrom
     }
 
     // v1alpha3_device_allocation_result->results
-    cJSON *results = cJSON_GetObjectItemCaseSensitive(v1alpha3_device_allocation_resultJSON, "results");
+    mazu_cJSON *results = mazu_cJSON_GetObjectItemCaseSensitive(v1alpha3_device_allocation_resultJSON, "results");
     if (results) { 
-    cJSON *results_local_nonprimitive = NULL;
-    if(!cJSON_IsArray(results)){
+    mazu_cJSON *results_local_nonprimitive = NULL;
+    if(!mazu_cJSON_IsArray(results)){
         goto end; //nonprimitive container
     }
 
     resultsList = list_createList();
 
-    cJSON_ArrayForEach(results_local_nonprimitive,results )
+    mazu_cJSON_ArrayForEach(results_local_nonprimitive,results )
     {
-        if(!cJSON_IsObject(results_local_nonprimitive)){
+        if(!mazu_cJSON_IsObject(results_local_nonprimitive)){
             goto end;
         }
         v1alpha3_device_request_allocation_result_t *resultsItem = v1alpha3_device_request_allocation_result_parseFromJSON(results_local_nonprimitive);

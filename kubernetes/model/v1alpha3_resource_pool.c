@@ -34,14 +34,14 @@ void v1alpha3_resource_pool_free(v1alpha3_resource_pool_t *v1alpha3_resource_poo
     free(v1alpha3_resource_pool);
 }
 
-cJSON *v1alpha3_resource_pool_convertToJSON(v1alpha3_resource_pool_t *v1alpha3_resource_pool) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1alpha3_resource_pool_convertToJSON(v1alpha3_resource_pool_t *v1alpha3_resource_pool) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1alpha3_resource_pool->generation
     if (!v1alpha3_resource_pool->generation) {
         goto fail;
     }
-    if(cJSON_AddNumberToObject(item, "generation", v1alpha3_resource_pool->generation) == NULL) {
+    if(mazu_cJSON_AddNumberToObject(item, "generation", v1alpha3_resource_pool->generation) == NULL) {
     goto fail; //Numeric
     }
 
@@ -50,7 +50,7 @@ cJSON *v1alpha3_resource_pool_convertToJSON(v1alpha3_resource_pool_t *v1alpha3_r
     if (!v1alpha3_resource_pool->name) {
         goto fail;
     }
-    if(cJSON_AddStringToObject(item, "name", v1alpha3_resource_pool->name) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "name", v1alpha3_resource_pool->name) == NULL) {
     goto fail; //String
     }
 
@@ -59,54 +59,54 @@ cJSON *v1alpha3_resource_pool_convertToJSON(v1alpha3_resource_pool_t *v1alpha3_r
     if (!v1alpha3_resource_pool->resource_slice_count) {
         goto fail;
     }
-    if(cJSON_AddNumberToObject(item, "resourceSliceCount", v1alpha3_resource_pool->resource_slice_count) == NULL) {
+    if(mazu_cJSON_AddNumberToObject(item, "resourceSliceCount", v1alpha3_resource_pool->resource_slice_count) == NULL) {
     goto fail; //Numeric
     }
 
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1alpha3_resource_pool_t *v1alpha3_resource_pool_parseFromJSON(cJSON *v1alpha3_resource_poolJSON){
+v1alpha3_resource_pool_t *v1alpha3_resource_pool_parseFromJSON(mazu_cJSON *v1alpha3_resource_poolJSON){
 
     v1alpha3_resource_pool_t *v1alpha3_resource_pool_local_var = NULL;
 
     // v1alpha3_resource_pool->generation
-    cJSON *generation = cJSON_GetObjectItemCaseSensitive(v1alpha3_resource_poolJSON, "generation");
+    mazu_cJSON *generation = mazu_cJSON_GetObjectItemCaseSensitive(v1alpha3_resource_poolJSON, "generation");
     if (!generation) {
         goto end;
     }
 
     
-    if(!cJSON_IsNumber(generation))
+    if(!mazu_cJSON_IsNumber(generation))
     {
     goto end; //Numeric
     }
 
     // v1alpha3_resource_pool->name
-    cJSON *name = cJSON_GetObjectItemCaseSensitive(v1alpha3_resource_poolJSON, "name");
+    mazu_cJSON *name = mazu_cJSON_GetObjectItemCaseSensitive(v1alpha3_resource_poolJSON, "name");
     if (!name) {
         goto end;
     }
 
     
-    if(!cJSON_IsString(name))
+    if(!mazu_cJSON_IsString(name))
     {
     goto end; //String
     }
 
     // v1alpha3_resource_pool->resource_slice_count
-    cJSON *resource_slice_count = cJSON_GetObjectItemCaseSensitive(v1alpha3_resource_poolJSON, "resourceSliceCount");
+    mazu_cJSON *resource_slice_count = mazu_cJSON_GetObjectItemCaseSensitive(v1alpha3_resource_poolJSON, "resourceSliceCount");
     if (!resource_slice_count) {
         goto end;
     }
 
     
-    if(!cJSON_IsNumber(resource_slice_count))
+    if(!mazu_cJSON_IsNumber(resource_slice_count))
     {
     goto end; //Numeric
     }

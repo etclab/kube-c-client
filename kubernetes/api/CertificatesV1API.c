@@ -81,12 +81,12 @@ CertificatesV1API_createCertificateSigningRequest(apiClient_t *apiClient, v1_cer
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body = NULL;
+    mazu_cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
         localVarSingleItemJSON_body = v1_certificate_signing_request_convertToJSON(body);
-        localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyParameters = mazu_cJSON_Print(localVarSingleItemJSON_body);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
@@ -118,9 +118,9 @@ CertificatesV1API_createCertificateSigningRequest(apiClient_t *apiClient, v1_cer
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CertificatesV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    mazu_cJSON *CertificatesV1APIlocalVarJSON = mazu_cJSON_Parse(apiClient->dataReceived);
     v1_certificate_signing_request_t *elementToReturn = v1_certificate_signing_request_parseFromJSON(CertificatesV1APIlocalVarJSON);
-    cJSON_Delete(CertificatesV1APIlocalVarJSON);
+    mazu_cJSON_Delete(CertificatesV1APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
     }
@@ -138,7 +138,7 @@ CertificatesV1API_createCertificateSigningRequest(apiClient_t *apiClient, v1_cer
     
     free(localVarPath);
     if (localVarSingleItemJSON_body) {
-        cJSON_Delete(localVarSingleItemJSON_body);
+        mazu_cJSON_Delete(localVarSingleItemJSON_body);
         localVarSingleItemJSON_body = NULL;
     }
     free(localVarBodyParameters);
@@ -290,12 +290,12 @@ CertificatesV1API_deleteCertificateSigningRequest(apiClient_t *apiClient, char *
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body = NULL;
+    mazu_cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
         localVarSingleItemJSON_body = v1_delete_options_convertToJSON(body);
-        localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyParameters = mazu_cJSON_Print(localVarSingleItemJSON_body);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
@@ -323,9 +323,9 @@ CertificatesV1API_deleteCertificateSigningRequest(apiClient_t *apiClient, char *
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CertificatesV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    mazu_cJSON *CertificatesV1APIlocalVarJSON = mazu_cJSON_Parse(apiClient->dataReceived);
     v1_status_t *elementToReturn = v1_status_parseFromJSON(CertificatesV1APIlocalVarJSON);
-    cJSON_Delete(CertificatesV1APIlocalVarJSON);
+    mazu_cJSON_Delete(CertificatesV1APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
     }
@@ -344,7 +344,7 @@ CertificatesV1API_deleteCertificateSigningRequest(apiClient_t *apiClient, char *
     free(localVarPath);
     free(localVarToReplace_name);
     if (localVarSingleItemJSON_body) {
-        cJSON_Delete(localVarSingleItemJSON_body);
+        mazu_cJSON_Delete(localVarSingleItemJSON_body);
         localVarSingleItemJSON_body = NULL;
     }
     free(localVarBodyParameters);
@@ -597,12 +597,12 @@ CertificatesV1API_deleteCollectionCertificateSigningRequest(apiClient_t *apiClie
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body = NULL;
+    mazu_cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
         localVarSingleItemJSON_body = v1_delete_options_convertToJSON(body);
-        localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyParameters = mazu_cJSON_Print(localVarSingleItemJSON_body);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
@@ -626,9 +626,9 @@ CertificatesV1API_deleteCollectionCertificateSigningRequest(apiClient_t *apiClie
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CertificatesV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    mazu_cJSON *CertificatesV1APIlocalVarJSON = mazu_cJSON_Parse(apiClient->dataReceived);
     v1_status_t *elementToReturn = v1_status_parseFromJSON(CertificatesV1APIlocalVarJSON);
-    cJSON_Delete(CertificatesV1APIlocalVarJSON);
+    mazu_cJSON_Delete(CertificatesV1APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
     }
@@ -646,7 +646,7 @@ CertificatesV1API_deleteCollectionCertificateSigningRequest(apiClient_t *apiClie
     
     free(localVarPath);
     if (localVarSingleItemJSON_body) {
-        cJSON_Delete(localVarSingleItemJSON_body);
+        mazu_cJSON_Delete(localVarSingleItemJSON_body);
         localVarSingleItemJSON_body = NULL;
     }
     free(localVarBodyParameters);
@@ -854,9 +854,9 @@ CertificatesV1API_getAPIResources_13(apiClient_t *apiClient)
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CertificatesV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    mazu_cJSON *CertificatesV1APIlocalVarJSON = mazu_cJSON_Parse(apiClient->dataReceived);
     v1_api_resource_list_t *elementToReturn = v1_api_resource_list_parseFromJSON(CertificatesV1APIlocalVarJSON);
-    cJSON_Delete(CertificatesV1APIlocalVarJSON);
+    mazu_cJSON_Delete(CertificatesV1APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
     }
@@ -1060,9 +1060,9 @@ CertificatesV1API_listCertificateSigningRequest(apiClient_t *apiClient, char *pr
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CertificatesV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    mazu_cJSON *CertificatesV1APIlocalVarJSON = mazu_cJSON_Parse(apiClient->dataReceived);
     v1_certificate_signing_request_list_t *elementToReturn = v1_certificate_signing_request_list_parseFromJSON(CertificatesV1APIlocalVarJSON);
-    cJSON_Delete(CertificatesV1APIlocalVarJSON);
+    mazu_cJSON_Delete(CertificatesV1APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
     }
@@ -1310,12 +1310,12 @@ CertificatesV1API_patchCertificateSigningRequest(apiClient_t *apiClient, char *n
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body = NULL;
+    mazu_cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
         localVarSingleItemJSON_body = object_convertToJSON(body);
-        localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyParameters = mazu_cJSON_Print(localVarSingleItemJSON_body);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
@@ -1347,9 +1347,9 @@ CertificatesV1API_patchCertificateSigningRequest(apiClient_t *apiClient, char *n
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CertificatesV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    mazu_cJSON *CertificatesV1APIlocalVarJSON = mazu_cJSON_Parse(apiClient->dataReceived);
     v1_certificate_signing_request_t *elementToReturn = v1_certificate_signing_request_parseFromJSON(CertificatesV1APIlocalVarJSON);
-    cJSON_Delete(CertificatesV1APIlocalVarJSON);
+    mazu_cJSON_Delete(CertificatesV1APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
     }
@@ -1368,7 +1368,7 @@ CertificatesV1API_patchCertificateSigningRequest(apiClient_t *apiClient, char *n
     free(localVarPath);
     free(localVarToReplace_name);
     if (localVarSingleItemJSON_body) {
-        cJSON_Delete(localVarSingleItemJSON_body);
+        mazu_cJSON_Delete(localVarSingleItemJSON_body);
         localVarSingleItemJSON_body = NULL;
     }
     free(localVarBodyParameters);
@@ -1531,12 +1531,12 @@ CertificatesV1API_patchCertificateSigningRequestApproval(apiClient_t *apiClient,
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body = NULL;
+    mazu_cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
         localVarSingleItemJSON_body = object_convertToJSON(body);
-        localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyParameters = mazu_cJSON_Print(localVarSingleItemJSON_body);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
@@ -1568,9 +1568,9 @@ CertificatesV1API_patchCertificateSigningRequestApproval(apiClient_t *apiClient,
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CertificatesV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    mazu_cJSON *CertificatesV1APIlocalVarJSON = mazu_cJSON_Parse(apiClient->dataReceived);
     v1_certificate_signing_request_t *elementToReturn = v1_certificate_signing_request_parseFromJSON(CertificatesV1APIlocalVarJSON);
-    cJSON_Delete(CertificatesV1APIlocalVarJSON);
+    mazu_cJSON_Delete(CertificatesV1APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
     }
@@ -1589,7 +1589,7 @@ CertificatesV1API_patchCertificateSigningRequestApproval(apiClient_t *apiClient,
     free(localVarPath);
     free(localVarToReplace_name);
     if (localVarSingleItemJSON_body) {
-        cJSON_Delete(localVarSingleItemJSON_body);
+        mazu_cJSON_Delete(localVarSingleItemJSON_body);
         localVarSingleItemJSON_body = NULL;
     }
     free(localVarBodyParameters);
@@ -1752,12 +1752,12 @@ CertificatesV1API_patchCertificateSigningRequestStatus(apiClient_t *apiClient, c
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body = NULL;
+    mazu_cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
         localVarSingleItemJSON_body = object_convertToJSON(body);
-        localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyParameters = mazu_cJSON_Print(localVarSingleItemJSON_body);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
@@ -1789,9 +1789,9 @@ CertificatesV1API_patchCertificateSigningRequestStatus(apiClient_t *apiClient, c
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CertificatesV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    mazu_cJSON *CertificatesV1APIlocalVarJSON = mazu_cJSON_Parse(apiClient->dataReceived);
     v1_certificate_signing_request_t *elementToReturn = v1_certificate_signing_request_parseFromJSON(CertificatesV1APIlocalVarJSON);
-    cJSON_Delete(CertificatesV1APIlocalVarJSON);
+    mazu_cJSON_Delete(CertificatesV1APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
     }
@@ -1810,7 +1810,7 @@ CertificatesV1API_patchCertificateSigningRequestStatus(apiClient_t *apiClient, c
     free(localVarPath);
     free(localVarToReplace_name);
     if (localVarSingleItemJSON_body) {
-        cJSON_Delete(localVarSingleItemJSON_body);
+        mazu_cJSON_Delete(localVarSingleItemJSON_body);
         localVarSingleItemJSON_body = NULL;
     }
     free(localVarBodyParameters);
@@ -1944,9 +1944,9 @@ CertificatesV1API_readCertificateSigningRequest(apiClient_t *apiClient, char *na
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CertificatesV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    mazu_cJSON *CertificatesV1APIlocalVarJSON = mazu_cJSON_Parse(apiClient->dataReceived);
     v1_certificate_signing_request_t *elementToReturn = v1_certificate_signing_request_parseFromJSON(CertificatesV1APIlocalVarJSON);
-    cJSON_Delete(CertificatesV1APIlocalVarJSON);
+    mazu_cJSON_Delete(CertificatesV1APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
     }
@@ -2046,9 +2046,9 @@ CertificatesV1API_readCertificateSigningRequestApproval(apiClient_t *apiClient, 
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CertificatesV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    mazu_cJSON *CertificatesV1APIlocalVarJSON = mazu_cJSON_Parse(apiClient->dataReceived);
     v1_certificate_signing_request_t *elementToReturn = v1_certificate_signing_request_parseFromJSON(CertificatesV1APIlocalVarJSON);
-    cJSON_Delete(CertificatesV1APIlocalVarJSON);
+    mazu_cJSON_Delete(CertificatesV1APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
     }
@@ -2148,9 +2148,9 @@ CertificatesV1API_readCertificateSigningRequestStatus(apiClient_t *apiClient, ch
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CertificatesV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    mazu_cJSON *CertificatesV1APIlocalVarJSON = mazu_cJSON_Parse(apiClient->dataReceived);
     v1_certificate_signing_request_t *elementToReturn = v1_certificate_signing_request_parseFromJSON(CertificatesV1APIlocalVarJSON);
-    cJSON_Delete(CertificatesV1APIlocalVarJSON);
+    mazu_cJSON_Delete(CertificatesV1APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
     }
@@ -2266,12 +2266,12 @@ CertificatesV1API_replaceCertificateSigningRequest(apiClient_t *apiClient, char 
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body = NULL;
+    mazu_cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
         localVarSingleItemJSON_body = v1_certificate_signing_request_convertToJSON(body);
-        localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyParameters = mazu_cJSON_Print(localVarSingleItemJSON_body);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
@@ -2299,9 +2299,9 @@ CertificatesV1API_replaceCertificateSigningRequest(apiClient_t *apiClient, char 
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CertificatesV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    mazu_cJSON *CertificatesV1APIlocalVarJSON = mazu_cJSON_Parse(apiClient->dataReceived);
     v1_certificate_signing_request_t *elementToReturn = v1_certificate_signing_request_parseFromJSON(CertificatesV1APIlocalVarJSON);
-    cJSON_Delete(CertificatesV1APIlocalVarJSON);
+    mazu_cJSON_Delete(CertificatesV1APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
     }
@@ -2320,7 +2320,7 @@ CertificatesV1API_replaceCertificateSigningRequest(apiClient_t *apiClient, char 
     free(localVarPath);
     free(localVarToReplace_name);
     if (localVarSingleItemJSON_body) {
-        cJSON_Delete(localVarSingleItemJSON_body);
+        mazu_cJSON_Delete(localVarSingleItemJSON_body);
         localVarSingleItemJSON_body = NULL;
     }
     free(localVarBodyParameters);
@@ -2458,12 +2458,12 @@ CertificatesV1API_replaceCertificateSigningRequestApproval(apiClient_t *apiClien
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body = NULL;
+    mazu_cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
         localVarSingleItemJSON_body = v1_certificate_signing_request_convertToJSON(body);
-        localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyParameters = mazu_cJSON_Print(localVarSingleItemJSON_body);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
@@ -2491,9 +2491,9 @@ CertificatesV1API_replaceCertificateSigningRequestApproval(apiClient_t *apiClien
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CertificatesV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    mazu_cJSON *CertificatesV1APIlocalVarJSON = mazu_cJSON_Parse(apiClient->dataReceived);
     v1_certificate_signing_request_t *elementToReturn = v1_certificate_signing_request_parseFromJSON(CertificatesV1APIlocalVarJSON);
-    cJSON_Delete(CertificatesV1APIlocalVarJSON);
+    mazu_cJSON_Delete(CertificatesV1APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
     }
@@ -2512,7 +2512,7 @@ CertificatesV1API_replaceCertificateSigningRequestApproval(apiClient_t *apiClien
     free(localVarPath);
     free(localVarToReplace_name);
     if (localVarSingleItemJSON_body) {
-        cJSON_Delete(localVarSingleItemJSON_body);
+        mazu_cJSON_Delete(localVarSingleItemJSON_body);
         localVarSingleItemJSON_body = NULL;
     }
     free(localVarBodyParameters);
@@ -2650,12 +2650,12 @@ CertificatesV1API_replaceCertificateSigningRequestStatus(apiClient_t *apiClient,
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body = NULL;
+    mazu_cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
         localVarSingleItemJSON_body = v1_certificate_signing_request_convertToJSON(body);
-        localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyParameters = mazu_cJSON_Print(localVarSingleItemJSON_body);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
@@ -2683,9 +2683,9 @@ CertificatesV1API_replaceCertificateSigningRequestStatus(apiClient_t *apiClient,
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CertificatesV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    mazu_cJSON *CertificatesV1APIlocalVarJSON = mazu_cJSON_Parse(apiClient->dataReceived);
     v1_certificate_signing_request_t *elementToReturn = v1_certificate_signing_request_parseFromJSON(CertificatesV1APIlocalVarJSON);
-    cJSON_Delete(CertificatesV1APIlocalVarJSON);
+    mazu_cJSON_Delete(CertificatesV1APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
     }
@@ -2704,7 +2704,7 @@ CertificatesV1API_replaceCertificateSigningRequestStatus(apiClient_t *apiClient,
     free(localVarPath);
     free(localVarToReplace_name);
     if (localVarSingleItemJSON_body) {
-        cJSON_Delete(localVarSingleItemJSON_body);
+        mazu_cJSON_Delete(localVarSingleItemJSON_body);
         localVarSingleItemJSON_body = NULL;
     }
     free(localVarBodyParameters);

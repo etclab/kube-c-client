@@ -22,19 +22,19 @@ void object_free(object_t *object) {
     free (object);
 }
 
-cJSON *object_convertToJSON(object_t *object) {
+mazu_cJSON *object_convertToJSON(object_t *object) {
     if (!object) {
         return NULL;
     }
 
     if (!object->temporary) {
-        return cJSON_Parse("null");
+        return mazu_cJSON_Parse("null");
     }
 
-    return cJSON_Parse(object->temporary);
+    return mazu_cJSON_Parse(object->temporary);
 }
 
-object_t *object_parseFromJSON(cJSON *json){
+object_t *object_parseFromJSON(mazu_cJSON *json){
     if (!json) {
         goto end;
     }
@@ -43,7 +43,7 @@ object_t *object_parseFromJSON(cJSON *json){
     if (!object) {
         goto end;
     }
-    object->temporary = cJSON_Print(json);
+    object->temporary = mazu_cJSON_Print(json);
     return object;
 
 end:

@@ -11,7 +11,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdbool.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 
 #include "../model/v1_lifecycle_handler.h"
 v1_lifecycle_handler_t* instantiate_v1_lifecycle_handler(int include_optional);
@@ -53,11 +53,11 @@ v1_lifecycle_handler_t* instantiate_v1_lifecycle_handler(int include_optional) {
 void test_v1_lifecycle_handler(int include_optional) {
     v1_lifecycle_handler_t* v1_lifecycle_handler_1 = instantiate_v1_lifecycle_handler(include_optional);
 
-	cJSON* jsonv1_lifecycle_handler_1 = v1_lifecycle_handler_convertToJSON(v1_lifecycle_handler_1);
-	printf("v1_lifecycle_handler :\n%s\n", cJSON_Print(jsonv1_lifecycle_handler_1));
+	mazu_cJSON* jsonv1_lifecycle_handler_1 = v1_lifecycle_handler_convertToJSON(v1_lifecycle_handler_1);
+	printf("v1_lifecycle_handler :\n%s\n", mazu_cJSON_Print(jsonv1_lifecycle_handler_1));
 	v1_lifecycle_handler_t* v1_lifecycle_handler_2 = v1_lifecycle_handler_parseFromJSON(jsonv1_lifecycle_handler_1);
-	cJSON* jsonv1_lifecycle_handler_2 = v1_lifecycle_handler_convertToJSON(v1_lifecycle_handler_2);
-	printf("repeating v1_lifecycle_handler:\n%s\n", cJSON_Print(jsonv1_lifecycle_handler_2));
+	mazu_cJSON* jsonv1_lifecycle_handler_2 = v1_lifecycle_handler_convertToJSON(v1_lifecycle_handler_2);
+	printf("repeating v1_lifecycle_handler:\n%s\n", mazu_cJSON_Print(jsonv1_lifecycle_handler_2));
 }
 
 int main() {

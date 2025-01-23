@@ -42,16 +42,16 @@ void v1beta3_priority_level_configuration_spec_free(v1beta3_priority_level_confi
     free(v1beta3_priority_level_configuration_spec);
 }
 
-cJSON *v1beta3_priority_level_configuration_spec_convertToJSON(v1beta3_priority_level_configuration_spec_t *v1beta3_priority_level_configuration_spec) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1beta3_priority_level_configuration_spec_convertToJSON(v1beta3_priority_level_configuration_spec_t *v1beta3_priority_level_configuration_spec) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1beta3_priority_level_configuration_spec->exempt
     if(v1beta3_priority_level_configuration_spec->exempt) {
-    cJSON *exempt_local_JSON = v1beta3_exempt_priority_level_configuration_convertToJSON(v1beta3_priority_level_configuration_spec->exempt);
+    mazu_cJSON *exempt_local_JSON = v1beta3_exempt_priority_level_configuration_convertToJSON(v1beta3_priority_level_configuration_spec->exempt);
     if(exempt_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "exempt", exempt_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "exempt", exempt_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -60,11 +60,11 @@ cJSON *v1beta3_priority_level_configuration_spec_convertToJSON(v1beta3_priority_
 
     // v1beta3_priority_level_configuration_spec->limited
     if(v1beta3_priority_level_configuration_spec->limited) {
-    cJSON *limited_local_JSON = v1beta3_limited_priority_level_configuration_convertToJSON(v1beta3_priority_level_configuration_spec->limited);
+    mazu_cJSON *limited_local_JSON = v1beta3_limited_priority_level_configuration_convertToJSON(v1beta3_priority_level_configuration_spec->limited);
     if(limited_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "limited", limited_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "limited", limited_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -75,19 +75,19 @@ cJSON *v1beta3_priority_level_configuration_spec_convertToJSON(v1beta3_priority_
     if (!v1beta3_priority_level_configuration_spec->type) {
         goto fail;
     }
-    if(cJSON_AddStringToObject(item, "type", v1beta3_priority_level_configuration_spec->type) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "type", v1beta3_priority_level_configuration_spec->type) == NULL) {
     goto fail; //String
     }
 
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1beta3_priority_level_configuration_spec_t *v1beta3_priority_level_configuration_spec_parseFromJSON(cJSON *v1beta3_priority_level_configuration_specJSON){
+v1beta3_priority_level_configuration_spec_t *v1beta3_priority_level_configuration_spec_parseFromJSON(mazu_cJSON *v1beta3_priority_level_configuration_specJSON){
 
     v1beta3_priority_level_configuration_spec_t *v1beta3_priority_level_configuration_spec_local_var = NULL;
 
@@ -98,25 +98,25 @@ v1beta3_priority_level_configuration_spec_t *v1beta3_priority_level_configuratio
     v1beta3_limited_priority_level_configuration_t *limited_local_nonprim = NULL;
 
     // v1beta3_priority_level_configuration_spec->exempt
-    cJSON *exempt = cJSON_GetObjectItemCaseSensitive(v1beta3_priority_level_configuration_specJSON, "exempt");
+    mazu_cJSON *exempt = mazu_cJSON_GetObjectItemCaseSensitive(v1beta3_priority_level_configuration_specJSON, "exempt");
     if (exempt) { 
     exempt_local_nonprim = v1beta3_exempt_priority_level_configuration_parseFromJSON(exempt); //nonprimitive
     }
 
     // v1beta3_priority_level_configuration_spec->limited
-    cJSON *limited = cJSON_GetObjectItemCaseSensitive(v1beta3_priority_level_configuration_specJSON, "limited");
+    mazu_cJSON *limited = mazu_cJSON_GetObjectItemCaseSensitive(v1beta3_priority_level_configuration_specJSON, "limited");
     if (limited) { 
     limited_local_nonprim = v1beta3_limited_priority_level_configuration_parseFromJSON(limited); //nonprimitive
     }
 
     // v1beta3_priority_level_configuration_spec->type
-    cJSON *type = cJSON_GetObjectItemCaseSensitive(v1beta3_priority_level_configuration_specJSON, "type");
+    mazu_cJSON *type = mazu_cJSON_GetObjectItemCaseSensitive(v1beta3_priority_level_configuration_specJSON, "type");
     if (!type) {
         goto end;
     }
 
     
-    if(!cJSON_IsString(type))
+    if(!mazu_cJSON_IsString(type))
     {
     goto end; //String
     }

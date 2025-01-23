@@ -51,12 +51,12 @@ void v2_horizontal_pod_autoscaler_list_free(v2_horizontal_pod_autoscaler_list_t 
     free(v2_horizontal_pod_autoscaler_list);
 }
 
-cJSON *v2_horizontal_pod_autoscaler_list_convertToJSON(v2_horizontal_pod_autoscaler_list_t *v2_horizontal_pod_autoscaler_list) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v2_horizontal_pod_autoscaler_list_convertToJSON(v2_horizontal_pod_autoscaler_list_t *v2_horizontal_pod_autoscaler_list) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v2_horizontal_pod_autoscaler_list->api_version
     if(v2_horizontal_pod_autoscaler_list->api_version) {
-    if(cJSON_AddStringToObject(item, "apiVersion", v2_horizontal_pod_autoscaler_list->api_version) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "apiVersion", v2_horizontal_pod_autoscaler_list->api_version) == NULL) {
     goto fail; //String
     }
     }
@@ -66,7 +66,7 @@ cJSON *v2_horizontal_pod_autoscaler_list_convertToJSON(v2_horizontal_pod_autosca
     if (!v2_horizontal_pod_autoscaler_list->items) {
         goto fail;
     }
-    cJSON *items = cJSON_AddArrayToObject(item, "items");
+    mazu_cJSON *items = mazu_cJSON_AddArrayToObject(item, "items");
     if(items == NULL) {
     goto fail; //nonprimitive container
     }
@@ -74,18 +74,18 @@ cJSON *v2_horizontal_pod_autoscaler_list_convertToJSON(v2_horizontal_pod_autosca
     listEntry_t *itemsListEntry;
     if (v2_horizontal_pod_autoscaler_list->items) {
     list_ForEach(itemsListEntry, v2_horizontal_pod_autoscaler_list->items) {
-    cJSON *itemLocal = v2_horizontal_pod_autoscaler_convertToJSON(itemsListEntry->data);
+    mazu_cJSON *itemLocal = v2_horizontal_pod_autoscaler_convertToJSON(itemsListEntry->data);
     if(itemLocal == NULL) {
     goto fail;
     }
-    cJSON_AddItemToArray(items, itemLocal);
+    mazu_cJSON_AddItemToArray(items, itemLocal);
     }
     }
 
 
     // v2_horizontal_pod_autoscaler_list->kind
     if(v2_horizontal_pod_autoscaler_list->kind) {
-    if(cJSON_AddStringToObject(item, "kind", v2_horizontal_pod_autoscaler_list->kind) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "kind", v2_horizontal_pod_autoscaler_list->kind) == NULL) {
     goto fail; //String
     }
     }
@@ -93,11 +93,11 @@ cJSON *v2_horizontal_pod_autoscaler_list_convertToJSON(v2_horizontal_pod_autosca
 
     // v2_horizontal_pod_autoscaler_list->metadata
     if(v2_horizontal_pod_autoscaler_list->metadata) {
-    cJSON *metadata_local_JSON = v1_list_meta_convertToJSON(v2_horizontal_pod_autoscaler_list->metadata);
+    mazu_cJSON *metadata_local_JSON = v1_list_meta_convertToJSON(v2_horizontal_pod_autoscaler_list->metadata);
     if(metadata_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "metadata", metadata_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "metadata", metadata_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -106,12 +106,12 @@ cJSON *v2_horizontal_pod_autoscaler_list_convertToJSON(v2_horizontal_pod_autosca
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v2_horizontal_pod_autoscaler_list_t *v2_horizontal_pod_autoscaler_list_parseFromJSON(cJSON *v2_horizontal_pod_autoscaler_listJSON){
+v2_horizontal_pod_autoscaler_list_t *v2_horizontal_pod_autoscaler_list_parseFromJSON(mazu_cJSON *v2_horizontal_pod_autoscaler_listJSON){
 
     v2_horizontal_pod_autoscaler_list_t *v2_horizontal_pod_autoscaler_list_local_var = NULL;
 
@@ -122,31 +122,31 @@ v2_horizontal_pod_autoscaler_list_t *v2_horizontal_pod_autoscaler_list_parseFrom
     v1_list_meta_t *metadata_local_nonprim = NULL;
 
     // v2_horizontal_pod_autoscaler_list->api_version
-    cJSON *api_version = cJSON_GetObjectItemCaseSensitive(v2_horizontal_pod_autoscaler_listJSON, "apiVersion");
+    mazu_cJSON *api_version = mazu_cJSON_GetObjectItemCaseSensitive(v2_horizontal_pod_autoscaler_listJSON, "apiVersion");
     if (api_version) { 
-    if(!cJSON_IsString(api_version) && !cJSON_IsNull(api_version))
+    if(!mazu_cJSON_IsString(api_version) && !mazu_cJSON_IsNull(api_version))
     {
     goto end; //String
     }
     }
 
     // v2_horizontal_pod_autoscaler_list->items
-    cJSON *items = cJSON_GetObjectItemCaseSensitive(v2_horizontal_pod_autoscaler_listJSON, "items");
+    mazu_cJSON *items = mazu_cJSON_GetObjectItemCaseSensitive(v2_horizontal_pod_autoscaler_listJSON, "items");
     if (!items) {
         goto end;
     }
 
     
-    cJSON *items_local_nonprimitive = NULL;
-    if(!cJSON_IsArray(items)){
+    mazu_cJSON *items_local_nonprimitive = NULL;
+    if(!mazu_cJSON_IsArray(items)){
         goto end; //nonprimitive container
     }
 
     itemsList = list_createList();
 
-    cJSON_ArrayForEach(items_local_nonprimitive,items )
+    mazu_cJSON_ArrayForEach(items_local_nonprimitive,items )
     {
-        if(!cJSON_IsObject(items_local_nonprimitive)){
+        if(!mazu_cJSON_IsObject(items_local_nonprimitive)){
             goto end;
         }
         v2_horizontal_pod_autoscaler_t *itemsItem = v2_horizontal_pod_autoscaler_parseFromJSON(items_local_nonprimitive);
@@ -155,25 +155,25 @@ v2_horizontal_pod_autoscaler_list_t *v2_horizontal_pod_autoscaler_list_parseFrom
     }
 
     // v2_horizontal_pod_autoscaler_list->kind
-    cJSON *kind = cJSON_GetObjectItemCaseSensitive(v2_horizontal_pod_autoscaler_listJSON, "kind");
+    mazu_cJSON *kind = mazu_cJSON_GetObjectItemCaseSensitive(v2_horizontal_pod_autoscaler_listJSON, "kind");
     if (kind) { 
-    if(!cJSON_IsString(kind) && !cJSON_IsNull(kind))
+    if(!mazu_cJSON_IsString(kind) && !mazu_cJSON_IsNull(kind))
     {
     goto end; //String
     }
     }
 
     // v2_horizontal_pod_autoscaler_list->metadata
-    cJSON *metadata = cJSON_GetObjectItemCaseSensitive(v2_horizontal_pod_autoscaler_listJSON, "metadata");
+    mazu_cJSON *metadata = mazu_cJSON_GetObjectItemCaseSensitive(v2_horizontal_pod_autoscaler_listJSON, "metadata");
     if (metadata) { 
     metadata_local_nonprim = v1_list_meta_parseFromJSON(metadata); //nonprimitive
     }
 
 
     v2_horizontal_pod_autoscaler_list_local_var = v2_horizontal_pod_autoscaler_list_create (
-        api_version && !cJSON_IsNull(api_version) ? strdup(api_version->valuestring) : NULL,
+        api_version && !mazu_cJSON_IsNull(api_version) ? strdup(api_version->valuestring) : NULL,
         itemsList,
-        kind && !cJSON_IsNull(kind) ? strdup(kind->valuestring) : NULL,
+        kind && !mazu_cJSON_IsNull(kind) ? strdup(kind->valuestring) : NULL,
         metadata ? metadata_local_nonprim : NULL
         );
 

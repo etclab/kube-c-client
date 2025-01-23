@@ -48,16 +48,16 @@ void v1_pod_disruption_budget_spec_free(v1_pod_disruption_budget_spec_t *v1_pod_
     free(v1_pod_disruption_budget_spec);
 }
 
-cJSON *v1_pod_disruption_budget_spec_convertToJSON(v1_pod_disruption_budget_spec_t *v1_pod_disruption_budget_spec) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_pod_disruption_budget_spec_convertToJSON(v1_pod_disruption_budget_spec_t *v1_pod_disruption_budget_spec) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_pod_disruption_budget_spec->max_unavailable
     if(v1_pod_disruption_budget_spec->max_unavailable) {
-    cJSON *max_unavailable_local_JSON = int_or_string_convertToJSON(v1_pod_disruption_budget_spec->max_unavailable);
+    mazu_cJSON *max_unavailable_local_JSON = int_or_string_convertToJSON(v1_pod_disruption_budget_spec->max_unavailable);
     if(max_unavailable_local_JSON == NULL) {
         goto fail; // custom
     }
-    cJSON_AddItemToObject(item, "maxUnavailable", max_unavailable_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "maxUnavailable", max_unavailable_local_JSON);
     if(item->child == NULL) {
         goto fail;
     }
@@ -66,11 +66,11 @@ cJSON *v1_pod_disruption_budget_spec_convertToJSON(v1_pod_disruption_budget_spec
 
     // v1_pod_disruption_budget_spec->min_available
     if(v1_pod_disruption_budget_spec->min_available) {
-    cJSON *min_available_local_JSON = int_or_string_convertToJSON(v1_pod_disruption_budget_spec->min_available);
+    mazu_cJSON *min_available_local_JSON = int_or_string_convertToJSON(v1_pod_disruption_budget_spec->min_available);
     if(min_available_local_JSON == NULL) {
         goto fail; // custom
     }
-    cJSON_AddItemToObject(item, "minAvailable", min_available_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "minAvailable", min_available_local_JSON);
     if(item->child == NULL) {
         goto fail;
     }
@@ -79,11 +79,11 @@ cJSON *v1_pod_disruption_budget_spec_convertToJSON(v1_pod_disruption_budget_spec
 
     // v1_pod_disruption_budget_spec->selector
     if(v1_pod_disruption_budget_spec->selector) {
-    cJSON *selector_local_JSON = v1_label_selector_convertToJSON(v1_pod_disruption_budget_spec->selector);
+    mazu_cJSON *selector_local_JSON = v1_label_selector_convertToJSON(v1_pod_disruption_budget_spec->selector);
     if(selector_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "selector", selector_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "selector", selector_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -92,7 +92,7 @@ cJSON *v1_pod_disruption_budget_spec_convertToJSON(v1_pod_disruption_budget_spec
 
     // v1_pod_disruption_budget_spec->unhealthy_pod_eviction_policy
     if(v1_pod_disruption_budget_spec->unhealthy_pod_eviction_policy) {
-    if(cJSON_AddStringToObject(item, "unhealthyPodEvictionPolicy", v1_pod_disruption_budget_spec->unhealthy_pod_eviction_policy) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "unhealthyPodEvictionPolicy", v1_pod_disruption_budget_spec->unhealthy_pod_eviction_policy) == NULL) {
     goto fail; //String
     }
     }
@@ -100,12 +100,12 @@ cJSON *v1_pod_disruption_budget_spec_convertToJSON(v1_pod_disruption_budget_spec
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_pod_disruption_budget_spec_t *v1_pod_disruption_budget_spec_parseFromJSON(cJSON *v1_pod_disruption_budget_specJSON){
+v1_pod_disruption_budget_spec_t *v1_pod_disruption_budget_spec_parseFromJSON(mazu_cJSON *v1_pod_disruption_budget_specJSON){
 
     v1_pod_disruption_budget_spec_t *v1_pod_disruption_budget_spec_local_var = NULL;
 
@@ -119,27 +119,27 @@ v1_pod_disruption_budget_spec_t *v1_pod_disruption_budget_spec_parseFromJSON(cJS
     v1_label_selector_t *selector_local_nonprim = NULL;
 
     // v1_pod_disruption_budget_spec->max_unavailable
-    cJSON *max_unavailable = cJSON_GetObjectItemCaseSensitive(v1_pod_disruption_budget_specJSON, "maxUnavailable");
+    mazu_cJSON *max_unavailable = mazu_cJSON_GetObjectItemCaseSensitive(v1_pod_disruption_budget_specJSON, "maxUnavailable");
     if (max_unavailable) { 
     max_unavailable_local_nonprim = int_or_string_parseFromJSON(max_unavailable); //custom
     }
 
     // v1_pod_disruption_budget_spec->min_available
-    cJSON *min_available = cJSON_GetObjectItemCaseSensitive(v1_pod_disruption_budget_specJSON, "minAvailable");
+    mazu_cJSON *min_available = mazu_cJSON_GetObjectItemCaseSensitive(v1_pod_disruption_budget_specJSON, "minAvailable");
     if (min_available) { 
     min_available_local_nonprim = int_or_string_parseFromJSON(min_available); //custom
     }
 
     // v1_pod_disruption_budget_spec->selector
-    cJSON *selector = cJSON_GetObjectItemCaseSensitive(v1_pod_disruption_budget_specJSON, "selector");
+    mazu_cJSON *selector = mazu_cJSON_GetObjectItemCaseSensitive(v1_pod_disruption_budget_specJSON, "selector");
     if (selector) { 
     selector_local_nonprim = v1_label_selector_parseFromJSON(selector); //nonprimitive
     }
 
     // v1_pod_disruption_budget_spec->unhealthy_pod_eviction_policy
-    cJSON *unhealthy_pod_eviction_policy = cJSON_GetObjectItemCaseSensitive(v1_pod_disruption_budget_specJSON, "unhealthyPodEvictionPolicy");
+    mazu_cJSON *unhealthy_pod_eviction_policy = mazu_cJSON_GetObjectItemCaseSensitive(v1_pod_disruption_budget_specJSON, "unhealthyPodEvictionPolicy");
     if (unhealthy_pod_eviction_policy) { 
-    if(!cJSON_IsString(unhealthy_pod_eviction_policy) && !cJSON_IsNull(unhealthy_pod_eviction_policy))
+    if(!mazu_cJSON_IsString(unhealthy_pod_eviction_policy) && !mazu_cJSON_IsNull(unhealthy_pod_eviction_policy))
     {
     goto end; //String
     }
@@ -150,7 +150,7 @@ v1_pod_disruption_budget_spec_t *v1_pod_disruption_budget_spec_parseFromJSON(cJS
         max_unavailable ? max_unavailable_local_nonprim : NULL,
         min_available ? min_available_local_nonprim : NULL,
         selector ? selector_local_nonprim : NULL,
-        unhealthy_pod_eviction_policy && !cJSON_IsNull(unhealthy_pod_eviction_policy) ? strdup(unhealthy_pod_eviction_policy->valuestring) : NULL
+        unhealthy_pod_eviction_policy && !mazu_cJSON_IsNull(unhealthy_pod_eviction_policy) ? strdup(unhealthy_pod_eviction_policy->valuestring) : NULL
         );
 
     return v1_pod_disruption_budget_spec_local_var;

@@ -42,12 +42,12 @@ void v1alpha3_allocation_result_free(v1alpha3_allocation_result_t *v1alpha3_allo
     free(v1alpha3_allocation_result);
 }
 
-cJSON *v1alpha3_allocation_result_convertToJSON(v1alpha3_allocation_result_t *v1alpha3_allocation_result) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1alpha3_allocation_result_convertToJSON(v1alpha3_allocation_result_t *v1alpha3_allocation_result) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1alpha3_allocation_result->controller
     if(v1alpha3_allocation_result->controller) {
-    if(cJSON_AddStringToObject(item, "controller", v1alpha3_allocation_result->controller) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "controller", v1alpha3_allocation_result->controller) == NULL) {
     goto fail; //String
     }
     }
@@ -55,11 +55,11 @@ cJSON *v1alpha3_allocation_result_convertToJSON(v1alpha3_allocation_result_t *v1
 
     // v1alpha3_allocation_result->devices
     if(v1alpha3_allocation_result->devices) {
-    cJSON *devices_local_JSON = v1alpha3_device_allocation_result_convertToJSON(v1alpha3_allocation_result->devices);
+    mazu_cJSON *devices_local_JSON = v1alpha3_device_allocation_result_convertToJSON(v1alpha3_allocation_result->devices);
     if(devices_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "devices", devices_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "devices", devices_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -68,11 +68,11 @@ cJSON *v1alpha3_allocation_result_convertToJSON(v1alpha3_allocation_result_t *v1
 
     // v1alpha3_allocation_result->node_selector
     if(v1alpha3_allocation_result->node_selector) {
-    cJSON *node_selector_local_JSON = v1_node_selector_convertToJSON(v1alpha3_allocation_result->node_selector);
+    mazu_cJSON *node_selector_local_JSON = v1_node_selector_convertToJSON(v1alpha3_allocation_result->node_selector);
     if(node_selector_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "nodeSelector", node_selector_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "nodeSelector", node_selector_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -81,12 +81,12 @@ cJSON *v1alpha3_allocation_result_convertToJSON(v1alpha3_allocation_result_t *v1
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1alpha3_allocation_result_t *v1alpha3_allocation_result_parseFromJSON(cJSON *v1alpha3_allocation_resultJSON){
+v1alpha3_allocation_result_t *v1alpha3_allocation_result_parseFromJSON(mazu_cJSON *v1alpha3_allocation_resultJSON){
 
     v1alpha3_allocation_result_t *v1alpha3_allocation_result_local_var = NULL;
 
@@ -97,29 +97,29 @@ v1alpha3_allocation_result_t *v1alpha3_allocation_result_parseFromJSON(cJSON *v1
     v1_node_selector_t *node_selector_local_nonprim = NULL;
 
     // v1alpha3_allocation_result->controller
-    cJSON *controller = cJSON_GetObjectItemCaseSensitive(v1alpha3_allocation_resultJSON, "controller");
+    mazu_cJSON *controller = mazu_cJSON_GetObjectItemCaseSensitive(v1alpha3_allocation_resultJSON, "controller");
     if (controller) { 
-    if(!cJSON_IsString(controller) && !cJSON_IsNull(controller))
+    if(!mazu_cJSON_IsString(controller) && !mazu_cJSON_IsNull(controller))
     {
     goto end; //String
     }
     }
 
     // v1alpha3_allocation_result->devices
-    cJSON *devices = cJSON_GetObjectItemCaseSensitive(v1alpha3_allocation_resultJSON, "devices");
+    mazu_cJSON *devices = mazu_cJSON_GetObjectItemCaseSensitive(v1alpha3_allocation_resultJSON, "devices");
     if (devices) { 
     devices_local_nonprim = v1alpha3_device_allocation_result_parseFromJSON(devices); //nonprimitive
     }
 
     // v1alpha3_allocation_result->node_selector
-    cJSON *node_selector = cJSON_GetObjectItemCaseSensitive(v1alpha3_allocation_resultJSON, "nodeSelector");
+    mazu_cJSON *node_selector = mazu_cJSON_GetObjectItemCaseSensitive(v1alpha3_allocation_resultJSON, "nodeSelector");
     if (node_selector) { 
     node_selector_local_nonprim = v1_node_selector_parseFromJSON(node_selector); //nonprimitive
     }
 
 
     v1alpha3_allocation_result_local_var = v1alpha3_allocation_result_create (
-        controller && !cJSON_IsNull(controller) ? strdup(controller->valuestring) : NULL,
+        controller && !mazu_cJSON_IsNull(controller) ? strdup(controller->valuestring) : NULL,
         devices ? devices_local_nonprim : NULL,
         node_selector ? node_selector_local_nonprim : NULL
         );

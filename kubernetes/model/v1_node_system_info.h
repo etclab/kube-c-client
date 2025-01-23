@@ -8,7 +8,7 @@
 #define _v1_node_system_info_H_
 
 #include <string.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
 #include "../include/binary.h"
@@ -47,9 +47,9 @@ v1_node_system_info_t *v1_node_system_info_create(
 
 void v1_node_system_info_free(v1_node_system_info_t *v1_node_system_info);
 
-v1_node_system_info_t *v1_node_system_info_parseFromJSON(cJSON *v1_node_system_infoJSON);
+v1_node_system_info_t *v1_node_system_info_parseFromJSON(mazu_cJSON *v1_node_system_infoJSON);
 
-cJSON *v1_node_system_info_convertToJSON(v1_node_system_info_t *v1_node_system_info);
+mazu_cJSON *v1_node_system_info_convertToJSON(v1_node_system_info_t *v1_node_system_info);
 
 #endif /* _v1_node_system_info_H_ */
 

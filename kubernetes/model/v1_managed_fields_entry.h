@@ -8,7 +8,7 @@
 #define _v1_managed_fields_entry_H_
 
 #include <string.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
 #include "../include/binary.h"
@@ -42,9 +42,9 @@ v1_managed_fields_entry_t *v1_managed_fields_entry_create(
 
 void v1_managed_fields_entry_free(v1_managed_fields_entry_t *v1_managed_fields_entry);
 
-v1_managed_fields_entry_t *v1_managed_fields_entry_parseFromJSON(cJSON *v1_managed_fields_entryJSON);
+v1_managed_fields_entry_t *v1_managed_fields_entry_parseFromJSON(mazu_cJSON *v1_managed_fields_entryJSON);
 
-cJSON *v1_managed_fields_entry_convertToJSON(v1_managed_fields_entry_t *v1_managed_fields_entry);
+mazu_cJSON *v1_managed_fields_entry_convertToJSON(v1_managed_fields_entry_t *v1_managed_fields_entry);
 
 #endif /* _v1_managed_fields_entry_H_ */
 

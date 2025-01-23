@@ -8,7 +8,7 @@
 #define _v1beta3_flow_schema_list_H_
 
 #include <string.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
 #include "../include/binary.h"
@@ -37,9 +37,9 @@ v1beta3_flow_schema_list_t *v1beta3_flow_schema_list_create(
 
 void v1beta3_flow_schema_list_free(v1beta3_flow_schema_list_t *v1beta3_flow_schema_list);
 
-v1beta3_flow_schema_list_t *v1beta3_flow_schema_list_parseFromJSON(cJSON *v1beta3_flow_schema_listJSON);
+v1beta3_flow_schema_list_t *v1beta3_flow_schema_list_parseFromJSON(mazu_cJSON *v1beta3_flow_schema_listJSON);
 
-cJSON *v1beta3_flow_schema_list_convertToJSON(v1beta3_flow_schema_list_t *v1beta3_flow_schema_list);
+mazu_cJSON *v1beta3_flow_schema_list_convertToJSON(v1beta3_flow_schema_list_t *v1beta3_flow_schema_list);
 
 #endif /* _v1beta3_flow_schema_list_H_ */
 

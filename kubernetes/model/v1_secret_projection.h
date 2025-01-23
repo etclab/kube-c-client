@@ -8,7 +8,7 @@
 #define _v1_secret_projection_H_
 
 #include <string.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
 #include "../include/binary.h"
@@ -34,9 +34,9 @@ v1_secret_projection_t *v1_secret_projection_create(
 
 void v1_secret_projection_free(v1_secret_projection_t *v1_secret_projection);
 
-v1_secret_projection_t *v1_secret_projection_parseFromJSON(cJSON *v1_secret_projectionJSON);
+v1_secret_projection_t *v1_secret_projection_parseFromJSON(mazu_cJSON *v1_secret_projectionJSON);
 
-cJSON *v1_secret_projection_convertToJSON(v1_secret_projection_t *v1_secret_projection);
+mazu_cJSON *v1_secret_projection_convertToJSON(v1_secret_projection_t *v1_secret_projection);
 
 #endif /* _v1_secret_projection_H_ */
 

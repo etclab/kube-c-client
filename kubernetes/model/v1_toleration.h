@@ -8,7 +8,7 @@
 #define _v1_toleration_H_
 
 #include <string.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
 #include "../include/binary.h"
@@ -37,9 +37,9 @@ v1_toleration_t *v1_toleration_create(
 
 void v1_toleration_free(v1_toleration_t *v1_toleration);
 
-v1_toleration_t *v1_toleration_parseFromJSON(cJSON *v1_tolerationJSON);
+v1_toleration_t *v1_toleration_parseFromJSON(mazu_cJSON *v1_tolerationJSON);
 
-cJSON *v1_toleration_convertToJSON(v1_toleration_t *v1_toleration);
+mazu_cJSON *v1_toleration_convertToJSON(v1_toleration_t *v1_toleration);
 
 #endif /* _v1_toleration_H_ */
 

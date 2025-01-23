@@ -48,12 +48,12 @@ void v1_component_condition_free(v1_component_condition_t *v1_component_conditio
     free(v1_component_condition);
 }
 
-cJSON *v1_component_condition_convertToJSON(v1_component_condition_t *v1_component_condition) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_component_condition_convertToJSON(v1_component_condition_t *v1_component_condition) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_component_condition->error
     if(v1_component_condition->error) {
-    if(cJSON_AddStringToObject(item, "error", v1_component_condition->error) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "error", v1_component_condition->error) == NULL) {
     goto fail; //String
     }
     }
@@ -61,7 +61,7 @@ cJSON *v1_component_condition_convertToJSON(v1_component_condition_t *v1_compone
 
     // v1_component_condition->message
     if(v1_component_condition->message) {
-    if(cJSON_AddStringToObject(item, "message", v1_component_condition->message) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "message", v1_component_condition->message) == NULL) {
     goto fail; //String
     }
     }
@@ -71,7 +71,7 @@ cJSON *v1_component_condition_convertToJSON(v1_component_condition_t *v1_compone
     if (!v1_component_condition->status) {
         goto fail;
     }
-    if(cJSON_AddStringToObject(item, "status", v1_component_condition->status) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "status", v1_component_condition->status) == NULL) {
     goto fail; //String
     }
 
@@ -80,68 +80,68 @@ cJSON *v1_component_condition_convertToJSON(v1_component_condition_t *v1_compone
     if (!v1_component_condition->type) {
         goto fail;
     }
-    if(cJSON_AddStringToObject(item, "type", v1_component_condition->type) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "type", v1_component_condition->type) == NULL) {
     goto fail; //String
     }
 
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_component_condition_t *v1_component_condition_parseFromJSON(cJSON *v1_component_conditionJSON){
+v1_component_condition_t *v1_component_condition_parseFromJSON(mazu_cJSON *v1_component_conditionJSON){
 
     v1_component_condition_t *v1_component_condition_local_var = NULL;
 
     // v1_component_condition->error
-    cJSON *error = cJSON_GetObjectItemCaseSensitive(v1_component_conditionJSON, "error");
+    mazu_cJSON *error = mazu_cJSON_GetObjectItemCaseSensitive(v1_component_conditionJSON, "error");
     if (error) { 
-    if(!cJSON_IsString(error) && !cJSON_IsNull(error))
+    if(!mazu_cJSON_IsString(error) && !mazu_cJSON_IsNull(error))
     {
     goto end; //String
     }
     }
 
     // v1_component_condition->message
-    cJSON *message = cJSON_GetObjectItemCaseSensitive(v1_component_conditionJSON, "message");
+    mazu_cJSON *message = mazu_cJSON_GetObjectItemCaseSensitive(v1_component_conditionJSON, "message");
     if (message) { 
-    if(!cJSON_IsString(message) && !cJSON_IsNull(message))
+    if(!mazu_cJSON_IsString(message) && !mazu_cJSON_IsNull(message))
     {
     goto end; //String
     }
     }
 
     // v1_component_condition->status
-    cJSON *status = cJSON_GetObjectItemCaseSensitive(v1_component_conditionJSON, "status");
+    mazu_cJSON *status = mazu_cJSON_GetObjectItemCaseSensitive(v1_component_conditionJSON, "status");
     if (!status) {
         goto end;
     }
 
     
-    if(!cJSON_IsString(status))
+    if(!mazu_cJSON_IsString(status))
     {
     goto end; //String
     }
 
     // v1_component_condition->type
-    cJSON *type = cJSON_GetObjectItemCaseSensitive(v1_component_conditionJSON, "type");
+    mazu_cJSON *type = mazu_cJSON_GetObjectItemCaseSensitive(v1_component_conditionJSON, "type");
     if (!type) {
         goto end;
     }
 
     
-    if(!cJSON_IsString(type))
+    if(!mazu_cJSON_IsString(type))
     {
     goto end; //String
     }
 
 
     v1_component_condition_local_var = v1_component_condition_create (
-        error && !cJSON_IsNull(error) ? strdup(error->valuestring) : NULL,
-        message && !cJSON_IsNull(message) ? strdup(message->valuestring) : NULL,
+        error && !mazu_cJSON_IsNull(error) ? strdup(error->valuestring) : NULL,
+        message && !mazu_cJSON_IsNull(message) ? strdup(message->valuestring) : NULL,
         strdup(status->valuestring),
         strdup(type->valuestring)
         );

@@ -8,7 +8,7 @@
 #define _v1_ip_block_H_
 
 #include <string.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
 #include "../include/binary.h"
@@ -31,9 +31,9 @@ v1_ip_block_t *v1_ip_block_create(
 
 void v1_ip_block_free(v1_ip_block_t *v1_ip_block);
 
-v1_ip_block_t *v1_ip_block_parseFromJSON(cJSON *v1_ip_blockJSON);
+v1_ip_block_t *v1_ip_block_parseFromJSON(mazu_cJSON *v1_ip_blockJSON);
 
-cJSON *v1_ip_block_convertToJSON(v1_ip_block_t *v1_ip_block);
+mazu_cJSON *v1_ip_block_convertToJSON(v1_ip_block_t *v1_ip_block);
 
 #endif /* _v1_ip_block_H_ */
 

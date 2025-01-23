@@ -45,12 +45,12 @@ void v1_cron_job_status_free(v1_cron_job_status_t *v1_cron_job_status) {
     free(v1_cron_job_status);
 }
 
-cJSON *v1_cron_job_status_convertToJSON(v1_cron_job_status_t *v1_cron_job_status) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_cron_job_status_convertToJSON(v1_cron_job_status_t *v1_cron_job_status) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_cron_job_status->active
     if(v1_cron_job_status->active) {
-    cJSON *active = cJSON_AddArrayToObject(item, "active");
+    mazu_cJSON *active = mazu_cJSON_AddArrayToObject(item, "active");
     if(active == NULL) {
     goto fail; //nonprimitive container
     }
@@ -58,11 +58,11 @@ cJSON *v1_cron_job_status_convertToJSON(v1_cron_job_status_t *v1_cron_job_status
     listEntry_t *activeListEntry;
     if (v1_cron_job_status->active) {
     list_ForEach(activeListEntry, v1_cron_job_status->active) {
-    cJSON *itemLocal = v1_object_reference_convertToJSON(activeListEntry->data);
+    mazu_cJSON *itemLocal = v1_object_reference_convertToJSON(activeListEntry->data);
     if(itemLocal == NULL) {
     goto fail;
     }
-    cJSON_AddItemToArray(active, itemLocal);
+    mazu_cJSON_AddItemToArray(active, itemLocal);
     }
     }
     }
@@ -70,7 +70,7 @@ cJSON *v1_cron_job_status_convertToJSON(v1_cron_job_status_t *v1_cron_job_status
 
     // v1_cron_job_status->last_schedule_time
     if(v1_cron_job_status->last_schedule_time) {
-    if(cJSON_AddStringToObject(item, "lastScheduleTime", v1_cron_job_status->last_schedule_time) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "lastScheduleTime", v1_cron_job_status->last_schedule_time) == NULL) {
     goto fail; //Date-Time
     }
     }
@@ -78,7 +78,7 @@ cJSON *v1_cron_job_status_convertToJSON(v1_cron_job_status_t *v1_cron_job_status
 
     // v1_cron_job_status->last_successful_time
     if(v1_cron_job_status->last_successful_time) {
-    if(cJSON_AddStringToObject(item, "lastSuccessfulTime", v1_cron_job_status->last_successful_time) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "lastSuccessfulTime", v1_cron_job_status->last_successful_time) == NULL) {
     goto fail; //Date-Time
     }
     }
@@ -86,12 +86,12 @@ cJSON *v1_cron_job_status_convertToJSON(v1_cron_job_status_t *v1_cron_job_status
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_cron_job_status_t *v1_cron_job_status_parseFromJSON(cJSON *v1_cron_job_statusJSON){
+v1_cron_job_status_t *v1_cron_job_status_parseFromJSON(mazu_cJSON *v1_cron_job_statusJSON){
 
     v1_cron_job_status_t *v1_cron_job_status_local_var = NULL;
 
@@ -99,18 +99,18 @@ v1_cron_job_status_t *v1_cron_job_status_parseFromJSON(cJSON *v1_cron_job_status
     list_t *activeList = NULL;
 
     // v1_cron_job_status->active
-    cJSON *active = cJSON_GetObjectItemCaseSensitive(v1_cron_job_statusJSON, "active");
+    mazu_cJSON *active = mazu_cJSON_GetObjectItemCaseSensitive(v1_cron_job_statusJSON, "active");
     if (active) { 
-    cJSON *active_local_nonprimitive = NULL;
-    if(!cJSON_IsArray(active)){
+    mazu_cJSON *active_local_nonprimitive = NULL;
+    if(!mazu_cJSON_IsArray(active)){
         goto end; //nonprimitive container
     }
 
     activeList = list_createList();
 
-    cJSON_ArrayForEach(active_local_nonprimitive,active )
+    mazu_cJSON_ArrayForEach(active_local_nonprimitive,active )
     {
-        if(!cJSON_IsObject(active_local_nonprimitive)){
+        if(!mazu_cJSON_IsObject(active_local_nonprimitive)){
             goto end;
         }
         v1_object_reference_t *activeItem = v1_object_reference_parseFromJSON(active_local_nonprimitive);
@@ -120,18 +120,18 @@ v1_cron_job_status_t *v1_cron_job_status_parseFromJSON(cJSON *v1_cron_job_status
     }
 
     // v1_cron_job_status->last_schedule_time
-    cJSON *last_schedule_time = cJSON_GetObjectItemCaseSensitive(v1_cron_job_statusJSON, "lastScheduleTime");
+    mazu_cJSON *last_schedule_time = mazu_cJSON_GetObjectItemCaseSensitive(v1_cron_job_statusJSON, "lastScheduleTime");
     if (last_schedule_time) { 
-    if(!cJSON_IsString(last_schedule_time) && !cJSON_IsNull(last_schedule_time))
+    if(!mazu_cJSON_IsString(last_schedule_time) && !mazu_cJSON_IsNull(last_schedule_time))
     {
     goto end; //DateTime
     }
     }
 
     // v1_cron_job_status->last_successful_time
-    cJSON *last_successful_time = cJSON_GetObjectItemCaseSensitive(v1_cron_job_statusJSON, "lastSuccessfulTime");
+    mazu_cJSON *last_successful_time = mazu_cJSON_GetObjectItemCaseSensitive(v1_cron_job_statusJSON, "lastSuccessfulTime");
     if (last_successful_time) { 
-    if(!cJSON_IsString(last_successful_time) && !cJSON_IsNull(last_successful_time))
+    if(!mazu_cJSON_IsString(last_successful_time) && !mazu_cJSON_IsNull(last_successful_time))
     {
     goto end; //DateTime
     }
@@ -140,8 +140,8 @@ v1_cron_job_status_t *v1_cron_job_status_parseFromJSON(cJSON *v1_cron_job_status
 
     v1_cron_job_status_local_var = v1_cron_job_status_create (
         active ? activeList : NULL,
-        last_schedule_time && !cJSON_IsNull(last_schedule_time) ? strdup(last_schedule_time->valuestring) : NULL,
-        last_successful_time && !cJSON_IsNull(last_successful_time) ? strdup(last_successful_time->valuestring) : NULL
+        last_schedule_time && !mazu_cJSON_IsNull(last_schedule_time) ? strdup(last_schedule_time->valuestring) : NULL,
+        last_successful_time && !mazu_cJSON_IsNull(last_successful_time) ? strdup(last_successful_time->valuestring) : NULL
         );
 
     return v1_cron_job_status_local_var;

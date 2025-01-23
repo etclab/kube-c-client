@@ -32,12 +32,12 @@ void v1_config_map_env_source_free(v1_config_map_env_source_t *v1_config_map_env
     free(v1_config_map_env_source);
 }
 
-cJSON *v1_config_map_env_source_convertToJSON(v1_config_map_env_source_t *v1_config_map_env_source) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_config_map_env_source_convertToJSON(v1_config_map_env_source_t *v1_config_map_env_source) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_config_map_env_source->name
     if(v1_config_map_env_source->name) {
-    if(cJSON_AddStringToObject(item, "name", v1_config_map_env_source->name) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "name", v1_config_map_env_source->name) == NULL) {
     goto fail; //String
     }
     }
@@ -45,7 +45,7 @@ cJSON *v1_config_map_env_source_convertToJSON(v1_config_map_env_source_t *v1_con
 
     // v1_config_map_env_source->optional
     if(v1_config_map_env_source->optional) {
-    if(cJSON_AddBoolToObject(item, "optional", v1_config_map_env_source->optional) == NULL) {
+    if(mazu_cJSON_AddBoolToObject(item, "optional", v1_config_map_env_source->optional) == NULL) {
     goto fail; //Bool
     }
     }
@@ -53,28 +53,28 @@ cJSON *v1_config_map_env_source_convertToJSON(v1_config_map_env_source_t *v1_con
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_config_map_env_source_t *v1_config_map_env_source_parseFromJSON(cJSON *v1_config_map_env_sourceJSON){
+v1_config_map_env_source_t *v1_config_map_env_source_parseFromJSON(mazu_cJSON *v1_config_map_env_sourceJSON){
 
     v1_config_map_env_source_t *v1_config_map_env_source_local_var = NULL;
 
     // v1_config_map_env_source->name
-    cJSON *name = cJSON_GetObjectItemCaseSensitive(v1_config_map_env_sourceJSON, "name");
+    mazu_cJSON *name = mazu_cJSON_GetObjectItemCaseSensitive(v1_config_map_env_sourceJSON, "name");
     if (name) { 
-    if(!cJSON_IsString(name) && !cJSON_IsNull(name))
+    if(!mazu_cJSON_IsString(name) && !mazu_cJSON_IsNull(name))
     {
     goto end; //String
     }
     }
 
     // v1_config_map_env_source->optional
-    cJSON *optional = cJSON_GetObjectItemCaseSensitive(v1_config_map_env_sourceJSON, "optional");
+    mazu_cJSON *optional = mazu_cJSON_GetObjectItemCaseSensitive(v1_config_map_env_sourceJSON, "optional");
     if (optional) { 
-    if(!cJSON_IsBool(optional))
+    if(!mazu_cJSON_IsBool(optional))
     {
     goto end; //Bool
     }
@@ -82,7 +82,7 @@ v1_config_map_env_source_t *v1_config_map_env_source_parseFromJSON(cJSON *v1_con
 
 
     v1_config_map_env_source_local_var = v1_config_map_env_source_create (
-        name && !cJSON_IsNull(name) ? strdup(name->valuestring) : NULL,
+        name && !mazu_cJSON_IsNull(name) ? strdup(name->valuestring) : NULL,
         optional ? optional->valueint : 0
         );
 

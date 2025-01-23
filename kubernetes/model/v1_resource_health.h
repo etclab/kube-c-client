@@ -8,7 +8,7 @@
 #define _v1_resource_health_H_
 
 #include <string.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
 #include "../include/binary.h"
@@ -31,9 +31,9 @@ v1_resource_health_t *v1_resource_health_create(
 
 void v1_resource_health_free(v1_resource_health_t *v1_resource_health);
 
-v1_resource_health_t *v1_resource_health_parseFromJSON(cJSON *v1_resource_healthJSON);
+v1_resource_health_t *v1_resource_health_parseFromJSON(mazu_cJSON *v1_resource_healthJSON);
 
-cJSON *v1_resource_health_convertToJSON(v1_resource_health_t *v1_resource_health);
+mazu_cJSON *v1_resource_health_convertToJSON(v1_resource_health_t *v1_resource_health);
 
 #endif /* _v1_resource_health_H_ */
 

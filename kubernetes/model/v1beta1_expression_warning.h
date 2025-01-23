@@ -8,7 +8,7 @@
 #define _v1beta1_expression_warning_H_
 
 #include <string.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
 #include "../include/binary.h"
@@ -31,9 +31,9 @@ v1beta1_expression_warning_t *v1beta1_expression_warning_create(
 
 void v1beta1_expression_warning_free(v1beta1_expression_warning_t *v1beta1_expression_warning);
 
-v1beta1_expression_warning_t *v1beta1_expression_warning_parseFromJSON(cJSON *v1beta1_expression_warningJSON);
+v1beta1_expression_warning_t *v1beta1_expression_warning_parseFromJSON(mazu_cJSON *v1beta1_expression_warningJSON);
 
-cJSON *v1beta1_expression_warning_convertToJSON(v1beta1_expression_warning_t *v1beta1_expression_warning);
+mazu_cJSON *v1beta1_expression_warning_convertToJSON(v1beta1_expression_warning_t *v1beta1_expression_warning);
 
 #endif /* _v1beta1_expression_warning_H_ */
 

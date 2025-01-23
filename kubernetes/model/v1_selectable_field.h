@@ -8,7 +8,7 @@
 #define _v1_selectable_field_H_
 
 #include <string.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
 #include "../include/binary.h"
@@ -29,9 +29,9 @@ v1_selectable_field_t *v1_selectable_field_create(
 
 void v1_selectable_field_free(v1_selectable_field_t *v1_selectable_field);
 
-v1_selectable_field_t *v1_selectable_field_parseFromJSON(cJSON *v1_selectable_fieldJSON);
+v1_selectable_field_t *v1_selectable_field_parseFromJSON(mazu_cJSON *v1_selectable_fieldJSON);
 
-cJSON *v1_selectable_field_convertToJSON(v1_selectable_field_t *v1_selectable_field);
+mazu_cJSON *v1_selectable_field_convertToJSON(v1_selectable_field_t *v1_selectable_field);
 
 #endif /* _v1_selectable_field_H_ */
 

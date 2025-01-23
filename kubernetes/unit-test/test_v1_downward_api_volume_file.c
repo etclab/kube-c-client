@@ -11,7 +11,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdbool.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 
 #include "../model/v1_downward_api_volume_file.h"
 v1_downward_api_volume_file_t* instantiate_v1_downward_api_volume_file(int include_optional);
@@ -49,11 +49,11 @@ v1_downward_api_volume_file_t* instantiate_v1_downward_api_volume_file(int inclu
 void test_v1_downward_api_volume_file(int include_optional) {
     v1_downward_api_volume_file_t* v1_downward_api_volume_file_1 = instantiate_v1_downward_api_volume_file(include_optional);
 
-	cJSON* jsonv1_downward_api_volume_file_1 = v1_downward_api_volume_file_convertToJSON(v1_downward_api_volume_file_1);
-	printf("v1_downward_api_volume_file :\n%s\n", cJSON_Print(jsonv1_downward_api_volume_file_1));
+	mazu_cJSON* jsonv1_downward_api_volume_file_1 = v1_downward_api_volume_file_convertToJSON(v1_downward_api_volume_file_1);
+	printf("v1_downward_api_volume_file :\n%s\n", mazu_cJSON_Print(jsonv1_downward_api_volume_file_1));
 	v1_downward_api_volume_file_t* v1_downward_api_volume_file_2 = v1_downward_api_volume_file_parseFromJSON(jsonv1_downward_api_volume_file_1);
-	cJSON* jsonv1_downward_api_volume_file_2 = v1_downward_api_volume_file_convertToJSON(v1_downward_api_volume_file_2);
-	printf("repeating v1_downward_api_volume_file:\n%s\n", cJSON_Print(jsonv1_downward_api_volume_file_2));
+	mazu_cJSON* jsonv1_downward_api_volume_file_2 = v1_downward_api_volume_file_convertToJSON(v1_downward_api_volume_file_2);
+	printf("repeating v1_downward_api_volume_file:\n%s\n", mazu_cJSON_Print(jsonv1_downward_api_volume_file_2));
 }
 
 int main() {

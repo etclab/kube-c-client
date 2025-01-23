@@ -11,7 +11,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdbool.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 
 #include "../model/v1_expression_warning.h"
 v1_expression_warning_t* instantiate_v1_expression_warning(int include_optional);
@@ -41,11 +41,11 @@ v1_expression_warning_t* instantiate_v1_expression_warning(int include_optional)
 void test_v1_expression_warning(int include_optional) {
     v1_expression_warning_t* v1_expression_warning_1 = instantiate_v1_expression_warning(include_optional);
 
-	cJSON* jsonv1_expression_warning_1 = v1_expression_warning_convertToJSON(v1_expression_warning_1);
-	printf("v1_expression_warning :\n%s\n", cJSON_Print(jsonv1_expression_warning_1));
+	mazu_cJSON* jsonv1_expression_warning_1 = v1_expression_warning_convertToJSON(v1_expression_warning_1);
+	printf("v1_expression_warning :\n%s\n", mazu_cJSON_Print(jsonv1_expression_warning_1));
 	v1_expression_warning_t* v1_expression_warning_2 = v1_expression_warning_parseFromJSON(jsonv1_expression_warning_1);
-	cJSON* jsonv1_expression_warning_2 = v1_expression_warning_convertToJSON(v1_expression_warning_2);
-	printf("repeating v1_expression_warning:\n%s\n", cJSON_Print(jsonv1_expression_warning_2));
+	mazu_cJSON* jsonv1_expression_warning_2 = v1_expression_warning_convertToJSON(v1_expression_warning_2);
+	printf("repeating v1_expression_warning:\n%s\n", mazu_cJSON_Print(jsonv1_expression_warning_2));
 }
 
 int main() {

@@ -66,12 +66,12 @@ void v1_managed_fields_entry_free(v1_managed_fields_entry_t *v1_managed_fields_e
     free(v1_managed_fields_entry);
 }
 
-cJSON *v1_managed_fields_entry_convertToJSON(v1_managed_fields_entry_t *v1_managed_fields_entry) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_managed_fields_entry_convertToJSON(v1_managed_fields_entry_t *v1_managed_fields_entry) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_managed_fields_entry->api_version
     if(v1_managed_fields_entry->api_version) {
-    if(cJSON_AddStringToObject(item, "apiVersion", v1_managed_fields_entry->api_version) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "apiVersion", v1_managed_fields_entry->api_version) == NULL) {
     goto fail; //String
     }
     }
@@ -79,7 +79,7 @@ cJSON *v1_managed_fields_entry_convertToJSON(v1_managed_fields_entry_t *v1_manag
 
     // v1_managed_fields_entry->fields_type
     if(v1_managed_fields_entry->fields_type) {
-    if(cJSON_AddStringToObject(item, "fieldsType", v1_managed_fields_entry->fields_type) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "fieldsType", v1_managed_fields_entry->fields_type) == NULL) {
     goto fail; //String
     }
     }
@@ -87,11 +87,11 @@ cJSON *v1_managed_fields_entry_convertToJSON(v1_managed_fields_entry_t *v1_manag
 
     // v1_managed_fields_entry->fields_v1
     if(v1_managed_fields_entry->fields_v1) {
-    cJSON *fields_v1_object = object_convertToJSON(v1_managed_fields_entry->fields_v1);
+    mazu_cJSON *fields_v1_object = object_convertToJSON(v1_managed_fields_entry->fields_v1);
     if(fields_v1_object == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "fieldsV1", fields_v1_object);
+    mazu_cJSON_AddItemToObject(item, "fieldsV1", fields_v1_object);
     if(item->child == NULL) {
     goto fail;
     }
@@ -100,7 +100,7 @@ cJSON *v1_managed_fields_entry_convertToJSON(v1_managed_fields_entry_t *v1_manag
 
     // v1_managed_fields_entry->manager
     if(v1_managed_fields_entry->manager) {
-    if(cJSON_AddStringToObject(item, "manager", v1_managed_fields_entry->manager) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "manager", v1_managed_fields_entry->manager) == NULL) {
     goto fail; //String
     }
     }
@@ -108,7 +108,7 @@ cJSON *v1_managed_fields_entry_convertToJSON(v1_managed_fields_entry_t *v1_manag
 
     // v1_managed_fields_entry->operation
     if(v1_managed_fields_entry->operation) {
-    if(cJSON_AddStringToObject(item, "operation", v1_managed_fields_entry->operation) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "operation", v1_managed_fields_entry->operation) == NULL) {
     goto fail; //String
     }
     }
@@ -116,7 +116,7 @@ cJSON *v1_managed_fields_entry_convertToJSON(v1_managed_fields_entry_t *v1_manag
 
     // v1_managed_fields_entry->subresource
     if(v1_managed_fields_entry->subresource) {
-    if(cJSON_AddStringToObject(item, "subresource", v1_managed_fields_entry->subresource) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "subresource", v1_managed_fields_entry->subresource) == NULL) {
     goto fail; //String
     }
     }
@@ -124,7 +124,7 @@ cJSON *v1_managed_fields_entry_convertToJSON(v1_managed_fields_entry_t *v1_manag
 
     // v1_managed_fields_entry->time
     if(v1_managed_fields_entry->time) {
-    if(cJSON_AddStringToObject(item, "time", v1_managed_fields_entry->time) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "time", v1_managed_fields_entry->time) == NULL) {
     goto fail; //Date-Time
     }
     }
@@ -132,71 +132,71 @@ cJSON *v1_managed_fields_entry_convertToJSON(v1_managed_fields_entry_t *v1_manag
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_managed_fields_entry_t *v1_managed_fields_entry_parseFromJSON(cJSON *v1_managed_fields_entryJSON){
+v1_managed_fields_entry_t *v1_managed_fields_entry_parseFromJSON(mazu_cJSON *v1_managed_fields_entryJSON){
 
     v1_managed_fields_entry_t *v1_managed_fields_entry_local_var = NULL;
 
     // v1_managed_fields_entry->api_version
-    cJSON *api_version = cJSON_GetObjectItemCaseSensitive(v1_managed_fields_entryJSON, "apiVersion");
+    mazu_cJSON *api_version = mazu_cJSON_GetObjectItemCaseSensitive(v1_managed_fields_entryJSON, "apiVersion");
     if (api_version) { 
-    if(!cJSON_IsString(api_version) && !cJSON_IsNull(api_version))
+    if(!mazu_cJSON_IsString(api_version) && !mazu_cJSON_IsNull(api_version))
     {
     goto end; //String
     }
     }
 
     // v1_managed_fields_entry->fields_type
-    cJSON *fields_type = cJSON_GetObjectItemCaseSensitive(v1_managed_fields_entryJSON, "fieldsType");
+    mazu_cJSON *fields_type = mazu_cJSON_GetObjectItemCaseSensitive(v1_managed_fields_entryJSON, "fieldsType");
     if (fields_type) { 
-    if(!cJSON_IsString(fields_type) && !cJSON_IsNull(fields_type))
+    if(!mazu_cJSON_IsString(fields_type) && !mazu_cJSON_IsNull(fields_type))
     {
     goto end; //String
     }
     }
 
     // v1_managed_fields_entry->fields_v1
-    cJSON *fields_v1 = cJSON_GetObjectItemCaseSensitive(v1_managed_fields_entryJSON, "fieldsV1");
+    mazu_cJSON *fields_v1 = mazu_cJSON_GetObjectItemCaseSensitive(v1_managed_fields_entryJSON, "fieldsV1");
     object_t *fields_v1_local_object = NULL;
     if (fields_v1) { 
     fields_v1_local_object = object_parseFromJSON(fields_v1); //object
     }
 
     // v1_managed_fields_entry->manager
-    cJSON *manager = cJSON_GetObjectItemCaseSensitive(v1_managed_fields_entryJSON, "manager");
+    mazu_cJSON *manager = mazu_cJSON_GetObjectItemCaseSensitive(v1_managed_fields_entryJSON, "manager");
     if (manager) { 
-    if(!cJSON_IsString(manager) && !cJSON_IsNull(manager))
+    if(!mazu_cJSON_IsString(manager) && !mazu_cJSON_IsNull(manager))
     {
     goto end; //String
     }
     }
 
     // v1_managed_fields_entry->operation
-    cJSON *operation = cJSON_GetObjectItemCaseSensitive(v1_managed_fields_entryJSON, "operation");
+    mazu_cJSON *operation = mazu_cJSON_GetObjectItemCaseSensitive(v1_managed_fields_entryJSON, "operation");
     if (operation) { 
-    if(!cJSON_IsString(operation) && !cJSON_IsNull(operation))
+    if(!mazu_cJSON_IsString(operation) && !mazu_cJSON_IsNull(operation))
     {
     goto end; //String
     }
     }
 
     // v1_managed_fields_entry->subresource
-    cJSON *subresource = cJSON_GetObjectItemCaseSensitive(v1_managed_fields_entryJSON, "subresource");
+    mazu_cJSON *subresource = mazu_cJSON_GetObjectItemCaseSensitive(v1_managed_fields_entryJSON, "subresource");
     if (subresource) { 
-    if(!cJSON_IsString(subresource) && !cJSON_IsNull(subresource))
+    if(!mazu_cJSON_IsString(subresource) && !mazu_cJSON_IsNull(subresource))
     {
     goto end; //String
     }
     }
 
     // v1_managed_fields_entry->time
-    cJSON *time = cJSON_GetObjectItemCaseSensitive(v1_managed_fields_entryJSON, "time");
+    mazu_cJSON *time = mazu_cJSON_GetObjectItemCaseSensitive(v1_managed_fields_entryJSON, "time");
     if (time) { 
-    if(!cJSON_IsString(time) && !cJSON_IsNull(time))
+    if(!mazu_cJSON_IsString(time) && !mazu_cJSON_IsNull(time))
     {
     goto end; //DateTime
     }
@@ -204,13 +204,13 @@ v1_managed_fields_entry_t *v1_managed_fields_entry_parseFromJSON(cJSON *v1_manag
 
 
     v1_managed_fields_entry_local_var = v1_managed_fields_entry_create (
-        api_version && !cJSON_IsNull(api_version) ? strdup(api_version->valuestring) : NULL,
-        fields_type && !cJSON_IsNull(fields_type) ? strdup(fields_type->valuestring) : NULL,
+        api_version && !mazu_cJSON_IsNull(api_version) ? strdup(api_version->valuestring) : NULL,
+        fields_type && !mazu_cJSON_IsNull(fields_type) ? strdup(fields_type->valuestring) : NULL,
         fields_v1 ? fields_v1_local_object : NULL,
-        manager && !cJSON_IsNull(manager) ? strdup(manager->valuestring) : NULL,
-        operation && !cJSON_IsNull(operation) ? strdup(operation->valuestring) : NULL,
-        subresource && !cJSON_IsNull(subresource) ? strdup(subresource->valuestring) : NULL,
-        time && !cJSON_IsNull(time) ? strdup(time->valuestring) : NULL
+        manager && !mazu_cJSON_IsNull(manager) ? strdup(manager->valuestring) : NULL,
+        operation && !mazu_cJSON_IsNull(operation) ? strdup(operation->valuestring) : NULL,
+        subresource && !mazu_cJSON_IsNull(subresource) ? strdup(subresource->valuestring) : NULL,
+        time && !mazu_cJSON_IsNull(time) ? strdup(time->valuestring) : NULL
         );
 
     return v1_managed_fields_entry_local_var;

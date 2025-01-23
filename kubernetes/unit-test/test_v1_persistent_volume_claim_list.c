@@ -11,7 +11,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdbool.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 
 #include "../model/v1_persistent_volume_claim_list.h"
 v1_persistent_volume_claim_list_t* instantiate_v1_persistent_volume_claim_list(int include_optional);
@@ -47,11 +47,11 @@ v1_persistent_volume_claim_list_t* instantiate_v1_persistent_volume_claim_list(i
 void test_v1_persistent_volume_claim_list(int include_optional) {
     v1_persistent_volume_claim_list_t* v1_persistent_volume_claim_list_1 = instantiate_v1_persistent_volume_claim_list(include_optional);
 
-	cJSON* jsonv1_persistent_volume_claim_list_1 = v1_persistent_volume_claim_list_convertToJSON(v1_persistent_volume_claim_list_1);
-	printf("v1_persistent_volume_claim_list :\n%s\n", cJSON_Print(jsonv1_persistent_volume_claim_list_1));
+	mazu_cJSON* jsonv1_persistent_volume_claim_list_1 = v1_persistent_volume_claim_list_convertToJSON(v1_persistent_volume_claim_list_1);
+	printf("v1_persistent_volume_claim_list :\n%s\n", mazu_cJSON_Print(jsonv1_persistent_volume_claim_list_1));
 	v1_persistent_volume_claim_list_t* v1_persistent_volume_claim_list_2 = v1_persistent_volume_claim_list_parseFromJSON(jsonv1_persistent_volume_claim_list_1);
-	cJSON* jsonv1_persistent_volume_claim_list_2 = v1_persistent_volume_claim_list_convertToJSON(v1_persistent_volume_claim_list_2);
-	printf("repeating v1_persistent_volume_claim_list:\n%s\n", cJSON_Print(jsonv1_persistent_volume_claim_list_2));
+	mazu_cJSON* jsonv1_persistent_volume_claim_list_2 = v1_persistent_volume_claim_list_convertToJSON(v1_persistent_volume_claim_list_2);
+	printf("repeating v1_persistent_volume_claim_list:\n%s\n", mazu_cJSON_Print(jsonv1_persistent_volume_claim_list_2));
 }
 
 int main() {

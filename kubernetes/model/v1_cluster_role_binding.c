@@ -57,12 +57,12 @@ void v1_cluster_role_binding_free(v1_cluster_role_binding_t *v1_cluster_role_bin
     free(v1_cluster_role_binding);
 }
 
-cJSON *v1_cluster_role_binding_convertToJSON(v1_cluster_role_binding_t *v1_cluster_role_binding) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_cluster_role_binding_convertToJSON(v1_cluster_role_binding_t *v1_cluster_role_binding) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_cluster_role_binding->api_version
     if(v1_cluster_role_binding->api_version) {
-    if(cJSON_AddStringToObject(item, "apiVersion", v1_cluster_role_binding->api_version) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "apiVersion", v1_cluster_role_binding->api_version) == NULL) {
     goto fail; //String
     }
     }
@@ -70,7 +70,7 @@ cJSON *v1_cluster_role_binding_convertToJSON(v1_cluster_role_binding_t *v1_clust
 
     // v1_cluster_role_binding->kind
     if(v1_cluster_role_binding->kind) {
-    if(cJSON_AddStringToObject(item, "kind", v1_cluster_role_binding->kind) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "kind", v1_cluster_role_binding->kind) == NULL) {
     goto fail; //String
     }
     }
@@ -78,11 +78,11 @@ cJSON *v1_cluster_role_binding_convertToJSON(v1_cluster_role_binding_t *v1_clust
 
     // v1_cluster_role_binding->metadata
     if(v1_cluster_role_binding->metadata) {
-    cJSON *metadata_local_JSON = v1_object_meta_convertToJSON(v1_cluster_role_binding->metadata);
+    mazu_cJSON *metadata_local_JSON = v1_object_meta_convertToJSON(v1_cluster_role_binding->metadata);
     if(metadata_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "metadata", metadata_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "metadata", metadata_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -93,11 +93,11 @@ cJSON *v1_cluster_role_binding_convertToJSON(v1_cluster_role_binding_t *v1_clust
     if (!v1_cluster_role_binding->role_ref) {
         goto fail;
     }
-    cJSON *role_ref_local_JSON = v1_role_ref_convertToJSON(v1_cluster_role_binding->role_ref);
+    mazu_cJSON *role_ref_local_JSON = v1_role_ref_convertToJSON(v1_cluster_role_binding->role_ref);
     if(role_ref_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "roleRef", role_ref_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "roleRef", role_ref_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -105,7 +105,7 @@ cJSON *v1_cluster_role_binding_convertToJSON(v1_cluster_role_binding_t *v1_clust
 
     // v1_cluster_role_binding->subjects
     if(v1_cluster_role_binding->subjects) {
-    cJSON *subjects = cJSON_AddArrayToObject(item, "subjects");
+    mazu_cJSON *subjects = mazu_cJSON_AddArrayToObject(item, "subjects");
     if(subjects == NULL) {
     goto fail; //nonprimitive container
     }
@@ -113,11 +113,11 @@ cJSON *v1_cluster_role_binding_convertToJSON(v1_cluster_role_binding_t *v1_clust
     listEntry_t *subjectsListEntry;
     if (v1_cluster_role_binding->subjects) {
     list_ForEach(subjectsListEntry, v1_cluster_role_binding->subjects) {
-    cJSON *itemLocal = rbac_v1_subject_convertToJSON(subjectsListEntry->data);
+    mazu_cJSON *itemLocal = rbac_v1_subject_convertToJSON(subjectsListEntry->data);
     if(itemLocal == NULL) {
     goto fail;
     }
-    cJSON_AddItemToArray(subjects, itemLocal);
+    mazu_cJSON_AddItemToArray(subjects, itemLocal);
     }
     }
     }
@@ -125,12 +125,12 @@ cJSON *v1_cluster_role_binding_convertToJSON(v1_cluster_role_binding_t *v1_clust
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_cluster_role_binding_t *v1_cluster_role_binding_parseFromJSON(cJSON *v1_cluster_role_bindingJSON){
+v1_cluster_role_binding_t *v1_cluster_role_binding_parseFromJSON(mazu_cJSON *v1_cluster_role_bindingJSON){
 
     v1_cluster_role_binding_t *v1_cluster_role_binding_local_var = NULL;
 
@@ -144,31 +144,31 @@ v1_cluster_role_binding_t *v1_cluster_role_binding_parseFromJSON(cJSON *v1_clust
     list_t *subjectsList = NULL;
 
     // v1_cluster_role_binding->api_version
-    cJSON *api_version = cJSON_GetObjectItemCaseSensitive(v1_cluster_role_bindingJSON, "apiVersion");
+    mazu_cJSON *api_version = mazu_cJSON_GetObjectItemCaseSensitive(v1_cluster_role_bindingJSON, "apiVersion");
     if (api_version) { 
-    if(!cJSON_IsString(api_version) && !cJSON_IsNull(api_version))
+    if(!mazu_cJSON_IsString(api_version) && !mazu_cJSON_IsNull(api_version))
     {
     goto end; //String
     }
     }
 
     // v1_cluster_role_binding->kind
-    cJSON *kind = cJSON_GetObjectItemCaseSensitive(v1_cluster_role_bindingJSON, "kind");
+    mazu_cJSON *kind = mazu_cJSON_GetObjectItemCaseSensitive(v1_cluster_role_bindingJSON, "kind");
     if (kind) { 
-    if(!cJSON_IsString(kind) && !cJSON_IsNull(kind))
+    if(!mazu_cJSON_IsString(kind) && !mazu_cJSON_IsNull(kind))
     {
     goto end; //String
     }
     }
 
     // v1_cluster_role_binding->metadata
-    cJSON *metadata = cJSON_GetObjectItemCaseSensitive(v1_cluster_role_bindingJSON, "metadata");
+    mazu_cJSON *metadata = mazu_cJSON_GetObjectItemCaseSensitive(v1_cluster_role_bindingJSON, "metadata");
     if (metadata) { 
     metadata_local_nonprim = v1_object_meta_parseFromJSON(metadata); //nonprimitive
     }
 
     // v1_cluster_role_binding->role_ref
-    cJSON *role_ref = cJSON_GetObjectItemCaseSensitive(v1_cluster_role_bindingJSON, "roleRef");
+    mazu_cJSON *role_ref = mazu_cJSON_GetObjectItemCaseSensitive(v1_cluster_role_bindingJSON, "roleRef");
     if (!role_ref) {
         goto end;
     }
@@ -177,18 +177,18 @@ v1_cluster_role_binding_t *v1_cluster_role_binding_parseFromJSON(cJSON *v1_clust
     role_ref_local_nonprim = v1_role_ref_parseFromJSON(role_ref); //nonprimitive
 
     // v1_cluster_role_binding->subjects
-    cJSON *subjects = cJSON_GetObjectItemCaseSensitive(v1_cluster_role_bindingJSON, "subjects");
+    mazu_cJSON *subjects = mazu_cJSON_GetObjectItemCaseSensitive(v1_cluster_role_bindingJSON, "subjects");
     if (subjects) { 
-    cJSON *subjects_local_nonprimitive = NULL;
-    if(!cJSON_IsArray(subjects)){
+    mazu_cJSON *subjects_local_nonprimitive = NULL;
+    if(!mazu_cJSON_IsArray(subjects)){
         goto end; //nonprimitive container
     }
 
     subjectsList = list_createList();
 
-    cJSON_ArrayForEach(subjects_local_nonprimitive,subjects )
+    mazu_cJSON_ArrayForEach(subjects_local_nonprimitive,subjects )
     {
-        if(!cJSON_IsObject(subjects_local_nonprimitive)){
+        if(!mazu_cJSON_IsObject(subjects_local_nonprimitive)){
             goto end;
         }
         rbac_v1_subject_t *subjectsItem = rbac_v1_subject_parseFromJSON(subjects_local_nonprimitive);
@@ -199,8 +199,8 @@ v1_cluster_role_binding_t *v1_cluster_role_binding_parseFromJSON(cJSON *v1_clust
 
 
     v1_cluster_role_binding_local_var = v1_cluster_role_binding_create (
-        api_version && !cJSON_IsNull(api_version) ? strdup(api_version->valuestring) : NULL,
-        kind && !cJSON_IsNull(kind) ? strdup(kind->valuestring) : NULL,
+        api_version && !mazu_cJSON_IsNull(api_version) ? strdup(api_version->valuestring) : NULL,
+        kind && !mazu_cJSON_IsNull(kind) ? strdup(kind->valuestring) : NULL,
         metadata ? metadata_local_nonprim : NULL,
         role_ref_local_nonprim,
         subjects ? subjectsList : NULL

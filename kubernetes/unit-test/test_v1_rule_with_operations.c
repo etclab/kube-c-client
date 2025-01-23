@@ -11,7 +11,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdbool.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 
 #include "../model/v1_rule_with_operations.h"
 v1_rule_with_operations_t* instantiate_v1_rule_with_operations(int include_optional);
@@ -47,11 +47,11 @@ v1_rule_with_operations_t* instantiate_v1_rule_with_operations(int include_optio
 void test_v1_rule_with_operations(int include_optional) {
     v1_rule_with_operations_t* v1_rule_with_operations_1 = instantiate_v1_rule_with_operations(include_optional);
 
-	cJSON* jsonv1_rule_with_operations_1 = v1_rule_with_operations_convertToJSON(v1_rule_with_operations_1);
-	printf("v1_rule_with_operations :\n%s\n", cJSON_Print(jsonv1_rule_with_operations_1));
+	mazu_cJSON* jsonv1_rule_with_operations_1 = v1_rule_with_operations_convertToJSON(v1_rule_with_operations_1);
+	printf("v1_rule_with_operations :\n%s\n", mazu_cJSON_Print(jsonv1_rule_with_operations_1));
 	v1_rule_with_operations_t* v1_rule_with_operations_2 = v1_rule_with_operations_parseFromJSON(jsonv1_rule_with_operations_1);
-	cJSON* jsonv1_rule_with_operations_2 = v1_rule_with_operations_convertToJSON(v1_rule_with_operations_2);
-	printf("repeating v1_rule_with_operations:\n%s\n", cJSON_Print(jsonv1_rule_with_operations_2));
+	mazu_cJSON* jsonv1_rule_with_operations_2 = v1_rule_with_operations_convertToJSON(v1_rule_with_operations_2);
+	printf("repeating v1_rule_with_operations:\n%s\n", mazu_cJSON_Print(jsonv1_rule_with_operations_2));
 }
 
 int main() {

@@ -8,7 +8,7 @@
 #define _v1beta3_service_account_subject_H_
 
 #include <string.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
 #include "../include/binary.h"
@@ -31,9 +31,9 @@ v1beta3_service_account_subject_t *v1beta3_service_account_subject_create(
 
 void v1beta3_service_account_subject_free(v1beta3_service_account_subject_t *v1beta3_service_account_subject);
 
-v1beta3_service_account_subject_t *v1beta3_service_account_subject_parseFromJSON(cJSON *v1beta3_service_account_subjectJSON);
+v1beta3_service_account_subject_t *v1beta3_service_account_subject_parseFromJSON(mazu_cJSON *v1beta3_service_account_subjectJSON);
 
-cJSON *v1beta3_service_account_subject_convertToJSON(v1beta3_service_account_subject_t *v1beta3_service_account_subject);
+mazu_cJSON *v1beta3_service_account_subject_convertToJSON(v1beta3_service_account_subject_t *v1beta3_service_account_subject);
 
 #endif /* _v1beta3_service_account_subject_H_ */
 

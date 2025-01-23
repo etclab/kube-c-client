@@ -11,7 +11,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdbool.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 
 #include "../model/v1_service.h"
 v1_service_t* instantiate_v1_service(int include_optional);
@@ -53,11 +53,11 @@ v1_service_t* instantiate_v1_service(int include_optional) {
 void test_v1_service(int include_optional) {
     v1_service_t* v1_service_1 = instantiate_v1_service(include_optional);
 
-	cJSON* jsonv1_service_1 = v1_service_convertToJSON(v1_service_1);
-	printf("v1_service :\n%s\n", cJSON_Print(jsonv1_service_1));
+	mazu_cJSON* jsonv1_service_1 = v1_service_convertToJSON(v1_service_1);
+	printf("v1_service :\n%s\n", mazu_cJSON_Print(jsonv1_service_1));
 	v1_service_t* v1_service_2 = v1_service_parseFromJSON(jsonv1_service_1);
-	cJSON* jsonv1_service_2 = v1_service_convertToJSON(v1_service_2);
-	printf("repeating v1_service:\n%s\n", cJSON_Print(jsonv1_service_2));
+	mazu_cJSON* jsonv1_service_2 = v1_service_convertToJSON(v1_service_2);
+	printf("repeating v1_service:\n%s\n", mazu_cJSON_Print(jsonv1_service_2));
 }
 
 int main() {

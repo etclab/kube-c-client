@@ -8,7 +8,7 @@
 #define _v1beta3_policy_rules_with_subjects_H_
 
 #include <string.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
 #include "../include/binary.h"
@@ -36,9 +36,9 @@ v1beta3_policy_rules_with_subjects_t *v1beta3_policy_rules_with_subjects_create(
 
 void v1beta3_policy_rules_with_subjects_free(v1beta3_policy_rules_with_subjects_t *v1beta3_policy_rules_with_subjects);
 
-v1beta3_policy_rules_with_subjects_t *v1beta3_policy_rules_with_subjects_parseFromJSON(cJSON *v1beta3_policy_rules_with_subjectsJSON);
+v1beta3_policy_rules_with_subjects_t *v1beta3_policy_rules_with_subjects_parseFromJSON(mazu_cJSON *v1beta3_policy_rules_with_subjectsJSON);
 
-cJSON *v1beta3_policy_rules_with_subjects_convertToJSON(v1beta3_policy_rules_with_subjects_t *v1beta3_policy_rules_with_subjects);
+mazu_cJSON *v1beta3_policy_rules_with_subjects_convertToJSON(v1beta3_policy_rules_with_subjects_t *v1beta3_policy_rules_with_subjects);
 
 #endif /* _v1beta3_policy_rules_with_subjects_H_ */
 

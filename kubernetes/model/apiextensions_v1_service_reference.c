@@ -44,14 +44,14 @@ void apiextensions_v1_service_reference_free(apiextensions_v1_service_reference_
     free(apiextensions_v1_service_reference);
 }
 
-cJSON *apiextensions_v1_service_reference_convertToJSON(apiextensions_v1_service_reference_t *apiextensions_v1_service_reference) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *apiextensions_v1_service_reference_convertToJSON(apiextensions_v1_service_reference_t *apiextensions_v1_service_reference) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // apiextensions_v1_service_reference->name
     if (!apiextensions_v1_service_reference->name) {
         goto fail;
     }
-    if(cJSON_AddStringToObject(item, "name", apiextensions_v1_service_reference->name) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "name", apiextensions_v1_service_reference->name) == NULL) {
     goto fail; //String
     }
 
@@ -60,14 +60,14 @@ cJSON *apiextensions_v1_service_reference_convertToJSON(apiextensions_v1_service
     if (!apiextensions_v1_service_reference->_namespace) {
         goto fail;
     }
-    if(cJSON_AddStringToObject(item, "namespace", apiextensions_v1_service_reference->_namespace) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "namespace", apiextensions_v1_service_reference->_namespace) == NULL) {
     goto fail; //String
     }
 
 
     // apiextensions_v1_service_reference->path
     if(apiextensions_v1_service_reference->path) {
-    if(cJSON_AddStringToObject(item, "path", apiextensions_v1_service_reference->path) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "path", apiextensions_v1_service_reference->path) == NULL) {
     goto fail; //String
     }
     }
@@ -75,7 +75,7 @@ cJSON *apiextensions_v1_service_reference_convertToJSON(apiextensions_v1_service
 
     // apiextensions_v1_service_reference->port
     if(apiextensions_v1_service_reference->port) {
-    if(cJSON_AddNumberToObject(item, "port", apiextensions_v1_service_reference->port) == NULL) {
+    if(mazu_cJSON_AddNumberToObject(item, "port", apiextensions_v1_service_reference->port) == NULL) {
     goto fail; //Numeric
     }
     }
@@ -83,52 +83,52 @@ cJSON *apiextensions_v1_service_reference_convertToJSON(apiextensions_v1_service
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-apiextensions_v1_service_reference_t *apiextensions_v1_service_reference_parseFromJSON(cJSON *apiextensions_v1_service_referenceJSON){
+apiextensions_v1_service_reference_t *apiextensions_v1_service_reference_parseFromJSON(mazu_cJSON *apiextensions_v1_service_referenceJSON){
 
     apiextensions_v1_service_reference_t *apiextensions_v1_service_reference_local_var = NULL;
 
     // apiextensions_v1_service_reference->name
-    cJSON *name = cJSON_GetObjectItemCaseSensitive(apiextensions_v1_service_referenceJSON, "name");
+    mazu_cJSON *name = mazu_cJSON_GetObjectItemCaseSensitive(apiextensions_v1_service_referenceJSON, "name");
     if (!name) {
         goto end;
     }
 
     
-    if(!cJSON_IsString(name))
+    if(!mazu_cJSON_IsString(name))
     {
     goto end; //String
     }
 
     // apiextensions_v1_service_reference->_namespace
-    cJSON *_namespace = cJSON_GetObjectItemCaseSensitive(apiextensions_v1_service_referenceJSON, "namespace");
+    mazu_cJSON *_namespace = mazu_cJSON_GetObjectItemCaseSensitive(apiextensions_v1_service_referenceJSON, "namespace");
     if (!_namespace) {
         goto end;
     }
 
     
-    if(!cJSON_IsString(_namespace))
+    if(!mazu_cJSON_IsString(_namespace))
     {
     goto end; //String
     }
 
     // apiextensions_v1_service_reference->path
-    cJSON *path = cJSON_GetObjectItemCaseSensitive(apiextensions_v1_service_referenceJSON, "path");
+    mazu_cJSON *path = mazu_cJSON_GetObjectItemCaseSensitive(apiextensions_v1_service_referenceJSON, "path");
     if (path) { 
-    if(!cJSON_IsString(path) && !cJSON_IsNull(path))
+    if(!mazu_cJSON_IsString(path) && !mazu_cJSON_IsNull(path))
     {
     goto end; //String
     }
     }
 
     // apiextensions_v1_service_reference->port
-    cJSON *port = cJSON_GetObjectItemCaseSensitive(apiextensions_v1_service_referenceJSON, "port");
+    mazu_cJSON *port = mazu_cJSON_GetObjectItemCaseSensitive(apiextensions_v1_service_referenceJSON, "port");
     if (port) { 
-    if(!cJSON_IsNumber(port))
+    if(!mazu_cJSON_IsNumber(port))
     {
     goto end; //Numeric
     }
@@ -138,7 +138,7 @@ apiextensions_v1_service_reference_t *apiextensions_v1_service_reference_parseFr
     apiextensions_v1_service_reference_local_var = apiextensions_v1_service_reference_create (
         strdup(name->valuestring),
         strdup(_namespace->valuestring),
-        path && !cJSON_IsNull(path) ? strdup(path->valuestring) : NULL,
+        path && !mazu_cJSON_IsNull(path) ? strdup(path->valuestring) : NULL,
         port ? port->valuedouble : 0
         );
 

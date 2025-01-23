@@ -59,12 +59,12 @@ void v1alpha3_resource_slice_spec_free(v1alpha3_resource_slice_spec_t *v1alpha3_
     free(v1alpha3_resource_slice_spec);
 }
 
-cJSON *v1alpha3_resource_slice_spec_convertToJSON(v1alpha3_resource_slice_spec_t *v1alpha3_resource_slice_spec) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1alpha3_resource_slice_spec_convertToJSON(v1alpha3_resource_slice_spec_t *v1alpha3_resource_slice_spec) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1alpha3_resource_slice_spec->all_nodes
     if(v1alpha3_resource_slice_spec->all_nodes) {
-    if(cJSON_AddBoolToObject(item, "allNodes", v1alpha3_resource_slice_spec->all_nodes) == NULL) {
+    if(mazu_cJSON_AddBoolToObject(item, "allNodes", v1alpha3_resource_slice_spec->all_nodes) == NULL) {
     goto fail; //Bool
     }
     }
@@ -72,7 +72,7 @@ cJSON *v1alpha3_resource_slice_spec_convertToJSON(v1alpha3_resource_slice_spec_t
 
     // v1alpha3_resource_slice_spec->devices
     if(v1alpha3_resource_slice_spec->devices) {
-    cJSON *devices = cJSON_AddArrayToObject(item, "devices");
+    mazu_cJSON *devices = mazu_cJSON_AddArrayToObject(item, "devices");
     if(devices == NULL) {
     goto fail; //nonprimitive container
     }
@@ -80,11 +80,11 @@ cJSON *v1alpha3_resource_slice_spec_convertToJSON(v1alpha3_resource_slice_spec_t
     listEntry_t *devicesListEntry;
     if (v1alpha3_resource_slice_spec->devices) {
     list_ForEach(devicesListEntry, v1alpha3_resource_slice_spec->devices) {
-    cJSON *itemLocal = v1alpha3_device_convertToJSON(devicesListEntry->data);
+    mazu_cJSON *itemLocal = v1alpha3_device_convertToJSON(devicesListEntry->data);
     if(itemLocal == NULL) {
     goto fail;
     }
-    cJSON_AddItemToArray(devices, itemLocal);
+    mazu_cJSON_AddItemToArray(devices, itemLocal);
     }
     }
     }
@@ -94,14 +94,14 @@ cJSON *v1alpha3_resource_slice_spec_convertToJSON(v1alpha3_resource_slice_spec_t
     if (!v1alpha3_resource_slice_spec->driver) {
         goto fail;
     }
-    if(cJSON_AddStringToObject(item, "driver", v1alpha3_resource_slice_spec->driver) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "driver", v1alpha3_resource_slice_spec->driver) == NULL) {
     goto fail; //String
     }
 
 
     // v1alpha3_resource_slice_spec->node_name
     if(v1alpha3_resource_slice_spec->node_name) {
-    if(cJSON_AddStringToObject(item, "nodeName", v1alpha3_resource_slice_spec->node_name) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "nodeName", v1alpha3_resource_slice_spec->node_name) == NULL) {
     goto fail; //String
     }
     }
@@ -109,11 +109,11 @@ cJSON *v1alpha3_resource_slice_spec_convertToJSON(v1alpha3_resource_slice_spec_t
 
     // v1alpha3_resource_slice_spec->node_selector
     if(v1alpha3_resource_slice_spec->node_selector) {
-    cJSON *node_selector_local_JSON = v1_node_selector_convertToJSON(v1alpha3_resource_slice_spec->node_selector);
+    mazu_cJSON *node_selector_local_JSON = v1_node_selector_convertToJSON(v1alpha3_resource_slice_spec->node_selector);
     if(node_selector_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "nodeSelector", node_selector_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "nodeSelector", node_selector_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -124,11 +124,11 @@ cJSON *v1alpha3_resource_slice_spec_convertToJSON(v1alpha3_resource_slice_spec_t
     if (!v1alpha3_resource_slice_spec->pool) {
         goto fail;
     }
-    cJSON *pool_local_JSON = v1alpha3_resource_pool_convertToJSON(v1alpha3_resource_slice_spec->pool);
+    mazu_cJSON *pool_local_JSON = v1alpha3_resource_pool_convertToJSON(v1alpha3_resource_slice_spec->pool);
     if(pool_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "pool", pool_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "pool", pool_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -136,12 +136,12 @@ cJSON *v1alpha3_resource_slice_spec_convertToJSON(v1alpha3_resource_slice_spec_t
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1alpha3_resource_slice_spec_t *v1alpha3_resource_slice_spec_parseFromJSON(cJSON *v1alpha3_resource_slice_specJSON){
+v1alpha3_resource_slice_spec_t *v1alpha3_resource_slice_spec_parseFromJSON(mazu_cJSON *v1alpha3_resource_slice_specJSON){
 
     v1alpha3_resource_slice_spec_t *v1alpha3_resource_slice_spec_local_var = NULL;
 
@@ -155,27 +155,27 @@ v1alpha3_resource_slice_spec_t *v1alpha3_resource_slice_spec_parseFromJSON(cJSON
     v1alpha3_resource_pool_t *pool_local_nonprim = NULL;
 
     // v1alpha3_resource_slice_spec->all_nodes
-    cJSON *all_nodes = cJSON_GetObjectItemCaseSensitive(v1alpha3_resource_slice_specJSON, "allNodes");
+    mazu_cJSON *all_nodes = mazu_cJSON_GetObjectItemCaseSensitive(v1alpha3_resource_slice_specJSON, "allNodes");
     if (all_nodes) { 
-    if(!cJSON_IsBool(all_nodes))
+    if(!mazu_cJSON_IsBool(all_nodes))
     {
     goto end; //Bool
     }
     }
 
     // v1alpha3_resource_slice_spec->devices
-    cJSON *devices = cJSON_GetObjectItemCaseSensitive(v1alpha3_resource_slice_specJSON, "devices");
+    mazu_cJSON *devices = mazu_cJSON_GetObjectItemCaseSensitive(v1alpha3_resource_slice_specJSON, "devices");
     if (devices) { 
-    cJSON *devices_local_nonprimitive = NULL;
-    if(!cJSON_IsArray(devices)){
+    mazu_cJSON *devices_local_nonprimitive = NULL;
+    if(!mazu_cJSON_IsArray(devices)){
         goto end; //nonprimitive container
     }
 
     devicesList = list_createList();
 
-    cJSON_ArrayForEach(devices_local_nonprimitive,devices )
+    mazu_cJSON_ArrayForEach(devices_local_nonprimitive,devices )
     {
-        if(!cJSON_IsObject(devices_local_nonprimitive)){
+        if(!mazu_cJSON_IsObject(devices_local_nonprimitive)){
             goto end;
         }
         v1alpha3_device_t *devicesItem = v1alpha3_device_parseFromJSON(devices_local_nonprimitive);
@@ -185,34 +185,34 @@ v1alpha3_resource_slice_spec_t *v1alpha3_resource_slice_spec_parseFromJSON(cJSON
     }
 
     // v1alpha3_resource_slice_spec->driver
-    cJSON *driver = cJSON_GetObjectItemCaseSensitive(v1alpha3_resource_slice_specJSON, "driver");
+    mazu_cJSON *driver = mazu_cJSON_GetObjectItemCaseSensitive(v1alpha3_resource_slice_specJSON, "driver");
     if (!driver) {
         goto end;
     }
 
     
-    if(!cJSON_IsString(driver))
+    if(!mazu_cJSON_IsString(driver))
     {
     goto end; //String
     }
 
     // v1alpha3_resource_slice_spec->node_name
-    cJSON *node_name = cJSON_GetObjectItemCaseSensitive(v1alpha3_resource_slice_specJSON, "nodeName");
+    mazu_cJSON *node_name = mazu_cJSON_GetObjectItemCaseSensitive(v1alpha3_resource_slice_specJSON, "nodeName");
     if (node_name) { 
-    if(!cJSON_IsString(node_name) && !cJSON_IsNull(node_name))
+    if(!mazu_cJSON_IsString(node_name) && !mazu_cJSON_IsNull(node_name))
     {
     goto end; //String
     }
     }
 
     // v1alpha3_resource_slice_spec->node_selector
-    cJSON *node_selector = cJSON_GetObjectItemCaseSensitive(v1alpha3_resource_slice_specJSON, "nodeSelector");
+    mazu_cJSON *node_selector = mazu_cJSON_GetObjectItemCaseSensitive(v1alpha3_resource_slice_specJSON, "nodeSelector");
     if (node_selector) { 
     node_selector_local_nonprim = v1_node_selector_parseFromJSON(node_selector); //nonprimitive
     }
 
     // v1alpha3_resource_slice_spec->pool
-    cJSON *pool = cJSON_GetObjectItemCaseSensitive(v1alpha3_resource_slice_specJSON, "pool");
+    mazu_cJSON *pool = mazu_cJSON_GetObjectItemCaseSensitive(v1alpha3_resource_slice_specJSON, "pool");
     if (!pool) {
         goto end;
     }
@@ -225,7 +225,7 @@ v1alpha3_resource_slice_spec_t *v1alpha3_resource_slice_spec_parseFromJSON(cJSON
         all_nodes ? all_nodes->valueint : 0,
         devices ? devicesList : NULL,
         strdup(driver->valuestring),
-        node_name && !cJSON_IsNull(node_name) ? strdup(node_name->valuestring) : NULL,
+        node_name && !mazu_cJSON_IsNull(node_name) ? strdup(node_name->valuestring) : NULL,
         node_selector ? node_selector_local_nonprim : NULL,
         pool_local_nonprim
         );

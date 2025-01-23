@@ -11,7 +11,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdbool.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 
 #include "../model/v1_custom_resource_validation.h"
 v1_custom_resource_validation_t* instantiate_v1_custom_resource_validation(int include_optional);
@@ -41,11 +41,11 @@ v1_custom_resource_validation_t* instantiate_v1_custom_resource_validation(int i
 void test_v1_custom_resource_validation(int include_optional) {
     v1_custom_resource_validation_t* v1_custom_resource_validation_1 = instantiate_v1_custom_resource_validation(include_optional);
 
-	cJSON* jsonv1_custom_resource_validation_1 = v1_custom_resource_validation_convertToJSON(v1_custom_resource_validation_1);
-	printf("v1_custom_resource_validation :\n%s\n", cJSON_Print(jsonv1_custom_resource_validation_1));
+	mazu_cJSON* jsonv1_custom_resource_validation_1 = v1_custom_resource_validation_convertToJSON(v1_custom_resource_validation_1);
+	printf("v1_custom_resource_validation :\n%s\n", mazu_cJSON_Print(jsonv1_custom_resource_validation_1));
 	v1_custom_resource_validation_t* v1_custom_resource_validation_2 = v1_custom_resource_validation_parseFromJSON(jsonv1_custom_resource_validation_1);
-	cJSON* jsonv1_custom_resource_validation_2 = v1_custom_resource_validation_convertToJSON(v1_custom_resource_validation_2);
-	printf("repeating v1_custom_resource_validation:\n%s\n", cJSON_Print(jsonv1_custom_resource_validation_2));
+	mazu_cJSON* jsonv1_custom_resource_validation_2 = v1_custom_resource_validation_convertToJSON(v1_custom_resource_validation_2);
+	printf("repeating v1_custom_resource_validation:\n%s\n", mazu_cJSON_Print(jsonv1_custom_resource_validation_2));
 }
 
 int main() {

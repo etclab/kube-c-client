@@ -36,18 +36,18 @@ void v2_external_metric_source_free(v2_external_metric_source_t *v2_external_met
     free(v2_external_metric_source);
 }
 
-cJSON *v2_external_metric_source_convertToJSON(v2_external_metric_source_t *v2_external_metric_source) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v2_external_metric_source_convertToJSON(v2_external_metric_source_t *v2_external_metric_source) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v2_external_metric_source->metric
     if (!v2_external_metric_source->metric) {
         goto fail;
     }
-    cJSON *metric_local_JSON = v2_metric_identifier_convertToJSON(v2_external_metric_source->metric);
+    mazu_cJSON *metric_local_JSON = v2_metric_identifier_convertToJSON(v2_external_metric_source->metric);
     if(metric_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "metric", metric_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "metric", metric_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -57,11 +57,11 @@ cJSON *v2_external_metric_source_convertToJSON(v2_external_metric_source_t *v2_e
     if (!v2_external_metric_source->target) {
         goto fail;
     }
-    cJSON *target_local_JSON = v2_metric_target_convertToJSON(v2_external_metric_source->target);
+    mazu_cJSON *target_local_JSON = v2_metric_target_convertToJSON(v2_external_metric_source->target);
     if(target_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "target", target_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "target", target_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -69,12 +69,12 @@ cJSON *v2_external_metric_source_convertToJSON(v2_external_metric_source_t *v2_e
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v2_external_metric_source_t *v2_external_metric_source_parseFromJSON(cJSON *v2_external_metric_sourceJSON){
+v2_external_metric_source_t *v2_external_metric_source_parseFromJSON(mazu_cJSON *v2_external_metric_sourceJSON){
 
     v2_external_metric_source_t *v2_external_metric_source_local_var = NULL;
 
@@ -85,7 +85,7 @@ v2_external_metric_source_t *v2_external_metric_source_parseFromJSON(cJSON *v2_e
     v2_metric_target_t *target_local_nonprim = NULL;
 
     // v2_external_metric_source->metric
-    cJSON *metric = cJSON_GetObjectItemCaseSensitive(v2_external_metric_sourceJSON, "metric");
+    mazu_cJSON *metric = mazu_cJSON_GetObjectItemCaseSensitive(v2_external_metric_sourceJSON, "metric");
     if (!metric) {
         goto end;
     }
@@ -94,7 +94,7 @@ v2_external_metric_source_t *v2_external_metric_source_parseFromJSON(cJSON *v2_e
     metric_local_nonprim = v2_metric_identifier_parseFromJSON(metric); //nonprimitive
 
     // v2_external_metric_source->target
-    cJSON *target = cJSON_GetObjectItemCaseSensitive(v2_external_metric_sourceJSON, "target");
+    mazu_cJSON *target = mazu_cJSON_GetObjectItemCaseSensitive(v2_external_metric_sourceJSON, "target");
     if (!target) {
         goto end;
     }

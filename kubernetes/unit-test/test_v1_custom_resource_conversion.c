@@ -11,7 +11,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdbool.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 
 #include "../model/v1_custom_resource_conversion.h"
 v1_custom_resource_conversion_t* instantiate_v1_custom_resource_conversion(int include_optional);
@@ -43,11 +43,11 @@ v1_custom_resource_conversion_t* instantiate_v1_custom_resource_conversion(int i
 void test_v1_custom_resource_conversion(int include_optional) {
     v1_custom_resource_conversion_t* v1_custom_resource_conversion_1 = instantiate_v1_custom_resource_conversion(include_optional);
 
-	cJSON* jsonv1_custom_resource_conversion_1 = v1_custom_resource_conversion_convertToJSON(v1_custom_resource_conversion_1);
-	printf("v1_custom_resource_conversion :\n%s\n", cJSON_Print(jsonv1_custom_resource_conversion_1));
+	mazu_cJSON* jsonv1_custom_resource_conversion_1 = v1_custom_resource_conversion_convertToJSON(v1_custom_resource_conversion_1);
+	printf("v1_custom_resource_conversion :\n%s\n", mazu_cJSON_Print(jsonv1_custom_resource_conversion_1));
 	v1_custom_resource_conversion_t* v1_custom_resource_conversion_2 = v1_custom_resource_conversion_parseFromJSON(jsonv1_custom_resource_conversion_1);
-	cJSON* jsonv1_custom_resource_conversion_2 = v1_custom_resource_conversion_convertToJSON(v1_custom_resource_conversion_2);
-	printf("repeating v1_custom_resource_conversion:\n%s\n", cJSON_Print(jsonv1_custom_resource_conversion_2));
+	mazu_cJSON* jsonv1_custom_resource_conversion_2 = v1_custom_resource_conversion_convertToJSON(v1_custom_resource_conversion_2);
+	printf("repeating v1_custom_resource_conversion:\n%s\n", mazu_cJSON_Print(jsonv1_custom_resource_conversion_2));
 }
 
 int main() {

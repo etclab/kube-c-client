@@ -42,16 +42,16 @@ void v1_affinity_free(v1_affinity_t *v1_affinity) {
     free(v1_affinity);
 }
 
-cJSON *v1_affinity_convertToJSON(v1_affinity_t *v1_affinity) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_affinity_convertToJSON(v1_affinity_t *v1_affinity) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_affinity->node_affinity
     if(v1_affinity->node_affinity) {
-    cJSON *node_affinity_local_JSON = v1_node_affinity_convertToJSON(v1_affinity->node_affinity);
+    mazu_cJSON *node_affinity_local_JSON = v1_node_affinity_convertToJSON(v1_affinity->node_affinity);
     if(node_affinity_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "nodeAffinity", node_affinity_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "nodeAffinity", node_affinity_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -60,11 +60,11 @@ cJSON *v1_affinity_convertToJSON(v1_affinity_t *v1_affinity) {
 
     // v1_affinity->pod_affinity
     if(v1_affinity->pod_affinity) {
-    cJSON *pod_affinity_local_JSON = v1_pod_affinity_convertToJSON(v1_affinity->pod_affinity);
+    mazu_cJSON *pod_affinity_local_JSON = v1_pod_affinity_convertToJSON(v1_affinity->pod_affinity);
     if(pod_affinity_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "podAffinity", pod_affinity_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "podAffinity", pod_affinity_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -73,11 +73,11 @@ cJSON *v1_affinity_convertToJSON(v1_affinity_t *v1_affinity) {
 
     // v1_affinity->pod_anti_affinity
     if(v1_affinity->pod_anti_affinity) {
-    cJSON *pod_anti_affinity_local_JSON = v1_pod_anti_affinity_convertToJSON(v1_affinity->pod_anti_affinity);
+    mazu_cJSON *pod_anti_affinity_local_JSON = v1_pod_anti_affinity_convertToJSON(v1_affinity->pod_anti_affinity);
     if(pod_anti_affinity_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "podAntiAffinity", pod_anti_affinity_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "podAntiAffinity", pod_anti_affinity_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -86,12 +86,12 @@ cJSON *v1_affinity_convertToJSON(v1_affinity_t *v1_affinity) {
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_affinity_t *v1_affinity_parseFromJSON(cJSON *v1_affinityJSON){
+v1_affinity_t *v1_affinity_parseFromJSON(mazu_cJSON *v1_affinityJSON){
 
     v1_affinity_t *v1_affinity_local_var = NULL;
 
@@ -105,19 +105,19 @@ v1_affinity_t *v1_affinity_parseFromJSON(cJSON *v1_affinityJSON){
     v1_pod_anti_affinity_t *pod_anti_affinity_local_nonprim = NULL;
 
     // v1_affinity->node_affinity
-    cJSON *node_affinity = cJSON_GetObjectItemCaseSensitive(v1_affinityJSON, "nodeAffinity");
+    mazu_cJSON *node_affinity = mazu_cJSON_GetObjectItemCaseSensitive(v1_affinityJSON, "nodeAffinity");
     if (node_affinity) { 
     node_affinity_local_nonprim = v1_node_affinity_parseFromJSON(node_affinity); //nonprimitive
     }
 
     // v1_affinity->pod_affinity
-    cJSON *pod_affinity = cJSON_GetObjectItemCaseSensitive(v1_affinityJSON, "podAffinity");
+    mazu_cJSON *pod_affinity = mazu_cJSON_GetObjectItemCaseSensitive(v1_affinityJSON, "podAffinity");
     if (pod_affinity) { 
     pod_affinity_local_nonprim = v1_pod_affinity_parseFromJSON(pod_affinity); //nonprimitive
     }
 
     // v1_affinity->pod_anti_affinity
-    cJSON *pod_anti_affinity = cJSON_GetObjectItemCaseSensitive(v1_affinityJSON, "podAntiAffinity");
+    mazu_cJSON *pod_anti_affinity = mazu_cJSON_GetObjectItemCaseSensitive(v1_affinityJSON, "podAntiAffinity");
     if (pod_anti_affinity) { 
     pod_anti_affinity_local_nonprim = v1_pod_anti_affinity_parseFromJSON(pod_anti_affinity); //nonprimitive
     }

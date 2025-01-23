@@ -48,12 +48,12 @@ void v1beta1_parent_reference_free(v1beta1_parent_reference_t *v1beta1_parent_re
     free(v1beta1_parent_reference);
 }
 
-cJSON *v1beta1_parent_reference_convertToJSON(v1beta1_parent_reference_t *v1beta1_parent_reference) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1beta1_parent_reference_convertToJSON(v1beta1_parent_reference_t *v1beta1_parent_reference) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1beta1_parent_reference->group
     if(v1beta1_parent_reference->group) {
-    if(cJSON_AddStringToObject(item, "group", v1beta1_parent_reference->group) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "group", v1beta1_parent_reference->group) == NULL) {
     goto fail; //String
     }
     }
@@ -63,14 +63,14 @@ cJSON *v1beta1_parent_reference_convertToJSON(v1beta1_parent_reference_t *v1beta
     if (!v1beta1_parent_reference->name) {
         goto fail;
     }
-    if(cJSON_AddStringToObject(item, "name", v1beta1_parent_reference->name) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "name", v1beta1_parent_reference->name) == NULL) {
     goto fail; //String
     }
 
 
     // v1beta1_parent_reference->_namespace
     if(v1beta1_parent_reference->_namespace) {
-    if(cJSON_AddStringToObject(item, "namespace", v1beta1_parent_reference->_namespace) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "namespace", v1beta1_parent_reference->_namespace) == NULL) {
     goto fail; //String
     }
     }
@@ -80,69 +80,69 @@ cJSON *v1beta1_parent_reference_convertToJSON(v1beta1_parent_reference_t *v1beta
     if (!v1beta1_parent_reference->resource) {
         goto fail;
     }
-    if(cJSON_AddStringToObject(item, "resource", v1beta1_parent_reference->resource) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "resource", v1beta1_parent_reference->resource) == NULL) {
     goto fail; //String
     }
 
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1beta1_parent_reference_t *v1beta1_parent_reference_parseFromJSON(cJSON *v1beta1_parent_referenceJSON){
+v1beta1_parent_reference_t *v1beta1_parent_reference_parseFromJSON(mazu_cJSON *v1beta1_parent_referenceJSON){
 
     v1beta1_parent_reference_t *v1beta1_parent_reference_local_var = NULL;
 
     // v1beta1_parent_reference->group
-    cJSON *group = cJSON_GetObjectItemCaseSensitive(v1beta1_parent_referenceJSON, "group");
+    mazu_cJSON *group = mazu_cJSON_GetObjectItemCaseSensitive(v1beta1_parent_referenceJSON, "group");
     if (group) { 
-    if(!cJSON_IsString(group) && !cJSON_IsNull(group))
+    if(!mazu_cJSON_IsString(group) && !mazu_cJSON_IsNull(group))
     {
     goto end; //String
     }
     }
 
     // v1beta1_parent_reference->name
-    cJSON *name = cJSON_GetObjectItemCaseSensitive(v1beta1_parent_referenceJSON, "name");
+    mazu_cJSON *name = mazu_cJSON_GetObjectItemCaseSensitive(v1beta1_parent_referenceJSON, "name");
     if (!name) {
         goto end;
     }
 
     
-    if(!cJSON_IsString(name))
+    if(!mazu_cJSON_IsString(name))
     {
     goto end; //String
     }
 
     // v1beta1_parent_reference->_namespace
-    cJSON *_namespace = cJSON_GetObjectItemCaseSensitive(v1beta1_parent_referenceJSON, "namespace");
+    mazu_cJSON *_namespace = mazu_cJSON_GetObjectItemCaseSensitive(v1beta1_parent_referenceJSON, "namespace");
     if (_namespace) { 
-    if(!cJSON_IsString(_namespace) && !cJSON_IsNull(_namespace))
+    if(!mazu_cJSON_IsString(_namespace) && !mazu_cJSON_IsNull(_namespace))
     {
     goto end; //String
     }
     }
 
     // v1beta1_parent_reference->resource
-    cJSON *resource = cJSON_GetObjectItemCaseSensitive(v1beta1_parent_referenceJSON, "resource");
+    mazu_cJSON *resource = mazu_cJSON_GetObjectItemCaseSensitive(v1beta1_parent_referenceJSON, "resource");
     if (!resource) {
         goto end;
     }
 
     
-    if(!cJSON_IsString(resource))
+    if(!mazu_cJSON_IsString(resource))
     {
     goto end; //String
     }
 
 
     v1beta1_parent_reference_local_var = v1beta1_parent_reference_create (
-        group && !cJSON_IsNull(group) ? strdup(group->valuestring) : NULL,
+        group && !mazu_cJSON_IsNull(group) ? strdup(group->valuestring) : NULL,
         strdup(name->valuestring),
-        _namespace && !cJSON_IsNull(_namespace) ? strdup(_namespace->valuestring) : NULL,
+        _namespace && !mazu_cJSON_IsNull(_namespace) ? strdup(_namespace->valuestring) : NULL,
         strdup(resource->valuestring)
         );
 

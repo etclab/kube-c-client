@@ -32,16 +32,16 @@ void v1_rolling_update_stateful_set_strategy_free(v1_rolling_update_stateful_set
     free(v1_rolling_update_stateful_set_strategy);
 }
 
-cJSON *v1_rolling_update_stateful_set_strategy_convertToJSON(v1_rolling_update_stateful_set_strategy_t *v1_rolling_update_stateful_set_strategy) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_rolling_update_stateful_set_strategy_convertToJSON(v1_rolling_update_stateful_set_strategy_t *v1_rolling_update_stateful_set_strategy) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_rolling_update_stateful_set_strategy->max_unavailable
     if(v1_rolling_update_stateful_set_strategy->max_unavailable) {
-    cJSON *max_unavailable_local_JSON = int_or_string_convertToJSON(v1_rolling_update_stateful_set_strategy->max_unavailable);
+    mazu_cJSON *max_unavailable_local_JSON = int_or_string_convertToJSON(v1_rolling_update_stateful_set_strategy->max_unavailable);
     if(max_unavailable_local_JSON == NULL) {
         goto fail; // custom
     }
-    cJSON_AddItemToObject(item, "maxUnavailable", max_unavailable_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "maxUnavailable", max_unavailable_local_JSON);
     if(item->child == NULL) {
         goto fail;
     }
@@ -50,7 +50,7 @@ cJSON *v1_rolling_update_stateful_set_strategy_convertToJSON(v1_rolling_update_s
 
     // v1_rolling_update_stateful_set_strategy->partition
     if(v1_rolling_update_stateful_set_strategy->partition) {
-    if(cJSON_AddNumberToObject(item, "partition", v1_rolling_update_stateful_set_strategy->partition) == NULL) {
+    if(mazu_cJSON_AddNumberToObject(item, "partition", v1_rolling_update_stateful_set_strategy->partition) == NULL) {
     goto fail; //Numeric
     }
     }
@@ -58,12 +58,12 @@ cJSON *v1_rolling_update_stateful_set_strategy_convertToJSON(v1_rolling_update_s
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_rolling_update_stateful_set_strategy_t *v1_rolling_update_stateful_set_strategy_parseFromJSON(cJSON *v1_rolling_update_stateful_set_strategyJSON){
+v1_rolling_update_stateful_set_strategy_t *v1_rolling_update_stateful_set_strategy_parseFromJSON(mazu_cJSON *v1_rolling_update_stateful_set_strategyJSON){
 
     v1_rolling_update_stateful_set_strategy_t *v1_rolling_update_stateful_set_strategy_local_var = NULL;
 
@@ -71,15 +71,15 @@ v1_rolling_update_stateful_set_strategy_t *v1_rolling_update_stateful_set_strate
     int_or_string_t *max_unavailable_local_nonprim = NULL;
 
     // v1_rolling_update_stateful_set_strategy->max_unavailable
-    cJSON *max_unavailable = cJSON_GetObjectItemCaseSensitive(v1_rolling_update_stateful_set_strategyJSON, "maxUnavailable");
+    mazu_cJSON *max_unavailable = mazu_cJSON_GetObjectItemCaseSensitive(v1_rolling_update_stateful_set_strategyJSON, "maxUnavailable");
     if (max_unavailable) { 
     max_unavailable_local_nonprim = int_or_string_parseFromJSON(max_unavailable); //custom
     }
 
     // v1_rolling_update_stateful_set_strategy->partition
-    cJSON *partition = cJSON_GetObjectItemCaseSensitive(v1_rolling_update_stateful_set_strategyJSON, "partition");
+    mazu_cJSON *partition = mazu_cJSON_GetObjectItemCaseSensitive(v1_rolling_update_stateful_set_strategyJSON, "partition");
     if (partition) { 
-    if(!cJSON_IsNumber(partition))
+    if(!mazu_cJSON_IsNumber(partition))
     {
     goto end; //Numeric
     }

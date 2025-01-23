@@ -42,19 +42,19 @@ void v1_uncounted_terminated_pods_free(v1_uncounted_terminated_pods_t *v1_uncoun
     free(v1_uncounted_terminated_pods);
 }
 
-cJSON *v1_uncounted_terminated_pods_convertToJSON(v1_uncounted_terminated_pods_t *v1_uncounted_terminated_pods) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_uncounted_terminated_pods_convertToJSON(v1_uncounted_terminated_pods_t *v1_uncounted_terminated_pods) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_uncounted_terminated_pods->failed
     if(v1_uncounted_terminated_pods->failed) {
-    cJSON *failed = cJSON_AddArrayToObject(item, "failed");
+    mazu_cJSON *failed = mazu_cJSON_AddArrayToObject(item, "failed");
     if(failed == NULL) {
         goto fail; //primitive container
     }
 
     listEntry_t *failedListEntry;
     list_ForEach(failedListEntry, v1_uncounted_terminated_pods->failed) {
-    if(cJSON_AddStringToObject(failed, "", (char*)failedListEntry->data) == NULL)
+    if(mazu_cJSON_AddStringToObject(failed, "", (char*)failedListEntry->data) == NULL)
     {
         goto fail;
     }
@@ -64,14 +64,14 @@ cJSON *v1_uncounted_terminated_pods_convertToJSON(v1_uncounted_terminated_pods_t
 
     // v1_uncounted_terminated_pods->succeeded
     if(v1_uncounted_terminated_pods->succeeded) {
-    cJSON *succeeded = cJSON_AddArrayToObject(item, "succeeded");
+    mazu_cJSON *succeeded = mazu_cJSON_AddArrayToObject(item, "succeeded");
     if(succeeded == NULL) {
         goto fail; //primitive container
     }
 
     listEntry_t *succeededListEntry;
     list_ForEach(succeededListEntry, v1_uncounted_terminated_pods->succeeded) {
-    if(cJSON_AddStringToObject(succeeded, "", (char*)succeededListEntry->data) == NULL)
+    if(mazu_cJSON_AddStringToObject(succeeded, "", (char*)succeededListEntry->data) == NULL)
     {
         goto fail;
     }
@@ -81,12 +81,12 @@ cJSON *v1_uncounted_terminated_pods_convertToJSON(v1_uncounted_terminated_pods_t
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_uncounted_terminated_pods_t *v1_uncounted_terminated_pods_parseFromJSON(cJSON *v1_uncounted_terminated_podsJSON){
+v1_uncounted_terminated_pods_t *v1_uncounted_terminated_pods_parseFromJSON(mazu_cJSON *v1_uncounted_terminated_podsJSON){
 
     v1_uncounted_terminated_pods_t *v1_uncounted_terminated_pods_local_var = NULL;
 
@@ -97,17 +97,17 @@ v1_uncounted_terminated_pods_t *v1_uncounted_terminated_pods_parseFromJSON(cJSON
     list_t *succeededList = NULL;
 
     // v1_uncounted_terminated_pods->failed
-    cJSON *failed = cJSON_GetObjectItemCaseSensitive(v1_uncounted_terminated_podsJSON, "failed");
+    mazu_cJSON *failed = mazu_cJSON_GetObjectItemCaseSensitive(v1_uncounted_terminated_podsJSON, "failed");
     if (failed) { 
-    cJSON *failed_local = NULL;
-    if(!cJSON_IsArray(failed)) {
+    mazu_cJSON *failed_local = NULL;
+    if(!mazu_cJSON_IsArray(failed)) {
         goto end;//primitive container
     }
     failedList = list_createList();
 
-    cJSON_ArrayForEach(failed_local, failed)
+    mazu_cJSON_ArrayForEach(failed_local, failed)
     {
-        if(!cJSON_IsString(failed_local))
+        if(!mazu_cJSON_IsString(failed_local))
         {
             goto end;
         }
@@ -116,17 +116,17 @@ v1_uncounted_terminated_pods_t *v1_uncounted_terminated_pods_parseFromJSON(cJSON
     }
 
     // v1_uncounted_terminated_pods->succeeded
-    cJSON *succeeded = cJSON_GetObjectItemCaseSensitive(v1_uncounted_terminated_podsJSON, "succeeded");
+    mazu_cJSON *succeeded = mazu_cJSON_GetObjectItemCaseSensitive(v1_uncounted_terminated_podsJSON, "succeeded");
     if (succeeded) { 
-    cJSON *succeeded_local = NULL;
-    if(!cJSON_IsArray(succeeded)) {
+    mazu_cJSON *succeeded_local = NULL;
+    if(!mazu_cJSON_IsArray(succeeded)) {
         goto end;//primitive container
     }
     succeededList = list_createList();
 
-    cJSON_ArrayForEach(succeeded_local, succeeded)
+    mazu_cJSON_ArrayForEach(succeeded_local, succeeded)
     {
-        if(!cJSON_IsString(succeeded_local))
+        if(!mazu_cJSON_IsString(succeeded_local))
         {
             goto end;
         }

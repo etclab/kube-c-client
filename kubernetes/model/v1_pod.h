@@ -8,7 +8,7 @@
 #define _v1_pod_H_
 
 #include <string.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
 #include "../include/binary.h"
@@ -40,9 +40,9 @@ v1_pod_t *v1_pod_create(
 
 void v1_pod_free(v1_pod_t *v1_pod);
 
-v1_pod_t *v1_pod_parseFromJSON(cJSON *v1_podJSON);
+v1_pod_t *v1_pod_parseFromJSON(mazu_cJSON *v1_podJSON);
 
-cJSON *v1_pod_convertToJSON(v1_pod_t *v1_pod);
+mazu_cJSON *v1_pod_convertToJSON(v1_pod_t *v1_pod);
 
 #endif /* _v1_pod_H_ */
 

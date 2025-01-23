@@ -108,21 +108,21 @@ void v1_container_status_free(v1_container_status_t *v1_container_status) {
     free(v1_container_status);
 }
 
-cJSON *v1_container_status_convertToJSON(v1_container_status_t *v1_container_status) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_container_status_convertToJSON(v1_container_status_t *v1_container_status) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_container_status->allocated_resources
     if(v1_container_status->allocated_resources) {
-    cJSON *allocated_resources = cJSON_AddObjectToObject(item, "allocatedResources");
+    mazu_cJSON *allocated_resources = mazu_cJSON_AddObjectToObject(item, "allocatedResources");
     if(allocated_resources == NULL) {
         goto fail; //primitive map container
     }
-    cJSON *localMapObject = allocated_resources;
+    mazu_cJSON *localMapObject = allocated_resources;
     listEntry_t *allocated_resourcesListEntry;
     if (v1_container_status->allocated_resources) {
     list_ForEach(allocated_resourcesListEntry, v1_container_status->allocated_resources) {
         keyValuePair_t *localKeyValue = (keyValuePair_t*)allocated_resourcesListEntry->data;
-        if(cJSON_AddStringToObject(localMapObject, localKeyValue->key, (char*)localKeyValue->value) == NULL)
+        if(mazu_cJSON_AddStringToObject(localMapObject, localKeyValue->key, (char*)localKeyValue->value) == NULL)
         {
             goto fail;
         }
@@ -133,7 +133,7 @@ cJSON *v1_container_status_convertToJSON(v1_container_status_t *v1_container_sta
 
     // v1_container_status->allocated_resources_status
     if(v1_container_status->allocated_resources_status) {
-    cJSON *allocated_resources_status = cJSON_AddArrayToObject(item, "allocatedResourcesStatus");
+    mazu_cJSON *allocated_resources_status = mazu_cJSON_AddArrayToObject(item, "allocatedResourcesStatus");
     if(allocated_resources_status == NULL) {
     goto fail; //nonprimitive container
     }
@@ -141,11 +141,11 @@ cJSON *v1_container_status_convertToJSON(v1_container_status_t *v1_container_sta
     listEntry_t *allocated_resources_statusListEntry;
     if (v1_container_status->allocated_resources_status) {
     list_ForEach(allocated_resources_statusListEntry, v1_container_status->allocated_resources_status) {
-    cJSON *itemLocal = v1_resource_status_convertToJSON(allocated_resources_statusListEntry->data);
+    mazu_cJSON *itemLocal = v1_resource_status_convertToJSON(allocated_resources_statusListEntry->data);
     if(itemLocal == NULL) {
     goto fail;
     }
-    cJSON_AddItemToArray(allocated_resources_status, itemLocal);
+    mazu_cJSON_AddItemToArray(allocated_resources_status, itemLocal);
     }
     }
     }
@@ -153,7 +153,7 @@ cJSON *v1_container_status_convertToJSON(v1_container_status_t *v1_container_sta
 
     // v1_container_status->container_id
     if(v1_container_status->container_id) {
-    if(cJSON_AddStringToObject(item, "containerID", v1_container_status->container_id) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "containerID", v1_container_status->container_id) == NULL) {
     goto fail; //String
     }
     }
@@ -163,7 +163,7 @@ cJSON *v1_container_status_convertToJSON(v1_container_status_t *v1_container_sta
     if (!v1_container_status->image) {
         goto fail;
     }
-    if(cJSON_AddStringToObject(item, "image", v1_container_status->image) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "image", v1_container_status->image) == NULL) {
     goto fail; //String
     }
 
@@ -172,18 +172,18 @@ cJSON *v1_container_status_convertToJSON(v1_container_status_t *v1_container_sta
     if (!v1_container_status->image_id) {
         goto fail;
     }
-    if(cJSON_AddStringToObject(item, "imageID", v1_container_status->image_id) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "imageID", v1_container_status->image_id) == NULL) {
     goto fail; //String
     }
 
 
     // v1_container_status->last_state
     if(v1_container_status->last_state) {
-    cJSON *last_state_local_JSON = v1_container_state_convertToJSON(v1_container_status->last_state);
+    mazu_cJSON *last_state_local_JSON = v1_container_state_convertToJSON(v1_container_status->last_state);
     if(last_state_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "lastState", last_state_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "lastState", last_state_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -194,7 +194,7 @@ cJSON *v1_container_status_convertToJSON(v1_container_status_t *v1_container_sta
     if (!v1_container_status->name) {
         goto fail;
     }
-    if(cJSON_AddStringToObject(item, "name", v1_container_status->name) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "name", v1_container_status->name) == NULL) {
     goto fail; //String
     }
 
@@ -203,18 +203,18 @@ cJSON *v1_container_status_convertToJSON(v1_container_status_t *v1_container_sta
     if (!v1_container_status->ready) {
         goto fail;
     }
-    if(cJSON_AddBoolToObject(item, "ready", v1_container_status->ready) == NULL) {
+    if(mazu_cJSON_AddBoolToObject(item, "ready", v1_container_status->ready) == NULL) {
     goto fail; //Bool
     }
 
 
     // v1_container_status->resources
     if(v1_container_status->resources) {
-    cJSON *resources_local_JSON = v1_resource_requirements_convertToJSON(v1_container_status->resources);
+    mazu_cJSON *resources_local_JSON = v1_resource_requirements_convertToJSON(v1_container_status->resources);
     if(resources_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "resources", resources_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "resources", resources_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -225,14 +225,14 @@ cJSON *v1_container_status_convertToJSON(v1_container_status_t *v1_container_sta
     if (!v1_container_status->restart_count) {
         goto fail;
     }
-    if(cJSON_AddNumberToObject(item, "restartCount", v1_container_status->restart_count) == NULL) {
+    if(mazu_cJSON_AddNumberToObject(item, "restartCount", v1_container_status->restart_count) == NULL) {
     goto fail; //Numeric
     }
 
 
     // v1_container_status->started
     if(v1_container_status->started) {
-    if(cJSON_AddBoolToObject(item, "started", v1_container_status->started) == NULL) {
+    if(mazu_cJSON_AddBoolToObject(item, "started", v1_container_status->started) == NULL) {
     goto fail; //Bool
     }
     }
@@ -240,11 +240,11 @@ cJSON *v1_container_status_convertToJSON(v1_container_status_t *v1_container_sta
 
     // v1_container_status->state
     if(v1_container_status->state) {
-    cJSON *state_local_JSON = v1_container_state_convertToJSON(v1_container_status->state);
+    mazu_cJSON *state_local_JSON = v1_container_state_convertToJSON(v1_container_status->state);
     if(state_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "state", state_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "state", state_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -253,11 +253,11 @@ cJSON *v1_container_status_convertToJSON(v1_container_status_t *v1_container_sta
 
     // v1_container_status->user
     if(v1_container_status->user) {
-    cJSON *user_local_JSON = v1_container_user_convertToJSON(v1_container_status->user);
+    mazu_cJSON *user_local_JSON = v1_container_user_convertToJSON(v1_container_status->user);
     if(user_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "user", user_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "user", user_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -266,7 +266,7 @@ cJSON *v1_container_status_convertToJSON(v1_container_status_t *v1_container_sta
 
     // v1_container_status->volume_mounts
     if(v1_container_status->volume_mounts) {
-    cJSON *volume_mounts = cJSON_AddArrayToObject(item, "volumeMounts");
+    mazu_cJSON *volume_mounts = mazu_cJSON_AddArrayToObject(item, "volumeMounts");
     if(volume_mounts == NULL) {
     goto fail; //nonprimitive container
     }
@@ -274,11 +274,11 @@ cJSON *v1_container_status_convertToJSON(v1_container_status_t *v1_container_sta
     listEntry_t *volume_mountsListEntry;
     if (v1_container_status->volume_mounts) {
     list_ForEach(volume_mountsListEntry, v1_container_status->volume_mounts) {
-    cJSON *itemLocal = v1_volume_mount_status_convertToJSON(volume_mountsListEntry->data);
+    mazu_cJSON *itemLocal = v1_volume_mount_status_convertToJSON(volume_mountsListEntry->data);
     if(itemLocal == NULL) {
     goto fail;
     }
-    cJSON_AddItemToArray(volume_mounts, itemLocal);
+    mazu_cJSON_AddItemToArray(volume_mounts, itemLocal);
     }
     }
     }
@@ -286,12 +286,12 @@ cJSON *v1_container_status_convertToJSON(v1_container_status_t *v1_container_sta
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_container_status_t *v1_container_status_parseFromJSON(cJSON *v1_container_statusJSON){
+v1_container_status_t *v1_container_status_parseFromJSON(mazu_cJSON *v1_container_statusJSON){
 
     v1_container_status_t *v1_container_status_local_var = NULL;
 
@@ -317,21 +317,21 @@ v1_container_status_t *v1_container_status_parseFromJSON(cJSON *v1_container_sta
     list_t *volume_mountsList = NULL;
 
     // v1_container_status->allocated_resources
-    cJSON *allocated_resources = cJSON_GetObjectItemCaseSensitive(v1_container_statusJSON, "allocatedResources");
+    mazu_cJSON *allocated_resources = mazu_cJSON_GetObjectItemCaseSensitive(v1_container_statusJSON, "allocatedResources");
     if (allocated_resources) { 
-    cJSON *allocated_resources_local_map = NULL;
-    if(!cJSON_IsObject(allocated_resources) && !cJSON_IsNull(allocated_resources))
+    mazu_cJSON *allocated_resources_local_map = NULL;
+    if(!mazu_cJSON_IsObject(allocated_resources) && !mazu_cJSON_IsNull(allocated_resources))
     {
         goto end;//primitive map container
     }
-    if(cJSON_IsObject(allocated_resources))
+    if(mazu_cJSON_IsObject(allocated_resources))
     {
         allocated_resourcesList = list_createList();
         keyValuePair_t *localMapKeyPair;
-        cJSON_ArrayForEach(allocated_resources_local_map, allocated_resources)
+        mazu_cJSON_ArrayForEach(allocated_resources_local_map, allocated_resources)
         {
-            cJSON *localMapObject = allocated_resources_local_map;
-            if(!cJSON_IsString(localMapObject))
+            mazu_cJSON *localMapObject = allocated_resources_local_map;
+            if(!mazu_cJSON_IsString(localMapObject))
             {
                 goto end;
             }
@@ -342,18 +342,18 @@ v1_container_status_t *v1_container_status_parseFromJSON(cJSON *v1_container_sta
     }
 
     // v1_container_status->allocated_resources_status
-    cJSON *allocated_resources_status = cJSON_GetObjectItemCaseSensitive(v1_container_statusJSON, "allocatedResourcesStatus");
+    mazu_cJSON *allocated_resources_status = mazu_cJSON_GetObjectItemCaseSensitive(v1_container_statusJSON, "allocatedResourcesStatus");
     if (allocated_resources_status) { 
-    cJSON *allocated_resources_status_local_nonprimitive = NULL;
-    if(!cJSON_IsArray(allocated_resources_status)){
+    mazu_cJSON *allocated_resources_status_local_nonprimitive = NULL;
+    if(!mazu_cJSON_IsArray(allocated_resources_status)){
         goto end; //nonprimitive container
     }
 
     allocated_resources_statusList = list_createList();
 
-    cJSON_ArrayForEach(allocated_resources_status_local_nonprimitive,allocated_resources_status )
+    mazu_cJSON_ArrayForEach(allocated_resources_status_local_nonprimitive,allocated_resources_status )
     {
-        if(!cJSON_IsObject(allocated_resources_status_local_nonprimitive)){
+        if(!mazu_cJSON_IsObject(allocated_resources_status_local_nonprimitive)){
             goto end;
         }
         v1_resource_status_t *allocated_resources_statusItem = v1_resource_status_parseFromJSON(allocated_resources_status_local_nonprimitive);
@@ -363,120 +363,120 @@ v1_container_status_t *v1_container_status_parseFromJSON(cJSON *v1_container_sta
     }
 
     // v1_container_status->container_id
-    cJSON *container_id = cJSON_GetObjectItemCaseSensitive(v1_container_statusJSON, "containerID");
+    mazu_cJSON *container_id = mazu_cJSON_GetObjectItemCaseSensitive(v1_container_statusJSON, "containerID");
     if (container_id) { 
-    if(!cJSON_IsString(container_id) && !cJSON_IsNull(container_id))
+    if(!mazu_cJSON_IsString(container_id) && !mazu_cJSON_IsNull(container_id))
     {
     goto end; //String
     }
     }
 
     // v1_container_status->image
-    cJSON *image = cJSON_GetObjectItemCaseSensitive(v1_container_statusJSON, "image");
+    mazu_cJSON *image = mazu_cJSON_GetObjectItemCaseSensitive(v1_container_statusJSON, "image");
     if (!image) {
         goto end;
     }
 
     
-    if(!cJSON_IsString(image))
+    if(!mazu_cJSON_IsString(image))
     {
     goto end; //String
     }
 
     // v1_container_status->image_id
-    cJSON *image_id = cJSON_GetObjectItemCaseSensitive(v1_container_statusJSON, "imageID");
+    mazu_cJSON *image_id = mazu_cJSON_GetObjectItemCaseSensitive(v1_container_statusJSON, "imageID");
     if (!image_id) {
         goto end;
     }
 
     
-    if(!cJSON_IsString(image_id))
+    if(!mazu_cJSON_IsString(image_id))
     {
     goto end; //String
     }
 
     // v1_container_status->last_state
-    cJSON *last_state = cJSON_GetObjectItemCaseSensitive(v1_container_statusJSON, "lastState");
+    mazu_cJSON *last_state = mazu_cJSON_GetObjectItemCaseSensitive(v1_container_statusJSON, "lastState");
     if (last_state) { 
     last_state_local_nonprim = v1_container_state_parseFromJSON(last_state); //nonprimitive
     }
 
     // v1_container_status->name
-    cJSON *name = cJSON_GetObjectItemCaseSensitive(v1_container_statusJSON, "name");
+    mazu_cJSON *name = mazu_cJSON_GetObjectItemCaseSensitive(v1_container_statusJSON, "name");
     if (!name) {
         goto end;
     }
 
     
-    if(!cJSON_IsString(name))
+    if(!mazu_cJSON_IsString(name))
     {
     goto end; //String
     }
 
     // v1_container_status->ready
-    cJSON *ready = cJSON_GetObjectItemCaseSensitive(v1_container_statusJSON, "ready");
+    mazu_cJSON *ready = mazu_cJSON_GetObjectItemCaseSensitive(v1_container_statusJSON, "ready");
     if (!ready) {
         goto end;
     }
 
     
-    if(!cJSON_IsBool(ready))
+    if(!mazu_cJSON_IsBool(ready))
     {
     goto end; //Bool
     }
 
     // v1_container_status->resources
-    cJSON *resources = cJSON_GetObjectItemCaseSensitive(v1_container_statusJSON, "resources");
+    mazu_cJSON *resources = mazu_cJSON_GetObjectItemCaseSensitive(v1_container_statusJSON, "resources");
     if (resources) { 
     resources_local_nonprim = v1_resource_requirements_parseFromJSON(resources); //nonprimitive
     }
 
     // v1_container_status->restart_count
-    cJSON *restart_count = cJSON_GetObjectItemCaseSensitive(v1_container_statusJSON, "restartCount");
+    mazu_cJSON *restart_count = mazu_cJSON_GetObjectItemCaseSensitive(v1_container_statusJSON, "restartCount");
     if (!restart_count) {
         goto end;
     }
 
     
-    if(!cJSON_IsNumber(restart_count))
+    if(!mazu_cJSON_IsNumber(restart_count))
     {
     goto end; //Numeric
     }
 
     // v1_container_status->started
-    cJSON *started = cJSON_GetObjectItemCaseSensitive(v1_container_statusJSON, "started");
+    mazu_cJSON *started = mazu_cJSON_GetObjectItemCaseSensitive(v1_container_statusJSON, "started");
     if (started) { 
-    if(!cJSON_IsBool(started))
+    if(!mazu_cJSON_IsBool(started))
     {
     goto end; //Bool
     }
     }
 
     // v1_container_status->state
-    cJSON *state = cJSON_GetObjectItemCaseSensitive(v1_container_statusJSON, "state");
+    mazu_cJSON *state = mazu_cJSON_GetObjectItemCaseSensitive(v1_container_statusJSON, "state");
     if (state) { 
     state_local_nonprim = v1_container_state_parseFromJSON(state); //nonprimitive
     }
 
     // v1_container_status->user
-    cJSON *user = cJSON_GetObjectItemCaseSensitive(v1_container_statusJSON, "user");
+    mazu_cJSON *user = mazu_cJSON_GetObjectItemCaseSensitive(v1_container_statusJSON, "user");
     if (user) { 
     user_local_nonprim = v1_container_user_parseFromJSON(user); //nonprimitive
     }
 
     // v1_container_status->volume_mounts
-    cJSON *volume_mounts = cJSON_GetObjectItemCaseSensitive(v1_container_statusJSON, "volumeMounts");
+    mazu_cJSON *volume_mounts = mazu_cJSON_GetObjectItemCaseSensitive(v1_container_statusJSON, "volumeMounts");
     if (volume_mounts) { 
-    cJSON *volume_mounts_local_nonprimitive = NULL;
-    if(!cJSON_IsArray(volume_mounts)){
+    mazu_cJSON *volume_mounts_local_nonprimitive = NULL;
+    if(!mazu_cJSON_IsArray(volume_mounts)){
         goto end; //nonprimitive container
     }
 
     volume_mountsList = list_createList();
 
-    cJSON_ArrayForEach(volume_mounts_local_nonprimitive,volume_mounts )
+    mazu_cJSON_ArrayForEach(volume_mounts_local_nonprimitive,volume_mounts )
     {
-        if(!cJSON_IsObject(volume_mounts_local_nonprimitive)){
+        if(!mazu_cJSON_IsObject(volume_mounts_local_nonprimitive)){
             goto end;
         }
         v1_volume_mount_status_t *volume_mountsItem = v1_volume_mount_status_parseFromJSON(volume_mounts_local_nonprimitive);
@@ -489,7 +489,7 @@ v1_container_status_t *v1_container_status_parseFromJSON(cJSON *v1_container_sta
     v1_container_status_local_var = v1_container_status_create (
         allocated_resources ? allocated_resourcesList : NULL,
         allocated_resources_status ? allocated_resources_statusList : NULL,
-        container_id && !cJSON_IsNull(container_id) ? strdup(container_id->valuestring) : NULL,
+        container_id && !mazu_cJSON_IsNull(container_id) ? strdup(container_id->valuestring) : NULL,
         strdup(image->valuestring),
         strdup(image_id->valuestring),
         last_state ? last_state_local_nonprim : NULL,

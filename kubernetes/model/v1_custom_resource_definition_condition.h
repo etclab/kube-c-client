@@ -8,7 +8,7 @@
 #define _v1_custom_resource_definition_condition_H_
 
 #include <string.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
 #include "../include/binary.h"
@@ -37,9 +37,9 @@ v1_custom_resource_definition_condition_t *v1_custom_resource_definition_conditi
 
 void v1_custom_resource_definition_condition_free(v1_custom_resource_definition_condition_t *v1_custom_resource_definition_condition);
 
-v1_custom_resource_definition_condition_t *v1_custom_resource_definition_condition_parseFromJSON(cJSON *v1_custom_resource_definition_conditionJSON);
+v1_custom_resource_definition_condition_t *v1_custom_resource_definition_condition_parseFromJSON(mazu_cJSON *v1_custom_resource_definition_conditionJSON);
 
-cJSON *v1_custom_resource_definition_condition_convertToJSON(v1_custom_resource_definition_condition_t *v1_custom_resource_definition_condition);
+mazu_cJSON *v1_custom_resource_definition_condition_convertToJSON(v1_custom_resource_definition_condition_t *v1_custom_resource_definition_condition);
 
 #endif /* _v1_custom_resource_definition_condition_H_ */
 

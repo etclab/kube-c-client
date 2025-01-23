@@ -33,12 +33,12 @@ void v1_type_checking_free(v1_type_checking_t *v1_type_checking) {
     free(v1_type_checking);
 }
 
-cJSON *v1_type_checking_convertToJSON(v1_type_checking_t *v1_type_checking) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_type_checking_convertToJSON(v1_type_checking_t *v1_type_checking) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_type_checking->expression_warnings
     if(v1_type_checking->expression_warnings) {
-    cJSON *expression_warnings = cJSON_AddArrayToObject(item, "expressionWarnings");
+    mazu_cJSON *expression_warnings = mazu_cJSON_AddArrayToObject(item, "expressionWarnings");
     if(expression_warnings == NULL) {
     goto fail; //nonprimitive container
     }
@@ -46,11 +46,11 @@ cJSON *v1_type_checking_convertToJSON(v1_type_checking_t *v1_type_checking) {
     listEntry_t *expression_warningsListEntry;
     if (v1_type_checking->expression_warnings) {
     list_ForEach(expression_warningsListEntry, v1_type_checking->expression_warnings) {
-    cJSON *itemLocal = v1_expression_warning_convertToJSON(expression_warningsListEntry->data);
+    mazu_cJSON *itemLocal = v1_expression_warning_convertToJSON(expression_warningsListEntry->data);
     if(itemLocal == NULL) {
     goto fail;
     }
-    cJSON_AddItemToArray(expression_warnings, itemLocal);
+    mazu_cJSON_AddItemToArray(expression_warnings, itemLocal);
     }
     }
     }
@@ -58,12 +58,12 @@ cJSON *v1_type_checking_convertToJSON(v1_type_checking_t *v1_type_checking) {
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_type_checking_t *v1_type_checking_parseFromJSON(cJSON *v1_type_checkingJSON){
+v1_type_checking_t *v1_type_checking_parseFromJSON(mazu_cJSON *v1_type_checkingJSON){
 
     v1_type_checking_t *v1_type_checking_local_var = NULL;
 
@@ -71,18 +71,18 @@ v1_type_checking_t *v1_type_checking_parseFromJSON(cJSON *v1_type_checkingJSON){
     list_t *expression_warningsList = NULL;
 
     // v1_type_checking->expression_warnings
-    cJSON *expression_warnings = cJSON_GetObjectItemCaseSensitive(v1_type_checkingJSON, "expressionWarnings");
+    mazu_cJSON *expression_warnings = mazu_cJSON_GetObjectItemCaseSensitive(v1_type_checkingJSON, "expressionWarnings");
     if (expression_warnings) { 
-    cJSON *expression_warnings_local_nonprimitive = NULL;
-    if(!cJSON_IsArray(expression_warnings)){
+    mazu_cJSON *expression_warnings_local_nonprimitive = NULL;
+    if(!mazu_cJSON_IsArray(expression_warnings)){
         goto end; //nonprimitive container
     }
 
     expression_warningsList = list_createList();
 
-    cJSON_ArrayForEach(expression_warnings_local_nonprimitive,expression_warnings )
+    mazu_cJSON_ArrayForEach(expression_warnings_local_nonprimitive,expression_warnings )
     {
-        if(!cJSON_IsObject(expression_warnings_local_nonprimitive)){
+        if(!mazu_cJSON_IsObject(expression_warnings_local_nonprimitive)){
             goto end;
         }
         v1_expression_warning_t *expression_warningsItem = v1_expression_warning_parseFromJSON(expression_warnings_local_nonprimitive);

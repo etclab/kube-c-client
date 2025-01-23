@@ -11,7 +11,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdbool.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 
 #include "../model/version_info.h"
 version_info_t* instantiate_version_info(int include_optional);
@@ -55,11 +55,11 @@ version_info_t* instantiate_version_info(int include_optional) {
 void test_version_info(int include_optional) {
     version_info_t* version_info_1 = instantiate_version_info(include_optional);
 
-	cJSON* jsonversion_info_1 = version_info_convertToJSON(version_info_1);
-	printf("version_info :\n%s\n", cJSON_Print(jsonversion_info_1));
+	mazu_cJSON* jsonversion_info_1 = version_info_convertToJSON(version_info_1);
+	printf("version_info :\n%s\n", mazu_cJSON_Print(jsonversion_info_1));
 	version_info_t* version_info_2 = version_info_parseFromJSON(jsonversion_info_1);
-	cJSON* jsonversion_info_2 = version_info_convertToJSON(version_info_2);
-	printf("repeating version_info:\n%s\n", cJSON_Print(jsonversion_info_2));
+	mazu_cJSON* jsonversion_info_2 = version_info_convertToJSON(version_info_2);
+	printf("repeating version_info:\n%s\n", mazu_cJSON_Print(jsonversion_info_2));
 }
 
 int main() {

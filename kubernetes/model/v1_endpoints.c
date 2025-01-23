@@ -51,12 +51,12 @@ void v1_endpoints_free(v1_endpoints_t *v1_endpoints) {
     free(v1_endpoints);
 }
 
-cJSON *v1_endpoints_convertToJSON(v1_endpoints_t *v1_endpoints) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_endpoints_convertToJSON(v1_endpoints_t *v1_endpoints) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_endpoints->api_version
     if(v1_endpoints->api_version) {
-    if(cJSON_AddStringToObject(item, "apiVersion", v1_endpoints->api_version) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "apiVersion", v1_endpoints->api_version) == NULL) {
     goto fail; //String
     }
     }
@@ -64,7 +64,7 @@ cJSON *v1_endpoints_convertToJSON(v1_endpoints_t *v1_endpoints) {
 
     // v1_endpoints->kind
     if(v1_endpoints->kind) {
-    if(cJSON_AddStringToObject(item, "kind", v1_endpoints->kind) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "kind", v1_endpoints->kind) == NULL) {
     goto fail; //String
     }
     }
@@ -72,11 +72,11 @@ cJSON *v1_endpoints_convertToJSON(v1_endpoints_t *v1_endpoints) {
 
     // v1_endpoints->metadata
     if(v1_endpoints->metadata) {
-    cJSON *metadata_local_JSON = v1_object_meta_convertToJSON(v1_endpoints->metadata);
+    mazu_cJSON *metadata_local_JSON = v1_object_meta_convertToJSON(v1_endpoints->metadata);
     if(metadata_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "metadata", metadata_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "metadata", metadata_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -85,7 +85,7 @@ cJSON *v1_endpoints_convertToJSON(v1_endpoints_t *v1_endpoints) {
 
     // v1_endpoints->subsets
     if(v1_endpoints->subsets) {
-    cJSON *subsets = cJSON_AddArrayToObject(item, "subsets");
+    mazu_cJSON *subsets = mazu_cJSON_AddArrayToObject(item, "subsets");
     if(subsets == NULL) {
     goto fail; //nonprimitive container
     }
@@ -93,11 +93,11 @@ cJSON *v1_endpoints_convertToJSON(v1_endpoints_t *v1_endpoints) {
     listEntry_t *subsetsListEntry;
     if (v1_endpoints->subsets) {
     list_ForEach(subsetsListEntry, v1_endpoints->subsets) {
-    cJSON *itemLocal = v1_endpoint_subset_convertToJSON(subsetsListEntry->data);
+    mazu_cJSON *itemLocal = v1_endpoint_subset_convertToJSON(subsetsListEntry->data);
     if(itemLocal == NULL) {
     goto fail;
     }
-    cJSON_AddItemToArray(subsets, itemLocal);
+    mazu_cJSON_AddItemToArray(subsets, itemLocal);
     }
     }
     }
@@ -105,12 +105,12 @@ cJSON *v1_endpoints_convertToJSON(v1_endpoints_t *v1_endpoints) {
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_endpoints_t *v1_endpoints_parseFromJSON(cJSON *v1_endpointsJSON){
+v1_endpoints_t *v1_endpoints_parseFromJSON(mazu_cJSON *v1_endpointsJSON){
 
     v1_endpoints_t *v1_endpoints_local_var = NULL;
 
@@ -121,42 +121,42 @@ v1_endpoints_t *v1_endpoints_parseFromJSON(cJSON *v1_endpointsJSON){
     list_t *subsetsList = NULL;
 
     // v1_endpoints->api_version
-    cJSON *api_version = cJSON_GetObjectItemCaseSensitive(v1_endpointsJSON, "apiVersion");
+    mazu_cJSON *api_version = mazu_cJSON_GetObjectItemCaseSensitive(v1_endpointsJSON, "apiVersion");
     if (api_version) { 
-    if(!cJSON_IsString(api_version) && !cJSON_IsNull(api_version))
+    if(!mazu_cJSON_IsString(api_version) && !mazu_cJSON_IsNull(api_version))
     {
     goto end; //String
     }
     }
 
     // v1_endpoints->kind
-    cJSON *kind = cJSON_GetObjectItemCaseSensitive(v1_endpointsJSON, "kind");
+    mazu_cJSON *kind = mazu_cJSON_GetObjectItemCaseSensitive(v1_endpointsJSON, "kind");
     if (kind) { 
-    if(!cJSON_IsString(kind) && !cJSON_IsNull(kind))
+    if(!mazu_cJSON_IsString(kind) && !mazu_cJSON_IsNull(kind))
     {
     goto end; //String
     }
     }
 
     // v1_endpoints->metadata
-    cJSON *metadata = cJSON_GetObjectItemCaseSensitive(v1_endpointsJSON, "metadata");
+    mazu_cJSON *metadata = mazu_cJSON_GetObjectItemCaseSensitive(v1_endpointsJSON, "metadata");
     if (metadata) { 
     metadata_local_nonprim = v1_object_meta_parseFromJSON(metadata); //nonprimitive
     }
 
     // v1_endpoints->subsets
-    cJSON *subsets = cJSON_GetObjectItemCaseSensitive(v1_endpointsJSON, "subsets");
+    mazu_cJSON *subsets = mazu_cJSON_GetObjectItemCaseSensitive(v1_endpointsJSON, "subsets");
     if (subsets) { 
-    cJSON *subsets_local_nonprimitive = NULL;
-    if(!cJSON_IsArray(subsets)){
+    mazu_cJSON *subsets_local_nonprimitive = NULL;
+    if(!mazu_cJSON_IsArray(subsets)){
         goto end; //nonprimitive container
     }
 
     subsetsList = list_createList();
 
-    cJSON_ArrayForEach(subsets_local_nonprimitive,subsets )
+    mazu_cJSON_ArrayForEach(subsets_local_nonprimitive,subsets )
     {
-        if(!cJSON_IsObject(subsets_local_nonprimitive)){
+        if(!mazu_cJSON_IsObject(subsets_local_nonprimitive)){
             goto end;
         }
         v1_endpoint_subset_t *subsetsItem = v1_endpoint_subset_parseFromJSON(subsets_local_nonprimitive);
@@ -167,8 +167,8 @@ v1_endpoints_t *v1_endpoints_parseFromJSON(cJSON *v1_endpointsJSON){
 
 
     v1_endpoints_local_var = v1_endpoints_create (
-        api_version && !cJSON_IsNull(api_version) ? strdup(api_version->valuestring) : NULL,
-        kind && !cJSON_IsNull(kind) ? strdup(kind->valuestring) : NULL,
+        api_version && !mazu_cJSON_IsNull(api_version) ? strdup(api_version->valuestring) : NULL,
+        kind && !mazu_cJSON_IsNull(kind) ? strdup(kind->valuestring) : NULL,
         metadata ? metadata_local_nonprim : NULL,
         subsets ? subsetsList : NULL
         );

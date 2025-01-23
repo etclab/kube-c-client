@@ -8,7 +8,7 @@
 #define _v2_horizontal_pod_autoscaler_H_
 
 #include <string.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
 #include "../include/binary.h"
@@ -40,9 +40,9 @@ v2_horizontal_pod_autoscaler_t *v2_horizontal_pod_autoscaler_create(
 
 void v2_horizontal_pod_autoscaler_free(v2_horizontal_pod_autoscaler_t *v2_horizontal_pod_autoscaler);
 
-v2_horizontal_pod_autoscaler_t *v2_horizontal_pod_autoscaler_parseFromJSON(cJSON *v2_horizontal_pod_autoscalerJSON);
+v2_horizontal_pod_autoscaler_t *v2_horizontal_pod_autoscaler_parseFromJSON(mazu_cJSON *v2_horizontal_pod_autoscalerJSON);
 
-cJSON *v2_horizontal_pod_autoscaler_convertToJSON(v2_horizontal_pod_autoscaler_t *v2_horizontal_pod_autoscaler);
+mazu_cJSON *v2_horizontal_pod_autoscaler_convertToJSON(v2_horizontal_pod_autoscaler_t *v2_horizontal_pod_autoscaler);
 
 #endif /* _v2_horizontal_pod_autoscaler_H_ */
 

@@ -50,12 +50,12 @@ void v1_controller_revision_free(v1_controller_revision_t *v1_controller_revisio
     free(v1_controller_revision);
 }
 
-cJSON *v1_controller_revision_convertToJSON(v1_controller_revision_t *v1_controller_revision) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_controller_revision_convertToJSON(v1_controller_revision_t *v1_controller_revision) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_controller_revision->api_version
     if(v1_controller_revision->api_version) {
-    if(cJSON_AddStringToObject(item, "apiVersion", v1_controller_revision->api_version) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "apiVersion", v1_controller_revision->api_version) == NULL) {
     goto fail; //String
     }
     }
@@ -63,11 +63,11 @@ cJSON *v1_controller_revision_convertToJSON(v1_controller_revision_t *v1_control
 
     // v1_controller_revision->data
     if(v1_controller_revision->data) {
-    cJSON *data_object = object_convertToJSON(v1_controller_revision->data);
+    mazu_cJSON *data_object = object_convertToJSON(v1_controller_revision->data);
     if(data_object == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "data", data_object);
+    mazu_cJSON_AddItemToObject(item, "data", data_object);
     if(item->child == NULL) {
     goto fail;
     }
@@ -76,7 +76,7 @@ cJSON *v1_controller_revision_convertToJSON(v1_controller_revision_t *v1_control
 
     // v1_controller_revision->kind
     if(v1_controller_revision->kind) {
-    if(cJSON_AddStringToObject(item, "kind", v1_controller_revision->kind) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "kind", v1_controller_revision->kind) == NULL) {
     goto fail; //String
     }
     }
@@ -84,11 +84,11 @@ cJSON *v1_controller_revision_convertToJSON(v1_controller_revision_t *v1_control
 
     // v1_controller_revision->metadata
     if(v1_controller_revision->metadata) {
-    cJSON *metadata_local_JSON = v1_object_meta_convertToJSON(v1_controller_revision->metadata);
+    mazu_cJSON *metadata_local_JSON = v1_object_meta_convertToJSON(v1_controller_revision->metadata);
     if(metadata_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "metadata", metadata_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "metadata", metadata_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -99,19 +99,19 @@ cJSON *v1_controller_revision_convertToJSON(v1_controller_revision_t *v1_control
     if (!v1_controller_revision->revision) {
         goto fail;
     }
-    if(cJSON_AddNumberToObject(item, "revision", v1_controller_revision->revision) == NULL) {
+    if(mazu_cJSON_AddNumberToObject(item, "revision", v1_controller_revision->revision) == NULL) {
     goto fail; //Numeric
     }
 
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_controller_revision_t *v1_controller_revision_parseFromJSON(cJSON *v1_controller_revisionJSON){
+v1_controller_revision_t *v1_controller_revision_parseFromJSON(mazu_cJSON *v1_controller_revisionJSON){
 
     v1_controller_revision_t *v1_controller_revision_local_var = NULL;
 
@@ -119,53 +119,53 @@ v1_controller_revision_t *v1_controller_revision_parseFromJSON(cJSON *v1_control
     v1_object_meta_t *metadata_local_nonprim = NULL;
 
     // v1_controller_revision->api_version
-    cJSON *api_version = cJSON_GetObjectItemCaseSensitive(v1_controller_revisionJSON, "apiVersion");
+    mazu_cJSON *api_version = mazu_cJSON_GetObjectItemCaseSensitive(v1_controller_revisionJSON, "apiVersion");
     if (api_version) { 
-    if(!cJSON_IsString(api_version) && !cJSON_IsNull(api_version))
+    if(!mazu_cJSON_IsString(api_version) && !mazu_cJSON_IsNull(api_version))
     {
     goto end; //String
     }
     }
 
     // v1_controller_revision->data
-    cJSON *data = cJSON_GetObjectItemCaseSensitive(v1_controller_revisionJSON, "data");
+    mazu_cJSON *data = mazu_cJSON_GetObjectItemCaseSensitive(v1_controller_revisionJSON, "data");
     object_t *data_local_object = NULL;
     if (data) { 
     data_local_object = object_parseFromJSON(data); //object
     }
 
     // v1_controller_revision->kind
-    cJSON *kind = cJSON_GetObjectItemCaseSensitive(v1_controller_revisionJSON, "kind");
+    mazu_cJSON *kind = mazu_cJSON_GetObjectItemCaseSensitive(v1_controller_revisionJSON, "kind");
     if (kind) { 
-    if(!cJSON_IsString(kind) && !cJSON_IsNull(kind))
+    if(!mazu_cJSON_IsString(kind) && !mazu_cJSON_IsNull(kind))
     {
     goto end; //String
     }
     }
 
     // v1_controller_revision->metadata
-    cJSON *metadata = cJSON_GetObjectItemCaseSensitive(v1_controller_revisionJSON, "metadata");
+    mazu_cJSON *metadata = mazu_cJSON_GetObjectItemCaseSensitive(v1_controller_revisionJSON, "metadata");
     if (metadata) { 
     metadata_local_nonprim = v1_object_meta_parseFromJSON(metadata); //nonprimitive
     }
 
     // v1_controller_revision->revision
-    cJSON *revision = cJSON_GetObjectItemCaseSensitive(v1_controller_revisionJSON, "revision");
+    mazu_cJSON *revision = mazu_cJSON_GetObjectItemCaseSensitive(v1_controller_revisionJSON, "revision");
     if (!revision) {
         goto end;
     }
 
     
-    if(!cJSON_IsNumber(revision))
+    if(!mazu_cJSON_IsNumber(revision))
     {
     goto end; //Numeric
     }
 
 
     v1_controller_revision_local_var = v1_controller_revision_create (
-        api_version && !cJSON_IsNull(api_version) ? strdup(api_version->valuestring) : NULL,
+        api_version && !mazu_cJSON_IsNull(api_version) ? strdup(api_version->valuestring) : NULL,
         data ? data_local_object : NULL,
-        kind && !cJSON_IsNull(kind) ? strdup(kind->valuestring) : NULL,
+        kind && !mazu_cJSON_IsNull(kind) ? strdup(kind->valuestring) : NULL,
         metadata ? metadata_local_nonprim : NULL,
         revision->valuedouble
         );

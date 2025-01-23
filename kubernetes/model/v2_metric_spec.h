@@ -8,7 +8,7 @@
 #define _v2_metric_spec_H_
 
 #include <string.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
 #include "../include/binary.h"
@@ -44,9 +44,9 @@ v2_metric_spec_t *v2_metric_spec_create(
 
 void v2_metric_spec_free(v2_metric_spec_t *v2_metric_spec);
 
-v2_metric_spec_t *v2_metric_spec_parseFromJSON(cJSON *v2_metric_specJSON);
+v2_metric_spec_t *v2_metric_spec_parseFromJSON(mazu_cJSON *v2_metric_specJSON);
 
-cJSON *v2_metric_spec_convertToJSON(v2_metric_spec_t *v2_metric_spec);
+mazu_cJSON *v2_metric_spec_convertToJSON(v2_metric_spec_t *v2_metric_spec);
 
 #endif /* _v2_metric_spec_H_ */
 

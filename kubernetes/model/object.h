@@ -6,7 +6,7 @@
 #define _object_H_
 
 #include <string.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
 #include "../include/binary.h"
@@ -20,8 +20,8 @@ object_t *object_create();
 
 void object_free(object_t *object);
 
-object_t *object_parseFromJSON(cJSON *json);
+object_t *object_parseFromJSON(mazu_cJSON *json);
 
-cJSON *object_convertToJSON(object_t *object);
+mazu_cJSON *object_convertToJSON(object_t *object);
 
 #endif /* _object_H_ */

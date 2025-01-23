@@ -8,7 +8,7 @@
 #define _v1_namespace_H_
 
 #include <string.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
 #include "../include/binary.h"
@@ -40,9 +40,9 @@ v1_namespace_t *v1_namespace_create(
 
 void v1_namespace_free(v1_namespace_t *v1_namespace);
 
-v1_namespace_t *v1_namespace_parseFromJSON(cJSON *v1_namespaceJSON);
+v1_namespace_t *v1_namespace_parseFromJSON(mazu_cJSON *v1_namespaceJSON);
 
-cJSON *v1_namespace_convertToJSON(v1_namespace_t *v1_namespace);
+mazu_cJSON *v1_namespace_convertToJSON(v1_namespace_t *v1_namespace);
 
 #endif /* _v1_namespace_H_ */
 

@@ -51,21 +51,21 @@ void v1_resource_quota_spec_free(v1_resource_quota_spec_t *v1_resource_quota_spe
     free(v1_resource_quota_spec);
 }
 
-cJSON *v1_resource_quota_spec_convertToJSON(v1_resource_quota_spec_t *v1_resource_quota_spec) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_resource_quota_spec_convertToJSON(v1_resource_quota_spec_t *v1_resource_quota_spec) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_resource_quota_spec->hard
     if(v1_resource_quota_spec->hard) {
-    cJSON *hard = cJSON_AddObjectToObject(item, "hard");
+    mazu_cJSON *hard = mazu_cJSON_AddObjectToObject(item, "hard");
     if(hard == NULL) {
         goto fail; //primitive map container
     }
-    cJSON *localMapObject = hard;
+    mazu_cJSON *localMapObject = hard;
     listEntry_t *hardListEntry;
     if (v1_resource_quota_spec->hard) {
     list_ForEach(hardListEntry, v1_resource_quota_spec->hard) {
         keyValuePair_t *localKeyValue = (keyValuePair_t*)hardListEntry->data;
-        if(cJSON_AddStringToObject(localMapObject, localKeyValue->key, (char*)localKeyValue->value) == NULL)
+        if(mazu_cJSON_AddStringToObject(localMapObject, localKeyValue->key, (char*)localKeyValue->value) == NULL)
         {
             goto fail;
         }
@@ -76,11 +76,11 @@ cJSON *v1_resource_quota_spec_convertToJSON(v1_resource_quota_spec_t *v1_resourc
 
     // v1_resource_quota_spec->scope_selector
     if(v1_resource_quota_spec->scope_selector) {
-    cJSON *scope_selector_local_JSON = v1_scope_selector_convertToJSON(v1_resource_quota_spec->scope_selector);
+    mazu_cJSON *scope_selector_local_JSON = v1_scope_selector_convertToJSON(v1_resource_quota_spec->scope_selector);
     if(scope_selector_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "scopeSelector", scope_selector_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "scopeSelector", scope_selector_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -89,14 +89,14 @@ cJSON *v1_resource_quota_spec_convertToJSON(v1_resource_quota_spec_t *v1_resourc
 
     // v1_resource_quota_spec->scopes
     if(v1_resource_quota_spec->scopes) {
-    cJSON *scopes = cJSON_AddArrayToObject(item, "scopes");
+    mazu_cJSON *scopes = mazu_cJSON_AddArrayToObject(item, "scopes");
     if(scopes == NULL) {
         goto fail; //primitive container
     }
 
     listEntry_t *scopesListEntry;
     list_ForEach(scopesListEntry, v1_resource_quota_spec->scopes) {
-    if(cJSON_AddStringToObject(scopes, "", (char*)scopesListEntry->data) == NULL)
+    if(mazu_cJSON_AddStringToObject(scopes, "", (char*)scopesListEntry->data) == NULL)
     {
         goto fail;
     }
@@ -106,12 +106,12 @@ cJSON *v1_resource_quota_spec_convertToJSON(v1_resource_quota_spec_t *v1_resourc
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_resource_quota_spec_t *v1_resource_quota_spec_parseFromJSON(cJSON *v1_resource_quota_specJSON){
+v1_resource_quota_spec_t *v1_resource_quota_spec_parseFromJSON(mazu_cJSON *v1_resource_quota_specJSON){
 
     v1_resource_quota_spec_t *v1_resource_quota_spec_local_var = NULL;
 
@@ -125,21 +125,21 @@ v1_resource_quota_spec_t *v1_resource_quota_spec_parseFromJSON(cJSON *v1_resourc
     list_t *scopesList = NULL;
 
     // v1_resource_quota_spec->hard
-    cJSON *hard = cJSON_GetObjectItemCaseSensitive(v1_resource_quota_specJSON, "hard");
+    mazu_cJSON *hard = mazu_cJSON_GetObjectItemCaseSensitive(v1_resource_quota_specJSON, "hard");
     if (hard) { 
-    cJSON *hard_local_map = NULL;
-    if(!cJSON_IsObject(hard) && !cJSON_IsNull(hard))
+    mazu_cJSON *hard_local_map = NULL;
+    if(!mazu_cJSON_IsObject(hard) && !mazu_cJSON_IsNull(hard))
     {
         goto end;//primitive map container
     }
-    if(cJSON_IsObject(hard))
+    if(mazu_cJSON_IsObject(hard))
     {
         hardList = list_createList();
         keyValuePair_t *localMapKeyPair;
-        cJSON_ArrayForEach(hard_local_map, hard)
+        mazu_cJSON_ArrayForEach(hard_local_map, hard)
         {
-            cJSON *localMapObject = hard_local_map;
-            if(!cJSON_IsString(localMapObject))
+            mazu_cJSON *localMapObject = hard_local_map;
+            if(!mazu_cJSON_IsString(localMapObject))
             {
                 goto end;
             }
@@ -150,23 +150,23 @@ v1_resource_quota_spec_t *v1_resource_quota_spec_parseFromJSON(cJSON *v1_resourc
     }
 
     // v1_resource_quota_spec->scope_selector
-    cJSON *scope_selector = cJSON_GetObjectItemCaseSensitive(v1_resource_quota_specJSON, "scopeSelector");
+    mazu_cJSON *scope_selector = mazu_cJSON_GetObjectItemCaseSensitive(v1_resource_quota_specJSON, "scopeSelector");
     if (scope_selector) { 
     scope_selector_local_nonprim = v1_scope_selector_parseFromJSON(scope_selector); //nonprimitive
     }
 
     // v1_resource_quota_spec->scopes
-    cJSON *scopes = cJSON_GetObjectItemCaseSensitive(v1_resource_quota_specJSON, "scopes");
+    mazu_cJSON *scopes = mazu_cJSON_GetObjectItemCaseSensitive(v1_resource_quota_specJSON, "scopes");
     if (scopes) { 
-    cJSON *scopes_local = NULL;
-    if(!cJSON_IsArray(scopes)) {
+    mazu_cJSON *scopes_local = NULL;
+    if(!mazu_cJSON_IsArray(scopes)) {
         goto end;//primitive container
     }
     scopesList = list_createList();
 
-    cJSON_ArrayForEach(scopes_local, scopes)
+    mazu_cJSON_ArrayForEach(scopes_local, scopes)
     {
-        if(!cJSON_IsString(scopes_local))
+        if(!mazu_cJSON_IsString(scopes_local))
         {
             goto end;
         }

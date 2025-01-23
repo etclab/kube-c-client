@@ -8,7 +8,7 @@
 #define _v1_runtime_class_list_H_
 
 #include <string.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
 #include "../include/binary.h"
@@ -37,9 +37,9 @@ v1_runtime_class_list_t *v1_runtime_class_list_create(
 
 void v1_runtime_class_list_free(v1_runtime_class_list_t *v1_runtime_class_list);
 
-v1_runtime_class_list_t *v1_runtime_class_list_parseFromJSON(cJSON *v1_runtime_class_listJSON);
+v1_runtime_class_list_t *v1_runtime_class_list_parseFromJSON(mazu_cJSON *v1_runtime_class_listJSON);
 
-cJSON *v1_runtime_class_list_convertToJSON(v1_runtime_class_list_t *v1_runtime_class_list);
+mazu_cJSON *v1_runtime_class_list_convertToJSON(v1_runtime_class_list_t *v1_runtime_class_list);
 
 #endif /* _v1_runtime_class_list_H_ */
 

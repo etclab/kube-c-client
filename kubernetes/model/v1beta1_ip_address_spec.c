@@ -30,18 +30,18 @@ void v1beta1_ip_address_spec_free(v1beta1_ip_address_spec_t *v1beta1_ip_address_
     free(v1beta1_ip_address_spec);
 }
 
-cJSON *v1beta1_ip_address_spec_convertToJSON(v1beta1_ip_address_spec_t *v1beta1_ip_address_spec) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1beta1_ip_address_spec_convertToJSON(v1beta1_ip_address_spec_t *v1beta1_ip_address_spec) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1beta1_ip_address_spec->parent_ref
     if (!v1beta1_ip_address_spec->parent_ref) {
         goto fail;
     }
-    cJSON *parent_ref_local_JSON = v1beta1_parent_reference_convertToJSON(v1beta1_ip_address_spec->parent_ref);
+    mazu_cJSON *parent_ref_local_JSON = v1beta1_parent_reference_convertToJSON(v1beta1_ip_address_spec->parent_ref);
     if(parent_ref_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "parentRef", parent_ref_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "parentRef", parent_ref_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -49,12 +49,12 @@ cJSON *v1beta1_ip_address_spec_convertToJSON(v1beta1_ip_address_spec_t *v1beta1_
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1beta1_ip_address_spec_t *v1beta1_ip_address_spec_parseFromJSON(cJSON *v1beta1_ip_address_specJSON){
+v1beta1_ip_address_spec_t *v1beta1_ip_address_spec_parseFromJSON(mazu_cJSON *v1beta1_ip_address_specJSON){
 
     v1beta1_ip_address_spec_t *v1beta1_ip_address_spec_local_var = NULL;
 
@@ -62,7 +62,7 @@ v1beta1_ip_address_spec_t *v1beta1_ip_address_spec_parseFromJSON(cJSON *v1beta1_
     v1beta1_parent_reference_t *parent_ref_local_nonprim = NULL;
 
     // v1beta1_ip_address_spec->parent_ref
-    cJSON *parent_ref = cJSON_GetObjectItemCaseSensitive(v1beta1_ip_address_specJSON, "parentRef");
+    mazu_cJSON *parent_ref = mazu_cJSON_GetObjectItemCaseSensitive(v1beta1_ip_address_specJSON, "parentRef");
     if (!parent_ref) {
         goto end;
     }

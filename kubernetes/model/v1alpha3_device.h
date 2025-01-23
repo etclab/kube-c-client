@@ -8,7 +8,7 @@
 #define _v1alpha3_device_H_
 
 #include <string.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
 #include "../include/binary.h"
@@ -32,9 +32,9 @@ v1alpha3_device_t *v1alpha3_device_create(
 
 void v1alpha3_device_free(v1alpha3_device_t *v1alpha3_device);
 
-v1alpha3_device_t *v1alpha3_device_parseFromJSON(cJSON *v1alpha3_deviceJSON);
+v1alpha3_device_t *v1alpha3_device_parseFromJSON(mazu_cJSON *v1alpha3_deviceJSON);
 
-cJSON *v1alpha3_device_convertToJSON(v1alpha3_device_t *v1alpha3_device);
+mazu_cJSON *v1alpha3_device_convertToJSON(v1alpha3_device_t *v1alpha3_device);
 
 #endif /* _v1alpha3_device_H_ */
 

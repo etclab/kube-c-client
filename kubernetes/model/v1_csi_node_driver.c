@@ -51,16 +51,16 @@ void v1_csi_node_driver_free(v1_csi_node_driver_t *v1_csi_node_driver) {
     free(v1_csi_node_driver);
 }
 
-cJSON *v1_csi_node_driver_convertToJSON(v1_csi_node_driver_t *v1_csi_node_driver) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_csi_node_driver_convertToJSON(v1_csi_node_driver_t *v1_csi_node_driver) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_csi_node_driver->allocatable
     if(v1_csi_node_driver->allocatable) {
-    cJSON *allocatable_local_JSON = v1_volume_node_resources_convertToJSON(v1_csi_node_driver->allocatable);
+    mazu_cJSON *allocatable_local_JSON = v1_volume_node_resources_convertToJSON(v1_csi_node_driver->allocatable);
     if(allocatable_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "allocatable", allocatable_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "allocatable", allocatable_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -71,7 +71,7 @@ cJSON *v1_csi_node_driver_convertToJSON(v1_csi_node_driver_t *v1_csi_node_driver
     if (!v1_csi_node_driver->name) {
         goto fail;
     }
-    if(cJSON_AddStringToObject(item, "name", v1_csi_node_driver->name) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "name", v1_csi_node_driver->name) == NULL) {
     goto fail; //String
     }
 
@@ -80,21 +80,21 @@ cJSON *v1_csi_node_driver_convertToJSON(v1_csi_node_driver_t *v1_csi_node_driver
     if (!v1_csi_node_driver->node_id) {
         goto fail;
     }
-    if(cJSON_AddStringToObject(item, "nodeID", v1_csi_node_driver->node_id) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "nodeID", v1_csi_node_driver->node_id) == NULL) {
     goto fail; //String
     }
 
 
     // v1_csi_node_driver->topology_keys
     if(v1_csi_node_driver->topology_keys) {
-    cJSON *topology_keys = cJSON_AddArrayToObject(item, "topologyKeys");
+    mazu_cJSON *topology_keys = mazu_cJSON_AddArrayToObject(item, "topologyKeys");
     if(topology_keys == NULL) {
         goto fail; //primitive container
     }
 
     listEntry_t *topology_keysListEntry;
     list_ForEach(topology_keysListEntry, v1_csi_node_driver->topology_keys) {
-    if(cJSON_AddStringToObject(topology_keys, "", (char*)topology_keysListEntry->data) == NULL)
+    if(mazu_cJSON_AddStringToObject(topology_keys, "", (char*)topology_keysListEntry->data) == NULL)
     {
         goto fail;
     }
@@ -104,12 +104,12 @@ cJSON *v1_csi_node_driver_convertToJSON(v1_csi_node_driver_t *v1_csi_node_driver
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_csi_node_driver_t *v1_csi_node_driver_parseFromJSON(cJSON *v1_csi_node_driverJSON){
+v1_csi_node_driver_t *v1_csi_node_driver_parseFromJSON(mazu_cJSON *v1_csi_node_driverJSON){
 
     v1_csi_node_driver_t *v1_csi_node_driver_local_var = NULL;
 
@@ -120,47 +120,47 @@ v1_csi_node_driver_t *v1_csi_node_driver_parseFromJSON(cJSON *v1_csi_node_driver
     list_t *topology_keysList = NULL;
 
     // v1_csi_node_driver->allocatable
-    cJSON *allocatable = cJSON_GetObjectItemCaseSensitive(v1_csi_node_driverJSON, "allocatable");
+    mazu_cJSON *allocatable = mazu_cJSON_GetObjectItemCaseSensitive(v1_csi_node_driverJSON, "allocatable");
     if (allocatable) { 
     allocatable_local_nonprim = v1_volume_node_resources_parseFromJSON(allocatable); //nonprimitive
     }
 
     // v1_csi_node_driver->name
-    cJSON *name = cJSON_GetObjectItemCaseSensitive(v1_csi_node_driverJSON, "name");
+    mazu_cJSON *name = mazu_cJSON_GetObjectItemCaseSensitive(v1_csi_node_driverJSON, "name");
     if (!name) {
         goto end;
     }
 
     
-    if(!cJSON_IsString(name))
+    if(!mazu_cJSON_IsString(name))
     {
     goto end; //String
     }
 
     // v1_csi_node_driver->node_id
-    cJSON *node_id = cJSON_GetObjectItemCaseSensitive(v1_csi_node_driverJSON, "nodeID");
+    mazu_cJSON *node_id = mazu_cJSON_GetObjectItemCaseSensitive(v1_csi_node_driverJSON, "nodeID");
     if (!node_id) {
         goto end;
     }
 
     
-    if(!cJSON_IsString(node_id))
+    if(!mazu_cJSON_IsString(node_id))
     {
     goto end; //String
     }
 
     // v1_csi_node_driver->topology_keys
-    cJSON *topology_keys = cJSON_GetObjectItemCaseSensitive(v1_csi_node_driverJSON, "topologyKeys");
+    mazu_cJSON *topology_keys = mazu_cJSON_GetObjectItemCaseSensitive(v1_csi_node_driverJSON, "topologyKeys");
     if (topology_keys) { 
-    cJSON *topology_keys_local = NULL;
-    if(!cJSON_IsArray(topology_keys)) {
+    mazu_cJSON *topology_keys_local = NULL;
+    if(!mazu_cJSON_IsArray(topology_keys)) {
         goto end;//primitive container
     }
     topology_keysList = list_createList();
 
-    cJSON_ArrayForEach(topology_keys_local, topology_keys)
+    mazu_cJSON_ArrayForEach(topology_keys_local, topology_keys)
     {
-        if(!cJSON_IsString(topology_keys_local))
+        if(!mazu_cJSON_IsString(topology_keys_local))
         {
             goto end;
         }

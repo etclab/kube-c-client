@@ -8,7 +8,7 @@
 #define _v1_windows_security_context_options_H_
 
 #include <string.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
 #include "../include/binary.h"
@@ -35,9 +35,9 @@ v1_windows_security_context_options_t *v1_windows_security_context_options_creat
 
 void v1_windows_security_context_options_free(v1_windows_security_context_options_t *v1_windows_security_context_options);
 
-v1_windows_security_context_options_t *v1_windows_security_context_options_parseFromJSON(cJSON *v1_windows_security_context_optionsJSON);
+v1_windows_security_context_options_t *v1_windows_security_context_options_parseFromJSON(mazu_cJSON *v1_windows_security_context_optionsJSON);
 
-cJSON *v1_windows_security_context_options_convertToJSON(v1_windows_security_context_options_t *v1_windows_security_context_options);
+mazu_cJSON *v1_windows_security_context_options_convertToJSON(v1_windows_security_context_options_t *v1_windows_security_context_options);
 
 #endif /* _v1_windows_security_context_options_H_ */
 

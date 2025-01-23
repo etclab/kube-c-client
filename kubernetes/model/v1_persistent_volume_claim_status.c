@@ -96,19 +96,19 @@ void v1_persistent_volume_claim_status_free(v1_persistent_volume_claim_status_t 
     free(v1_persistent_volume_claim_status);
 }
 
-cJSON *v1_persistent_volume_claim_status_convertToJSON(v1_persistent_volume_claim_status_t *v1_persistent_volume_claim_status) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_persistent_volume_claim_status_convertToJSON(v1_persistent_volume_claim_status_t *v1_persistent_volume_claim_status) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_persistent_volume_claim_status->access_modes
     if(v1_persistent_volume_claim_status->access_modes) {
-    cJSON *access_modes = cJSON_AddArrayToObject(item, "accessModes");
+    mazu_cJSON *access_modes = mazu_cJSON_AddArrayToObject(item, "accessModes");
     if(access_modes == NULL) {
         goto fail; //primitive container
     }
 
     listEntry_t *access_modesListEntry;
     list_ForEach(access_modesListEntry, v1_persistent_volume_claim_status->access_modes) {
-    if(cJSON_AddStringToObject(access_modes, "", (char*)access_modesListEntry->data) == NULL)
+    if(mazu_cJSON_AddStringToObject(access_modes, "", (char*)access_modesListEntry->data) == NULL)
     {
         goto fail;
     }
@@ -118,16 +118,16 @@ cJSON *v1_persistent_volume_claim_status_convertToJSON(v1_persistent_volume_clai
 
     // v1_persistent_volume_claim_status->allocated_resource_statuses
     if(v1_persistent_volume_claim_status->allocated_resource_statuses) {
-    cJSON *allocated_resource_statuses = cJSON_AddObjectToObject(item, "allocatedResourceStatuses");
+    mazu_cJSON *allocated_resource_statuses = mazu_cJSON_AddObjectToObject(item, "allocatedResourceStatuses");
     if(allocated_resource_statuses == NULL) {
         goto fail; //primitive map container
     }
-    cJSON *localMapObject = allocated_resource_statuses;
+    mazu_cJSON *localMapObject = allocated_resource_statuses;
     listEntry_t *allocated_resource_statusesListEntry;
     if (v1_persistent_volume_claim_status->allocated_resource_statuses) {
     list_ForEach(allocated_resource_statusesListEntry, v1_persistent_volume_claim_status->allocated_resource_statuses) {
         keyValuePair_t *localKeyValue = (keyValuePair_t*)allocated_resource_statusesListEntry->data;
-        if(cJSON_AddStringToObject(localMapObject, localKeyValue->key, (char*)localKeyValue->value) == NULL)
+        if(mazu_cJSON_AddStringToObject(localMapObject, localKeyValue->key, (char*)localKeyValue->value) == NULL)
         {
             goto fail;
         }
@@ -138,16 +138,16 @@ cJSON *v1_persistent_volume_claim_status_convertToJSON(v1_persistent_volume_clai
 
     // v1_persistent_volume_claim_status->allocated_resources
     if(v1_persistent_volume_claim_status->allocated_resources) {
-    cJSON *allocated_resources = cJSON_AddObjectToObject(item, "allocatedResources");
+    mazu_cJSON *allocated_resources = mazu_cJSON_AddObjectToObject(item, "allocatedResources");
     if(allocated_resources == NULL) {
         goto fail; //primitive map container
     }
-    cJSON *localMapObject = allocated_resources;
+    mazu_cJSON *localMapObject = allocated_resources;
     listEntry_t *allocated_resourcesListEntry;
     if (v1_persistent_volume_claim_status->allocated_resources) {
     list_ForEach(allocated_resourcesListEntry, v1_persistent_volume_claim_status->allocated_resources) {
         keyValuePair_t *localKeyValue = (keyValuePair_t*)allocated_resourcesListEntry->data;
-        if(cJSON_AddStringToObject(localMapObject, localKeyValue->key, (char*)localKeyValue->value) == NULL)
+        if(mazu_cJSON_AddStringToObject(localMapObject, localKeyValue->key, (char*)localKeyValue->value) == NULL)
         {
             goto fail;
         }
@@ -158,16 +158,16 @@ cJSON *v1_persistent_volume_claim_status_convertToJSON(v1_persistent_volume_clai
 
     // v1_persistent_volume_claim_status->capacity
     if(v1_persistent_volume_claim_status->capacity) {
-    cJSON *capacity = cJSON_AddObjectToObject(item, "capacity");
+    mazu_cJSON *capacity = mazu_cJSON_AddObjectToObject(item, "capacity");
     if(capacity == NULL) {
         goto fail; //primitive map container
     }
-    cJSON *localMapObject = capacity;
+    mazu_cJSON *localMapObject = capacity;
     listEntry_t *capacityListEntry;
     if (v1_persistent_volume_claim_status->capacity) {
     list_ForEach(capacityListEntry, v1_persistent_volume_claim_status->capacity) {
         keyValuePair_t *localKeyValue = (keyValuePair_t*)capacityListEntry->data;
-        if(cJSON_AddStringToObject(localMapObject, localKeyValue->key, (char*)localKeyValue->value) == NULL)
+        if(mazu_cJSON_AddStringToObject(localMapObject, localKeyValue->key, (char*)localKeyValue->value) == NULL)
         {
             goto fail;
         }
@@ -178,7 +178,7 @@ cJSON *v1_persistent_volume_claim_status_convertToJSON(v1_persistent_volume_clai
 
     // v1_persistent_volume_claim_status->conditions
     if(v1_persistent_volume_claim_status->conditions) {
-    cJSON *conditions = cJSON_AddArrayToObject(item, "conditions");
+    mazu_cJSON *conditions = mazu_cJSON_AddArrayToObject(item, "conditions");
     if(conditions == NULL) {
     goto fail; //nonprimitive container
     }
@@ -186,11 +186,11 @@ cJSON *v1_persistent_volume_claim_status_convertToJSON(v1_persistent_volume_clai
     listEntry_t *conditionsListEntry;
     if (v1_persistent_volume_claim_status->conditions) {
     list_ForEach(conditionsListEntry, v1_persistent_volume_claim_status->conditions) {
-    cJSON *itemLocal = v1_persistent_volume_claim_condition_convertToJSON(conditionsListEntry->data);
+    mazu_cJSON *itemLocal = v1_persistent_volume_claim_condition_convertToJSON(conditionsListEntry->data);
     if(itemLocal == NULL) {
     goto fail;
     }
-    cJSON_AddItemToArray(conditions, itemLocal);
+    mazu_cJSON_AddItemToArray(conditions, itemLocal);
     }
     }
     }
@@ -198,7 +198,7 @@ cJSON *v1_persistent_volume_claim_status_convertToJSON(v1_persistent_volume_clai
 
     // v1_persistent_volume_claim_status->current_volume_attributes_class_name
     if(v1_persistent_volume_claim_status->current_volume_attributes_class_name) {
-    if(cJSON_AddStringToObject(item, "currentVolumeAttributesClassName", v1_persistent_volume_claim_status->current_volume_attributes_class_name) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "currentVolumeAttributesClassName", v1_persistent_volume_claim_status->current_volume_attributes_class_name) == NULL) {
     goto fail; //String
     }
     }
@@ -206,11 +206,11 @@ cJSON *v1_persistent_volume_claim_status_convertToJSON(v1_persistent_volume_clai
 
     // v1_persistent_volume_claim_status->modify_volume_status
     if(v1_persistent_volume_claim_status->modify_volume_status) {
-    cJSON *modify_volume_status_local_JSON = v1_modify_volume_status_convertToJSON(v1_persistent_volume_claim_status->modify_volume_status);
+    mazu_cJSON *modify_volume_status_local_JSON = v1_modify_volume_status_convertToJSON(v1_persistent_volume_claim_status->modify_volume_status);
     if(modify_volume_status_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "modifyVolumeStatus", modify_volume_status_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "modifyVolumeStatus", modify_volume_status_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -219,7 +219,7 @@ cJSON *v1_persistent_volume_claim_status_convertToJSON(v1_persistent_volume_clai
 
     // v1_persistent_volume_claim_status->phase
     if(v1_persistent_volume_claim_status->phase) {
-    if(cJSON_AddStringToObject(item, "phase", v1_persistent_volume_claim_status->phase) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "phase", v1_persistent_volume_claim_status->phase) == NULL) {
     goto fail; //String
     }
     }
@@ -227,12 +227,12 @@ cJSON *v1_persistent_volume_claim_status_convertToJSON(v1_persistent_volume_clai
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_persistent_volume_claim_status_t *v1_persistent_volume_claim_status_parseFromJSON(cJSON *v1_persistent_volume_claim_statusJSON){
+v1_persistent_volume_claim_status_t *v1_persistent_volume_claim_status_parseFromJSON(mazu_cJSON *v1_persistent_volume_claim_statusJSON){
 
     v1_persistent_volume_claim_status_t *v1_persistent_volume_claim_status_local_var = NULL;
 
@@ -255,17 +255,17 @@ v1_persistent_volume_claim_status_t *v1_persistent_volume_claim_status_parseFrom
     v1_modify_volume_status_t *modify_volume_status_local_nonprim = NULL;
 
     // v1_persistent_volume_claim_status->access_modes
-    cJSON *access_modes = cJSON_GetObjectItemCaseSensitive(v1_persistent_volume_claim_statusJSON, "accessModes");
+    mazu_cJSON *access_modes = mazu_cJSON_GetObjectItemCaseSensitive(v1_persistent_volume_claim_statusJSON, "accessModes");
     if (access_modes) { 
-    cJSON *access_modes_local = NULL;
-    if(!cJSON_IsArray(access_modes)) {
+    mazu_cJSON *access_modes_local = NULL;
+    if(!mazu_cJSON_IsArray(access_modes)) {
         goto end;//primitive container
     }
     access_modesList = list_createList();
 
-    cJSON_ArrayForEach(access_modes_local, access_modes)
+    mazu_cJSON_ArrayForEach(access_modes_local, access_modes)
     {
-        if(!cJSON_IsString(access_modes_local))
+        if(!mazu_cJSON_IsString(access_modes_local))
         {
             goto end;
         }
@@ -274,21 +274,21 @@ v1_persistent_volume_claim_status_t *v1_persistent_volume_claim_status_parseFrom
     }
 
     // v1_persistent_volume_claim_status->allocated_resource_statuses
-    cJSON *allocated_resource_statuses = cJSON_GetObjectItemCaseSensitive(v1_persistent_volume_claim_statusJSON, "allocatedResourceStatuses");
+    mazu_cJSON *allocated_resource_statuses = mazu_cJSON_GetObjectItemCaseSensitive(v1_persistent_volume_claim_statusJSON, "allocatedResourceStatuses");
     if (allocated_resource_statuses) { 
-    cJSON *allocated_resource_statuses_local_map = NULL;
-    if(!cJSON_IsObject(allocated_resource_statuses) && !cJSON_IsNull(allocated_resource_statuses))
+    mazu_cJSON *allocated_resource_statuses_local_map = NULL;
+    if(!mazu_cJSON_IsObject(allocated_resource_statuses) && !mazu_cJSON_IsNull(allocated_resource_statuses))
     {
         goto end;//primitive map container
     }
-    if(cJSON_IsObject(allocated_resource_statuses))
+    if(mazu_cJSON_IsObject(allocated_resource_statuses))
     {
         allocated_resource_statusesList = list_createList();
         keyValuePair_t *localMapKeyPair;
-        cJSON_ArrayForEach(allocated_resource_statuses_local_map, allocated_resource_statuses)
+        mazu_cJSON_ArrayForEach(allocated_resource_statuses_local_map, allocated_resource_statuses)
         {
-            cJSON *localMapObject = allocated_resource_statuses_local_map;
-            if(!cJSON_IsString(localMapObject))
+            mazu_cJSON *localMapObject = allocated_resource_statuses_local_map;
+            if(!mazu_cJSON_IsString(localMapObject))
             {
                 goto end;
             }
@@ -299,21 +299,21 @@ v1_persistent_volume_claim_status_t *v1_persistent_volume_claim_status_parseFrom
     }
 
     // v1_persistent_volume_claim_status->allocated_resources
-    cJSON *allocated_resources = cJSON_GetObjectItemCaseSensitive(v1_persistent_volume_claim_statusJSON, "allocatedResources");
+    mazu_cJSON *allocated_resources = mazu_cJSON_GetObjectItemCaseSensitive(v1_persistent_volume_claim_statusJSON, "allocatedResources");
     if (allocated_resources) { 
-    cJSON *allocated_resources_local_map = NULL;
-    if(!cJSON_IsObject(allocated_resources) && !cJSON_IsNull(allocated_resources))
+    mazu_cJSON *allocated_resources_local_map = NULL;
+    if(!mazu_cJSON_IsObject(allocated_resources) && !mazu_cJSON_IsNull(allocated_resources))
     {
         goto end;//primitive map container
     }
-    if(cJSON_IsObject(allocated_resources))
+    if(mazu_cJSON_IsObject(allocated_resources))
     {
         allocated_resourcesList = list_createList();
         keyValuePair_t *localMapKeyPair;
-        cJSON_ArrayForEach(allocated_resources_local_map, allocated_resources)
+        mazu_cJSON_ArrayForEach(allocated_resources_local_map, allocated_resources)
         {
-            cJSON *localMapObject = allocated_resources_local_map;
-            if(!cJSON_IsString(localMapObject))
+            mazu_cJSON *localMapObject = allocated_resources_local_map;
+            if(!mazu_cJSON_IsString(localMapObject))
             {
                 goto end;
             }
@@ -324,21 +324,21 @@ v1_persistent_volume_claim_status_t *v1_persistent_volume_claim_status_parseFrom
     }
 
     // v1_persistent_volume_claim_status->capacity
-    cJSON *capacity = cJSON_GetObjectItemCaseSensitive(v1_persistent_volume_claim_statusJSON, "capacity");
+    mazu_cJSON *capacity = mazu_cJSON_GetObjectItemCaseSensitive(v1_persistent_volume_claim_statusJSON, "capacity");
     if (capacity) { 
-    cJSON *capacity_local_map = NULL;
-    if(!cJSON_IsObject(capacity) && !cJSON_IsNull(capacity))
+    mazu_cJSON *capacity_local_map = NULL;
+    if(!mazu_cJSON_IsObject(capacity) && !mazu_cJSON_IsNull(capacity))
     {
         goto end;//primitive map container
     }
-    if(cJSON_IsObject(capacity))
+    if(mazu_cJSON_IsObject(capacity))
     {
         capacityList = list_createList();
         keyValuePair_t *localMapKeyPair;
-        cJSON_ArrayForEach(capacity_local_map, capacity)
+        mazu_cJSON_ArrayForEach(capacity_local_map, capacity)
         {
-            cJSON *localMapObject = capacity_local_map;
-            if(!cJSON_IsString(localMapObject))
+            mazu_cJSON *localMapObject = capacity_local_map;
+            if(!mazu_cJSON_IsString(localMapObject))
             {
                 goto end;
             }
@@ -349,18 +349,18 @@ v1_persistent_volume_claim_status_t *v1_persistent_volume_claim_status_parseFrom
     }
 
     // v1_persistent_volume_claim_status->conditions
-    cJSON *conditions = cJSON_GetObjectItemCaseSensitive(v1_persistent_volume_claim_statusJSON, "conditions");
+    mazu_cJSON *conditions = mazu_cJSON_GetObjectItemCaseSensitive(v1_persistent_volume_claim_statusJSON, "conditions");
     if (conditions) { 
-    cJSON *conditions_local_nonprimitive = NULL;
-    if(!cJSON_IsArray(conditions)){
+    mazu_cJSON *conditions_local_nonprimitive = NULL;
+    if(!mazu_cJSON_IsArray(conditions)){
         goto end; //nonprimitive container
     }
 
     conditionsList = list_createList();
 
-    cJSON_ArrayForEach(conditions_local_nonprimitive,conditions )
+    mazu_cJSON_ArrayForEach(conditions_local_nonprimitive,conditions )
     {
-        if(!cJSON_IsObject(conditions_local_nonprimitive)){
+        if(!mazu_cJSON_IsObject(conditions_local_nonprimitive)){
             goto end;
         }
         v1_persistent_volume_claim_condition_t *conditionsItem = v1_persistent_volume_claim_condition_parseFromJSON(conditions_local_nonprimitive);
@@ -370,24 +370,24 @@ v1_persistent_volume_claim_status_t *v1_persistent_volume_claim_status_parseFrom
     }
 
     // v1_persistent_volume_claim_status->current_volume_attributes_class_name
-    cJSON *current_volume_attributes_class_name = cJSON_GetObjectItemCaseSensitive(v1_persistent_volume_claim_statusJSON, "currentVolumeAttributesClassName");
+    mazu_cJSON *current_volume_attributes_class_name = mazu_cJSON_GetObjectItemCaseSensitive(v1_persistent_volume_claim_statusJSON, "currentVolumeAttributesClassName");
     if (current_volume_attributes_class_name) { 
-    if(!cJSON_IsString(current_volume_attributes_class_name) && !cJSON_IsNull(current_volume_attributes_class_name))
+    if(!mazu_cJSON_IsString(current_volume_attributes_class_name) && !mazu_cJSON_IsNull(current_volume_attributes_class_name))
     {
     goto end; //String
     }
     }
 
     // v1_persistent_volume_claim_status->modify_volume_status
-    cJSON *modify_volume_status = cJSON_GetObjectItemCaseSensitive(v1_persistent_volume_claim_statusJSON, "modifyVolumeStatus");
+    mazu_cJSON *modify_volume_status = mazu_cJSON_GetObjectItemCaseSensitive(v1_persistent_volume_claim_statusJSON, "modifyVolumeStatus");
     if (modify_volume_status) { 
     modify_volume_status_local_nonprim = v1_modify_volume_status_parseFromJSON(modify_volume_status); //nonprimitive
     }
 
     // v1_persistent_volume_claim_status->phase
-    cJSON *phase = cJSON_GetObjectItemCaseSensitive(v1_persistent_volume_claim_statusJSON, "phase");
+    mazu_cJSON *phase = mazu_cJSON_GetObjectItemCaseSensitive(v1_persistent_volume_claim_statusJSON, "phase");
     if (phase) { 
-    if(!cJSON_IsString(phase) && !cJSON_IsNull(phase))
+    if(!mazu_cJSON_IsString(phase) && !mazu_cJSON_IsNull(phase))
     {
     goto end; //String
     }
@@ -400,9 +400,9 @@ v1_persistent_volume_claim_status_t *v1_persistent_volume_claim_status_parseFrom
         allocated_resources ? allocated_resourcesList : NULL,
         capacity ? capacityList : NULL,
         conditions ? conditionsList : NULL,
-        current_volume_attributes_class_name && !cJSON_IsNull(current_volume_attributes_class_name) ? strdup(current_volume_attributes_class_name->valuestring) : NULL,
+        current_volume_attributes_class_name && !mazu_cJSON_IsNull(current_volume_attributes_class_name) ? strdup(current_volume_attributes_class_name->valuestring) : NULL,
         modify_volume_status ? modify_volume_status_local_nonprim : NULL,
-        phase && !cJSON_IsNull(phase) ? strdup(phase->valuestring) : NULL
+        phase && !mazu_cJSON_IsNull(phase) ? strdup(phase->valuestring) : NULL
         );
 
     return v1_persistent_volume_claim_status_local_var;

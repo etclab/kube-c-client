@@ -57,16 +57,16 @@ void v1_user_info_free(v1_user_info_t *v1_user_info) {
     free(v1_user_info);
 }
 
-cJSON *v1_user_info_convertToJSON(v1_user_info_t *v1_user_info) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_user_info_convertToJSON(v1_user_info_t *v1_user_info) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_user_info->extra
     if(v1_user_info->extra) {
-    cJSON *extra = cJSON_AddObjectToObject(item, "extra");
+    mazu_cJSON *extra = mazu_cJSON_AddObjectToObject(item, "extra");
     if(extra == NULL) {
         goto fail; //primitive map container
     }
-    cJSON *localMapObject = extra;
+    mazu_cJSON *localMapObject = extra;
     listEntry_t *extraListEntry;
     if (v1_user_info->extra) {
     list_ForEach(extraListEntry, v1_user_info->extra) {
@@ -78,14 +78,14 @@ cJSON *v1_user_info_convertToJSON(v1_user_info_t *v1_user_info) {
 
     // v1_user_info->groups
     if(v1_user_info->groups) {
-    cJSON *groups = cJSON_AddArrayToObject(item, "groups");
+    mazu_cJSON *groups = mazu_cJSON_AddArrayToObject(item, "groups");
     if(groups == NULL) {
         goto fail; //primitive container
     }
 
     listEntry_t *groupsListEntry;
     list_ForEach(groupsListEntry, v1_user_info->groups) {
-    if(cJSON_AddStringToObject(groups, "", (char*)groupsListEntry->data) == NULL)
+    if(mazu_cJSON_AddStringToObject(groups, "", (char*)groupsListEntry->data) == NULL)
     {
         goto fail;
     }
@@ -95,7 +95,7 @@ cJSON *v1_user_info_convertToJSON(v1_user_info_t *v1_user_info) {
 
     // v1_user_info->uid
     if(v1_user_info->uid) {
-    if(cJSON_AddStringToObject(item, "uid", v1_user_info->uid) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "uid", v1_user_info->uid) == NULL) {
     goto fail; //String
     }
     }
@@ -103,7 +103,7 @@ cJSON *v1_user_info_convertToJSON(v1_user_info_t *v1_user_info) {
 
     // v1_user_info->username
     if(v1_user_info->username) {
-    if(cJSON_AddStringToObject(item, "username", v1_user_info->username) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "username", v1_user_info->username) == NULL) {
     goto fail; //String
     }
     }
@@ -111,12 +111,12 @@ cJSON *v1_user_info_convertToJSON(v1_user_info_t *v1_user_info) {
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_user_info_t *v1_user_info_parseFromJSON(cJSON *v1_user_infoJSON){
+v1_user_info_t *v1_user_info_parseFromJSON(mazu_cJSON *v1_user_infoJSON){
 
     v1_user_info_t *v1_user_info_local_var = NULL;
 
@@ -127,37 +127,37 @@ v1_user_info_t *v1_user_info_parseFromJSON(cJSON *v1_user_infoJSON){
     list_t *groupsList = NULL;
 
     // v1_user_info->extra
-    cJSON *extra = cJSON_GetObjectItemCaseSensitive(v1_user_infoJSON, "extra");
+    mazu_cJSON *extra = mazu_cJSON_GetObjectItemCaseSensitive(v1_user_infoJSON, "extra");
     if (extra) { 
-    cJSON *extra_local_map = NULL;
-    if(!cJSON_IsObject(extra) && !cJSON_IsNull(extra))
+    mazu_cJSON *extra_local_map = NULL;
+    if(!mazu_cJSON_IsObject(extra) && !mazu_cJSON_IsNull(extra))
     {
         goto end;//primitive map container
     }
-    if(cJSON_IsObject(extra))
+    if(mazu_cJSON_IsObject(extra))
     {
         extraList = list_createList();
         keyValuePair_t *localMapKeyPair;
-        cJSON_ArrayForEach(extra_local_map, extra)
+        mazu_cJSON_ArrayForEach(extra_local_map, extra)
         {
-            cJSON *localMapObject = extra_local_map;
+            mazu_cJSON *localMapObject = extra_local_map;
             list_addElement(extraList , localMapKeyPair);
         }
     }
     }
 
     // v1_user_info->groups
-    cJSON *groups = cJSON_GetObjectItemCaseSensitive(v1_user_infoJSON, "groups");
+    mazu_cJSON *groups = mazu_cJSON_GetObjectItemCaseSensitive(v1_user_infoJSON, "groups");
     if (groups) { 
-    cJSON *groups_local = NULL;
-    if(!cJSON_IsArray(groups)) {
+    mazu_cJSON *groups_local = NULL;
+    if(!mazu_cJSON_IsArray(groups)) {
         goto end;//primitive container
     }
     groupsList = list_createList();
 
-    cJSON_ArrayForEach(groups_local, groups)
+    mazu_cJSON_ArrayForEach(groups_local, groups)
     {
-        if(!cJSON_IsString(groups_local))
+        if(!mazu_cJSON_IsString(groups_local))
         {
             goto end;
         }
@@ -166,18 +166,18 @@ v1_user_info_t *v1_user_info_parseFromJSON(cJSON *v1_user_infoJSON){
     }
 
     // v1_user_info->uid
-    cJSON *uid = cJSON_GetObjectItemCaseSensitive(v1_user_infoJSON, "uid");
+    mazu_cJSON *uid = mazu_cJSON_GetObjectItemCaseSensitive(v1_user_infoJSON, "uid");
     if (uid) { 
-    if(!cJSON_IsString(uid) && !cJSON_IsNull(uid))
+    if(!mazu_cJSON_IsString(uid) && !mazu_cJSON_IsNull(uid))
     {
     goto end; //String
     }
     }
 
     // v1_user_info->username
-    cJSON *username = cJSON_GetObjectItemCaseSensitive(v1_user_infoJSON, "username");
+    mazu_cJSON *username = mazu_cJSON_GetObjectItemCaseSensitive(v1_user_infoJSON, "username");
     if (username) { 
-    if(!cJSON_IsString(username) && !cJSON_IsNull(username))
+    if(!mazu_cJSON_IsString(username) && !mazu_cJSON_IsNull(username))
     {
     goto end; //String
     }
@@ -187,8 +187,8 @@ v1_user_info_t *v1_user_info_parseFromJSON(cJSON *v1_user_infoJSON){
     v1_user_info_local_var = v1_user_info_create (
         extra ? extraList : NULL,
         groups ? groupsList : NULL,
-        uid && !cJSON_IsNull(uid) ? strdup(uid->valuestring) : NULL,
-        username && !cJSON_IsNull(username) ? strdup(username->valuestring) : NULL
+        uid && !mazu_cJSON_IsNull(uid) ? strdup(uid->valuestring) : NULL,
+        username && !mazu_cJSON_IsNull(username) ? strdup(username->valuestring) : NULL
         );
 
     return v1_user_info_local_var;

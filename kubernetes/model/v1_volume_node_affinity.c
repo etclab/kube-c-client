@@ -30,16 +30,16 @@ void v1_volume_node_affinity_free(v1_volume_node_affinity_t *v1_volume_node_affi
     free(v1_volume_node_affinity);
 }
 
-cJSON *v1_volume_node_affinity_convertToJSON(v1_volume_node_affinity_t *v1_volume_node_affinity) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_volume_node_affinity_convertToJSON(v1_volume_node_affinity_t *v1_volume_node_affinity) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_volume_node_affinity->required
     if(v1_volume_node_affinity->required) {
-    cJSON *required_local_JSON = v1_node_selector_convertToJSON(v1_volume_node_affinity->required);
+    mazu_cJSON *required_local_JSON = v1_node_selector_convertToJSON(v1_volume_node_affinity->required);
     if(required_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "required", required_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "required", required_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -48,12 +48,12 @@ cJSON *v1_volume_node_affinity_convertToJSON(v1_volume_node_affinity_t *v1_volum
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_volume_node_affinity_t *v1_volume_node_affinity_parseFromJSON(cJSON *v1_volume_node_affinityJSON){
+v1_volume_node_affinity_t *v1_volume_node_affinity_parseFromJSON(mazu_cJSON *v1_volume_node_affinityJSON){
 
     v1_volume_node_affinity_t *v1_volume_node_affinity_local_var = NULL;
 
@@ -61,7 +61,7 @@ v1_volume_node_affinity_t *v1_volume_node_affinity_parseFromJSON(cJSON *v1_volum
     v1_node_selector_t *required_local_nonprim = NULL;
 
     // v1_volume_node_affinity->required
-    cJSON *required = cJSON_GetObjectItemCaseSensitive(v1_volume_node_affinityJSON, "required");
+    mazu_cJSON *required = mazu_cJSON_GetObjectItemCaseSensitive(v1_volume_node_affinityJSON, "required");
     if (required) { 
     required_local_nonprim = v1_node_selector_parseFromJSON(required); //nonprimitive
     }

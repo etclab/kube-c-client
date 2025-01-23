@@ -11,7 +11,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdbool.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 
 #include "../model/v1_node_condition.h"
 v1_node_condition_t* instantiate_v1_node_condition(int include_optional);
@@ -49,11 +49,11 @@ v1_node_condition_t* instantiate_v1_node_condition(int include_optional) {
 void test_v1_node_condition(int include_optional) {
     v1_node_condition_t* v1_node_condition_1 = instantiate_v1_node_condition(include_optional);
 
-	cJSON* jsonv1_node_condition_1 = v1_node_condition_convertToJSON(v1_node_condition_1);
-	printf("v1_node_condition :\n%s\n", cJSON_Print(jsonv1_node_condition_1));
+	mazu_cJSON* jsonv1_node_condition_1 = v1_node_condition_convertToJSON(v1_node_condition_1);
+	printf("v1_node_condition :\n%s\n", mazu_cJSON_Print(jsonv1_node_condition_1));
 	v1_node_condition_t* v1_node_condition_2 = v1_node_condition_parseFromJSON(jsonv1_node_condition_1);
-	cJSON* jsonv1_node_condition_2 = v1_node_condition_convertToJSON(v1_node_condition_2);
-	printf("repeating v1_node_condition:\n%s\n", cJSON_Print(jsonv1_node_condition_2));
+	mazu_cJSON* jsonv1_node_condition_2 = v1_node_condition_convertToJSON(v1_node_condition_2);
+	printf("repeating v1_node_condition:\n%s\n", mazu_cJSON_Print(jsonv1_node_condition_2));
 }
 
 int main() {

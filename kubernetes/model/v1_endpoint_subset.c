@@ -51,12 +51,12 @@ void v1_endpoint_subset_free(v1_endpoint_subset_t *v1_endpoint_subset) {
     free(v1_endpoint_subset);
 }
 
-cJSON *v1_endpoint_subset_convertToJSON(v1_endpoint_subset_t *v1_endpoint_subset) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_endpoint_subset_convertToJSON(v1_endpoint_subset_t *v1_endpoint_subset) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_endpoint_subset->addresses
     if(v1_endpoint_subset->addresses) {
-    cJSON *addresses = cJSON_AddArrayToObject(item, "addresses");
+    mazu_cJSON *addresses = mazu_cJSON_AddArrayToObject(item, "addresses");
     if(addresses == NULL) {
     goto fail; //nonprimitive container
     }
@@ -64,11 +64,11 @@ cJSON *v1_endpoint_subset_convertToJSON(v1_endpoint_subset_t *v1_endpoint_subset
     listEntry_t *addressesListEntry;
     if (v1_endpoint_subset->addresses) {
     list_ForEach(addressesListEntry, v1_endpoint_subset->addresses) {
-    cJSON *itemLocal = v1_endpoint_address_convertToJSON(addressesListEntry->data);
+    mazu_cJSON *itemLocal = v1_endpoint_address_convertToJSON(addressesListEntry->data);
     if(itemLocal == NULL) {
     goto fail;
     }
-    cJSON_AddItemToArray(addresses, itemLocal);
+    mazu_cJSON_AddItemToArray(addresses, itemLocal);
     }
     }
     }
@@ -76,7 +76,7 @@ cJSON *v1_endpoint_subset_convertToJSON(v1_endpoint_subset_t *v1_endpoint_subset
 
     // v1_endpoint_subset->not_ready_addresses
     if(v1_endpoint_subset->not_ready_addresses) {
-    cJSON *not_ready_addresses = cJSON_AddArrayToObject(item, "notReadyAddresses");
+    mazu_cJSON *not_ready_addresses = mazu_cJSON_AddArrayToObject(item, "notReadyAddresses");
     if(not_ready_addresses == NULL) {
     goto fail; //nonprimitive container
     }
@@ -84,11 +84,11 @@ cJSON *v1_endpoint_subset_convertToJSON(v1_endpoint_subset_t *v1_endpoint_subset
     listEntry_t *not_ready_addressesListEntry;
     if (v1_endpoint_subset->not_ready_addresses) {
     list_ForEach(not_ready_addressesListEntry, v1_endpoint_subset->not_ready_addresses) {
-    cJSON *itemLocal = v1_endpoint_address_convertToJSON(not_ready_addressesListEntry->data);
+    mazu_cJSON *itemLocal = v1_endpoint_address_convertToJSON(not_ready_addressesListEntry->data);
     if(itemLocal == NULL) {
     goto fail;
     }
-    cJSON_AddItemToArray(not_ready_addresses, itemLocal);
+    mazu_cJSON_AddItemToArray(not_ready_addresses, itemLocal);
     }
     }
     }
@@ -96,7 +96,7 @@ cJSON *v1_endpoint_subset_convertToJSON(v1_endpoint_subset_t *v1_endpoint_subset
 
     // v1_endpoint_subset->ports
     if(v1_endpoint_subset->ports) {
-    cJSON *ports = cJSON_AddArrayToObject(item, "ports");
+    mazu_cJSON *ports = mazu_cJSON_AddArrayToObject(item, "ports");
     if(ports == NULL) {
     goto fail; //nonprimitive container
     }
@@ -104,11 +104,11 @@ cJSON *v1_endpoint_subset_convertToJSON(v1_endpoint_subset_t *v1_endpoint_subset
     listEntry_t *portsListEntry;
     if (v1_endpoint_subset->ports) {
     list_ForEach(portsListEntry, v1_endpoint_subset->ports) {
-    cJSON *itemLocal = core_v1_endpoint_port_convertToJSON(portsListEntry->data);
+    mazu_cJSON *itemLocal = core_v1_endpoint_port_convertToJSON(portsListEntry->data);
     if(itemLocal == NULL) {
     goto fail;
     }
-    cJSON_AddItemToArray(ports, itemLocal);
+    mazu_cJSON_AddItemToArray(ports, itemLocal);
     }
     }
     }
@@ -116,12 +116,12 @@ cJSON *v1_endpoint_subset_convertToJSON(v1_endpoint_subset_t *v1_endpoint_subset
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_endpoint_subset_t *v1_endpoint_subset_parseFromJSON(cJSON *v1_endpoint_subsetJSON){
+v1_endpoint_subset_t *v1_endpoint_subset_parseFromJSON(mazu_cJSON *v1_endpoint_subsetJSON){
 
     v1_endpoint_subset_t *v1_endpoint_subset_local_var = NULL;
 
@@ -135,18 +135,18 @@ v1_endpoint_subset_t *v1_endpoint_subset_parseFromJSON(cJSON *v1_endpoint_subset
     list_t *portsList = NULL;
 
     // v1_endpoint_subset->addresses
-    cJSON *addresses = cJSON_GetObjectItemCaseSensitive(v1_endpoint_subsetJSON, "addresses");
+    mazu_cJSON *addresses = mazu_cJSON_GetObjectItemCaseSensitive(v1_endpoint_subsetJSON, "addresses");
     if (addresses) { 
-    cJSON *addresses_local_nonprimitive = NULL;
-    if(!cJSON_IsArray(addresses)){
+    mazu_cJSON *addresses_local_nonprimitive = NULL;
+    if(!mazu_cJSON_IsArray(addresses)){
         goto end; //nonprimitive container
     }
 
     addressesList = list_createList();
 
-    cJSON_ArrayForEach(addresses_local_nonprimitive,addresses )
+    mazu_cJSON_ArrayForEach(addresses_local_nonprimitive,addresses )
     {
-        if(!cJSON_IsObject(addresses_local_nonprimitive)){
+        if(!mazu_cJSON_IsObject(addresses_local_nonprimitive)){
             goto end;
         }
         v1_endpoint_address_t *addressesItem = v1_endpoint_address_parseFromJSON(addresses_local_nonprimitive);
@@ -156,18 +156,18 @@ v1_endpoint_subset_t *v1_endpoint_subset_parseFromJSON(cJSON *v1_endpoint_subset
     }
 
     // v1_endpoint_subset->not_ready_addresses
-    cJSON *not_ready_addresses = cJSON_GetObjectItemCaseSensitive(v1_endpoint_subsetJSON, "notReadyAddresses");
+    mazu_cJSON *not_ready_addresses = mazu_cJSON_GetObjectItemCaseSensitive(v1_endpoint_subsetJSON, "notReadyAddresses");
     if (not_ready_addresses) { 
-    cJSON *not_ready_addresses_local_nonprimitive = NULL;
-    if(!cJSON_IsArray(not_ready_addresses)){
+    mazu_cJSON *not_ready_addresses_local_nonprimitive = NULL;
+    if(!mazu_cJSON_IsArray(not_ready_addresses)){
         goto end; //nonprimitive container
     }
 
     not_ready_addressesList = list_createList();
 
-    cJSON_ArrayForEach(not_ready_addresses_local_nonprimitive,not_ready_addresses )
+    mazu_cJSON_ArrayForEach(not_ready_addresses_local_nonprimitive,not_ready_addresses )
     {
-        if(!cJSON_IsObject(not_ready_addresses_local_nonprimitive)){
+        if(!mazu_cJSON_IsObject(not_ready_addresses_local_nonprimitive)){
             goto end;
         }
         v1_endpoint_address_t *not_ready_addressesItem = v1_endpoint_address_parseFromJSON(not_ready_addresses_local_nonprimitive);
@@ -177,18 +177,18 @@ v1_endpoint_subset_t *v1_endpoint_subset_parseFromJSON(cJSON *v1_endpoint_subset
     }
 
     // v1_endpoint_subset->ports
-    cJSON *ports = cJSON_GetObjectItemCaseSensitive(v1_endpoint_subsetJSON, "ports");
+    mazu_cJSON *ports = mazu_cJSON_GetObjectItemCaseSensitive(v1_endpoint_subsetJSON, "ports");
     if (ports) { 
-    cJSON *ports_local_nonprimitive = NULL;
-    if(!cJSON_IsArray(ports)){
+    mazu_cJSON *ports_local_nonprimitive = NULL;
+    if(!mazu_cJSON_IsArray(ports)){
         goto end; //nonprimitive container
     }
 
     portsList = list_createList();
 
-    cJSON_ArrayForEach(ports_local_nonprimitive,ports )
+    mazu_cJSON_ArrayForEach(ports_local_nonprimitive,ports )
     {
-        if(!cJSON_IsObject(ports_local_nonprimitive)){
+        if(!mazu_cJSON_IsObject(ports_local_nonprimitive)){
             goto end;
         }
         core_v1_endpoint_port_t *portsItem = core_v1_endpoint_port_parseFromJSON(ports_local_nonprimitive);

@@ -8,7 +8,7 @@
 #define _v1_config_map_projection_H_
 
 #include <string.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
 #include "../include/binary.h"
@@ -34,9 +34,9 @@ v1_config_map_projection_t *v1_config_map_projection_create(
 
 void v1_config_map_projection_free(v1_config_map_projection_t *v1_config_map_projection);
 
-v1_config_map_projection_t *v1_config_map_projection_parseFromJSON(cJSON *v1_config_map_projectionJSON);
+v1_config_map_projection_t *v1_config_map_projection_parseFromJSON(mazu_cJSON *v1_config_map_projectionJSON);
 
-cJSON *v1_config_map_projection_convertToJSON(v1_config_map_projection_t *v1_config_map_projection);
+mazu_cJSON *v1_config_map_projection_convertToJSON(v1_config_map_projection_t *v1_config_map_projection);
 
 #endif /* _v1_config_map_projection_H_ */
 

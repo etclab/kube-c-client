@@ -53,9 +53,9 @@ ResourceAPI_getAPIGroup_17(apiClient_t *apiClient)
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *ResourceAPIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    mazu_cJSON *ResourceAPIlocalVarJSON = mazu_cJSON_Parse(apiClient->dataReceived);
     v1_api_group_t *elementToReturn = v1_api_group_parseFromJSON(ResourceAPIlocalVarJSON);
-    cJSON_Delete(ResourceAPIlocalVarJSON);
+    mazu_cJSON_Delete(ResourceAPIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
     }

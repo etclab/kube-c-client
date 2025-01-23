@@ -36,16 +36,16 @@ void v1_custom_resource_subresources_free(v1_custom_resource_subresources_t *v1_
     free(v1_custom_resource_subresources);
 }
 
-cJSON *v1_custom_resource_subresources_convertToJSON(v1_custom_resource_subresources_t *v1_custom_resource_subresources) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_custom_resource_subresources_convertToJSON(v1_custom_resource_subresources_t *v1_custom_resource_subresources) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_custom_resource_subresources->scale
     if(v1_custom_resource_subresources->scale) {
-    cJSON *scale_local_JSON = v1_custom_resource_subresource_scale_convertToJSON(v1_custom_resource_subresources->scale);
+    mazu_cJSON *scale_local_JSON = v1_custom_resource_subresource_scale_convertToJSON(v1_custom_resource_subresources->scale);
     if(scale_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "scale", scale_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "scale", scale_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -54,11 +54,11 @@ cJSON *v1_custom_resource_subresources_convertToJSON(v1_custom_resource_subresou
 
     // v1_custom_resource_subresources->status
     if(v1_custom_resource_subresources->status) {
-    cJSON *status_object = object_convertToJSON(v1_custom_resource_subresources->status);
+    mazu_cJSON *status_object = object_convertToJSON(v1_custom_resource_subresources->status);
     if(status_object == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "status", status_object);
+    mazu_cJSON_AddItemToObject(item, "status", status_object);
     if(item->child == NULL) {
     goto fail;
     }
@@ -67,12 +67,12 @@ cJSON *v1_custom_resource_subresources_convertToJSON(v1_custom_resource_subresou
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_custom_resource_subresources_t *v1_custom_resource_subresources_parseFromJSON(cJSON *v1_custom_resource_subresourcesJSON){
+v1_custom_resource_subresources_t *v1_custom_resource_subresources_parseFromJSON(mazu_cJSON *v1_custom_resource_subresourcesJSON){
 
     v1_custom_resource_subresources_t *v1_custom_resource_subresources_local_var = NULL;
 
@@ -80,13 +80,13 @@ v1_custom_resource_subresources_t *v1_custom_resource_subresources_parseFromJSON
     v1_custom_resource_subresource_scale_t *scale_local_nonprim = NULL;
 
     // v1_custom_resource_subresources->scale
-    cJSON *scale = cJSON_GetObjectItemCaseSensitive(v1_custom_resource_subresourcesJSON, "scale");
+    mazu_cJSON *scale = mazu_cJSON_GetObjectItemCaseSensitive(v1_custom_resource_subresourcesJSON, "scale");
     if (scale) { 
     scale_local_nonprim = v1_custom_resource_subresource_scale_parseFromJSON(scale); //nonprimitive
     }
 
     // v1_custom_resource_subresources->status
-    cJSON *status = cJSON_GetObjectItemCaseSensitive(v1_custom_resource_subresourcesJSON, "status");
+    mazu_cJSON *status = mazu_cJSON_GetObjectItemCaseSensitive(v1_custom_resource_subresourcesJSON, "status");
     object_t *status_local_object = NULL;
     if (status) { 
     status_local_object = object_parseFromJSON(status); //object

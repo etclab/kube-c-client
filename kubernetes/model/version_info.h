@@ -8,7 +8,7 @@
 #define _version_info_H_
 
 #include <string.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
 #include "../include/binary.h"
@@ -45,9 +45,9 @@ version_info_t *version_info_create(
 
 void version_info_free(version_info_t *version_info);
 
-version_info_t *version_info_parseFromJSON(cJSON *version_infoJSON);
+version_info_t *version_info_parseFromJSON(mazu_cJSON *version_infoJSON);
 
-cJSON *version_info_convertToJSON(version_info_t *version_info);
+mazu_cJSON *version_info_convertToJSON(version_info_t *version_info);
 
 #endif /* _version_info_H_ */
 

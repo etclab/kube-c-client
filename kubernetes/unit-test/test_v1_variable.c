@@ -11,7 +11,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdbool.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 
 #include "../model/v1_variable.h"
 v1_variable_t* instantiate_v1_variable(int include_optional);
@@ -41,11 +41,11 @@ v1_variable_t* instantiate_v1_variable(int include_optional) {
 void test_v1_variable(int include_optional) {
     v1_variable_t* v1_variable_1 = instantiate_v1_variable(include_optional);
 
-	cJSON* jsonv1_variable_1 = v1_variable_convertToJSON(v1_variable_1);
-	printf("v1_variable :\n%s\n", cJSON_Print(jsonv1_variable_1));
+	mazu_cJSON* jsonv1_variable_1 = v1_variable_convertToJSON(v1_variable_1);
+	printf("v1_variable :\n%s\n", mazu_cJSON_Print(jsonv1_variable_1));
 	v1_variable_t* v1_variable_2 = v1_variable_parseFromJSON(jsonv1_variable_1);
-	cJSON* jsonv1_variable_2 = v1_variable_convertToJSON(v1_variable_2);
-	printf("repeating v1_variable:\n%s\n", cJSON_Print(jsonv1_variable_2));
+	mazu_cJSON* jsonv1_variable_2 = v1_variable_convertToJSON(v1_variable_2);
+	printf("repeating v1_variable:\n%s\n", mazu_cJSON_Print(jsonv1_variable_2));
 }
 
 int main() {

@@ -30,37 +30,37 @@ void v1_host_ip_free(v1_host_ip_t *v1_host_ip) {
     free(v1_host_ip);
 }
 
-cJSON *v1_host_ip_convertToJSON(v1_host_ip_t *v1_host_ip) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_host_ip_convertToJSON(v1_host_ip_t *v1_host_ip) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_host_ip->ip
     if (!v1_host_ip->ip) {
         goto fail;
     }
-    if(cJSON_AddStringToObject(item, "ip", v1_host_ip->ip) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "ip", v1_host_ip->ip) == NULL) {
     goto fail; //String
     }
 
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_host_ip_t *v1_host_ip_parseFromJSON(cJSON *v1_host_ipJSON){
+v1_host_ip_t *v1_host_ip_parseFromJSON(mazu_cJSON *v1_host_ipJSON){
 
     v1_host_ip_t *v1_host_ip_local_var = NULL;
 
     // v1_host_ip->ip
-    cJSON *ip = cJSON_GetObjectItemCaseSensitive(v1_host_ipJSON, "ip");
+    mazu_cJSON *ip = mazu_cJSON_GetObjectItemCaseSensitive(v1_host_ipJSON, "ip");
     if (!ip) {
         goto end;
     }
 
     
-    if(!cJSON_IsString(ip))
+    if(!mazu_cJSON_IsString(ip))
     {
     goto end; //String
     }

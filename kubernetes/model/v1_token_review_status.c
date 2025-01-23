@@ -47,19 +47,19 @@ void v1_token_review_status_free(v1_token_review_status_t *v1_token_review_statu
     free(v1_token_review_status);
 }
 
-cJSON *v1_token_review_status_convertToJSON(v1_token_review_status_t *v1_token_review_status) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_token_review_status_convertToJSON(v1_token_review_status_t *v1_token_review_status) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_token_review_status->audiences
     if(v1_token_review_status->audiences) {
-    cJSON *audiences = cJSON_AddArrayToObject(item, "audiences");
+    mazu_cJSON *audiences = mazu_cJSON_AddArrayToObject(item, "audiences");
     if(audiences == NULL) {
         goto fail; //primitive container
     }
 
     listEntry_t *audiencesListEntry;
     list_ForEach(audiencesListEntry, v1_token_review_status->audiences) {
-    if(cJSON_AddStringToObject(audiences, "", (char*)audiencesListEntry->data) == NULL)
+    if(mazu_cJSON_AddStringToObject(audiences, "", (char*)audiencesListEntry->data) == NULL)
     {
         goto fail;
     }
@@ -69,7 +69,7 @@ cJSON *v1_token_review_status_convertToJSON(v1_token_review_status_t *v1_token_r
 
     // v1_token_review_status->authenticated
     if(v1_token_review_status->authenticated) {
-    if(cJSON_AddBoolToObject(item, "authenticated", v1_token_review_status->authenticated) == NULL) {
+    if(mazu_cJSON_AddBoolToObject(item, "authenticated", v1_token_review_status->authenticated) == NULL) {
     goto fail; //Bool
     }
     }
@@ -77,7 +77,7 @@ cJSON *v1_token_review_status_convertToJSON(v1_token_review_status_t *v1_token_r
 
     // v1_token_review_status->error
     if(v1_token_review_status->error) {
-    if(cJSON_AddStringToObject(item, "error", v1_token_review_status->error) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "error", v1_token_review_status->error) == NULL) {
     goto fail; //String
     }
     }
@@ -85,11 +85,11 @@ cJSON *v1_token_review_status_convertToJSON(v1_token_review_status_t *v1_token_r
 
     // v1_token_review_status->user
     if(v1_token_review_status->user) {
-    cJSON *user_local_JSON = v1_user_info_convertToJSON(v1_token_review_status->user);
+    mazu_cJSON *user_local_JSON = v1_user_info_convertToJSON(v1_token_review_status->user);
     if(user_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "user", user_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "user", user_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -98,12 +98,12 @@ cJSON *v1_token_review_status_convertToJSON(v1_token_review_status_t *v1_token_r
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_token_review_status_t *v1_token_review_status_parseFromJSON(cJSON *v1_token_review_statusJSON){
+v1_token_review_status_t *v1_token_review_status_parseFromJSON(mazu_cJSON *v1_token_review_statusJSON){
 
     v1_token_review_status_t *v1_token_review_status_local_var = NULL;
 
@@ -114,17 +114,17 @@ v1_token_review_status_t *v1_token_review_status_parseFromJSON(cJSON *v1_token_r
     v1_user_info_t *user_local_nonprim = NULL;
 
     // v1_token_review_status->audiences
-    cJSON *audiences = cJSON_GetObjectItemCaseSensitive(v1_token_review_statusJSON, "audiences");
+    mazu_cJSON *audiences = mazu_cJSON_GetObjectItemCaseSensitive(v1_token_review_statusJSON, "audiences");
     if (audiences) { 
-    cJSON *audiences_local = NULL;
-    if(!cJSON_IsArray(audiences)) {
+    mazu_cJSON *audiences_local = NULL;
+    if(!mazu_cJSON_IsArray(audiences)) {
         goto end;//primitive container
     }
     audiencesList = list_createList();
 
-    cJSON_ArrayForEach(audiences_local, audiences)
+    mazu_cJSON_ArrayForEach(audiences_local, audiences)
     {
-        if(!cJSON_IsString(audiences_local))
+        if(!mazu_cJSON_IsString(audiences_local))
         {
             goto end;
         }
@@ -133,25 +133,25 @@ v1_token_review_status_t *v1_token_review_status_parseFromJSON(cJSON *v1_token_r
     }
 
     // v1_token_review_status->authenticated
-    cJSON *authenticated = cJSON_GetObjectItemCaseSensitive(v1_token_review_statusJSON, "authenticated");
+    mazu_cJSON *authenticated = mazu_cJSON_GetObjectItemCaseSensitive(v1_token_review_statusJSON, "authenticated");
     if (authenticated) { 
-    if(!cJSON_IsBool(authenticated))
+    if(!mazu_cJSON_IsBool(authenticated))
     {
     goto end; //Bool
     }
     }
 
     // v1_token_review_status->error
-    cJSON *error = cJSON_GetObjectItemCaseSensitive(v1_token_review_statusJSON, "error");
+    mazu_cJSON *error = mazu_cJSON_GetObjectItemCaseSensitive(v1_token_review_statusJSON, "error");
     if (error) { 
-    if(!cJSON_IsString(error) && !cJSON_IsNull(error))
+    if(!mazu_cJSON_IsString(error) && !mazu_cJSON_IsNull(error))
     {
     goto end; //String
     }
     }
 
     // v1_token_review_status->user
-    cJSON *user = cJSON_GetObjectItemCaseSensitive(v1_token_review_statusJSON, "user");
+    mazu_cJSON *user = mazu_cJSON_GetObjectItemCaseSensitive(v1_token_review_statusJSON, "user");
     if (user) { 
     user_local_nonprim = v1_user_info_parseFromJSON(user); //nonprimitive
     }
@@ -160,7 +160,7 @@ v1_token_review_status_t *v1_token_review_status_parseFromJSON(cJSON *v1_token_r
     v1_token_review_status_local_var = v1_token_review_status_create (
         audiences ? audiencesList : NULL,
         authenticated ? authenticated->valueint : 0,
-        error && !cJSON_IsNull(error) ? strdup(error->valuestring) : NULL,
+        error && !mazu_cJSON_IsNull(error) ? strdup(error->valuestring) : NULL,
         user ? user_local_nonprim : NULL
         );
 

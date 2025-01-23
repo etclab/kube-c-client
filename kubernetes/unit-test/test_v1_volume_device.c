@@ -11,7 +11,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdbool.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 
 #include "../model/v1_volume_device.h"
 v1_volume_device_t* instantiate_v1_volume_device(int include_optional);
@@ -41,11 +41,11 @@ v1_volume_device_t* instantiate_v1_volume_device(int include_optional) {
 void test_v1_volume_device(int include_optional) {
     v1_volume_device_t* v1_volume_device_1 = instantiate_v1_volume_device(include_optional);
 
-	cJSON* jsonv1_volume_device_1 = v1_volume_device_convertToJSON(v1_volume_device_1);
-	printf("v1_volume_device :\n%s\n", cJSON_Print(jsonv1_volume_device_1));
+	mazu_cJSON* jsonv1_volume_device_1 = v1_volume_device_convertToJSON(v1_volume_device_1);
+	printf("v1_volume_device :\n%s\n", mazu_cJSON_Print(jsonv1_volume_device_1));
 	v1_volume_device_t* v1_volume_device_2 = v1_volume_device_parseFromJSON(jsonv1_volume_device_1);
-	cJSON* jsonv1_volume_device_2 = v1_volume_device_convertToJSON(v1_volume_device_2);
-	printf("repeating v1_volume_device:\n%s\n", cJSON_Print(jsonv1_volume_device_2));
+	mazu_cJSON* jsonv1_volume_device_2 = v1_volume_device_convertToJSON(v1_volume_device_2);
+	printf("repeating v1_volume_device:\n%s\n", mazu_cJSON_Print(jsonv1_volume_device_2));
 }
 
 int main() {

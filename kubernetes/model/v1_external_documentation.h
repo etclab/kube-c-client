@@ -8,7 +8,7 @@
 #define _v1_external_documentation_H_
 
 #include <string.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
 #include "../include/binary.h"
@@ -31,9 +31,9 @@ v1_external_documentation_t *v1_external_documentation_create(
 
 void v1_external_documentation_free(v1_external_documentation_t *v1_external_documentation);
 
-v1_external_documentation_t *v1_external_documentation_parseFromJSON(cJSON *v1_external_documentationJSON);
+v1_external_documentation_t *v1_external_documentation_parseFromJSON(mazu_cJSON *v1_external_documentationJSON);
 
-cJSON *v1_external_documentation_convertToJSON(v1_external_documentation_t *v1_external_documentation);
+mazu_cJSON *v1_external_documentation_convertToJSON(v1_external_documentation_t *v1_external_documentation);
 
 #endif /* _v1_external_documentation_H_ */
 

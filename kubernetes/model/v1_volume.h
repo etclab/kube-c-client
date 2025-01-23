@@ -8,7 +8,7 @@
 #define _v1_volume_H_
 
 #include <string.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
 #include "../include/binary.h"
@@ -119,9 +119,9 @@ v1_volume_t *v1_volume_create(
 
 void v1_volume_free(v1_volume_t *v1_volume);
 
-v1_volume_t *v1_volume_parseFromJSON(cJSON *v1_volumeJSON);
+v1_volume_t *v1_volume_parseFromJSON(mazu_cJSON *v1_volumeJSON);
 
-cJSON *v1_volume_convertToJSON(v1_volume_t *v1_volume);
+mazu_cJSON *v1_volume_convertToJSON(v1_volume_t *v1_volume);
 
 #endif /* _v1_volume_H_ */
 

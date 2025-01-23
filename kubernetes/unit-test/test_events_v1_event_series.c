@@ -11,7 +11,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdbool.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 
 #include "../model/events_v1_event_series.h"
 events_v1_event_series_t* instantiate_events_v1_event_series(int include_optional);
@@ -41,11 +41,11 @@ events_v1_event_series_t* instantiate_events_v1_event_series(int include_optiona
 void test_events_v1_event_series(int include_optional) {
     events_v1_event_series_t* events_v1_event_series_1 = instantiate_events_v1_event_series(include_optional);
 
-	cJSON* jsonevents_v1_event_series_1 = events_v1_event_series_convertToJSON(events_v1_event_series_1);
-	printf("events_v1_event_series :\n%s\n", cJSON_Print(jsonevents_v1_event_series_1));
+	mazu_cJSON* jsonevents_v1_event_series_1 = events_v1_event_series_convertToJSON(events_v1_event_series_1);
+	printf("events_v1_event_series :\n%s\n", mazu_cJSON_Print(jsonevents_v1_event_series_1));
 	events_v1_event_series_t* events_v1_event_series_2 = events_v1_event_series_parseFromJSON(jsonevents_v1_event_series_1);
-	cJSON* jsonevents_v1_event_series_2 = events_v1_event_series_convertToJSON(events_v1_event_series_2);
-	printf("repeating events_v1_event_series:\n%s\n", cJSON_Print(jsonevents_v1_event_series_2));
+	mazu_cJSON* jsonevents_v1_event_series_2 = events_v1_event_series_convertToJSON(events_v1_event_series_2);
+	printf("repeating events_v1_event_series:\n%s\n", mazu_cJSON_Print(jsonevents_v1_event_series_2));
 }
 
 int main() {

@@ -33,19 +33,19 @@ void v1_namespace_spec_free(v1_namespace_spec_t *v1_namespace_spec) {
     free(v1_namespace_spec);
 }
 
-cJSON *v1_namespace_spec_convertToJSON(v1_namespace_spec_t *v1_namespace_spec) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_namespace_spec_convertToJSON(v1_namespace_spec_t *v1_namespace_spec) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_namespace_spec->finalizers
     if(v1_namespace_spec->finalizers) {
-    cJSON *finalizers = cJSON_AddArrayToObject(item, "finalizers");
+    mazu_cJSON *finalizers = mazu_cJSON_AddArrayToObject(item, "finalizers");
     if(finalizers == NULL) {
         goto fail; //primitive container
     }
 
     listEntry_t *finalizersListEntry;
     list_ForEach(finalizersListEntry, v1_namespace_spec->finalizers) {
-    if(cJSON_AddStringToObject(finalizers, "", (char*)finalizersListEntry->data) == NULL)
+    if(mazu_cJSON_AddStringToObject(finalizers, "", (char*)finalizersListEntry->data) == NULL)
     {
         goto fail;
     }
@@ -55,12 +55,12 @@ cJSON *v1_namespace_spec_convertToJSON(v1_namespace_spec_t *v1_namespace_spec) {
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_namespace_spec_t *v1_namespace_spec_parseFromJSON(cJSON *v1_namespace_specJSON){
+v1_namespace_spec_t *v1_namespace_spec_parseFromJSON(mazu_cJSON *v1_namespace_specJSON){
 
     v1_namespace_spec_t *v1_namespace_spec_local_var = NULL;
 
@@ -68,17 +68,17 @@ v1_namespace_spec_t *v1_namespace_spec_parseFromJSON(cJSON *v1_namespace_specJSO
     list_t *finalizersList = NULL;
 
     // v1_namespace_spec->finalizers
-    cJSON *finalizers = cJSON_GetObjectItemCaseSensitive(v1_namespace_specJSON, "finalizers");
+    mazu_cJSON *finalizers = mazu_cJSON_GetObjectItemCaseSensitive(v1_namespace_specJSON, "finalizers");
     if (finalizers) { 
-    cJSON *finalizers_local = NULL;
-    if(!cJSON_IsArray(finalizers)) {
+    mazu_cJSON *finalizers_local = NULL;
+    if(!mazu_cJSON_IsArray(finalizers)) {
         goto end;//primitive container
     }
     finalizersList = list_createList();
 
-    cJSON_ArrayForEach(finalizers_local, finalizers)
+    mazu_cJSON_ArrayForEach(finalizers_local, finalizers)
     {
-        if(!cJSON_IsString(finalizers_local))
+        if(!mazu_cJSON_IsString(finalizers_local))
         {
             goto end;
         }

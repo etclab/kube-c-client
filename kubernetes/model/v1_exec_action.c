@@ -33,19 +33,19 @@ void v1_exec_action_free(v1_exec_action_t *v1_exec_action) {
     free(v1_exec_action);
 }
 
-cJSON *v1_exec_action_convertToJSON(v1_exec_action_t *v1_exec_action) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_exec_action_convertToJSON(v1_exec_action_t *v1_exec_action) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_exec_action->command
     if(v1_exec_action->command) {
-    cJSON *command = cJSON_AddArrayToObject(item, "command");
+    mazu_cJSON *command = mazu_cJSON_AddArrayToObject(item, "command");
     if(command == NULL) {
         goto fail; //primitive container
     }
 
     listEntry_t *commandListEntry;
     list_ForEach(commandListEntry, v1_exec_action->command) {
-    if(cJSON_AddStringToObject(command, "", (char*)commandListEntry->data) == NULL)
+    if(mazu_cJSON_AddStringToObject(command, "", (char*)commandListEntry->data) == NULL)
     {
         goto fail;
     }
@@ -55,12 +55,12 @@ cJSON *v1_exec_action_convertToJSON(v1_exec_action_t *v1_exec_action) {
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_exec_action_t *v1_exec_action_parseFromJSON(cJSON *v1_exec_actionJSON){
+v1_exec_action_t *v1_exec_action_parseFromJSON(mazu_cJSON *v1_exec_actionJSON){
 
     v1_exec_action_t *v1_exec_action_local_var = NULL;
 
@@ -68,17 +68,17 @@ v1_exec_action_t *v1_exec_action_parseFromJSON(cJSON *v1_exec_actionJSON){
     list_t *commandList = NULL;
 
     // v1_exec_action->command
-    cJSON *command = cJSON_GetObjectItemCaseSensitive(v1_exec_actionJSON, "command");
+    mazu_cJSON *command = mazu_cJSON_GetObjectItemCaseSensitive(v1_exec_actionJSON, "command");
     if (command) { 
-    cJSON *command_local = NULL;
-    if(!cJSON_IsArray(command)) {
+    mazu_cJSON *command_local = NULL;
+    if(!mazu_cJSON_IsArray(command)) {
         goto end;//primitive container
     }
     commandList = list_createList();
 
-    cJSON_ArrayForEach(command_local, command)
+    mazu_cJSON_ArrayForEach(command_local, command)
     {
-        if(!cJSON_IsString(command_local))
+        if(!mazu_cJSON_IsString(command_local))
         {
             goto end;
         }

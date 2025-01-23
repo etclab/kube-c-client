@@ -67,16 +67,16 @@ void v1_topology_spread_constraint_free(v1_topology_spread_constraint_t *v1_topo
     free(v1_topology_spread_constraint);
 }
 
-cJSON *v1_topology_spread_constraint_convertToJSON(v1_topology_spread_constraint_t *v1_topology_spread_constraint) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_topology_spread_constraint_convertToJSON(v1_topology_spread_constraint_t *v1_topology_spread_constraint) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_topology_spread_constraint->label_selector
     if(v1_topology_spread_constraint->label_selector) {
-    cJSON *label_selector_local_JSON = v1_label_selector_convertToJSON(v1_topology_spread_constraint->label_selector);
+    mazu_cJSON *label_selector_local_JSON = v1_label_selector_convertToJSON(v1_topology_spread_constraint->label_selector);
     if(label_selector_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "labelSelector", label_selector_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "labelSelector", label_selector_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -85,14 +85,14 @@ cJSON *v1_topology_spread_constraint_convertToJSON(v1_topology_spread_constraint
 
     // v1_topology_spread_constraint->match_label_keys
     if(v1_topology_spread_constraint->match_label_keys) {
-    cJSON *match_label_keys = cJSON_AddArrayToObject(item, "matchLabelKeys");
+    mazu_cJSON *match_label_keys = mazu_cJSON_AddArrayToObject(item, "matchLabelKeys");
     if(match_label_keys == NULL) {
         goto fail; //primitive container
     }
 
     listEntry_t *match_label_keysListEntry;
     list_ForEach(match_label_keysListEntry, v1_topology_spread_constraint->match_label_keys) {
-    if(cJSON_AddStringToObject(match_label_keys, "", (char*)match_label_keysListEntry->data) == NULL)
+    if(mazu_cJSON_AddStringToObject(match_label_keys, "", (char*)match_label_keysListEntry->data) == NULL)
     {
         goto fail;
     }
@@ -104,14 +104,14 @@ cJSON *v1_topology_spread_constraint_convertToJSON(v1_topology_spread_constraint
     if (!v1_topology_spread_constraint->max_skew) {
         goto fail;
     }
-    if(cJSON_AddNumberToObject(item, "maxSkew", v1_topology_spread_constraint->max_skew) == NULL) {
+    if(mazu_cJSON_AddNumberToObject(item, "maxSkew", v1_topology_spread_constraint->max_skew) == NULL) {
     goto fail; //Numeric
     }
 
 
     // v1_topology_spread_constraint->min_domains
     if(v1_topology_spread_constraint->min_domains) {
-    if(cJSON_AddNumberToObject(item, "minDomains", v1_topology_spread_constraint->min_domains) == NULL) {
+    if(mazu_cJSON_AddNumberToObject(item, "minDomains", v1_topology_spread_constraint->min_domains) == NULL) {
     goto fail; //Numeric
     }
     }
@@ -119,7 +119,7 @@ cJSON *v1_topology_spread_constraint_convertToJSON(v1_topology_spread_constraint
 
     // v1_topology_spread_constraint->node_affinity_policy
     if(v1_topology_spread_constraint->node_affinity_policy) {
-    if(cJSON_AddStringToObject(item, "nodeAffinityPolicy", v1_topology_spread_constraint->node_affinity_policy) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "nodeAffinityPolicy", v1_topology_spread_constraint->node_affinity_policy) == NULL) {
     goto fail; //String
     }
     }
@@ -127,7 +127,7 @@ cJSON *v1_topology_spread_constraint_convertToJSON(v1_topology_spread_constraint
 
     // v1_topology_spread_constraint->node_taints_policy
     if(v1_topology_spread_constraint->node_taints_policy) {
-    if(cJSON_AddStringToObject(item, "nodeTaintsPolicy", v1_topology_spread_constraint->node_taints_policy) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "nodeTaintsPolicy", v1_topology_spread_constraint->node_taints_policy) == NULL) {
     goto fail; //String
     }
     }
@@ -137,7 +137,7 @@ cJSON *v1_topology_spread_constraint_convertToJSON(v1_topology_spread_constraint
     if (!v1_topology_spread_constraint->topology_key) {
         goto fail;
     }
-    if(cJSON_AddStringToObject(item, "topologyKey", v1_topology_spread_constraint->topology_key) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "topologyKey", v1_topology_spread_constraint->topology_key) == NULL) {
     goto fail; //String
     }
 
@@ -146,19 +146,19 @@ cJSON *v1_topology_spread_constraint_convertToJSON(v1_topology_spread_constraint
     if (!v1_topology_spread_constraint->when_unsatisfiable) {
         goto fail;
     }
-    if(cJSON_AddStringToObject(item, "whenUnsatisfiable", v1_topology_spread_constraint->when_unsatisfiable) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "whenUnsatisfiable", v1_topology_spread_constraint->when_unsatisfiable) == NULL) {
     goto fail; //String
     }
 
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_topology_spread_constraint_t *v1_topology_spread_constraint_parseFromJSON(cJSON *v1_topology_spread_constraintJSON){
+v1_topology_spread_constraint_t *v1_topology_spread_constraint_parseFromJSON(mazu_cJSON *v1_topology_spread_constraintJSON){
 
     v1_topology_spread_constraint_t *v1_topology_spread_constraint_local_var = NULL;
 
@@ -169,23 +169,23 @@ v1_topology_spread_constraint_t *v1_topology_spread_constraint_parseFromJSON(cJS
     list_t *match_label_keysList = NULL;
 
     // v1_topology_spread_constraint->label_selector
-    cJSON *label_selector = cJSON_GetObjectItemCaseSensitive(v1_topology_spread_constraintJSON, "labelSelector");
+    mazu_cJSON *label_selector = mazu_cJSON_GetObjectItemCaseSensitive(v1_topology_spread_constraintJSON, "labelSelector");
     if (label_selector) { 
     label_selector_local_nonprim = v1_label_selector_parseFromJSON(label_selector); //nonprimitive
     }
 
     // v1_topology_spread_constraint->match_label_keys
-    cJSON *match_label_keys = cJSON_GetObjectItemCaseSensitive(v1_topology_spread_constraintJSON, "matchLabelKeys");
+    mazu_cJSON *match_label_keys = mazu_cJSON_GetObjectItemCaseSensitive(v1_topology_spread_constraintJSON, "matchLabelKeys");
     if (match_label_keys) { 
-    cJSON *match_label_keys_local = NULL;
-    if(!cJSON_IsArray(match_label_keys)) {
+    mazu_cJSON *match_label_keys_local = NULL;
+    if(!mazu_cJSON_IsArray(match_label_keys)) {
         goto end;//primitive container
     }
     match_label_keysList = list_createList();
 
-    cJSON_ArrayForEach(match_label_keys_local, match_label_keys)
+    mazu_cJSON_ArrayForEach(match_label_keys_local, match_label_keys)
     {
-        if(!cJSON_IsString(match_label_keys_local))
+        if(!mazu_cJSON_IsString(match_label_keys_local))
         {
             goto end;
         }
@@ -194,64 +194,64 @@ v1_topology_spread_constraint_t *v1_topology_spread_constraint_parseFromJSON(cJS
     }
 
     // v1_topology_spread_constraint->max_skew
-    cJSON *max_skew = cJSON_GetObjectItemCaseSensitive(v1_topology_spread_constraintJSON, "maxSkew");
+    mazu_cJSON *max_skew = mazu_cJSON_GetObjectItemCaseSensitive(v1_topology_spread_constraintJSON, "maxSkew");
     if (!max_skew) {
         goto end;
     }
 
     
-    if(!cJSON_IsNumber(max_skew))
+    if(!mazu_cJSON_IsNumber(max_skew))
     {
     goto end; //Numeric
     }
 
     // v1_topology_spread_constraint->min_domains
-    cJSON *min_domains = cJSON_GetObjectItemCaseSensitive(v1_topology_spread_constraintJSON, "minDomains");
+    mazu_cJSON *min_domains = mazu_cJSON_GetObjectItemCaseSensitive(v1_topology_spread_constraintJSON, "minDomains");
     if (min_domains) { 
-    if(!cJSON_IsNumber(min_domains))
+    if(!mazu_cJSON_IsNumber(min_domains))
     {
     goto end; //Numeric
     }
     }
 
     // v1_topology_spread_constraint->node_affinity_policy
-    cJSON *node_affinity_policy = cJSON_GetObjectItemCaseSensitive(v1_topology_spread_constraintJSON, "nodeAffinityPolicy");
+    mazu_cJSON *node_affinity_policy = mazu_cJSON_GetObjectItemCaseSensitive(v1_topology_spread_constraintJSON, "nodeAffinityPolicy");
     if (node_affinity_policy) { 
-    if(!cJSON_IsString(node_affinity_policy) && !cJSON_IsNull(node_affinity_policy))
+    if(!mazu_cJSON_IsString(node_affinity_policy) && !mazu_cJSON_IsNull(node_affinity_policy))
     {
     goto end; //String
     }
     }
 
     // v1_topology_spread_constraint->node_taints_policy
-    cJSON *node_taints_policy = cJSON_GetObjectItemCaseSensitive(v1_topology_spread_constraintJSON, "nodeTaintsPolicy");
+    mazu_cJSON *node_taints_policy = mazu_cJSON_GetObjectItemCaseSensitive(v1_topology_spread_constraintJSON, "nodeTaintsPolicy");
     if (node_taints_policy) { 
-    if(!cJSON_IsString(node_taints_policy) && !cJSON_IsNull(node_taints_policy))
+    if(!mazu_cJSON_IsString(node_taints_policy) && !mazu_cJSON_IsNull(node_taints_policy))
     {
     goto end; //String
     }
     }
 
     // v1_topology_spread_constraint->topology_key
-    cJSON *topology_key = cJSON_GetObjectItemCaseSensitive(v1_topology_spread_constraintJSON, "topologyKey");
+    mazu_cJSON *topology_key = mazu_cJSON_GetObjectItemCaseSensitive(v1_topology_spread_constraintJSON, "topologyKey");
     if (!topology_key) {
         goto end;
     }
 
     
-    if(!cJSON_IsString(topology_key))
+    if(!mazu_cJSON_IsString(topology_key))
     {
     goto end; //String
     }
 
     // v1_topology_spread_constraint->when_unsatisfiable
-    cJSON *when_unsatisfiable = cJSON_GetObjectItemCaseSensitive(v1_topology_spread_constraintJSON, "whenUnsatisfiable");
+    mazu_cJSON *when_unsatisfiable = mazu_cJSON_GetObjectItemCaseSensitive(v1_topology_spread_constraintJSON, "whenUnsatisfiable");
     if (!when_unsatisfiable) {
         goto end;
     }
 
     
-    if(!cJSON_IsString(when_unsatisfiable))
+    if(!mazu_cJSON_IsString(when_unsatisfiable))
     {
     goto end; //String
     }
@@ -262,8 +262,8 @@ v1_topology_spread_constraint_t *v1_topology_spread_constraint_parseFromJSON(cJS
         match_label_keys ? match_label_keysList : NULL,
         max_skew->valuedouble,
         min_domains ? min_domains->valuedouble : 0,
-        node_affinity_policy && !cJSON_IsNull(node_affinity_policy) ? strdup(node_affinity_policy->valuestring) : NULL,
-        node_taints_policy && !cJSON_IsNull(node_taints_policy) ? strdup(node_taints_policy->valuestring) : NULL,
+        node_affinity_policy && !mazu_cJSON_IsNull(node_affinity_policy) ? strdup(node_affinity_policy->valuestring) : NULL,
+        node_taints_policy && !mazu_cJSON_IsNull(node_taints_policy) ? strdup(node_taints_policy->valuestring) : NULL,
         strdup(topology_key->valuestring),
         strdup(when_unsatisfiable->valuestring)
         );

@@ -48,16 +48,16 @@ void v1_lifecycle_handler_free(v1_lifecycle_handler_t *v1_lifecycle_handler) {
     free(v1_lifecycle_handler);
 }
 
-cJSON *v1_lifecycle_handler_convertToJSON(v1_lifecycle_handler_t *v1_lifecycle_handler) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_lifecycle_handler_convertToJSON(v1_lifecycle_handler_t *v1_lifecycle_handler) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_lifecycle_handler->exec
     if(v1_lifecycle_handler->exec) {
-    cJSON *exec_local_JSON = v1_exec_action_convertToJSON(v1_lifecycle_handler->exec);
+    mazu_cJSON *exec_local_JSON = v1_exec_action_convertToJSON(v1_lifecycle_handler->exec);
     if(exec_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "exec", exec_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "exec", exec_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -66,11 +66,11 @@ cJSON *v1_lifecycle_handler_convertToJSON(v1_lifecycle_handler_t *v1_lifecycle_h
 
     // v1_lifecycle_handler->http_get
     if(v1_lifecycle_handler->http_get) {
-    cJSON *http_get_local_JSON = v1_http_get_action_convertToJSON(v1_lifecycle_handler->http_get);
+    mazu_cJSON *http_get_local_JSON = v1_http_get_action_convertToJSON(v1_lifecycle_handler->http_get);
     if(http_get_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "httpGet", http_get_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "httpGet", http_get_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -79,11 +79,11 @@ cJSON *v1_lifecycle_handler_convertToJSON(v1_lifecycle_handler_t *v1_lifecycle_h
 
     // v1_lifecycle_handler->sleep
     if(v1_lifecycle_handler->sleep) {
-    cJSON *sleep_local_JSON = v1_sleep_action_convertToJSON(v1_lifecycle_handler->sleep);
+    mazu_cJSON *sleep_local_JSON = v1_sleep_action_convertToJSON(v1_lifecycle_handler->sleep);
     if(sleep_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "sleep", sleep_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "sleep", sleep_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -92,11 +92,11 @@ cJSON *v1_lifecycle_handler_convertToJSON(v1_lifecycle_handler_t *v1_lifecycle_h
 
     // v1_lifecycle_handler->tcp_socket
     if(v1_lifecycle_handler->tcp_socket) {
-    cJSON *tcp_socket_local_JSON = v1_tcp_socket_action_convertToJSON(v1_lifecycle_handler->tcp_socket);
+    mazu_cJSON *tcp_socket_local_JSON = v1_tcp_socket_action_convertToJSON(v1_lifecycle_handler->tcp_socket);
     if(tcp_socket_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "tcpSocket", tcp_socket_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "tcpSocket", tcp_socket_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -105,12 +105,12 @@ cJSON *v1_lifecycle_handler_convertToJSON(v1_lifecycle_handler_t *v1_lifecycle_h
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_lifecycle_handler_t *v1_lifecycle_handler_parseFromJSON(cJSON *v1_lifecycle_handlerJSON){
+v1_lifecycle_handler_t *v1_lifecycle_handler_parseFromJSON(mazu_cJSON *v1_lifecycle_handlerJSON){
 
     v1_lifecycle_handler_t *v1_lifecycle_handler_local_var = NULL;
 
@@ -127,25 +127,25 @@ v1_lifecycle_handler_t *v1_lifecycle_handler_parseFromJSON(cJSON *v1_lifecycle_h
     v1_tcp_socket_action_t *tcp_socket_local_nonprim = NULL;
 
     // v1_lifecycle_handler->exec
-    cJSON *exec = cJSON_GetObjectItemCaseSensitive(v1_lifecycle_handlerJSON, "exec");
+    mazu_cJSON *exec = mazu_cJSON_GetObjectItemCaseSensitive(v1_lifecycle_handlerJSON, "exec");
     if (exec) { 
     exec_local_nonprim = v1_exec_action_parseFromJSON(exec); //nonprimitive
     }
 
     // v1_lifecycle_handler->http_get
-    cJSON *http_get = cJSON_GetObjectItemCaseSensitive(v1_lifecycle_handlerJSON, "httpGet");
+    mazu_cJSON *http_get = mazu_cJSON_GetObjectItemCaseSensitive(v1_lifecycle_handlerJSON, "httpGet");
     if (http_get) { 
     http_get_local_nonprim = v1_http_get_action_parseFromJSON(http_get); //nonprimitive
     }
 
     // v1_lifecycle_handler->sleep
-    cJSON *sleep = cJSON_GetObjectItemCaseSensitive(v1_lifecycle_handlerJSON, "sleep");
+    mazu_cJSON *sleep = mazu_cJSON_GetObjectItemCaseSensitive(v1_lifecycle_handlerJSON, "sleep");
     if (sleep) { 
     sleep_local_nonprim = v1_sleep_action_parseFromJSON(sleep); //nonprimitive
     }
 
     // v1_lifecycle_handler->tcp_socket
-    cJSON *tcp_socket = cJSON_GetObjectItemCaseSensitive(v1_lifecycle_handlerJSON, "tcpSocket");
+    mazu_cJSON *tcp_socket = mazu_cJSON_GetObjectItemCaseSensitive(v1_lifecycle_handlerJSON, "tcpSocket");
     if (tcp_socket) { 
     tcp_socket_local_nonprim = v1_tcp_socket_action_parseFromJSON(tcp_socket); //nonprimitive
     }

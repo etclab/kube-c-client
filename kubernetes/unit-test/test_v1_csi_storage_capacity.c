@@ -11,7 +11,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdbool.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 
 #include "../model/v1_csi_storage_capacity.h"
 v1_csi_storage_capacity_t* instantiate_v1_csi_storage_capacity(int include_optional);
@@ -55,11 +55,11 @@ v1_csi_storage_capacity_t* instantiate_v1_csi_storage_capacity(int include_optio
 void test_v1_csi_storage_capacity(int include_optional) {
     v1_csi_storage_capacity_t* v1_csi_storage_capacity_1 = instantiate_v1_csi_storage_capacity(include_optional);
 
-	cJSON* jsonv1_csi_storage_capacity_1 = v1_csi_storage_capacity_convertToJSON(v1_csi_storage_capacity_1);
-	printf("v1_csi_storage_capacity :\n%s\n", cJSON_Print(jsonv1_csi_storage_capacity_1));
+	mazu_cJSON* jsonv1_csi_storage_capacity_1 = v1_csi_storage_capacity_convertToJSON(v1_csi_storage_capacity_1);
+	printf("v1_csi_storage_capacity :\n%s\n", mazu_cJSON_Print(jsonv1_csi_storage_capacity_1));
 	v1_csi_storage_capacity_t* v1_csi_storage_capacity_2 = v1_csi_storage_capacity_parseFromJSON(jsonv1_csi_storage_capacity_1);
-	cJSON* jsonv1_csi_storage_capacity_2 = v1_csi_storage_capacity_convertToJSON(v1_csi_storage_capacity_2);
-	printf("repeating v1_csi_storage_capacity:\n%s\n", cJSON_Print(jsonv1_csi_storage_capacity_2));
+	mazu_cJSON* jsonv1_csi_storage_capacity_2 = v1_csi_storage_capacity_convertToJSON(v1_csi_storage_capacity_2);
+	printf("repeating v1_csi_storage_capacity:\n%s\n", mazu_cJSON_Print(jsonv1_csi_storage_capacity_2));
 }
 
 int main() {

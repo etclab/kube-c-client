@@ -59,12 +59,12 @@ void v1_stateful_set_status_free(v1_stateful_set_status_t *v1_stateful_set_statu
     free(v1_stateful_set_status);
 }
 
-cJSON *v1_stateful_set_status_convertToJSON(v1_stateful_set_status_t *v1_stateful_set_status) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_stateful_set_status_convertToJSON(v1_stateful_set_status_t *v1_stateful_set_status) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_stateful_set_status->available_replicas
     if(v1_stateful_set_status->available_replicas) {
-    if(cJSON_AddNumberToObject(item, "availableReplicas", v1_stateful_set_status->available_replicas) == NULL) {
+    if(mazu_cJSON_AddNumberToObject(item, "availableReplicas", v1_stateful_set_status->available_replicas) == NULL) {
     goto fail; //Numeric
     }
     }
@@ -72,7 +72,7 @@ cJSON *v1_stateful_set_status_convertToJSON(v1_stateful_set_status_t *v1_statefu
 
     // v1_stateful_set_status->collision_count
     if(v1_stateful_set_status->collision_count) {
-    if(cJSON_AddNumberToObject(item, "collisionCount", v1_stateful_set_status->collision_count) == NULL) {
+    if(mazu_cJSON_AddNumberToObject(item, "collisionCount", v1_stateful_set_status->collision_count) == NULL) {
     goto fail; //Numeric
     }
     }
@@ -80,7 +80,7 @@ cJSON *v1_stateful_set_status_convertToJSON(v1_stateful_set_status_t *v1_statefu
 
     // v1_stateful_set_status->conditions
     if(v1_stateful_set_status->conditions) {
-    cJSON *conditions = cJSON_AddArrayToObject(item, "conditions");
+    mazu_cJSON *conditions = mazu_cJSON_AddArrayToObject(item, "conditions");
     if(conditions == NULL) {
     goto fail; //nonprimitive container
     }
@@ -88,11 +88,11 @@ cJSON *v1_stateful_set_status_convertToJSON(v1_stateful_set_status_t *v1_statefu
     listEntry_t *conditionsListEntry;
     if (v1_stateful_set_status->conditions) {
     list_ForEach(conditionsListEntry, v1_stateful_set_status->conditions) {
-    cJSON *itemLocal = v1_stateful_set_condition_convertToJSON(conditionsListEntry->data);
+    mazu_cJSON *itemLocal = v1_stateful_set_condition_convertToJSON(conditionsListEntry->data);
     if(itemLocal == NULL) {
     goto fail;
     }
-    cJSON_AddItemToArray(conditions, itemLocal);
+    mazu_cJSON_AddItemToArray(conditions, itemLocal);
     }
     }
     }
@@ -100,7 +100,7 @@ cJSON *v1_stateful_set_status_convertToJSON(v1_stateful_set_status_t *v1_statefu
 
     // v1_stateful_set_status->current_replicas
     if(v1_stateful_set_status->current_replicas) {
-    if(cJSON_AddNumberToObject(item, "currentReplicas", v1_stateful_set_status->current_replicas) == NULL) {
+    if(mazu_cJSON_AddNumberToObject(item, "currentReplicas", v1_stateful_set_status->current_replicas) == NULL) {
     goto fail; //Numeric
     }
     }
@@ -108,7 +108,7 @@ cJSON *v1_stateful_set_status_convertToJSON(v1_stateful_set_status_t *v1_statefu
 
     // v1_stateful_set_status->current_revision
     if(v1_stateful_set_status->current_revision) {
-    if(cJSON_AddStringToObject(item, "currentRevision", v1_stateful_set_status->current_revision) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "currentRevision", v1_stateful_set_status->current_revision) == NULL) {
     goto fail; //String
     }
     }
@@ -116,7 +116,7 @@ cJSON *v1_stateful_set_status_convertToJSON(v1_stateful_set_status_t *v1_statefu
 
     // v1_stateful_set_status->observed_generation
     if(v1_stateful_set_status->observed_generation) {
-    if(cJSON_AddNumberToObject(item, "observedGeneration", v1_stateful_set_status->observed_generation) == NULL) {
+    if(mazu_cJSON_AddNumberToObject(item, "observedGeneration", v1_stateful_set_status->observed_generation) == NULL) {
     goto fail; //Numeric
     }
     }
@@ -124,7 +124,7 @@ cJSON *v1_stateful_set_status_convertToJSON(v1_stateful_set_status_t *v1_statefu
 
     // v1_stateful_set_status->ready_replicas
     if(v1_stateful_set_status->ready_replicas) {
-    if(cJSON_AddNumberToObject(item, "readyReplicas", v1_stateful_set_status->ready_replicas) == NULL) {
+    if(mazu_cJSON_AddNumberToObject(item, "readyReplicas", v1_stateful_set_status->ready_replicas) == NULL) {
     goto fail; //Numeric
     }
     }
@@ -134,14 +134,14 @@ cJSON *v1_stateful_set_status_convertToJSON(v1_stateful_set_status_t *v1_statefu
     if (!v1_stateful_set_status->replicas) {
         goto fail;
     }
-    if(cJSON_AddNumberToObject(item, "replicas", v1_stateful_set_status->replicas) == NULL) {
+    if(mazu_cJSON_AddNumberToObject(item, "replicas", v1_stateful_set_status->replicas) == NULL) {
     goto fail; //Numeric
     }
 
 
     // v1_stateful_set_status->update_revision
     if(v1_stateful_set_status->update_revision) {
-    if(cJSON_AddStringToObject(item, "updateRevision", v1_stateful_set_status->update_revision) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "updateRevision", v1_stateful_set_status->update_revision) == NULL) {
     goto fail; //String
     }
     }
@@ -149,7 +149,7 @@ cJSON *v1_stateful_set_status_convertToJSON(v1_stateful_set_status_t *v1_statefu
 
     // v1_stateful_set_status->updated_replicas
     if(v1_stateful_set_status->updated_replicas) {
-    if(cJSON_AddNumberToObject(item, "updatedReplicas", v1_stateful_set_status->updated_replicas) == NULL) {
+    if(mazu_cJSON_AddNumberToObject(item, "updatedReplicas", v1_stateful_set_status->updated_replicas) == NULL) {
     goto fail; //Numeric
     }
     }
@@ -157,12 +157,12 @@ cJSON *v1_stateful_set_status_convertToJSON(v1_stateful_set_status_t *v1_statefu
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_stateful_set_status_t *v1_stateful_set_status_parseFromJSON(cJSON *v1_stateful_set_statusJSON){
+v1_stateful_set_status_t *v1_stateful_set_status_parseFromJSON(mazu_cJSON *v1_stateful_set_statusJSON){
 
     v1_stateful_set_status_t *v1_stateful_set_status_local_var = NULL;
 
@@ -170,36 +170,36 @@ v1_stateful_set_status_t *v1_stateful_set_status_parseFromJSON(cJSON *v1_statefu
     list_t *conditionsList = NULL;
 
     // v1_stateful_set_status->available_replicas
-    cJSON *available_replicas = cJSON_GetObjectItemCaseSensitive(v1_stateful_set_statusJSON, "availableReplicas");
+    mazu_cJSON *available_replicas = mazu_cJSON_GetObjectItemCaseSensitive(v1_stateful_set_statusJSON, "availableReplicas");
     if (available_replicas) { 
-    if(!cJSON_IsNumber(available_replicas))
+    if(!mazu_cJSON_IsNumber(available_replicas))
     {
     goto end; //Numeric
     }
     }
 
     // v1_stateful_set_status->collision_count
-    cJSON *collision_count = cJSON_GetObjectItemCaseSensitive(v1_stateful_set_statusJSON, "collisionCount");
+    mazu_cJSON *collision_count = mazu_cJSON_GetObjectItemCaseSensitive(v1_stateful_set_statusJSON, "collisionCount");
     if (collision_count) { 
-    if(!cJSON_IsNumber(collision_count))
+    if(!mazu_cJSON_IsNumber(collision_count))
     {
     goto end; //Numeric
     }
     }
 
     // v1_stateful_set_status->conditions
-    cJSON *conditions = cJSON_GetObjectItemCaseSensitive(v1_stateful_set_statusJSON, "conditions");
+    mazu_cJSON *conditions = mazu_cJSON_GetObjectItemCaseSensitive(v1_stateful_set_statusJSON, "conditions");
     if (conditions) { 
-    cJSON *conditions_local_nonprimitive = NULL;
-    if(!cJSON_IsArray(conditions)){
+    mazu_cJSON *conditions_local_nonprimitive = NULL;
+    if(!mazu_cJSON_IsArray(conditions)){
         goto end; //nonprimitive container
     }
 
     conditionsList = list_createList();
 
-    cJSON_ArrayForEach(conditions_local_nonprimitive,conditions )
+    mazu_cJSON_ArrayForEach(conditions_local_nonprimitive,conditions )
     {
-        if(!cJSON_IsObject(conditions_local_nonprimitive)){
+        if(!mazu_cJSON_IsObject(conditions_local_nonprimitive)){
             goto end;
         }
         v1_stateful_set_condition_t *conditionsItem = v1_stateful_set_condition_parseFromJSON(conditions_local_nonprimitive);
@@ -209,66 +209,66 @@ v1_stateful_set_status_t *v1_stateful_set_status_parseFromJSON(cJSON *v1_statefu
     }
 
     // v1_stateful_set_status->current_replicas
-    cJSON *current_replicas = cJSON_GetObjectItemCaseSensitive(v1_stateful_set_statusJSON, "currentReplicas");
+    mazu_cJSON *current_replicas = mazu_cJSON_GetObjectItemCaseSensitive(v1_stateful_set_statusJSON, "currentReplicas");
     if (current_replicas) { 
-    if(!cJSON_IsNumber(current_replicas))
+    if(!mazu_cJSON_IsNumber(current_replicas))
     {
     goto end; //Numeric
     }
     }
 
     // v1_stateful_set_status->current_revision
-    cJSON *current_revision = cJSON_GetObjectItemCaseSensitive(v1_stateful_set_statusJSON, "currentRevision");
+    mazu_cJSON *current_revision = mazu_cJSON_GetObjectItemCaseSensitive(v1_stateful_set_statusJSON, "currentRevision");
     if (current_revision) { 
-    if(!cJSON_IsString(current_revision) && !cJSON_IsNull(current_revision))
+    if(!mazu_cJSON_IsString(current_revision) && !mazu_cJSON_IsNull(current_revision))
     {
     goto end; //String
     }
     }
 
     // v1_stateful_set_status->observed_generation
-    cJSON *observed_generation = cJSON_GetObjectItemCaseSensitive(v1_stateful_set_statusJSON, "observedGeneration");
+    mazu_cJSON *observed_generation = mazu_cJSON_GetObjectItemCaseSensitive(v1_stateful_set_statusJSON, "observedGeneration");
     if (observed_generation) { 
-    if(!cJSON_IsNumber(observed_generation))
+    if(!mazu_cJSON_IsNumber(observed_generation))
     {
     goto end; //Numeric
     }
     }
 
     // v1_stateful_set_status->ready_replicas
-    cJSON *ready_replicas = cJSON_GetObjectItemCaseSensitive(v1_stateful_set_statusJSON, "readyReplicas");
+    mazu_cJSON *ready_replicas = mazu_cJSON_GetObjectItemCaseSensitive(v1_stateful_set_statusJSON, "readyReplicas");
     if (ready_replicas) { 
-    if(!cJSON_IsNumber(ready_replicas))
+    if(!mazu_cJSON_IsNumber(ready_replicas))
     {
     goto end; //Numeric
     }
     }
 
     // v1_stateful_set_status->replicas
-    cJSON *replicas = cJSON_GetObjectItemCaseSensitive(v1_stateful_set_statusJSON, "replicas");
+    mazu_cJSON *replicas = mazu_cJSON_GetObjectItemCaseSensitive(v1_stateful_set_statusJSON, "replicas");
     if (!replicas) {
         goto end;
     }
 
     
-    if(!cJSON_IsNumber(replicas))
+    if(!mazu_cJSON_IsNumber(replicas))
     {
     goto end; //Numeric
     }
 
     // v1_stateful_set_status->update_revision
-    cJSON *update_revision = cJSON_GetObjectItemCaseSensitive(v1_stateful_set_statusJSON, "updateRevision");
+    mazu_cJSON *update_revision = mazu_cJSON_GetObjectItemCaseSensitive(v1_stateful_set_statusJSON, "updateRevision");
     if (update_revision) { 
-    if(!cJSON_IsString(update_revision) && !cJSON_IsNull(update_revision))
+    if(!mazu_cJSON_IsString(update_revision) && !mazu_cJSON_IsNull(update_revision))
     {
     goto end; //String
     }
     }
 
     // v1_stateful_set_status->updated_replicas
-    cJSON *updated_replicas = cJSON_GetObjectItemCaseSensitive(v1_stateful_set_statusJSON, "updatedReplicas");
+    mazu_cJSON *updated_replicas = mazu_cJSON_GetObjectItemCaseSensitive(v1_stateful_set_statusJSON, "updatedReplicas");
     if (updated_replicas) { 
-    if(!cJSON_IsNumber(updated_replicas))
+    if(!mazu_cJSON_IsNumber(updated_replicas))
     {
     goto end; //Numeric
     }
@@ -280,11 +280,11 @@ v1_stateful_set_status_t *v1_stateful_set_status_parseFromJSON(cJSON *v1_statefu
         collision_count ? collision_count->valuedouble : 0,
         conditions ? conditionsList : NULL,
         current_replicas ? current_replicas->valuedouble : 0,
-        current_revision && !cJSON_IsNull(current_revision) ? strdup(current_revision->valuestring) : NULL,
+        current_revision && !mazu_cJSON_IsNull(current_revision) ? strdup(current_revision->valuestring) : NULL,
         observed_generation ? observed_generation->valuedouble : 0,
         ready_replicas ? ready_replicas->valuedouble : 0,
         replicas->valuedouble,
-        update_revision && !cJSON_IsNull(update_revision) ? strdup(update_revision->valuestring) : NULL,
+        update_revision && !mazu_cJSON_IsNull(update_revision) ? strdup(update_revision->valuestring) : NULL,
         updated_replicas ? updated_replicas->valuedouble : 0
         );
 

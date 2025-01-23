@@ -53,9 +53,9 @@ NetworkingAPI_getAPIGroup_13(apiClient_t *apiClient)
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *NetworkingAPIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    mazu_cJSON *NetworkingAPIlocalVarJSON = mazu_cJSON_Parse(apiClient->dataReceived);
     v1_api_group_t *elementToReturn = v1_api_group_parseFromJSON(NetworkingAPIlocalVarJSON);
-    cJSON_Delete(NetworkingAPIlocalVarJSON);
+    mazu_cJSON_Delete(NetworkingAPIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
     }

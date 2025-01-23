@@ -53,9 +53,9 @@ NodeAPI_getAPIGroup_14(apiClient_t *apiClient)
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *NodeAPIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    mazu_cJSON *NodeAPIlocalVarJSON = mazu_cJSON_Parse(apiClient->dataReceived);
     v1_api_group_t *elementToReturn = v1_api_group_parseFromJSON(NodeAPIlocalVarJSON);
-    cJSON_Delete(NodeAPIlocalVarJSON);
+    mazu_cJSON_Delete(NodeAPIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
     }

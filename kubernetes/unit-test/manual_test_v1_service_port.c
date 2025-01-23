@@ -11,7 +11,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdbool.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 
 #include "../model/v1_service_port.h"
 #include "../model/int_or_string.h"
@@ -41,19 +41,19 @@ v1_service_port_t* instantiate_v1_service_port() {
 void test_v1_service_port() {
   v1_service_port_t* v1_service_port_1 = instantiate_v1_service_port();
 
-	cJSON* jsonv1_service_port_1 = v1_service_port_convertToJSON(v1_service_port_1);
-  char *service_port_1_string = cJSON_Print(jsonv1_service_port_1);
+	mazu_cJSON* jsonv1_service_port_1 = v1_service_port_convertToJSON(v1_service_port_1);
+  char *service_port_1_string = mazu_cJSON_Print(jsonv1_service_port_1);
 	printf("v1_service_port :\n%s\n", service_port_1_string);
   free(service_port_1_string);
 
 	v1_service_port_t* v1_service_port_2 = v1_service_port_parseFromJSON(jsonv1_service_port_1);
-	cJSON* jsonv1_service_port_2 = v1_service_port_convertToJSON(v1_service_port_2);
-  char *service_port_2_string = cJSON_Print(jsonv1_service_port_2);
+	mazu_cJSON* jsonv1_service_port_2 = v1_service_port_convertToJSON(v1_service_port_2);
+  char *service_port_2_string = mazu_cJSON_Print(jsonv1_service_port_2);
 	printf("repeating v1_service_port:\n%s\n", service_port_2_string);
   free(service_port_2_string);
 
-  cJSON_Delete(jsonv1_service_port_2);
-  cJSON_Delete(jsonv1_service_port_1);
+  mazu_cJSON_Delete(jsonv1_service_port_2);
+  mazu_cJSON_Delete(jsonv1_service_port_1);
   v1_service_port_free(v1_service_port_2);
   v1_service_port_free(v1_service_port_1);
 }

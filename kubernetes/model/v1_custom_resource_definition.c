@@ -54,12 +54,12 @@ void v1_custom_resource_definition_free(v1_custom_resource_definition_t *v1_cust
     free(v1_custom_resource_definition);
 }
 
-cJSON *v1_custom_resource_definition_convertToJSON(v1_custom_resource_definition_t *v1_custom_resource_definition) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_custom_resource_definition_convertToJSON(v1_custom_resource_definition_t *v1_custom_resource_definition) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_custom_resource_definition->api_version
     if(v1_custom_resource_definition->api_version) {
-    if(cJSON_AddStringToObject(item, "apiVersion", v1_custom_resource_definition->api_version) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "apiVersion", v1_custom_resource_definition->api_version) == NULL) {
     goto fail; //String
     }
     }
@@ -67,7 +67,7 @@ cJSON *v1_custom_resource_definition_convertToJSON(v1_custom_resource_definition
 
     // v1_custom_resource_definition->kind
     if(v1_custom_resource_definition->kind) {
-    if(cJSON_AddStringToObject(item, "kind", v1_custom_resource_definition->kind) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "kind", v1_custom_resource_definition->kind) == NULL) {
     goto fail; //String
     }
     }
@@ -75,11 +75,11 @@ cJSON *v1_custom_resource_definition_convertToJSON(v1_custom_resource_definition
 
     // v1_custom_resource_definition->metadata
     if(v1_custom_resource_definition->metadata) {
-    cJSON *metadata_local_JSON = v1_object_meta_convertToJSON(v1_custom_resource_definition->metadata);
+    mazu_cJSON *metadata_local_JSON = v1_object_meta_convertToJSON(v1_custom_resource_definition->metadata);
     if(metadata_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "metadata", metadata_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "metadata", metadata_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -90,11 +90,11 @@ cJSON *v1_custom_resource_definition_convertToJSON(v1_custom_resource_definition
     if (!v1_custom_resource_definition->spec) {
         goto fail;
     }
-    cJSON *spec_local_JSON = v1_custom_resource_definition_spec_convertToJSON(v1_custom_resource_definition->spec);
+    mazu_cJSON *spec_local_JSON = v1_custom_resource_definition_spec_convertToJSON(v1_custom_resource_definition->spec);
     if(spec_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "spec", spec_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "spec", spec_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -102,11 +102,11 @@ cJSON *v1_custom_resource_definition_convertToJSON(v1_custom_resource_definition
 
     // v1_custom_resource_definition->status
     if(v1_custom_resource_definition->status) {
-    cJSON *status_local_JSON = v1_custom_resource_definition_status_convertToJSON(v1_custom_resource_definition->status);
+    mazu_cJSON *status_local_JSON = v1_custom_resource_definition_status_convertToJSON(v1_custom_resource_definition->status);
     if(status_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "status", status_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "status", status_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -115,12 +115,12 @@ cJSON *v1_custom_resource_definition_convertToJSON(v1_custom_resource_definition
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_custom_resource_definition_t *v1_custom_resource_definition_parseFromJSON(cJSON *v1_custom_resource_definitionJSON){
+v1_custom_resource_definition_t *v1_custom_resource_definition_parseFromJSON(mazu_cJSON *v1_custom_resource_definitionJSON){
 
     v1_custom_resource_definition_t *v1_custom_resource_definition_local_var = NULL;
 
@@ -134,31 +134,31 @@ v1_custom_resource_definition_t *v1_custom_resource_definition_parseFromJSON(cJS
     v1_custom_resource_definition_status_t *status_local_nonprim = NULL;
 
     // v1_custom_resource_definition->api_version
-    cJSON *api_version = cJSON_GetObjectItemCaseSensitive(v1_custom_resource_definitionJSON, "apiVersion");
+    mazu_cJSON *api_version = mazu_cJSON_GetObjectItemCaseSensitive(v1_custom_resource_definitionJSON, "apiVersion");
     if (api_version) { 
-    if(!cJSON_IsString(api_version) && !cJSON_IsNull(api_version))
+    if(!mazu_cJSON_IsString(api_version) && !mazu_cJSON_IsNull(api_version))
     {
     goto end; //String
     }
     }
 
     // v1_custom_resource_definition->kind
-    cJSON *kind = cJSON_GetObjectItemCaseSensitive(v1_custom_resource_definitionJSON, "kind");
+    mazu_cJSON *kind = mazu_cJSON_GetObjectItemCaseSensitive(v1_custom_resource_definitionJSON, "kind");
     if (kind) { 
-    if(!cJSON_IsString(kind) && !cJSON_IsNull(kind))
+    if(!mazu_cJSON_IsString(kind) && !mazu_cJSON_IsNull(kind))
     {
     goto end; //String
     }
     }
 
     // v1_custom_resource_definition->metadata
-    cJSON *metadata = cJSON_GetObjectItemCaseSensitive(v1_custom_resource_definitionJSON, "metadata");
+    mazu_cJSON *metadata = mazu_cJSON_GetObjectItemCaseSensitive(v1_custom_resource_definitionJSON, "metadata");
     if (metadata) { 
     metadata_local_nonprim = v1_object_meta_parseFromJSON(metadata); //nonprimitive
     }
 
     // v1_custom_resource_definition->spec
-    cJSON *spec = cJSON_GetObjectItemCaseSensitive(v1_custom_resource_definitionJSON, "spec");
+    mazu_cJSON *spec = mazu_cJSON_GetObjectItemCaseSensitive(v1_custom_resource_definitionJSON, "spec");
     if (!spec) {
         goto end;
     }
@@ -167,15 +167,15 @@ v1_custom_resource_definition_t *v1_custom_resource_definition_parseFromJSON(cJS
     spec_local_nonprim = v1_custom_resource_definition_spec_parseFromJSON(spec); //nonprimitive
 
     // v1_custom_resource_definition->status
-    cJSON *status = cJSON_GetObjectItemCaseSensitive(v1_custom_resource_definitionJSON, "status");
+    mazu_cJSON *status = mazu_cJSON_GetObjectItemCaseSensitive(v1_custom_resource_definitionJSON, "status");
     if (status) { 
     status_local_nonprim = v1_custom_resource_definition_status_parseFromJSON(status); //nonprimitive
     }
 
 
     v1_custom_resource_definition_local_var = v1_custom_resource_definition_create (
-        api_version && !cJSON_IsNull(api_version) ? strdup(api_version->valuestring) : NULL,
-        kind && !cJSON_IsNull(kind) ? strdup(kind->valuestring) : NULL,
+        api_version && !mazu_cJSON_IsNull(api_version) ? strdup(api_version->valuestring) : NULL,
+        kind && !mazu_cJSON_IsNull(kind) ? strdup(kind->valuestring) : NULL,
         metadata ? metadata_local_nonprim : NULL,
         spec_local_nonprim,
         status ? status_local_nonprim : NULL

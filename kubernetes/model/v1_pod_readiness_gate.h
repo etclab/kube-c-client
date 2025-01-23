@@ -8,7 +8,7 @@
 #define _v1_pod_readiness_gate_H_
 
 #include <string.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
 #include "../include/binary.h"
@@ -29,9 +29,9 @@ v1_pod_readiness_gate_t *v1_pod_readiness_gate_create(
 
 void v1_pod_readiness_gate_free(v1_pod_readiness_gate_t *v1_pod_readiness_gate);
 
-v1_pod_readiness_gate_t *v1_pod_readiness_gate_parseFromJSON(cJSON *v1_pod_readiness_gateJSON);
+v1_pod_readiness_gate_t *v1_pod_readiness_gate_parseFromJSON(mazu_cJSON *v1_pod_readiness_gateJSON);
 
-cJSON *v1_pod_readiness_gate_convertToJSON(v1_pod_readiness_gate_t *v1_pod_readiness_gate);
+mazu_cJSON *v1_pod_readiness_gate_convertToJSON(v1_pod_readiness_gate_t *v1_pod_readiness_gate);
 
 #endif /* _v1_pod_readiness_gate_H_ */
 

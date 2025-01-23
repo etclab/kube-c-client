@@ -26,29 +26,29 @@ void int_or_string_free(int_or_string_t * ios)
     free(ios);
 }
 
-cJSON *int_or_string_convertToJSON(int_or_string_t * ios)
+mazu_cJSON *int_or_string_convertToJSON(int_or_string_t * ios)
 {
     if (IOS_DATA_TYPE_INT == ios->type) {
-        return cJSON_CreateNumber(ios->i);
+        return mazu_cJSON_CreateNumber(ios->i);
     }
     if (IOS_DATA_TYPE_STRING == ios->type && ios->s) {
-        return cJSON_CreateString(ios->s);
+        return mazu_cJSON_CreateString(ios->s);
     }
     return NULL;
 }
 
-int_or_string_t *int_or_string_parseFromJSON(cJSON * cjson)
+int_or_string_t *int_or_string_parseFromJSON(mazu_cJSON * cjson)
 {
     int_or_string_t *ios = int_or_string_create();
     if (!ios) {
         return NULL;
     }
-    if (cJSON_IsNumber(cjson)) {
+    if (mazu_cJSON_IsNumber(cjson)) {
         ios->i = cjson->valuedouble;
         ios->type = IOS_DATA_TYPE_INT;
         return ios;
     }
-    if (cJSON_IsString(cjson)) {
+    if (mazu_cJSON_IsString(cjson)) {
         ios->s = strdup(cjson->valuestring);
         ios->type = IOS_DATA_TYPE_STRING;
         return ios;

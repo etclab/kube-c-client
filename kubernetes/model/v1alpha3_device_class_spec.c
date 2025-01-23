@@ -48,12 +48,12 @@ void v1alpha3_device_class_spec_free(v1alpha3_device_class_spec_t *v1alpha3_devi
     free(v1alpha3_device_class_spec);
 }
 
-cJSON *v1alpha3_device_class_spec_convertToJSON(v1alpha3_device_class_spec_t *v1alpha3_device_class_spec) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1alpha3_device_class_spec_convertToJSON(v1alpha3_device_class_spec_t *v1alpha3_device_class_spec) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1alpha3_device_class_spec->config
     if(v1alpha3_device_class_spec->config) {
-    cJSON *config = cJSON_AddArrayToObject(item, "config");
+    mazu_cJSON *config = mazu_cJSON_AddArrayToObject(item, "config");
     if(config == NULL) {
     goto fail; //nonprimitive container
     }
@@ -61,11 +61,11 @@ cJSON *v1alpha3_device_class_spec_convertToJSON(v1alpha3_device_class_spec_t *v1
     listEntry_t *configListEntry;
     if (v1alpha3_device_class_spec->config) {
     list_ForEach(configListEntry, v1alpha3_device_class_spec->config) {
-    cJSON *itemLocal = v1alpha3_device_class_configuration_convertToJSON(configListEntry->data);
+    mazu_cJSON *itemLocal = v1alpha3_device_class_configuration_convertToJSON(configListEntry->data);
     if(itemLocal == NULL) {
     goto fail;
     }
-    cJSON_AddItemToArray(config, itemLocal);
+    mazu_cJSON_AddItemToArray(config, itemLocal);
     }
     }
     }
@@ -73,7 +73,7 @@ cJSON *v1alpha3_device_class_spec_convertToJSON(v1alpha3_device_class_spec_t *v1
 
     // v1alpha3_device_class_spec->selectors
     if(v1alpha3_device_class_spec->selectors) {
-    cJSON *selectors = cJSON_AddArrayToObject(item, "selectors");
+    mazu_cJSON *selectors = mazu_cJSON_AddArrayToObject(item, "selectors");
     if(selectors == NULL) {
     goto fail; //nonprimitive container
     }
@@ -81,11 +81,11 @@ cJSON *v1alpha3_device_class_spec_convertToJSON(v1alpha3_device_class_spec_t *v1
     listEntry_t *selectorsListEntry;
     if (v1alpha3_device_class_spec->selectors) {
     list_ForEach(selectorsListEntry, v1alpha3_device_class_spec->selectors) {
-    cJSON *itemLocal = v1alpha3_device_selector_convertToJSON(selectorsListEntry->data);
+    mazu_cJSON *itemLocal = v1alpha3_device_selector_convertToJSON(selectorsListEntry->data);
     if(itemLocal == NULL) {
     goto fail;
     }
-    cJSON_AddItemToArray(selectors, itemLocal);
+    mazu_cJSON_AddItemToArray(selectors, itemLocal);
     }
     }
     }
@@ -93,11 +93,11 @@ cJSON *v1alpha3_device_class_spec_convertToJSON(v1alpha3_device_class_spec_t *v1
 
     // v1alpha3_device_class_spec->suitable_nodes
     if(v1alpha3_device_class_spec->suitable_nodes) {
-    cJSON *suitable_nodes_local_JSON = v1_node_selector_convertToJSON(v1alpha3_device_class_spec->suitable_nodes);
+    mazu_cJSON *suitable_nodes_local_JSON = v1_node_selector_convertToJSON(v1alpha3_device_class_spec->suitable_nodes);
     if(suitable_nodes_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "suitableNodes", suitable_nodes_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "suitableNodes", suitable_nodes_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -106,12 +106,12 @@ cJSON *v1alpha3_device_class_spec_convertToJSON(v1alpha3_device_class_spec_t *v1
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1alpha3_device_class_spec_t *v1alpha3_device_class_spec_parseFromJSON(cJSON *v1alpha3_device_class_specJSON){
+v1alpha3_device_class_spec_t *v1alpha3_device_class_spec_parseFromJSON(mazu_cJSON *v1alpha3_device_class_specJSON){
 
     v1alpha3_device_class_spec_t *v1alpha3_device_class_spec_local_var = NULL;
 
@@ -125,18 +125,18 @@ v1alpha3_device_class_spec_t *v1alpha3_device_class_spec_parseFromJSON(cJSON *v1
     v1_node_selector_t *suitable_nodes_local_nonprim = NULL;
 
     // v1alpha3_device_class_spec->config
-    cJSON *config = cJSON_GetObjectItemCaseSensitive(v1alpha3_device_class_specJSON, "config");
+    mazu_cJSON *config = mazu_cJSON_GetObjectItemCaseSensitive(v1alpha3_device_class_specJSON, "config");
     if (config) { 
-    cJSON *config_local_nonprimitive = NULL;
-    if(!cJSON_IsArray(config)){
+    mazu_cJSON *config_local_nonprimitive = NULL;
+    if(!mazu_cJSON_IsArray(config)){
         goto end; //nonprimitive container
     }
 
     configList = list_createList();
 
-    cJSON_ArrayForEach(config_local_nonprimitive,config )
+    mazu_cJSON_ArrayForEach(config_local_nonprimitive,config )
     {
-        if(!cJSON_IsObject(config_local_nonprimitive)){
+        if(!mazu_cJSON_IsObject(config_local_nonprimitive)){
             goto end;
         }
         v1alpha3_device_class_configuration_t *configItem = v1alpha3_device_class_configuration_parseFromJSON(config_local_nonprimitive);
@@ -146,18 +146,18 @@ v1alpha3_device_class_spec_t *v1alpha3_device_class_spec_parseFromJSON(cJSON *v1
     }
 
     // v1alpha3_device_class_spec->selectors
-    cJSON *selectors = cJSON_GetObjectItemCaseSensitive(v1alpha3_device_class_specJSON, "selectors");
+    mazu_cJSON *selectors = mazu_cJSON_GetObjectItemCaseSensitive(v1alpha3_device_class_specJSON, "selectors");
     if (selectors) { 
-    cJSON *selectors_local_nonprimitive = NULL;
-    if(!cJSON_IsArray(selectors)){
+    mazu_cJSON *selectors_local_nonprimitive = NULL;
+    if(!mazu_cJSON_IsArray(selectors)){
         goto end; //nonprimitive container
     }
 
     selectorsList = list_createList();
 
-    cJSON_ArrayForEach(selectors_local_nonprimitive,selectors )
+    mazu_cJSON_ArrayForEach(selectors_local_nonprimitive,selectors )
     {
-        if(!cJSON_IsObject(selectors_local_nonprimitive)){
+        if(!mazu_cJSON_IsObject(selectors_local_nonprimitive)){
             goto end;
         }
         v1alpha3_device_selector_t *selectorsItem = v1alpha3_device_selector_parseFromJSON(selectors_local_nonprimitive);
@@ -167,7 +167,7 @@ v1alpha3_device_class_spec_t *v1alpha3_device_class_spec_parseFromJSON(cJSON *v1
     }
 
     // v1alpha3_device_class_spec->suitable_nodes
-    cJSON *suitable_nodes = cJSON_GetObjectItemCaseSensitive(v1alpha3_device_class_specJSON, "suitableNodes");
+    mazu_cJSON *suitable_nodes = mazu_cJSON_GetObjectItemCaseSensitive(v1alpha3_device_class_specJSON, "suitableNodes");
     if (suitable_nodes) { 
     suitable_nodes_local_nonprim = v1_node_selector_parseFromJSON(suitable_nodes); //nonprimitive
     }

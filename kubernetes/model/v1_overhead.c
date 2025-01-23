@@ -36,21 +36,21 @@ void v1_overhead_free(v1_overhead_t *v1_overhead) {
     free(v1_overhead);
 }
 
-cJSON *v1_overhead_convertToJSON(v1_overhead_t *v1_overhead) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_overhead_convertToJSON(v1_overhead_t *v1_overhead) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_overhead->pod_fixed
     if(v1_overhead->pod_fixed) {
-    cJSON *pod_fixed = cJSON_AddObjectToObject(item, "podFixed");
+    mazu_cJSON *pod_fixed = mazu_cJSON_AddObjectToObject(item, "podFixed");
     if(pod_fixed == NULL) {
         goto fail; //primitive map container
     }
-    cJSON *localMapObject = pod_fixed;
+    mazu_cJSON *localMapObject = pod_fixed;
     listEntry_t *pod_fixedListEntry;
     if (v1_overhead->pod_fixed) {
     list_ForEach(pod_fixedListEntry, v1_overhead->pod_fixed) {
         keyValuePair_t *localKeyValue = (keyValuePair_t*)pod_fixedListEntry->data;
-        if(cJSON_AddStringToObject(localMapObject, localKeyValue->key, (char*)localKeyValue->value) == NULL)
+        if(mazu_cJSON_AddStringToObject(localMapObject, localKeyValue->key, (char*)localKeyValue->value) == NULL)
         {
             goto fail;
         }
@@ -61,12 +61,12 @@ cJSON *v1_overhead_convertToJSON(v1_overhead_t *v1_overhead) {
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_overhead_t *v1_overhead_parseFromJSON(cJSON *v1_overheadJSON){
+v1_overhead_t *v1_overhead_parseFromJSON(mazu_cJSON *v1_overheadJSON){
 
     v1_overhead_t *v1_overhead_local_var = NULL;
 
@@ -74,21 +74,21 @@ v1_overhead_t *v1_overhead_parseFromJSON(cJSON *v1_overheadJSON){
     list_t *pod_fixedList = NULL;
 
     // v1_overhead->pod_fixed
-    cJSON *pod_fixed = cJSON_GetObjectItemCaseSensitive(v1_overheadJSON, "podFixed");
+    mazu_cJSON *pod_fixed = mazu_cJSON_GetObjectItemCaseSensitive(v1_overheadJSON, "podFixed");
     if (pod_fixed) { 
-    cJSON *pod_fixed_local_map = NULL;
-    if(!cJSON_IsObject(pod_fixed) && !cJSON_IsNull(pod_fixed))
+    mazu_cJSON *pod_fixed_local_map = NULL;
+    if(!mazu_cJSON_IsObject(pod_fixed) && !mazu_cJSON_IsNull(pod_fixed))
     {
         goto end;//primitive map container
     }
-    if(cJSON_IsObject(pod_fixed))
+    if(mazu_cJSON_IsObject(pod_fixed))
     {
         pod_fixedList = list_createList();
         keyValuePair_t *localMapKeyPair;
-        cJSON_ArrayForEach(pod_fixed_local_map, pod_fixed)
+        mazu_cJSON_ArrayForEach(pod_fixed_local_map, pod_fixed)
         {
-            cJSON *localMapObject = pod_fixed_local_map;
-            if(!cJSON_IsString(localMapObject))
+            mazu_cJSON *localMapObject = pod_fixed_local_map;
+            if(!mazu_cJSON_IsString(localMapObject))
             {
                 goto end;
             }

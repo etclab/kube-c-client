@@ -39,21 +39,21 @@ void v1_resource_status_free(v1_resource_status_t *v1_resource_status) {
     free(v1_resource_status);
 }
 
-cJSON *v1_resource_status_convertToJSON(v1_resource_status_t *v1_resource_status) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_resource_status_convertToJSON(v1_resource_status_t *v1_resource_status) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_resource_status->name
     if (!v1_resource_status->name) {
         goto fail;
     }
-    if(cJSON_AddStringToObject(item, "name", v1_resource_status->name) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "name", v1_resource_status->name) == NULL) {
     goto fail; //String
     }
 
 
     // v1_resource_status->resources
     if(v1_resource_status->resources) {
-    cJSON *resources = cJSON_AddArrayToObject(item, "resources");
+    mazu_cJSON *resources = mazu_cJSON_AddArrayToObject(item, "resources");
     if(resources == NULL) {
     goto fail; //nonprimitive container
     }
@@ -61,11 +61,11 @@ cJSON *v1_resource_status_convertToJSON(v1_resource_status_t *v1_resource_status
     listEntry_t *resourcesListEntry;
     if (v1_resource_status->resources) {
     list_ForEach(resourcesListEntry, v1_resource_status->resources) {
-    cJSON *itemLocal = v1_resource_health_convertToJSON(resourcesListEntry->data);
+    mazu_cJSON *itemLocal = v1_resource_health_convertToJSON(resourcesListEntry->data);
     if(itemLocal == NULL) {
     goto fail;
     }
-    cJSON_AddItemToArray(resources, itemLocal);
+    mazu_cJSON_AddItemToArray(resources, itemLocal);
     }
     }
     }
@@ -73,12 +73,12 @@ cJSON *v1_resource_status_convertToJSON(v1_resource_status_t *v1_resource_status
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_resource_status_t *v1_resource_status_parseFromJSON(cJSON *v1_resource_statusJSON){
+v1_resource_status_t *v1_resource_status_parseFromJSON(mazu_cJSON *v1_resource_statusJSON){
 
     v1_resource_status_t *v1_resource_status_local_var = NULL;
 
@@ -86,30 +86,30 @@ v1_resource_status_t *v1_resource_status_parseFromJSON(cJSON *v1_resource_status
     list_t *resourcesList = NULL;
 
     // v1_resource_status->name
-    cJSON *name = cJSON_GetObjectItemCaseSensitive(v1_resource_statusJSON, "name");
+    mazu_cJSON *name = mazu_cJSON_GetObjectItemCaseSensitive(v1_resource_statusJSON, "name");
     if (!name) {
         goto end;
     }
 
     
-    if(!cJSON_IsString(name))
+    if(!mazu_cJSON_IsString(name))
     {
     goto end; //String
     }
 
     // v1_resource_status->resources
-    cJSON *resources = cJSON_GetObjectItemCaseSensitive(v1_resource_statusJSON, "resources");
+    mazu_cJSON *resources = mazu_cJSON_GetObjectItemCaseSensitive(v1_resource_statusJSON, "resources");
     if (resources) { 
-    cJSON *resources_local_nonprimitive = NULL;
-    if(!cJSON_IsArray(resources)){
+    mazu_cJSON *resources_local_nonprimitive = NULL;
+    if(!mazu_cJSON_IsArray(resources)){
         goto end; //nonprimitive container
     }
 
     resourcesList = list_createList();
 
-    cJSON_ArrayForEach(resources_local_nonprimitive,resources )
+    mazu_cJSON_ArrayForEach(resources_local_nonprimitive,resources )
     {
-        if(!cJSON_IsObject(resources_local_nonprimitive)){
+        if(!mazu_cJSON_IsObject(resources_local_nonprimitive)){
             goto end;
         }
         v1_resource_health_t *resourcesItem = v1_resource_health_parseFromJSON(resources_local_nonprimitive);

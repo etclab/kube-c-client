@@ -8,7 +8,7 @@
 #define _v1alpha1_storage_version_migration_status_H_
 
 #include <string.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
 #include "../include/binary.h"
@@ -32,9 +32,9 @@ v1alpha1_storage_version_migration_status_t *v1alpha1_storage_version_migration_
 
 void v1alpha1_storage_version_migration_status_free(v1alpha1_storage_version_migration_status_t *v1alpha1_storage_version_migration_status);
 
-v1alpha1_storage_version_migration_status_t *v1alpha1_storage_version_migration_status_parseFromJSON(cJSON *v1alpha1_storage_version_migration_statusJSON);
+v1alpha1_storage_version_migration_status_t *v1alpha1_storage_version_migration_status_parseFromJSON(mazu_cJSON *v1alpha1_storage_version_migration_statusJSON);
 
-cJSON *v1alpha1_storage_version_migration_status_convertToJSON(v1alpha1_storage_version_migration_status_t *v1alpha1_storage_version_migration_status);
+mazu_cJSON *v1alpha1_storage_version_migration_status_convertToJSON(v1alpha1_storage_version_migration_status_t *v1alpha1_storage_version_migration_status);
 
 #endif /* _v1alpha1_storage_version_migration_status_H_ */
 

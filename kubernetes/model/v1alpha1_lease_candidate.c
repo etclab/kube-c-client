@@ -48,12 +48,12 @@ void v1alpha1_lease_candidate_free(v1alpha1_lease_candidate_t *v1alpha1_lease_ca
     free(v1alpha1_lease_candidate);
 }
 
-cJSON *v1alpha1_lease_candidate_convertToJSON(v1alpha1_lease_candidate_t *v1alpha1_lease_candidate) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1alpha1_lease_candidate_convertToJSON(v1alpha1_lease_candidate_t *v1alpha1_lease_candidate) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1alpha1_lease_candidate->api_version
     if(v1alpha1_lease_candidate->api_version) {
-    if(cJSON_AddStringToObject(item, "apiVersion", v1alpha1_lease_candidate->api_version) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "apiVersion", v1alpha1_lease_candidate->api_version) == NULL) {
     goto fail; //String
     }
     }
@@ -61,7 +61,7 @@ cJSON *v1alpha1_lease_candidate_convertToJSON(v1alpha1_lease_candidate_t *v1alph
 
     // v1alpha1_lease_candidate->kind
     if(v1alpha1_lease_candidate->kind) {
-    if(cJSON_AddStringToObject(item, "kind", v1alpha1_lease_candidate->kind) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "kind", v1alpha1_lease_candidate->kind) == NULL) {
     goto fail; //String
     }
     }
@@ -69,11 +69,11 @@ cJSON *v1alpha1_lease_candidate_convertToJSON(v1alpha1_lease_candidate_t *v1alph
 
     // v1alpha1_lease_candidate->metadata
     if(v1alpha1_lease_candidate->metadata) {
-    cJSON *metadata_local_JSON = v1_object_meta_convertToJSON(v1alpha1_lease_candidate->metadata);
+    mazu_cJSON *metadata_local_JSON = v1_object_meta_convertToJSON(v1alpha1_lease_candidate->metadata);
     if(metadata_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "metadata", metadata_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "metadata", metadata_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -82,11 +82,11 @@ cJSON *v1alpha1_lease_candidate_convertToJSON(v1alpha1_lease_candidate_t *v1alph
 
     // v1alpha1_lease_candidate->spec
     if(v1alpha1_lease_candidate->spec) {
-    cJSON *spec_local_JSON = v1alpha1_lease_candidate_spec_convertToJSON(v1alpha1_lease_candidate->spec);
+    mazu_cJSON *spec_local_JSON = v1alpha1_lease_candidate_spec_convertToJSON(v1alpha1_lease_candidate->spec);
     if(spec_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "spec", spec_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "spec", spec_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -95,12 +95,12 @@ cJSON *v1alpha1_lease_candidate_convertToJSON(v1alpha1_lease_candidate_t *v1alph
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1alpha1_lease_candidate_t *v1alpha1_lease_candidate_parseFromJSON(cJSON *v1alpha1_lease_candidateJSON){
+v1alpha1_lease_candidate_t *v1alpha1_lease_candidate_parseFromJSON(mazu_cJSON *v1alpha1_lease_candidateJSON){
 
     v1alpha1_lease_candidate_t *v1alpha1_lease_candidate_local_var = NULL;
 
@@ -111,39 +111,39 @@ v1alpha1_lease_candidate_t *v1alpha1_lease_candidate_parseFromJSON(cJSON *v1alph
     v1alpha1_lease_candidate_spec_t *spec_local_nonprim = NULL;
 
     // v1alpha1_lease_candidate->api_version
-    cJSON *api_version = cJSON_GetObjectItemCaseSensitive(v1alpha1_lease_candidateJSON, "apiVersion");
+    mazu_cJSON *api_version = mazu_cJSON_GetObjectItemCaseSensitive(v1alpha1_lease_candidateJSON, "apiVersion");
     if (api_version) { 
-    if(!cJSON_IsString(api_version) && !cJSON_IsNull(api_version))
+    if(!mazu_cJSON_IsString(api_version) && !mazu_cJSON_IsNull(api_version))
     {
     goto end; //String
     }
     }
 
     // v1alpha1_lease_candidate->kind
-    cJSON *kind = cJSON_GetObjectItemCaseSensitive(v1alpha1_lease_candidateJSON, "kind");
+    mazu_cJSON *kind = mazu_cJSON_GetObjectItemCaseSensitive(v1alpha1_lease_candidateJSON, "kind");
     if (kind) { 
-    if(!cJSON_IsString(kind) && !cJSON_IsNull(kind))
+    if(!mazu_cJSON_IsString(kind) && !mazu_cJSON_IsNull(kind))
     {
     goto end; //String
     }
     }
 
     // v1alpha1_lease_candidate->metadata
-    cJSON *metadata = cJSON_GetObjectItemCaseSensitive(v1alpha1_lease_candidateJSON, "metadata");
+    mazu_cJSON *metadata = mazu_cJSON_GetObjectItemCaseSensitive(v1alpha1_lease_candidateJSON, "metadata");
     if (metadata) { 
     metadata_local_nonprim = v1_object_meta_parseFromJSON(metadata); //nonprimitive
     }
 
     // v1alpha1_lease_candidate->spec
-    cJSON *spec = cJSON_GetObjectItemCaseSensitive(v1alpha1_lease_candidateJSON, "spec");
+    mazu_cJSON *spec = mazu_cJSON_GetObjectItemCaseSensitive(v1alpha1_lease_candidateJSON, "spec");
     if (spec) { 
     spec_local_nonprim = v1alpha1_lease_candidate_spec_parseFromJSON(spec); //nonprimitive
     }
 
 
     v1alpha1_lease_candidate_local_var = v1alpha1_lease_candidate_create (
-        api_version && !cJSON_IsNull(api_version) ? strdup(api_version->valuestring) : NULL,
-        kind && !cJSON_IsNull(kind) ? strdup(kind->valuestring) : NULL,
+        api_version && !mazu_cJSON_IsNull(api_version) ? strdup(api_version->valuestring) : NULL,
+        kind && !mazu_cJSON_IsNull(kind) ? strdup(kind->valuestring) : NULL,
         metadata ? metadata_local_nonprim : NULL,
         spec ? spec_local_nonprim : NULL
         );

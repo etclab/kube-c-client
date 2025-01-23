@@ -58,12 +58,12 @@ void v1_priority_class_free(v1_priority_class_t *v1_priority_class) {
     free(v1_priority_class);
 }
 
-cJSON *v1_priority_class_convertToJSON(v1_priority_class_t *v1_priority_class) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_priority_class_convertToJSON(v1_priority_class_t *v1_priority_class) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_priority_class->api_version
     if(v1_priority_class->api_version) {
-    if(cJSON_AddStringToObject(item, "apiVersion", v1_priority_class->api_version) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "apiVersion", v1_priority_class->api_version) == NULL) {
     goto fail; //String
     }
     }
@@ -71,7 +71,7 @@ cJSON *v1_priority_class_convertToJSON(v1_priority_class_t *v1_priority_class) {
 
     // v1_priority_class->description
     if(v1_priority_class->description) {
-    if(cJSON_AddStringToObject(item, "description", v1_priority_class->description) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "description", v1_priority_class->description) == NULL) {
     goto fail; //String
     }
     }
@@ -79,7 +79,7 @@ cJSON *v1_priority_class_convertToJSON(v1_priority_class_t *v1_priority_class) {
 
     // v1_priority_class->global_default
     if(v1_priority_class->global_default) {
-    if(cJSON_AddBoolToObject(item, "globalDefault", v1_priority_class->global_default) == NULL) {
+    if(mazu_cJSON_AddBoolToObject(item, "globalDefault", v1_priority_class->global_default) == NULL) {
     goto fail; //Bool
     }
     }
@@ -87,7 +87,7 @@ cJSON *v1_priority_class_convertToJSON(v1_priority_class_t *v1_priority_class) {
 
     // v1_priority_class->kind
     if(v1_priority_class->kind) {
-    if(cJSON_AddStringToObject(item, "kind", v1_priority_class->kind) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "kind", v1_priority_class->kind) == NULL) {
     goto fail; //String
     }
     }
@@ -95,11 +95,11 @@ cJSON *v1_priority_class_convertToJSON(v1_priority_class_t *v1_priority_class) {
 
     // v1_priority_class->metadata
     if(v1_priority_class->metadata) {
-    cJSON *metadata_local_JSON = v1_object_meta_convertToJSON(v1_priority_class->metadata);
+    mazu_cJSON *metadata_local_JSON = v1_object_meta_convertToJSON(v1_priority_class->metadata);
     if(metadata_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "metadata", metadata_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "metadata", metadata_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -108,7 +108,7 @@ cJSON *v1_priority_class_convertToJSON(v1_priority_class_t *v1_priority_class) {
 
     // v1_priority_class->preemption_policy
     if(v1_priority_class->preemption_policy) {
-    if(cJSON_AddStringToObject(item, "preemptionPolicy", v1_priority_class->preemption_policy) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "preemptionPolicy", v1_priority_class->preemption_policy) == NULL) {
     goto fail; //String
     }
     }
@@ -118,19 +118,19 @@ cJSON *v1_priority_class_convertToJSON(v1_priority_class_t *v1_priority_class) {
     if (!v1_priority_class->value) {
         goto fail;
     }
-    if(cJSON_AddNumberToObject(item, "value", v1_priority_class->value) == NULL) {
+    if(mazu_cJSON_AddNumberToObject(item, "value", v1_priority_class->value) == NULL) {
     goto fail; //Numeric
     }
 
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_priority_class_t *v1_priority_class_parseFromJSON(cJSON *v1_priority_classJSON){
+v1_priority_class_t *v1_priority_class_parseFromJSON(mazu_cJSON *v1_priority_classJSON){
 
     v1_priority_class_t *v1_priority_class_local_var = NULL;
 
@@ -138,76 +138,76 @@ v1_priority_class_t *v1_priority_class_parseFromJSON(cJSON *v1_priority_classJSO
     v1_object_meta_t *metadata_local_nonprim = NULL;
 
     // v1_priority_class->api_version
-    cJSON *api_version = cJSON_GetObjectItemCaseSensitive(v1_priority_classJSON, "apiVersion");
+    mazu_cJSON *api_version = mazu_cJSON_GetObjectItemCaseSensitive(v1_priority_classJSON, "apiVersion");
     if (api_version) { 
-    if(!cJSON_IsString(api_version) && !cJSON_IsNull(api_version))
+    if(!mazu_cJSON_IsString(api_version) && !mazu_cJSON_IsNull(api_version))
     {
     goto end; //String
     }
     }
 
     // v1_priority_class->description
-    cJSON *description = cJSON_GetObjectItemCaseSensitive(v1_priority_classJSON, "description");
+    mazu_cJSON *description = mazu_cJSON_GetObjectItemCaseSensitive(v1_priority_classJSON, "description");
     if (description) { 
-    if(!cJSON_IsString(description) && !cJSON_IsNull(description))
+    if(!mazu_cJSON_IsString(description) && !mazu_cJSON_IsNull(description))
     {
     goto end; //String
     }
     }
 
     // v1_priority_class->global_default
-    cJSON *global_default = cJSON_GetObjectItemCaseSensitive(v1_priority_classJSON, "globalDefault");
+    mazu_cJSON *global_default = mazu_cJSON_GetObjectItemCaseSensitive(v1_priority_classJSON, "globalDefault");
     if (global_default) { 
-    if(!cJSON_IsBool(global_default))
+    if(!mazu_cJSON_IsBool(global_default))
     {
     goto end; //Bool
     }
     }
 
     // v1_priority_class->kind
-    cJSON *kind = cJSON_GetObjectItemCaseSensitive(v1_priority_classJSON, "kind");
+    mazu_cJSON *kind = mazu_cJSON_GetObjectItemCaseSensitive(v1_priority_classJSON, "kind");
     if (kind) { 
-    if(!cJSON_IsString(kind) && !cJSON_IsNull(kind))
+    if(!mazu_cJSON_IsString(kind) && !mazu_cJSON_IsNull(kind))
     {
     goto end; //String
     }
     }
 
     // v1_priority_class->metadata
-    cJSON *metadata = cJSON_GetObjectItemCaseSensitive(v1_priority_classJSON, "metadata");
+    mazu_cJSON *metadata = mazu_cJSON_GetObjectItemCaseSensitive(v1_priority_classJSON, "metadata");
     if (metadata) { 
     metadata_local_nonprim = v1_object_meta_parseFromJSON(metadata); //nonprimitive
     }
 
     // v1_priority_class->preemption_policy
-    cJSON *preemption_policy = cJSON_GetObjectItemCaseSensitive(v1_priority_classJSON, "preemptionPolicy");
+    mazu_cJSON *preemption_policy = mazu_cJSON_GetObjectItemCaseSensitive(v1_priority_classJSON, "preemptionPolicy");
     if (preemption_policy) { 
-    if(!cJSON_IsString(preemption_policy) && !cJSON_IsNull(preemption_policy))
+    if(!mazu_cJSON_IsString(preemption_policy) && !mazu_cJSON_IsNull(preemption_policy))
     {
     goto end; //String
     }
     }
 
     // v1_priority_class->value
-    cJSON *value = cJSON_GetObjectItemCaseSensitive(v1_priority_classJSON, "value");
+    mazu_cJSON *value = mazu_cJSON_GetObjectItemCaseSensitive(v1_priority_classJSON, "value");
     if (!value) {
         goto end;
     }
 
     
-    if(!cJSON_IsNumber(value))
+    if(!mazu_cJSON_IsNumber(value))
     {
     goto end; //Numeric
     }
 
 
     v1_priority_class_local_var = v1_priority_class_create (
-        api_version && !cJSON_IsNull(api_version) ? strdup(api_version->valuestring) : NULL,
-        description && !cJSON_IsNull(description) ? strdup(description->valuestring) : NULL,
+        api_version && !mazu_cJSON_IsNull(api_version) ? strdup(api_version->valuestring) : NULL,
+        description && !mazu_cJSON_IsNull(description) ? strdup(description->valuestring) : NULL,
         global_default ? global_default->valueint : 0,
-        kind && !cJSON_IsNull(kind) ? strdup(kind->valuestring) : NULL,
+        kind && !mazu_cJSON_IsNull(kind) ? strdup(kind->valuestring) : NULL,
         metadata ? metadata_local_nonprim : NULL,
-        preemption_policy && !cJSON_IsNull(preemption_policy) ? strdup(preemption_policy->valuestring) : NULL,
+        preemption_policy && !mazu_cJSON_IsNull(preemption_policy) ? strdup(preemption_policy->valuestring) : NULL,
         value->valuedouble
         );
 

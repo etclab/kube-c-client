@@ -55,12 +55,12 @@ void v1alpha3_device_request_free(v1alpha3_device_request_t *v1alpha3_device_req
     free(v1alpha3_device_request);
 }
 
-cJSON *v1alpha3_device_request_convertToJSON(v1alpha3_device_request_t *v1alpha3_device_request) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1alpha3_device_request_convertToJSON(v1alpha3_device_request_t *v1alpha3_device_request) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1alpha3_device_request->admin_access
     if(v1alpha3_device_request->admin_access) {
-    if(cJSON_AddBoolToObject(item, "adminAccess", v1alpha3_device_request->admin_access) == NULL) {
+    if(mazu_cJSON_AddBoolToObject(item, "adminAccess", v1alpha3_device_request->admin_access) == NULL) {
     goto fail; //Bool
     }
     }
@@ -68,7 +68,7 @@ cJSON *v1alpha3_device_request_convertToJSON(v1alpha3_device_request_t *v1alpha3
 
     // v1alpha3_device_request->allocation_mode
     if(v1alpha3_device_request->allocation_mode) {
-    if(cJSON_AddStringToObject(item, "allocationMode", v1alpha3_device_request->allocation_mode) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "allocationMode", v1alpha3_device_request->allocation_mode) == NULL) {
     goto fail; //String
     }
     }
@@ -76,7 +76,7 @@ cJSON *v1alpha3_device_request_convertToJSON(v1alpha3_device_request_t *v1alpha3
 
     // v1alpha3_device_request->count
     if(v1alpha3_device_request->count) {
-    if(cJSON_AddNumberToObject(item, "count", v1alpha3_device_request->count) == NULL) {
+    if(mazu_cJSON_AddNumberToObject(item, "count", v1alpha3_device_request->count) == NULL) {
     goto fail; //Numeric
     }
     }
@@ -86,7 +86,7 @@ cJSON *v1alpha3_device_request_convertToJSON(v1alpha3_device_request_t *v1alpha3
     if (!v1alpha3_device_request->device_class_name) {
         goto fail;
     }
-    if(cJSON_AddStringToObject(item, "deviceClassName", v1alpha3_device_request->device_class_name) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "deviceClassName", v1alpha3_device_request->device_class_name) == NULL) {
     goto fail; //String
     }
 
@@ -95,14 +95,14 @@ cJSON *v1alpha3_device_request_convertToJSON(v1alpha3_device_request_t *v1alpha3
     if (!v1alpha3_device_request->name) {
         goto fail;
     }
-    if(cJSON_AddStringToObject(item, "name", v1alpha3_device_request->name) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "name", v1alpha3_device_request->name) == NULL) {
     goto fail; //String
     }
 
 
     // v1alpha3_device_request->selectors
     if(v1alpha3_device_request->selectors) {
-    cJSON *selectors = cJSON_AddArrayToObject(item, "selectors");
+    mazu_cJSON *selectors = mazu_cJSON_AddArrayToObject(item, "selectors");
     if(selectors == NULL) {
     goto fail; //nonprimitive container
     }
@@ -110,11 +110,11 @@ cJSON *v1alpha3_device_request_convertToJSON(v1alpha3_device_request_t *v1alpha3
     listEntry_t *selectorsListEntry;
     if (v1alpha3_device_request->selectors) {
     list_ForEach(selectorsListEntry, v1alpha3_device_request->selectors) {
-    cJSON *itemLocal = v1alpha3_device_selector_convertToJSON(selectorsListEntry->data);
+    mazu_cJSON *itemLocal = v1alpha3_device_selector_convertToJSON(selectorsListEntry->data);
     if(itemLocal == NULL) {
     goto fail;
     }
-    cJSON_AddItemToArray(selectors, itemLocal);
+    mazu_cJSON_AddItemToArray(selectors, itemLocal);
     }
     }
     }
@@ -122,12 +122,12 @@ cJSON *v1alpha3_device_request_convertToJSON(v1alpha3_device_request_t *v1alpha3
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1alpha3_device_request_t *v1alpha3_device_request_parseFromJSON(cJSON *v1alpha3_device_requestJSON){
+v1alpha3_device_request_t *v1alpha3_device_request_parseFromJSON(mazu_cJSON *v1alpha3_device_requestJSON){
 
     v1alpha3_device_request_t *v1alpha3_device_request_local_var = NULL;
 
@@ -135,69 +135,69 @@ v1alpha3_device_request_t *v1alpha3_device_request_parseFromJSON(cJSON *v1alpha3
     list_t *selectorsList = NULL;
 
     // v1alpha3_device_request->admin_access
-    cJSON *admin_access = cJSON_GetObjectItemCaseSensitive(v1alpha3_device_requestJSON, "adminAccess");
+    mazu_cJSON *admin_access = mazu_cJSON_GetObjectItemCaseSensitive(v1alpha3_device_requestJSON, "adminAccess");
     if (admin_access) { 
-    if(!cJSON_IsBool(admin_access))
+    if(!mazu_cJSON_IsBool(admin_access))
     {
     goto end; //Bool
     }
     }
 
     // v1alpha3_device_request->allocation_mode
-    cJSON *allocation_mode = cJSON_GetObjectItemCaseSensitive(v1alpha3_device_requestJSON, "allocationMode");
+    mazu_cJSON *allocation_mode = mazu_cJSON_GetObjectItemCaseSensitive(v1alpha3_device_requestJSON, "allocationMode");
     if (allocation_mode) { 
-    if(!cJSON_IsString(allocation_mode) && !cJSON_IsNull(allocation_mode))
+    if(!mazu_cJSON_IsString(allocation_mode) && !mazu_cJSON_IsNull(allocation_mode))
     {
     goto end; //String
     }
     }
 
     // v1alpha3_device_request->count
-    cJSON *count = cJSON_GetObjectItemCaseSensitive(v1alpha3_device_requestJSON, "count");
+    mazu_cJSON *count = mazu_cJSON_GetObjectItemCaseSensitive(v1alpha3_device_requestJSON, "count");
     if (count) { 
-    if(!cJSON_IsNumber(count))
+    if(!mazu_cJSON_IsNumber(count))
     {
     goto end; //Numeric
     }
     }
 
     // v1alpha3_device_request->device_class_name
-    cJSON *device_class_name = cJSON_GetObjectItemCaseSensitive(v1alpha3_device_requestJSON, "deviceClassName");
+    mazu_cJSON *device_class_name = mazu_cJSON_GetObjectItemCaseSensitive(v1alpha3_device_requestJSON, "deviceClassName");
     if (!device_class_name) {
         goto end;
     }
 
     
-    if(!cJSON_IsString(device_class_name))
+    if(!mazu_cJSON_IsString(device_class_name))
     {
     goto end; //String
     }
 
     // v1alpha3_device_request->name
-    cJSON *name = cJSON_GetObjectItemCaseSensitive(v1alpha3_device_requestJSON, "name");
+    mazu_cJSON *name = mazu_cJSON_GetObjectItemCaseSensitive(v1alpha3_device_requestJSON, "name");
     if (!name) {
         goto end;
     }
 
     
-    if(!cJSON_IsString(name))
+    if(!mazu_cJSON_IsString(name))
     {
     goto end; //String
     }
 
     // v1alpha3_device_request->selectors
-    cJSON *selectors = cJSON_GetObjectItemCaseSensitive(v1alpha3_device_requestJSON, "selectors");
+    mazu_cJSON *selectors = mazu_cJSON_GetObjectItemCaseSensitive(v1alpha3_device_requestJSON, "selectors");
     if (selectors) { 
-    cJSON *selectors_local_nonprimitive = NULL;
-    if(!cJSON_IsArray(selectors)){
+    mazu_cJSON *selectors_local_nonprimitive = NULL;
+    if(!mazu_cJSON_IsArray(selectors)){
         goto end; //nonprimitive container
     }
 
     selectorsList = list_createList();
 
-    cJSON_ArrayForEach(selectors_local_nonprimitive,selectors )
+    mazu_cJSON_ArrayForEach(selectors_local_nonprimitive,selectors )
     {
-        if(!cJSON_IsObject(selectors_local_nonprimitive)){
+        if(!mazu_cJSON_IsObject(selectors_local_nonprimitive)){
             goto end;
         }
         v1alpha3_device_selector_t *selectorsItem = v1alpha3_device_selector_parseFromJSON(selectors_local_nonprimitive);
@@ -209,7 +209,7 @@ v1alpha3_device_request_t *v1alpha3_device_request_parseFromJSON(cJSON *v1alpha3
 
     v1alpha3_device_request_local_var = v1alpha3_device_request_create (
         admin_access ? admin_access->valueint : 0,
-        allocation_mode && !cJSON_IsNull(allocation_mode) ? strdup(allocation_mode->valuestring) : NULL,
+        allocation_mode && !mazu_cJSON_IsNull(allocation_mode) ? strdup(allocation_mode->valuestring) : NULL,
         count ? count->valuedouble : 0,
         strdup(device_class_name->valuestring),
         strdup(name->valuestring),

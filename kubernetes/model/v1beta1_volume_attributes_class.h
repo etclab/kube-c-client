@@ -8,7 +8,7 @@
 #define _v1beta1_volume_attributes_class_H_
 
 #include <string.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
 #include "../include/binary.h"
@@ -38,9 +38,9 @@ v1beta1_volume_attributes_class_t *v1beta1_volume_attributes_class_create(
 
 void v1beta1_volume_attributes_class_free(v1beta1_volume_attributes_class_t *v1beta1_volume_attributes_class);
 
-v1beta1_volume_attributes_class_t *v1beta1_volume_attributes_class_parseFromJSON(cJSON *v1beta1_volume_attributes_classJSON);
+v1beta1_volume_attributes_class_t *v1beta1_volume_attributes_class_parseFromJSON(mazu_cJSON *v1beta1_volume_attributes_classJSON);
 
-cJSON *v1beta1_volume_attributes_class_convertToJSON(v1beta1_volume_attributes_class_t *v1beta1_volume_attributes_class);
+mazu_cJSON *v1beta1_volume_attributes_class_convertToJSON(v1beta1_volume_attributes_class_t *v1beta1_volume_attributes_class);
 
 #endif /* _v1beta1_volume_attributes_class_H_ */
 

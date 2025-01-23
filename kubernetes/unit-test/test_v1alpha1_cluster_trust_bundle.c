@@ -11,7 +11,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdbool.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 
 #include "../model/v1alpha1_cluster_trust_bundle.h"
 v1alpha1_cluster_trust_bundle_t* instantiate_v1alpha1_cluster_trust_bundle(int include_optional);
@@ -49,11 +49,11 @@ v1alpha1_cluster_trust_bundle_t* instantiate_v1alpha1_cluster_trust_bundle(int i
 void test_v1alpha1_cluster_trust_bundle(int include_optional) {
     v1alpha1_cluster_trust_bundle_t* v1alpha1_cluster_trust_bundle_1 = instantiate_v1alpha1_cluster_trust_bundle(include_optional);
 
-	cJSON* jsonv1alpha1_cluster_trust_bundle_1 = v1alpha1_cluster_trust_bundle_convertToJSON(v1alpha1_cluster_trust_bundle_1);
-	printf("v1alpha1_cluster_trust_bundle :\n%s\n", cJSON_Print(jsonv1alpha1_cluster_trust_bundle_1));
+	mazu_cJSON* jsonv1alpha1_cluster_trust_bundle_1 = v1alpha1_cluster_trust_bundle_convertToJSON(v1alpha1_cluster_trust_bundle_1);
+	printf("v1alpha1_cluster_trust_bundle :\n%s\n", mazu_cJSON_Print(jsonv1alpha1_cluster_trust_bundle_1));
 	v1alpha1_cluster_trust_bundle_t* v1alpha1_cluster_trust_bundle_2 = v1alpha1_cluster_trust_bundle_parseFromJSON(jsonv1alpha1_cluster_trust_bundle_1);
-	cJSON* jsonv1alpha1_cluster_trust_bundle_2 = v1alpha1_cluster_trust_bundle_convertToJSON(v1alpha1_cluster_trust_bundle_2);
-	printf("repeating v1alpha1_cluster_trust_bundle:\n%s\n", cJSON_Print(jsonv1alpha1_cluster_trust_bundle_2));
+	mazu_cJSON* jsonv1alpha1_cluster_trust_bundle_2 = v1alpha1_cluster_trust_bundle_convertToJSON(v1alpha1_cluster_trust_bundle_2);
+	printf("repeating v1alpha1_cluster_trust_bundle:\n%s\n", mazu_cJSON_Print(jsonv1alpha1_cluster_trust_bundle_2));
 }
 
 int main() {

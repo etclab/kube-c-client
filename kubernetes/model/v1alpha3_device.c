@@ -36,16 +36,16 @@ void v1alpha3_device_free(v1alpha3_device_t *v1alpha3_device) {
     free(v1alpha3_device);
 }
 
-cJSON *v1alpha3_device_convertToJSON(v1alpha3_device_t *v1alpha3_device) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1alpha3_device_convertToJSON(v1alpha3_device_t *v1alpha3_device) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1alpha3_device->basic
     if(v1alpha3_device->basic) {
-    cJSON *basic_local_JSON = v1alpha3_basic_device_convertToJSON(v1alpha3_device->basic);
+    mazu_cJSON *basic_local_JSON = v1alpha3_basic_device_convertToJSON(v1alpha3_device->basic);
     if(basic_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "basic", basic_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "basic", basic_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -56,19 +56,19 @@ cJSON *v1alpha3_device_convertToJSON(v1alpha3_device_t *v1alpha3_device) {
     if (!v1alpha3_device->name) {
         goto fail;
     }
-    if(cJSON_AddStringToObject(item, "name", v1alpha3_device->name) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "name", v1alpha3_device->name) == NULL) {
     goto fail; //String
     }
 
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1alpha3_device_t *v1alpha3_device_parseFromJSON(cJSON *v1alpha3_deviceJSON){
+v1alpha3_device_t *v1alpha3_device_parseFromJSON(mazu_cJSON *v1alpha3_deviceJSON){
 
     v1alpha3_device_t *v1alpha3_device_local_var = NULL;
 
@@ -76,19 +76,19 @@ v1alpha3_device_t *v1alpha3_device_parseFromJSON(cJSON *v1alpha3_deviceJSON){
     v1alpha3_basic_device_t *basic_local_nonprim = NULL;
 
     // v1alpha3_device->basic
-    cJSON *basic = cJSON_GetObjectItemCaseSensitive(v1alpha3_deviceJSON, "basic");
+    mazu_cJSON *basic = mazu_cJSON_GetObjectItemCaseSensitive(v1alpha3_deviceJSON, "basic");
     if (basic) { 
     basic_local_nonprim = v1alpha3_basic_device_parseFromJSON(basic); //nonprimitive
     }
 
     // v1alpha3_device->name
-    cJSON *name = cJSON_GetObjectItemCaseSensitive(v1alpha3_deviceJSON, "name");
+    mazu_cJSON *name = mazu_cJSON_GetObjectItemCaseSensitive(v1alpha3_deviceJSON, "name");
     if (!name) {
         goto end;
     }
 
     
-    if(!cJSON_IsString(name))
+    if(!mazu_cJSON_IsString(name))
     {
     goto end; //String
     }

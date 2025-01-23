@@ -52,12 +52,12 @@ void v1_deployment_spec_free(v1_deployment_spec_t *v1_deployment_spec) {
     free(v1_deployment_spec);
 }
 
-cJSON *v1_deployment_spec_convertToJSON(v1_deployment_spec_t *v1_deployment_spec) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_deployment_spec_convertToJSON(v1_deployment_spec_t *v1_deployment_spec) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_deployment_spec->min_ready_seconds
     if(v1_deployment_spec->min_ready_seconds) {
-    if(cJSON_AddNumberToObject(item, "minReadySeconds", v1_deployment_spec->min_ready_seconds) == NULL) {
+    if(mazu_cJSON_AddNumberToObject(item, "minReadySeconds", v1_deployment_spec->min_ready_seconds) == NULL) {
     goto fail; //Numeric
     }
     }
@@ -65,7 +65,7 @@ cJSON *v1_deployment_spec_convertToJSON(v1_deployment_spec_t *v1_deployment_spec
 
     // v1_deployment_spec->paused
     if(v1_deployment_spec->paused) {
-    if(cJSON_AddBoolToObject(item, "paused", v1_deployment_spec->paused) == NULL) {
+    if(mazu_cJSON_AddBoolToObject(item, "paused", v1_deployment_spec->paused) == NULL) {
     goto fail; //Bool
     }
     }
@@ -73,7 +73,7 @@ cJSON *v1_deployment_spec_convertToJSON(v1_deployment_spec_t *v1_deployment_spec
 
     // v1_deployment_spec->progress_deadline_seconds
     if(v1_deployment_spec->progress_deadline_seconds) {
-    if(cJSON_AddNumberToObject(item, "progressDeadlineSeconds", v1_deployment_spec->progress_deadline_seconds) == NULL) {
+    if(mazu_cJSON_AddNumberToObject(item, "progressDeadlineSeconds", v1_deployment_spec->progress_deadline_seconds) == NULL) {
     goto fail; //Numeric
     }
     }
@@ -81,7 +81,7 @@ cJSON *v1_deployment_spec_convertToJSON(v1_deployment_spec_t *v1_deployment_spec
 
     // v1_deployment_spec->replicas
     if(v1_deployment_spec->replicas) {
-    if(cJSON_AddNumberToObject(item, "replicas", v1_deployment_spec->replicas) == NULL) {
+    if(mazu_cJSON_AddNumberToObject(item, "replicas", v1_deployment_spec->replicas) == NULL) {
     goto fail; //Numeric
     }
     }
@@ -89,7 +89,7 @@ cJSON *v1_deployment_spec_convertToJSON(v1_deployment_spec_t *v1_deployment_spec
 
     // v1_deployment_spec->revision_history_limit
     if(v1_deployment_spec->revision_history_limit) {
-    if(cJSON_AddNumberToObject(item, "revisionHistoryLimit", v1_deployment_spec->revision_history_limit) == NULL) {
+    if(mazu_cJSON_AddNumberToObject(item, "revisionHistoryLimit", v1_deployment_spec->revision_history_limit) == NULL) {
     goto fail; //Numeric
     }
     }
@@ -99,11 +99,11 @@ cJSON *v1_deployment_spec_convertToJSON(v1_deployment_spec_t *v1_deployment_spec
     if (!v1_deployment_spec->selector) {
         goto fail;
     }
-    cJSON *selector_local_JSON = v1_label_selector_convertToJSON(v1_deployment_spec->selector);
+    mazu_cJSON *selector_local_JSON = v1_label_selector_convertToJSON(v1_deployment_spec->selector);
     if(selector_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "selector", selector_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "selector", selector_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -111,11 +111,11 @@ cJSON *v1_deployment_spec_convertToJSON(v1_deployment_spec_t *v1_deployment_spec
 
     // v1_deployment_spec->strategy
     if(v1_deployment_spec->strategy) {
-    cJSON *strategy_local_JSON = v1_deployment_strategy_convertToJSON(v1_deployment_spec->strategy);
+    mazu_cJSON *strategy_local_JSON = v1_deployment_strategy_convertToJSON(v1_deployment_spec->strategy);
     if(strategy_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "strategy", strategy_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "strategy", strategy_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -126,11 +126,11 @@ cJSON *v1_deployment_spec_convertToJSON(v1_deployment_spec_t *v1_deployment_spec
     if (!v1_deployment_spec->_template) {
         goto fail;
     }
-    cJSON *_template_local_JSON = v1_pod_template_spec_convertToJSON(v1_deployment_spec->_template);
+    mazu_cJSON *_template_local_JSON = v1_pod_template_spec_convertToJSON(v1_deployment_spec->_template);
     if(_template_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "template", _template_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "template", _template_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -138,12 +138,12 @@ cJSON *v1_deployment_spec_convertToJSON(v1_deployment_spec_t *v1_deployment_spec
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_deployment_spec_t *v1_deployment_spec_parseFromJSON(cJSON *v1_deployment_specJSON){
+v1_deployment_spec_t *v1_deployment_spec_parseFromJSON(mazu_cJSON *v1_deployment_specJSON){
 
     v1_deployment_spec_t *v1_deployment_spec_local_var = NULL;
 
@@ -157,52 +157,52 @@ v1_deployment_spec_t *v1_deployment_spec_parseFromJSON(cJSON *v1_deployment_spec
     v1_pod_template_spec_t *_template_local_nonprim = NULL;
 
     // v1_deployment_spec->min_ready_seconds
-    cJSON *min_ready_seconds = cJSON_GetObjectItemCaseSensitive(v1_deployment_specJSON, "minReadySeconds");
+    mazu_cJSON *min_ready_seconds = mazu_cJSON_GetObjectItemCaseSensitive(v1_deployment_specJSON, "minReadySeconds");
     if (min_ready_seconds) { 
-    if(!cJSON_IsNumber(min_ready_seconds))
+    if(!mazu_cJSON_IsNumber(min_ready_seconds))
     {
     goto end; //Numeric
     }
     }
 
     // v1_deployment_spec->paused
-    cJSON *paused = cJSON_GetObjectItemCaseSensitive(v1_deployment_specJSON, "paused");
+    mazu_cJSON *paused = mazu_cJSON_GetObjectItemCaseSensitive(v1_deployment_specJSON, "paused");
     if (paused) { 
-    if(!cJSON_IsBool(paused))
+    if(!mazu_cJSON_IsBool(paused))
     {
     goto end; //Bool
     }
     }
 
     // v1_deployment_spec->progress_deadline_seconds
-    cJSON *progress_deadline_seconds = cJSON_GetObjectItemCaseSensitive(v1_deployment_specJSON, "progressDeadlineSeconds");
+    mazu_cJSON *progress_deadline_seconds = mazu_cJSON_GetObjectItemCaseSensitive(v1_deployment_specJSON, "progressDeadlineSeconds");
     if (progress_deadline_seconds) { 
-    if(!cJSON_IsNumber(progress_deadline_seconds))
+    if(!mazu_cJSON_IsNumber(progress_deadline_seconds))
     {
     goto end; //Numeric
     }
     }
 
     // v1_deployment_spec->replicas
-    cJSON *replicas = cJSON_GetObjectItemCaseSensitive(v1_deployment_specJSON, "replicas");
+    mazu_cJSON *replicas = mazu_cJSON_GetObjectItemCaseSensitive(v1_deployment_specJSON, "replicas");
     if (replicas) { 
-    if(!cJSON_IsNumber(replicas))
+    if(!mazu_cJSON_IsNumber(replicas))
     {
     goto end; //Numeric
     }
     }
 
     // v1_deployment_spec->revision_history_limit
-    cJSON *revision_history_limit = cJSON_GetObjectItemCaseSensitive(v1_deployment_specJSON, "revisionHistoryLimit");
+    mazu_cJSON *revision_history_limit = mazu_cJSON_GetObjectItemCaseSensitive(v1_deployment_specJSON, "revisionHistoryLimit");
     if (revision_history_limit) { 
-    if(!cJSON_IsNumber(revision_history_limit))
+    if(!mazu_cJSON_IsNumber(revision_history_limit))
     {
     goto end; //Numeric
     }
     }
 
     // v1_deployment_spec->selector
-    cJSON *selector = cJSON_GetObjectItemCaseSensitive(v1_deployment_specJSON, "selector");
+    mazu_cJSON *selector = mazu_cJSON_GetObjectItemCaseSensitive(v1_deployment_specJSON, "selector");
     if (!selector) {
         goto end;
     }
@@ -211,13 +211,13 @@ v1_deployment_spec_t *v1_deployment_spec_parseFromJSON(cJSON *v1_deployment_spec
     selector_local_nonprim = v1_label_selector_parseFromJSON(selector); //nonprimitive
 
     // v1_deployment_spec->strategy
-    cJSON *strategy = cJSON_GetObjectItemCaseSensitive(v1_deployment_specJSON, "strategy");
+    mazu_cJSON *strategy = mazu_cJSON_GetObjectItemCaseSensitive(v1_deployment_specJSON, "strategy");
     if (strategy) { 
     strategy_local_nonprim = v1_deployment_strategy_parseFromJSON(strategy); //nonprimitive
     }
 
     // v1_deployment_spec->_template
-    cJSON *_template = cJSON_GetObjectItemCaseSensitive(v1_deployment_specJSON, "template");
+    mazu_cJSON *_template = mazu_cJSON_GetObjectItemCaseSensitive(v1_deployment_specJSON, "template");
     if (!_template) {
         goto end;
     }

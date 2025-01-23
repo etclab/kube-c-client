@@ -44,12 +44,12 @@ void v1_cinder_persistent_volume_source_free(v1_cinder_persistent_volume_source_
     free(v1_cinder_persistent_volume_source);
 }
 
-cJSON *v1_cinder_persistent_volume_source_convertToJSON(v1_cinder_persistent_volume_source_t *v1_cinder_persistent_volume_source) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_cinder_persistent_volume_source_convertToJSON(v1_cinder_persistent_volume_source_t *v1_cinder_persistent_volume_source) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_cinder_persistent_volume_source->fs_type
     if(v1_cinder_persistent_volume_source->fs_type) {
-    if(cJSON_AddStringToObject(item, "fsType", v1_cinder_persistent_volume_source->fs_type) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "fsType", v1_cinder_persistent_volume_source->fs_type) == NULL) {
     goto fail; //String
     }
     }
@@ -57,7 +57,7 @@ cJSON *v1_cinder_persistent_volume_source_convertToJSON(v1_cinder_persistent_vol
 
     // v1_cinder_persistent_volume_source->read_only
     if(v1_cinder_persistent_volume_source->read_only) {
-    if(cJSON_AddBoolToObject(item, "readOnly", v1_cinder_persistent_volume_source->read_only) == NULL) {
+    if(mazu_cJSON_AddBoolToObject(item, "readOnly", v1_cinder_persistent_volume_source->read_only) == NULL) {
     goto fail; //Bool
     }
     }
@@ -65,11 +65,11 @@ cJSON *v1_cinder_persistent_volume_source_convertToJSON(v1_cinder_persistent_vol
 
     // v1_cinder_persistent_volume_source->secret_ref
     if(v1_cinder_persistent_volume_source->secret_ref) {
-    cJSON *secret_ref_local_JSON = v1_secret_reference_convertToJSON(v1_cinder_persistent_volume_source->secret_ref);
+    mazu_cJSON *secret_ref_local_JSON = v1_secret_reference_convertToJSON(v1_cinder_persistent_volume_source->secret_ref);
     if(secret_ref_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "secretRef", secret_ref_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "secretRef", secret_ref_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -80,19 +80,19 @@ cJSON *v1_cinder_persistent_volume_source_convertToJSON(v1_cinder_persistent_vol
     if (!v1_cinder_persistent_volume_source->volume_id) {
         goto fail;
     }
-    if(cJSON_AddStringToObject(item, "volumeID", v1_cinder_persistent_volume_source->volume_id) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "volumeID", v1_cinder_persistent_volume_source->volume_id) == NULL) {
     goto fail; //String
     }
 
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_cinder_persistent_volume_source_t *v1_cinder_persistent_volume_source_parseFromJSON(cJSON *v1_cinder_persistent_volume_sourceJSON){
+v1_cinder_persistent_volume_source_t *v1_cinder_persistent_volume_source_parseFromJSON(mazu_cJSON *v1_cinder_persistent_volume_sourceJSON){
 
     v1_cinder_persistent_volume_source_t *v1_cinder_persistent_volume_source_local_var = NULL;
 
@@ -100,44 +100,44 @@ v1_cinder_persistent_volume_source_t *v1_cinder_persistent_volume_source_parseFr
     v1_secret_reference_t *secret_ref_local_nonprim = NULL;
 
     // v1_cinder_persistent_volume_source->fs_type
-    cJSON *fs_type = cJSON_GetObjectItemCaseSensitive(v1_cinder_persistent_volume_sourceJSON, "fsType");
+    mazu_cJSON *fs_type = mazu_cJSON_GetObjectItemCaseSensitive(v1_cinder_persistent_volume_sourceJSON, "fsType");
     if (fs_type) { 
-    if(!cJSON_IsString(fs_type) && !cJSON_IsNull(fs_type))
+    if(!mazu_cJSON_IsString(fs_type) && !mazu_cJSON_IsNull(fs_type))
     {
     goto end; //String
     }
     }
 
     // v1_cinder_persistent_volume_source->read_only
-    cJSON *read_only = cJSON_GetObjectItemCaseSensitive(v1_cinder_persistent_volume_sourceJSON, "readOnly");
+    mazu_cJSON *read_only = mazu_cJSON_GetObjectItemCaseSensitive(v1_cinder_persistent_volume_sourceJSON, "readOnly");
     if (read_only) { 
-    if(!cJSON_IsBool(read_only))
+    if(!mazu_cJSON_IsBool(read_only))
     {
     goto end; //Bool
     }
     }
 
     // v1_cinder_persistent_volume_source->secret_ref
-    cJSON *secret_ref = cJSON_GetObjectItemCaseSensitive(v1_cinder_persistent_volume_sourceJSON, "secretRef");
+    mazu_cJSON *secret_ref = mazu_cJSON_GetObjectItemCaseSensitive(v1_cinder_persistent_volume_sourceJSON, "secretRef");
     if (secret_ref) { 
     secret_ref_local_nonprim = v1_secret_reference_parseFromJSON(secret_ref); //nonprimitive
     }
 
     // v1_cinder_persistent_volume_source->volume_id
-    cJSON *volume_id = cJSON_GetObjectItemCaseSensitive(v1_cinder_persistent_volume_sourceJSON, "volumeID");
+    mazu_cJSON *volume_id = mazu_cJSON_GetObjectItemCaseSensitive(v1_cinder_persistent_volume_sourceJSON, "volumeID");
     if (!volume_id) {
         goto end;
     }
 
     
-    if(!cJSON_IsString(volume_id))
+    if(!mazu_cJSON_IsString(volume_id))
     {
     goto end; //String
     }
 
 
     v1_cinder_persistent_volume_source_local_var = v1_cinder_persistent_volume_source_create (
-        fs_type && !cJSON_IsNull(fs_type) ? strdup(fs_type->valuestring) : NULL,
+        fs_type && !mazu_cJSON_IsNull(fs_type) ? strdup(fs_type->valuestring) : NULL,
         read_only ? read_only->valueint : 0,
         secret_ref ? secret_ref_local_nonprim : NULL,
         strdup(volume_id->valuestring)

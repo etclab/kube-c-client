@@ -32,12 +32,12 @@ void v1_service_backend_port_free(v1_service_backend_port_t *v1_service_backend_
     free(v1_service_backend_port);
 }
 
-cJSON *v1_service_backend_port_convertToJSON(v1_service_backend_port_t *v1_service_backend_port) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_service_backend_port_convertToJSON(v1_service_backend_port_t *v1_service_backend_port) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_service_backend_port->name
     if(v1_service_backend_port->name) {
-    if(cJSON_AddStringToObject(item, "name", v1_service_backend_port->name) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "name", v1_service_backend_port->name) == NULL) {
     goto fail; //String
     }
     }
@@ -45,7 +45,7 @@ cJSON *v1_service_backend_port_convertToJSON(v1_service_backend_port_t *v1_servi
 
     // v1_service_backend_port->number
     if(v1_service_backend_port->number) {
-    if(cJSON_AddNumberToObject(item, "number", v1_service_backend_port->number) == NULL) {
+    if(mazu_cJSON_AddNumberToObject(item, "number", v1_service_backend_port->number) == NULL) {
     goto fail; //Numeric
     }
     }
@@ -53,28 +53,28 @@ cJSON *v1_service_backend_port_convertToJSON(v1_service_backend_port_t *v1_servi
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_service_backend_port_t *v1_service_backend_port_parseFromJSON(cJSON *v1_service_backend_portJSON){
+v1_service_backend_port_t *v1_service_backend_port_parseFromJSON(mazu_cJSON *v1_service_backend_portJSON){
 
     v1_service_backend_port_t *v1_service_backend_port_local_var = NULL;
 
     // v1_service_backend_port->name
-    cJSON *name = cJSON_GetObjectItemCaseSensitive(v1_service_backend_portJSON, "name");
+    mazu_cJSON *name = mazu_cJSON_GetObjectItemCaseSensitive(v1_service_backend_portJSON, "name");
     if (name) { 
-    if(!cJSON_IsString(name) && !cJSON_IsNull(name))
+    if(!mazu_cJSON_IsString(name) && !mazu_cJSON_IsNull(name))
     {
     goto end; //String
     }
     }
 
     // v1_service_backend_port->number
-    cJSON *number = cJSON_GetObjectItemCaseSensitive(v1_service_backend_portJSON, "number");
+    mazu_cJSON *number = mazu_cJSON_GetObjectItemCaseSensitive(v1_service_backend_portJSON, "number");
     if (number) { 
-    if(!cJSON_IsNumber(number))
+    if(!mazu_cJSON_IsNumber(number))
     {
     goto end; //Numeric
     }
@@ -82,7 +82,7 @@ v1_service_backend_port_t *v1_service_backend_port_parseFromJSON(cJSON *v1_servi
 
 
     v1_service_backend_port_local_var = v1_service_backend_port_create (
-        name && !cJSON_IsNull(name) ? strdup(name->valuestring) : NULL,
+        name && !mazu_cJSON_IsNull(name) ? strdup(name->valuestring) : NULL,
         number ? number->valuedouble : 0
         );
 

@@ -26,37 +26,37 @@ void v1_daemon_endpoint_free(v1_daemon_endpoint_t *v1_daemon_endpoint) {
     free(v1_daemon_endpoint);
 }
 
-cJSON *v1_daemon_endpoint_convertToJSON(v1_daemon_endpoint_t *v1_daemon_endpoint) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_daemon_endpoint_convertToJSON(v1_daemon_endpoint_t *v1_daemon_endpoint) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_daemon_endpoint->port
     if (!v1_daemon_endpoint->port) {
         goto fail;
     }
-    if(cJSON_AddNumberToObject(item, "Port", v1_daemon_endpoint->port) == NULL) {
+    if(mazu_cJSON_AddNumberToObject(item, "Port", v1_daemon_endpoint->port) == NULL) {
     goto fail; //Numeric
     }
 
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_daemon_endpoint_t *v1_daemon_endpoint_parseFromJSON(cJSON *v1_daemon_endpointJSON){
+v1_daemon_endpoint_t *v1_daemon_endpoint_parseFromJSON(mazu_cJSON *v1_daemon_endpointJSON){
 
     v1_daemon_endpoint_t *v1_daemon_endpoint_local_var = NULL;
 
     // v1_daemon_endpoint->port
-    cJSON *port = cJSON_GetObjectItemCaseSensitive(v1_daemon_endpointJSON, "Port");
+    mazu_cJSON *port = mazu_cJSON_GetObjectItemCaseSensitive(v1_daemon_endpointJSON, "Port");
     if (!port) {
         goto end;
     }
 
     
-    if(!cJSON_IsNumber(port))
+    if(!mazu_cJSON_IsNumber(port))
     {
     goto end; //Numeric
     }

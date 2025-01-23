@@ -54,12 +54,12 @@ void v1_node_free(v1_node_t *v1_node) {
     free(v1_node);
 }
 
-cJSON *v1_node_convertToJSON(v1_node_t *v1_node) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_node_convertToJSON(v1_node_t *v1_node) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_node->api_version
     if(v1_node->api_version) {
-    if(cJSON_AddStringToObject(item, "apiVersion", v1_node->api_version) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "apiVersion", v1_node->api_version) == NULL) {
     goto fail; //String
     }
     }
@@ -67,7 +67,7 @@ cJSON *v1_node_convertToJSON(v1_node_t *v1_node) {
 
     // v1_node->kind
     if(v1_node->kind) {
-    if(cJSON_AddStringToObject(item, "kind", v1_node->kind) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "kind", v1_node->kind) == NULL) {
     goto fail; //String
     }
     }
@@ -75,11 +75,11 @@ cJSON *v1_node_convertToJSON(v1_node_t *v1_node) {
 
     // v1_node->metadata
     if(v1_node->metadata) {
-    cJSON *metadata_local_JSON = v1_object_meta_convertToJSON(v1_node->metadata);
+    mazu_cJSON *metadata_local_JSON = v1_object_meta_convertToJSON(v1_node->metadata);
     if(metadata_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "metadata", metadata_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "metadata", metadata_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -88,11 +88,11 @@ cJSON *v1_node_convertToJSON(v1_node_t *v1_node) {
 
     // v1_node->spec
     if(v1_node->spec) {
-    cJSON *spec_local_JSON = v1_node_spec_convertToJSON(v1_node->spec);
+    mazu_cJSON *spec_local_JSON = v1_node_spec_convertToJSON(v1_node->spec);
     if(spec_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "spec", spec_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "spec", spec_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -101,11 +101,11 @@ cJSON *v1_node_convertToJSON(v1_node_t *v1_node) {
 
     // v1_node->status
     if(v1_node->status) {
-    cJSON *status_local_JSON = v1_node_status_convertToJSON(v1_node->status);
+    mazu_cJSON *status_local_JSON = v1_node_status_convertToJSON(v1_node->status);
     if(status_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "status", status_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "status", status_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -114,12 +114,12 @@ cJSON *v1_node_convertToJSON(v1_node_t *v1_node) {
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_node_t *v1_node_parseFromJSON(cJSON *v1_nodeJSON){
+v1_node_t *v1_node_parseFromJSON(mazu_cJSON *v1_nodeJSON){
 
     v1_node_t *v1_node_local_var = NULL;
 
@@ -133,45 +133,45 @@ v1_node_t *v1_node_parseFromJSON(cJSON *v1_nodeJSON){
     v1_node_status_t *status_local_nonprim = NULL;
 
     // v1_node->api_version
-    cJSON *api_version = cJSON_GetObjectItemCaseSensitive(v1_nodeJSON, "apiVersion");
+    mazu_cJSON *api_version = mazu_cJSON_GetObjectItemCaseSensitive(v1_nodeJSON, "apiVersion");
     if (api_version) { 
-    if(!cJSON_IsString(api_version) && !cJSON_IsNull(api_version))
+    if(!mazu_cJSON_IsString(api_version) && !mazu_cJSON_IsNull(api_version))
     {
     goto end; //String
     }
     }
 
     // v1_node->kind
-    cJSON *kind = cJSON_GetObjectItemCaseSensitive(v1_nodeJSON, "kind");
+    mazu_cJSON *kind = mazu_cJSON_GetObjectItemCaseSensitive(v1_nodeJSON, "kind");
     if (kind) { 
-    if(!cJSON_IsString(kind) && !cJSON_IsNull(kind))
+    if(!mazu_cJSON_IsString(kind) && !mazu_cJSON_IsNull(kind))
     {
     goto end; //String
     }
     }
 
     // v1_node->metadata
-    cJSON *metadata = cJSON_GetObjectItemCaseSensitive(v1_nodeJSON, "metadata");
+    mazu_cJSON *metadata = mazu_cJSON_GetObjectItemCaseSensitive(v1_nodeJSON, "metadata");
     if (metadata) { 
     metadata_local_nonprim = v1_object_meta_parseFromJSON(metadata); //nonprimitive
     }
 
     // v1_node->spec
-    cJSON *spec = cJSON_GetObjectItemCaseSensitive(v1_nodeJSON, "spec");
+    mazu_cJSON *spec = mazu_cJSON_GetObjectItemCaseSensitive(v1_nodeJSON, "spec");
     if (spec) { 
     spec_local_nonprim = v1_node_spec_parseFromJSON(spec); //nonprimitive
     }
 
     // v1_node->status
-    cJSON *status = cJSON_GetObjectItemCaseSensitive(v1_nodeJSON, "status");
+    mazu_cJSON *status = mazu_cJSON_GetObjectItemCaseSensitive(v1_nodeJSON, "status");
     if (status) { 
     status_local_nonprim = v1_node_status_parseFromJSON(status); //nonprimitive
     }
 
 
     v1_node_local_var = v1_node_create (
-        api_version && !cJSON_IsNull(api_version) ? strdup(api_version->valuestring) : NULL,
-        kind && !cJSON_IsNull(kind) ? strdup(kind->valuestring) : NULL,
+        api_version && !mazu_cJSON_IsNull(api_version) ? strdup(api_version->valuestring) : NULL,
+        kind && !mazu_cJSON_IsNull(kind) ? strdup(kind->valuestring) : NULL,
         metadata ? metadata_local_nonprim : NULL,
         spec ? spec_local_nonprim : NULL,
         status ? status_local_nonprim : NULL

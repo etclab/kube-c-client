@@ -8,7 +8,7 @@
 #define _v1_controller_revision_H_
 
 #include <string.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
 #include "../include/binary.h"
@@ -39,9 +39,9 @@ v1_controller_revision_t *v1_controller_revision_create(
 
 void v1_controller_revision_free(v1_controller_revision_t *v1_controller_revision);
 
-v1_controller_revision_t *v1_controller_revision_parseFromJSON(cJSON *v1_controller_revisionJSON);
+v1_controller_revision_t *v1_controller_revision_parseFromJSON(mazu_cJSON *v1_controller_revisionJSON);
 
-cJSON *v1_controller_revision_convertToJSON(v1_controller_revision_t *v1_controller_revision);
+mazu_cJSON *v1_controller_revision_convertToJSON(v1_controller_revision_t *v1_controller_revision);
 
 #endif /* _v1_controller_revision_H_ */
 

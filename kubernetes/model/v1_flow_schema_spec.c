@@ -47,16 +47,16 @@ void v1_flow_schema_spec_free(v1_flow_schema_spec_t *v1_flow_schema_spec) {
     free(v1_flow_schema_spec);
 }
 
-cJSON *v1_flow_schema_spec_convertToJSON(v1_flow_schema_spec_t *v1_flow_schema_spec) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_flow_schema_spec_convertToJSON(v1_flow_schema_spec_t *v1_flow_schema_spec) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_flow_schema_spec->distinguisher_method
     if(v1_flow_schema_spec->distinguisher_method) {
-    cJSON *distinguisher_method_local_JSON = v1_flow_distinguisher_method_convertToJSON(v1_flow_schema_spec->distinguisher_method);
+    mazu_cJSON *distinguisher_method_local_JSON = v1_flow_distinguisher_method_convertToJSON(v1_flow_schema_spec->distinguisher_method);
     if(distinguisher_method_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "distinguisherMethod", distinguisher_method_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "distinguisherMethod", distinguisher_method_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -65,7 +65,7 @@ cJSON *v1_flow_schema_spec_convertToJSON(v1_flow_schema_spec_t *v1_flow_schema_s
 
     // v1_flow_schema_spec->matching_precedence
     if(v1_flow_schema_spec->matching_precedence) {
-    if(cJSON_AddNumberToObject(item, "matchingPrecedence", v1_flow_schema_spec->matching_precedence) == NULL) {
+    if(mazu_cJSON_AddNumberToObject(item, "matchingPrecedence", v1_flow_schema_spec->matching_precedence) == NULL) {
     goto fail; //Numeric
     }
     }
@@ -75,11 +75,11 @@ cJSON *v1_flow_schema_spec_convertToJSON(v1_flow_schema_spec_t *v1_flow_schema_s
     if (!v1_flow_schema_spec->priority_level_configuration) {
         goto fail;
     }
-    cJSON *priority_level_configuration_local_JSON = v1_priority_level_configuration_reference_convertToJSON(v1_flow_schema_spec->priority_level_configuration);
+    mazu_cJSON *priority_level_configuration_local_JSON = v1_priority_level_configuration_reference_convertToJSON(v1_flow_schema_spec->priority_level_configuration);
     if(priority_level_configuration_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "priorityLevelConfiguration", priority_level_configuration_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "priorityLevelConfiguration", priority_level_configuration_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -87,7 +87,7 @@ cJSON *v1_flow_schema_spec_convertToJSON(v1_flow_schema_spec_t *v1_flow_schema_s
 
     // v1_flow_schema_spec->rules
     if(v1_flow_schema_spec->rules) {
-    cJSON *rules = cJSON_AddArrayToObject(item, "rules");
+    mazu_cJSON *rules = mazu_cJSON_AddArrayToObject(item, "rules");
     if(rules == NULL) {
     goto fail; //nonprimitive container
     }
@@ -95,11 +95,11 @@ cJSON *v1_flow_schema_spec_convertToJSON(v1_flow_schema_spec_t *v1_flow_schema_s
     listEntry_t *rulesListEntry;
     if (v1_flow_schema_spec->rules) {
     list_ForEach(rulesListEntry, v1_flow_schema_spec->rules) {
-    cJSON *itemLocal = v1_policy_rules_with_subjects_convertToJSON(rulesListEntry->data);
+    mazu_cJSON *itemLocal = v1_policy_rules_with_subjects_convertToJSON(rulesListEntry->data);
     if(itemLocal == NULL) {
     goto fail;
     }
-    cJSON_AddItemToArray(rules, itemLocal);
+    mazu_cJSON_AddItemToArray(rules, itemLocal);
     }
     }
     }
@@ -107,12 +107,12 @@ cJSON *v1_flow_schema_spec_convertToJSON(v1_flow_schema_spec_t *v1_flow_schema_s
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_flow_schema_spec_t *v1_flow_schema_spec_parseFromJSON(cJSON *v1_flow_schema_specJSON){
+v1_flow_schema_spec_t *v1_flow_schema_spec_parseFromJSON(mazu_cJSON *v1_flow_schema_specJSON){
 
     v1_flow_schema_spec_t *v1_flow_schema_spec_local_var = NULL;
 
@@ -126,22 +126,22 @@ v1_flow_schema_spec_t *v1_flow_schema_spec_parseFromJSON(cJSON *v1_flow_schema_s
     list_t *rulesList = NULL;
 
     // v1_flow_schema_spec->distinguisher_method
-    cJSON *distinguisher_method = cJSON_GetObjectItemCaseSensitive(v1_flow_schema_specJSON, "distinguisherMethod");
+    mazu_cJSON *distinguisher_method = mazu_cJSON_GetObjectItemCaseSensitive(v1_flow_schema_specJSON, "distinguisherMethod");
     if (distinguisher_method) { 
     distinguisher_method_local_nonprim = v1_flow_distinguisher_method_parseFromJSON(distinguisher_method); //nonprimitive
     }
 
     // v1_flow_schema_spec->matching_precedence
-    cJSON *matching_precedence = cJSON_GetObjectItemCaseSensitive(v1_flow_schema_specJSON, "matchingPrecedence");
+    mazu_cJSON *matching_precedence = mazu_cJSON_GetObjectItemCaseSensitive(v1_flow_schema_specJSON, "matchingPrecedence");
     if (matching_precedence) { 
-    if(!cJSON_IsNumber(matching_precedence))
+    if(!mazu_cJSON_IsNumber(matching_precedence))
     {
     goto end; //Numeric
     }
     }
 
     // v1_flow_schema_spec->priority_level_configuration
-    cJSON *priority_level_configuration = cJSON_GetObjectItemCaseSensitive(v1_flow_schema_specJSON, "priorityLevelConfiguration");
+    mazu_cJSON *priority_level_configuration = mazu_cJSON_GetObjectItemCaseSensitive(v1_flow_schema_specJSON, "priorityLevelConfiguration");
     if (!priority_level_configuration) {
         goto end;
     }
@@ -150,18 +150,18 @@ v1_flow_schema_spec_t *v1_flow_schema_spec_parseFromJSON(cJSON *v1_flow_schema_s
     priority_level_configuration_local_nonprim = v1_priority_level_configuration_reference_parseFromJSON(priority_level_configuration); //nonprimitive
 
     // v1_flow_schema_spec->rules
-    cJSON *rules = cJSON_GetObjectItemCaseSensitive(v1_flow_schema_specJSON, "rules");
+    mazu_cJSON *rules = mazu_cJSON_GetObjectItemCaseSensitive(v1_flow_schema_specJSON, "rules");
     if (rules) { 
-    cJSON *rules_local_nonprimitive = NULL;
-    if(!cJSON_IsArray(rules)){
+    mazu_cJSON *rules_local_nonprimitive = NULL;
+    if(!mazu_cJSON_IsArray(rules)){
         goto end; //nonprimitive container
     }
 
     rulesList = list_createList();
 
-    cJSON_ArrayForEach(rules_local_nonprimitive,rules )
+    mazu_cJSON_ArrayForEach(rules_local_nonprimitive,rules )
     {
-        if(!cJSON_IsObject(rules_local_nonprimitive)){
+        if(!mazu_cJSON_IsObject(rules_local_nonprimitive)){
             goto end;
         }
         v1_policy_rules_with_subjects_t *rulesItem = v1_policy_rules_with_subjects_parseFromJSON(rules_local_nonprimitive);

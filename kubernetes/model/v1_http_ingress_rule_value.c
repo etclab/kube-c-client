@@ -33,14 +33,14 @@ void v1_http_ingress_rule_value_free(v1_http_ingress_rule_value_t *v1_http_ingre
     free(v1_http_ingress_rule_value);
 }
 
-cJSON *v1_http_ingress_rule_value_convertToJSON(v1_http_ingress_rule_value_t *v1_http_ingress_rule_value) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_http_ingress_rule_value_convertToJSON(v1_http_ingress_rule_value_t *v1_http_ingress_rule_value) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_http_ingress_rule_value->paths
     if (!v1_http_ingress_rule_value->paths) {
         goto fail;
     }
-    cJSON *paths = cJSON_AddArrayToObject(item, "paths");
+    mazu_cJSON *paths = mazu_cJSON_AddArrayToObject(item, "paths");
     if(paths == NULL) {
     goto fail; //nonprimitive container
     }
@@ -48,23 +48,23 @@ cJSON *v1_http_ingress_rule_value_convertToJSON(v1_http_ingress_rule_value_t *v1
     listEntry_t *pathsListEntry;
     if (v1_http_ingress_rule_value->paths) {
     list_ForEach(pathsListEntry, v1_http_ingress_rule_value->paths) {
-    cJSON *itemLocal = v1_http_ingress_path_convertToJSON(pathsListEntry->data);
+    mazu_cJSON *itemLocal = v1_http_ingress_path_convertToJSON(pathsListEntry->data);
     if(itemLocal == NULL) {
     goto fail;
     }
-    cJSON_AddItemToArray(paths, itemLocal);
+    mazu_cJSON_AddItemToArray(paths, itemLocal);
     }
     }
 
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_http_ingress_rule_value_t *v1_http_ingress_rule_value_parseFromJSON(cJSON *v1_http_ingress_rule_valueJSON){
+v1_http_ingress_rule_value_t *v1_http_ingress_rule_value_parseFromJSON(mazu_cJSON *v1_http_ingress_rule_valueJSON){
 
     v1_http_ingress_rule_value_t *v1_http_ingress_rule_value_local_var = NULL;
 
@@ -72,22 +72,22 @@ v1_http_ingress_rule_value_t *v1_http_ingress_rule_value_parseFromJSON(cJSON *v1
     list_t *pathsList = NULL;
 
     // v1_http_ingress_rule_value->paths
-    cJSON *paths = cJSON_GetObjectItemCaseSensitive(v1_http_ingress_rule_valueJSON, "paths");
+    mazu_cJSON *paths = mazu_cJSON_GetObjectItemCaseSensitive(v1_http_ingress_rule_valueJSON, "paths");
     if (!paths) {
         goto end;
     }
 
     
-    cJSON *paths_local_nonprimitive = NULL;
-    if(!cJSON_IsArray(paths)){
+    mazu_cJSON *paths_local_nonprimitive = NULL;
+    if(!mazu_cJSON_IsArray(paths)){
         goto end; //nonprimitive container
     }
 
     pathsList = list_createList();
 
-    cJSON_ArrayForEach(paths_local_nonprimitive,paths )
+    mazu_cJSON_ArrayForEach(paths_local_nonprimitive,paths )
     {
-        if(!cJSON_IsObject(paths_local_nonprimitive)){
+        if(!mazu_cJSON_IsObject(paths_local_nonprimitive)){
             goto end;
         }
         v1_http_ingress_path_t *pathsItem = v1_http_ingress_path_parseFromJSON(paths_local_nonprimitive);

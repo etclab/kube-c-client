@@ -36,21 +36,21 @@ void v1_resource_claim_free(v1_resource_claim_t *v1_resource_claim) {
     free(v1_resource_claim);
 }
 
-cJSON *v1_resource_claim_convertToJSON(v1_resource_claim_t *v1_resource_claim) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_resource_claim_convertToJSON(v1_resource_claim_t *v1_resource_claim) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_resource_claim->name
     if (!v1_resource_claim->name) {
         goto fail;
     }
-    if(cJSON_AddStringToObject(item, "name", v1_resource_claim->name) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "name", v1_resource_claim->name) == NULL) {
     goto fail; //String
     }
 
 
     // v1_resource_claim->request
     if(v1_resource_claim->request) {
-    if(cJSON_AddStringToObject(item, "request", v1_resource_claim->request) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "request", v1_resource_claim->request) == NULL) {
     goto fail; //String
     }
     }
@@ -58,31 +58,31 @@ cJSON *v1_resource_claim_convertToJSON(v1_resource_claim_t *v1_resource_claim) {
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_resource_claim_t *v1_resource_claim_parseFromJSON(cJSON *v1_resource_claimJSON){
+v1_resource_claim_t *v1_resource_claim_parseFromJSON(mazu_cJSON *v1_resource_claimJSON){
 
     v1_resource_claim_t *v1_resource_claim_local_var = NULL;
 
     // v1_resource_claim->name
-    cJSON *name = cJSON_GetObjectItemCaseSensitive(v1_resource_claimJSON, "name");
+    mazu_cJSON *name = mazu_cJSON_GetObjectItemCaseSensitive(v1_resource_claimJSON, "name");
     if (!name) {
         goto end;
     }
 
     
-    if(!cJSON_IsString(name))
+    if(!mazu_cJSON_IsString(name))
     {
     goto end; //String
     }
 
     // v1_resource_claim->request
-    cJSON *request = cJSON_GetObjectItemCaseSensitive(v1_resource_claimJSON, "request");
+    mazu_cJSON *request = mazu_cJSON_GetObjectItemCaseSensitive(v1_resource_claimJSON, "request");
     if (request) { 
-    if(!cJSON_IsString(request) && !cJSON_IsNull(request))
+    if(!mazu_cJSON_IsString(request) && !mazu_cJSON_IsNull(request))
     {
     goto end; //String
     }
@@ -91,7 +91,7 @@ v1_resource_claim_t *v1_resource_claim_parseFromJSON(cJSON *v1_resource_claimJSO
 
     v1_resource_claim_local_var = v1_resource_claim_create (
         strdup(name->valuestring),
-        request && !cJSON_IsNull(request) ? strdup(request->valuestring) : NULL
+        request && !mazu_cJSON_IsNull(request) ? strdup(request->valuestring) : NULL
         );
 
     return v1_resource_claim_local_var;

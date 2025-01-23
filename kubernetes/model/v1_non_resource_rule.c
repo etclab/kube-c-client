@@ -42,19 +42,19 @@ void v1_non_resource_rule_free(v1_non_resource_rule_t *v1_non_resource_rule) {
     free(v1_non_resource_rule);
 }
 
-cJSON *v1_non_resource_rule_convertToJSON(v1_non_resource_rule_t *v1_non_resource_rule) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_non_resource_rule_convertToJSON(v1_non_resource_rule_t *v1_non_resource_rule) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_non_resource_rule->non_resource_urls
     if(v1_non_resource_rule->non_resource_urls) {
-    cJSON *non_resource_urls = cJSON_AddArrayToObject(item, "nonResourceURLs");
+    mazu_cJSON *non_resource_urls = mazu_cJSON_AddArrayToObject(item, "nonResourceURLs");
     if(non_resource_urls == NULL) {
         goto fail; //primitive container
     }
 
     listEntry_t *non_resource_urlsListEntry;
     list_ForEach(non_resource_urlsListEntry, v1_non_resource_rule->non_resource_urls) {
-    if(cJSON_AddStringToObject(non_resource_urls, "", (char*)non_resource_urlsListEntry->data) == NULL)
+    if(mazu_cJSON_AddStringToObject(non_resource_urls, "", (char*)non_resource_urlsListEntry->data) == NULL)
     {
         goto fail;
     }
@@ -66,14 +66,14 @@ cJSON *v1_non_resource_rule_convertToJSON(v1_non_resource_rule_t *v1_non_resourc
     if (!v1_non_resource_rule->verbs) {
         goto fail;
     }
-    cJSON *verbs = cJSON_AddArrayToObject(item, "verbs");
+    mazu_cJSON *verbs = mazu_cJSON_AddArrayToObject(item, "verbs");
     if(verbs == NULL) {
         goto fail; //primitive container
     }
 
     listEntry_t *verbsListEntry;
     list_ForEach(verbsListEntry, v1_non_resource_rule->verbs) {
-    if(cJSON_AddStringToObject(verbs, "", (char*)verbsListEntry->data) == NULL)
+    if(mazu_cJSON_AddStringToObject(verbs, "", (char*)verbsListEntry->data) == NULL)
     {
         goto fail;
     }
@@ -82,12 +82,12 @@ cJSON *v1_non_resource_rule_convertToJSON(v1_non_resource_rule_t *v1_non_resourc
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_non_resource_rule_t *v1_non_resource_rule_parseFromJSON(cJSON *v1_non_resource_ruleJSON){
+v1_non_resource_rule_t *v1_non_resource_rule_parseFromJSON(mazu_cJSON *v1_non_resource_ruleJSON){
 
     v1_non_resource_rule_t *v1_non_resource_rule_local_var = NULL;
 
@@ -98,17 +98,17 @@ v1_non_resource_rule_t *v1_non_resource_rule_parseFromJSON(cJSON *v1_non_resourc
     list_t *verbsList = NULL;
 
     // v1_non_resource_rule->non_resource_urls
-    cJSON *non_resource_urls = cJSON_GetObjectItemCaseSensitive(v1_non_resource_ruleJSON, "nonResourceURLs");
+    mazu_cJSON *non_resource_urls = mazu_cJSON_GetObjectItemCaseSensitive(v1_non_resource_ruleJSON, "nonResourceURLs");
     if (non_resource_urls) { 
-    cJSON *non_resource_urls_local = NULL;
-    if(!cJSON_IsArray(non_resource_urls)) {
+    mazu_cJSON *non_resource_urls_local = NULL;
+    if(!mazu_cJSON_IsArray(non_resource_urls)) {
         goto end;//primitive container
     }
     non_resource_urlsList = list_createList();
 
-    cJSON_ArrayForEach(non_resource_urls_local, non_resource_urls)
+    mazu_cJSON_ArrayForEach(non_resource_urls_local, non_resource_urls)
     {
-        if(!cJSON_IsString(non_resource_urls_local))
+        if(!mazu_cJSON_IsString(non_resource_urls_local))
         {
             goto end;
         }
@@ -117,21 +117,21 @@ v1_non_resource_rule_t *v1_non_resource_rule_parseFromJSON(cJSON *v1_non_resourc
     }
 
     // v1_non_resource_rule->verbs
-    cJSON *verbs = cJSON_GetObjectItemCaseSensitive(v1_non_resource_ruleJSON, "verbs");
+    mazu_cJSON *verbs = mazu_cJSON_GetObjectItemCaseSensitive(v1_non_resource_ruleJSON, "verbs");
     if (!verbs) {
         goto end;
     }
 
     
-    cJSON *verbs_local = NULL;
-    if(!cJSON_IsArray(verbs)) {
+    mazu_cJSON *verbs_local = NULL;
+    if(!mazu_cJSON_IsArray(verbs)) {
         goto end;//primitive container
     }
     verbsList = list_createList();
 
-    cJSON_ArrayForEach(verbs_local, verbs)
+    mazu_cJSON_ArrayForEach(verbs_local, verbs)
     {
-        if(!cJSON_IsString(verbs_local))
+        if(!mazu_cJSON_IsString(verbs_local))
         {
             goto end;
         }

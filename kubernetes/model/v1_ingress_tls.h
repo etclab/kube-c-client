@@ -8,7 +8,7 @@
 #define _v1_ingress_tls_H_
 
 #include <string.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
 #include "../include/binary.h"
@@ -31,9 +31,9 @@ v1_ingress_tls_t *v1_ingress_tls_create(
 
 void v1_ingress_tls_free(v1_ingress_tls_t *v1_ingress_tls);
 
-v1_ingress_tls_t *v1_ingress_tls_parseFromJSON(cJSON *v1_ingress_tlsJSON);
+v1_ingress_tls_t *v1_ingress_tls_parseFromJSON(mazu_cJSON *v1_ingress_tlsJSON);
 
-cJSON *v1_ingress_tls_convertToJSON(v1_ingress_tls_t *v1_ingress_tls);
+mazu_cJSON *v1_ingress_tls_convertToJSON(v1_ingress_tls_t *v1_ingress_tls);
 
 #endif /* _v1_ingress_tls_H_ */
 

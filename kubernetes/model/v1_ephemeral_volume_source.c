@@ -30,16 +30,16 @@ void v1_ephemeral_volume_source_free(v1_ephemeral_volume_source_t *v1_ephemeral_
     free(v1_ephemeral_volume_source);
 }
 
-cJSON *v1_ephemeral_volume_source_convertToJSON(v1_ephemeral_volume_source_t *v1_ephemeral_volume_source) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_ephemeral_volume_source_convertToJSON(v1_ephemeral_volume_source_t *v1_ephemeral_volume_source) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_ephemeral_volume_source->volume_claim_template
     if(v1_ephemeral_volume_source->volume_claim_template) {
-    cJSON *volume_claim_template_local_JSON = v1_persistent_volume_claim_template_convertToJSON(v1_ephemeral_volume_source->volume_claim_template);
+    mazu_cJSON *volume_claim_template_local_JSON = v1_persistent_volume_claim_template_convertToJSON(v1_ephemeral_volume_source->volume_claim_template);
     if(volume_claim_template_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "volumeClaimTemplate", volume_claim_template_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "volumeClaimTemplate", volume_claim_template_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -48,12 +48,12 @@ cJSON *v1_ephemeral_volume_source_convertToJSON(v1_ephemeral_volume_source_t *v1
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_ephemeral_volume_source_t *v1_ephemeral_volume_source_parseFromJSON(cJSON *v1_ephemeral_volume_sourceJSON){
+v1_ephemeral_volume_source_t *v1_ephemeral_volume_source_parseFromJSON(mazu_cJSON *v1_ephemeral_volume_sourceJSON){
 
     v1_ephemeral_volume_source_t *v1_ephemeral_volume_source_local_var = NULL;
 
@@ -61,7 +61,7 @@ v1_ephemeral_volume_source_t *v1_ephemeral_volume_source_parseFromJSON(cJSON *v1
     v1_persistent_volume_claim_template_t *volume_claim_template_local_nonprim = NULL;
 
     // v1_ephemeral_volume_source->volume_claim_template
-    cJSON *volume_claim_template = cJSON_GetObjectItemCaseSensitive(v1_ephemeral_volume_sourceJSON, "volumeClaimTemplate");
+    mazu_cJSON *volume_claim_template = mazu_cJSON_GetObjectItemCaseSensitive(v1_ephemeral_volume_sourceJSON, "volumeClaimTemplate");
     if (volume_claim_template) { 
     volume_claim_template_local_nonprim = v1_persistent_volume_claim_template_parseFromJSON(volume_claim_template); //nonprimitive
     }

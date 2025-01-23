@@ -81,12 +81,12 @@ AuthenticationV1alpha1API_createSelfSubjectReview_0(apiClient_t *apiClient, v1al
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body = NULL;
+    mazu_cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
         localVarSingleItemJSON_body = v1alpha1_self_subject_review_convertToJSON(body);
-        localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyParameters = mazu_cJSON_Print(localVarSingleItemJSON_body);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
@@ -118,9 +118,9 @@ AuthenticationV1alpha1API_createSelfSubjectReview_0(apiClient_t *apiClient, v1al
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *AuthenticationV1alpha1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    mazu_cJSON *AuthenticationV1alpha1APIlocalVarJSON = mazu_cJSON_Parse(apiClient->dataReceived);
     v1alpha1_self_subject_review_t *elementToReturn = v1alpha1_self_subject_review_parseFromJSON(AuthenticationV1alpha1APIlocalVarJSON);
-    cJSON_Delete(AuthenticationV1alpha1APIlocalVarJSON);
+    mazu_cJSON_Delete(AuthenticationV1alpha1APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
     }
@@ -138,7 +138,7 @@ AuthenticationV1alpha1API_createSelfSubjectReview_0(apiClient_t *apiClient, v1al
     
     free(localVarPath);
     if (localVarSingleItemJSON_body) {
-        cJSON_Delete(localVarSingleItemJSON_body);
+        mazu_cJSON_Delete(localVarSingleItemJSON_body);
         localVarSingleItemJSON_body = NULL;
     }
     free(localVarBodyParameters);
@@ -238,9 +238,9 @@ AuthenticationV1alpha1API_getAPIResources_7(apiClient_t *apiClient)
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *AuthenticationV1alpha1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    mazu_cJSON *AuthenticationV1alpha1APIlocalVarJSON = mazu_cJSON_Parse(apiClient->dataReceived);
     v1_api_resource_list_t *elementToReturn = v1_api_resource_list_parseFromJSON(AuthenticationV1alpha1APIlocalVarJSON);
-    cJSON_Delete(AuthenticationV1alpha1APIlocalVarJSON);
+    mazu_cJSON_Delete(AuthenticationV1alpha1APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
     }

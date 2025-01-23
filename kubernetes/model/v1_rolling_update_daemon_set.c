@@ -36,16 +36,16 @@ void v1_rolling_update_daemon_set_free(v1_rolling_update_daemon_set_t *v1_rollin
     free(v1_rolling_update_daemon_set);
 }
 
-cJSON *v1_rolling_update_daemon_set_convertToJSON(v1_rolling_update_daemon_set_t *v1_rolling_update_daemon_set) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_rolling_update_daemon_set_convertToJSON(v1_rolling_update_daemon_set_t *v1_rolling_update_daemon_set) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_rolling_update_daemon_set->max_surge
     if(v1_rolling_update_daemon_set->max_surge) {
-    cJSON *max_surge_local_JSON = int_or_string_convertToJSON(v1_rolling_update_daemon_set->max_surge);
+    mazu_cJSON *max_surge_local_JSON = int_or_string_convertToJSON(v1_rolling_update_daemon_set->max_surge);
     if(max_surge_local_JSON == NULL) {
         goto fail; // custom
     }
-    cJSON_AddItemToObject(item, "maxSurge", max_surge_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "maxSurge", max_surge_local_JSON);
     if(item->child == NULL) {
         goto fail;
     }
@@ -54,11 +54,11 @@ cJSON *v1_rolling_update_daemon_set_convertToJSON(v1_rolling_update_daemon_set_t
 
     // v1_rolling_update_daemon_set->max_unavailable
     if(v1_rolling_update_daemon_set->max_unavailable) {
-    cJSON *max_unavailable_local_JSON = int_or_string_convertToJSON(v1_rolling_update_daemon_set->max_unavailable);
+    mazu_cJSON *max_unavailable_local_JSON = int_or_string_convertToJSON(v1_rolling_update_daemon_set->max_unavailable);
     if(max_unavailable_local_JSON == NULL) {
         goto fail; // custom
     }
-    cJSON_AddItemToObject(item, "maxUnavailable", max_unavailable_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "maxUnavailable", max_unavailable_local_JSON);
     if(item->child == NULL) {
         goto fail;
     }
@@ -67,12 +67,12 @@ cJSON *v1_rolling_update_daemon_set_convertToJSON(v1_rolling_update_daemon_set_t
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_rolling_update_daemon_set_t *v1_rolling_update_daemon_set_parseFromJSON(cJSON *v1_rolling_update_daemon_setJSON){
+v1_rolling_update_daemon_set_t *v1_rolling_update_daemon_set_parseFromJSON(mazu_cJSON *v1_rolling_update_daemon_setJSON){
 
     v1_rolling_update_daemon_set_t *v1_rolling_update_daemon_set_local_var = NULL;
 
@@ -83,13 +83,13 @@ v1_rolling_update_daemon_set_t *v1_rolling_update_daemon_set_parseFromJSON(cJSON
     int_or_string_t *max_unavailable_local_nonprim = NULL;
 
     // v1_rolling_update_daemon_set->max_surge
-    cJSON *max_surge = cJSON_GetObjectItemCaseSensitive(v1_rolling_update_daemon_setJSON, "maxSurge");
+    mazu_cJSON *max_surge = mazu_cJSON_GetObjectItemCaseSensitive(v1_rolling_update_daemon_setJSON, "maxSurge");
     if (max_surge) { 
     max_surge_local_nonprim = int_or_string_parseFromJSON(max_surge); //custom
     }
 
     // v1_rolling_update_daemon_set->max_unavailable
-    cJSON *max_unavailable = cJSON_GetObjectItemCaseSensitive(v1_rolling_update_daemon_setJSON, "maxUnavailable");
+    mazu_cJSON *max_unavailable = mazu_cJSON_GetObjectItemCaseSensitive(v1_rolling_update_daemon_setJSON, "maxUnavailable");
     if (max_unavailable) { 
     max_unavailable_local_nonprim = int_or_string_parseFromJSON(max_unavailable); //custom
     }

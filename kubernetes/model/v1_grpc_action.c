@@ -32,21 +32,21 @@ void v1_grpc_action_free(v1_grpc_action_t *v1_grpc_action) {
     free(v1_grpc_action);
 }
 
-cJSON *v1_grpc_action_convertToJSON(v1_grpc_action_t *v1_grpc_action) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_grpc_action_convertToJSON(v1_grpc_action_t *v1_grpc_action) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_grpc_action->port
     if (!v1_grpc_action->port) {
         goto fail;
     }
-    if(cJSON_AddNumberToObject(item, "port", v1_grpc_action->port) == NULL) {
+    if(mazu_cJSON_AddNumberToObject(item, "port", v1_grpc_action->port) == NULL) {
     goto fail; //Numeric
     }
 
 
     // v1_grpc_action->service
     if(v1_grpc_action->service) {
-    if(cJSON_AddStringToObject(item, "service", v1_grpc_action->service) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "service", v1_grpc_action->service) == NULL) {
     goto fail; //String
     }
     }
@@ -54,31 +54,31 @@ cJSON *v1_grpc_action_convertToJSON(v1_grpc_action_t *v1_grpc_action) {
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_grpc_action_t *v1_grpc_action_parseFromJSON(cJSON *v1_grpc_actionJSON){
+v1_grpc_action_t *v1_grpc_action_parseFromJSON(mazu_cJSON *v1_grpc_actionJSON){
 
     v1_grpc_action_t *v1_grpc_action_local_var = NULL;
 
     // v1_grpc_action->port
-    cJSON *port = cJSON_GetObjectItemCaseSensitive(v1_grpc_actionJSON, "port");
+    mazu_cJSON *port = mazu_cJSON_GetObjectItemCaseSensitive(v1_grpc_actionJSON, "port");
     if (!port) {
         goto end;
     }
 
     
-    if(!cJSON_IsNumber(port))
+    if(!mazu_cJSON_IsNumber(port))
     {
     goto end; //Numeric
     }
 
     // v1_grpc_action->service
-    cJSON *service = cJSON_GetObjectItemCaseSensitive(v1_grpc_actionJSON, "service");
+    mazu_cJSON *service = mazu_cJSON_GetObjectItemCaseSensitive(v1_grpc_actionJSON, "service");
     if (service) { 
-    if(!cJSON_IsString(service) && !cJSON_IsNull(service))
+    if(!mazu_cJSON_IsString(service) && !mazu_cJSON_IsNull(service))
     {
     goto end; //String
     }
@@ -87,7 +87,7 @@ v1_grpc_action_t *v1_grpc_action_parseFromJSON(cJSON *v1_grpc_actionJSON){
 
     v1_grpc_action_local_var = v1_grpc_action_create (
         port->valuedouble,
-        service && !cJSON_IsNull(service) ? strdup(service->valuestring) : NULL
+        service && !mazu_cJSON_IsNull(service) ? strdup(service->valuestring) : NULL
         );
 
     return v1_grpc_action_local_var;

@@ -11,7 +11,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdbool.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 
 #include "../model/authentication_v1_token_request.h"
 authentication_v1_token_request_t* instantiate_authentication_v1_token_request(int include_optional);
@@ -53,11 +53,11 @@ authentication_v1_token_request_t* instantiate_authentication_v1_token_request(i
 void test_authentication_v1_token_request(int include_optional) {
     authentication_v1_token_request_t* authentication_v1_token_request_1 = instantiate_authentication_v1_token_request(include_optional);
 
-	cJSON* jsonauthentication_v1_token_request_1 = authentication_v1_token_request_convertToJSON(authentication_v1_token_request_1);
-	printf("authentication_v1_token_request :\n%s\n", cJSON_Print(jsonauthentication_v1_token_request_1));
+	mazu_cJSON* jsonauthentication_v1_token_request_1 = authentication_v1_token_request_convertToJSON(authentication_v1_token_request_1);
+	printf("authentication_v1_token_request :\n%s\n", mazu_cJSON_Print(jsonauthentication_v1_token_request_1));
 	authentication_v1_token_request_t* authentication_v1_token_request_2 = authentication_v1_token_request_parseFromJSON(jsonauthentication_v1_token_request_1);
-	cJSON* jsonauthentication_v1_token_request_2 = authentication_v1_token_request_convertToJSON(authentication_v1_token_request_2);
-	printf("repeating authentication_v1_token_request:\n%s\n", cJSON_Print(jsonauthentication_v1_token_request_2));
+	mazu_cJSON* jsonauthentication_v1_token_request_2 = authentication_v1_token_request_convertToJSON(authentication_v1_token_request_2);
+	printf("repeating authentication_v1_token_request:\n%s\n", mazu_cJSON_Print(jsonauthentication_v1_token_request_2));
 }
 
 int main() {

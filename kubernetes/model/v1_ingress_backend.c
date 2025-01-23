@@ -36,16 +36,16 @@ void v1_ingress_backend_free(v1_ingress_backend_t *v1_ingress_backend) {
     free(v1_ingress_backend);
 }
 
-cJSON *v1_ingress_backend_convertToJSON(v1_ingress_backend_t *v1_ingress_backend) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_ingress_backend_convertToJSON(v1_ingress_backend_t *v1_ingress_backend) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_ingress_backend->resource
     if(v1_ingress_backend->resource) {
-    cJSON *resource_local_JSON = v1_typed_local_object_reference_convertToJSON(v1_ingress_backend->resource);
+    mazu_cJSON *resource_local_JSON = v1_typed_local_object_reference_convertToJSON(v1_ingress_backend->resource);
     if(resource_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "resource", resource_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "resource", resource_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -54,11 +54,11 @@ cJSON *v1_ingress_backend_convertToJSON(v1_ingress_backend_t *v1_ingress_backend
 
     // v1_ingress_backend->service
     if(v1_ingress_backend->service) {
-    cJSON *service_local_JSON = v1_ingress_service_backend_convertToJSON(v1_ingress_backend->service);
+    mazu_cJSON *service_local_JSON = v1_ingress_service_backend_convertToJSON(v1_ingress_backend->service);
     if(service_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "service", service_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "service", service_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -67,12 +67,12 @@ cJSON *v1_ingress_backend_convertToJSON(v1_ingress_backend_t *v1_ingress_backend
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_ingress_backend_t *v1_ingress_backend_parseFromJSON(cJSON *v1_ingress_backendJSON){
+v1_ingress_backend_t *v1_ingress_backend_parseFromJSON(mazu_cJSON *v1_ingress_backendJSON){
 
     v1_ingress_backend_t *v1_ingress_backend_local_var = NULL;
 
@@ -83,13 +83,13 @@ v1_ingress_backend_t *v1_ingress_backend_parseFromJSON(cJSON *v1_ingress_backend
     v1_ingress_service_backend_t *service_local_nonprim = NULL;
 
     // v1_ingress_backend->resource
-    cJSON *resource = cJSON_GetObjectItemCaseSensitive(v1_ingress_backendJSON, "resource");
+    mazu_cJSON *resource = mazu_cJSON_GetObjectItemCaseSensitive(v1_ingress_backendJSON, "resource");
     if (resource) { 
     resource_local_nonprim = v1_typed_local_object_reference_parseFromJSON(resource); //nonprimitive
     }
 
     // v1_ingress_backend->service
-    cJSON *service = cJSON_GetObjectItemCaseSensitive(v1_ingress_backendJSON, "service");
+    mazu_cJSON *service = mazu_cJSON_GetObjectItemCaseSensitive(v1_ingress_backendJSON, "service");
     if (service) { 
     service_local_nonprim = v1_ingress_service_backend_parseFromJSON(service); //nonprimitive
     }

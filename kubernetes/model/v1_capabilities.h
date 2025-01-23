@@ -8,7 +8,7 @@
 #define _v1_capabilities_H_
 
 #include <string.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
 #include "../include/binary.h"
@@ -31,9 +31,9 @@ v1_capabilities_t *v1_capabilities_create(
 
 void v1_capabilities_free(v1_capabilities_t *v1_capabilities);
 
-v1_capabilities_t *v1_capabilities_parseFromJSON(cJSON *v1_capabilitiesJSON);
+v1_capabilities_t *v1_capabilities_parseFromJSON(mazu_cJSON *v1_capabilitiesJSON);
 
-cJSON *v1_capabilities_convertToJSON(v1_capabilities_t *v1_capabilities);
+mazu_cJSON *v1_capabilities_convertToJSON(v1_capabilities_t *v1_capabilities);
 
 #endif /* _v1_capabilities_H_ */
 

@@ -76,12 +76,12 @@ void v1_scale_io_volume_source_free(v1_scale_io_volume_source_t *v1_scale_io_vol
     free(v1_scale_io_volume_source);
 }
 
-cJSON *v1_scale_io_volume_source_convertToJSON(v1_scale_io_volume_source_t *v1_scale_io_volume_source) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_scale_io_volume_source_convertToJSON(v1_scale_io_volume_source_t *v1_scale_io_volume_source) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_scale_io_volume_source->fs_type
     if(v1_scale_io_volume_source->fs_type) {
-    if(cJSON_AddStringToObject(item, "fsType", v1_scale_io_volume_source->fs_type) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "fsType", v1_scale_io_volume_source->fs_type) == NULL) {
     goto fail; //String
     }
     }
@@ -91,14 +91,14 @@ cJSON *v1_scale_io_volume_source_convertToJSON(v1_scale_io_volume_source_t *v1_s
     if (!v1_scale_io_volume_source->gateway) {
         goto fail;
     }
-    if(cJSON_AddStringToObject(item, "gateway", v1_scale_io_volume_source->gateway) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "gateway", v1_scale_io_volume_source->gateway) == NULL) {
     goto fail; //String
     }
 
 
     // v1_scale_io_volume_source->protection_domain
     if(v1_scale_io_volume_source->protection_domain) {
-    if(cJSON_AddStringToObject(item, "protectionDomain", v1_scale_io_volume_source->protection_domain) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "protectionDomain", v1_scale_io_volume_source->protection_domain) == NULL) {
     goto fail; //String
     }
     }
@@ -106,7 +106,7 @@ cJSON *v1_scale_io_volume_source_convertToJSON(v1_scale_io_volume_source_t *v1_s
 
     // v1_scale_io_volume_source->read_only
     if(v1_scale_io_volume_source->read_only) {
-    if(cJSON_AddBoolToObject(item, "readOnly", v1_scale_io_volume_source->read_only) == NULL) {
+    if(mazu_cJSON_AddBoolToObject(item, "readOnly", v1_scale_io_volume_source->read_only) == NULL) {
     goto fail; //Bool
     }
     }
@@ -116,11 +116,11 @@ cJSON *v1_scale_io_volume_source_convertToJSON(v1_scale_io_volume_source_t *v1_s
     if (!v1_scale_io_volume_source->secret_ref) {
         goto fail;
     }
-    cJSON *secret_ref_local_JSON = v1_local_object_reference_convertToJSON(v1_scale_io_volume_source->secret_ref);
+    mazu_cJSON *secret_ref_local_JSON = v1_local_object_reference_convertToJSON(v1_scale_io_volume_source->secret_ref);
     if(secret_ref_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "secretRef", secret_ref_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "secretRef", secret_ref_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -128,7 +128,7 @@ cJSON *v1_scale_io_volume_source_convertToJSON(v1_scale_io_volume_source_t *v1_s
 
     // v1_scale_io_volume_source->ssl_enabled
     if(v1_scale_io_volume_source->ssl_enabled) {
-    if(cJSON_AddBoolToObject(item, "sslEnabled", v1_scale_io_volume_source->ssl_enabled) == NULL) {
+    if(mazu_cJSON_AddBoolToObject(item, "sslEnabled", v1_scale_io_volume_source->ssl_enabled) == NULL) {
     goto fail; //Bool
     }
     }
@@ -136,7 +136,7 @@ cJSON *v1_scale_io_volume_source_convertToJSON(v1_scale_io_volume_source_t *v1_s
 
     // v1_scale_io_volume_source->storage_mode
     if(v1_scale_io_volume_source->storage_mode) {
-    if(cJSON_AddStringToObject(item, "storageMode", v1_scale_io_volume_source->storage_mode) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "storageMode", v1_scale_io_volume_source->storage_mode) == NULL) {
     goto fail; //String
     }
     }
@@ -144,7 +144,7 @@ cJSON *v1_scale_io_volume_source_convertToJSON(v1_scale_io_volume_source_t *v1_s
 
     // v1_scale_io_volume_source->storage_pool
     if(v1_scale_io_volume_source->storage_pool) {
-    if(cJSON_AddStringToObject(item, "storagePool", v1_scale_io_volume_source->storage_pool) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "storagePool", v1_scale_io_volume_source->storage_pool) == NULL) {
     goto fail; //String
     }
     }
@@ -154,14 +154,14 @@ cJSON *v1_scale_io_volume_source_convertToJSON(v1_scale_io_volume_source_t *v1_s
     if (!v1_scale_io_volume_source->system) {
         goto fail;
     }
-    if(cJSON_AddStringToObject(item, "system", v1_scale_io_volume_source->system) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "system", v1_scale_io_volume_source->system) == NULL) {
     goto fail; //String
     }
 
 
     // v1_scale_io_volume_source->volume_name
     if(v1_scale_io_volume_source->volume_name) {
-    if(cJSON_AddStringToObject(item, "volumeName", v1_scale_io_volume_source->volume_name) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "volumeName", v1_scale_io_volume_source->volume_name) == NULL) {
     goto fail; //String
     }
     }
@@ -169,12 +169,12 @@ cJSON *v1_scale_io_volume_source_convertToJSON(v1_scale_io_volume_source_t *v1_s
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_scale_io_volume_source_t *v1_scale_io_volume_source_parseFromJSON(cJSON *v1_scale_io_volume_sourceJSON){
+v1_scale_io_volume_source_t *v1_scale_io_volume_source_parseFromJSON(mazu_cJSON *v1_scale_io_volume_sourceJSON){
 
     v1_scale_io_volume_source_t *v1_scale_io_volume_source_local_var = NULL;
 
@@ -182,46 +182,46 @@ v1_scale_io_volume_source_t *v1_scale_io_volume_source_parseFromJSON(cJSON *v1_s
     v1_local_object_reference_t *secret_ref_local_nonprim = NULL;
 
     // v1_scale_io_volume_source->fs_type
-    cJSON *fs_type = cJSON_GetObjectItemCaseSensitive(v1_scale_io_volume_sourceJSON, "fsType");
+    mazu_cJSON *fs_type = mazu_cJSON_GetObjectItemCaseSensitive(v1_scale_io_volume_sourceJSON, "fsType");
     if (fs_type) { 
-    if(!cJSON_IsString(fs_type) && !cJSON_IsNull(fs_type))
+    if(!mazu_cJSON_IsString(fs_type) && !mazu_cJSON_IsNull(fs_type))
     {
     goto end; //String
     }
     }
 
     // v1_scale_io_volume_source->gateway
-    cJSON *gateway = cJSON_GetObjectItemCaseSensitive(v1_scale_io_volume_sourceJSON, "gateway");
+    mazu_cJSON *gateway = mazu_cJSON_GetObjectItemCaseSensitive(v1_scale_io_volume_sourceJSON, "gateway");
     if (!gateway) {
         goto end;
     }
 
     
-    if(!cJSON_IsString(gateway))
+    if(!mazu_cJSON_IsString(gateway))
     {
     goto end; //String
     }
 
     // v1_scale_io_volume_source->protection_domain
-    cJSON *protection_domain = cJSON_GetObjectItemCaseSensitive(v1_scale_io_volume_sourceJSON, "protectionDomain");
+    mazu_cJSON *protection_domain = mazu_cJSON_GetObjectItemCaseSensitive(v1_scale_io_volume_sourceJSON, "protectionDomain");
     if (protection_domain) { 
-    if(!cJSON_IsString(protection_domain) && !cJSON_IsNull(protection_domain))
+    if(!mazu_cJSON_IsString(protection_domain) && !mazu_cJSON_IsNull(protection_domain))
     {
     goto end; //String
     }
     }
 
     // v1_scale_io_volume_source->read_only
-    cJSON *read_only = cJSON_GetObjectItemCaseSensitive(v1_scale_io_volume_sourceJSON, "readOnly");
+    mazu_cJSON *read_only = mazu_cJSON_GetObjectItemCaseSensitive(v1_scale_io_volume_sourceJSON, "readOnly");
     if (read_only) { 
-    if(!cJSON_IsBool(read_only))
+    if(!mazu_cJSON_IsBool(read_only))
     {
     goto end; //Bool
     }
     }
 
     // v1_scale_io_volume_source->secret_ref
-    cJSON *secret_ref = cJSON_GetObjectItemCaseSensitive(v1_scale_io_volume_sourceJSON, "secretRef");
+    mazu_cJSON *secret_ref = mazu_cJSON_GetObjectItemCaseSensitive(v1_scale_io_volume_sourceJSON, "secretRef");
     if (!secret_ref) {
         goto end;
     }
@@ -230,48 +230,48 @@ v1_scale_io_volume_source_t *v1_scale_io_volume_source_parseFromJSON(cJSON *v1_s
     secret_ref_local_nonprim = v1_local_object_reference_parseFromJSON(secret_ref); //nonprimitive
 
     // v1_scale_io_volume_source->ssl_enabled
-    cJSON *ssl_enabled = cJSON_GetObjectItemCaseSensitive(v1_scale_io_volume_sourceJSON, "sslEnabled");
+    mazu_cJSON *ssl_enabled = mazu_cJSON_GetObjectItemCaseSensitive(v1_scale_io_volume_sourceJSON, "sslEnabled");
     if (ssl_enabled) { 
-    if(!cJSON_IsBool(ssl_enabled))
+    if(!mazu_cJSON_IsBool(ssl_enabled))
     {
     goto end; //Bool
     }
     }
 
     // v1_scale_io_volume_source->storage_mode
-    cJSON *storage_mode = cJSON_GetObjectItemCaseSensitive(v1_scale_io_volume_sourceJSON, "storageMode");
+    mazu_cJSON *storage_mode = mazu_cJSON_GetObjectItemCaseSensitive(v1_scale_io_volume_sourceJSON, "storageMode");
     if (storage_mode) { 
-    if(!cJSON_IsString(storage_mode) && !cJSON_IsNull(storage_mode))
+    if(!mazu_cJSON_IsString(storage_mode) && !mazu_cJSON_IsNull(storage_mode))
     {
     goto end; //String
     }
     }
 
     // v1_scale_io_volume_source->storage_pool
-    cJSON *storage_pool = cJSON_GetObjectItemCaseSensitive(v1_scale_io_volume_sourceJSON, "storagePool");
+    mazu_cJSON *storage_pool = mazu_cJSON_GetObjectItemCaseSensitive(v1_scale_io_volume_sourceJSON, "storagePool");
     if (storage_pool) { 
-    if(!cJSON_IsString(storage_pool) && !cJSON_IsNull(storage_pool))
+    if(!mazu_cJSON_IsString(storage_pool) && !mazu_cJSON_IsNull(storage_pool))
     {
     goto end; //String
     }
     }
 
     // v1_scale_io_volume_source->system
-    cJSON *system = cJSON_GetObjectItemCaseSensitive(v1_scale_io_volume_sourceJSON, "system");
+    mazu_cJSON *system = mazu_cJSON_GetObjectItemCaseSensitive(v1_scale_io_volume_sourceJSON, "system");
     if (!system) {
         goto end;
     }
 
     
-    if(!cJSON_IsString(system))
+    if(!mazu_cJSON_IsString(system))
     {
     goto end; //String
     }
 
     // v1_scale_io_volume_source->volume_name
-    cJSON *volume_name = cJSON_GetObjectItemCaseSensitive(v1_scale_io_volume_sourceJSON, "volumeName");
+    mazu_cJSON *volume_name = mazu_cJSON_GetObjectItemCaseSensitive(v1_scale_io_volume_sourceJSON, "volumeName");
     if (volume_name) { 
-    if(!cJSON_IsString(volume_name) && !cJSON_IsNull(volume_name))
+    if(!mazu_cJSON_IsString(volume_name) && !mazu_cJSON_IsNull(volume_name))
     {
     goto end; //String
     }
@@ -279,16 +279,16 @@ v1_scale_io_volume_source_t *v1_scale_io_volume_source_parseFromJSON(cJSON *v1_s
 
 
     v1_scale_io_volume_source_local_var = v1_scale_io_volume_source_create (
-        fs_type && !cJSON_IsNull(fs_type) ? strdup(fs_type->valuestring) : NULL,
+        fs_type && !mazu_cJSON_IsNull(fs_type) ? strdup(fs_type->valuestring) : NULL,
         strdup(gateway->valuestring),
-        protection_domain && !cJSON_IsNull(protection_domain) ? strdup(protection_domain->valuestring) : NULL,
+        protection_domain && !mazu_cJSON_IsNull(protection_domain) ? strdup(protection_domain->valuestring) : NULL,
         read_only ? read_only->valueint : 0,
         secret_ref_local_nonprim,
         ssl_enabled ? ssl_enabled->valueint : 0,
-        storage_mode && !cJSON_IsNull(storage_mode) ? strdup(storage_mode->valuestring) : NULL,
-        storage_pool && !cJSON_IsNull(storage_pool) ? strdup(storage_pool->valuestring) : NULL,
+        storage_mode && !mazu_cJSON_IsNull(storage_mode) ? strdup(storage_mode->valuestring) : NULL,
+        storage_pool && !mazu_cJSON_IsNull(storage_pool) ? strdup(storage_pool->valuestring) : NULL,
         strdup(system->valuestring),
-        volume_name && !cJSON_IsNull(volume_name) ? strdup(volume_name->valuestring) : NULL
+        volume_name && !mazu_cJSON_IsNull(volume_name) ? strdup(volume_name->valuestring) : NULL
         );
 
     return v1_scale_io_volume_source_local_var;

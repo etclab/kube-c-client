@@ -42,12 +42,12 @@ void v1_status_cause_free(v1_status_cause_t *v1_status_cause) {
     free(v1_status_cause);
 }
 
-cJSON *v1_status_cause_convertToJSON(v1_status_cause_t *v1_status_cause) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_status_cause_convertToJSON(v1_status_cause_t *v1_status_cause) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_status_cause->field
     if(v1_status_cause->field) {
-    if(cJSON_AddStringToObject(item, "field", v1_status_cause->field) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "field", v1_status_cause->field) == NULL) {
     goto fail; //String
     }
     }
@@ -55,7 +55,7 @@ cJSON *v1_status_cause_convertToJSON(v1_status_cause_t *v1_status_cause) {
 
     // v1_status_cause->message
     if(v1_status_cause->message) {
-    if(cJSON_AddStringToObject(item, "message", v1_status_cause->message) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "message", v1_status_cause->message) == NULL) {
     goto fail; //String
     }
     }
@@ -63,7 +63,7 @@ cJSON *v1_status_cause_convertToJSON(v1_status_cause_t *v1_status_cause) {
 
     // v1_status_cause->reason
     if(v1_status_cause->reason) {
-    if(cJSON_AddStringToObject(item, "reason", v1_status_cause->reason) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "reason", v1_status_cause->reason) == NULL) {
     goto fail; //String
     }
     }
@@ -71,37 +71,37 @@ cJSON *v1_status_cause_convertToJSON(v1_status_cause_t *v1_status_cause) {
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_status_cause_t *v1_status_cause_parseFromJSON(cJSON *v1_status_causeJSON){
+v1_status_cause_t *v1_status_cause_parseFromJSON(mazu_cJSON *v1_status_causeJSON){
 
     v1_status_cause_t *v1_status_cause_local_var = NULL;
 
     // v1_status_cause->field
-    cJSON *field = cJSON_GetObjectItemCaseSensitive(v1_status_causeJSON, "field");
+    mazu_cJSON *field = mazu_cJSON_GetObjectItemCaseSensitive(v1_status_causeJSON, "field");
     if (field) { 
-    if(!cJSON_IsString(field) && !cJSON_IsNull(field))
+    if(!mazu_cJSON_IsString(field) && !mazu_cJSON_IsNull(field))
     {
     goto end; //String
     }
     }
 
     // v1_status_cause->message
-    cJSON *message = cJSON_GetObjectItemCaseSensitive(v1_status_causeJSON, "message");
+    mazu_cJSON *message = mazu_cJSON_GetObjectItemCaseSensitive(v1_status_causeJSON, "message");
     if (message) { 
-    if(!cJSON_IsString(message) && !cJSON_IsNull(message))
+    if(!mazu_cJSON_IsString(message) && !mazu_cJSON_IsNull(message))
     {
     goto end; //String
     }
     }
 
     // v1_status_cause->reason
-    cJSON *reason = cJSON_GetObjectItemCaseSensitive(v1_status_causeJSON, "reason");
+    mazu_cJSON *reason = mazu_cJSON_GetObjectItemCaseSensitive(v1_status_causeJSON, "reason");
     if (reason) { 
-    if(!cJSON_IsString(reason) && !cJSON_IsNull(reason))
+    if(!mazu_cJSON_IsString(reason) && !mazu_cJSON_IsNull(reason))
     {
     goto end; //String
     }
@@ -109,9 +109,9 @@ v1_status_cause_t *v1_status_cause_parseFromJSON(cJSON *v1_status_causeJSON){
 
 
     v1_status_cause_local_var = v1_status_cause_create (
-        field && !cJSON_IsNull(field) ? strdup(field->valuestring) : NULL,
-        message && !cJSON_IsNull(message) ? strdup(message->valuestring) : NULL,
-        reason && !cJSON_IsNull(reason) ? strdup(reason->valuestring) : NULL
+        field && !mazu_cJSON_IsNull(field) ? strdup(field->valuestring) : NULL,
+        message && !mazu_cJSON_IsNull(message) ? strdup(message->valuestring) : NULL,
+        reason && !mazu_cJSON_IsNull(reason) ? strdup(reason->valuestring) : NULL
         );
 
     return v1_status_cause_local_var;

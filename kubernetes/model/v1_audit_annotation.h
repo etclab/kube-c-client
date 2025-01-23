@@ -8,7 +8,7 @@
 #define _v1_audit_annotation_H_
 
 #include <string.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
 #include "../include/binary.h"
@@ -31,9 +31,9 @@ v1_audit_annotation_t *v1_audit_annotation_create(
 
 void v1_audit_annotation_free(v1_audit_annotation_t *v1_audit_annotation);
 
-v1_audit_annotation_t *v1_audit_annotation_parseFromJSON(cJSON *v1_audit_annotationJSON);
+v1_audit_annotation_t *v1_audit_annotation_parseFromJSON(mazu_cJSON *v1_audit_annotationJSON);
 
-cJSON *v1_audit_annotation_convertToJSON(v1_audit_annotation_t *v1_audit_annotation);
+mazu_cJSON *v1_audit_annotation_convertToJSON(v1_audit_annotation_t *v1_audit_annotation);
 
 #endif /* _v1_audit_annotation_H_ */
 

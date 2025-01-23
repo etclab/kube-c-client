@@ -46,21 +46,21 @@ void v1_container_port_free(v1_container_port_t *v1_container_port) {
     free(v1_container_port);
 }
 
-cJSON *v1_container_port_convertToJSON(v1_container_port_t *v1_container_port) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_container_port_convertToJSON(v1_container_port_t *v1_container_port) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_container_port->container_port
     if (!v1_container_port->container_port) {
         goto fail;
     }
-    if(cJSON_AddNumberToObject(item, "containerPort", v1_container_port->container_port) == NULL) {
+    if(mazu_cJSON_AddNumberToObject(item, "containerPort", v1_container_port->container_port) == NULL) {
     goto fail; //Numeric
     }
 
 
     // v1_container_port->host_ip
     if(v1_container_port->host_ip) {
-    if(cJSON_AddStringToObject(item, "hostIP", v1_container_port->host_ip) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "hostIP", v1_container_port->host_ip) == NULL) {
     goto fail; //String
     }
     }
@@ -68,7 +68,7 @@ cJSON *v1_container_port_convertToJSON(v1_container_port_t *v1_container_port) {
 
     // v1_container_port->host_port
     if(v1_container_port->host_port) {
-    if(cJSON_AddNumberToObject(item, "hostPort", v1_container_port->host_port) == NULL) {
+    if(mazu_cJSON_AddNumberToObject(item, "hostPort", v1_container_port->host_port) == NULL) {
     goto fail; //Numeric
     }
     }
@@ -76,7 +76,7 @@ cJSON *v1_container_port_convertToJSON(v1_container_port_t *v1_container_port) {
 
     // v1_container_port->name
     if(v1_container_port->name) {
-    if(cJSON_AddStringToObject(item, "name", v1_container_port->name) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "name", v1_container_port->name) == NULL) {
     goto fail; //String
     }
     }
@@ -84,7 +84,7 @@ cJSON *v1_container_port_convertToJSON(v1_container_port_t *v1_container_port) {
 
     // v1_container_port->protocol
     if(v1_container_port->protocol) {
-    if(cJSON_AddStringToObject(item, "protocol", v1_container_port->protocol) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "protocol", v1_container_port->protocol) == NULL) {
     goto fail; //String
     }
     }
@@ -92,58 +92,58 @@ cJSON *v1_container_port_convertToJSON(v1_container_port_t *v1_container_port) {
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_container_port_t *v1_container_port_parseFromJSON(cJSON *v1_container_portJSON){
+v1_container_port_t *v1_container_port_parseFromJSON(mazu_cJSON *v1_container_portJSON){
 
     v1_container_port_t *v1_container_port_local_var = NULL;
 
     // v1_container_port->container_port
-    cJSON *container_port = cJSON_GetObjectItemCaseSensitive(v1_container_portJSON, "containerPort");
+    mazu_cJSON *container_port = mazu_cJSON_GetObjectItemCaseSensitive(v1_container_portJSON, "containerPort");
     if (!container_port) {
         goto end;
     }
 
     
-    if(!cJSON_IsNumber(container_port))
+    if(!mazu_cJSON_IsNumber(container_port))
     {
     goto end; //Numeric
     }
 
     // v1_container_port->host_ip
-    cJSON *host_ip = cJSON_GetObjectItemCaseSensitive(v1_container_portJSON, "hostIP");
+    mazu_cJSON *host_ip = mazu_cJSON_GetObjectItemCaseSensitive(v1_container_portJSON, "hostIP");
     if (host_ip) { 
-    if(!cJSON_IsString(host_ip) && !cJSON_IsNull(host_ip))
+    if(!mazu_cJSON_IsString(host_ip) && !mazu_cJSON_IsNull(host_ip))
     {
     goto end; //String
     }
     }
 
     // v1_container_port->host_port
-    cJSON *host_port = cJSON_GetObjectItemCaseSensitive(v1_container_portJSON, "hostPort");
+    mazu_cJSON *host_port = mazu_cJSON_GetObjectItemCaseSensitive(v1_container_portJSON, "hostPort");
     if (host_port) { 
-    if(!cJSON_IsNumber(host_port))
+    if(!mazu_cJSON_IsNumber(host_port))
     {
     goto end; //Numeric
     }
     }
 
     // v1_container_port->name
-    cJSON *name = cJSON_GetObjectItemCaseSensitive(v1_container_portJSON, "name");
+    mazu_cJSON *name = mazu_cJSON_GetObjectItemCaseSensitive(v1_container_portJSON, "name");
     if (name) { 
-    if(!cJSON_IsString(name) && !cJSON_IsNull(name))
+    if(!mazu_cJSON_IsString(name) && !mazu_cJSON_IsNull(name))
     {
     goto end; //String
     }
     }
 
     // v1_container_port->protocol
-    cJSON *protocol = cJSON_GetObjectItemCaseSensitive(v1_container_portJSON, "protocol");
+    mazu_cJSON *protocol = mazu_cJSON_GetObjectItemCaseSensitive(v1_container_portJSON, "protocol");
     if (protocol) { 
-    if(!cJSON_IsString(protocol) && !cJSON_IsNull(protocol))
+    if(!mazu_cJSON_IsString(protocol) && !mazu_cJSON_IsNull(protocol))
     {
     goto end; //String
     }
@@ -152,10 +152,10 @@ v1_container_port_t *v1_container_port_parseFromJSON(cJSON *v1_container_portJSO
 
     v1_container_port_local_var = v1_container_port_create (
         container_port->valuedouble,
-        host_ip && !cJSON_IsNull(host_ip) ? strdup(host_ip->valuestring) : NULL,
+        host_ip && !mazu_cJSON_IsNull(host_ip) ? strdup(host_ip->valuestring) : NULL,
         host_port ? host_port->valuedouble : 0,
-        name && !cJSON_IsNull(name) ? strdup(name->valuestring) : NULL,
-        protocol && !cJSON_IsNull(protocol) ? strdup(protocol->valuestring) : NULL
+        name && !mazu_cJSON_IsNull(name) ? strdup(name->valuestring) : NULL,
+        protocol && !mazu_cJSON_IsNull(protocol) ? strdup(protocol->valuestring) : NULL
         );
 
     return v1_container_port_local_var;

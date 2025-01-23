@@ -8,7 +8,7 @@
 #define _v1_ingress_service_backend_H_
 
 #include <string.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
 #include "../include/binary.h"
@@ -32,9 +32,9 @@ v1_ingress_service_backend_t *v1_ingress_service_backend_create(
 
 void v1_ingress_service_backend_free(v1_ingress_service_backend_t *v1_ingress_service_backend);
 
-v1_ingress_service_backend_t *v1_ingress_service_backend_parseFromJSON(cJSON *v1_ingress_service_backendJSON);
+v1_ingress_service_backend_t *v1_ingress_service_backend_parseFromJSON(mazu_cJSON *v1_ingress_service_backendJSON);
 
-cJSON *v1_ingress_service_backend_convertToJSON(v1_ingress_service_backend_t *v1_ingress_service_backend);
+mazu_cJSON *v1_ingress_service_backend_convertToJSON(v1_ingress_service_backend_t *v1_ingress_service_backend);
 
 #endif /* _v1_ingress_service_backend_H_ */
 

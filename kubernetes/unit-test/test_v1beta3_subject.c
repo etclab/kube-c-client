@@ -11,7 +11,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdbool.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 
 #include "../model/v1beta3_subject.h"
 v1beta3_subject_t* instantiate_v1beta3_subject(int include_optional);
@@ -51,11 +51,11 @@ v1beta3_subject_t* instantiate_v1beta3_subject(int include_optional) {
 void test_v1beta3_subject(int include_optional) {
     v1beta3_subject_t* v1beta3_subject_1 = instantiate_v1beta3_subject(include_optional);
 
-	cJSON* jsonv1beta3_subject_1 = v1beta3_subject_convertToJSON(v1beta3_subject_1);
-	printf("v1beta3_subject :\n%s\n", cJSON_Print(jsonv1beta3_subject_1));
+	mazu_cJSON* jsonv1beta3_subject_1 = v1beta3_subject_convertToJSON(v1beta3_subject_1);
+	printf("v1beta3_subject :\n%s\n", mazu_cJSON_Print(jsonv1beta3_subject_1));
 	v1beta3_subject_t* v1beta3_subject_2 = v1beta3_subject_parseFromJSON(jsonv1beta3_subject_1);
-	cJSON* jsonv1beta3_subject_2 = v1beta3_subject_convertToJSON(v1beta3_subject_2);
-	printf("repeating v1beta3_subject:\n%s\n", cJSON_Print(jsonv1beta3_subject_2));
+	mazu_cJSON* jsonv1beta3_subject_2 = v1beta3_subject_convertToJSON(v1beta3_subject_2);
+	printf("repeating v1beta3_subject:\n%s\n", mazu_cJSON_Print(jsonv1beta3_subject_2));
 }
 
 int main() {

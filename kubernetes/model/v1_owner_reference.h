@@ -8,7 +8,7 @@
 #define _v1_owner_reference_H_
 
 #include <string.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
 #include "../include/binary.h"
@@ -39,9 +39,9 @@ v1_owner_reference_t *v1_owner_reference_create(
 
 void v1_owner_reference_free(v1_owner_reference_t *v1_owner_reference);
 
-v1_owner_reference_t *v1_owner_reference_parseFromJSON(cJSON *v1_owner_referenceJSON);
+v1_owner_reference_t *v1_owner_reference_parseFromJSON(mazu_cJSON *v1_owner_referenceJSON);
 
-cJSON *v1_owner_reference_convertToJSON(v1_owner_reference_t *v1_owner_reference);
+mazu_cJSON *v1_owner_reference_convertToJSON(v1_owner_reference_t *v1_owner_reference);
 
 #endif /* _v1_owner_reference_H_ */
 

@@ -39,28 +39,28 @@ void v1alpha3_resource_claim_scheduling_status_free(v1alpha3_resource_claim_sche
     free(v1alpha3_resource_claim_scheduling_status);
 }
 
-cJSON *v1alpha3_resource_claim_scheduling_status_convertToJSON(v1alpha3_resource_claim_scheduling_status_t *v1alpha3_resource_claim_scheduling_status) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1alpha3_resource_claim_scheduling_status_convertToJSON(v1alpha3_resource_claim_scheduling_status_t *v1alpha3_resource_claim_scheduling_status) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1alpha3_resource_claim_scheduling_status->name
     if (!v1alpha3_resource_claim_scheduling_status->name) {
         goto fail;
     }
-    if(cJSON_AddStringToObject(item, "name", v1alpha3_resource_claim_scheduling_status->name) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "name", v1alpha3_resource_claim_scheduling_status->name) == NULL) {
     goto fail; //String
     }
 
 
     // v1alpha3_resource_claim_scheduling_status->unsuitable_nodes
     if(v1alpha3_resource_claim_scheduling_status->unsuitable_nodes) {
-    cJSON *unsuitable_nodes = cJSON_AddArrayToObject(item, "unsuitableNodes");
+    mazu_cJSON *unsuitable_nodes = mazu_cJSON_AddArrayToObject(item, "unsuitableNodes");
     if(unsuitable_nodes == NULL) {
         goto fail; //primitive container
     }
 
     listEntry_t *unsuitable_nodesListEntry;
     list_ForEach(unsuitable_nodesListEntry, v1alpha3_resource_claim_scheduling_status->unsuitable_nodes) {
-    if(cJSON_AddStringToObject(unsuitable_nodes, "", (char*)unsuitable_nodesListEntry->data) == NULL)
+    if(mazu_cJSON_AddStringToObject(unsuitable_nodes, "", (char*)unsuitable_nodesListEntry->data) == NULL)
     {
         goto fail;
     }
@@ -70,12 +70,12 @@ cJSON *v1alpha3_resource_claim_scheduling_status_convertToJSON(v1alpha3_resource
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1alpha3_resource_claim_scheduling_status_t *v1alpha3_resource_claim_scheduling_status_parseFromJSON(cJSON *v1alpha3_resource_claim_scheduling_statusJSON){
+v1alpha3_resource_claim_scheduling_status_t *v1alpha3_resource_claim_scheduling_status_parseFromJSON(mazu_cJSON *v1alpha3_resource_claim_scheduling_statusJSON){
 
     v1alpha3_resource_claim_scheduling_status_t *v1alpha3_resource_claim_scheduling_status_local_var = NULL;
 
@@ -83,29 +83,29 @@ v1alpha3_resource_claim_scheduling_status_t *v1alpha3_resource_claim_scheduling_
     list_t *unsuitable_nodesList = NULL;
 
     // v1alpha3_resource_claim_scheduling_status->name
-    cJSON *name = cJSON_GetObjectItemCaseSensitive(v1alpha3_resource_claim_scheduling_statusJSON, "name");
+    mazu_cJSON *name = mazu_cJSON_GetObjectItemCaseSensitive(v1alpha3_resource_claim_scheduling_statusJSON, "name");
     if (!name) {
         goto end;
     }
 
     
-    if(!cJSON_IsString(name))
+    if(!mazu_cJSON_IsString(name))
     {
     goto end; //String
     }
 
     // v1alpha3_resource_claim_scheduling_status->unsuitable_nodes
-    cJSON *unsuitable_nodes = cJSON_GetObjectItemCaseSensitive(v1alpha3_resource_claim_scheduling_statusJSON, "unsuitableNodes");
+    mazu_cJSON *unsuitable_nodes = mazu_cJSON_GetObjectItemCaseSensitive(v1alpha3_resource_claim_scheduling_statusJSON, "unsuitableNodes");
     if (unsuitable_nodes) { 
-    cJSON *unsuitable_nodes_local = NULL;
-    if(!cJSON_IsArray(unsuitable_nodes)) {
+    mazu_cJSON *unsuitable_nodes_local = NULL;
+    if(!mazu_cJSON_IsArray(unsuitable_nodes)) {
         goto end;//primitive container
     }
     unsuitable_nodesList = list_createList();
 
-    cJSON_ArrayForEach(unsuitable_nodes_local, unsuitable_nodes)
+    mazu_cJSON_ArrayForEach(unsuitable_nodes_local, unsuitable_nodes)
     {
-        if(!cJSON_IsString(unsuitable_nodes_local))
+        if(!mazu_cJSON_IsString(unsuitable_nodes_local))
         {
             goto end;
         }

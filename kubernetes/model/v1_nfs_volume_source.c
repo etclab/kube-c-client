@@ -38,21 +38,21 @@ void v1_nfs_volume_source_free(v1_nfs_volume_source_t *v1_nfs_volume_source) {
     free(v1_nfs_volume_source);
 }
 
-cJSON *v1_nfs_volume_source_convertToJSON(v1_nfs_volume_source_t *v1_nfs_volume_source) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_nfs_volume_source_convertToJSON(v1_nfs_volume_source_t *v1_nfs_volume_source) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_nfs_volume_source->path
     if (!v1_nfs_volume_source->path) {
         goto fail;
     }
-    if(cJSON_AddStringToObject(item, "path", v1_nfs_volume_source->path) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "path", v1_nfs_volume_source->path) == NULL) {
     goto fail; //String
     }
 
 
     // v1_nfs_volume_source->read_only
     if(v1_nfs_volume_source->read_only) {
-    if(cJSON_AddBoolToObject(item, "readOnly", v1_nfs_volume_source->read_only) == NULL) {
+    if(mazu_cJSON_AddBoolToObject(item, "readOnly", v1_nfs_volume_source->read_only) == NULL) {
     goto fail; //Bool
     }
     }
@@ -62,51 +62,51 @@ cJSON *v1_nfs_volume_source_convertToJSON(v1_nfs_volume_source_t *v1_nfs_volume_
     if (!v1_nfs_volume_source->server) {
         goto fail;
     }
-    if(cJSON_AddStringToObject(item, "server", v1_nfs_volume_source->server) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "server", v1_nfs_volume_source->server) == NULL) {
     goto fail; //String
     }
 
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_nfs_volume_source_t *v1_nfs_volume_source_parseFromJSON(cJSON *v1_nfs_volume_sourceJSON){
+v1_nfs_volume_source_t *v1_nfs_volume_source_parseFromJSON(mazu_cJSON *v1_nfs_volume_sourceJSON){
 
     v1_nfs_volume_source_t *v1_nfs_volume_source_local_var = NULL;
 
     // v1_nfs_volume_source->path
-    cJSON *path = cJSON_GetObjectItemCaseSensitive(v1_nfs_volume_sourceJSON, "path");
+    mazu_cJSON *path = mazu_cJSON_GetObjectItemCaseSensitive(v1_nfs_volume_sourceJSON, "path");
     if (!path) {
         goto end;
     }
 
     
-    if(!cJSON_IsString(path))
+    if(!mazu_cJSON_IsString(path))
     {
     goto end; //String
     }
 
     // v1_nfs_volume_source->read_only
-    cJSON *read_only = cJSON_GetObjectItemCaseSensitive(v1_nfs_volume_sourceJSON, "readOnly");
+    mazu_cJSON *read_only = mazu_cJSON_GetObjectItemCaseSensitive(v1_nfs_volume_sourceJSON, "readOnly");
     if (read_only) { 
-    if(!cJSON_IsBool(read_only))
+    if(!mazu_cJSON_IsBool(read_only))
     {
     goto end; //Bool
     }
     }
 
     // v1_nfs_volume_source->server
-    cJSON *server = cJSON_GetObjectItemCaseSensitive(v1_nfs_volume_sourceJSON, "server");
+    mazu_cJSON *server = mazu_cJSON_GetObjectItemCaseSensitive(v1_nfs_volume_sourceJSON, "server");
     if (!server) {
         goto end;
     }
 
     
-    if(!cJSON_IsString(server))
+    if(!mazu_cJSON_IsString(server))
     {
     goto end; //String
     }

@@ -8,7 +8,7 @@
 #define _v1_ingress_class_parameters_reference_H_
 
 #include <string.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
 #include "../include/binary.h"
@@ -37,9 +37,9 @@ v1_ingress_class_parameters_reference_t *v1_ingress_class_parameters_reference_c
 
 void v1_ingress_class_parameters_reference_free(v1_ingress_class_parameters_reference_t *v1_ingress_class_parameters_reference);
 
-v1_ingress_class_parameters_reference_t *v1_ingress_class_parameters_reference_parseFromJSON(cJSON *v1_ingress_class_parameters_referenceJSON);
+v1_ingress_class_parameters_reference_t *v1_ingress_class_parameters_reference_parseFromJSON(mazu_cJSON *v1_ingress_class_parameters_referenceJSON);
 
-cJSON *v1_ingress_class_parameters_reference_convertToJSON(v1_ingress_class_parameters_reference_t *v1_ingress_class_parameters_reference);
+mazu_cJSON *v1_ingress_class_parameters_reference_convertToJSON(v1_ingress_class_parameters_reference_t *v1_ingress_class_parameters_reference);
 
 #endif /* _v1_ingress_class_parameters_reference_H_ */
 

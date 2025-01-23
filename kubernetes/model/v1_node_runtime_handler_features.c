@@ -28,12 +28,12 @@ void v1_node_runtime_handler_features_free(v1_node_runtime_handler_features_t *v
     free(v1_node_runtime_handler_features);
 }
 
-cJSON *v1_node_runtime_handler_features_convertToJSON(v1_node_runtime_handler_features_t *v1_node_runtime_handler_features) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_node_runtime_handler_features_convertToJSON(v1_node_runtime_handler_features_t *v1_node_runtime_handler_features) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_node_runtime_handler_features->recursive_read_only_mounts
     if(v1_node_runtime_handler_features->recursive_read_only_mounts) {
-    if(cJSON_AddBoolToObject(item, "recursiveReadOnlyMounts", v1_node_runtime_handler_features->recursive_read_only_mounts) == NULL) {
+    if(mazu_cJSON_AddBoolToObject(item, "recursiveReadOnlyMounts", v1_node_runtime_handler_features->recursive_read_only_mounts) == NULL) {
     goto fail; //Bool
     }
     }
@@ -41,7 +41,7 @@ cJSON *v1_node_runtime_handler_features_convertToJSON(v1_node_runtime_handler_fe
 
     // v1_node_runtime_handler_features->user_namespaces
     if(v1_node_runtime_handler_features->user_namespaces) {
-    if(cJSON_AddBoolToObject(item, "userNamespaces", v1_node_runtime_handler_features->user_namespaces) == NULL) {
+    if(mazu_cJSON_AddBoolToObject(item, "userNamespaces", v1_node_runtime_handler_features->user_namespaces) == NULL) {
     goto fail; //Bool
     }
     }
@@ -49,28 +49,28 @@ cJSON *v1_node_runtime_handler_features_convertToJSON(v1_node_runtime_handler_fe
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_node_runtime_handler_features_t *v1_node_runtime_handler_features_parseFromJSON(cJSON *v1_node_runtime_handler_featuresJSON){
+v1_node_runtime_handler_features_t *v1_node_runtime_handler_features_parseFromJSON(mazu_cJSON *v1_node_runtime_handler_featuresJSON){
 
     v1_node_runtime_handler_features_t *v1_node_runtime_handler_features_local_var = NULL;
 
     // v1_node_runtime_handler_features->recursive_read_only_mounts
-    cJSON *recursive_read_only_mounts = cJSON_GetObjectItemCaseSensitive(v1_node_runtime_handler_featuresJSON, "recursiveReadOnlyMounts");
+    mazu_cJSON *recursive_read_only_mounts = mazu_cJSON_GetObjectItemCaseSensitive(v1_node_runtime_handler_featuresJSON, "recursiveReadOnlyMounts");
     if (recursive_read_only_mounts) { 
-    if(!cJSON_IsBool(recursive_read_only_mounts))
+    if(!mazu_cJSON_IsBool(recursive_read_only_mounts))
     {
     goto end; //Bool
     }
     }
 
     // v1_node_runtime_handler_features->user_namespaces
-    cJSON *user_namespaces = cJSON_GetObjectItemCaseSensitive(v1_node_runtime_handler_featuresJSON, "userNamespaces");
+    mazu_cJSON *user_namespaces = mazu_cJSON_GetObjectItemCaseSensitive(v1_node_runtime_handler_featuresJSON, "userNamespaces");
     if (user_namespaces) { 
-    if(!cJSON_IsBool(user_namespaces))
+    if(!mazu_cJSON_IsBool(user_namespaces))
     {
     goto end; //Bool
     }

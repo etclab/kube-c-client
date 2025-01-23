@@ -8,7 +8,7 @@
 #define _v1_validating_webhook_H_
 
 #include <string.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
 #include "../include/binary.h"
@@ -53,9 +53,9 @@ v1_validating_webhook_t *v1_validating_webhook_create(
 
 void v1_validating_webhook_free(v1_validating_webhook_t *v1_validating_webhook);
 
-v1_validating_webhook_t *v1_validating_webhook_parseFromJSON(cJSON *v1_validating_webhookJSON);
+v1_validating_webhook_t *v1_validating_webhook_parseFromJSON(mazu_cJSON *v1_validating_webhookJSON);
 
-cJSON *v1_validating_webhook_convertToJSON(v1_validating_webhook_t *v1_validating_webhook);
+mazu_cJSON *v1_validating_webhook_convertToJSON(v1_validating_webhook_t *v1_validating_webhook);
 
 #endif /* _v1_validating_webhook_H_ */
 

@@ -52,12 +52,12 @@ void v1_fc_volume_source_free(v1_fc_volume_source_t *v1_fc_volume_source) {
     free(v1_fc_volume_source);
 }
 
-cJSON *v1_fc_volume_source_convertToJSON(v1_fc_volume_source_t *v1_fc_volume_source) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_fc_volume_source_convertToJSON(v1_fc_volume_source_t *v1_fc_volume_source) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_fc_volume_source->fs_type
     if(v1_fc_volume_source->fs_type) {
-    if(cJSON_AddStringToObject(item, "fsType", v1_fc_volume_source->fs_type) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "fsType", v1_fc_volume_source->fs_type) == NULL) {
     goto fail; //String
     }
     }
@@ -65,7 +65,7 @@ cJSON *v1_fc_volume_source_convertToJSON(v1_fc_volume_source_t *v1_fc_volume_sou
 
     // v1_fc_volume_source->lun
     if(v1_fc_volume_source->lun) {
-    if(cJSON_AddNumberToObject(item, "lun", v1_fc_volume_source->lun) == NULL) {
+    if(mazu_cJSON_AddNumberToObject(item, "lun", v1_fc_volume_source->lun) == NULL) {
     goto fail; //Numeric
     }
     }
@@ -73,7 +73,7 @@ cJSON *v1_fc_volume_source_convertToJSON(v1_fc_volume_source_t *v1_fc_volume_sou
 
     // v1_fc_volume_source->read_only
     if(v1_fc_volume_source->read_only) {
-    if(cJSON_AddBoolToObject(item, "readOnly", v1_fc_volume_source->read_only) == NULL) {
+    if(mazu_cJSON_AddBoolToObject(item, "readOnly", v1_fc_volume_source->read_only) == NULL) {
     goto fail; //Bool
     }
     }
@@ -81,14 +81,14 @@ cJSON *v1_fc_volume_source_convertToJSON(v1_fc_volume_source_t *v1_fc_volume_sou
 
     // v1_fc_volume_source->target_wwns
     if(v1_fc_volume_source->target_wwns) {
-    cJSON *target_wwns = cJSON_AddArrayToObject(item, "targetWWNs");
+    mazu_cJSON *target_wwns = mazu_cJSON_AddArrayToObject(item, "targetWWNs");
     if(target_wwns == NULL) {
         goto fail; //primitive container
     }
 
     listEntry_t *target_wwnsListEntry;
     list_ForEach(target_wwnsListEntry, v1_fc_volume_source->target_wwns) {
-    if(cJSON_AddStringToObject(target_wwns, "", (char*)target_wwnsListEntry->data) == NULL)
+    if(mazu_cJSON_AddStringToObject(target_wwns, "", (char*)target_wwnsListEntry->data) == NULL)
     {
         goto fail;
     }
@@ -98,14 +98,14 @@ cJSON *v1_fc_volume_source_convertToJSON(v1_fc_volume_source_t *v1_fc_volume_sou
 
     // v1_fc_volume_source->wwids
     if(v1_fc_volume_source->wwids) {
-    cJSON *wwids = cJSON_AddArrayToObject(item, "wwids");
+    mazu_cJSON *wwids = mazu_cJSON_AddArrayToObject(item, "wwids");
     if(wwids == NULL) {
         goto fail; //primitive container
     }
 
     listEntry_t *wwidsListEntry;
     list_ForEach(wwidsListEntry, v1_fc_volume_source->wwids) {
-    if(cJSON_AddStringToObject(wwids, "", (char*)wwidsListEntry->data) == NULL)
+    if(mazu_cJSON_AddStringToObject(wwids, "", (char*)wwidsListEntry->data) == NULL)
     {
         goto fail;
     }
@@ -115,12 +115,12 @@ cJSON *v1_fc_volume_source_convertToJSON(v1_fc_volume_source_t *v1_fc_volume_sou
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_fc_volume_source_t *v1_fc_volume_source_parseFromJSON(cJSON *v1_fc_volume_sourceJSON){
+v1_fc_volume_source_t *v1_fc_volume_source_parseFromJSON(mazu_cJSON *v1_fc_volume_sourceJSON){
 
     v1_fc_volume_source_t *v1_fc_volume_source_local_var = NULL;
 
@@ -131,44 +131,44 @@ v1_fc_volume_source_t *v1_fc_volume_source_parseFromJSON(cJSON *v1_fc_volume_sou
     list_t *wwidsList = NULL;
 
     // v1_fc_volume_source->fs_type
-    cJSON *fs_type = cJSON_GetObjectItemCaseSensitive(v1_fc_volume_sourceJSON, "fsType");
+    mazu_cJSON *fs_type = mazu_cJSON_GetObjectItemCaseSensitive(v1_fc_volume_sourceJSON, "fsType");
     if (fs_type) { 
-    if(!cJSON_IsString(fs_type) && !cJSON_IsNull(fs_type))
+    if(!mazu_cJSON_IsString(fs_type) && !mazu_cJSON_IsNull(fs_type))
     {
     goto end; //String
     }
     }
 
     // v1_fc_volume_source->lun
-    cJSON *lun = cJSON_GetObjectItemCaseSensitive(v1_fc_volume_sourceJSON, "lun");
+    mazu_cJSON *lun = mazu_cJSON_GetObjectItemCaseSensitive(v1_fc_volume_sourceJSON, "lun");
     if (lun) { 
-    if(!cJSON_IsNumber(lun))
+    if(!mazu_cJSON_IsNumber(lun))
     {
     goto end; //Numeric
     }
     }
 
     // v1_fc_volume_source->read_only
-    cJSON *read_only = cJSON_GetObjectItemCaseSensitive(v1_fc_volume_sourceJSON, "readOnly");
+    mazu_cJSON *read_only = mazu_cJSON_GetObjectItemCaseSensitive(v1_fc_volume_sourceJSON, "readOnly");
     if (read_only) { 
-    if(!cJSON_IsBool(read_only))
+    if(!mazu_cJSON_IsBool(read_only))
     {
     goto end; //Bool
     }
     }
 
     // v1_fc_volume_source->target_wwns
-    cJSON *target_wwns = cJSON_GetObjectItemCaseSensitive(v1_fc_volume_sourceJSON, "targetWWNs");
+    mazu_cJSON *target_wwns = mazu_cJSON_GetObjectItemCaseSensitive(v1_fc_volume_sourceJSON, "targetWWNs");
     if (target_wwns) { 
-    cJSON *target_wwns_local = NULL;
-    if(!cJSON_IsArray(target_wwns)) {
+    mazu_cJSON *target_wwns_local = NULL;
+    if(!mazu_cJSON_IsArray(target_wwns)) {
         goto end;//primitive container
     }
     target_wwnsList = list_createList();
 
-    cJSON_ArrayForEach(target_wwns_local, target_wwns)
+    mazu_cJSON_ArrayForEach(target_wwns_local, target_wwns)
     {
-        if(!cJSON_IsString(target_wwns_local))
+        if(!mazu_cJSON_IsString(target_wwns_local))
         {
             goto end;
         }
@@ -177,17 +177,17 @@ v1_fc_volume_source_t *v1_fc_volume_source_parseFromJSON(cJSON *v1_fc_volume_sou
     }
 
     // v1_fc_volume_source->wwids
-    cJSON *wwids = cJSON_GetObjectItemCaseSensitive(v1_fc_volume_sourceJSON, "wwids");
+    mazu_cJSON *wwids = mazu_cJSON_GetObjectItemCaseSensitive(v1_fc_volume_sourceJSON, "wwids");
     if (wwids) { 
-    cJSON *wwids_local = NULL;
-    if(!cJSON_IsArray(wwids)) {
+    mazu_cJSON *wwids_local = NULL;
+    if(!mazu_cJSON_IsArray(wwids)) {
         goto end;//primitive container
     }
     wwidsList = list_createList();
 
-    cJSON_ArrayForEach(wwids_local, wwids)
+    mazu_cJSON_ArrayForEach(wwids_local, wwids)
     {
-        if(!cJSON_IsString(wwids_local))
+        if(!mazu_cJSON_IsString(wwids_local))
         {
             goto end;
         }
@@ -197,7 +197,7 @@ v1_fc_volume_source_t *v1_fc_volume_source_parseFromJSON(cJSON *v1_fc_volume_sou
 
 
     v1_fc_volume_source_local_var = v1_fc_volume_source_create (
-        fs_type && !cJSON_IsNull(fs_type) ? strdup(fs_type->valuestring) : NULL,
+        fs_type && !mazu_cJSON_IsNull(fs_type) ? strdup(fs_type->valuestring) : NULL,
         lun ? lun->valuedouble : 0,
         read_only ? read_only->valueint : 0,
         target_wwns ? target_wwnsList : NULL,

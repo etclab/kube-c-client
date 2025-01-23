@@ -48,14 +48,14 @@ void v1alpha3_device_request_allocation_result_free(v1alpha3_device_request_allo
     free(v1alpha3_device_request_allocation_result);
 }
 
-cJSON *v1alpha3_device_request_allocation_result_convertToJSON(v1alpha3_device_request_allocation_result_t *v1alpha3_device_request_allocation_result) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1alpha3_device_request_allocation_result_convertToJSON(v1alpha3_device_request_allocation_result_t *v1alpha3_device_request_allocation_result) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1alpha3_device_request_allocation_result->device
     if (!v1alpha3_device_request_allocation_result->device) {
         goto fail;
     }
-    if(cJSON_AddStringToObject(item, "device", v1alpha3_device_request_allocation_result->device) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "device", v1alpha3_device_request_allocation_result->device) == NULL) {
     goto fail; //String
     }
 
@@ -64,7 +64,7 @@ cJSON *v1alpha3_device_request_allocation_result_convertToJSON(v1alpha3_device_r
     if (!v1alpha3_device_request_allocation_result->driver) {
         goto fail;
     }
-    if(cJSON_AddStringToObject(item, "driver", v1alpha3_device_request_allocation_result->driver) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "driver", v1alpha3_device_request_allocation_result->driver) == NULL) {
     goto fail; //String
     }
 
@@ -73,7 +73,7 @@ cJSON *v1alpha3_device_request_allocation_result_convertToJSON(v1alpha3_device_r
     if (!v1alpha3_device_request_allocation_result->pool) {
         goto fail;
     }
-    if(cJSON_AddStringToObject(item, "pool", v1alpha3_device_request_allocation_result->pool) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "pool", v1alpha3_device_request_allocation_result->pool) == NULL) {
     goto fail; //String
     }
 
@@ -82,66 +82,66 @@ cJSON *v1alpha3_device_request_allocation_result_convertToJSON(v1alpha3_device_r
     if (!v1alpha3_device_request_allocation_result->request) {
         goto fail;
     }
-    if(cJSON_AddStringToObject(item, "request", v1alpha3_device_request_allocation_result->request) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "request", v1alpha3_device_request_allocation_result->request) == NULL) {
     goto fail; //String
     }
 
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1alpha3_device_request_allocation_result_t *v1alpha3_device_request_allocation_result_parseFromJSON(cJSON *v1alpha3_device_request_allocation_resultJSON){
+v1alpha3_device_request_allocation_result_t *v1alpha3_device_request_allocation_result_parseFromJSON(mazu_cJSON *v1alpha3_device_request_allocation_resultJSON){
 
     v1alpha3_device_request_allocation_result_t *v1alpha3_device_request_allocation_result_local_var = NULL;
 
     // v1alpha3_device_request_allocation_result->device
-    cJSON *device = cJSON_GetObjectItemCaseSensitive(v1alpha3_device_request_allocation_resultJSON, "device");
+    mazu_cJSON *device = mazu_cJSON_GetObjectItemCaseSensitive(v1alpha3_device_request_allocation_resultJSON, "device");
     if (!device) {
         goto end;
     }
 
     
-    if(!cJSON_IsString(device))
+    if(!mazu_cJSON_IsString(device))
     {
     goto end; //String
     }
 
     // v1alpha3_device_request_allocation_result->driver
-    cJSON *driver = cJSON_GetObjectItemCaseSensitive(v1alpha3_device_request_allocation_resultJSON, "driver");
+    mazu_cJSON *driver = mazu_cJSON_GetObjectItemCaseSensitive(v1alpha3_device_request_allocation_resultJSON, "driver");
     if (!driver) {
         goto end;
     }
 
     
-    if(!cJSON_IsString(driver))
+    if(!mazu_cJSON_IsString(driver))
     {
     goto end; //String
     }
 
     // v1alpha3_device_request_allocation_result->pool
-    cJSON *pool = cJSON_GetObjectItemCaseSensitive(v1alpha3_device_request_allocation_resultJSON, "pool");
+    mazu_cJSON *pool = mazu_cJSON_GetObjectItemCaseSensitive(v1alpha3_device_request_allocation_resultJSON, "pool");
     if (!pool) {
         goto end;
     }
 
     
-    if(!cJSON_IsString(pool))
+    if(!mazu_cJSON_IsString(pool))
     {
     goto end; //String
     }
 
     // v1alpha3_device_request_allocation_result->request
-    cJSON *request = cJSON_GetObjectItemCaseSensitive(v1alpha3_device_request_allocation_resultJSON, "request");
+    mazu_cJSON *request = mazu_cJSON_GetObjectItemCaseSensitive(v1alpha3_device_request_allocation_resultJSON, "request");
     if (!request) {
         goto end;
     }
 
     
-    if(!cJSON_IsString(request))
+    if(!mazu_cJSON_IsString(request))
     {
     goto end; //String
     }

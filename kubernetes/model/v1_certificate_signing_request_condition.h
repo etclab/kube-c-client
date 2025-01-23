@@ -8,7 +8,7 @@
 #define _v1_certificate_signing_request_condition_H_
 
 #include <string.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
 #include "../include/binary.h"
@@ -39,9 +39,9 @@ v1_certificate_signing_request_condition_t *v1_certificate_signing_request_condi
 
 void v1_certificate_signing_request_condition_free(v1_certificate_signing_request_condition_t *v1_certificate_signing_request_condition);
 
-v1_certificate_signing_request_condition_t *v1_certificate_signing_request_condition_parseFromJSON(cJSON *v1_certificate_signing_request_conditionJSON);
+v1_certificate_signing_request_condition_t *v1_certificate_signing_request_condition_parseFromJSON(mazu_cJSON *v1_certificate_signing_request_conditionJSON);
 
-cJSON *v1_certificate_signing_request_condition_convertToJSON(v1_certificate_signing_request_condition_t *v1_certificate_signing_request_condition);
+mazu_cJSON *v1_certificate_signing_request_condition_convertToJSON(v1_certificate_signing_request_condition_t *v1_certificate_signing_request_condition);
 
 #endif /* _v1_certificate_signing_request_condition_H_ */
 

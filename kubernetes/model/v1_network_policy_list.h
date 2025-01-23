@@ -8,7 +8,7 @@
 #define _v1_network_policy_list_H_
 
 #include <string.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
 #include "../include/binary.h"
@@ -37,9 +37,9 @@ v1_network_policy_list_t *v1_network_policy_list_create(
 
 void v1_network_policy_list_free(v1_network_policy_list_t *v1_network_policy_list);
 
-v1_network_policy_list_t *v1_network_policy_list_parseFromJSON(cJSON *v1_network_policy_listJSON);
+v1_network_policy_list_t *v1_network_policy_list_parseFromJSON(mazu_cJSON *v1_network_policy_listJSON);
 
-cJSON *v1_network_policy_list_convertToJSON(v1_network_policy_list_t *v1_network_policy_list);
+mazu_cJSON *v1_network_policy_list_convertToJSON(v1_network_policy_list_t *v1_network_policy_list);
 
 #endif /* _v1_network_policy_list_H_ */
 

@@ -33,12 +33,12 @@ void v1alpha3_pod_scheduling_context_status_free(v1alpha3_pod_scheduling_context
     free(v1alpha3_pod_scheduling_context_status);
 }
 
-cJSON *v1alpha3_pod_scheduling_context_status_convertToJSON(v1alpha3_pod_scheduling_context_status_t *v1alpha3_pod_scheduling_context_status) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1alpha3_pod_scheduling_context_status_convertToJSON(v1alpha3_pod_scheduling_context_status_t *v1alpha3_pod_scheduling_context_status) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1alpha3_pod_scheduling_context_status->resource_claims
     if(v1alpha3_pod_scheduling_context_status->resource_claims) {
-    cJSON *resource_claims = cJSON_AddArrayToObject(item, "resourceClaims");
+    mazu_cJSON *resource_claims = mazu_cJSON_AddArrayToObject(item, "resourceClaims");
     if(resource_claims == NULL) {
     goto fail; //nonprimitive container
     }
@@ -46,11 +46,11 @@ cJSON *v1alpha3_pod_scheduling_context_status_convertToJSON(v1alpha3_pod_schedul
     listEntry_t *resource_claimsListEntry;
     if (v1alpha3_pod_scheduling_context_status->resource_claims) {
     list_ForEach(resource_claimsListEntry, v1alpha3_pod_scheduling_context_status->resource_claims) {
-    cJSON *itemLocal = v1alpha3_resource_claim_scheduling_status_convertToJSON(resource_claimsListEntry->data);
+    mazu_cJSON *itemLocal = v1alpha3_resource_claim_scheduling_status_convertToJSON(resource_claimsListEntry->data);
     if(itemLocal == NULL) {
     goto fail;
     }
-    cJSON_AddItemToArray(resource_claims, itemLocal);
+    mazu_cJSON_AddItemToArray(resource_claims, itemLocal);
     }
     }
     }
@@ -58,12 +58,12 @@ cJSON *v1alpha3_pod_scheduling_context_status_convertToJSON(v1alpha3_pod_schedul
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1alpha3_pod_scheduling_context_status_t *v1alpha3_pod_scheduling_context_status_parseFromJSON(cJSON *v1alpha3_pod_scheduling_context_statusJSON){
+v1alpha3_pod_scheduling_context_status_t *v1alpha3_pod_scheduling_context_status_parseFromJSON(mazu_cJSON *v1alpha3_pod_scheduling_context_statusJSON){
 
     v1alpha3_pod_scheduling_context_status_t *v1alpha3_pod_scheduling_context_status_local_var = NULL;
 
@@ -71,18 +71,18 @@ v1alpha3_pod_scheduling_context_status_t *v1alpha3_pod_scheduling_context_status
     list_t *resource_claimsList = NULL;
 
     // v1alpha3_pod_scheduling_context_status->resource_claims
-    cJSON *resource_claims = cJSON_GetObjectItemCaseSensitive(v1alpha3_pod_scheduling_context_statusJSON, "resourceClaims");
+    mazu_cJSON *resource_claims = mazu_cJSON_GetObjectItemCaseSensitive(v1alpha3_pod_scheduling_context_statusJSON, "resourceClaims");
     if (resource_claims) { 
-    cJSON *resource_claims_local_nonprimitive = NULL;
-    if(!cJSON_IsArray(resource_claims)){
+    mazu_cJSON *resource_claims_local_nonprimitive = NULL;
+    if(!mazu_cJSON_IsArray(resource_claims)){
         goto end; //nonprimitive container
     }
 
     resource_claimsList = list_createList();
 
-    cJSON_ArrayForEach(resource_claims_local_nonprimitive,resource_claims )
+    mazu_cJSON_ArrayForEach(resource_claims_local_nonprimitive,resource_claims )
     {
-        if(!cJSON_IsObject(resource_claims_local_nonprimitive)){
+        if(!mazu_cJSON_IsObject(resource_claims_local_nonprimitive)){
             goto end;
         }
         v1alpha3_resource_claim_scheduling_status_t *resource_claimsItem = v1alpha3_resource_claim_scheduling_status_parseFromJSON(resource_claims_local_nonprimitive);

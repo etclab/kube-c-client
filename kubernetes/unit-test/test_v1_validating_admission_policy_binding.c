@@ -11,7 +11,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdbool.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 
 #include "../model/v1_validating_admission_policy_binding.h"
 v1_validating_admission_policy_binding_t* instantiate_v1_validating_admission_policy_binding(int include_optional);
@@ -49,11 +49,11 @@ v1_validating_admission_policy_binding_t* instantiate_v1_validating_admission_po
 void test_v1_validating_admission_policy_binding(int include_optional) {
     v1_validating_admission_policy_binding_t* v1_validating_admission_policy_binding_1 = instantiate_v1_validating_admission_policy_binding(include_optional);
 
-	cJSON* jsonv1_validating_admission_policy_binding_1 = v1_validating_admission_policy_binding_convertToJSON(v1_validating_admission_policy_binding_1);
-	printf("v1_validating_admission_policy_binding :\n%s\n", cJSON_Print(jsonv1_validating_admission_policy_binding_1));
+	mazu_cJSON* jsonv1_validating_admission_policy_binding_1 = v1_validating_admission_policy_binding_convertToJSON(v1_validating_admission_policy_binding_1);
+	printf("v1_validating_admission_policy_binding :\n%s\n", mazu_cJSON_Print(jsonv1_validating_admission_policy_binding_1));
 	v1_validating_admission_policy_binding_t* v1_validating_admission_policy_binding_2 = v1_validating_admission_policy_binding_parseFromJSON(jsonv1_validating_admission_policy_binding_1);
-	cJSON* jsonv1_validating_admission_policy_binding_2 = v1_validating_admission_policy_binding_convertToJSON(v1_validating_admission_policy_binding_2);
-	printf("repeating v1_validating_admission_policy_binding:\n%s\n", cJSON_Print(jsonv1_validating_admission_policy_binding_2));
+	mazu_cJSON* jsonv1_validating_admission_policy_binding_2 = v1_validating_admission_policy_binding_convertToJSON(v1_validating_admission_policy_binding_2);
+	printf("repeating v1_validating_admission_policy_binding:\n%s\n", mazu_cJSON_Print(jsonv1_validating_admission_policy_binding_2));
 }
 
 int main() {

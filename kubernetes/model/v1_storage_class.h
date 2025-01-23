@@ -8,7 +8,7 @@
 #define _v1_storage_class_H_
 
 #include <string.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
 #include "../include/binary.h"
@@ -49,9 +49,9 @@ v1_storage_class_t *v1_storage_class_create(
 
 void v1_storage_class_free(v1_storage_class_t *v1_storage_class);
 
-v1_storage_class_t *v1_storage_class_parseFromJSON(cJSON *v1_storage_classJSON);
+v1_storage_class_t *v1_storage_class_parseFromJSON(mazu_cJSON *v1_storage_classJSON);
 
-cJSON *v1_storage_class_convertToJSON(v1_storage_class_t *v1_storage_class);
+mazu_cJSON *v1_storage_class_convertToJSON(v1_storage_class_t *v1_storage_class);
 
 #endif /* _v1_storage_class_H_ */
 

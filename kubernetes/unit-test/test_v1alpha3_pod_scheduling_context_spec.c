@@ -11,7 +11,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdbool.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 
 #include "../model/v1alpha3_pod_scheduling_context_spec.h"
 v1alpha3_pod_scheduling_context_spec_t* instantiate_v1alpha3_pod_scheduling_context_spec(int include_optional);
@@ -41,11 +41,11 @@ v1alpha3_pod_scheduling_context_spec_t* instantiate_v1alpha3_pod_scheduling_cont
 void test_v1alpha3_pod_scheduling_context_spec(int include_optional) {
     v1alpha3_pod_scheduling_context_spec_t* v1alpha3_pod_scheduling_context_spec_1 = instantiate_v1alpha3_pod_scheduling_context_spec(include_optional);
 
-	cJSON* jsonv1alpha3_pod_scheduling_context_spec_1 = v1alpha3_pod_scheduling_context_spec_convertToJSON(v1alpha3_pod_scheduling_context_spec_1);
-	printf("v1alpha3_pod_scheduling_context_spec :\n%s\n", cJSON_Print(jsonv1alpha3_pod_scheduling_context_spec_1));
+	mazu_cJSON* jsonv1alpha3_pod_scheduling_context_spec_1 = v1alpha3_pod_scheduling_context_spec_convertToJSON(v1alpha3_pod_scheduling_context_spec_1);
+	printf("v1alpha3_pod_scheduling_context_spec :\n%s\n", mazu_cJSON_Print(jsonv1alpha3_pod_scheduling_context_spec_1));
 	v1alpha3_pod_scheduling_context_spec_t* v1alpha3_pod_scheduling_context_spec_2 = v1alpha3_pod_scheduling_context_spec_parseFromJSON(jsonv1alpha3_pod_scheduling_context_spec_1);
-	cJSON* jsonv1alpha3_pod_scheduling_context_spec_2 = v1alpha3_pod_scheduling_context_spec_convertToJSON(v1alpha3_pod_scheduling_context_spec_2);
-	printf("repeating v1alpha3_pod_scheduling_context_spec:\n%s\n", cJSON_Print(jsonv1alpha3_pod_scheduling_context_spec_2));
+	mazu_cJSON* jsonv1alpha3_pod_scheduling_context_spec_2 = v1alpha3_pod_scheduling_context_spec_convertToJSON(v1alpha3_pod_scheduling_context_spec_2);
+	printf("repeating v1alpha3_pod_scheduling_context_spec:\n%s\n", mazu_cJSON_Print(jsonv1alpha3_pod_scheduling_context_spec_2));
 }
 
 int main() {

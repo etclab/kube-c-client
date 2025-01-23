@@ -8,7 +8,7 @@
 #define _v1_node_runtime_handler_features_H_
 
 #include <string.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
 #include "../include/binary.h"
@@ -31,9 +31,9 @@ v1_node_runtime_handler_features_t *v1_node_runtime_handler_features_create(
 
 void v1_node_runtime_handler_features_free(v1_node_runtime_handler_features_t *v1_node_runtime_handler_features);
 
-v1_node_runtime_handler_features_t *v1_node_runtime_handler_features_parseFromJSON(cJSON *v1_node_runtime_handler_featuresJSON);
+v1_node_runtime_handler_features_t *v1_node_runtime_handler_features_parseFromJSON(mazu_cJSON *v1_node_runtime_handler_featuresJSON);
 
-cJSON *v1_node_runtime_handler_features_convertToJSON(v1_node_runtime_handler_features_t *v1_node_runtime_handler_features);
+mazu_cJSON *v1_node_runtime_handler_features_convertToJSON(v1_node_runtime_handler_features_t *v1_node_runtime_handler_features);
 
 #endif /* _v1_node_runtime_handler_features_H_ */
 

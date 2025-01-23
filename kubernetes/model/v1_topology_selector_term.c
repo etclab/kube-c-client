@@ -33,12 +33,12 @@ void v1_topology_selector_term_free(v1_topology_selector_term_t *v1_topology_sel
     free(v1_topology_selector_term);
 }
 
-cJSON *v1_topology_selector_term_convertToJSON(v1_topology_selector_term_t *v1_topology_selector_term) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_topology_selector_term_convertToJSON(v1_topology_selector_term_t *v1_topology_selector_term) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_topology_selector_term->match_label_expressions
     if(v1_topology_selector_term->match_label_expressions) {
-    cJSON *match_label_expressions = cJSON_AddArrayToObject(item, "matchLabelExpressions");
+    mazu_cJSON *match_label_expressions = mazu_cJSON_AddArrayToObject(item, "matchLabelExpressions");
     if(match_label_expressions == NULL) {
     goto fail; //nonprimitive container
     }
@@ -46,11 +46,11 @@ cJSON *v1_topology_selector_term_convertToJSON(v1_topology_selector_term_t *v1_t
     listEntry_t *match_label_expressionsListEntry;
     if (v1_topology_selector_term->match_label_expressions) {
     list_ForEach(match_label_expressionsListEntry, v1_topology_selector_term->match_label_expressions) {
-    cJSON *itemLocal = v1_topology_selector_label_requirement_convertToJSON(match_label_expressionsListEntry->data);
+    mazu_cJSON *itemLocal = v1_topology_selector_label_requirement_convertToJSON(match_label_expressionsListEntry->data);
     if(itemLocal == NULL) {
     goto fail;
     }
-    cJSON_AddItemToArray(match_label_expressions, itemLocal);
+    mazu_cJSON_AddItemToArray(match_label_expressions, itemLocal);
     }
     }
     }
@@ -58,12 +58,12 @@ cJSON *v1_topology_selector_term_convertToJSON(v1_topology_selector_term_t *v1_t
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_topology_selector_term_t *v1_topology_selector_term_parseFromJSON(cJSON *v1_topology_selector_termJSON){
+v1_topology_selector_term_t *v1_topology_selector_term_parseFromJSON(mazu_cJSON *v1_topology_selector_termJSON){
 
     v1_topology_selector_term_t *v1_topology_selector_term_local_var = NULL;
 
@@ -71,18 +71,18 @@ v1_topology_selector_term_t *v1_topology_selector_term_parseFromJSON(cJSON *v1_t
     list_t *match_label_expressionsList = NULL;
 
     // v1_topology_selector_term->match_label_expressions
-    cJSON *match_label_expressions = cJSON_GetObjectItemCaseSensitive(v1_topology_selector_termJSON, "matchLabelExpressions");
+    mazu_cJSON *match_label_expressions = mazu_cJSON_GetObjectItemCaseSensitive(v1_topology_selector_termJSON, "matchLabelExpressions");
     if (match_label_expressions) { 
-    cJSON *match_label_expressions_local_nonprimitive = NULL;
-    if(!cJSON_IsArray(match_label_expressions)){
+    mazu_cJSON *match_label_expressions_local_nonprimitive = NULL;
+    if(!mazu_cJSON_IsArray(match_label_expressions)){
         goto end; //nonprimitive container
     }
 
     match_label_expressionsList = list_createList();
 
-    cJSON_ArrayForEach(match_label_expressions_local_nonprimitive,match_label_expressions )
+    mazu_cJSON_ArrayForEach(match_label_expressions_local_nonprimitive,match_label_expressions )
     {
-        if(!cJSON_IsObject(match_label_expressions_local_nonprimitive)){
+        if(!mazu_cJSON_IsObject(match_label_expressions_local_nonprimitive)){
             goto end;
         }
         v1_topology_selector_label_requirement_t *match_label_expressionsItem = v1_topology_selector_label_requirement_parseFromJSON(match_label_expressions_local_nonprimitive);

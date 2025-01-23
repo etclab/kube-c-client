@@ -39,16 +39,16 @@ void v1_webhook_conversion_free(v1_webhook_conversion_t *v1_webhook_conversion) 
     free(v1_webhook_conversion);
 }
 
-cJSON *v1_webhook_conversion_convertToJSON(v1_webhook_conversion_t *v1_webhook_conversion) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_webhook_conversion_convertToJSON(v1_webhook_conversion_t *v1_webhook_conversion) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_webhook_conversion->client_config
     if(v1_webhook_conversion->client_config) {
-    cJSON *client_config_local_JSON = apiextensions_v1_webhook_client_config_convertToJSON(v1_webhook_conversion->client_config);
+    mazu_cJSON *client_config_local_JSON = apiextensions_v1_webhook_client_config_convertToJSON(v1_webhook_conversion->client_config);
     if(client_config_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "clientConfig", client_config_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "clientConfig", client_config_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -59,14 +59,14 @@ cJSON *v1_webhook_conversion_convertToJSON(v1_webhook_conversion_t *v1_webhook_c
     if (!v1_webhook_conversion->conversion_review_versions) {
         goto fail;
     }
-    cJSON *conversion_review_versions = cJSON_AddArrayToObject(item, "conversionReviewVersions");
+    mazu_cJSON *conversion_review_versions = mazu_cJSON_AddArrayToObject(item, "conversionReviewVersions");
     if(conversion_review_versions == NULL) {
         goto fail; //primitive container
     }
 
     listEntry_t *conversion_review_versionsListEntry;
     list_ForEach(conversion_review_versionsListEntry, v1_webhook_conversion->conversion_review_versions) {
-    if(cJSON_AddStringToObject(conversion_review_versions, "", (char*)conversion_review_versionsListEntry->data) == NULL)
+    if(mazu_cJSON_AddStringToObject(conversion_review_versions, "", (char*)conversion_review_versionsListEntry->data) == NULL)
     {
         goto fail;
     }
@@ -75,12 +75,12 @@ cJSON *v1_webhook_conversion_convertToJSON(v1_webhook_conversion_t *v1_webhook_c
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_webhook_conversion_t *v1_webhook_conversion_parseFromJSON(cJSON *v1_webhook_conversionJSON){
+v1_webhook_conversion_t *v1_webhook_conversion_parseFromJSON(mazu_cJSON *v1_webhook_conversionJSON){
 
     v1_webhook_conversion_t *v1_webhook_conversion_local_var = NULL;
 
@@ -91,27 +91,27 @@ v1_webhook_conversion_t *v1_webhook_conversion_parseFromJSON(cJSON *v1_webhook_c
     list_t *conversion_review_versionsList = NULL;
 
     // v1_webhook_conversion->client_config
-    cJSON *client_config = cJSON_GetObjectItemCaseSensitive(v1_webhook_conversionJSON, "clientConfig");
+    mazu_cJSON *client_config = mazu_cJSON_GetObjectItemCaseSensitive(v1_webhook_conversionJSON, "clientConfig");
     if (client_config) { 
     client_config_local_nonprim = apiextensions_v1_webhook_client_config_parseFromJSON(client_config); //nonprimitive
     }
 
     // v1_webhook_conversion->conversion_review_versions
-    cJSON *conversion_review_versions = cJSON_GetObjectItemCaseSensitive(v1_webhook_conversionJSON, "conversionReviewVersions");
+    mazu_cJSON *conversion_review_versions = mazu_cJSON_GetObjectItemCaseSensitive(v1_webhook_conversionJSON, "conversionReviewVersions");
     if (!conversion_review_versions) {
         goto end;
     }
 
     
-    cJSON *conversion_review_versions_local = NULL;
-    if(!cJSON_IsArray(conversion_review_versions)) {
+    mazu_cJSON *conversion_review_versions_local = NULL;
+    if(!mazu_cJSON_IsArray(conversion_review_versions)) {
         goto end;//primitive container
     }
     conversion_review_versionsList = list_createList();
 
-    cJSON_ArrayForEach(conversion_review_versions_local, conversion_review_versions)
+    mazu_cJSON_ArrayForEach(conversion_review_versions_local, conversion_review_versions)
     {
-        if(!cJSON_IsString(conversion_review_versions_local))
+        if(!mazu_cJSON_IsString(conversion_review_versions_local))
         {
             goto end;
         }

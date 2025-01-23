@@ -48,21 +48,21 @@ void v1_validation_free(v1_validation_t *v1_validation) {
     free(v1_validation);
 }
 
-cJSON *v1_validation_convertToJSON(v1_validation_t *v1_validation) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_validation_convertToJSON(v1_validation_t *v1_validation) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_validation->expression
     if (!v1_validation->expression) {
         goto fail;
     }
-    if(cJSON_AddStringToObject(item, "expression", v1_validation->expression) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "expression", v1_validation->expression) == NULL) {
     goto fail; //String
     }
 
 
     // v1_validation->message
     if(v1_validation->message) {
-    if(cJSON_AddStringToObject(item, "message", v1_validation->message) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "message", v1_validation->message) == NULL) {
     goto fail; //String
     }
     }
@@ -70,7 +70,7 @@ cJSON *v1_validation_convertToJSON(v1_validation_t *v1_validation) {
 
     // v1_validation->message_expression
     if(v1_validation->message_expression) {
-    if(cJSON_AddStringToObject(item, "messageExpression", v1_validation->message_expression) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "messageExpression", v1_validation->message_expression) == NULL) {
     goto fail; //String
     }
     }
@@ -78,7 +78,7 @@ cJSON *v1_validation_convertToJSON(v1_validation_t *v1_validation) {
 
     // v1_validation->reason
     if(v1_validation->reason) {
-    if(cJSON_AddStringToObject(item, "reason", v1_validation->reason) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "reason", v1_validation->reason) == NULL) {
     goto fail; //String
     }
     }
@@ -86,49 +86,49 @@ cJSON *v1_validation_convertToJSON(v1_validation_t *v1_validation) {
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_validation_t *v1_validation_parseFromJSON(cJSON *v1_validationJSON){
+v1_validation_t *v1_validation_parseFromJSON(mazu_cJSON *v1_validationJSON){
 
     v1_validation_t *v1_validation_local_var = NULL;
 
     // v1_validation->expression
-    cJSON *expression = cJSON_GetObjectItemCaseSensitive(v1_validationJSON, "expression");
+    mazu_cJSON *expression = mazu_cJSON_GetObjectItemCaseSensitive(v1_validationJSON, "expression");
     if (!expression) {
         goto end;
     }
 
     
-    if(!cJSON_IsString(expression))
+    if(!mazu_cJSON_IsString(expression))
     {
     goto end; //String
     }
 
     // v1_validation->message
-    cJSON *message = cJSON_GetObjectItemCaseSensitive(v1_validationJSON, "message");
+    mazu_cJSON *message = mazu_cJSON_GetObjectItemCaseSensitive(v1_validationJSON, "message");
     if (message) { 
-    if(!cJSON_IsString(message) && !cJSON_IsNull(message))
+    if(!mazu_cJSON_IsString(message) && !mazu_cJSON_IsNull(message))
     {
     goto end; //String
     }
     }
 
     // v1_validation->message_expression
-    cJSON *message_expression = cJSON_GetObjectItemCaseSensitive(v1_validationJSON, "messageExpression");
+    mazu_cJSON *message_expression = mazu_cJSON_GetObjectItemCaseSensitive(v1_validationJSON, "messageExpression");
     if (message_expression) { 
-    if(!cJSON_IsString(message_expression) && !cJSON_IsNull(message_expression))
+    if(!mazu_cJSON_IsString(message_expression) && !mazu_cJSON_IsNull(message_expression))
     {
     goto end; //String
     }
     }
 
     // v1_validation->reason
-    cJSON *reason = cJSON_GetObjectItemCaseSensitive(v1_validationJSON, "reason");
+    mazu_cJSON *reason = mazu_cJSON_GetObjectItemCaseSensitive(v1_validationJSON, "reason");
     if (reason) { 
-    if(!cJSON_IsString(reason) && !cJSON_IsNull(reason))
+    if(!mazu_cJSON_IsString(reason) && !mazu_cJSON_IsNull(reason))
     {
     goto end; //String
     }
@@ -137,9 +137,9 @@ v1_validation_t *v1_validation_parseFromJSON(cJSON *v1_validationJSON){
 
     v1_validation_local_var = v1_validation_create (
         strdup(expression->valuestring),
-        message && !cJSON_IsNull(message) ? strdup(message->valuestring) : NULL,
-        message_expression && !cJSON_IsNull(message_expression) ? strdup(message_expression->valuestring) : NULL,
-        reason && !cJSON_IsNull(reason) ? strdup(reason->valuestring) : NULL
+        message && !mazu_cJSON_IsNull(message) ? strdup(message->valuestring) : NULL,
+        message_expression && !mazu_cJSON_IsNull(message_expression) ? strdup(message_expression->valuestring) : NULL,
+        reason && !mazu_cJSON_IsNull(reason) ? strdup(reason->valuestring) : NULL
         );
 
     return v1_validation_local_var;

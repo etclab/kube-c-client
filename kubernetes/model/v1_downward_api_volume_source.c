@@ -35,12 +35,12 @@ void v1_downward_api_volume_source_free(v1_downward_api_volume_source_t *v1_down
     free(v1_downward_api_volume_source);
 }
 
-cJSON *v1_downward_api_volume_source_convertToJSON(v1_downward_api_volume_source_t *v1_downward_api_volume_source) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_downward_api_volume_source_convertToJSON(v1_downward_api_volume_source_t *v1_downward_api_volume_source) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_downward_api_volume_source->default_mode
     if(v1_downward_api_volume_source->default_mode) {
-    if(cJSON_AddNumberToObject(item, "defaultMode", v1_downward_api_volume_source->default_mode) == NULL) {
+    if(mazu_cJSON_AddNumberToObject(item, "defaultMode", v1_downward_api_volume_source->default_mode) == NULL) {
     goto fail; //Numeric
     }
     }
@@ -48,7 +48,7 @@ cJSON *v1_downward_api_volume_source_convertToJSON(v1_downward_api_volume_source
 
     // v1_downward_api_volume_source->items
     if(v1_downward_api_volume_source->items) {
-    cJSON *items = cJSON_AddArrayToObject(item, "items");
+    mazu_cJSON *items = mazu_cJSON_AddArrayToObject(item, "items");
     if(items == NULL) {
     goto fail; //nonprimitive container
     }
@@ -56,11 +56,11 @@ cJSON *v1_downward_api_volume_source_convertToJSON(v1_downward_api_volume_source
     listEntry_t *itemsListEntry;
     if (v1_downward_api_volume_source->items) {
     list_ForEach(itemsListEntry, v1_downward_api_volume_source->items) {
-    cJSON *itemLocal = v1_downward_api_volume_file_convertToJSON(itemsListEntry->data);
+    mazu_cJSON *itemLocal = v1_downward_api_volume_file_convertToJSON(itemsListEntry->data);
     if(itemLocal == NULL) {
     goto fail;
     }
-    cJSON_AddItemToArray(items, itemLocal);
+    mazu_cJSON_AddItemToArray(items, itemLocal);
     }
     }
     }
@@ -68,12 +68,12 @@ cJSON *v1_downward_api_volume_source_convertToJSON(v1_downward_api_volume_source
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_downward_api_volume_source_t *v1_downward_api_volume_source_parseFromJSON(cJSON *v1_downward_api_volume_sourceJSON){
+v1_downward_api_volume_source_t *v1_downward_api_volume_source_parseFromJSON(mazu_cJSON *v1_downward_api_volume_sourceJSON){
 
     v1_downward_api_volume_source_t *v1_downward_api_volume_source_local_var = NULL;
 
@@ -81,27 +81,27 @@ v1_downward_api_volume_source_t *v1_downward_api_volume_source_parseFromJSON(cJS
     list_t *itemsList = NULL;
 
     // v1_downward_api_volume_source->default_mode
-    cJSON *default_mode = cJSON_GetObjectItemCaseSensitive(v1_downward_api_volume_sourceJSON, "defaultMode");
+    mazu_cJSON *default_mode = mazu_cJSON_GetObjectItemCaseSensitive(v1_downward_api_volume_sourceJSON, "defaultMode");
     if (default_mode) { 
-    if(!cJSON_IsNumber(default_mode))
+    if(!mazu_cJSON_IsNumber(default_mode))
     {
     goto end; //Numeric
     }
     }
 
     // v1_downward_api_volume_source->items
-    cJSON *items = cJSON_GetObjectItemCaseSensitive(v1_downward_api_volume_sourceJSON, "items");
+    mazu_cJSON *items = mazu_cJSON_GetObjectItemCaseSensitive(v1_downward_api_volume_sourceJSON, "items");
     if (items) { 
-    cJSON *items_local_nonprimitive = NULL;
-    if(!cJSON_IsArray(items)){
+    mazu_cJSON *items_local_nonprimitive = NULL;
+    if(!mazu_cJSON_IsArray(items)){
         goto end; //nonprimitive container
     }
 
     itemsList = list_createList();
 
-    cJSON_ArrayForEach(items_local_nonprimitive,items )
+    mazu_cJSON_ArrayForEach(items_local_nonprimitive,items )
     {
-        if(!cJSON_IsObject(items_local_nonprimitive)){
+        if(!mazu_cJSON_IsObject(items_local_nonprimitive)){
             goto end;
         }
         v1_downward_api_volume_file_t *itemsItem = v1_downward_api_volume_file_parseFromJSON(items_local_nonprimitive);

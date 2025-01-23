@@ -32,14 +32,14 @@ void events_v1_event_series_free(events_v1_event_series_t *events_v1_event_serie
     free(events_v1_event_series);
 }
 
-cJSON *events_v1_event_series_convertToJSON(events_v1_event_series_t *events_v1_event_series) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *events_v1_event_series_convertToJSON(events_v1_event_series_t *events_v1_event_series) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // events_v1_event_series->count
     if (!events_v1_event_series->count) {
         goto fail;
     }
-    if(cJSON_AddNumberToObject(item, "count", events_v1_event_series->count) == NULL) {
+    if(mazu_cJSON_AddNumberToObject(item, "count", events_v1_event_series->count) == NULL) {
     goto fail; //Numeric
     }
 
@@ -48,42 +48,42 @@ cJSON *events_v1_event_series_convertToJSON(events_v1_event_series_t *events_v1_
     if (!events_v1_event_series->last_observed_time) {
         goto fail;
     }
-    if(cJSON_AddStringToObject(item, "lastObservedTime", events_v1_event_series->last_observed_time) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "lastObservedTime", events_v1_event_series->last_observed_time) == NULL) {
     goto fail; //Date-Time
     }
 
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-events_v1_event_series_t *events_v1_event_series_parseFromJSON(cJSON *events_v1_event_seriesJSON){
+events_v1_event_series_t *events_v1_event_series_parseFromJSON(mazu_cJSON *events_v1_event_seriesJSON){
 
     events_v1_event_series_t *events_v1_event_series_local_var = NULL;
 
     // events_v1_event_series->count
-    cJSON *count = cJSON_GetObjectItemCaseSensitive(events_v1_event_seriesJSON, "count");
+    mazu_cJSON *count = mazu_cJSON_GetObjectItemCaseSensitive(events_v1_event_seriesJSON, "count");
     if (!count) {
         goto end;
     }
 
     
-    if(!cJSON_IsNumber(count))
+    if(!mazu_cJSON_IsNumber(count))
     {
     goto end; //Numeric
     }
 
     // events_v1_event_series->last_observed_time
-    cJSON *last_observed_time = cJSON_GetObjectItemCaseSensitive(events_v1_event_seriesJSON, "lastObservedTime");
+    mazu_cJSON *last_observed_time = mazu_cJSON_GetObjectItemCaseSensitive(events_v1_event_seriesJSON, "lastObservedTime");
     if (!last_observed_time) {
         goto end;
     }
 
     
-    if(!cJSON_IsString(last_observed_time) && !cJSON_IsNull(last_observed_time))
+    if(!mazu_cJSON_IsString(last_observed_time) && !mazu_cJSON_IsNull(last_observed_time))
     {
     goto end; //DateTime
     }

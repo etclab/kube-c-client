@@ -11,7 +11,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdbool.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 
 #include "../model/v1_volume.h"
 v1_volume_t* instantiate_v1_volume(int include_optional);
@@ -159,11 +159,11 @@ v1_volume_t* instantiate_v1_volume(int include_optional) {
 void test_v1_volume(int include_optional) {
     v1_volume_t* v1_volume_1 = instantiate_v1_volume(include_optional);
 
-	cJSON* jsonv1_volume_1 = v1_volume_convertToJSON(v1_volume_1);
-	printf("v1_volume :\n%s\n", cJSON_Print(jsonv1_volume_1));
+	mazu_cJSON* jsonv1_volume_1 = v1_volume_convertToJSON(v1_volume_1);
+	printf("v1_volume :\n%s\n", mazu_cJSON_Print(jsonv1_volume_1));
 	v1_volume_t* v1_volume_2 = v1_volume_parseFromJSON(jsonv1_volume_1);
-	cJSON* jsonv1_volume_2 = v1_volume_convertToJSON(v1_volume_2);
-	printf("repeating v1_volume:\n%s\n", cJSON_Print(jsonv1_volume_2));
+	mazu_cJSON* jsonv1_volume_2 = v1_volume_convertToJSON(v1_volume_2);
+	printf("repeating v1_volume:\n%s\n", mazu_cJSON_Print(jsonv1_volume_2));
 }
 
 int main() {

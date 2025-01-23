@@ -54,12 +54,12 @@ void v1_priority_level_configuration_condition_free(v1_priority_level_configurat
     free(v1_priority_level_configuration_condition);
 }
 
-cJSON *v1_priority_level_configuration_condition_convertToJSON(v1_priority_level_configuration_condition_t *v1_priority_level_configuration_condition) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_priority_level_configuration_condition_convertToJSON(v1_priority_level_configuration_condition_t *v1_priority_level_configuration_condition) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_priority_level_configuration_condition->last_transition_time
     if(v1_priority_level_configuration_condition->last_transition_time) {
-    if(cJSON_AddStringToObject(item, "lastTransitionTime", v1_priority_level_configuration_condition->last_transition_time) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "lastTransitionTime", v1_priority_level_configuration_condition->last_transition_time) == NULL) {
     goto fail; //Date-Time
     }
     }
@@ -67,7 +67,7 @@ cJSON *v1_priority_level_configuration_condition_convertToJSON(v1_priority_level
 
     // v1_priority_level_configuration_condition->message
     if(v1_priority_level_configuration_condition->message) {
-    if(cJSON_AddStringToObject(item, "message", v1_priority_level_configuration_condition->message) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "message", v1_priority_level_configuration_condition->message) == NULL) {
     goto fail; //String
     }
     }
@@ -75,7 +75,7 @@ cJSON *v1_priority_level_configuration_condition_convertToJSON(v1_priority_level
 
     // v1_priority_level_configuration_condition->reason
     if(v1_priority_level_configuration_condition->reason) {
-    if(cJSON_AddStringToObject(item, "reason", v1_priority_level_configuration_condition->reason) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "reason", v1_priority_level_configuration_condition->reason) == NULL) {
     goto fail; //String
     }
     }
@@ -83,7 +83,7 @@ cJSON *v1_priority_level_configuration_condition_convertToJSON(v1_priority_level
 
     // v1_priority_level_configuration_condition->status
     if(v1_priority_level_configuration_condition->status) {
-    if(cJSON_AddStringToObject(item, "status", v1_priority_level_configuration_condition->status) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "status", v1_priority_level_configuration_condition->status) == NULL) {
     goto fail; //String
     }
     }
@@ -91,7 +91,7 @@ cJSON *v1_priority_level_configuration_condition_convertToJSON(v1_priority_level
 
     // v1_priority_level_configuration_condition->type
     if(v1_priority_level_configuration_condition->type) {
-    if(cJSON_AddStringToObject(item, "type", v1_priority_level_configuration_condition->type) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "type", v1_priority_level_configuration_condition->type) == NULL) {
     goto fail; //String
     }
     }
@@ -99,55 +99,55 @@ cJSON *v1_priority_level_configuration_condition_convertToJSON(v1_priority_level
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_priority_level_configuration_condition_t *v1_priority_level_configuration_condition_parseFromJSON(cJSON *v1_priority_level_configuration_conditionJSON){
+v1_priority_level_configuration_condition_t *v1_priority_level_configuration_condition_parseFromJSON(mazu_cJSON *v1_priority_level_configuration_conditionJSON){
 
     v1_priority_level_configuration_condition_t *v1_priority_level_configuration_condition_local_var = NULL;
 
     // v1_priority_level_configuration_condition->last_transition_time
-    cJSON *last_transition_time = cJSON_GetObjectItemCaseSensitive(v1_priority_level_configuration_conditionJSON, "lastTransitionTime");
+    mazu_cJSON *last_transition_time = mazu_cJSON_GetObjectItemCaseSensitive(v1_priority_level_configuration_conditionJSON, "lastTransitionTime");
     if (last_transition_time) { 
-    if(!cJSON_IsString(last_transition_time) && !cJSON_IsNull(last_transition_time))
+    if(!mazu_cJSON_IsString(last_transition_time) && !mazu_cJSON_IsNull(last_transition_time))
     {
     goto end; //DateTime
     }
     }
 
     // v1_priority_level_configuration_condition->message
-    cJSON *message = cJSON_GetObjectItemCaseSensitive(v1_priority_level_configuration_conditionJSON, "message");
+    mazu_cJSON *message = mazu_cJSON_GetObjectItemCaseSensitive(v1_priority_level_configuration_conditionJSON, "message");
     if (message) { 
-    if(!cJSON_IsString(message) && !cJSON_IsNull(message))
+    if(!mazu_cJSON_IsString(message) && !mazu_cJSON_IsNull(message))
     {
     goto end; //String
     }
     }
 
     // v1_priority_level_configuration_condition->reason
-    cJSON *reason = cJSON_GetObjectItemCaseSensitive(v1_priority_level_configuration_conditionJSON, "reason");
+    mazu_cJSON *reason = mazu_cJSON_GetObjectItemCaseSensitive(v1_priority_level_configuration_conditionJSON, "reason");
     if (reason) { 
-    if(!cJSON_IsString(reason) && !cJSON_IsNull(reason))
+    if(!mazu_cJSON_IsString(reason) && !mazu_cJSON_IsNull(reason))
     {
     goto end; //String
     }
     }
 
     // v1_priority_level_configuration_condition->status
-    cJSON *status = cJSON_GetObjectItemCaseSensitive(v1_priority_level_configuration_conditionJSON, "status");
+    mazu_cJSON *status = mazu_cJSON_GetObjectItemCaseSensitive(v1_priority_level_configuration_conditionJSON, "status");
     if (status) { 
-    if(!cJSON_IsString(status) && !cJSON_IsNull(status))
+    if(!mazu_cJSON_IsString(status) && !mazu_cJSON_IsNull(status))
     {
     goto end; //String
     }
     }
 
     // v1_priority_level_configuration_condition->type
-    cJSON *type = cJSON_GetObjectItemCaseSensitive(v1_priority_level_configuration_conditionJSON, "type");
+    mazu_cJSON *type = mazu_cJSON_GetObjectItemCaseSensitive(v1_priority_level_configuration_conditionJSON, "type");
     if (type) { 
-    if(!cJSON_IsString(type) && !cJSON_IsNull(type))
+    if(!mazu_cJSON_IsString(type) && !mazu_cJSON_IsNull(type))
     {
     goto end; //String
     }
@@ -155,11 +155,11 @@ v1_priority_level_configuration_condition_t *v1_priority_level_configuration_con
 
 
     v1_priority_level_configuration_condition_local_var = v1_priority_level_configuration_condition_create (
-        last_transition_time && !cJSON_IsNull(last_transition_time) ? strdup(last_transition_time->valuestring) : NULL,
-        message && !cJSON_IsNull(message) ? strdup(message->valuestring) : NULL,
-        reason && !cJSON_IsNull(reason) ? strdup(reason->valuestring) : NULL,
-        status && !cJSON_IsNull(status) ? strdup(status->valuestring) : NULL,
-        type && !cJSON_IsNull(type) ? strdup(type->valuestring) : NULL
+        last_transition_time && !mazu_cJSON_IsNull(last_transition_time) ? strdup(last_transition_time->valuestring) : NULL,
+        message && !mazu_cJSON_IsNull(message) ? strdup(message->valuestring) : NULL,
+        reason && !mazu_cJSON_IsNull(reason) ? strdup(reason->valuestring) : NULL,
+        status && !mazu_cJSON_IsNull(status) ? strdup(status->valuestring) : NULL,
+        type && !mazu_cJSON_IsNull(type) ? strdup(type->valuestring) : NULL
         );
 
     return v1_priority_level_configuration_condition_local_var;

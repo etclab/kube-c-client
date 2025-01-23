@@ -11,7 +11,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdbool.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 
 #include "../model/v1_pod_readiness_gate.h"
 v1_pod_readiness_gate_t* instantiate_v1_pod_readiness_gate(int include_optional);
@@ -39,11 +39,11 @@ v1_pod_readiness_gate_t* instantiate_v1_pod_readiness_gate(int include_optional)
 void test_v1_pod_readiness_gate(int include_optional) {
     v1_pod_readiness_gate_t* v1_pod_readiness_gate_1 = instantiate_v1_pod_readiness_gate(include_optional);
 
-	cJSON* jsonv1_pod_readiness_gate_1 = v1_pod_readiness_gate_convertToJSON(v1_pod_readiness_gate_1);
-	printf("v1_pod_readiness_gate :\n%s\n", cJSON_Print(jsonv1_pod_readiness_gate_1));
+	mazu_cJSON* jsonv1_pod_readiness_gate_1 = v1_pod_readiness_gate_convertToJSON(v1_pod_readiness_gate_1);
+	printf("v1_pod_readiness_gate :\n%s\n", mazu_cJSON_Print(jsonv1_pod_readiness_gate_1));
 	v1_pod_readiness_gate_t* v1_pod_readiness_gate_2 = v1_pod_readiness_gate_parseFromJSON(jsonv1_pod_readiness_gate_1);
-	cJSON* jsonv1_pod_readiness_gate_2 = v1_pod_readiness_gate_convertToJSON(v1_pod_readiness_gate_2);
-	printf("repeating v1_pod_readiness_gate:\n%s\n", cJSON_Print(jsonv1_pod_readiness_gate_2));
+	mazu_cJSON* jsonv1_pod_readiness_gate_2 = v1_pod_readiness_gate_convertToJSON(v1_pod_readiness_gate_2);
+	printf("repeating v1_pod_readiness_gate:\n%s\n", mazu_cJSON_Print(jsonv1_pod_readiness_gate_2));
 }
 
 int main() {

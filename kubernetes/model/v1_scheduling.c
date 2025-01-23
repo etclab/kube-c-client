@@ -45,21 +45,21 @@ void v1_scheduling_free(v1_scheduling_t *v1_scheduling) {
     free(v1_scheduling);
 }
 
-cJSON *v1_scheduling_convertToJSON(v1_scheduling_t *v1_scheduling) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_scheduling_convertToJSON(v1_scheduling_t *v1_scheduling) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_scheduling->node_selector
     if(v1_scheduling->node_selector) {
-    cJSON *node_selector = cJSON_AddObjectToObject(item, "nodeSelector");
+    mazu_cJSON *node_selector = mazu_cJSON_AddObjectToObject(item, "nodeSelector");
     if(node_selector == NULL) {
         goto fail; //primitive map container
     }
-    cJSON *localMapObject = node_selector;
+    mazu_cJSON *localMapObject = node_selector;
     listEntry_t *node_selectorListEntry;
     if (v1_scheduling->node_selector) {
     list_ForEach(node_selectorListEntry, v1_scheduling->node_selector) {
         keyValuePair_t *localKeyValue = (keyValuePair_t*)node_selectorListEntry->data;
-        if(cJSON_AddStringToObject(localMapObject, localKeyValue->key, (char*)localKeyValue->value) == NULL)
+        if(mazu_cJSON_AddStringToObject(localMapObject, localKeyValue->key, (char*)localKeyValue->value) == NULL)
         {
             goto fail;
         }
@@ -70,7 +70,7 @@ cJSON *v1_scheduling_convertToJSON(v1_scheduling_t *v1_scheduling) {
 
     // v1_scheduling->tolerations
     if(v1_scheduling->tolerations) {
-    cJSON *tolerations = cJSON_AddArrayToObject(item, "tolerations");
+    mazu_cJSON *tolerations = mazu_cJSON_AddArrayToObject(item, "tolerations");
     if(tolerations == NULL) {
     goto fail; //nonprimitive container
     }
@@ -78,11 +78,11 @@ cJSON *v1_scheduling_convertToJSON(v1_scheduling_t *v1_scheduling) {
     listEntry_t *tolerationsListEntry;
     if (v1_scheduling->tolerations) {
     list_ForEach(tolerationsListEntry, v1_scheduling->tolerations) {
-    cJSON *itemLocal = v1_toleration_convertToJSON(tolerationsListEntry->data);
+    mazu_cJSON *itemLocal = v1_toleration_convertToJSON(tolerationsListEntry->data);
     if(itemLocal == NULL) {
     goto fail;
     }
-    cJSON_AddItemToArray(tolerations, itemLocal);
+    mazu_cJSON_AddItemToArray(tolerations, itemLocal);
     }
     }
     }
@@ -90,12 +90,12 @@ cJSON *v1_scheduling_convertToJSON(v1_scheduling_t *v1_scheduling) {
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_scheduling_t *v1_scheduling_parseFromJSON(cJSON *v1_schedulingJSON){
+v1_scheduling_t *v1_scheduling_parseFromJSON(mazu_cJSON *v1_schedulingJSON){
 
     v1_scheduling_t *v1_scheduling_local_var = NULL;
 
@@ -106,21 +106,21 @@ v1_scheduling_t *v1_scheduling_parseFromJSON(cJSON *v1_schedulingJSON){
     list_t *tolerationsList = NULL;
 
     // v1_scheduling->node_selector
-    cJSON *node_selector = cJSON_GetObjectItemCaseSensitive(v1_schedulingJSON, "nodeSelector");
+    mazu_cJSON *node_selector = mazu_cJSON_GetObjectItemCaseSensitive(v1_schedulingJSON, "nodeSelector");
     if (node_selector) { 
-    cJSON *node_selector_local_map = NULL;
-    if(!cJSON_IsObject(node_selector) && !cJSON_IsNull(node_selector))
+    mazu_cJSON *node_selector_local_map = NULL;
+    if(!mazu_cJSON_IsObject(node_selector) && !mazu_cJSON_IsNull(node_selector))
     {
         goto end;//primitive map container
     }
-    if(cJSON_IsObject(node_selector))
+    if(mazu_cJSON_IsObject(node_selector))
     {
         node_selectorList = list_createList();
         keyValuePair_t *localMapKeyPair;
-        cJSON_ArrayForEach(node_selector_local_map, node_selector)
+        mazu_cJSON_ArrayForEach(node_selector_local_map, node_selector)
         {
-            cJSON *localMapObject = node_selector_local_map;
-            if(!cJSON_IsString(localMapObject))
+            mazu_cJSON *localMapObject = node_selector_local_map;
+            if(!mazu_cJSON_IsString(localMapObject))
             {
                 goto end;
             }
@@ -131,18 +131,18 @@ v1_scheduling_t *v1_scheduling_parseFromJSON(cJSON *v1_schedulingJSON){
     }
 
     // v1_scheduling->tolerations
-    cJSON *tolerations = cJSON_GetObjectItemCaseSensitive(v1_schedulingJSON, "tolerations");
+    mazu_cJSON *tolerations = mazu_cJSON_GetObjectItemCaseSensitive(v1_schedulingJSON, "tolerations");
     if (tolerations) { 
-    cJSON *tolerations_local_nonprimitive = NULL;
-    if(!cJSON_IsArray(tolerations)){
+    mazu_cJSON *tolerations_local_nonprimitive = NULL;
+    if(!mazu_cJSON_IsArray(tolerations)){
         goto end; //nonprimitive container
     }
 
     tolerationsList = list_createList();
 
-    cJSON_ArrayForEach(tolerations_local_nonprimitive,tolerations )
+    mazu_cJSON_ArrayForEach(tolerations_local_nonprimitive,tolerations )
     {
-        if(!cJSON_IsObject(tolerations_local_nonprimitive)){
+        if(!mazu_cJSON_IsObject(tolerations_local_nonprimitive)){
             goto end;
         }
         v1_toleration_t *tolerationsItem = v1_toleration_parseFromJSON(tolerations_local_nonprimitive);

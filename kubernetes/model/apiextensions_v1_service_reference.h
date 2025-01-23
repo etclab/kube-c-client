@@ -8,7 +8,7 @@
 #define _apiextensions_v1_service_reference_H_
 
 #include <string.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
 #include "../include/binary.h"
@@ -35,9 +35,9 @@ apiextensions_v1_service_reference_t *apiextensions_v1_service_reference_create(
 
 void apiextensions_v1_service_reference_free(apiextensions_v1_service_reference_t *apiextensions_v1_service_reference);
 
-apiextensions_v1_service_reference_t *apiextensions_v1_service_reference_parseFromJSON(cJSON *apiextensions_v1_service_referenceJSON);
+apiextensions_v1_service_reference_t *apiextensions_v1_service_reference_parseFromJSON(mazu_cJSON *apiextensions_v1_service_referenceJSON);
 
-cJSON *apiextensions_v1_service_reference_convertToJSON(apiextensions_v1_service_reference_t *apiextensions_v1_service_reference);
+mazu_cJSON *apiextensions_v1_service_reference_convertToJSON(apiextensions_v1_service_reference_t *apiextensions_v1_service_reference);
 
 #endif /* _apiextensions_v1_service_reference_H_ */
 

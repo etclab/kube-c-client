@@ -72,12 +72,12 @@ void v1_custom_resource_definition_version_free(v1_custom_resource_definition_ve
     free(v1_custom_resource_definition_version);
 }
 
-cJSON *v1_custom_resource_definition_version_convertToJSON(v1_custom_resource_definition_version_t *v1_custom_resource_definition_version) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_custom_resource_definition_version_convertToJSON(v1_custom_resource_definition_version_t *v1_custom_resource_definition_version) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_custom_resource_definition_version->additional_printer_columns
     if(v1_custom_resource_definition_version->additional_printer_columns) {
-    cJSON *additional_printer_columns = cJSON_AddArrayToObject(item, "additionalPrinterColumns");
+    mazu_cJSON *additional_printer_columns = mazu_cJSON_AddArrayToObject(item, "additionalPrinterColumns");
     if(additional_printer_columns == NULL) {
     goto fail; //nonprimitive container
     }
@@ -85,11 +85,11 @@ cJSON *v1_custom_resource_definition_version_convertToJSON(v1_custom_resource_de
     listEntry_t *additional_printer_columnsListEntry;
     if (v1_custom_resource_definition_version->additional_printer_columns) {
     list_ForEach(additional_printer_columnsListEntry, v1_custom_resource_definition_version->additional_printer_columns) {
-    cJSON *itemLocal = v1_custom_resource_column_definition_convertToJSON(additional_printer_columnsListEntry->data);
+    mazu_cJSON *itemLocal = v1_custom_resource_column_definition_convertToJSON(additional_printer_columnsListEntry->data);
     if(itemLocal == NULL) {
     goto fail;
     }
-    cJSON_AddItemToArray(additional_printer_columns, itemLocal);
+    mazu_cJSON_AddItemToArray(additional_printer_columns, itemLocal);
     }
     }
     }
@@ -97,7 +97,7 @@ cJSON *v1_custom_resource_definition_version_convertToJSON(v1_custom_resource_de
 
     // v1_custom_resource_definition_version->deprecated
     if(v1_custom_resource_definition_version->deprecated) {
-    if(cJSON_AddBoolToObject(item, "deprecated", v1_custom_resource_definition_version->deprecated) == NULL) {
+    if(mazu_cJSON_AddBoolToObject(item, "deprecated", v1_custom_resource_definition_version->deprecated) == NULL) {
     goto fail; //Bool
     }
     }
@@ -105,7 +105,7 @@ cJSON *v1_custom_resource_definition_version_convertToJSON(v1_custom_resource_de
 
     // v1_custom_resource_definition_version->deprecation_warning
     if(v1_custom_resource_definition_version->deprecation_warning) {
-    if(cJSON_AddStringToObject(item, "deprecationWarning", v1_custom_resource_definition_version->deprecation_warning) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "deprecationWarning", v1_custom_resource_definition_version->deprecation_warning) == NULL) {
     goto fail; //String
     }
     }
@@ -115,18 +115,18 @@ cJSON *v1_custom_resource_definition_version_convertToJSON(v1_custom_resource_de
     if (!v1_custom_resource_definition_version->name) {
         goto fail;
     }
-    if(cJSON_AddStringToObject(item, "name", v1_custom_resource_definition_version->name) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "name", v1_custom_resource_definition_version->name) == NULL) {
     goto fail; //String
     }
 
 
     // v1_custom_resource_definition_version->schema
     if(v1_custom_resource_definition_version->schema) {
-    cJSON *schema_local_JSON = v1_custom_resource_validation_convertToJSON(v1_custom_resource_definition_version->schema);
+    mazu_cJSON *schema_local_JSON = v1_custom_resource_validation_convertToJSON(v1_custom_resource_definition_version->schema);
     if(schema_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "schema", schema_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "schema", schema_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -135,7 +135,7 @@ cJSON *v1_custom_resource_definition_version_convertToJSON(v1_custom_resource_de
 
     // v1_custom_resource_definition_version->selectable_fields
     if(v1_custom_resource_definition_version->selectable_fields) {
-    cJSON *selectable_fields = cJSON_AddArrayToObject(item, "selectableFields");
+    mazu_cJSON *selectable_fields = mazu_cJSON_AddArrayToObject(item, "selectableFields");
     if(selectable_fields == NULL) {
     goto fail; //nonprimitive container
     }
@@ -143,11 +143,11 @@ cJSON *v1_custom_resource_definition_version_convertToJSON(v1_custom_resource_de
     listEntry_t *selectable_fieldsListEntry;
     if (v1_custom_resource_definition_version->selectable_fields) {
     list_ForEach(selectable_fieldsListEntry, v1_custom_resource_definition_version->selectable_fields) {
-    cJSON *itemLocal = v1_selectable_field_convertToJSON(selectable_fieldsListEntry->data);
+    mazu_cJSON *itemLocal = v1_selectable_field_convertToJSON(selectable_fieldsListEntry->data);
     if(itemLocal == NULL) {
     goto fail;
     }
-    cJSON_AddItemToArray(selectable_fields, itemLocal);
+    mazu_cJSON_AddItemToArray(selectable_fields, itemLocal);
     }
     }
     }
@@ -157,7 +157,7 @@ cJSON *v1_custom_resource_definition_version_convertToJSON(v1_custom_resource_de
     if (!v1_custom_resource_definition_version->served) {
         goto fail;
     }
-    if(cJSON_AddBoolToObject(item, "served", v1_custom_resource_definition_version->served) == NULL) {
+    if(mazu_cJSON_AddBoolToObject(item, "served", v1_custom_resource_definition_version->served) == NULL) {
     goto fail; //Bool
     }
 
@@ -166,18 +166,18 @@ cJSON *v1_custom_resource_definition_version_convertToJSON(v1_custom_resource_de
     if (!v1_custom_resource_definition_version->storage) {
         goto fail;
     }
-    if(cJSON_AddBoolToObject(item, "storage", v1_custom_resource_definition_version->storage) == NULL) {
+    if(mazu_cJSON_AddBoolToObject(item, "storage", v1_custom_resource_definition_version->storage) == NULL) {
     goto fail; //Bool
     }
 
 
     // v1_custom_resource_definition_version->subresources
     if(v1_custom_resource_definition_version->subresources) {
-    cJSON *subresources_local_JSON = v1_custom_resource_subresources_convertToJSON(v1_custom_resource_definition_version->subresources);
+    mazu_cJSON *subresources_local_JSON = v1_custom_resource_subresources_convertToJSON(v1_custom_resource_definition_version->subresources);
     if(subresources_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "subresources", subresources_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "subresources", subresources_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -186,12 +186,12 @@ cJSON *v1_custom_resource_definition_version_convertToJSON(v1_custom_resource_de
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_custom_resource_definition_version_t *v1_custom_resource_definition_version_parseFromJSON(cJSON *v1_custom_resource_definition_versionJSON){
+v1_custom_resource_definition_version_t *v1_custom_resource_definition_version_parseFromJSON(mazu_cJSON *v1_custom_resource_definition_versionJSON){
 
     v1_custom_resource_definition_version_t *v1_custom_resource_definition_version_local_var = NULL;
 
@@ -208,18 +208,18 @@ v1_custom_resource_definition_version_t *v1_custom_resource_definition_version_p
     v1_custom_resource_subresources_t *subresources_local_nonprim = NULL;
 
     // v1_custom_resource_definition_version->additional_printer_columns
-    cJSON *additional_printer_columns = cJSON_GetObjectItemCaseSensitive(v1_custom_resource_definition_versionJSON, "additionalPrinterColumns");
+    mazu_cJSON *additional_printer_columns = mazu_cJSON_GetObjectItemCaseSensitive(v1_custom_resource_definition_versionJSON, "additionalPrinterColumns");
     if (additional_printer_columns) { 
-    cJSON *additional_printer_columns_local_nonprimitive = NULL;
-    if(!cJSON_IsArray(additional_printer_columns)){
+    mazu_cJSON *additional_printer_columns_local_nonprimitive = NULL;
+    if(!mazu_cJSON_IsArray(additional_printer_columns)){
         goto end; //nonprimitive container
     }
 
     additional_printer_columnsList = list_createList();
 
-    cJSON_ArrayForEach(additional_printer_columns_local_nonprimitive,additional_printer_columns )
+    mazu_cJSON_ArrayForEach(additional_printer_columns_local_nonprimitive,additional_printer_columns )
     {
-        if(!cJSON_IsObject(additional_printer_columns_local_nonprimitive)){
+        if(!mazu_cJSON_IsObject(additional_printer_columns_local_nonprimitive)){
             goto end;
         }
         v1_custom_resource_column_definition_t *additional_printer_columnsItem = v1_custom_resource_column_definition_parseFromJSON(additional_printer_columns_local_nonprimitive);
@@ -229,54 +229,54 @@ v1_custom_resource_definition_version_t *v1_custom_resource_definition_version_p
     }
 
     // v1_custom_resource_definition_version->deprecated
-    cJSON *deprecated = cJSON_GetObjectItemCaseSensitive(v1_custom_resource_definition_versionJSON, "deprecated");
+    mazu_cJSON *deprecated = mazu_cJSON_GetObjectItemCaseSensitive(v1_custom_resource_definition_versionJSON, "deprecated");
     if (deprecated) { 
-    if(!cJSON_IsBool(deprecated))
+    if(!mazu_cJSON_IsBool(deprecated))
     {
     goto end; //Bool
     }
     }
 
     // v1_custom_resource_definition_version->deprecation_warning
-    cJSON *deprecation_warning = cJSON_GetObjectItemCaseSensitive(v1_custom_resource_definition_versionJSON, "deprecationWarning");
+    mazu_cJSON *deprecation_warning = mazu_cJSON_GetObjectItemCaseSensitive(v1_custom_resource_definition_versionJSON, "deprecationWarning");
     if (deprecation_warning) { 
-    if(!cJSON_IsString(deprecation_warning) && !cJSON_IsNull(deprecation_warning))
+    if(!mazu_cJSON_IsString(deprecation_warning) && !mazu_cJSON_IsNull(deprecation_warning))
     {
     goto end; //String
     }
     }
 
     // v1_custom_resource_definition_version->name
-    cJSON *name = cJSON_GetObjectItemCaseSensitive(v1_custom_resource_definition_versionJSON, "name");
+    mazu_cJSON *name = mazu_cJSON_GetObjectItemCaseSensitive(v1_custom_resource_definition_versionJSON, "name");
     if (!name) {
         goto end;
     }
 
     
-    if(!cJSON_IsString(name))
+    if(!mazu_cJSON_IsString(name))
     {
     goto end; //String
     }
 
     // v1_custom_resource_definition_version->schema
-    cJSON *schema = cJSON_GetObjectItemCaseSensitive(v1_custom_resource_definition_versionJSON, "schema");
+    mazu_cJSON *schema = mazu_cJSON_GetObjectItemCaseSensitive(v1_custom_resource_definition_versionJSON, "schema");
     if (schema) { 
     schema_local_nonprim = v1_custom_resource_validation_parseFromJSON(schema); //nonprimitive
     }
 
     // v1_custom_resource_definition_version->selectable_fields
-    cJSON *selectable_fields = cJSON_GetObjectItemCaseSensitive(v1_custom_resource_definition_versionJSON, "selectableFields");
+    mazu_cJSON *selectable_fields = mazu_cJSON_GetObjectItemCaseSensitive(v1_custom_resource_definition_versionJSON, "selectableFields");
     if (selectable_fields) { 
-    cJSON *selectable_fields_local_nonprimitive = NULL;
-    if(!cJSON_IsArray(selectable_fields)){
+    mazu_cJSON *selectable_fields_local_nonprimitive = NULL;
+    if(!mazu_cJSON_IsArray(selectable_fields)){
         goto end; //nonprimitive container
     }
 
     selectable_fieldsList = list_createList();
 
-    cJSON_ArrayForEach(selectable_fields_local_nonprimitive,selectable_fields )
+    mazu_cJSON_ArrayForEach(selectable_fields_local_nonprimitive,selectable_fields )
     {
-        if(!cJSON_IsObject(selectable_fields_local_nonprimitive)){
+        if(!mazu_cJSON_IsObject(selectable_fields_local_nonprimitive)){
             goto end;
         }
         v1_selectable_field_t *selectable_fieldsItem = v1_selectable_field_parseFromJSON(selectable_fields_local_nonprimitive);
@@ -286,31 +286,31 @@ v1_custom_resource_definition_version_t *v1_custom_resource_definition_version_p
     }
 
     // v1_custom_resource_definition_version->served
-    cJSON *served = cJSON_GetObjectItemCaseSensitive(v1_custom_resource_definition_versionJSON, "served");
+    mazu_cJSON *served = mazu_cJSON_GetObjectItemCaseSensitive(v1_custom_resource_definition_versionJSON, "served");
     if (!served) {
         goto end;
     }
 
     
-    if(!cJSON_IsBool(served))
+    if(!mazu_cJSON_IsBool(served))
     {
     goto end; //Bool
     }
 
     // v1_custom_resource_definition_version->storage
-    cJSON *storage = cJSON_GetObjectItemCaseSensitive(v1_custom_resource_definition_versionJSON, "storage");
+    mazu_cJSON *storage = mazu_cJSON_GetObjectItemCaseSensitive(v1_custom_resource_definition_versionJSON, "storage");
     if (!storage) {
         goto end;
     }
 
     
-    if(!cJSON_IsBool(storage))
+    if(!mazu_cJSON_IsBool(storage))
     {
     goto end; //Bool
     }
 
     // v1_custom_resource_definition_version->subresources
-    cJSON *subresources = cJSON_GetObjectItemCaseSensitive(v1_custom_resource_definition_versionJSON, "subresources");
+    mazu_cJSON *subresources = mazu_cJSON_GetObjectItemCaseSensitive(v1_custom_resource_definition_versionJSON, "subresources");
     if (subresources) { 
     subresources_local_nonprim = v1_custom_resource_subresources_parseFromJSON(subresources); //nonprimitive
     }
@@ -319,7 +319,7 @@ v1_custom_resource_definition_version_t *v1_custom_resource_definition_version_p
     v1_custom_resource_definition_version_local_var = v1_custom_resource_definition_version_create (
         additional_printer_columns ? additional_printer_columnsList : NULL,
         deprecated ? deprecated->valueint : 0,
-        deprecation_warning && !cJSON_IsNull(deprecation_warning) ? strdup(deprecation_warning->valuestring) : NULL,
+        deprecation_warning && !mazu_cJSON_IsNull(deprecation_warning) ? strdup(deprecation_warning->valuestring) : NULL,
         strdup(name->valuestring),
         schema ? schema_local_nonprim : NULL,
         selectable_fields ? selectable_fieldsList : NULL,

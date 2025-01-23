@@ -11,7 +11,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdbool.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 
 #include "../model/v1alpha1_type_checking.h"
 v1alpha1_type_checking_t* instantiate_v1alpha1_type_checking(int include_optional);
@@ -39,11 +39,11 @@ v1alpha1_type_checking_t* instantiate_v1alpha1_type_checking(int include_optiona
 void test_v1alpha1_type_checking(int include_optional) {
     v1alpha1_type_checking_t* v1alpha1_type_checking_1 = instantiate_v1alpha1_type_checking(include_optional);
 
-	cJSON* jsonv1alpha1_type_checking_1 = v1alpha1_type_checking_convertToJSON(v1alpha1_type_checking_1);
-	printf("v1alpha1_type_checking :\n%s\n", cJSON_Print(jsonv1alpha1_type_checking_1));
+	mazu_cJSON* jsonv1alpha1_type_checking_1 = v1alpha1_type_checking_convertToJSON(v1alpha1_type_checking_1);
+	printf("v1alpha1_type_checking :\n%s\n", mazu_cJSON_Print(jsonv1alpha1_type_checking_1));
 	v1alpha1_type_checking_t* v1alpha1_type_checking_2 = v1alpha1_type_checking_parseFromJSON(jsonv1alpha1_type_checking_1);
-	cJSON* jsonv1alpha1_type_checking_2 = v1alpha1_type_checking_convertToJSON(v1alpha1_type_checking_2);
-	printf("repeating v1alpha1_type_checking:\n%s\n", cJSON_Print(jsonv1alpha1_type_checking_2));
+	mazu_cJSON* jsonv1alpha1_type_checking_2 = v1alpha1_type_checking_convertToJSON(v1alpha1_type_checking_2);
+	printf("repeating v1alpha1_type_checking:\n%s\n", mazu_cJSON_Print(jsonv1alpha1_type_checking_2));
 }
 
 int main() {

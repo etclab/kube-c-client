@@ -36,14 +36,14 @@ void v1_sysctl_free(v1_sysctl_t *v1_sysctl) {
     free(v1_sysctl);
 }
 
-cJSON *v1_sysctl_convertToJSON(v1_sysctl_t *v1_sysctl) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_sysctl_convertToJSON(v1_sysctl_t *v1_sysctl) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_sysctl->name
     if (!v1_sysctl->name) {
         goto fail;
     }
-    if(cJSON_AddStringToObject(item, "name", v1_sysctl->name) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "name", v1_sysctl->name) == NULL) {
     goto fail; //String
     }
 
@@ -52,42 +52,42 @@ cJSON *v1_sysctl_convertToJSON(v1_sysctl_t *v1_sysctl) {
     if (!v1_sysctl->value) {
         goto fail;
     }
-    if(cJSON_AddStringToObject(item, "value", v1_sysctl->value) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "value", v1_sysctl->value) == NULL) {
     goto fail; //String
     }
 
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_sysctl_t *v1_sysctl_parseFromJSON(cJSON *v1_sysctlJSON){
+v1_sysctl_t *v1_sysctl_parseFromJSON(mazu_cJSON *v1_sysctlJSON){
 
     v1_sysctl_t *v1_sysctl_local_var = NULL;
 
     // v1_sysctl->name
-    cJSON *name = cJSON_GetObjectItemCaseSensitive(v1_sysctlJSON, "name");
+    mazu_cJSON *name = mazu_cJSON_GetObjectItemCaseSensitive(v1_sysctlJSON, "name");
     if (!name) {
         goto end;
     }
 
     
-    if(!cJSON_IsString(name))
+    if(!mazu_cJSON_IsString(name))
     {
     goto end; //String
     }
 
     // v1_sysctl->value
-    cJSON *value = cJSON_GetObjectItemCaseSensitive(v1_sysctlJSON, "value");
+    mazu_cJSON *value = mazu_cJSON_GetObjectItemCaseSensitive(v1_sysctlJSON, "value");
     if (!value) {
         goto end;
     }
 
     
-    if(!cJSON_IsString(value))
+    if(!mazu_cJSON_IsString(value))
     {
     goto end; //String
     }

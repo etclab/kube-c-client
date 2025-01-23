@@ -11,7 +11,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdbool.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 
 #include "../model/v1_node_daemon_endpoints.h"
 v1_node_daemon_endpoints_t* instantiate_v1_node_daemon_endpoints(int include_optional);
@@ -41,11 +41,11 @@ v1_node_daemon_endpoints_t* instantiate_v1_node_daemon_endpoints(int include_opt
 void test_v1_node_daemon_endpoints(int include_optional) {
     v1_node_daemon_endpoints_t* v1_node_daemon_endpoints_1 = instantiate_v1_node_daemon_endpoints(include_optional);
 
-	cJSON* jsonv1_node_daemon_endpoints_1 = v1_node_daemon_endpoints_convertToJSON(v1_node_daemon_endpoints_1);
-	printf("v1_node_daemon_endpoints :\n%s\n", cJSON_Print(jsonv1_node_daemon_endpoints_1));
+	mazu_cJSON* jsonv1_node_daemon_endpoints_1 = v1_node_daemon_endpoints_convertToJSON(v1_node_daemon_endpoints_1);
+	printf("v1_node_daemon_endpoints :\n%s\n", mazu_cJSON_Print(jsonv1_node_daemon_endpoints_1));
 	v1_node_daemon_endpoints_t* v1_node_daemon_endpoints_2 = v1_node_daemon_endpoints_parseFromJSON(jsonv1_node_daemon_endpoints_1);
-	cJSON* jsonv1_node_daemon_endpoints_2 = v1_node_daemon_endpoints_convertToJSON(v1_node_daemon_endpoints_2);
-	printf("repeating v1_node_daemon_endpoints:\n%s\n", cJSON_Print(jsonv1_node_daemon_endpoints_2));
+	mazu_cJSON* jsonv1_node_daemon_endpoints_2 = v1_node_daemon_endpoints_convertToJSON(v1_node_daemon_endpoints_2);
+	printf("repeating v1_node_daemon_endpoints:\n%s\n", mazu_cJSON_Print(jsonv1_node_daemon_endpoints_2));
 }
 
 int main() {

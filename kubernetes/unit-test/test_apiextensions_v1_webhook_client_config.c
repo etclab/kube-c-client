@@ -11,7 +11,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdbool.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 
 #include "../model/apiextensions_v1_webhook_client_config.h"
 apiextensions_v1_webhook_client_config_t* instantiate_apiextensions_v1_webhook_client_config(int include_optional);
@@ -45,11 +45,11 @@ apiextensions_v1_webhook_client_config_t* instantiate_apiextensions_v1_webhook_c
 void test_apiextensions_v1_webhook_client_config(int include_optional) {
     apiextensions_v1_webhook_client_config_t* apiextensions_v1_webhook_client_config_1 = instantiate_apiextensions_v1_webhook_client_config(include_optional);
 
-	cJSON* jsonapiextensions_v1_webhook_client_config_1 = apiextensions_v1_webhook_client_config_convertToJSON(apiextensions_v1_webhook_client_config_1);
-	printf("apiextensions_v1_webhook_client_config :\n%s\n", cJSON_Print(jsonapiextensions_v1_webhook_client_config_1));
+	mazu_cJSON* jsonapiextensions_v1_webhook_client_config_1 = apiextensions_v1_webhook_client_config_convertToJSON(apiextensions_v1_webhook_client_config_1);
+	printf("apiextensions_v1_webhook_client_config :\n%s\n", mazu_cJSON_Print(jsonapiextensions_v1_webhook_client_config_1));
 	apiextensions_v1_webhook_client_config_t* apiextensions_v1_webhook_client_config_2 = apiextensions_v1_webhook_client_config_parseFromJSON(jsonapiextensions_v1_webhook_client_config_1);
-	cJSON* jsonapiextensions_v1_webhook_client_config_2 = apiextensions_v1_webhook_client_config_convertToJSON(apiextensions_v1_webhook_client_config_2);
-	printf("repeating apiextensions_v1_webhook_client_config:\n%s\n", cJSON_Print(jsonapiextensions_v1_webhook_client_config_2));
+	mazu_cJSON* jsonapiextensions_v1_webhook_client_config_2 = apiextensions_v1_webhook_client_config_convertToJSON(apiextensions_v1_webhook_client_config_2);
+	printf("repeating apiextensions_v1_webhook_client_config:\n%s\n", mazu_cJSON_Print(jsonapiextensions_v1_webhook_client_config_2));
 }
 
 int main() {

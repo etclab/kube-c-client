@@ -8,7 +8,7 @@
 #define _v1alpha1_variable_H_
 
 #include <string.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
 #include "../include/binary.h"
@@ -31,9 +31,9 @@ v1alpha1_variable_t *v1alpha1_variable_create(
 
 void v1alpha1_variable_free(v1alpha1_variable_t *v1alpha1_variable);
 
-v1alpha1_variable_t *v1alpha1_variable_parseFromJSON(cJSON *v1alpha1_variableJSON);
+v1alpha1_variable_t *v1alpha1_variable_parseFromJSON(mazu_cJSON *v1alpha1_variableJSON);
 
-cJSON *v1alpha1_variable_convertToJSON(v1alpha1_variable_t *v1alpha1_variable);
+mazu_cJSON *v1alpha1_variable_convertToJSON(v1alpha1_variable_t *v1alpha1_variable);
 
 #endif /* _v1alpha1_variable_H_ */
 

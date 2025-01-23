@@ -36,14 +36,14 @@ void v1alpha1_expression_warning_free(v1alpha1_expression_warning_t *v1alpha1_ex
     free(v1alpha1_expression_warning);
 }
 
-cJSON *v1alpha1_expression_warning_convertToJSON(v1alpha1_expression_warning_t *v1alpha1_expression_warning) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1alpha1_expression_warning_convertToJSON(v1alpha1_expression_warning_t *v1alpha1_expression_warning) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1alpha1_expression_warning->field_ref
     if (!v1alpha1_expression_warning->field_ref) {
         goto fail;
     }
-    if(cJSON_AddStringToObject(item, "fieldRef", v1alpha1_expression_warning->field_ref) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "fieldRef", v1alpha1_expression_warning->field_ref) == NULL) {
     goto fail; //String
     }
 
@@ -52,42 +52,42 @@ cJSON *v1alpha1_expression_warning_convertToJSON(v1alpha1_expression_warning_t *
     if (!v1alpha1_expression_warning->warning) {
         goto fail;
     }
-    if(cJSON_AddStringToObject(item, "warning", v1alpha1_expression_warning->warning) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "warning", v1alpha1_expression_warning->warning) == NULL) {
     goto fail; //String
     }
 
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1alpha1_expression_warning_t *v1alpha1_expression_warning_parseFromJSON(cJSON *v1alpha1_expression_warningJSON){
+v1alpha1_expression_warning_t *v1alpha1_expression_warning_parseFromJSON(mazu_cJSON *v1alpha1_expression_warningJSON){
 
     v1alpha1_expression_warning_t *v1alpha1_expression_warning_local_var = NULL;
 
     // v1alpha1_expression_warning->field_ref
-    cJSON *field_ref = cJSON_GetObjectItemCaseSensitive(v1alpha1_expression_warningJSON, "fieldRef");
+    mazu_cJSON *field_ref = mazu_cJSON_GetObjectItemCaseSensitive(v1alpha1_expression_warningJSON, "fieldRef");
     if (!field_ref) {
         goto end;
     }
 
     
-    if(!cJSON_IsString(field_ref))
+    if(!mazu_cJSON_IsString(field_ref))
     {
     goto end; //String
     }
 
     // v1alpha1_expression_warning->warning
-    cJSON *warning = cJSON_GetObjectItemCaseSensitive(v1alpha1_expression_warningJSON, "warning");
+    mazu_cJSON *warning = mazu_cJSON_GetObjectItemCaseSensitive(v1alpha1_expression_warningJSON, "warning");
     if (!warning) {
         goto end;
     }
 
     
-    if(!cJSON_IsString(warning))
+    if(!mazu_cJSON_IsString(warning))
     {
     goto end; //String
     }

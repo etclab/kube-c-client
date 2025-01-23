@@ -44,12 +44,12 @@ void v2_metric_target_free(v2_metric_target_t *v2_metric_target) {
     free(v2_metric_target);
 }
 
-cJSON *v2_metric_target_convertToJSON(v2_metric_target_t *v2_metric_target) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v2_metric_target_convertToJSON(v2_metric_target_t *v2_metric_target) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v2_metric_target->average_utilization
     if(v2_metric_target->average_utilization) {
-    if(cJSON_AddNumberToObject(item, "averageUtilization", v2_metric_target->average_utilization) == NULL) {
+    if(mazu_cJSON_AddNumberToObject(item, "averageUtilization", v2_metric_target->average_utilization) == NULL) {
     goto fail; //Numeric
     }
     }
@@ -57,7 +57,7 @@ cJSON *v2_metric_target_convertToJSON(v2_metric_target_t *v2_metric_target) {
 
     // v2_metric_target->average_value
     if(v2_metric_target->average_value) {
-    if(cJSON_AddStringToObject(item, "averageValue", v2_metric_target->average_value) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "averageValue", v2_metric_target->average_value) == NULL) {
     goto fail; //String
     }
     }
@@ -67,14 +67,14 @@ cJSON *v2_metric_target_convertToJSON(v2_metric_target_t *v2_metric_target) {
     if (!v2_metric_target->type) {
         goto fail;
     }
-    if(cJSON_AddStringToObject(item, "type", v2_metric_target->type) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "type", v2_metric_target->type) == NULL) {
     goto fail; //String
     }
 
 
     // v2_metric_target->value
     if(v2_metric_target->value) {
-    if(cJSON_AddStringToObject(item, "value", v2_metric_target->value) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "value", v2_metric_target->value) == NULL) {
     goto fail; //String
     }
     }
@@ -82,49 +82,49 @@ cJSON *v2_metric_target_convertToJSON(v2_metric_target_t *v2_metric_target) {
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v2_metric_target_t *v2_metric_target_parseFromJSON(cJSON *v2_metric_targetJSON){
+v2_metric_target_t *v2_metric_target_parseFromJSON(mazu_cJSON *v2_metric_targetJSON){
 
     v2_metric_target_t *v2_metric_target_local_var = NULL;
 
     // v2_metric_target->average_utilization
-    cJSON *average_utilization = cJSON_GetObjectItemCaseSensitive(v2_metric_targetJSON, "averageUtilization");
+    mazu_cJSON *average_utilization = mazu_cJSON_GetObjectItemCaseSensitive(v2_metric_targetJSON, "averageUtilization");
     if (average_utilization) { 
-    if(!cJSON_IsNumber(average_utilization))
+    if(!mazu_cJSON_IsNumber(average_utilization))
     {
     goto end; //Numeric
     }
     }
 
     // v2_metric_target->average_value
-    cJSON *average_value = cJSON_GetObjectItemCaseSensitive(v2_metric_targetJSON, "averageValue");
+    mazu_cJSON *average_value = mazu_cJSON_GetObjectItemCaseSensitive(v2_metric_targetJSON, "averageValue");
     if (average_value) { 
-    if(!cJSON_IsString(average_value) && !cJSON_IsNull(average_value))
+    if(!mazu_cJSON_IsString(average_value) && !mazu_cJSON_IsNull(average_value))
     {
     goto end; //String
     }
     }
 
     // v2_metric_target->type
-    cJSON *type = cJSON_GetObjectItemCaseSensitive(v2_metric_targetJSON, "type");
+    mazu_cJSON *type = mazu_cJSON_GetObjectItemCaseSensitive(v2_metric_targetJSON, "type");
     if (!type) {
         goto end;
     }
 
     
-    if(!cJSON_IsString(type))
+    if(!mazu_cJSON_IsString(type))
     {
     goto end; //String
     }
 
     // v2_metric_target->value
-    cJSON *value = cJSON_GetObjectItemCaseSensitive(v2_metric_targetJSON, "value");
+    mazu_cJSON *value = mazu_cJSON_GetObjectItemCaseSensitive(v2_metric_targetJSON, "value");
     if (value) { 
-    if(!cJSON_IsString(value) && !cJSON_IsNull(value))
+    if(!mazu_cJSON_IsString(value) && !mazu_cJSON_IsNull(value))
     {
     goto end; //String
     }
@@ -133,9 +133,9 @@ v2_metric_target_t *v2_metric_target_parseFromJSON(cJSON *v2_metric_targetJSON){
 
     v2_metric_target_local_var = v2_metric_target_create (
         average_utilization ? average_utilization->valuedouble : 0,
-        average_value && !cJSON_IsNull(average_value) ? strdup(average_value->valuestring) : NULL,
+        average_value && !mazu_cJSON_IsNull(average_value) ? strdup(average_value->valuestring) : NULL,
         strdup(type->valuestring),
-        value && !cJSON_IsNull(value) ? strdup(value->valuestring) : NULL
+        value && !mazu_cJSON_IsNull(value) ? strdup(value->valuestring) : NULL
         );
 
     return v2_metric_target_local_var;

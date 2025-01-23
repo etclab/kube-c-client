@@ -8,7 +8,7 @@
 #define _v1_network_policy_peer_H_
 
 #include <string.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
 #include "../include/binary.h"
@@ -35,9 +35,9 @@ v1_network_policy_peer_t *v1_network_policy_peer_create(
 
 void v1_network_policy_peer_free(v1_network_policy_peer_t *v1_network_policy_peer);
 
-v1_network_policy_peer_t *v1_network_policy_peer_parseFromJSON(cJSON *v1_network_policy_peerJSON);
+v1_network_policy_peer_t *v1_network_policy_peer_parseFromJSON(mazu_cJSON *v1_network_policy_peerJSON);
 
-cJSON *v1_network_policy_peer_convertToJSON(v1_network_policy_peer_t *v1_network_policy_peer);
+mazu_cJSON *v1_network_policy_peer_convertToJSON(v1_network_policy_peer_t *v1_network_policy_peer);
 
 #endif /* _v1_network_policy_peer_H_ */
 

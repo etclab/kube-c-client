@@ -8,7 +8,7 @@
 #define _v1_csi_node_driver_H_
 
 #include <string.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
 #include "../include/binary.h"
@@ -36,9 +36,9 @@ v1_csi_node_driver_t *v1_csi_node_driver_create(
 
 void v1_csi_node_driver_free(v1_csi_node_driver_t *v1_csi_node_driver);
 
-v1_csi_node_driver_t *v1_csi_node_driver_parseFromJSON(cJSON *v1_csi_node_driverJSON);
+v1_csi_node_driver_t *v1_csi_node_driver_parseFromJSON(mazu_cJSON *v1_csi_node_driverJSON);
 
-cJSON *v1_csi_node_driver_convertToJSON(v1_csi_node_driver_t *v1_csi_node_driver);
+mazu_cJSON *v1_csi_node_driver_convertToJSON(v1_csi_node_driver_t *v1_csi_node_driver);
 
 #endif /* _v1_csi_node_driver_H_ */
 

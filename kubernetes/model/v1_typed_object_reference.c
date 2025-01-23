@@ -48,12 +48,12 @@ void v1_typed_object_reference_free(v1_typed_object_reference_t *v1_typed_object
     free(v1_typed_object_reference);
 }
 
-cJSON *v1_typed_object_reference_convertToJSON(v1_typed_object_reference_t *v1_typed_object_reference) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_typed_object_reference_convertToJSON(v1_typed_object_reference_t *v1_typed_object_reference) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_typed_object_reference->api_group
     if(v1_typed_object_reference->api_group) {
-    if(cJSON_AddStringToObject(item, "apiGroup", v1_typed_object_reference->api_group) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "apiGroup", v1_typed_object_reference->api_group) == NULL) {
     goto fail; //String
     }
     }
@@ -63,7 +63,7 @@ cJSON *v1_typed_object_reference_convertToJSON(v1_typed_object_reference_t *v1_t
     if (!v1_typed_object_reference->kind) {
         goto fail;
     }
-    if(cJSON_AddStringToObject(item, "kind", v1_typed_object_reference->kind) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "kind", v1_typed_object_reference->kind) == NULL) {
     goto fail; //String
     }
 
@@ -72,14 +72,14 @@ cJSON *v1_typed_object_reference_convertToJSON(v1_typed_object_reference_t *v1_t
     if (!v1_typed_object_reference->name) {
         goto fail;
     }
-    if(cJSON_AddStringToObject(item, "name", v1_typed_object_reference->name) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "name", v1_typed_object_reference->name) == NULL) {
     goto fail; //String
     }
 
 
     // v1_typed_object_reference->_namespace
     if(v1_typed_object_reference->_namespace) {
-    if(cJSON_AddStringToObject(item, "namespace", v1_typed_object_reference->_namespace) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "namespace", v1_typed_object_reference->_namespace) == NULL) {
     goto fail; //String
     }
     }
@@ -87,52 +87,52 @@ cJSON *v1_typed_object_reference_convertToJSON(v1_typed_object_reference_t *v1_t
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_typed_object_reference_t *v1_typed_object_reference_parseFromJSON(cJSON *v1_typed_object_referenceJSON){
+v1_typed_object_reference_t *v1_typed_object_reference_parseFromJSON(mazu_cJSON *v1_typed_object_referenceJSON){
 
     v1_typed_object_reference_t *v1_typed_object_reference_local_var = NULL;
 
     // v1_typed_object_reference->api_group
-    cJSON *api_group = cJSON_GetObjectItemCaseSensitive(v1_typed_object_referenceJSON, "apiGroup");
+    mazu_cJSON *api_group = mazu_cJSON_GetObjectItemCaseSensitive(v1_typed_object_referenceJSON, "apiGroup");
     if (api_group) { 
-    if(!cJSON_IsString(api_group) && !cJSON_IsNull(api_group))
+    if(!mazu_cJSON_IsString(api_group) && !mazu_cJSON_IsNull(api_group))
     {
     goto end; //String
     }
     }
 
     // v1_typed_object_reference->kind
-    cJSON *kind = cJSON_GetObjectItemCaseSensitive(v1_typed_object_referenceJSON, "kind");
+    mazu_cJSON *kind = mazu_cJSON_GetObjectItemCaseSensitive(v1_typed_object_referenceJSON, "kind");
     if (!kind) {
         goto end;
     }
 
     
-    if(!cJSON_IsString(kind))
+    if(!mazu_cJSON_IsString(kind))
     {
     goto end; //String
     }
 
     // v1_typed_object_reference->name
-    cJSON *name = cJSON_GetObjectItemCaseSensitive(v1_typed_object_referenceJSON, "name");
+    mazu_cJSON *name = mazu_cJSON_GetObjectItemCaseSensitive(v1_typed_object_referenceJSON, "name");
     if (!name) {
         goto end;
     }
 
     
-    if(!cJSON_IsString(name))
+    if(!mazu_cJSON_IsString(name))
     {
     goto end; //String
     }
 
     // v1_typed_object_reference->_namespace
-    cJSON *_namespace = cJSON_GetObjectItemCaseSensitive(v1_typed_object_referenceJSON, "namespace");
+    mazu_cJSON *_namespace = mazu_cJSON_GetObjectItemCaseSensitive(v1_typed_object_referenceJSON, "namespace");
     if (_namespace) { 
-    if(!cJSON_IsString(_namespace) && !cJSON_IsNull(_namespace))
+    if(!mazu_cJSON_IsString(_namespace) && !mazu_cJSON_IsNull(_namespace))
     {
     goto end; //String
     }
@@ -140,10 +140,10 @@ v1_typed_object_reference_t *v1_typed_object_reference_parseFromJSON(cJSON *v1_t
 
 
     v1_typed_object_reference_local_var = v1_typed_object_reference_create (
-        api_group && !cJSON_IsNull(api_group) ? strdup(api_group->valuestring) : NULL,
+        api_group && !mazu_cJSON_IsNull(api_group) ? strdup(api_group->valuestring) : NULL,
         strdup(kind->valuestring),
         strdup(name->valuestring),
-        _namespace && !cJSON_IsNull(_namespace) ? strdup(_namespace->valuestring) : NULL
+        _namespace && !mazu_cJSON_IsNull(_namespace) ? strdup(_namespace->valuestring) : NULL
         );
 
     return v1_typed_object_reference_local_var;

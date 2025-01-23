@@ -36,12 +36,12 @@ void v1_non_resource_attributes_free(v1_non_resource_attributes_t *v1_non_resour
     free(v1_non_resource_attributes);
 }
 
-cJSON *v1_non_resource_attributes_convertToJSON(v1_non_resource_attributes_t *v1_non_resource_attributes) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_non_resource_attributes_convertToJSON(v1_non_resource_attributes_t *v1_non_resource_attributes) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_non_resource_attributes->path
     if(v1_non_resource_attributes->path) {
-    if(cJSON_AddStringToObject(item, "path", v1_non_resource_attributes->path) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "path", v1_non_resource_attributes->path) == NULL) {
     goto fail; //String
     }
     }
@@ -49,7 +49,7 @@ cJSON *v1_non_resource_attributes_convertToJSON(v1_non_resource_attributes_t *v1
 
     // v1_non_resource_attributes->verb
     if(v1_non_resource_attributes->verb) {
-    if(cJSON_AddStringToObject(item, "verb", v1_non_resource_attributes->verb) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "verb", v1_non_resource_attributes->verb) == NULL) {
     goto fail; //String
     }
     }
@@ -57,28 +57,28 @@ cJSON *v1_non_resource_attributes_convertToJSON(v1_non_resource_attributes_t *v1
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_non_resource_attributes_t *v1_non_resource_attributes_parseFromJSON(cJSON *v1_non_resource_attributesJSON){
+v1_non_resource_attributes_t *v1_non_resource_attributes_parseFromJSON(mazu_cJSON *v1_non_resource_attributesJSON){
 
     v1_non_resource_attributes_t *v1_non_resource_attributes_local_var = NULL;
 
     // v1_non_resource_attributes->path
-    cJSON *path = cJSON_GetObjectItemCaseSensitive(v1_non_resource_attributesJSON, "path");
+    mazu_cJSON *path = mazu_cJSON_GetObjectItemCaseSensitive(v1_non_resource_attributesJSON, "path");
     if (path) { 
-    if(!cJSON_IsString(path) && !cJSON_IsNull(path))
+    if(!mazu_cJSON_IsString(path) && !mazu_cJSON_IsNull(path))
     {
     goto end; //String
     }
     }
 
     // v1_non_resource_attributes->verb
-    cJSON *verb = cJSON_GetObjectItemCaseSensitive(v1_non_resource_attributesJSON, "verb");
+    mazu_cJSON *verb = mazu_cJSON_GetObjectItemCaseSensitive(v1_non_resource_attributesJSON, "verb");
     if (verb) { 
-    if(!cJSON_IsString(verb) && !cJSON_IsNull(verb))
+    if(!mazu_cJSON_IsString(verb) && !mazu_cJSON_IsNull(verb))
     {
     goto end; //String
     }
@@ -86,8 +86,8 @@ v1_non_resource_attributes_t *v1_non_resource_attributes_parseFromJSON(cJSON *v1
 
 
     v1_non_resource_attributes_local_var = v1_non_resource_attributes_create (
-        path && !cJSON_IsNull(path) ? strdup(path->valuestring) : NULL,
-        verb && !cJSON_IsNull(verb) ? strdup(verb->valuestring) : NULL
+        path && !mazu_cJSON_IsNull(path) ? strdup(path->valuestring) : NULL,
+        verb && !mazu_cJSON_IsNull(verb) ? strdup(verb->valuestring) : NULL
         );
 
     return v1_non_resource_attributes_local_var;

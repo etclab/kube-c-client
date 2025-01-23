@@ -33,12 +33,12 @@ void v1beta1_service_cidr_status_free(v1beta1_service_cidr_status_t *v1beta1_ser
     free(v1beta1_service_cidr_status);
 }
 
-cJSON *v1beta1_service_cidr_status_convertToJSON(v1beta1_service_cidr_status_t *v1beta1_service_cidr_status) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1beta1_service_cidr_status_convertToJSON(v1beta1_service_cidr_status_t *v1beta1_service_cidr_status) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1beta1_service_cidr_status->conditions
     if(v1beta1_service_cidr_status->conditions) {
-    cJSON *conditions = cJSON_AddArrayToObject(item, "conditions");
+    mazu_cJSON *conditions = mazu_cJSON_AddArrayToObject(item, "conditions");
     if(conditions == NULL) {
     goto fail; //nonprimitive container
     }
@@ -46,11 +46,11 @@ cJSON *v1beta1_service_cidr_status_convertToJSON(v1beta1_service_cidr_status_t *
     listEntry_t *conditionsListEntry;
     if (v1beta1_service_cidr_status->conditions) {
     list_ForEach(conditionsListEntry, v1beta1_service_cidr_status->conditions) {
-    cJSON *itemLocal = v1_condition_convertToJSON(conditionsListEntry->data);
+    mazu_cJSON *itemLocal = v1_condition_convertToJSON(conditionsListEntry->data);
     if(itemLocal == NULL) {
     goto fail;
     }
-    cJSON_AddItemToArray(conditions, itemLocal);
+    mazu_cJSON_AddItemToArray(conditions, itemLocal);
     }
     }
     }
@@ -58,12 +58,12 @@ cJSON *v1beta1_service_cidr_status_convertToJSON(v1beta1_service_cidr_status_t *
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1beta1_service_cidr_status_t *v1beta1_service_cidr_status_parseFromJSON(cJSON *v1beta1_service_cidr_statusJSON){
+v1beta1_service_cidr_status_t *v1beta1_service_cidr_status_parseFromJSON(mazu_cJSON *v1beta1_service_cidr_statusJSON){
 
     v1beta1_service_cidr_status_t *v1beta1_service_cidr_status_local_var = NULL;
 
@@ -71,18 +71,18 @@ v1beta1_service_cidr_status_t *v1beta1_service_cidr_status_parseFromJSON(cJSON *
     list_t *conditionsList = NULL;
 
     // v1beta1_service_cidr_status->conditions
-    cJSON *conditions = cJSON_GetObjectItemCaseSensitive(v1beta1_service_cidr_statusJSON, "conditions");
+    mazu_cJSON *conditions = mazu_cJSON_GetObjectItemCaseSensitive(v1beta1_service_cidr_statusJSON, "conditions");
     if (conditions) { 
-    cJSON *conditions_local_nonprimitive = NULL;
-    if(!cJSON_IsArray(conditions)){
+    mazu_cJSON *conditions_local_nonprimitive = NULL;
+    if(!mazu_cJSON_IsArray(conditions)){
         goto end; //nonprimitive container
     }
 
     conditionsList = list_createList();
 
-    cJSON_ArrayForEach(conditions_local_nonprimitive,conditions )
+    mazu_cJSON_ArrayForEach(conditions_local_nonprimitive,conditions )
     {
-        if(!cJSON_IsObject(conditions_local_nonprimitive)){
+        if(!mazu_cJSON_IsObject(conditions_local_nonprimitive)){
             goto end;
         }
         v1_condition_t *conditionsItem = v1_condition_parseFromJSON(conditions_local_nonprimitive);

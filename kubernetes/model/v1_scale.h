@@ -8,7 +8,7 @@
 #define _v1_scale_H_
 
 #include <string.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
 #include "../include/binary.h"
@@ -40,9 +40,9 @@ v1_scale_t *v1_scale_create(
 
 void v1_scale_free(v1_scale_t *v1_scale);
 
-v1_scale_t *v1_scale_parseFromJSON(cJSON *v1_scaleJSON);
+v1_scale_t *v1_scale_parseFromJSON(mazu_cJSON *v1_scaleJSON);
 
-cJSON *v1_scale_convertToJSON(v1_scale_t *v1_scale);
+mazu_cJSON *v1_scale_convertToJSON(v1_scale_t *v1_scale);
 
 #endif /* _v1_scale_H_ */
 

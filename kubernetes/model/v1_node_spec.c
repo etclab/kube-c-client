@@ -68,16 +68,16 @@ void v1_node_spec_free(v1_node_spec_t *v1_node_spec) {
     free(v1_node_spec);
 }
 
-cJSON *v1_node_spec_convertToJSON(v1_node_spec_t *v1_node_spec) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_node_spec_convertToJSON(v1_node_spec_t *v1_node_spec) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_node_spec->config_source
     if(v1_node_spec->config_source) {
-    cJSON *config_source_local_JSON = v1_node_config_source_convertToJSON(v1_node_spec->config_source);
+    mazu_cJSON *config_source_local_JSON = v1_node_config_source_convertToJSON(v1_node_spec->config_source);
     if(config_source_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "configSource", config_source_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "configSource", config_source_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -86,7 +86,7 @@ cJSON *v1_node_spec_convertToJSON(v1_node_spec_t *v1_node_spec) {
 
     // v1_node_spec->external_id
     if(v1_node_spec->external_id) {
-    if(cJSON_AddStringToObject(item, "externalID", v1_node_spec->external_id) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "externalID", v1_node_spec->external_id) == NULL) {
     goto fail; //String
     }
     }
@@ -94,7 +94,7 @@ cJSON *v1_node_spec_convertToJSON(v1_node_spec_t *v1_node_spec) {
 
     // v1_node_spec->pod_cidr
     if(v1_node_spec->pod_cidr) {
-    if(cJSON_AddStringToObject(item, "podCIDR", v1_node_spec->pod_cidr) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "podCIDR", v1_node_spec->pod_cidr) == NULL) {
     goto fail; //String
     }
     }
@@ -102,14 +102,14 @@ cJSON *v1_node_spec_convertToJSON(v1_node_spec_t *v1_node_spec) {
 
     // v1_node_spec->pod_cidrs
     if(v1_node_spec->pod_cidrs) {
-    cJSON *pod_cidrs = cJSON_AddArrayToObject(item, "podCIDRs");
+    mazu_cJSON *pod_cidrs = mazu_cJSON_AddArrayToObject(item, "podCIDRs");
     if(pod_cidrs == NULL) {
         goto fail; //primitive container
     }
 
     listEntry_t *pod_cidrsListEntry;
     list_ForEach(pod_cidrsListEntry, v1_node_spec->pod_cidrs) {
-    if(cJSON_AddStringToObject(pod_cidrs, "", (char*)pod_cidrsListEntry->data) == NULL)
+    if(mazu_cJSON_AddStringToObject(pod_cidrs, "", (char*)pod_cidrsListEntry->data) == NULL)
     {
         goto fail;
     }
@@ -119,7 +119,7 @@ cJSON *v1_node_spec_convertToJSON(v1_node_spec_t *v1_node_spec) {
 
     // v1_node_spec->provider_id
     if(v1_node_spec->provider_id) {
-    if(cJSON_AddStringToObject(item, "providerID", v1_node_spec->provider_id) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "providerID", v1_node_spec->provider_id) == NULL) {
     goto fail; //String
     }
     }
@@ -127,7 +127,7 @@ cJSON *v1_node_spec_convertToJSON(v1_node_spec_t *v1_node_spec) {
 
     // v1_node_spec->taints
     if(v1_node_spec->taints) {
-    cJSON *taints = cJSON_AddArrayToObject(item, "taints");
+    mazu_cJSON *taints = mazu_cJSON_AddArrayToObject(item, "taints");
     if(taints == NULL) {
     goto fail; //nonprimitive container
     }
@@ -135,11 +135,11 @@ cJSON *v1_node_spec_convertToJSON(v1_node_spec_t *v1_node_spec) {
     listEntry_t *taintsListEntry;
     if (v1_node_spec->taints) {
     list_ForEach(taintsListEntry, v1_node_spec->taints) {
-    cJSON *itemLocal = v1_taint_convertToJSON(taintsListEntry->data);
+    mazu_cJSON *itemLocal = v1_taint_convertToJSON(taintsListEntry->data);
     if(itemLocal == NULL) {
     goto fail;
     }
-    cJSON_AddItemToArray(taints, itemLocal);
+    mazu_cJSON_AddItemToArray(taints, itemLocal);
     }
     }
     }
@@ -147,7 +147,7 @@ cJSON *v1_node_spec_convertToJSON(v1_node_spec_t *v1_node_spec) {
 
     // v1_node_spec->unschedulable
     if(v1_node_spec->unschedulable) {
-    if(cJSON_AddBoolToObject(item, "unschedulable", v1_node_spec->unschedulable) == NULL) {
+    if(mazu_cJSON_AddBoolToObject(item, "unschedulable", v1_node_spec->unschedulable) == NULL) {
     goto fail; //Bool
     }
     }
@@ -155,12 +155,12 @@ cJSON *v1_node_spec_convertToJSON(v1_node_spec_t *v1_node_spec) {
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_node_spec_t *v1_node_spec_parseFromJSON(cJSON *v1_node_specJSON){
+v1_node_spec_t *v1_node_spec_parseFromJSON(mazu_cJSON *v1_node_specJSON){
 
     v1_node_spec_t *v1_node_spec_local_var = NULL;
 
@@ -174,41 +174,41 @@ v1_node_spec_t *v1_node_spec_parseFromJSON(cJSON *v1_node_specJSON){
     list_t *taintsList = NULL;
 
     // v1_node_spec->config_source
-    cJSON *config_source = cJSON_GetObjectItemCaseSensitive(v1_node_specJSON, "configSource");
+    mazu_cJSON *config_source = mazu_cJSON_GetObjectItemCaseSensitive(v1_node_specJSON, "configSource");
     if (config_source) { 
     config_source_local_nonprim = v1_node_config_source_parseFromJSON(config_source); //nonprimitive
     }
 
     // v1_node_spec->external_id
-    cJSON *external_id = cJSON_GetObjectItemCaseSensitive(v1_node_specJSON, "externalID");
+    mazu_cJSON *external_id = mazu_cJSON_GetObjectItemCaseSensitive(v1_node_specJSON, "externalID");
     if (external_id) { 
-    if(!cJSON_IsString(external_id) && !cJSON_IsNull(external_id))
+    if(!mazu_cJSON_IsString(external_id) && !mazu_cJSON_IsNull(external_id))
     {
     goto end; //String
     }
     }
 
     // v1_node_spec->pod_cidr
-    cJSON *pod_cidr = cJSON_GetObjectItemCaseSensitive(v1_node_specJSON, "podCIDR");
+    mazu_cJSON *pod_cidr = mazu_cJSON_GetObjectItemCaseSensitive(v1_node_specJSON, "podCIDR");
     if (pod_cidr) { 
-    if(!cJSON_IsString(pod_cidr) && !cJSON_IsNull(pod_cidr))
+    if(!mazu_cJSON_IsString(pod_cidr) && !mazu_cJSON_IsNull(pod_cidr))
     {
     goto end; //String
     }
     }
 
     // v1_node_spec->pod_cidrs
-    cJSON *pod_cidrs = cJSON_GetObjectItemCaseSensitive(v1_node_specJSON, "podCIDRs");
+    mazu_cJSON *pod_cidrs = mazu_cJSON_GetObjectItemCaseSensitive(v1_node_specJSON, "podCIDRs");
     if (pod_cidrs) { 
-    cJSON *pod_cidrs_local = NULL;
-    if(!cJSON_IsArray(pod_cidrs)) {
+    mazu_cJSON *pod_cidrs_local = NULL;
+    if(!mazu_cJSON_IsArray(pod_cidrs)) {
         goto end;//primitive container
     }
     pod_cidrsList = list_createList();
 
-    cJSON_ArrayForEach(pod_cidrs_local, pod_cidrs)
+    mazu_cJSON_ArrayForEach(pod_cidrs_local, pod_cidrs)
     {
-        if(!cJSON_IsString(pod_cidrs_local))
+        if(!mazu_cJSON_IsString(pod_cidrs_local))
         {
             goto end;
         }
@@ -217,27 +217,27 @@ v1_node_spec_t *v1_node_spec_parseFromJSON(cJSON *v1_node_specJSON){
     }
 
     // v1_node_spec->provider_id
-    cJSON *provider_id = cJSON_GetObjectItemCaseSensitive(v1_node_specJSON, "providerID");
+    mazu_cJSON *provider_id = mazu_cJSON_GetObjectItemCaseSensitive(v1_node_specJSON, "providerID");
     if (provider_id) { 
-    if(!cJSON_IsString(provider_id) && !cJSON_IsNull(provider_id))
+    if(!mazu_cJSON_IsString(provider_id) && !mazu_cJSON_IsNull(provider_id))
     {
     goto end; //String
     }
     }
 
     // v1_node_spec->taints
-    cJSON *taints = cJSON_GetObjectItemCaseSensitive(v1_node_specJSON, "taints");
+    mazu_cJSON *taints = mazu_cJSON_GetObjectItemCaseSensitive(v1_node_specJSON, "taints");
     if (taints) { 
-    cJSON *taints_local_nonprimitive = NULL;
-    if(!cJSON_IsArray(taints)){
+    mazu_cJSON *taints_local_nonprimitive = NULL;
+    if(!mazu_cJSON_IsArray(taints)){
         goto end; //nonprimitive container
     }
 
     taintsList = list_createList();
 
-    cJSON_ArrayForEach(taints_local_nonprimitive,taints )
+    mazu_cJSON_ArrayForEach(taints_local_nonprimitive,taints )
     {
-        if(!cJSON_IsObject(taints_local_nonprimitive)){
+        if(!mazu_cJSON_IsObject(taints_local_nonprimitive)){
             goto end;
         }
         v1_taint_t *taintsItem = v1_taint_parseFromJSON(taints_local_nonprimitive);
@@ -247,9 +247,9 @@ v1_node_spec_t *v1_node_spec_parseFromJSON(cJSON *v1_node_specJSON){
     }
 
     // v1_node_spec->unschedulable
-    cJSON *unschedulable = cJSON_GetObjectItemCaseSensitive(v1_node_specJSON, "unschedulable");
+    mazu_cJSON *unschedulable = mazu_cJSON_GetObjectItemCaseSensitive(v1_node_specJSON, "unschedulable");
     if (unschedulable) { 
-    if(!cJSON_IsBool(unschedulable))
+    if(!mazu_cJSON_IsBool(unschedulable))
     {
     goto end; //Bool
     }
@@ -258,10 +258,10 @@ v1_node_spec_t *v1_node_spec_parseFromJSON(cJSON *v1_node_specJSON){
 
     v1_node_spec_local_var = v1_node_spec_create (
         config_source ? config_source_local_nonprim : NULL,
-        external_id && !cJSON_IsNull(external_id) ? strdup(external_id->valuestring) : NULL,
-        pod_cidr && !cJSON_IsNull(pod_cidr) ? strdup(pod_cidr->valuestring) : NULL,
+        external_id && !mazu_cJSON_IsNull(external_id) ? strdup(external_id->valuestring) : NULL,
+        pod_cidr && !mazu_cJSON_IsNull(pod_cidr) ? strdup(pod_cidr->valuestring) : NULL,
         pod_cidrs ? pod_cidrsList : NULL,
-        provider_id && !cJSON_IsNull(provider_id) ? strdup(provider_id->valuestring) : NULL,
+        provider_id && !mazu_cJSON_IsNull(provider_id) ? strdup(provider_id->valuestring) : NULL,
         taints ? taintsList : NULL,
         unschedulable ? unschedulable->valueint : 0
         );

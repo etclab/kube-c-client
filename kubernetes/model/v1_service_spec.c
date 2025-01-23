@@ -153,12 +153,12 @@ void v1_service_spec_free(v1_service_spec_t *v1_service_spec) {
     free(v1_service_spec);
 }
 
-cJSON *v1_service_spec_convertToJSON(v1_service_spec_t *v1_service_spec) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_service_spec_convertToJSON(v1_service_spec_t *v1_service_spec) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_service_spec->allocate_load_balancer_node_ports
     if(v1_service_spec->allocate_load_balancer_node_ports) {
-    if(cJSON_AddBoolToObject(item, "allocateLoadBalancerNodePorts", v1_service_spec->allocate_load_balancer_node_ports) == NULL) {
+    if(mazu_cJSON_AddBoolToObject(item, "allocateLoadBalancerNodePorts", v1_service_spec->allocate_load_balancer_node_ports) == NULL) {
     goto fail; //Bool
     }
     }
@@ -166,7 +166,7 @@ cJSON *v1_service_spec_convertToJSON(v1_service_spec_t *v1_service_spec) {
 
     // v1_service_spec->cluster_ip
     if(v1_service_spec->cluster_ip) {
-    if(cJSON_AddStringToObject(item, "clusterIP", v1_service_spec->cluster_ip) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "clusterIP", v1_service_spec->cluster_ip) == NULL) {
     goto fail; //String
     }
     }
@@ -174,14 +174,14 @@ cJSON *v1_service_spec_convertToJSON(v1_service_spec_t *v1_service_spec) {
 
     // v1_service_spec->cluster_ips
     if(v1_service_spec->cluster_ips) {
-    cJSON *cluster_ips = cJSON_AddArrayToObject(item, "clusterIPs");
+    mazu_cJSON *cluster_ips = mazu_cJSON_AddArrayToObject(item, "clusterIPs");
     if(cluster_ips == NULL) {
         goto fail; //primitive container
     }
 
     listEntry_t *cluster_ipsListEntry;
     list_ForEach(cluster_ipsListEntry, v1_service_spec->cluster_ips) {
-    if(cJSON_AddStringToObject(cluster_ips, "", (char*)cluster_ipsListEntry->data) == NULL)
+    if(mazu_cJSON_AddStringToObject(cluster_ips, "", (char*)cluster_ipsListEntry->data) == NULL)
     {
         goto fail;
     }
@@ -191,14 +191,14 @@ cJSON *v1_service_spec_convertToJSON(v1_service_spec_t *v1_service_spec) {
 
     // v1_service_spec->external_ips
     if(v1_service_spec->external_ips) {
-    cJSON *external_ips = cJSON_AddArrayToObject(item, "externalIPs");
+    mazu_cJSON *external_ips = mazu_cJSON_AddArrayToObject(item, "externalIPs");
     if(external_ips == NULL) {
         goto fail; //primitive container
     }
 
     listEntry_t *external_ipsListEntry;
     list_ForEach(external_ipsListEntry, v1_service_spec->external_ips) {
-    if(cJSON_AddStringToObject(external_ips, "", (char*)external_ipsListEntry->data) == NULL)
+    if(mazu_cJSON_AddStringToObject(external_ips, "", (char*)external_ipsListEntry->data) == NULL)
     {
         goto fail;
     }
@@ -208,7 +208,7 @@ cJSON *v1_service_spec_convertToJSON(v1_service_spec_t *v1_service_spec) {
 
     // v1_service_spec->external_name
     if(v1_service_spec->external_name) {
-    if(cJSON_AddStringToObject(item, "externalName", v1_service_spec->external_name) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "externalName", v1_service_spec->external_name) == NULL) {
     goto fail; //String
     }
     }
@@ -216,7 +216,7 @@ cJSON *v1_service_spec_convertToJSON(v1_service_spec_t *v1_service_spec) {
 
     // v1_service_spec->external_traffic_policy
     if(v1_service_spec->external_traffic_policy) {
-    if(cJSON_AddStringToObject(item, "externalTrafficPolicy", v1_service_spec->external_traffic_policy) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "externalTrafficPolicy", v1_service_spec->external_traffic_policy) == NULL) {
     goto fail; //String
     }
     }
@@ -224,7 +224,7 @@ cJSON *v1_service_spec_convertToJSON(v1_service_spec_t *v1_service_spec) {
 
     // v1_service_spec->health_check_node_port
     if(v1_service_spec->health_check_node_port) {
-    if(cJSON_AddNumberToObject(item, "healthCheckNodePort", v1_service_spec->health_check_node_port) == NULL) {
+    if(mazu_cJSON_AddNumberToObject(item, "healthCheckNodePort", v1_service_spec->health_check_node_port) == NULL) {
     goto fail; //Numeric
     }
     }
@@ -232,7 +232,7 @@ cJSON *v1_service_spec_convertToJSON(v1_service_spec_t *v1_service_spec) {
 
     // v1_service_spec->internal_traffic_policy
     if(v1_service_spec->internal_traffic_policy) {
-    if(cJSON_AddStringToObject(item, "internalTrafficPolicy", v1_service_spec->internal_traffic_policy) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "internalTrafficPolicy", v1_service_spec->internal_traffic_policy) == NULL) {
     goto fail; //String
     }
     }
@@ -240,14 +240,14 @@ cJSON *v1_service_spec_convertToJSON(v1_service_spec_t *v1_service_spec) {
 
     // v1_service_spec->ip_families
     if(v1_service_spec->ip_families) {
-    cJSON *ip_families = cJSON_AddArrayToObject(item, "ipFamilies");
+    mazu_cJSON *ip_families = mazu_cJSON_AddArrayToObject(item, "ipFamilies");
     if(ip_families == NULL) {
         goto fail; //primitive container
     }
 
     listEntry_t *ip_familiesListEntry;
     list_ForEach(ip_familiesListEntry, v1_service_spec->ip_families) {
-    if(cJSON_AddStringToObject(ip_families, "", (char*)ip_familiesListEntry->data) == NULL)
+    if(mazu_cJSON_AddStringToObject(ip_families, "", (char*)ip_familiesListEntry->data) == NULL)
     {
         goto fail;
     }
@@ -257,7 +257,7 @@ cJSON *v1_service_spec_convertToJSON(v1_service_spec_t *v1_service_spec) {
 
     // v1_service_spec->ip_family_policy
     if(v1_service_spec->ip_family_policy) {
-    if(cJSON_AddStringToObject(item, "ipFamilyPolicy", v1_service_spec->ip_family_policy) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "ipFamilyPolicy", v1_service_spec->ip_family_policy) == NULL) {
     goto fail; //String
     }
     }
@@ -265,7 +265,7 @@ cJSON *v1_service_spec_convertToJSON(v1_service_spec_t *v1_service_spec) {
 
     // v1_service_spec->load_balancer_class
     if(v1_service_spec->load_balancer_class) {
-    if(cJSON_AddStringToObject(item, "loadBalancerClass", v1_service_spec->load_balancer_class) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "loadBalancerClass", v1_service_spec->load_balancer_class) == NULL) {
     goto fail; //String
     }
     }
@@ -273,7 +273,7 @@ cJSON *v1_service_spec_convertToJSON(v1_service_spec_t *v1_service_spec) {
 
     // v1_service_spec->load_balancer_ip
     if(v1_service_spec->load_balancer_ip) {
-    if(cJSON_AddStringToObject(item, "loadBalancerIP", v1_service_spec->load_balancer_ip) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "loadBalancerIP", v1_service_spec->load_balancer_ip) == NULL) {
     goto fail; //String
     }
     }
@@ -281,14 +281,14 @@ cJSON *v1_service_spec_convertToJSON(v1_service_spec_t *v1_service_spec) {
 
     // v1_service_spec->load_balancer_source_ranges
     if(v1_service_spec->load_balancer_source_ranges) {
-    cJSON *load_balancer_source_ranges = cJSON_AddArrayToObject(item, "loadBalancerSourceRanges");
+    mazu_cJSON *load_balancer_source_ranges = mazu_cJSON_AddArrayToObject(item, "loadBalancerSourceRanges");
     if(load_balancer_source_ranges == NULL) {
         goto fail; //primitive container
     }
 
     listEntry_t *load_balancer_source_rangesListEntry;
     list_ForEach(load_balancer_source_rangesListEntry, v1_service_spec->load_balancer_source_ranges) {
-    if(cJSON_AddStringToObject(load_balancer_source_ranges, "", (char*)load_balancer_source_rangesListEntry->data) == NULL)
+    if(mazu_cJSON_AddStringToObject(load_balancer_source_ranges, "", (char*)load_balancer_source_rangesListEntry->data) == NULL)
     {
         goto fail;
     }
@@ -298,7 +298,7 @@ cJSON *v1_service_spec_convertToJSON(v1_service_spec_t *v1_service_spec) {
 
     // v1_service_spec->ports
     if(v1_service_spec->ports) {
-    cJSON *ports = cJSON_AddArrayToObject(item, "ports");
+    mazu_cJSON *ports = mazu_cJSON_AddArrayToObject(item, "ports");
     if(ports == NULL) {
     goto fail; //nonprimitive container
     }
@@ -306,11 +306,11 @@ cJSON *v1_service_spec_convertToJSON(v1_service_spec_t *v1_service_spec) {
     listEntry_t *portsListEntry;
     if (v1_service_spec->ports) {
     list_ForEach(portsListEntry, v1_service_spec->ports) {
-    cJSON *itemLocal = v1_service_port_convertToJSON(portsListEntry->data);
+    mazu_cJSON *itemLocal = v1_service_port_convertToJSON(portsListEntry->data);
     if(itemLocal == NULL) {
     goto fail;
     }
-    cJSON_AddItemToArray(ports, itemLocal);
+    mazu_cJSON_AddItemToArray(ports, itemLocal);
     }
     }
     }
@@ -318,7 +318,7 @@ cJSON *v1_service_spec_convertToJSON(v1_service_spec_t *v1_service_spec) {
 
     // v1_service_spec->publish_not_ready_addresses
     if(v1_service_spec->publish_not_ready_addresses) {
-    if(cJSON_AddBoolToObject(item, "publishNotReadyAddresses", v1_service_spec->publish_not_ready_addresses) == NULL) {
+    if(mazu_cJSON_AddBoolToObject(item, "publishNotReadyAddresses", v1_service_spec->publish_not_ready_addresses) == NULL) {
     goto fail; //Bool
     }
     }
@@ -326,16 +326,16 @@ cJSON *v1_service_spec_convertToJSON(v1_service_spec_t *v1_service_spec) {
 
     // v1_service_spec->selector
     if(v1_service_spec->selector) {
-    cJSON *selector = cJSON_AddObjectToObject(item, "selector");
+    mazu_cJSON *selector = mazu_cJSON_AddObjectToObject(item, "selector");
     if(selector == NULL) {
         goto fail; //primitive map container
     }
-    cJSON *localMapObject = selector;
+    mazu_cJSON *localMapObject = selector;
     listEntry_t *selectorListEntry;
     if (v1_service_spec->selector) {
     list_ForEach(selectorListEntry, v1_service_spec->selector) {
         keyValuePair_t *localKeyValue = (keyValuePair_t*)selectorListEntry->data;
-        if(cJSON_AddStringToObject(localMapObject, localKeyValue->key, (char*)localKeyValue->value) == NULL)
+        if(mazu_cJSON_AddStringToObject(localMapObject, localKeyValue->key, (char*)localKeyValue->value) == NULL)
         {
             goto fail;
         }
@@ -346,7 +346,7 @@ cJSON *v1_service_spec_convertToJSON(v1_service_spec_t *v1_service_spec) {
 
     // v1_service_spec->session_affinity
     if(v1_service_spec->session_affinity) {
-    if(cJSON_AddStringToObject(item, "sessionAffinity", v1_service_spec->session_affinity) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "sessionAffinity", v1_service_spec->session_affinity) == NULL) {
     goto fail; //String
     }
     }
@@ -354,11 +354,11 @@ cJSON *v1_service_spec_convertToJSON(v1_service_spec_t *v1_service_spec) {
 
     // v1_service_spec->session_affinity_config
     if(v1_service_spec->session_affinity_config) {
-    cJSON *session_affinity_config_local_JSON = v1_session_affinity_config_convertToJSON(v1_service_spec->session_affinity_config);
+    mazu_cJSON *session_affinity_config_local_JSON = v1_session_affinity_config_convertToJSON(v1_service_spec->session_affinity_config);
     if(session_affinity_config_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "sessionAffinityConfig", session_affinity_config_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "sessionAffinityConfig", session_affinity_config_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -367,7 +367,7 @@ cJSON *v1_service_spec_convertToJSON(v1_service_spec_t *v1_service_spec) {
 
     // v1_service_spec->traffic_distribution
     if(v1_service_spec->traffic_distribution) {
-    if(cJSON_AddStringToObject(item, "trafficDistribution", v1_service_spec->traffic_distribution) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "trafficDistribution", v1_service_spec->traffic_distribution) == NULL) {
     goto fail; //String
     }
     }
@@ -375,7 +375,7 @@ cJSON *v1_service_spec_convertToJSON(v1_service_spec_t *v1_service_spec) {
 
     // v1_service_spec->type
     if(v1_service_spec->type) {
-    if(cJSON_AddStringToObject(item, "type", v1_service_spec->type) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "type", v1_service_spec->type) == NULL) {
     goto fail; //String
     }
     }
@@ -383,12 +383,12 @@ cJSON *v1_service_spec_convertToJSON(v1_service_spec_t *v1_service_spec) {
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_service_spec_t *v1_service_spec_parseFromJSON(cJSON *v1_service_specJSON){
+v1_service_spec_t *v1_service_spec_parseFromJSON(mazu_cJSON *v1_service_specJSON){
 
     v1_service_spec_t *v1_service_spec_local_var = NULL;
 
@@ -414,35 +414,35 @@ v1_service_spec_t *v1_service_spec_parseFromJSON(cJSON *v1_service_specJSON){
     v1_session_affinity_config_t *session_affinity_config_local_nonprim = NULL;
 
     // v1_service_spec->allocate_load_balancer_node_ports
-    cJSON *allocate_load_balancer_node_ports = cJSON_GetObjectItemCaseSensitive(v1_service_specJSON, "allocateLoadBalancerNodePorts");
+    mazu_cJSON *allocate_load_balancer_node_ports = mazu_cJSON_GetObjectItemCaseSensitive(v1_service_specJSON, "allocateLoadBalancerNodePorts");
     if (allocate_load_balancer_node_ports) { 
-    if(!cJSON_IsBool(allocate_load_balancer_node_ports))
+    if(!mazu_cJSON_IsBool(allocate_load_balancer_node_ports))
     {
     goto end; //Bool
     }
     }
 
     // v1_service_spec->cluster_ip
-    cJSON *cluster_ip = cJSON_GetObjectItemCaseSensitive(v1_service_specJSON, "clusterIP");
+    mazu_cJSON *cluster_ip = mazu_cJSON_GetObjectItemCaseSensitive(v1_service_specJSON, "clusterIP");
     if (cluster_ip) { 
-    if(!cJSON_IsString(cluster_ip) && !cJSON_IsNull(cluster_ip))
+    if(!mazu_cJSON_IsString(cluster_ip) && !mazu_cJSON_IsNull(cluster_ip))
     {
     goto end; //String
     }
     }
 
     // v1_service_spec->cluster_ips
-    cJSON *cluster_ips = cJSON_GetObjectItemCaseSensitive(v1_service_specJSON, "clusterIPs");
+    mazu_cJSON *cluster_ips = mazu_cJSON_GetObjectItemCaseSensitive(v1_service_specJSON, "clusterIPs");
     if (cluster_ips) { 
-    cJSON *cluster_ips_local = NULL;
-    if(!cJSON_IsArray(cluster_ips)) {
+    mazu_cJSON *cluster_ips_local = NULL;
+    if(!mazu_cJSON_IsArray(cluster_ips)) {
         goto end;//primitive container
     }
     cluster_ipsList = list_createList();
 
-    cJSON_ArrayForEach(cluster_ips_local, cluster_ips)
+    mazu_cJSON_ArrayForEach(cluster_ips_local, cluster_ips)
     {
-        if(!cJSON_IsString(cluster_ips_local))
+        if(!mazu_cJSON_IsString(cluster_ips_local))
         {
             goto end;
         }
@@ -451,17 +451,17 @@ v1_service_spec_t *v1_service_spec_parseFromJSON(cJSON *v1_service_specJSON){
     }
 
     // v1_service_spec->external_ips
-    cJSON *external_ips = cJSON_GetObjectItemCaseSensitive(v1_service_specJSON, "externalIPs");
+    mazu_cJSON *external_ips = mazu_cJSON_GetObjectItemCaseSensitive(v1_service_specJSON, "externalIPs");
     if (external_ips) { 
-    cJSON *external_ips_local = NULL;
-    if(!cJSON_IsArray(external_ips)) {
+    mazu_cJSON *external_ips_local = NULL;
+    if(!mazu_cJSON_IsArray(external_ips)) {
         goto end;//primitive container
     }
     external_ipsList = list_createList();
 
-    cJSON_ArrayForEach(external_ips_local, external_ips)
+    mazu_cJSON_ArrayForEach(external_ips_local, external_ips)
     {
-        if(!cJSON_IsString(external_ips_local))
+        if(!mazu_cJSON_IsString(external_ips_local))
         {
             goto end;
         }
@@ -470,53 +470,53 @@ v1_service_spec_t *v1_service_spec_parseFromJSON(cJSON *v1_service_specJSON){
     }
 
     // v1_service_spec->external_name
-    cJSON *external_name = cJSON_GetObjectItemCaseSensitive(v1_service_specJSON, "externalName");
+    mazu_cJSON *external_name = mazu_cJSON_GetObjectItemCaseSensitive(v1_service_specJSON, "externalName");
     if (external_name) { 
-    if(!cJSON_IsString(external_name) && !cJSON_IsNull(external_name))
+    if(!mazu_cJSON_IsString(external_name) && !mazu_cJSON_IsNull(external_name))
     {
     goto end; //String
     }
     }
 
     // v1_service_spec->external_traffic_policy
-    cJSON *external_traffic_policy = cJSON_GetObjectItemCaseSensitive(v1_service_specJSON, "externalTrafficPolicy");
+    mazu_cJSON *external_traffic_policy = mazu_cJSON_GetObjectItemCaseSensitive(v1_service_specJSON, "externalTrafficPolicy");
     if (external_traffic_policy) { 
-    if(!cJSON_IsString(external_traffic_policy) && !cJSON_IsNull(external_traffic_policy))
+    if(!mazu_cJSON_IsString(external_traffic_policy) && !mazu_cJSON_IsNull(external_traffic_policy))
     {
     goto end; //String
     }
     }
 
     // v1_service_spec->health_check_node_port
-    cJSON *health_check_node_port = cJSON_GetObjectItemCaseSensitive(v1_service_specJSON, "healthCheckNodePort");
+    mazu_cJSON *health_check_node_port = mazu_cJSON_GetObjectItemCaseSensitive(v1_service_specJSON, "healthCheckNodePort");
     if (health_check_node_port) { 
-    if(!cJSON_IsNumber(health_check_node_port))
+    if(!mazu_cJSON_IsNumber(health_check_node_port))
     {
     goto end; //Numeric
     }
     }
 
     // v1_service_spec->internal_traffic_policy
-    cJSON *internal_traffic_policy = cJSON_GetObjectItemCaseSensitive(v1_service_specJSON, "internalTrafficPolicy");
+    mazu_cJSON *internal_traffic_policy = mazu_cJSON_GetObjectItemCaseSensitive(v1_service_specJSON, "internalTrafficPolicy");
     if (internal_traffic_policy) { 
-    if(!cJSON_IsString(internal_traffic_policy) && !cJSON_IsNull(internal_traffic_policy))
+    if(!mazu_cJSON_IsString(internal_traffic_policy) && !mazu_cJSON_IsNull(internal_traffic_policy))
     {
     goto end; //String
     }
     }
 
     // v1_service_spec->ip_families
-    cJSON *ip_families = cJSON_GetObjectItemCaseSensitive(v1_service_specJSON, "ipFamilies");
+    mazu_cJSON *ip_families = mazu_cJSON_GetObjectItemCaseSensitive(v1_service_specJSON, "ipFamilies");
     if (ip_families) { 
-    cJSON *ip_families_local = NULL;
-    if(!cJSON_IsArray(ip_families)) {
+    mazu_cJSON *ip_families_local = NULL;
+    if(!mazu_cJSON_IsArray(ip_families)) {
         goto end;//primitive container
     }
     ip_familiesList = list_createList();
 
-    cJSON_ArrayForEach(ip_families_local, ip_families)
+    mazu_cJSON_ArrayForEach(ip_families_local, ip_families)
     {
-        if(!cJSON_IsString(ip_families_local))
+        if(!mazu_cJSON_IsString(ip_families_local))
         {
             goto end;
         }
@@ -525,44 +525,44 @@ v1_service_spec_t *v1_service_spec_parseFromJSON(cJSON *v1_service_specJSON){
     }
 
     // v1_service_spec->ip_family_policy
-    cJSON *ip_family_policy = cJSON_GetObjectItemCaseSensitive(v1_service_specJSON, "ipFamilyPolicy");
+    mazu_cJSON *ip_family_policy = mazu_cJSON_GetObjectItemCaseSensitive(v1_service_specJSON, "ipFamilyPolicy");
     if (ip_family_policy) { 
-    if(!cJSON_IsString(ip_family_policy) && !cJSON_IsNull(ip_family_policy))
+    if(!mazu_cJSON_IsString(ip_family_policy) && !mazu_cJSON_IsNull(ip_family_policy))
     {
     goto end; //String
     }
     }
 
     // v1_service_spec->load_balancer_class
-    cJSON *load_balancer_class = cJSON_GetObjectItemCaseSensitive(v1_service_specJSON, "loadBalancerClass");
+    mazu_cJSON *load_balancer_class = mazu_cJSON_GetObjectItemCaseSensitive(v1_service_specJSON, "loadBalancerClass");
     if (load_balancer_class) { 
-    if(!cJSON_IsString(load_balancer_class) && !cJSON_IsNull(load_balancer_class))
+    if(!mazu_cJSON_IsString(load_balancer_class) && !mazu_cJSON_IsNull(load_balancer_class))
     {
     goto end; //String
     }
     }
 
     // v1_service_spec->load_balancer_ip
-    cJSON *load_balancer_ip = cJSON_GetObjectItemCaseSensitive(v1_service_specJSON, "loadBalancerIP");
+    mazu_cJSON *load_balancer_ip = mazu_cJSON_GetObjectItemCaseSensitive(v1_service_specJSON, "loadBalancerIP");
     if (load_balancer_ip) { 
-    if(!cJSON_IsString(load_balancer_ip) && !cJSON_IsNull(load_balancer_ip))
+    if(!mazu_cJSON_IsString(load_balancer_ip) && !mazu_cJSON_IsNull(load_balancer_ip))
     {
     goto end; //String
     }
     }
 
     // v1_service_spec->load_balancer_source_ranges
-    cJSON *load_balancer_source_ranges = cJSON_GetObjectItemCaseSensitive(v1_service_specJSON, "loadBalancerSourceRanges");
+    mazu_cJSON *load_balancer_source_ranges = mazu_cJSON_GetObjectItemCaseSensitive(v1_service_specJSON, "loadBalancerSourceRanges");
     if (load_balancer_source_ranges) { 
-    cJSON *load_balancer_source_ranges_local = NULL;
-    if(!cJSON_IsArray(load_balancer_source_ranges)) {
+    mazu_cJSON *load_balancer_source_ranges_local = NULL;
+    if(!mazu_cJSON_IsArray(load_balancer_source_ranges)) {
         goto end;//primitive container
     }
     load_balancer_source_rangesList = list_createList();
 
-    cJSON_ArrayForEach(load_balancer_source_ranges_local, load_balancer_source_ranges)
+    mazu_cJSON_ArrayForEach(load_balancer_source_ranges_local, load_balancer_source_ranges)
     {
-        if(!cJSON_IsString(load_balancer_source_ranges_local))
+        if(!mazu_cJSON_IsString(load_balancer_source_ranges_local))
         {
             goto end;
         }
@@ -571,18 +571,18 @@ v1_service_spec_t *v1_service_spec_parseFromJSON(cJSON *v1_service_specJSON){
     }
 
     // v1_service_spec->ports
-    cJSON *ports = cJSON_GetObjectItemCaseSensitive(v1_service_specJSON, "ports");
+    mazu_cJSON *ports = mazu_cJSON_GetObjectItemCaseSensitive(v1_service_specJSON, "ports");
     if (ports) { 
-    cJSON *ports_local_nonprimitive = NULL;
-    if(!cJSON_IsArray(ports)){
+    mazu_cJSON *ports_local_nonprimitive = NULL;
+    if(!mazu_cJSON_IsArray(ports)){
         goto end; //nonprimitive container
     }
 
     portsList = list_createList();
 
-    cJSON_ArrayForEach(ports_local_nonprimitive,ports )
+    mazu_cJSON_ArrayForEach(ports_local_nonprimitive,ports )
     {
-        if(!cJSON_IsObject(ports_local_nonprimitive)){
+        if(!mazu_cJSON_IsObject(ports_local_nonprimitive)){
             goto end;
         }
         v1_service_port_t *portsItem = v1_service_port_parseFromJSON(ports_local_nonprimitive);
@@ -592,30 +592,30 @@ v1_service_spec_t *v1_service_spec_parseFromJSON(cJSON *v1_service_specJSON){
     }
 
     // v1_service_spec->publish_not_ready_addresses
-    cJSON *publish_not_ready_addresses = cJSON_GetObjectItemCaseSensitive(v1_service_specJSON, "publishNotReadyAddresses");
+    mazu_cJSON *publish_not_ready_addresses = mazu_cJSON_GetObjectItemCaseSensitive(v1_service_specJSON, "publishNotReadyAddresses");
     if (publish_not_ready_addresses) { 
-    if(!cJSON_IsBool(publish_not_ready_addresses))
+    if(!mazu_cJSON_IsBool(publish_not_ready_addresses))
     {
     goto end; //Bool
     }
     }
 
     // v1_service_spec->selector
-    cJSON *selector = cJSON_GetObjectItemCaseSensitive(v1_service_specJSON, "selector");
+    mazu_cJSON *selector = mazu_cJSON_GetObjectItemCaseSensitive(v1_service_specJSON, "selector");
     if (selector) { 
-    cJSON *selector_local_map = NULL;
-    if(!cJSON_IsObject(selector) && !cJSON_IsNull(selector))
+    mazu_cJSON *selector_local_map = NULL;
+    if(!mazu_cJSON_IsObject(selector) && !mazu_cJSON_IsNull(selector))
     {
         goto end;//primitive map container
     }
-    if(cJSON_IsObject(selector))
+    if(mazu_cJSON_IsObject(selector))
     {
         selectorList = list_createList();
         keyValuePair_t *localMapKeyPair;
-        cJSON_ArrayForEach(selector_local_map, selector)
+        mazu_cJSON_ArrayForEach(selector_local_map, selector)
         {
-            cJSON *localMapObject = selector_local_map;
-            if(!cJSON_IsString(localMapObject))
+            mazu_cJSON *localMapObject = selector_local_map;
+            if(!mazu_cJSON_IsString(localMapObject))
             {
                 goto end;
             }
@@ -626,33 +626,33 @@ v1_service_spec_t *v1_service_spec_parseFromJSON(cJSON *v1_service_specJSON){
     }
 
     // v1_service_spec->session_affinity
-    cJSON *session_affinity = cJSON_GetObjectItemCaseSensitive(v1_service_specJSON, "sessionAffinity");
+    mazu_cJSON *session_affinity = mazu_cJSON_GetObjectItemCaseSensitive(v1_service_specJSON, "sessionAffinity");
     if (session_affinity) { 
-    if(!cJSON_IsString(session_affinity) && !cJSON_IsNull(session_affinity))
+    if(!mazu_cJSON_IsString(session_affinity) && !mazu_cJSON_IsNull(session_affinity))
     {
     goto end; //String
     }
     }
 
     // v1_service_spec->session_affinity_config
-    cJSON *session_affinity_config = cJSON_GetObjectItemCaseSensitive(v1_service_specJSON, "sessionAffinityConfig");
+    mazu_cJSON *session_affinity_config = mazu_cJSON_GetObjectItemCaseSensitive(v1_service_specJSON, "sessionAffinityConfig");
     if (session_affinity_config) { 
     session_affinity_config_local_nonprim = v1_session_affinity_config_parseFromJSON(session_affinity_config); //nonprimitive
     }
 
     // v1_service_spec->traffic_distribution
-    cJSON *traffic_distribution = cJSON_GetObjectItemCaseSensitive(v1_service_specJSON, "trafficDistribution");
+    mazu_cJSON *traffic_distribution = mazu_cJSON_GetObjectItemCaseSensitive(v1_service_specJSON, "trafficDistribution");
     if (traffic_distribution) { 
-    if(!cJSON_IsString(traffic_distribution) && !cJSON_IsNull(traffic_distribution))
+    if(!mazu_cJSON_IsString(traffic_distribution) && !mazu_cJSON_IsNull(traffic_distribution))
     {
     goto end; //String
     }
     }
 
     // v1_service_spec->type
-    cJSON *type = cJSON_GetObjectItemCaseSensitive(v1_service_specJSON, "type");
+    mazu_cJSON *type = mazu_cJSON_GetObjectItemCaseSensitive(v1_service_specJSON, "type");
     if (type) { 
-    if(!cJSON_IsString(type) && !cJSON_IsNull(type))
+    if(!mazu_cJSON_IsString(type) && !mazu_cJSON_IsNull(type))
     {
     goto end; //String
     }
@@ -661,25 +661,25 @@ v1_service_spec_t *v1_service_spec_parseFromJSON(cJSON *v1_service_specJSON){
 
     v1_service_spec_local_var = v1_service_spec_create (
         allocate_load_balancer_node_ports ? allocate_load_balancer_node_ports->valueint : 0,
-        cluster_ip && !cJSON_IsNull(cluster_ip) ? strdup(cluster_ip->valuestring) : NULL,
+        cluster_ip && !mazu_cJSON_IsNull(cluster_ip) ? strdup(cluster_ip->valuestring) : NULL,
         cluster_ips ? cluster_ipsList : NULL,
         external_ips ? external_ipsList : NULL,
-        external_name && !cJSON_IsNull(external_name) ? strdup(external_name->valuestring) : NULL,
-        external_traffic_policy && !cJSON_IsNull(external_traffic_policy) ? strdup(external_traffic_policy->valuestring) : NULL,
+        external_name && !mazu_cJSON_IsNull(external_name) ? strdup(external_name->valuestring) : NULL,
+        external_traffic_policy && !mazu_cJSON_IsNull(external_traffic_policy) ? strdup(external_traffic_policy->valuestring) : NULL,
         health_check_node_port ? health_check_node_port->valuedouble : 0,
-        internal_traffic_policy && !cJSON_IsNull(internal_traffic_policy) ? strdup(internal_traffic_policy->valuestring) : NULL,
+        internal_traffic_policy && !mazu_cJSON_IsNull(internal_traffic_policy) ? strdup(internal_traffic_policy->valuestring) : NULL,
         ip_families ? ip_familiesList : NULL,
-        ip_family_policy && !cJSON_IsNull(ip_family_policy) ? strdup(ip_family_policy->valuestring) : NULL,
-        load_balancer_class && !cJSON_IsNull(load_balancer_class) ? strdup(load_balancer_class->valuestring) : NULL,
-        load_balancer_ip && !cJSON_IsNull(load_balancer_ip) ? strdup(load_balancer_ip->valuestring) : NULL,
+        ip_family_policy && !mazu_cJSON_IsNull(ip_family_policy) ? strdup(ip_family_policy->valuestring) : NULL,
+        load_balancer_class && !mazu_cJSON_IsNull(load_balancer_class) ? strdup(load_balancer_class->valuestring) : NULL,
+        load_balancer_ip && !mazu_cJSON_IsNull(load_balancer_ip) ? strdup(load_balancer_ip->valuestring) : NULL,
         load_balancer_source_ranges ? load_balancer_source_rangesList : NULL,
         ports ? portsList : NULL,
         publish_not_ready_addresses ? publish_not_ready_addresses->valueint : 0,
         selector ? selectorList : NULL,
-        session_affinity && !cJSON_IsNull(session_affinity) ? strdup(session_affinity->valuestring) : NULL,
+        session_affinity && !mazu_cJSON_IsNull(session_affinity) ? strdup(session_affinity->valuestring) : NULL,
         session_affinity_config ? session_affinity_config_local_nonprim : NULL,
-        traffic_distribution && !cJSON_IsNull(traffic_distribution) ? strdup(traffic_distribution->valuestring) : NULL,
-        type && !cJSON_IsNull(type) ? strdup(type->valuestring) : NULL
+        traffic_distribution && !mazu_cJSON_IsNull(traffic_distribution) ? strdup(traffic_distribution->valuestring) : NULL,
+        type && !mazu_cJSON_IsNull(type) ? strdup(type->valuestring) : NULL
         );
 
     return v1_service_spec_local_var;

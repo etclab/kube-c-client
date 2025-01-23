@@ -8,7 +8,7 @@
 #define _v1_flow_schema_H_
 
 #include <string.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
 #include "../include/binary.h"
@@ -40,9 +40,9 @@ v1_flow_schema_t *v1_flow_schema_create(
 
 void v1_flow_schema_free(v1_flow_schema_t *v1_flow_schema);
 
-v1_flow_schema_t *v1_flow_schema_parseFromJSON(cJSON *v1_flow_schemaJSON);
+v1_flow_schema_t *v1_flow_schema_parseFromJSON(mazu_cJSON *v1_flow_schemaJSON);
 
-cJSON *v1_flow_schema_convertToJSON(v1_flow_schema_t *v1_flow_schema);
+mazu_cJSON *v1_flow_schema_convertToJSON(v1_flow_schema_t *v1_flow_schema);
 
 #endif /* _v1_flow_schema_H_ */
 

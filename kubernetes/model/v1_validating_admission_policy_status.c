@@ -41,12 +41,12 @@ void v1_validating_admission_policy_status_free(v1_validating_admission_policy_s
     free(v1_validating_admission_policy_status);
 }
 
-cJSON *v1_validating_admission_policy_status_convertToJSON(v1_validating_admission_policy_status_t *v1_validating_admission_policy_status) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_validating_admission_policy_status_convertToJSON(v1_validating_admission_policy_status_t *v1_validating_admission_policy_status) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_validating_admission_policy_status->conditions
     if(v1_validating_admission_policy_status->conditions) {
-    cJSON *conditions = cJSON_AddArrayToObject(item, "conditions");
+    mazu_cJSON *conditions = mazu_cJSON_AddArrayToObject(item, "conditions");
     if(conditions == NULL) {
     goto fail; //nonprimitive container
     }
@@ -54,11 +54,11 @@ cJSON *v1_validating_admission_policy_status_convertToJSON(v1_validating_admissi
     listEntry_t *conditionsListEntry;
     if (v1_validating_admission_policy_status->conditions) {
     list_ForEach(conditionsListEntry, v1_validating_admission_policy_status->conditions) {
-    cJSON *itemLocal = v1_condition_convertToJSON(conditionsListEntry->data);
+    mazu_cJSON *itemLocal = v1_condition_convertToJSON(conditionsListEntry->data);
     if(itemLocal == NULL) {
     goto fail;
     }
-    cJSON_AddItemToArray(conditions, itemLocal);
+    mazu_cJSON_AddItemToArray(conditions, itemLocal);
     }
     }
     }
@@ -66,7 +66,7 @@ cJSON *v1_validating_admission_policy_status_convertToJSON(v1_validating_admissi
 
     // v1_validating_admission_policy_status->observed_generation
     if(v1_validating_admission_policy_status->observed_generation) {
-    if(cJSON_AddNumberToObject(item, "observedGeneration", v1_validating_admission_policy_status->observed_generation) == NULL) {
+    if(mazu_cJSON_AddNumberToObject(item, "observedGeneration", v1_validating_admission_policy_status->observed_generation) == NULL) {
     goto fail; //Numeric
     }
     }
@@ -74,11 +74,11 @@ cJSON *v1_validating_admission_policy_status_convertToJSON(v1_validating_admissi
 
     // v1_validating_admission_policy_status->type_checking
     if(v1_validating_admission_policy_status->type_checking) {
-    cJSON *type_checking_local_JSON = v1_type_checking_convertToJSON(v1_validating_admission_policy_status->type_checking);
+    mazu_cJSON *type_checking_local_JSON = v1_type_checking_convertToJSON(v1_validating_admission_policy_status->type_checking);
     if(type_checking_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "typeChecking", type_checking_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "typeChecking", type_checking_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -87,12 +87,12 @@ cJSON *v1_validating_admission_policy_status_convertToJSON(v1_validating_admissi
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_validating_admission_policy_status_t *v1_validating_admission_policy_status_parseFromJSON(cJSON *v1_validating_admission_policy_statusJSON){
+v1_validating_admission_policy_status_t *v1_validating_admission_policy_status_parseFromJSON(mazu_cJSON *v1_validating_admission_policy_statusJSON){
 
     v1_validating_admission_policy_status_t *v1_validating_admission_policy_status_local_var = NULL;
 
@@ -103,18 +103,18 @@ v1_validating_admission_policy_status_t *v1_validating_admission_policy_status_p
     v1_type_checking_t *type_checking_local_nonprim = NULL;
 
     // v1_validating_admission_policy_status->conditions
-    cJSON *conditions = cJSON_GetObjectItemCaseSensitive(v1_validating_admission_policy_statusJSON, "conditions");
+    mazu_cJSON *conditions = mazu_cJSON_GetObjectItemCaseSensitive(v1_validating_admission_policy_statusJSON, "conditions");
     if (conditions) { 
-    cJSON *conditions_local_nonprimitive = NULL;
-    if(!cJSON_IsArray(conditions)){
+    mazu_cJSON *conditions_local_nonprimitive = NULL;
+    if(!mazu_cJSON_IsArray(conditions)){
         goto end; //nonprimitive container
     }
 
     conditionsList = list_createList();
 
-    cJSON_ArrayForEach(conditions_local_nonprimitive,conditions )
+    mazu_cJSON_ArrayForEach(conditions_local_nonprimitive,conditions )
     {
-        if(!cJSON_IsObject(conditions_local_nonprimitive)){
+        if(!mazu_cJSON_IsObject(conditions_local_nonprimitive)){
             goto end;
         }
         v1_condition_t *conditionsItem = v1_condition_parseFromJSON(conditions_local_nonprimitive);
@@ -124,16 +124,16 @@ v1_validating_admission_policy_status_t *v1_validating_admission_policy_status_p
     }
 
     // v1_validating_admission_policy_status->observed_generation
-    cJSON *observed_generation = cJSON_GetObjectItemCaseSensitive(v1_validating_admission_policy_statusJSON, "observedGeneration");
+    mazu_cJSON *observed_generation = mazu_cJSON_GetObjectItemCaseSensitive(v1_validating_admission_policy_statusJSON, "observedGeneration");
     if (observed_generation) { 
-    if(!cJSON_IsNumber(observed_generation))
+    if(!mazu_cJSON_IsNumber(observed_generation))
     {
     goto end; //Numeric
     }
     }
 
     // v1_validating_admission_policy_status->type_checking
-    cJSON *type_checking = cJSON_GetObjectItemCaseSensitive(v1_validating_admission_policy_statusJSON, "typeChecking");
+    mazu_cJSON *type_checking = mazu_cJSON_GetObjectItemCaseSensitive(v1_validating_admission_policy_statusJSON, "typeChecking");
     if (type_checking) { 
     type_checking_local_nonprim = v1_type_checking_parseFromJSON(type_checking); //nonprimitive
     }

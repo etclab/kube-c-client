@@ -81,12 +81,12 @@ AdmissionregistrationV1beta1API_createValidatingAdmissionPolicyBinding_1(apiClie
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body = NULL;
+    mazu_cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
         localVarSingleItemJSON_body = v1beta1_validating_admission_policy_binding_convertToJSON(body);
-        localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyParameters = mazu_cJSON_Print(localVarSingleItemJSON_body);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
@@ -118,9 +118,9 @@ AdmissionregistrationV1beta1API_createValidatingAdmissionPolicyBinding_1(apiClie
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *AdmissionregistrationV1beta1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    mazu_cJSON *AdmissionregistrationV1beta1APIlocalVarJSON = mazu_cJSON_Parse(apiClient->dataReceived);
     v1beta1_validating_admission_policy_binding_t *elementToReturn = v1beta1_validating_admission_policy_binding_parseFromJSON(AdmissionregistrationV1beta1APIlocalVarJSON);
-    cJSON_Delete(AdmissionregistrationV1beta1APIlocalVarJSON);
+    mazu_cJSON_Delete(AdmissionregistrationV1beta1APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
     }
@@ -138,7 +138,7 @@ AdmissionregistrationV1beta1API_createValidatingAdmissionPolicyBinding_1(apiClie
     
     free(localVarPath);
     if (localVarSingleItemJSON_body) {
-        cJSON_Delete(localVarSingleItemJSON_body);
+        mazu_cJSON_Delete(localVarSingleItemJSON_body);
         localVarSingleItemJSON_body = NULL;
     }
     free(localVarBodyParameters);
@@ -266,12 +266,12 @@ AdmissionregistrationV1beta1API_createValidatingAdmissionPolicy_1(apiClient_t *a
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body = NULL;
+    mazu_cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
         localVarSingleItemJSON_body = v1beta1_validating_admission_policy_convertToJSON(body);
-        localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyParameters = mazu_cJSON_Print(localVarSingleItemJSON_body);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
@@ -303,9 +303,9 @@ AdmissionregistrationV1beta1API_createValidatingAdmissionPolicy_1(apiClient_t *a
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *AdmissionregistrationV1beta1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    mazu_cJSON *AdmissionregistrationV1beta1APIlocalVarJSON = mazu_cJSON_Parse(apiClient->dataReceived);
     v1beta1_validating_admission_policy_t *elementToReturn = v1beta1_validating_admission_policy_parseFromJSON(AdmissionregistrationV1beta1APIlocalVarJSON);
-    cJSON_Delete(AdmissionregistrationV1beta1APIlocalVarJSON);
+    mazu_cJSON_Delete(AdmissionregistrationV1beta1APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
     }
@@ -323,7 +323,7 @@ AdmissionregistrationV1beta1API_createValidatingAdmissionPolicy_1(apiClient_t *a
     
     free(localVarPath);
     if (localVarSingleItemJSON_body) {
-        cJSON_Delete(localVarSingleItemJSON_body);
+        mazu_cJSON_Delete(localVarSingleItemJSON_body);
         localVarSingleItemJSON_body = NULL;
     }
     free(localVarBodyParameters);
@@ -564,12 +564,12 @@ AdmissionregistrationV1beta1API_deleteCollectionValidatingAdmissionPolicyBinding
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body = NULL;
+    mazu_cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
         localVarSingleItemJSON_body = v1_delete_options_convertToJSON(body);
-        localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyParameters = mazu_cJSON_Print(localVarSingleItemJSON_body);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
@@ -593,9 +593,9 @@ AdmissionregistrationV1beta1API_deleteCollectionValidatingAdmissionPolicyBinding
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *AdmissionregistrationV1beta1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    mazu_cJSON *AdmissionregistrationV1beta1APIlocalVarJSON = mazu_cJSON_Parse(apiClient->dataReceived);
     v1_status_t *elementToReturn = v1_status_parseFromJSON(AdmissionregistrationV1beta1APIlocalVarJSON);
-    cJSON_Delete(AdmissionregistrationV1beta1APIlocalVarJSON);
+    mazu_cJSON_Delete(AdmissionregistrationV1beta1APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
     }
@@ -613,7 +613,7 @@ AdmissionregistrationV1beta1API_deleteCollectionValidatingAdmissionPolicyBinding
     
     free(localVarPath);
     if (localVarSingleItemJSON_body) {
-        cJSON_Delete(localVarSingleItemJSON_body);
+        mazu_cJSON_Delete(localVarSingleItemJSON_body);
         localVarSingleItemJSON_body = NULL;
     }
     free(localVarBodyParameters);
@@ -962,12 +962,12 @@ AdmissionregistrationV1beta1API_deleteCollectionValidatingAdmissionPolicy_1(apiC
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body = NULL;
+    mazu_cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
         localVarSingleItemJSON_body = v1_delete_options_convertToJSON(body);
-        localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyParameters = mazu_cJSON_Print(localVarSingleItemJSON_body);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
@@ -991,9 +991,9 @@ AdmissionregistrationV1beta1API_deleteCollectionValidatingAdmissionPolicy_1(apiC
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *AdmissionregistrationV1beta1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    mazu_cJSON *AdmissionregistrationV1beta1APIlocalVarJSON = mazu_cJSON_Parse(apiClient->dataReceived);
     v1_status_t *elementToReturn = v1_status_parseFromJSON(AdmissionregistrationV1beta1APIlocalVarJSON);
-    cJSON_Delete(AdmissionregistrationV1beta1APIlocalVarJSON);
+    mazu_cJSON_Delete(AdmissionregistrationV1beta1APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
     }
@@ -1011,7 +1011,7 @@ AdmissionregistrationV1beta1API_deleteCollectionValidatingAdmissionPolicy_1(apiC
     
     free(localVarPath);
     if (localVarSingleItemJSON_body) {
-        cJSON_Delete(localVarSingleItemJSON_body);
+        mazu_cJSON_Delete(localVarSingleItemJSON_body);
         localVarSingleItemJSON_body = NULL;
     }
     free(localVarBodyParameters);
@@ -1271,12 +1271,12 @@ AdmissionregistrationV1beta1API_deleteValidatingAdmissionPolicyBinding_1(apiClie
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body = NULL;
+    mazu_cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
         localVarSingleItemJSON_body = v1_delete_options_convertToJSON(body);
-        localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyParameters = mazu_cJSON_Print(localVarSingleItemJSON_body);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
@@ -1304,9 +1304,9 @@ AdmissionregistrationV1beta1API_deleteValidatingAdmissionPolicyBinding_1(apiClie
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *AdmissionregistrationV1beta1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    mazu_cJSON *AdmissionregistrationV1beta1APIlocalVarJSON = mazu_cJSON_Parse(apiClient->dataReceived);
     v1_status_t *elementToReturn = v1_status_parseFromJSON(AdmissionregistrationV1beta1APIlocalVarJSON);
-    cJSON_Delete(AdmissionregistrationV1beta1APIlocalVarJSON);
+    mazu_cJSON_Delete(AdmissionregistrationV1beta1APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
     }
@@ -1325,7 +1325,7 @@ AdmissionregistrationV1beta1API_deleteValidatingAdmissionPolicyBinding_1(apiClie
     free(localVarPath);
     free(localVarToReplace_name);
     if (localVarSingleItemJSON_body) {
-        cJSON_Delete(localVarSingleItemJSON_body);
+        mazu_cJSON_Delete(localVarSingleItemJSON_body);
         localVarSingleItemJSON_body = NULL;
     }
     free(localVarBodyParameters);
@@ -1489,12 +1489,12 @@ AdmissionregistrationV1beta1API_deleteValidatingAdmissionPolicy_1(apiClient_t *a
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body = NULL;
+    mazu_cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
         localVarSingleItemJSON_body = v1_delete_options_convertToJSON(body);
-        localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyParameters = mazu_cJSON_Print(localVarSingleItemJSON_body);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
@@ -1522,9 +1522,9 @@ AdmissionregistrationV1beta1API_deleteValidatingAdmissionPolicy_1(apiClient_t *a
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *AdmissionregistrationV1beta1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    mazu_cJSON *AdmissionregistrationV1beta1APIlocalVarJSON = mazu_cJSON_Parse(apiClient->dataReceived);
     v1_status_t *elementToReturn = v1_status_parseFromJSON(AdmissionregistrationV1beta1APIlocalVarJSON);
-    cJSON_Delete(AdmissionregistrationV1beta1APIlocalVarJSON);
+    mazu_cJSON_Delete(AdmissionregistrationV1beta1APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
     }
@@ -1543,7 +1543,7 @@ AdmissionregistrationV1beta1API_deleteValidatingAdmissionPolicy_1(apiClient_t *a
     free(localVarPath);
     free(localVarToReplace_name);
     if (localVarSingleItemJSON_body) {
-        cJSON_Delete(localVarSingleItemJSON_body);
+        mazu_cJSON_Delete(localVarSingleItemJSON_body);
         localVarSingleItemJSON_body = NULL;
     }
     free(localVarBodyParameters);
@@ -1655,9 +1655,9 @@ AdmissionregistrationV1beta1API_getAPIResources_2(apiClient_t *apiClient)
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *AdmissionregistrationV1beta1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    mazu_cJSON *AdmissionregistrationV1beta1APIlocalVarJSON = mazu_cJSON_Parse(apiClient->dataReceived);
     v1_api_resource_list_t *elementToReturn = v1_api_resource_list_parseFromJSON(AdmissionregistrationV1beta1APIlocalVarJSON);
-    cJSON_Delete(AdmissionregistrationV1beta1APIlocalVarJSON);
+    mazu_cJSON_Delete(AdmissionregistrationV1beta1APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
     }
@@ -1861,9 +1861,9 @@ AdmissionregistrationV1beta1API_listValidatingAdmissionPolicyBinding_1(apiClient
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *AdmissionregistrationV1beta1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    mazu_cJSON *AdmissionregistrationV1beta1APIlocalVarJSON = mazu_cJSON_Parse(apiClient->dataReceived);
     v1beta1_validating_admission_policy_binding_list_t *elementToReturn = v1beta1_validating_admission_policy_binding_list_parseFromJSON(AdmissionregistrationV1beta1APIlocalVarJSON);
-    cJSON_Delete(AdmissionregistrationV1beta1APIlocalVarJSON);
+    mazu_cJSON_Delete(AdmissionregistrationV1beta1APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
     }
@@ -2199,9 +2199,9 @@ AdmissionregistrationV1beta1API_listValidatingAdmissionPolicy_1(apiClient_t *api
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *AdmissionregistrationV1beta1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    mazu_cJSON *AdmissionregistrationV1beta1APIlocalVarJSON = mazu_cJSON_Parse(apiClient->dataReceived);
     v1beta1_validating_admission_policy_list_t *elementToReturn = v1beta1_validating_admission_policy_list_parseFromJSON(AdmissionregistrationV1beta1APIlocalVarJSON);
-    cJSON_Delete(AdmissionregistrationV1beta1APIlocalVarJSON);
+    mazu_cJSON_Delete(AdmissionregistrationV1beta1APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
     }
@@ -2449,12 +2449,12 @@ AdmissionregistrationV1beta1API_patchValidatingAdmissionPolicyBinding_1(apiClien
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body = NULL;
+    mazu_cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
         localVarSingleItemJSON_body = object_convertToJSON(body);
-        localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyParameters = mazu_cJSON_Print(localVarSingleItemJSON_body);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
@@ -2486,9 +2486,9 @@ AdmissionregistrationV1beta1API_patchValidatingAdmissionPolicyBinding_1(apiClien
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *AdmissionregistrationV1beta1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    mazu_cJSON *AdmissionregistrationV1beta1APIlocalVarJSON = mazu_cJSON_Parse(apiClient->dataReceived);
     v1beta1_validating_admission_policy_binding_t *elementToReturn = v1beta1_validating_admission_policy_binding_parseFromJSON(AdmissionregistrationV1beta1APIlocalVarJSON);
-    cJSON_Delete(AdmissionregistrationV1beta1APIlocalVarJSON);
+    mazu_cJSON_Delete(AdmissionregistrationV1beta1APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
     }
@@ -2507,7 +2507,7 @@ AdmissionregistrationV1beta1API_patchValidatingAdmissionPolicyBinding_1(apiClien
     free(localVarPath);
     free(localVarToReplace_name);
     if (localVarSingleItemJSON_body) {
-        cJSON_Delete(localVarSingleItemJSON_body);
+        mazu_cJSON_Delete(localVarSingleItemJSON_body);
         localVarSingleItemJSON_body = NULL;
     }
     free(localVarBodyParameters);
@@ -2670,12 +2670,12 @@ AdmissionregistrationV1beta1API_patchValidatingAdmissionPolicyStatus_1(apiClient
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body = NULL;
+    mazu_cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
         localVarSingleItemJSON_body = object_convertToJSON(body);
-        localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyParameters = mazu_cJSON_Print(localVarSingleItemJSON_body);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
@@ -2707,9 +2707,9 @@ AdmissionregistrationV1beta1API_patchValidatingAdmissionPolicyStatus_1(apiClient
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *AdmissionregistrationV1beta1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    mazu_cJSON *AdmissionregistrationV1beta1APIlocalVarJSON = mazu_cJSON_Parse(apiClient->dataReceived);
     v1beta1_validating_admission_policy_t *elementToReturn = v1beta1_validating_admission_policy_parseFromJSON(AdmissionregistrationV1beta1APIlocalVarJSON);
-    cJSON_Delete(AdmissionregistrationV1beta1APIlocalVarJSON);
+    mazu_cJSON_Delete(AdmissionregistrationV1beta1APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
     }
@@ -2728,7 +2728,7 @@ AdmissionregistrationV1beta1API_patchValidatingAdmissionPolicyStatus_1(apiClient
     free(localVarPath);
     free(localVarToReplace_name);
     if (localVarSingleItemJSON_body) {
-        cJSON_Delete(localVarSingleItemJSON_body);
+        mazu_cJSON_Delete(localVarSingleItemJSON_body);
         localVarSingleItemJSON_body = NULL;
     }
     free(localVarBodyParameters);
@@ -2891,12 +2891,12 @@ AdmissionregistrationV1beta1API_patchValidatingAdmissionPolicy_1(apiClient_t *ap
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body = NULL;
+    mazu_cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
         localVarSingleItemJSON_body = object_convertToJSON(body);
-        localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyParameters = mazu_cJSON_Print(localVarSingleItemJSON_body);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
@@ -2928,9 +2928,9 @@ AdmissionregistrationV1beta1API_patchValidatingAdmissionPolicy_1(apiClient_t *ap
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *AdmissionregistrationV1beta1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    mazu_cJSON *AdmissionregistrationV1beta1APIlocalVarJSON = mazu_cJSON_Parse(apiClient->dataReceived);
     v1beta1_validating_admission_policy_t *elementToReturn = v1beta1_validating_admission_policy_parseFromJSON(AdmissionregistrationV1beta1APIlocalVarJSON);
-    cJSON_Delete(AdmissionregistrationV1beta1APIlocalVarJSON);
+    mazu_cJSON_Delete(AdmissionregistrationV1beta1APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
     }
@@ -2949,7 +2949,7 @@ AdmissionregistrationV1beta1API_patchValidatingAdmissionPolicy_1(apiClient_t *ap
     free(localVarPath);
     free(localVarToReplace_name);
     if (localVarSingleItemJSON_body) {
-        cJSON_Delete(localVarSingleItemJSON_body);
+        mazu_cJSON_Delete(localVarSingleItemJSON_body);
         localVarSingleItemJSON_body = NULL;
     }
     free(localVarBodyParameters);
@@ -3083,9 +3083,9 @@ AdmissionregistrationV1beta1API_readValidatingAdmissionPolicyBinding_1(apiClient
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *AdmissionregistrationV1beta1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    mazu_cJSON *AdmissionregistrationV1beta1APIlocalVarJSON = mazu_cJSON_Parse(apiClient->dataReceived);
     v1beta1_validating_admission_policy_binding_t *elementToReturn = v1beta1_validating_admission_policy_binding_parseFromJSON(AdmissionregistrationV1beta1APIlocalVarJSON);
-    cJSON_Delete(AdmissionregistrationV1beta1APIlocalVarJSON);
+    mazu_cJSON_Delete(AdmissionregistrationV1beta1APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
     }
@@ -3185,9 +3185,9 @@ AdmissionregistrationV1beta1API_readValidatingAdmissionPolicyStatus_1(apiClient_
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *AdmissionregistrationV1beta1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    mazu_cJSON *AdmissionregistrationV1beta1APIlocalVarJSON = mazu_cJSON_Parse(apiClient->dataReceived);
     v1beta1_validating_admission_policy_t *elementToReturn = v1beta1_validating_admission_policy_parseFromJSON(AdmissionregistrationV1beta1APIlocalVarJSON);
-    cJSON_Delete(AdmissionregistrationV1beta1APIlocalVarJSON);
+    mazu_cJSON_Delete(AdmissionregistrationV1beta1APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
     }
@@ -3287,9 +3287,9 @@ AdmissionregistrationV1beta1API_readValidatingAdmissionPolicy_1(apiClient_t *api
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *AdmissionregistrationV1beta1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    mazu_cJSON *AdmissionregistrationV1beta1APIlocalVarJSON = mazu_cJSON_Parse(apiClient->dataReceived);
     v1beta1_validating_admission_policy_t *elementToReturn = v1beta1_validating_admission_policy_parseFromJSON(AdmissionregistrationV1beta1APIlocalVarJSON);
-    cJSON_Delete(AdmissionregistrationV1beta1APIlocalVarJSON);
+    mazu_cJSON_Delete(AdmissionregistrationV1beta1APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
     }
@@ -3405,12 +3405,12 @@ AdmissionregistrationV1beta1API_replaceValidatingAdmissionPolicyBinding_1(apiCli
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body = NULL;
+    mazu_cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
         localVarSingleItemJSON_body = v1beta1_validating_admission_policy_binding_convertToJSON(body);
-        localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyParameters = mazu_cJSON_Print(localVarSingleItemJSON_body);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
@@ -3438,9 +3438,9 @@ AdmissionregistrationV1beta1API_replaceValidatingAdmissionPolicyBinding_1(apiCli
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *AdmissionregistrationV1beta1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    mazu_cJSON *AdmissionregistrationV1beta1APIlocalVarJSON = mazu_cJSON_Parse(apiClient->dataReceived);
     v1beta1_validating_admission_policy_binding_t *elementToReturn = v1beta1_validating_admission_policy_binding_parseFromJSON(AdmissionregistrationV1beta1APIlocalVarJSON);
-    cJSON_Delete(AdmissionregistrationV1beta1APIlocalVarJSON);
+    mazu_cJSON_Delete(AdmissionregistrationV1beta1APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
     }
@@ -3459,7 +3459,7 @@ AdmissionregistrationV1beta1API_replaceValidatingAdmissionPolicyBinding_1(apiCli
     free(localVarPath);
     free(localVarToReplace_name);
     if (localVarSingleItemJSON_body) {
-        cJSON_Delete(localVarSingleItemJSON_body);
+        mazu_cJSON_Delete(localVarSingleItemJSON_body);
         localVarSingleItemJSON_body = NULL;
     }
     free(localVarBodyParameters);
@@ -3597,12 +3597,12 @@ AdmissionregistrationV1beta1API_replaceValidatingAdmissionPolicyStatus_1(apiClie
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body = NULL;
+    mazu_cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
         localVarSingleItemJSON_body = v1beta1_validating_admission_policy_convertToJSON(body);
-        localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyParameters = mazu_cJSON_Print(localVarSingleItemJSON_body);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
@@ -3630,9 +3630,9 @@ AdmissionregistrationV1beta1API_replaceValidatingAdmissionPolicyStatus_1(apiClie
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *AdmissionregistrationV1beta1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    mazu_cJSON *AdmissionregistrationV1beta1APIlocalVarJSON = mazu_cJSON_Parse(apiClient->dataReceived);
     v1beta1_validating_admission_policy_t *elementToReturn = v1beta1_validating_admission_policy_parseFromJSON(AdmissionregistrationV1beta1APIlocalVarJSON);
-    cJSON_Delete(AdmissionregistrationV1beta1APIlocalVarJSON);
+    mazu_cJSON_Delete(AdmissionregistrationV1beta1APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
     }
@@ -3651,7 +3651,7 @@ AdmissionregistrationV1beta1API_replaceValidatingAdmissionPolicyStatus_1(apiClie
     free(localVarPath);
     free(localVarToReplace_name);
     if (localVarSingleItemJSON_body) {
-        cJSON_Delete(localVarSingleItemJSON_body);
+        mazu_cJSON_Delete(localVarSingleItemJSON_body);
         localVarSingleItemJSON_body = NULL;
     }
     free(localVarBodyParameters);
@@ -3789,12 +3789,12 @@ AdmissionregistrationV1beta1API_replaceValidatingAdmissionPolicy_1(apiClient_t *
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body = NULL;
+    mazu_cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
         localVarSingleItemJSON_body = v1beta1_validating_admission_policy_convertToJSON(body);
-        localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyParameters = mazu_cJSON_Print(localVarSingleItemJSON_body);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
@@ -3822,9 +3822,9 @@ AdmissionregistrationV1beta1API_replaceValidatingAdmissionPolicy_1(apiClient_t *
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *AdmissionregistrationV1beta1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    mazu_cJSON *AdmissionregistrationV1beta1APIlocalVarJSON = mazu_cJSON_Parse(apiClient->dataReceived);
     v1beta1_validating_admission_policy_t *elementToReturn = v1beta1_validating_admission_policy_parseFromJSON(AdmissionregistrationV1beta1APIlocalVarJSON);
-    cJSON_Delete(AdmissionregistrationV1beta1APIlocalVarJSON);
+    mazu_cJSON_Delete(AdmissionregistrationV1beta1APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
     }
@@ -3843,7 +3843,7 @@ AdmissionregistrationV1beta1API_replaceValidatingAdmissionPolicy_1(apiClient_t *
     free(localVarPath);
     free(localVarToReplace_name);
     if (localVarSingleItemJSON_body) {
-        cJSON_Delete(localVarSingleItemJSON_body);
+        mazu_cJSON_Delete(localVarSingleItemJSON_body);
         localVarSingleItemJSON_body = NULL;
     }
     free(localVarBodyParameters);

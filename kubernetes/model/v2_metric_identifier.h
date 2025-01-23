@@ -8,7 +8,7 @@
 #define _v2_metric_identifier_H_
 
 #include <string.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
 #include "../include/binary.h"
@@ -32,9 +32,9 @@ v2_metric_identifier_t *v2_metric_identifier_create(
 
 void v2_metric_identifier_free(v2_metric_identifier_t *v2_metric_identifier);
 
-v2_metric_identifier_t *v2_metric_identifier_parseFromJSON(cJSON *v2_metric_identifierJSON);
+v2_metric_identifier_t *v2_metric_identifier_parseFromJSON(mazu_cJSON *v2_metric_identifierJSON);
 
-cJSON *v2_metric_identifier_convertToJSON(v2_metric_identifier_t *v2_metric_identifier);
+mazu_cJSON *v2_metric_identifier_convertToJSON(v2_metric_identifier_t *v2_metric_identifier);
 
 #endif /* _v2_metric_identifier_H_ */
 

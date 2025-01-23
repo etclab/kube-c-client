@@ -36,14 +36,14 @@ void v1_container_resize_policy_free(v1_container_resize_policy_t *v1_container_
     free(v1_container_resize_policy);
 }
 
-cJSON *v1_container_resize_policy_convertToJSON(v1_container_resize_policy_t *v1_container_resize_policy) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_container_resize_policy_convertToJSON(v1_container_resize_policy_t *v1_container_resize_policy) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_container_resize_policy->resource_name
     if (!v1_container_resize_policy->resource_name) {
         goto fail;
     }
-    if(cJSON_AddStringToObject(item, "resourceName", v1_container_resize_policy->resource_name) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "resourceName", v1_container_resize_policy->resource_name) == NULL) {
     goto fail; //String
     }
 
@@ -52,42 +52,42 @@ cJSON *v1_container_resize_policy_convertToJSON(v1_container_resize_policy_t *v1
     if (!v1_container_resize_policy->restart_policy) {
         goto fail;
     }
-    if(cJSON_AddStringToObject(item, "restartPolicy", v1_container_resize_policy->restart_policy) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "restartPolicy", v1_container_resize_policy->restart_policy) == NULL) {
     goto fail; //String
     }
 
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_container_resize_policy_t *v1_container_resize_policy_parseFromJSON(cJSON *v1_container_resize_policyJSON){
+v1_container_resize_policy_t *v1_container_resize_policy_parseFromJSON(mazu_cJSON *v1_container_resize_policyJSON){
 
     v1_container_resize_policy_t *v1_container_resize_policy_local_var = NULL;
 
     // v1_container_resize_policy->resource_name
-    cJSON *resource_name = cJSON_GetObjectItemCaseSensitive(v1_container_resize_policyJSON, "resourceName");
+    mazu_cJSON *resource_name = mazu_cJSON_GetObjectItemCaseSensitive(v1_container_resize_policyJSON, "resourceName");
     if (!resource_name) {
         goto end;
     }
 
     
-    if(!cJSON_IsString(resource_name))
+    if(!mazu_cJSON_IsString(resource_name))
     {
     goto end; //String
     }
 
     // v1_container_resize_policy->restart_policy
-    cJSON *restart_policy = cJSON_GetObjectItemCaseSensitive(v1_container_resize_policyJSON, "restartPolicy");
+    mazu_cJSON *restart_policy = mazu_cJSON_GetObjectItemCaseSensitive(v1_container_resize_policyJSON, "restartPolicy");
     if (!restart_policy) {
         goto end;
     }
 
     
-    if(!cJSON_IsString(restart_policy))
+    if(!mazu_cJSON_IsString(restart_policy))
     {
     goto end; //String
     }

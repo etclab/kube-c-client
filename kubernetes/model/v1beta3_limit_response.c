@@ -36,16 +36,16 @@ void v1beta3_limit_response_free(v1beta3_limit_response_t *v1beta3_limit_respons
     free(v1beta3_limit_response);
 }
 
-cJSON *v1beta3_limit_response_convertToJSON(v1beta3_limit_response_t *v1beta3_limit_response) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1beta3_limit_response_convertToJSON(v1beta3_limit_response_t *v1beta3_limit_response) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1beta3_limit_response->queuing
     if(v1beta3_limit_response->queuing) {
-    cJSON *queuing_local_JSON = v1beta3_queuing_configuration_convertToJSON(v1beta3_limit_response->queuing);
+    mazu_cJSON *queuing_local_JSON = v1beta3_queuing_configuration_convertToJSON(v1beta3_limit_response->queuing);
     if(queuing_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "queuing", queuing_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "queuing", queuing_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -56,19 +56,19 @@ cJSON *v1beta3_limit_response_convertToJSON(v1beta3_limit_response_t *v1beta3_li
     if (!v1beta3_limit_response->type) {
         goto fail;
     }
-    if(cJSON_AddStringToObject(item, "type", v1beta3_limit_response->type) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "type", v1beta3_limit_response->type) == NULL) {
     goto fail; //String
     }
 
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1beta3_limit_response_t *v1beta3_limit_response_parseFromJSON(cJSON *v1beta3_limit_responseJSON){
+v1beta3_limit_response_t *v1beta3_limit_response_parseFromJSON(mazu_cJSON *v1beta3_limit_responseJSON){
 
     v1beta3_limit_response_t *v1beta3_limit_response_local_var = NULL;
 
@@ -76,19 +76,19 @@ v1beta3_limit_response_t *v1beta3_limit_response_parseFromJSON(cJSON *v1beta3_li
     v1beta3_queuing_configuration_t *queuing_local_nonprim = NULL;
 
     // v1beta3_limit_response->queuing
-    cJSON *queuing = cJSON_GetObjectItemCaseSensitive(v1beta3_limit_responseJSON, "queuing");
+    mazu_cJSON *queuing = mazu_cJSON_GetObjectItemCaseSensitive(v1beta3_limit_responseJSON, "queuing");
     if (queuing) { 
     queuing_local_nonprim = v1beta3_queuing_configuration_parseFromJSON(queuing); //nonprimitive
     }
 
     // v1beta3_limit_response->type
-    cJSON *type = cJSON_GetObjectItemCaseSensitive(v1beta3_limit_responseJSON, "type");
+    mazu_cJSON *type = mazu_cJSON_GetObjectItemCaseSensitive(v1beta3_limit_responseJSON, "type");
     if (!type) {
         goto end;
     }
 
     
-    if(!cJSON_IsString(type))
+    if(!mazu_cJSON_IsString(type))
     {
     goto end; //String
     }

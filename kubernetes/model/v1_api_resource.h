@@ -8,7 +8,7 @@
 #define _v1_api_resource_H_
 
 #include <string.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
 #include "../include/binary.h"
@@ -47,9 +47,9 @@ v1_api_resource_t *v1_api_resource_create(
 
 void v1_api_resource_free(v1_api_resource_t *v1_api_resource);
 
-v1_api_resource_t *v1_api_resource_parseFromJSON(cJSON *v1_api_resourceJSON);
+v1_api_resource_t *v1_api_resource_parseFromJSON(mazu_cJSON *v1_api_resourceJSON);
 
-cJSON *v1_api_resource_convertToJSON(v1_api_resource_t *v1_api_resource);
+mazu_cJSON *v1_api_resource_convertToJSON(v1_api_resource_t *v1_api_resource);
 
 #endif /* _v1_api_resource_H_ */
 

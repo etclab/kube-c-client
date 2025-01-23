@@ -8,7 +8,7 @@
 #define _v1_token_review_H_
 
 #include <string.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
 #include "../include/binary.h"
@@ -40,9 +40,9 @@ v1_token_review_t *v1_token_review_create(
 
 void v1_token_review_free(v1_token_review_t *v1_token_review);
 
-v1_token_review_t *v1_token_review_parseFromJSON(cJSON *v1_token_reviewJSON);
+v1_token_review_t *v1_token_review_parseFromJSON(mazu_cJSON *v1_token_reviewJSON);
 
-cJSON *v1_token_review_convertToJSON(v1_token_review_t *v1_token_review);
+mazu_cJSON *v1_token_review_convertToJSON(v1_token_review_t *v1_token_review);
 
 #endif /* _v1_token_review_H_ */
 

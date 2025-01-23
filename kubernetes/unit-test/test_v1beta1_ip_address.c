@@ -11,7 +11,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdbool.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 
 #include "../model/v1beta1_ip_address.h"
 v1beta1_ip_address_t* instantiate_v1beta1_ip_address(int include_optional);
@@ -49,11 +49,11 @@ v1beta1_ip_address_t* instantiate_v1beta1_ip_address(int include_optional) {
 void test_v1beta1_ip_address(int include_optional) {
     v1beta1_ip_address_t* v1beta1_ip_address_1 = instantiate_v1beta1_ip_address(include_optional);
 
-	cJSON* jsonv1beta1_ip_address_1 = v1beta1_ip_address_convertToJSON(v1beta1_ip_address_1);
-	printf("v1beta1_ip_address :\n%s\n", cJSON_Print(jsonv1beta1_ip_address_1));
+	mazu_cJSON* jsonv1beta1_ip_address_1 = v1beta1_ip_address_convertToJSON(v1beta1_ip_address_1);
+	printf("v1beta1_ip_address :\n%s\n", mazu_cJSON_Print(jsonv1beta1_ip_address_1));
 	v1beta1_ip_address_t* v1beta1_ip_address_2 = v1beta1_ip_address_parseFromJSON(jsonv1beta1_ip_address_1);
-	cJSON* jsonv1beta1_ip_address_2 = v1beta1_ip_address_convertToJSON(v1beta1_ip_address_2);
-	printf("repeating v1beta1_ip_address:\n%s\n", cJSON_Print(jsonv1beta1_ip_address_2));
+	mazu_cJSON* jsonv1beta1_ip_address_2 = v1beta1_ip_address_convertToJSON(v1beta1_ip_address_2);
+	printf("repeating v1beta1_ip_address:\n%s\n", mazu_cJSON_Print(jsonv1beta1_ip_address_2));
 }
 
 int main() {

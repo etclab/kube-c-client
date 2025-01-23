@@ -42,12 +42,12 @@ void apiextensions_v1_webhook_client_config_free(apiextensions_v1_webhook_client
     free(apiextensions_v1_webhook_client_config);
 }
 
-cJSON *apiextensions_v1_webhook_client_config_convertToJSON(apiextensions_v1_webhook_client_config_t *apiextensions_v1_webhook_client_config) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *apiextensions_v1_webhook_client_config_convertToJSON(apiextensions_v1_webhook_client_config_t *apiextensions_v1_webhook_client_config) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // apiextensions_v1_webhook_client_config->ca_bundle
     if(apiextensions_v1_webhook_client_config->ca_bundle) {
-    if(cJSON_AddStringToObject(item, "caBundle", apiextensions_v1_webhook_client_config->ca_bundle) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "caBundle", apiextensions_v1_webhook_client_config->ca_bundle) == NULL) {
     goto fail; //ByteArray
     }
     }
@@ -55,11 +55,11 @@ cJSON *apiextensions_v1_webhook_client_config_convertToJSON(apiextensions_v1_web
 
     // apiextensions_v1_webhook_client_config->service
     if(apiextensions_v1_webhook_client_config->service) {
-    cJSON *service_local_JSON = apiextensions_v1_service_reference_convertToJSON(apiextensions_v1_webhook_client_config->service);
+    mazu_cJSON *service_local_JSON = apiextensions_v1_service_reference_convertToJSON(apiextensions_v1_webhook_client_config->service);
     if(service_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "service", service_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "service", service_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -68,7 +68,7 @@ cJSON *apiextensions_v1_webhook_client_config_convertToJSON(apiextensions_v1_web
 
     // apiextensions_v1_webhook_client_config->url
     if(apiextensions_v1_webhook_client_config->url) {
-    if(cJSON_AddStringToObject(item, "url", apiextensions_v1_webhook_client_config->url) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "url", apiextensions_v1_webhook_client_config->url) == NULL) {
     goto fail; //String
     }
     }
@@ -76,12 +76,12 @@ cJSON *apiextensions_v1_webhook_client_config_convertToJSON(apiextensions_v1_web
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-apiextensions_v1_webhook_client_config_t *apiextensions_v1_webhook_client_config_parseFromJSON(cJSON *apiextensions_v1_webhook_client_configJSON){
+apiextensions_v1_webhook_client_config_t *apiextensions_v1_webhook_client_config_parseFromJSON(mazu_cJSON *apiextensions_v1_webhook_client_configJSON){
 
     apiextensions_v1_webhook_client_config_t *apiextensions_v1_webhook_client_config_local_var = NULL;
 
@@ -89,24 +89,24 @@ apiextensions_v1_webhook_client_config_t *apiextensions_v1_webhook_client_config
     apiextensions_v1_service_reference_t *service_local_nonprim = NULL;
 
     // apiextensions_v1_webhook_client_config->ca_bundle
-    cJSON *ca_bundle = cJSON_GetObjectItemCaseSensitive(apiextensions_v1_webhook_client_configJSON, "caBundle");
+    mazu_cJSON *ca_bundle = mazu_cJSON_GetObjectItemCaseSensitive(apiextensions_v1_webhook_client_configJSON, "caBundle");
     if (ca_bundle) { 
-    if(!cJSON_IsString(ca_bundle))
+    if(!mazu_cJSON_IsString(ca_bundle))
     {
     goto end; //ByteArray
     }
     }
 
     // apiextensions_v1_webhook_client_config->service
-    cJSON *service = cJSON_GetObjectItemCaseSensitive(apiextensions_v1_webhook_client_configJSON, "service");
+    mazu_cJSON *service = mazu_cJSON_GetObjectItemCaseSensitive(apiextensions_v1_webhook_client_configJSON, "service");
     if (service) { 
     service_local_nonprim = apiextensions_v1_service_reference_parseFromJSON(service); //nonprimitive
     }
 
     // apiextensions_v1_webhook_client_config->url
-    cJSON *url = cJSON_GetObjectItemCaseSensitive(apiextensions_v1_webhook_client_configJSON, "url");
+    mazu_cJSON *url = mazu_cJSON_GetObjectItemCaseSensitive(apiextensions_v1_webhook_client_configJSON, "url");
     if (url) { 
-    if(!cJSON_IsString(url) && !cJSON_IsNull(url))
+    if(!mazu_cJSON_IsString(url) && !mazu_cJSON_IsNull(url))
     {
     goto end; //String
     }
@@ -116,7 +116,7 @@ apiextensions_v1_webhook_client_config_t *apiextensions_v1_webhook_client_config
     apiextensions_v1_webhook_client_config_local_var = apiextensions_v1_webhook_client_config_create (
         ca_bundle ? strdup(ca_bundle->valuestring) : NULL,
         service ? service_local_nonprim : NULL,
-        url && !cJSON_IsNull(url) ? strdup(url->valuestring) : NULL
+        url && !mazu_cJSON_IsNull(url) ? strdup(url->valuestring) : NULL
         );
 
     return apiextensions_v1_webhook_client_config_local_var;

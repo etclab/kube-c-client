@@ -8,7 +8,7 @@
 #define _v1_object_meta_H_
 
 #include <string.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
 #include "../include/binary.h"
@@ -59,9 +59,9 @@ v1_object_meta_t *v1_object_meta_create(
 
 void v1_object_meta_free(v1_object_meta_t *v1_object_meta);
 
-v1_object_meta_t *v1_object_meta_parseFromJSON(cJSON *v1_object_metaJSON);
+v1_object_meta_t *v1_object_meta_parseFromJSON(mazu_cJSON *v1_object_metaJSON);
 
-cJSON *v1_object_meta_convertToJSON(v1_object_meta_t *v1_object_meta);
+mazu_cJSON *v1_object_meta_convertToJSON(v1_object_meta_t *v1_object_meta);
 
 #endif /* _v1_object_meta_H_ */
 

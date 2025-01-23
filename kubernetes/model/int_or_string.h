@@ -6,7 +6,7 @@
 #define _INT_OR_STRING_H_
 
 #include <string.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 
 #ifdef  __cplusplus
 extern "C" {
@@ -29,9 +29,9 @@ int_or_string_t *int_or_string_create();
 
 void int_or_string_free(int_or_string_t *ios);
 
-int_or_string_t *int_or_string_parseFromJSON(cJSON *cjson);
+int_or_string_t *int_or_string_parseFromJSON(mazu_cJSON *cjson);
 
-cJSON *int_or_string_convertToJSON(int_or_string_t *ios);
+mazu_cJSON *int_or_string_convertToJSON(int_or_string_t *ios);
 
 #ifdef  __cplusplus
 }

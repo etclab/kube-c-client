@@ -186,19 +186,19 @@ void v1_ephemeral_container_free(v1_ephemeral_container_t *v1_ephemeral_containe
     free(v1_ephemeral_container);
 }
 
-cJSON *v1_ephemeral_container_convertToJSON(v1_ephemeral_container_t *v1_ephemeral_container) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_ephemeral_container_convertToJSON(v1_ephemeral_container_t *v1_ephemeral_container) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_ephemeral_container->args
     if(v1_ephemeral_container->args) {
-    cJSON *args = cJSON_AddArrayToObject(item, "args");
+    mazu_cJSON *args = mazu_cJSON_AddArrayToObject(item, "args");
     if(args == NULL) {
         goto fail; //primitive container
     }
 
     listEntry_t *argsListEntry;
     list_ForEach(argsListEntry, v1_ephemeral_container->args) {
-    if(cJSON_AddStringToObject(args, "", (char*)argsListEntry->data) == NULL)
+    if(mazu_cJSON_AddStringToObject(args, "", (char*)argsListEntry->data) == NULL)
     {
         goto fail;
     }
@@ -208,14 +208,14 @@ cJSON *v1_ephemeral_container_convertToJSON(v1_ephemeral_container_t *v1_ephemer
 
     // v1_ephemeral_container->command
     if(v1_ephemeral_container->command) {
-    cJSON *command = cJSON_AddArrayToObject(item, "command");
+    mazu_cJSON *command = mazu_cJSON_AddArrayToObject(item, "command");
     if(command == NULL) {
         goto fail; //primitive container
     }
 
     listEntry_t *commandListEntry;
     list_ForEach(commandListEntry, v1_ephemeral_container->command) {
-    if(cJSON_AddStringToObject(command, "", (char*)commandListEntry->data) == NULL)
+    if(mazu_cJSON_AddStringToObject(command, "", (char*)commandListEntry->data) == NULL)
     {
         goto fail;
     }
@@ -225,7 +225,7 @@ cJSON *v1_ephemeral_container_convertToJSON(v1_ephemeral_container_t *v1_ephemer
 
     // v1_ephemeral_container->env
     if(v1_ephemeral_container->env) {
-    cJSON *env = cJSON_AddArrayToObject(item, "env");
+    mazu_cJSON *env = mazu_cJSON_AddArrayToObject(item, "env");
     if(env == NULL) {
     goto fail; //nonprimitive container
     }
@@ -233,11 +233,11 @@ cJSON *v1_ephemeral_container_convertToJSON(v1_ephemeral_container_t *v1_ephemer
     listEntry_t *envListEntry;
     if (v1_ephemeral_container->env) {
     list_ForEach(envListEntry, v1_ephemeral_container->env) {
-    cJSON *itemLocal = v1_env_var_convertToJSON(envListEntry->data);
+    mazu_cJSON *itemLocal = v1_env_var_convertToJSON(envListEntry->data);
     if(itemLocal == NULL) {
     goto fail;
     }
-    cJSON_AddItemToArray(env, itemLocal);
+    mazu_cJSON_AddItemToArray(env, itemLocal);
     }
     }
     }
@@ -245,7 +245,7 @@ cJSON *v1_ephemeral_container_convertToJSON(v1_ephemeral_container_t *v1_ephemer
 
     // v1_ephemeral_container->env_from
     if(v1_ephemeral_container->env_from) {
-    cJSON *env_from = cJSON_AddArrayToObject(item, "envFrom");
+    mazu_cJSON *env_from = mazu_cJSON_AddArrayToObject(item, "envFrom");
     if(env_from == NULL) {
     goto fail; //nonprimitive container
     }
@@ -253,11 +253,11 @@ cJSON *v1_ephemeral_container_convertToJSON(v1_ephemeral_container_t *v1_ephemer
     listEntry_t *env_fromListEntry;
     if (v1_ephemeral_container->env_from) {
     list_ForEach(env_fromListEntry, v1_ephemeral_container->env_from) {
-    cJSON *itemLocal = v1_env_from_source_convertToJSON(env_fromListEntry->data);
+    mazu_cJSON *itemLocal = v1_env_from_source_convertToJSON(env_fromListEntry->data);
     if(itemLocal == NULL) {
     goto fail;
     }
-    cJSON_AddItemToArray(env_from, itemLocal);
+    mazu_cJSON_AddItemToArray(env_from, itemLocal);
     }
     }
     }
@@ -265,7 +265,7 @@ cJSON *v1_ephemeral_container_convertToJSON(v1_ephemeral_container_t *v1_ephemer
 
     // v1_ephemeral_container->image
     if(v1_ephemeral_container->image) {
-    if(cJSON_AddStringToObject(item, "image", v1_ephemeral_container->image) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "image", v1_ephemeral_container->image) == NULL) {
     goto fail; //String
     }
     }
@@ -273,7 +273,7 @@ cJSON *v1_ephemeral_container_convertToJSON(v1_ephemeral_container_t *v1_ephemer
 
     // v1_ephemeral_container->image_pull_policy
     if(v1_ephemeral_container->image_pull_policy) {
-    if(cJSON_AddStringToObject(item, "imagePullPolicy", v1_ephemeral_container->image_pull_policy) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "imagePullPolicy", v1_ephemeral_container->image_pull_policy) == NULL) {
     goto fail; //String
     }
     }
@@ -281,11 +281,11 @@ cJSON *v1_ephemeral_container_convertToJSON(v1_ephemeral_container_t *v1_ephemer
 
     // v1_ephemeral_container->lifecycle
     if(v1_ephemeral_container->lifecycle) {
-    cJSON *lifecycle_local_JSON = v1_lifecycle_convertToJSON(v1_ephemeral_container->lifecycle);
+    mazu_cJSON *lifecycle_local_JSON = v1_lifecycle_convertToJSON(v1_ephemeral_container->lifecycle);
     if(lifecycle_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "lifecycle", lifecycle_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "lifecycle", lifecycle_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -294,11 +294,11 @@ cJSON *v1_ephemeral_container_convertToJSON(v1_ephemeral_container_t *v1_ephemer
 
     // v1_ephemeral_container->liveness_probe
     if(v1_ephemeral_container->liveness_probe) {
-    cJSON *liveness_probe_local_JSON = v1_probe_convertToJSON(v1_ephemeral_container->liveness_probe);
+    mazu_cJSON *liveness_probe_local_JSON = v1_probe_convertToJSON(v1_ephemeral_container->liveness_probe);
     if(liveness_probe_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "livenessProbe", liveness_probe_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "livenessProbe", liveness_probe_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -309,14 +309,14 @@ cJSON *v1_ephemeral_container_convertToJSON(v1_ephemeral_container_t *v1_ephemer
     if (!v1_ephemeral_container->name) {
         goto fail;
     }
-    if(cJSON_AddStringToObject(item, "name", v1_ephemeral_container->name) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "name", v1_ephemeral_container->name) == NULL) {
     goto fail; //String
     }
 
 
     // v1_ephemeral_container->ports
     if(v1_ephemeral_container->ports) {
-    cJSON *ports = cJSON_AddArrayToObject(item, "ports");
+    mazu_cJSON *ports = mazu_cJSON_AddArrayToObject(item, "ports");
     if(ports == NULL) {
     goto fail; //nonprimitive container
     }
@@ -324,11 +324,11 @@ cJSON *v1_ephemeral_container_convertToJSON(v1_ephemeral_container_t *v1_ephemer
     listEntry_t *portsListEntry;
     if (v1_ephemeral_container->ports) {
     list_ForEach(portsListEntry, v1_ephemeral_container->ports) {
-    cJSON *itemLocal = v1_container_port_convertToJSON(portsListEntry->data);
+    mazu_cJSON *itemLocal = v1_container_port_convertToJSON(portsListEntry->data);
     if(itemLocal == NULL) {
     goto fail;
     }
-    cJSON_AddItemToArray(ports, itemLocal);
+    mazu_cJSON_AddItemToArray(ports, itemLocal);
     }
     }
     }
@@ -336,11 +336,11 @@ cJSON *v1_ephemeral_container_convertToJSON(v1_ephemeral_container_t *v1_ephemer
 
     // v1_ephemeral_container->readiness_probe
     if(v1_ephemeral_container->readiness_probe) {
-    cJSON *readiness_probe_local_JSON = v1_probe_convertToJSON(v1_ephemeral_container->readiness_probe);
+    mazu_cJSON *readiness_probe_local_JSON = v1_probe_convertToJSON(v1_ephemeral_container->readiness_probe);
     if(readiness_probe_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "readinessProbe", readiness_probe_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "readinessProbe", readiness_probe_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -349,7 +349,7 @@ cJSON *v1_ephemeral_container_convertToJSON(v1_ephemeral_container_t *v1_ephemer
 
     // v1_ephemeral_container->resize_policy
     if(v1_ephemeral_container->resize_policy) {
-    cJSON *resize_policy = cJSON_AddArrayToObject(item, "resizePolicy");
+    mazu_cJSON *resize_policy = mazu_cJSON_AddArrayToObject(item, "resizePolicy");
     if(resize_policy == NULL) {
     goto fail; //nonprimitive container
     }
@@ -357,11 +357,11 @@ cJSON *v1_ephemeral_container_convertToJSON(v1_ephemeral_container_t *v1_ephemer
     listEntry_t *resize_policyListEntry;
     if (v1_ephemeral_container->resize_policy) {
     list_ForEach(resize_policyListEntry, v1_ephemeral_container->resize_policy) {
-    cJSON *itemLocal = v1_container_resize_policy_convertToJSON(resize_policyListEntry->data);
+    mazu_cJSON *itemLocal = v1_container_resize_policy_convertToJSON(resize_policyListEntry->data);
     if(itemLocal == NULL) {
     goto fail;
     }
-    cJSON_AddItemToArray(resize_policy, itemLocal);
+    mazu_cJSON_AddItemToArray(resize_policy, itemLocal);
     }
     }
     }
@@ -369,11 +369,11 @@ cJSON *v1_ephemeral_container_convertToJSON(v1_ephemeral_container_t *v1_ephemer
 
     // v1_ephemeral_container->resources
     if(v1_ephemeral_container->resources) {
-    cJSON *resources_local_JSON = v1_resource_requirements_convertToJSON(v1_ephemeral_container->resources);
+    mazu_cJSON *resources_local_JSON = v1_resource_requirements_convertToJSON(v1_ephemeral_container->resources);
     if(resources_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "resources", resources_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "resources", resources_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -382,7 +382,7 @@ cJSON *v1_ephemeral_container_convertToJSON(v1_ephemeral_container_t *v1_ephemer
 
     // v1_ephemeral_container->restart_policy
     if(v1_ephemeral_container->restart_policy) {
-    if(cJSON_AddStringToObject(item, "restartPolicy", v1_ephemeral_container->restart_policy) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "restartPolicy", v1_ephemeral_container->restart_policy) == NULL) {
     goto fail; //String
     }
     }
@@ -390,11 +390,11 @@ cJSON *v1_ephemeral_container_convertToJSON(v1_ephemeral_container_t *v1_ephemer
 
     // v1_ephemeral_container->security_context
     if(v1_ephemeral_container->security_context) {
-    cJSON *security_context_local_JSON = v1_security_context_convertToJSON(v1_ephemeral_container->security_context);
+    mazu_cJSON *security_context_local_JSON = v1_security_context_convertToJSON(v1_ephemeral_container->security_context);
     if(security_context_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "securityContext", security_context_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "securityContext", security_context_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -403,11 +403,11 @@ cJSON *v1_ephemeral_container_convertToJSON(v1_ephemeral_container_t *v1_ephemer
 
     // v1_ephemeral_container->startup_probe
     if(v1_ephemeral_container->startup_probe) {
-    cJSON *startup_probe_local_JSON = v1_probe_convertToJSON(v1_ephemeral_container->startup_probe);
+    mazu_cJSON *startup_probe_local_JSON = v1_probe_convertToJSON(v1_ephemeral_container->startup_probe);
     if(startup_probe_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "startupProbe", startup_probe_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "startupProbe", startup_probe_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -416,7 +416,7 @@ cJSON *v1_ephemeral_container_convertToJSON(v1_ephemeral_container_t *v1_ephemer
 
     // v1_ephemeral_container->_stdin
     if(v1_ephemeral_container->_stdin) {
-    if(cJSON_AddBoolToObject(item, "stdin", v1_ephemeral_container->_stdin) == NULL) {
+    if(mazu_cJSON_AddBoolToObject(item, "stdin", v1_ephemeral_container->_stdin) == NULL) {
     goto fail; //Bool
     }
     }
@@ -424,7 +424,7 @@ cJSON *v1_ephemeral_container_convertToJSON(v1_ephemeral_container_t *v1_ephemer
 
     // v1_ephemeral_container->stdin_once
     if(v1_ephemeral_container->stdin_once) {
-    if(cJSON_AddBoolToObject(item, "stdinOnce", v1_ephemeral_container->stdin_once) == NULL) {
+    if(mazu_cJSON_AddBoolToObject(item, "stdinOnce", v1_ephemeral_container->stdin_once) == NULL) {
     goto fail; //Bool
     }
     }
@@ -432,7 +432,7 @@ cJSON *v1_ephemeral_container_convertToJSON(v1_ephemeral_container_t *v1_ephemer
 
     // v1_ephemeral_container->target_container_name
     if(v1_ephemeral_container->target_container_name) {
-    if(cJSON_AddStringToObject(item, "targetContainerName", v1_ephemeral_container->target_container_name) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "targetContainerName", v1_ephemeral_container->target_container_name) == NULL) {
     goto fail; //String
     }
     }
@@ -440,7 +440,7 @@ cJSON *v1_ephemeral_container_convertToJSON(v1_ephemeral_container_t *v1_ephemer
 
     // v1_ephemeral_container->termination_message_path
     if(v1_ephemeral_container->termination_message_path) {
-    if(cJSON_AddStringToObject(item, "terminationMessagePath", v1_ephemeral_container->termination_message_path) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "terminationMessagePath", v1_ephemeral_container->termination_message_path) == NULL) {
     goto fail; //String
     }
     }
@@ -448,7 +448,7 @@ cJSON *v1_ephemeral_container_convertToJSON(v1_ephemeral_container_t *v1_ephemer
 
     // v1_ephemeral_container->termination_message_policy
     if(v1_ephemeral_container->termination_message_policy) {
-    if(cJSON_AddStringToObject(item, "terminationMessagePolicy", v1_ephemeral_container->termination_message_policy) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "terminationMessagePolicy", v1_ephemeral_container->termination_message_policy) == NULL) {
     goto fail; //String
     }
     }
@@ -456,7 +456,7 @@ cJSON *v1_ephemeral_container_convertToJSON(v1_ephemeral_container_t *v1_ephemer
 
     // v1_ephemeral_container->tty
     if(v1_ephemeral_container->tty) {
-    if(cJSON_AddBoolToObject(item, "tty", v1_ephemeral_container->tty) == NULL) {
+    if(mazu_cJSON_AddBoolToObject(item, "tty", v1_ephemeral_container->tty) == NULL) {
     goto fail; //Bool
     }
     }
@@ -464,7 +464,7 @@ cJSON *v1_ephemeral_container_convertToJSON(v1_ephemeral_container_t *v1_ephemer
 
     // v1_ephemeral_container->volume_devices
     if(v1_ephemeral_container->volume_devices) {
-    cJSON *volume_devices = cJSON_AddArrayToObject(item, "volumeDevices");
+    mazu_cJSON *volume_devices = mazu_cJSON_AddArrayToObject(item, "volumeDevices");
     if(volume_devices == NULL) {
     goto fail; //nonprimitive container
     }
@@ -472,11 +472,11 @@ cJSON *v1_ephemeral_container_convertToJSON(v1_ephemeral_container_t *v1_ephemer
     listEntry_t *volume_devicesListEntry;
     if (v1_ephemeral_container->volume_devices) {
     list_ForEach(volume_devicesListEntry, v1_ephemeral_container->volume_devices) {
-    cJSON *itemLocal = v1_volume_device_convertToJSON(volume_devicesListEntry->data);
+    mazu_cJSON *itemLocal = v1_volume_device_convertToJSON(volume_devicesListEntry->data);
     if(itemLocal == NULL) {
     goto fail;
     }
-    cJSON_AddItemToArray(volume_devices, itemLocal);
+    mazu_cJSON_AddItemToArray(volume_devices, itemLocal);
     }
     }
     }
@@ -484,7 +484,7 @@ cJSON *v1_ephemeral_container_convertToJSON(v1_ephemeral_container_t *v1_ephemer
 
     // v1_ephemeral_container->volume_mounts
     if(v1_ephemeral_container->volume_mounts) {
-    cJSON *volume_mounts = cJSON_AddArrayToObject(item, "volumeMounts");
+    mazu_cJSON *volume_mounts = mazu_cJSON_AddArrayToObject(item, "volumeMounts");
     if(volume_mounts == NULL) {
     goto fail; //nonprimitive container
     }
@@ -492,11 +492,11 @@ cJSON *v1_ephemeral_container_convertToJSON(v1_ephemeral_container_t *v1_ephemer
     listEntry_t *volume_mountsListEntry;
     if (v1_ephemeral_container->volume_mounts) {
     list_ForEach(volume_mountsListEntry, v1_ephemeral_container->volume_mounts) {
-    cJSON *itemLocal = v1_volume_mount_convertToJSON(volume_mountsListEntry->data);
+    mazu_cJSON *itemLocal = v1_volume_mount_convertToJSON(volume_mountsListEntry->data);
     if(itemLocal == NULL) {
     goto fail;
     }
-    cJSON_AddItemToArray(volume_mounts, itemLocal);
+    mazu_cJSON_AddItemToArray(volume_mounts, itemLocal);
     }
     }
     }
@@ -504,7 +504,7 @@ cJSON *v1_ephemeral_container_convertToJSON(v1_ephemeral_container_t *v1_ephemer
 
     // v1_ephemeral_container->working_dir
     if(v1_ephemeral_container->working_dir) {
-    if(cJSON_AddStringToObject(item, "workingDir", v1_ephemeral_container->working_dir) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "workingDir", v1_ephemeral_container->working_dir) == NULL) {
     goto fail; //String
     }
     }
@@ -512,12 +512,12 @@ cJSON *v1_ephemeral_container_convertToJSON(v1_ephemeral_container_t *v1_ephemer
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_ephemeral_container_t *v1_ephemeral_container_parseFromJSON(cJSON *v1_ephemeral_containerJSON){
+v1_ephemeral_container_t *v1_ephemeral_container_parseFromJSON(mazu_cJSON *v1_ephemeral_containerJSON){
 
     v1_ephemeral_container_t *v1_ephemeral_container_local_var = NULL;
 
@@ -564,17 +564,17 @@ v1_ephemeral_container_t *v1_ephemeral_container_parseFromJSON(cJSON *v1_ephemer
     list_t *volume_mountsList = NULL;
 
     // v1_ephemeral_container->args
-    cJSON *args = cJSON_GetObjectItemCaseSensitive(v1_ephemeral_containerJSON, "args");
+    mazu_cJSON *args = mazu_cJSON_GetObjectItemCaseSensitive(v1_ephemeral_containerJSON, "args");
     if (args) { 
-    cJSON *args_local = NULL;
-    if(!cJSON_IsArray(args)) {
+    mazu_cJSON *args_local = NULL;
+    if(!mazu_cJSON_IsArray(args)) {
         goto end;//primitive container
     }
     argsList = list_createList();
 
-    cJSON_ArrayForEach(args_local, args)
+    mazu_cJSON_ArrayForEach(args_local, args)
     {
-        if(!cJSON_IsString(args_local))
+        if(!mazu_cJSON_IsString(args_local))
         {
             goto end;
         }
@@ -583,17 +583,17 @@ v1_ephemeral_container_t *v1_ephemeral_container_parseFromJSON(cJSON *v1_ephemer
     }
 
     // v1_ephemeral_container->command
-    cJSON *command = cJSON_GetObjectItemCaseSensitive(v1_ephemeral_containerJSON, "command");
+    mazu_cJSON *command = mazu_cJSON_GetObjectItemCaseSensitive(v1_ephemeral_containerJSON, "command");
     if (command) { 
-    cJSON *command_local = NULL;
-    if(!cJSON_IsArray(command)) {
+    mazu_cJSON *command_local = NULL;
+    if(!mazu_cJSON_IsArray(command)) {
         goto end;//primitive container
     }
     commandList = list_createList();
 
-    cJSON_ArrayForEach(command_local, command)
+    mazu_cJSON_ArrayForEach(command_local, command)
     {
-        if(!cJSON_IsString(command_local))
+        if(!mazu_cJSON_IsString(command_local))
         {
             goto end;
         }
@@ -602,18 +602,18 @@ v1_ephemeral_container_t *v1_ephemeral_container_parseFromJSON(cJSON *v1_ephemer
     }
 
     // v1_ephemeral_container->env
-    cJSON *env = cJSON_GetObjectItemCaseSensitive(v1_ephemeral_containerJSON, "env");
+    mazu_cJSON *env = mazu_cJSON_GetObjectItemCaseSensitive(v1_ephemeral_containerJSON, "env");
     if (env) { 
-    cJSON *env_local_nonprimitive = NULL;
-    if(!cJSON_IsArray(env)){
+    mazu_cJSON *env_local_nonprimitive = NULL;
+    if(!mazu_cJSON_IsArray(env)){
         goto end; //nonprimitive container
     }
 
     envList = list_createList();
 
-    cJSON_ArrayForEach(env_local_nonprimitive,env )
+    mazu_cJSON_ArrayForEach(env_local_nonprimitive,env )
     {
-        if(!cJSON_IsObject(env_local_nonprimitive)){
+        if(!mazu_cJSON_IsObject(env_local_nonprimitive)){
             goto end;
         }
         v1_env_var_t *envItem = v1_env_var_parseFromJSON(env_local_nonprimitive);
@@ -623,18 +623,18 @@ v1_ephemeral_container_t *v1_ephemeral_container_parseFromJSON(cJSON *v1_ephemer
     }
 
     // v1_ephemeral_container->env_from
-    cJSON *env_from = cJSON_GetObjectItemCaseSensitive(v1_ephemeral_containerJSON, "envFrom");
+    mazu_cJSON *env_from = mazu_cJSON_GetObjectItemCaseSensitive(v1_ephemeral_containerJSON, "envFrom");
     if (env_from) { 
-    cJSON *env_from_local_nonprimitive = NULL;
-    if(!cJSON_IsArray(env_from)){
+    mazu_cJSON *env_from_local_nonprimitive = NULL;
+    if(!mazu_cJSON_IsArray(env_from)){
         goto end; //nonprimitive container
     }
 
     env_fromList = list_createList();
 
-    cJSON_ArrayForEach(env_from_local_nonprimitive,env_from )
+    mazu_cJSON_ArrayForEach(env_from_local_nonprimitive,env_from )
     {
-        if(!cJSON_IsObject(env_from_local_nonprimitive)){
+        if(!mazu_cJSON_IsObject(env_from_local_nonprimitive)){
             goto end;
         }
         v1_env_from_source_t *env_fromItem = v1_env_from_source_parseFromJSON(env_from_local_nonprimitive);
@@ -644,60 +644,60 @@ v1_ephemeral_container_t *v1_ephemeral_container_parseFromJSON(cJSON *v1_ephemer
     }
 
     // v1_ephemeral_container->image
-    cJSON *image = cJSON_GetObjectItemCaseSensitive(v1_ephemeral_containerJSON, "image");
+    mazu_cJSON *image = mazu_cJSON_GetObjectItemCaseSensitive(v1_ephemeral_containerJSON, "image");
     if (image) { 
-    if(!cJSON_IsString(image) && !cJSON_IsNull(image))
+    if(!mazu_cJSON_IsString(image) && !mazu_cJSON_IsNull(image))
     {
     goto end; //String
     }
     }
 
     // v1_ephemeral_container->image_pull_policy
-    cJSON *image_pull_policy = cJSON_GetObjectItemCaseSensitive(v1_ephemeral_containerJSON, "imagePullPolicy");
+    mazu_cJSON *image_pull_policy = mazu_cJSON_GetObjectItemCaseSensitive(v1_ephemeral_containerJSON, "imagePullPolicy");
     if (image_pull_policy) { 
-    if(!cJSON_IsString(image_pull_policy) && !cJSON_IsNull(image_pull_policy))
+    if(!mazu_cJSON_IsString(image_pull_policy) && !mazu_cJSON_IsNull(image_pull_policy))
     {
     goto end; //String
     }
     }
 
     // v1_ephemeral_container->lifecycle
-    cJSON *lifecycle = cJSON_GetObjectItemCaseSensitive(v1_ephemeral_containerJSON, "lifecycle");
+    mazu_cJSON *lifecycle = mazu_cJSON_GetObjectItemCaseSensitive(v1_ephemeral_containerJSON, "lifecycle");
     if (lifecycle) { 
     lifecycle_local_nonprim = v1_lifecycle_parseFromJSON(lifecycle); //nonprimitive
     }
 
     // v1_ephemeral_container->liveness_probe
-    cJSON *liveness_probe = cJSON_GetObjectItemCaseSensitive(v1_ephemeral_containerJSON, "livenessProbe");
+    mazu_cJSON *liveness_probe = mazu_cJSON_GetObjectItemCaseSensitive(v1_ephemeral_containerJSON, "livenessProbe");
     if (liveness_probe) { 
     liveness_probe_local_nonprim = v1_probe_parseFromJSON(liveness_probe); //nonprimitive
     }
 
     // v1_ephemeral_container->name
-    cJSON *name = cJSON_GetObjectItemCaseSensitive(v1_ephemeral_containerJSON, "name");
+    mazu_cJSON *name = mazu_cJSON_GetObjectItemCaseSensitive(v1_ephemeral_containerJSON, "name");
     if (!name) {
         goto end;
     }
 
     
-    if(!cJSON_IsString(name))
+    if(!mazu_cJSON_IsString(name))
     {
     goto end; //String
     }
 
     // v1_ephemeral_container->ports
-    cJSON *ports = cJSON_GetObjectItemCaseSensitive(v1_ephemeral_containerJSON, "ports");
+    mazu_cJSON *ports = mazu_cJSON_GetObjectItemCaseSensitive(v1_ephemeral_containerJSON, "ports");
     if (ports) { 
-    cJSON *ports_local_nonprimitive = NULL;
-    if(!cJSON_IsArray(ports)){
+    mazu_cJSON *ports_local_nonprimitive = NULL;
+    if(!mazu_cJSON_IsArray(ports)){
         goto end; //nonprimitive container
     }
 
     portsList = list_createList();
 
-    cJSON_ArrayForEach(ports_local_nonprimitive,ports )
+    mazu_cJSON_ArrayForEach(ports_local_nonprimitive,ports )
     {
-        if(!cJSON_IsObject(ports_local_nonprimitive)){
+        if(!mazu_cJSON_IsObject(ports_local_nonprimitive)){
             goto end;
         }
         v1_container_port_t *portsItem = v1_container_port_parseFromJSON(ports_local_nonprimitive);
@@ -707,24 +707,24 @@ v1_ephemeral_container_t *v1_ephemeral_container_parseFromJSON(cJSON *v1_ephemer
     }
 
     // v1_ephemeral_container->readiness_probe
-    cJSON *readiness_probe = cJSON_GetObjectItemCaseSensitive(v1_ephemeral_containerJSON, "readinessProbe");
+    mazu_cJSON *readiness_probe = mazu_cJSON_GetObjectItemCaseSensitive(v1_ephemeral_containerJSON, "readinessProbe");
     if (readiness_probe) { 
     readiness_probe_local_nonprim = v1_probe_parseFromJSON(readiness_probe); //nonprimitive
     }
 
     // v1_ephemeral_container->resize_policy
-    cJSON *resize_policy = cJSON_GetObjectItemCaseSensitive(v1_ephemeral_containerJSON, "resizePolicy");
+    mazu_cJSON *resize_policy = mazu_cJSON_GetObjectItemCaseSensitive(v1_ephemeral_containerJSON, "resizePolicy");
     if (resize_policy) { 
-    cJSON *resize_policy_local_nonprimitive = NULL;
-    if(!cJSON_IsArray(resize_policy)){
+    mazu_cJSON *resize_policy_local_nonprimitive = NULL;
+    if(!mazu_cJSON_IsArray(resize_policy)){
         goto end; //nonprimitive container
     }
 
     resize_policyList = list_createList();
 
-    cJSON_ArrayForEach(resize_policy_local_nonprimitive,resize_policy )
+    mazu_cJSON_ArrayForEach(resize_policy_local_nonprimitive,resize_policy )
     {
-        if(!cJSON_IsObject(resize_policy_local_nonprimitive)){
+        if(!mazu_cJSON_IsObject(resize_policy_local_nonprimitive)){
             goto end;
         }
         v1_container_resize_policy_t *resize_policyItem = v1_container_resize_policy_parseFromJSON(resize_policy_local_nonprimitive);
@@ -734,99 +734,99 @@ v1_ephemeral_container_t *v1_ephemeral_container_parseFromJSON(cJSON *v1_ephemer
     }
 
     // v1_ephemeral_container->resources
-    cJSON *resources = cJSON_GetObjectItemCaseSensitive(v1_ephemeral_containerJSON, "resources");
+    mazu_cJSON *resources = mazu_cJSON_GetObjectItemCaseSensitive(v1_ephemeral_containerJSON, "resources");
     if (resources) { 
     resources_local_nonprim = v1_resource_requirements_parseFromJSON(resources); //nonprimitive
     }
 
     // v1_ephemeral_container->restart_policy
-    cJSON *restart_policy = cJSON_GetObjectItemCaseSensitive(v1_ephemeral_containerJSON, "restartPolicy");
+    mazu_cJSON *restart_policy = mazu_cJSON_GetObjectItemCaseSensitive(v1_ephemeral_containerJSON, "restartPolicy");
     if (restart_policy) { 
-    if(!cJSON_IsString(restart_policy) && !cJSON_IsNull(restart_policy))
+    if(!mazu_cJSON_IsString(restart_policy) && !mazu_cJSON_IsNull(restart_policy))
     {
     goto end; //String
     }
     }
 
     // v1_ephemeral_container->security_context
-    cJSON *security_context = cJSON_GetObjectItemCaseSensitive(v1_ephemeral_containerJSON, "securityContext");
+    mazu_cJSON *security_context = mazu_cJSON_GetObjectItemCaseSensitive(v1_ephemeral_containerJSON, "securityContext");
     if (security_context) { 
     security_context_local_nonprim = v1_security_context_parseFromJSON(security_context); //nonprimitive
     }
 
     // v1_ephemeral_container->startup_probe
-    cJSON *startup_probe = cJSON_GetObjectItemCaseSensitive(v1_ephemeral_containerJSON, "startupProbe");
+    mazu_cJSON *startup_probe = mazu_cJSON_GetObjectItemCaseSensitive(v1_ephemeral_containerJSON, "startupProbe");
     if (startup_probe) { 
     startup_probe_local_nonprim = v1_probe_parseFromJSON(startup_probe); //nonprimitive
     }
 
     // v1_ephemeral_container->_stdin
-    cJSON *_stdin = cJSON_GetObjectItemCaseSensitive(v1_ephemeral_containerJSON, "stdin");
+    mazu_cJSON *_stdin = mazu_cJSON_GetObjectItemCaseSensitive(v1_ephemeral_containerJSON, "stdin");
     if (_stdin) { 
-    if(!cJSON_IsBool(_stdin))
+    if(!mazu_cJSON_IsBool(_stdin))
     {
     goto end; //Bool
     }
     }
 
     // v1_ephemeral_container->stdin_once
-    cJSON *stdin_once = cJSON_GetObjectItemCaseSensitive(v1_ephemeral_containerJSON, "stdinOnce");
+    mazu_cJSON *stdin_once = mazu_cJSON_GetObjectItemCaseSensitive(v1_ephemeral_containerJSON, "stdinOnce");
     if (stdin_once) { 
-    if(!cJSON_IsBool(stdin_once))
+    if(!mazu_cJSON_IsBool(stdin_once))
     {
     goto end; //Bool
     }
     }
 
     // v1_ephemeral_container->target_container_name
-    cJSON *target_container_name = cJSON_GetObjectItemCaseSensitive(v1_ephemeral_containerJSON, "targetContainerName");
+    mazu_cJSON *target_container_name = mazu_cJSON_GetObjectItemCaseSensitive(v1_ephemeral_containerJSON, "targetContainerName");
     if (target_container_name) { 
-    if(!cJSON_IsString(target_container_name) && !cJSON_IsNull(target_container_name))
+    if(!mazu_cJSON_IsString(target_container_name) && !mazu_cJSON_IsNull(target_container_name))
     {
     goto end; //String
     }
     }
 
     // v1_ephemeral_container->termination_message_path
-    cJSON *termination_message_path = cJSON_GetObjectItemCaseSensitive(v1_ephemeral_containerJSON, "terminationMessagePath");
+    mazu_cJSON *termination_message_path = mazu_cJSON_GetObjectItemCaseSensitive(v1_ephemeral_containerJSON, "terminationMessagePath");
     if (termination_message_path) { 
-    if(!cJSON_IsString(termination_message_path) && !cJSON_IsNull(termination_message_path))
+    if(!mazu_cJSON_IsString(termination_message_path) && !mazu_cJSON_IsNull(termination_message_path))
     {
     goto end; //String
     }
     }
 
     // v1_ephemeral_container->termination_message_policy
-    cJSON *termination_message_policy = cJSON_GetObjectItemCaseSensitive(v1_ephemeral_containerJSON, "terminationMessagePolicy");
+    mazu_cJSON *termination_message_policy = mazu_cJSON_GetObjectItemCaseSensitive(v1_ephemeral_containerJSON, "terminationMessagePolicy");
     if (termination_message_policy) { 
-    if(!cJSON_IsString(termination_message_policy) && !cJSON_IsNull(termination_message_policy))
+    if(!mazu_cJSON_IsString(termination_message_policy) && !mazu_cJSON_IsNull(termination_message_policy))
     {
     goto end; //String
     }
     }
 
     // v1_ephemeral_container->tty
-    cJSON *tty = cJSON_GetObjectItemCaseSensitive(v1_ephemeral_containerJSON, "tty");
+    mazu_cJSON *tty = mazu_cJSON_GetObjectItemCaseSensitive(v1_ephemeral_containerJSON, "tty");
     if (tty) { 
-    if(!cJSON_IsBool(tty))
+    if(!mazu_cJSON_IsBool(tty))
     {
     goto end; //Bool
     }
     }
 
     // v1_ephemeral_container->volume_devices
-    cJSON *volume_devices = cJSON_GetObjectItemCaseSensitive(v1_ephemeral_containerJSON, "volumeDevices");
+    mazu_cJSON *volume_devices = mazu_cJSON_GetObjectItemCaseSensitive(v1_ephemeral_containerJSON, "volumeDevices");
     if (volume_devices) { 
-    cJSON *volume_devices_local_nonprimitive = NULL;
-    if(!cJSON_IsArray(volume_devices)){
+    mazu_cJSON *volume_devices_local_nonprimitive = NULL;
+    if(!mazu_cJSON_IsArray(volume_devices)){
         goto end; //nonprimitive container
     }
 
     volume_devicesList = list_createList();
 
-    cJSON_ArrayForEach(volume_devices_local_nonprimitive,volume_devices )
+    mazu_cJSON_ArrayForEach(volume_devices_local_nonprimitive,volume_devices )
     {
-        if(!cJSON_IsObject(volume_devices_local_nonprimitive)){
+        if(!mazu_cJSON_IsObject(volume_devices_local_nonprimitive)){
             goto end;
         }
         v1_volume_device_t *volume_devicesItem = v1_volume_device_parseFromJSON(volume_devices_local_nonprimitive);
@@ -836,18 +836,18 @@ v1_ephemeral_container_t *v1_ephemeral_container_parseFromJSON(cJSON *v1_ephemer
     }
 
     // v1_ephemeral_container->volume_mounts
-    cJSON *volume_mounts = cJSON_GetObjectItemCaseSensitive(v1_ephemeral_containerJSON, "volumeMounts");
+    mazu_cJSON *volume_mounts = mazu_cJSON_GetObjectItemCaseSensitive(v1_ephemeral_containerJSON, "volumeMounts");
     if (volume_mounts) { 
-    cJSON *volume_mounts_local_nonprimitive = NULL;
-    if(!cJSON_IsArray(volume_mounts)){
+    mazu_cJSON *volume_mounts_local_nonprimitive = NULL;
+    if(!mazu_cJSON_IsArray(volume_mounts)){
         goto end; //nonprimitive container
     }
 
     volume_mountsList = list_createList();
 
-    cJSON_ArrayForEach(volume_mounts_local_nonprimitive,volume_mounts )
+    mazu_cJSON_ArrayForEach(volume_mounts_local_nonprimitive,volume_mounts )
     {
-        if(!cJSON_IsObject(volume_mounts_local_nonprimitive)){
+        if(!mazu_cJSON_IsObject(volume_mounts_local_nonprimitive)){
             goto end;
         }
         v1_volume_mount_t *volume_mountsItem = v1_volume_mount_parseFromJSON(volume_mounts_local_nonprimitive);
@@ -857,9 +857,9 @@ v1_ephemeral_container_t *v1_ephemeral_container_parseFromJSON(cJSON *v1_ephemer
     }
 
     // v1_ephemeral_container->working_dir
-    cJSON *working_dir = cJSON_GetObjectItemCaseSensitive(v1_ephemeral_containerJSON, "workingDir");
+    mazu_cJSON *working_dir = mazu_cJSON_GetObjectItemCaseSensitive(v1_ephemeral_containerJSON, "workingDir");
     if (working_dir) { 
-    if(!cJSON_IsString(working_dir) && !cJSON_IsNull(working_dir))
+    if(!mazu_cJSON_IsString(working_dir) && !mazu_cJSON_IsNull(working_dir))
     {
     goto end; //String
     }
@@ -871,8 +871,8 @@ v1_ephemeral_container_t *v1_ephemeral_container_parseFromJSON(cJSON *v1_ephemer
         command ? commandList : NULL,
         env ? envList : NULL,
         env_from ? env_fromList : NULL,
-        image && !cJSON_IsNull(image) ? strdup(image->valuestring) : NULL,
-        image_pull_policy && !cJSON_IsNull(image_pull_policy) ? strdup(image_pull_policy->valuestring) : NULL,
+        image && !mazu_cJSON_IsNull(image) ? strdup(image->valuestring) : NULL,
+        image_pull_policy && !mazu_cJSON_IsNull(image_pull_policy) ? strdup(image_pull_policy->valuestring) : NULL,
         lifecycle ? lifecycle_local_nonprim : NULL,
         liveness_probe ? liveness_probe_local_nonprim : NULL,
         strdup(name->valuestring),
@@ -880,18 +880,18 @@ v1_ephemeral_container_t *v1_ephemeral_container_parseFromJSON(cJSON *v1_ephemer
         readiness_probe ? readiness_probe_local_nonprim : NULL,
         resize_policy ? resize_policyList : NULL,
         resources ? resources_local_nonprim : NULL,
-        restart_policy && !cJSON_IsNull(restart_policy) ? strdup(restart_policy->valuestring) : NULL,
+        restart_policy && !mazu_cJSON_IsNull(restart_policy) ? strdup(restart_policy->valuestring) : NULL,
         security_context ? security_context_local_nonprim : NULL,
         startup_probe ? startup_probe_local_nonprim : NULL,
         _stdin ? _stdin->valueint : 0,
         stdin_once ? stdin_once->valueint : 0,
-        target_container_name && !cJSON_IsNull(target_container_name) ? strdup(target_container_name->valuestring) : NULL,
-        termination_message_path && !cJSON_IsNull(termination_message_path) ? strdup(termination_message_path->valuestring) : NULL,
-        termination_message_policy && !cJSON_IsNull(termination_message_policy) ? strdup(termination_message_policy->valuestring) : NULL,
+        target_container_name && !mazu_cJSON_IsNull(target_container_name) ? strdup(target_container_name->valuestring) : NULL,
+        termination_message_path && !mazu_cJSON_IsNull(termination_message_path) ? strdup(termination_message_path->valuestring) : NULL,
+        termination_message_policy && !mazu_cJSON_IsNull(termination_message_policy) ? strdup(termination_message_policy->valuestring) : NULL,
         tty ? tty->valueint : 0,
         volume_devices ? volume_devicesList : NULL,
         volume_mounts ? volume_mountsList : NULL,
-        working_dir && !cJSON_IsNull(working_dir) ? strdup(working_dir->valuestring) : NULL
+        working_dir && !mazu_cJSON_IsNull(working_dir) ? strdup(working_dir->valuestring) : NULL
         );
 
     return v1_ephemeral_container_local_var;

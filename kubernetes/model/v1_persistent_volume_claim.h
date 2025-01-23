@@ -8,7 +8,7 @@
 #define _v1_persistent_volume_claim_H_
 
 #include <string.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
 #include "../include/binary.h"
@@ -40,9 +40,9 @@ v1_persistent_volume_claim_t *v1_persistent_volume_claim_create(
 
 void v1_persistent_volume_claim_free(v1_persistent_volume_claim_t *v1_persistent_volume_claim);
 
-v1_persistent_volume_claim_t *v1_persistent_volume_claim_parseFromJSON(cJSON *v1_persistent_volume_claimJSON);
+v1_persistent_volume_claim_t *v1_persistent_volume_claim_parseFromJSON(mazu_cJSON *v1_persistent_volume_claimJSON);
 
-cJSON *v1_persistent_volume_claim_convertToJSON(v1_persistent_volume_claim_t *v1_persistent_volume_claim);
+mazu_cJSON *v1_persistent_volume_claim_convertToJSON(v1_persistent_volume_claim_t *v1_persistent_volume_claim);
 
 #endif /* _v1_persistent_volume_claim_H_ */
 

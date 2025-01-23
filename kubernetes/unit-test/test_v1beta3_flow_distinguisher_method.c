@@ -11,7 +11,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdbool.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 
 #include "../model/v1beta3_flow_distinguisher_method.h"
 v1beta3_flow_distinguisher_method_t* instantiate_v1beta3_flow_distinguisher_method(int include_optional);
@@ -39,11 +39,11 @@ v1beta3_flow_distinguisher_method_t* instantiate_v1beta3_flow_distinguisher_meth
 void test_v1beta3_flow_distinguisher_method(int include_optional) {
     v1beta3_flow_distinguisher_method_t* v1beta3_flow_distinguisher_method_1 = instantiate_v1beta3_flow_distinguisher_method(include_optional);
 
-	cJSON* jsonv1beta3_flow_distinguisher_method_1 = v1beta3_flow_distinguisher_method_convertToJSON(v1beta3_flow_distinguisher_method_1);
-	printf("v1beta3_flow_distinguisher_method :\n%s\n", cJSON_Print(jsonv1beta3_flow_distinguisher_method_1));
+	mazu_cJSON* jsonv1beta3_flow_distinguisher_method_1 = v1beta3_flow_distinguisher_method_convertToJSON(v1beta3_flow_distinguisher_method_1);
+	printf("v1beta3_flow_distinguisher_method :\n%s\n", mazu_cJSON_Print(jsonv1beta3_flow_distinguisher_method_1));
 	v1beta3_flow_distinguisher_method_t* v1beta3_flow_distinguisher_method_2 = v1beta3_flow_distinguisher_method_parseFromJSON(jsonv1beta3_flow_distinguisher_method_1);
-	cJSON* jsonv1beta3_flow_distinguisher_method_2 = v1beta3_flow_distinguisher_method_convertToJSON(v1beta3_flow_distinguisher_method_2);
-	printf("repeating v1beta3_flow_distinguisher_method:\n%s\n", cJSON_Print(jsonv1beta3_flow_distinguisher_method_2));
+	mazu_cJSON* jsonv1beta3_flow_distinguisher_method_2 = v1beta3_flow_distinguisher_method_convertToJSON(v1beta3_flow_distinguisher_method_2);
+	printf("repeating v1beta3_flow_distinguisher_method:\n%s\n", mazu_cJSON_Print(jsonv1beta3_flow_distinguisher_method_2));
 }
 
 int main() {

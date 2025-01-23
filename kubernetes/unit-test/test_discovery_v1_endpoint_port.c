@@ -11,7 +11,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdbool.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 
 #include "../model/discovery_v1_endpoint_port.h"
 discovery_v1_endpoint_port_t* instantiate_discovery_v1_endpoint_port(int include_optional);
@@ -45,11 +45,11 @@ discovery_v1_endpoint_port_t* instantiate_discovery_v1_endpoint_port(int include
 void test_discovery_v1_endpoint_port(int include_optional) {
     discovery_v1_endpoint_port_t* discovery_v1_endpoint_port_1 = instantiate_discovery_v1_endpoint_port(include_optional);
 
-	cJSON* jsondiscovery_v1_endpoint_port_1 = discovery_v1_endpoint_port_convertToJSON(discovery_v1_endpoint_port_1);
-	printf("discovery_v1_endpoint_port :\n%s\n", cJSON_Print(jsondiscovery_v1_endpoint_port_1));
+	mazu_cJSON* jsondiscovery_v1_endpoint_port_1 = discovery_v1_endpoint_port_convertToJSON(discovery_v1_endpoint_port_1);
+	printf("discovery_v1_endpoint_port :\n%s\n", mazu_cJSON_Print(jsondiscovery_v1_endpoint_port_1));
 	discovery_v1_endpoint_port_t* discovery_v1_endpoint_port_2 = discovery_v1_endpoint_port_parseFromJSON(jsondiscovery_v1_endpoint_port_1);
-	cJSON* jsondiscovery_v1_endpoint_port_2 = discovery_v1_endpoint_port_convertToJSON(discovery_v1_endpoint_port_2);
-	printf("repeating discovery_v1_endpoint_port:\n%s\n", cJSON_Print(jsondiscovery_v1_endpoint_port_2));
+	mazu_cJSON* jsondiscovery_v1_endpoint_port_2 = discovery_v1_endpoint_port_convertToJSON(discovery_v1_endpoint_port_2);
+	printf("repeating discovery_v1_endpoint_port:\n%s\n", mazu_cJSON_Print(jsondiscovery_v1_endpoint_port_2));
 }
 
 int main() {

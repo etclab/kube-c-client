@@ -8,7 +8,7 @@
 #define _v1alpha1_type_checking_H_
 
 #include <string.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
 #include "../include/binary.h"
@@ -30,9 +30,9 @@ v1alpha1_type_checking_t *v1alpha1_type_checking_create(
 
 void v1alpha1_type_checking_free(v1alpha1_type_checking_t *v1alpha1_type_checking);
 
-v1alpha1_type_checking_t *v1alpha1_type_checking_parseFromJSON(cJSON *v1alpha1_type_checkingJSON);
+v1alpha1_type_checking_t *v1alpha1_type_checking_parseFromJSON(mazu_cJSON *v1alpha1_type_checkingJSON);
 
-cJSON *v1alpha1_type_checking_convertToJSON(v1alpha1_type_checking_t *v1alpha1_type_checking);
+mazu_cJSON *v1alpha1_type_checking_convertToJSON(v1alpha1_type_checking_t *v1alpha1_type_checking);
 
 #endif /* _v1alpha1_type_checking_H_ */
 

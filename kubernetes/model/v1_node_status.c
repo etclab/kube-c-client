@@ -132,12 +132,12 @@ void v1_node_status_free(v1_node_status_t *v1_node_status) {
     free(v1_node_status);
 }
 
-cJSON *v1_node_status_convertToJSON(v1_node_status_t *v1_node_status) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_node_status_convertToJSON(v1_node_status_t *v1_node_status) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_node_status->addresses
     if(v1_node_status->addresses) {
-    cJSON *addresses = cJSON_AddArrayToObject(item, "addresses");
+    mazu_cJSON *addresses = mazu_cJSON_AddArrayToObject(item, "addresses");
     if(addresses == NULL) {
     goto fail; //nonprimitive container
     }
@@ -145,11 +145,11 @@ cJSON *v1_node_status_convertToJSON(v1_node_status_t *v1_node_status) {
     listEntry_t *addressesListEntry;
     if (v1_node_status->addresses) {
     list_ForEach(addressesListEntry, v1_node_status->addresses) {
-    cJSON *itemLocal = v1_node_address_convertToJSON(addressesListEntry->data);
+    mazu_cJSON *itemLocal = v1_node_address_convertToJSON(addressesListEntry->data);
     if(itemLocal == NULL) {
     goto fail;
     }
-    cJSON_AddItemToArray(addresses, itemLocal);
+    mazu_cJSON_AddItemToArray(addresses, itemLocal);
     }
     }
     }
@@ -157,16 +157,16 @@ cJSON *v1_node_status_convertToJSON(v1_node_status_t *v1_node_status) {
 
     // v1_node_status->allocatable
     if(v1_node_status->allocatable) {
-    cJSON *allocatable = cJSON_AddObjectToObject(item, "allocatable");
+    mazu_cJSON *allocatable = mazu_cJSON_AddObjectToObject(item, "allocatable");
     if(allocatable == NULL) {
         goto fail; //primitive map container
     }
-    cJSON *localMapObject = allocatable;
+    mazu_cJSON *localMapObject = allocatable;
     listEntry_t *allocatableListEntry;
     if (v1_node_status->allocatable) {
     list_ForEach(allocatableListEntry, v1_node_status->allocatable) {
         keyValuePair_t *localKeyValue = (keyValuePair_t*)allocatableListEntry->data;
-        if(cJSON_AddStringToObject(localMapObject, localKeyValue->key, (char*)localKeyValue->value) == NULL)
+        if(mazu_cJSON_AddStringToObject(localMapObject, localKeyValue->key, (char*)localKeyValue->value) == NULL)
         {
             goto fail;
         }
@@ -177,16 +177,16 @@ cJSON *v1_node_status_convertToJSON(v1_node_status_t *v1_node_status) {
 
     // v1_node_status->capacity
     if(v1_node_status->capacity) {
-    cJSON *capacity = cJSON_AddObjectToObject(item, "capacity");
+    mazu_cJSON *capacity = mazu_cJSON_AddObjectToObject(item, "capacity");
     if(capacity == NULL) {
         goto fail; //primitive map container
     }
-    cJSON *localMapObject = capacity;
+    mazu_cJSON *localMapObject = capacity;
     listEntry_t *capacityListEntry;
     if (v1_node_status->capacity) {
     list_ForEach(capacityListEntry, v1_node_status->capacity) {
         keyValuePair_t *localKeyValue = (keyValuePair_t*)capacityListEntry->data;
-        if(cJSON_AddStringToObject(localMapObject, localKeyValue->key, (char*)localKeyValue->value) == NULL)
+        if(mazu_cJSON_AddStringToObject(localMapObject, localKeyValue->key, (char*)localKeyValue->value) == NULL)
         {
             goto fail;
         }
@@ -197,7 +197,7 @@ cJSON *v1_node_status_convertToJSON(v1_node_status_t *v1_node_status) {
 
     // v1_node_status->conditions
     if(v1_node_status->conditions) {
-    cJSON *conditions = cJSON_AddArrayToObject(item, "conditions");
+    mazu_cJSON *conditions = mazu_cJSON_AddArrayToObject(item, "conditions");
     if(conditions == NULL) {
     goto fail; //nonprimitive container
     }
@@ -205,11 +205,11 @@ cJSON *v1_node_status_convertToJSON(v1_node_status_t *v1_node_status) {
     listEntry_t *conditionsListEntry;
     if (v1_node_status->conditions) {
     list_ForEach(conditionsListEntry, v1_node_status->conditions) {
-    cJSON *itemLocal = v1_node_condition_convertToJSON(conditionsListEntry->data);
+    mazu_cJSON *itemLocal = v1_node_condition_convertToJSON(conditionsListEntry->data);
     if(itemLocal == NULL) {
     goto fail;
     }
-    cJSON_AddItemToArray(conditions, itemLocal);
+    mazu_cJSON_AddItemToArray(conditions, itemLocal);
     }
     }
     }
@@ -217,11 +217,11 @@ cJSON *v1_node_status_convertToJSON(v1_node_status_t *v1_node_status) {
 
     // v1_node_status->config
     if(v1_node_status->config) {
-    cJSON *config_local_JSON = v1_node_config_status_convertToJSON(v1_node_status->config);
+    mazu_cJSON *config_local_JSON = v1_node_config_status_convertToJSON(v1_node_status->config);
     if(config_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "config", config_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "config", config_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -230,11 +230,11 @@ cJSON *v1_node_status_convertToJSON(v1_node_status_t *v1_node_status) {
 
     // v1_node_status->daemon_endpoints
     if(v1_node_status->daemon_endpoints) {
-    cJSON *daemon_endpoints_local_JSON = v1_node_daemon_endpoints_convertToJSON(v1_node_status->daemon_endpoints);
+    mazu_cJSON *daemon_endpoints_local_JSON = v1_node_daemon_endpoints_convertToJSON(v1_node_status->daemon_endpoints);
     if(daemon_endpoints_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "daemonEndpoints", daemon_endpoints_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "daemonEndpoints", daemon_endpoints_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -243,11 +243,11 @@ cJSON *v1_node_status_convertToJSON(v1_node_status_t *v1_node_status) {
 
     // v1_node_status->features
     if(v1_node_status->features) {
-    cJSON *features_local_JSON = v1_node_features_convertToJSON(v1_node_status->features);
+    mazu_cJSON *features_local_JSON = v1_node_features_convertToJSON(v1_node_status->features);
     if(features_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "features", features_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "features", features_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -256,7 +256,7 @@ cJSON *v1_node_status_convertToJSON(v1_node_status_t *v1_node_status) {
 
     // v1_node_status->images
     if(v1_node_status->images) {
-    cJSON *images = cJSON_AddArrayToObject(item, "images");
+    mazu_cJSON *images = mazu_cJSON_AddArrayToObject(item, "images");
     if(images == NULL) {
     goto fail; //nonprimitive container
     }
@@ -264,11 +264,11 @@ cJSON *v1_node_status_convertToJSON(v1_node_status_t *v1_node_status) {
     listEntry_t *imagesListEntry;
     if (v1_node_status->images) {
     list_ForEach(imagesListEntry, v1_node_status->images) {
-    cJSON *itemLocal = v1_container_image_convertToJSON(imagesListEntry->data);
+    mazu_cJSON *itemLocal = v1_container_image_convertToJSON(imagesListEntry->data);
     if(itemLocal == NULL) {
     goto fail;
     }
-    cJSON_AddItemToArray(images, itemLocal);
+    mazu_cJSON_AddItemToArray(images, itemLocal);
     }
     }
     }
@@ -276,11 +276,11 @@ cJSON *v1_node_status_convertToJSON(v1_node_status_t *v1_node_status) {
 
     // v1_node_status->node_info
     if(v1_node_status->node_info) {
-    cJSON *node_info_local_JSON = v1_node_system_info_convertToJSON(v1_node_status->node_info);
+    mazu_cJSON *node_info_local_JSON = v1_node_system_info_convertToJSON(v1_node_status->node_info);
     if(node_info_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "nodeInfo", node_info_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "nodeInfo", node_info_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -289,7 +289,7 @@ cJSON *v1_node_status_convertToJSON(v1_node_status_t *v1_node_status) {
 
     // v1_node_status->phase
     if(v1_node_status->phase) {
-    if(cJSON_AddStringToObject(item, "phase", v1_node_status->phase) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "phase", v1_node_status->phase) == NULL) {
     goto fail; //String
     }
     }
@@ -297,7 +297,7 @@ cJSON *v1_node_status_convertToJSON(v1_node_status_t *v1_node_status) {
 
     // v1_node_status->runtime_handlers
     if(v1_node_status->runtime_handlers) {
-    cJSON *runtime_handlers = cJSON_AddArrayToObject(item, "runtimeHandlers");
+    mazu_cJSON *runtime_handlers = mazu_cJSON_AddArrayToObject(item, "runtimeHandlers");
     if(runtime_handlers == NULL) {
     goto fail; //nonprimitive container
     }
@@ -305,11 +305,11 @@ cJSON *v1_node_status_convertToJSON(v1_node_status_t *v1_node_status) {
     listEntry_t *runtime_handlersListEntry;
     if (v1_node_status->runtime_handlers) {
     list_ForEach(runtime_handlersListEntry, v1_node_status->runtime_handlers) {
-    cJSON *itemLocal = v1_node_runtime_handler_convertToJSON(runtime_handlersListEntry->data);
+    mazu_cJSON *itemLocal = v1_node_runtime_handler_convertToJSON(runtime_handlersListEntry->data);
     if(itemLocal == NULL) {
     goto fail;
     }
-    cJSON_AddItemToArray(runtime_handlers, itemLocal);
+    mazu_cJSON_AddItemToArray(runtime_handlers, itemLocal);
     }
     }
     }
@@ -317,7 +317,7 @@ cJSON *v1_node_status_convertToJSON(v1_node_status_t *v1_node_status) {
 
     // v1_node_status->volumes_attached
     if(v1_node_status->volumes_attached) {
-    cJSON *volumes_attached = cJSON_AddArrayToObject(item, "volumesAttached");
+    mazu_cJSON *volumes_attached = mazu_cJSON_AddArrayToObject(item, "volumesAttached");
     if(volumes_attached == NULL) {
     goto fail; //nonprimitive container
     }
@@ -325,11 +325,11 @@ cJSON *v1_node_status_convertToJSON(v1_node_status_t *v1_node_status) {
     listEntry_t *volumes_attachedListEntry;
     if (v1_node_status->volumes_attached) {
     list_ForEach(volumes_attachedListEntry, v1_node_status->volumes_attached) {
-    cJSON *itemLocal = v1_attached_volume_convertToJSON(volumes_attachedListEntry->data);
+    mazu_cJSON *itemLocal = v1_attached_volume_convertToJSON(volumes_attachedListEntry->data);
     if(itemLocal == NULL) {
     goto fail;
     }
-    cJSON_AddItemToArray(volumes_attached, itemLocal);
+    mazu_cJSON_AddItemToArray(volumes_attached, itemLocal);
     }
     }
     }
@@ -337,14 +337,14 @@ cJSON *v1_node_status_convertToJSON(v1_node_status_t *v1_node_status) {
 
     // v1_node_status->volumes_in_use
     if(v1_node_status->volumes_in_use) {
-    cJSON *volumes_in_use = cJSON_AddArrayToObject(item, "volumesInUse");
+    mazu_cJSON *volumes_in_use = mazu_cJSON_AddArrayToObject(item, "volumesInUse");
     if(volumes_in_use == NULL) {
         goto fail; //primitive container
     }
 
     listEntry_t *volumes_in_useListEntry;
     list_ForEach(volumes_in_useListEntry, v1_node_status->volumes_in_use) {
-    if(cJSON_AddStringToObject(volumes_in_use, "", (char*)volumes_in_useListEntry->data) == NULL)
+    if(mazu_cJSON_AddStringToObject(volumes_in_use, "", (char*)volumes_in_useListEntry->data) == NULL)
     {
         goto fail;
     }
@@ -354,12 +354,12 @@ cJSON *v1_node_status_convertToJSON(v1_node_status_t *v1_node_status) {
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_node_status_t *v1_node_status_parseFromJSON(cJSON *v1_node_statusJSON){
+v1_node_status_t *v1_node_status_parseFromJSON(mazu_cJSON *v1_node_statusJSON){
 
     v1_node_status_t *v1_node_status_local_var = NULL;
 
@@ -400,18 +400,18 @@ v1_node_status_t *v1_node_status_parseFromJSON(cJSON *v1_node_statusJSON){
     list_t *volumes_in_useList = NULL;
 
     // v1_node_status->addresses
-    cJSON *addresses = cJSON_GetObjectItemCaseSensitive(v1_node_statusJSON, "addresses");
+    mazu_cJSON *addresses = mazu_cJSON_GetObjectItemCaseSensitive(v1_node_statusJSON, "addresses");
     if (addresses) { 
-    cJSON *addresses_local_nonprimitive = NULL;
-    if(!cJSON_IsArray(addresses)){
+    mazu_cJSON *addresses_local_nonprimitive = NULL;
+    if(!mazu_cJSON_IsArray(addresses)){
         goto end; //nonprimitive container
     }
 
     addressesList = list_createList();
 
-    cJSON_ArrayForEach(addresses_local_nonprimitive,addresses )
+    mazu_cJSON_ArrayForEach(addresses_local_nonprimitive,addresses )
     {
-        if(!cJSON_IsObject(addresses_local_nonprimitive)){
+        if(!mazu_cJSON_IsObject(addresses_local_nonprimitive)){
             goto end;
         }
         v1_node_address_t *addressesItem = v1_node_address_parseFromJSON(addresses_local_nonprimitive);
@@ -421,21 +421,21 @@ v1_node_status_t *v1_node_status_parseFromJSON(cJSON *v1_node_statusJSON){
     }
 
     // v1_node_status->allocatable
-    cJSON *allocatable = cJSON_GetObjectItemCaseSensitive(v1_node_statusJSON, "allocatable");
+    mazu_cJSON *allocatable = mazu_cJSON_GetObjectItemCaseSensitive(v1_node_statusJSON, "allocatable");
     if (allocatable) { 
-    cJSON *allocatable_local_map = NULL;
-    if(!cJSON_IsObject(allocatable) && !cJSON_IsNull(allocatable))
+    mazu_cJSON *allocatable_local_map = NULL;
+    if(!mazu_cJSON_IsObject(allocatable) && !mazu_cJSON_IsNull(allocatable))
     {
         goto end;//primitive map container
     }
-    if(cJSON_IsObject(allocatable))
+    if(mazu_cJSON_IsObject(allocatable))
     {
         allocatableList = list_createList();
         keyValuePair_t *localMapKeyPair;
-        cJSON_ArrayForEach(allocatable_local_map, allocatable)
+        mazu_cJSON_ArrayForEach(allocatable_local_map, allocatable)
         {
-            cJSON *localMapObject = allocatable_local_map;
-            if(!cJSON_IsString(localMapObject))
+            mazu_cJSON *localMapObject = allocatable_local_map;
+            if(!mazu_cJSON_IsString(localMapObject))
             {
                 goto end;
             }
@@ -446,21 +446,21 @@ v1_node_status_t *v1_node_status_parseFromJSON(cJSON *v1_node_statusJSON){
     }
 
     // v1_node_status->capacity
-    cJSON *capacity = cJSON_GetObjectItemCaseSensitive(v1_node_statusJSON, "capacity");
+    mazu_cJSON *capacity = mazu_cJSON_GetObjectItemCaseSensitive(v1_node_statusJSON, "capacity");
     if (capacity) { 
-    cJSON *capacity_local_map = NULL;
-    if(!cJSON_IsObject(capacity) && !cJSON_IsNull(capacity))
+    mazu_cJSON *capacity_local_map = NULL;
+    if(!mazu_cJSON_IsObject(capacity) && !mazu_cJSON_IsNull(capacity))
     {
         goto end;//primitive map container
     }
-    if(cJSON_IsObject(capacity))
+    if(mazu_cJSON_IsObject(capacity))
     {
         capacityList = list_createList();
         keyValuePair_t *localMapKeyPair;
-        cJSON_ArrayForEach(capacity_local_map, capacity)
+        mazu_cJSON_ArrayForEach(capacity_local_map, capacity)
         {
-            cJSON *localMapObject = capacity_local_map;
-            if(!cJSON_IsString(localMapObject))
+            mazu_cJSON *localMapObject = capacity_local_map;
+            if(!mazu_cJSON_IsString(localMapObject))
             {
                 goto end;
             }
@@ -471,18 +471,18 @@ v1_node_status_t *v1_node_status_parseFromJSON(cJSON *v1_node_statusJSON){
     }
 
     // v1_node_status->conditions
-    cJSON *conditions = cJSON_GetObjectItemCaseSensitive(v1_node_statusJSON, "conditions");
+    mazu_cJSON *conditions = mazu_cJSON_GetObjectItemCaseSensitive(v1_node_statusJSON, "conditions");
     if (conditions) { 
-    cJSON *conditions_local_nonprimitive = NULL;
-    if(!cJSON_IsArray(conditions)){
+    mazu_cJSON *conditions_local_nonprimitive = NULL;
+    if(!mazu_cJSON_IsArray(conditions)){
         goto end; //nonprimitive container
     }
 
     conditionsList = list_createList();
 
-    cJSON_ArrayForEach(conditions_local_nonprimitive,conditions )
+    mazu_cJSON_ArrayForEach(conditions_local_nonprimitive,conditions )
     {
-        if(!cJSON_IsObject(conditions_local_nonprimitive)){
+        if(!mazu_cJSON_IsObject(conditions_local_nonprimitive)){
             goto end;
         }
         v1_node_condition_t *conditionsItem = v1_node_condition_parseFromJSON(conditions_local_nonprimitive);
@@ -492,36 +492,36 @@ v1_node_status_t *v1_node_status_parseFromJSON(cJSON *v1_node_statusJSON){
     }
 
     // v1_node_status->config
-    cJSON *config = cJSON_GetObjectItemCaseSensitive(v1_node_statusJSON, "config");
+    mazu_cJSON *config = mazu_cJSON_GetObjectItemCaseSensitive(v1_node_statusJSON, "config");
     if (config) { 
     config_local_nonprim = v1_node_config_status_parseFromJSON(config); //nonprimitive
     }
 
     // v1_node_status->daemon_endpoints
-    cJSON *daemon_endpoints = cJSON_GetObjectItemCaseSensitive(v1_node_statusJSON, "daemonEndpoints");
+    mazu_cJSON *daemon_endpoints = mazu_cJSON_GetObjectItemCaseSensitive(v1_node_statusJSON, "daemonEndpoints");
     if (daemon_endpoints) { 
     daemon_endpoints_local_nonprim = v1_node_daemon_endpoints_parseFromJSON(daemon_endpoints); //nonprimitive
     }
 
     // v1_node_status->features
-    cJSON *features = cJSON_GetObjectItemCaseSensitive(v1_node_statusJSON, "features");
+    mazu_cJSON *features = mazu_cJSON_GetObjectItemCaseSensitive(v1_node_statusJSON, "features");
     if (features) { 
     features_local_nonprim = v1_node_features_parseFromJSON(features); //nonprimitive
     }
 
     // v1_node_status->images
-    cJSON *images = cJSON_GetObjectItemCaseSensitive(v1_node_statusJSON, "images");
+    mazu_cJSON *images = mazu_cJSON_GetObjectItemCaseSensitive(v1_node_statusJSON, "images");
     if (images) { 
-    cJSON *images_local_nonprimitive = NULL;
-    if(!cJSON_IsArray(images)){
+    mazu_cJSON *images_local_nonprimitive = NULL;
+    if(!mazu_cJSON_IsArray(images)){
         goto end; //nonprimitive container
     }
 
     imagesList = list_createList();
 
-    cJSON_ArrayForEach(images_local_nonprimitive,images )
+    mazu_cJSON_ArrayForEach(images_local_nonprimitive,images )
     {
-        if(!cJSON_IsObject(images_local_nonprimitive)){
+        if(!mazu_cJSON_IsObject(images_local_nonprimitive)){
             goto end;
         }
         v1_container_image_t *imagesItem = v1_container_image_parseFromJSON(images_local_nonprimitive);
@@ -531,33 +531,33 @@ v1_node_status_t *v1_node_status_parseFromJSON(cJSON *v1_node_statusJSON){
     }
 
     // v1_node_status->node_info
-    cJSON *node_info = cJSON_GetObjectItemCaseSensitive(v1_node_statusJSON, "nodeInfo");
+    mazu_cJSON *node_info = mazu_cJSON_GetObjectItemCaseSensitive(v1_node_statusJSON, "nodeInfo");
     if (node_info) { 
     node_info_local_nonprim = v1_node_system_info_parseFromJSON(node_info); //nonprimitive
     }
 
     // v1_node_status->phase
-    cJSON *phase = cJSON_GetObjectItemCaseSensitive(v1_node_statusJSON, "phase");
+    mazu_cJSON *phase = mazu_cJSON_GetObjectItemCaseSensitive(v1_node_statusJSON, "phase");
     if (phase) { 
-    if(!cJSON_IsString(phase) && !cJSON_IsNull(phase))
+    if(!mazu_cJSON_IsString(phase) && !mazu_cJSON_IsNull(phase))
     {
     goto end; //String
     }
     }
 
     // v1_node_status->runtime_handlers
-    cJSON *runtime_handlers = cJSON_GetObjectItemCaseSensitive(v1_node_statusJSON, "runtimeHandlers");
+    mazu_cJSON *runtime_handlers = mazu_cJSON_GetObjectItemCaseSensitive(v1_node_statusJSON, "runtimeHandlers");
     if (runtime_handlers) { 
-    cJSON *runtime_handlers_local_nonprimitive = NULL;
-    if(!cJSON_IsArray(runtime_handlers)){
+    mazu_cJSON *runtime_handlers_local_nonprimitive = NULL;
+    if(!mazu_cJSON_IsArray(runtime_handlers)){
         goto end; //nonprimitive container
     }
 
     runtime_handlersList = list_createList();
 
-    cJSON_ArrayForEach(runtime_handlers_local_nonprimitive,runtime_handlers )
+    mazu_cJSON_ArrayForEach(runtime_handlers_local_nonprimitive,runtime_handlers )
     {
-        if(!cJSON_IsObject(runtime_handlers_local_nonprimitive)){
+        if(!mazu_cJSON_IsObject(runtime_handlers_local_nonprimitive)){
             goto end;
         }
         v1_node_runtime_handler_t *runtime_handlersItem = v1_node_runtime_handler_parseFromJSON(runtime_handlers_local_nonprimitive);
@@ -567,18 +567,18 @@ v1_node_status_t *v1_node_status_parseFromJSON(cJSON *v1_node_statusJSON){
     }
 
     // v1_node_status->volumes_attached
-    cJSON *volumes_attached = cJSON_GetObjectItemCaseSensitive(v1_node_statusJSON, "volumesAttached");
+    mazu_cJSON *volumes_attached = mazu_cJSON_GetObjectItemCaseSensitive(v1_node_statusJSON, "volumesAttached");
     if (volumes_attached) { 
-    cJSON *volumes_attached_local_nonprimitive = NULL;
-    if(!cJSON_IsArray(volumes_attached)){
+    mazu_cJSON *volumes_attached_local_nonprimitive = NULL;
+    if(!mazu_cJSON_IsArray(volumes_attached)){
         goto end; //nonprimitive container
     }
 
     volumes_attachedList = list_createList();
 
-    cJSON_ArrayForEach(volumes_attached_local_nonprimitive,volumes_attached )
+    mazu_cJSON_ArrayForEach(volumes_attached_local_nonprimitive,volumes_attached )
     {
-        if(!cJSON_IsObject(volumes_attached_local_nonprimitive)){
+        if(!mazu_cJSON_IsObject(volumes_attached_local_nonprimitive)){
             goto end;
         }
         v1_attached_volume_t *volumes_attachedItem = v1_attached_volume_parseFromJSON(volumes_attached_local_nonprimitive);
@@ -588,17 +588,17 @@ v1_node_status_t *v1_node_status_parseFromJSON(cJSON *v1_node_statusJSON){
     }
 
     // v1_node_status->volumes_in_use
-    cJSON *volumes_in_use = cJSON_GetObjectItemCaseSensitive(v1_node_statusJSON, "volumesInUse");
+    mazu_cJSON *volumes_in_use = mazu_cJSON_GetObjectItemCaseSensitive(v1_node_statusJSON, "volumesInUse");
     if (volumes_in_use) { 
-    cJSON *volumes_in_use_local = NULL;
-    if(!cJSON_IsArray(volumes_in_use)) {
+    mazu_cJSON *volumes_in_use_local = NULL;
+    if(!mazu_cJSON_IsArray(volumes_in_use)) {
         goto end;//primitive container
     }
     volumes_in_useList = list_createList();
 
-    cJSON_ArrayForEach(volumes_in_use_local, volumes_in_use)
+    mazu_cJSON_ArrayForEach(volumes_in_use_local, volumes_in_use)
     {
-        if(!cJSON_IsString(volumes_in_use_local))
+        if(!mazu_cJSON_IsString(volumes_in_use_local))
         {
             goto end;
         }
@@ -617,7 +617,7 @@ v1_node_status_t *v1_node_status_parseFromJSON(cJSON *v1_node_statusJSON){
         features ? features_local_nonprim : NULL,
         images ? imagesList : NULL,
         node_info ? node_info_local_nonprim : NULL,
-        phase && !cJSON_IsNull(phase) ? strdup(phase->valuestring) : NULL,
+        phase && !mazu_cJSON_IsNull(phase) ? strdup(phase->valuestring) : NULL,
         runtime_handlers ? runtime_handlersList : NULL,
         volumes_attached ? volumes_attachedList : NULL,
         volumes_in_use ? volumes_in_useList : NULL

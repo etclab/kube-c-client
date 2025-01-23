@@ -68,12 +68,12 @@ void v1_config_map_free(v1_config_map_t *v1_config_map) {
     free(v1_config_map);
 }
 
-cJSON *v1_config_map_convertToJSON(v1_config_map_t *v1_config_map) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_config_map_convertToJSON(v1_config_map_t *v1_config_map) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_config_map->api_version
     if(v1_config_map->api_version) {
-    if(cJSON_AddStringToObject(item, "apiVersion", v1_config_map->api_version) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "apiVersion", v1_config_map->api_version) == NULL) {
     goto fail; //String
     }
     }
@@ -81,16 +81,16 @@ cJSON *v1_config_map_convertToJSON(v1_config_map_t *v1_config_map) {
 
     // v1_config_map->binary_data
     if(v1_config_map->binary_data) {
-    cJSON *binary_data = cJSON_AddObjectToObject(item, "binaryData");
+    mazu_cJSON *binary_data = mazu_cJSON_AddObjectToObject(item, "binaryData");
     if(binary_data == NULL) {
         goto fail; //primitive map container
     }
-    cJSON *localMapObject = binary_data;
+    mazu_cJSON *localMapObject = binary_data;
     listEntry_t *binary_dataListEntry;
     if (v1_config_map->binary_data) {
     list_ForEach(binary_dataListEntry, v1_config_map->binary_data) {
         keyValuePair_t *localKeyValue = (keyValuePair_t*)binary_dataListEntry->data;
-        if(cJSON_AddStringToObject(localMapObject, localKeyValue->key, (char*)localKeyValue->value) == NULL)
+        if(mazu_cJSON_AddStringToObject(localMapObject, localKeyValue->key, (char*)localKeyValue->value) == NULL)
         {
             goto fail;
         }
@@ -101,16 +101,16 @@ cJSON *v1_config_map_convertToJSON(v1_config_map_t *v1_config_map) {
 
     // v1_config_map->data
     if(v1_config_map->data) {
-    cJSON *data = cJSON_AddObjectToObject(item, "data");
+    mazu_cJSON *data = mazu_cJSON_AddObjectToObject(item, "data");
     if(data == NULL) {
         goto fail; //primitive map container
     }
-    cJSON *localMapObject = data;
+    mazu_cJSON *localMapObject = data;
     listEntry_t *dataListEntry;
     if (v1_config_map->data) {
     list_ForEach(dataListEntry, v1_config_map->data) {
         keyValuePair_t *localKeyValue = (keyValuePair_t*)dataListEntry->data;
-        if(cJSON_AddStringToObject(localMapObject, localKeyValue->key, (char*)localKeyValue->value) == NULL)
+        if(mazu_cJSON_AddStringToObject(localMapObject, localKeyValue->key, (char*)localKeyValue->value) == NULL)
         {
             goto fail;
         }
@@ -121,7 +121,7 @@ cJSON *v1_config_map_convertToJSON(v1_config_map_t *v1_config_map) {
 
     // v1_config_map->immutable
     if(v1_config_map->immutable) {
-    if(cJSON_AddBoolToObject(item, "immutable", v1_config_map->immutable) == NULL) {
+    if(mazu_cJSON_AddBoolToObject(item, "immutable", v1_config_map->immutable) == NULL) {
     goto fail; //Bool
     }
     }
@@ -129,7 +129,7 @@ cJSON *v1_config_map_convertToJSON(v1_config_map_t *v1_config_map) {
 
     // v1_config_map->kind
     if(v1_config_map->kind) {
-    if(cJSON_AddStringToObject(item, "kind", v1_config_map->kind) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "kind", v1_config_map->kind) == NULL) {
     goto fail; //String
     }
     }
@@ -137,11 +137,11 @@ cJSON *v1_config_map_convertToJSON(v1_config_map_t *v1_config_map) {
 
     // v1_config_map->metadata
     if(v1_config_map->metadata) {
-    cJSON *metadata_local_JSON = v1_object_meta_convertToJSON(v1_config_map->metadata);
+    mazu_cJSON *metadata_local_JSON = v1_object_meta_convertToJSON(v1_config_map->metadata);
     if(metadata_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "metadata", metadata_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "metadata", metadata_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -150,12 +150,12 @@ cJSON *v1_config_map_convertToJSON(v1_config_map_t *v1_config_map) {
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_config_map_t *v1_config_map_parseFromJSON(cJSON *v1_config_mapJSON){
+v1_config_map_t *v1_config_map_parseFromJSON(mazu_cJSON *v1_config_mapJSON){
 
     v1_config_map_t *v1_config_map_local_var = NULL;
 
@@ -169,30 +169,30 @@ v1_config_map_t *v1_config_map_parseFromJSON(cJSON *v1_config_mapJSON){
     v1_object_meta_t *metadata_local_nonprim = NULL;
 
     // v1_config_map->api_version
-    cJSON *api_version = cJSON_GetObjectItemCaseSensitive(v1_config_mapJSON, "apiVersion");
+    mazu_cJSON *api_version = mazu_cJSON_GetObjectItemCaseSensitive(v1_config_mapJSON, "apiVersion");
     if (api_version) { 
-    if(!cJSON_IsString(api_version) && !cJSON_IsNull(api_version))
+    if(!mazu_cJSON_IsString(api_version) && !mazu_cJSON_IsNull(api_version))
     {
     goto end; //String
     }
     }
 
     // v1_config_map->binary_data
-    cJSON *binary_data = cJSON_GetObjectItemCaseSensitive(v1_config_mapJSON, "binaryData");
+    mazu_cJSON *binary_data = mazu_cJSON_GetObjectItemCaseSensitive(v1_config_mapJSON, "binaryData");
     if (binary_data) { 
-    cJSON *binary_data_local_map = NULL;
-    if(!cJSON_IsObject(binary_data) && !cJSON_IsNull(binary_data))
+    mazu_cJSON *binary_data_local_map = NULL;
+    if(!mazu_cJSON_IsObject(binary_data) && !mazu_cJSON_IsNull(binary_data))
     {
         goto end;//primitive map container
     }
-    if(cJSON_IsObject(binary_data))
+    if(mazu_cJSON_IsObject(binary_data))
     {
         binary_dataList = list_createList();
         keyValuePair_t *localMapKeyPair;
-        cJSON_ArrayForEach(binary_data_local_map, binary_data)
+        mazu_cJSON_ArrayForEach(binary_data_local_map, binary_data)
         {
-            cJSON *localMapObject = binary_data_local_map;
-            if(!cJSON_IsString(localMapObject))
+            mazu_cJSON *localMapObject = binary_data_local_map;
+            if(!mazu_cJSON_IsString(localMapObject))
             {
                 goto end;
             }
@@ -203,21 +203,21 @@ v1_config_map_t *v1_config_map_parseFromJSON(cJSON *v1_config_mapJSON){
     }
 
     // v1_config_map->data
-    cJSON *data = cJSON_GetObjectItemCaseSensitive(v1_config_mapJSON, "data");
+    mazu_cJSON *data = mazu_cJSON_GetObjectItemCaseSensitive(v1_config_mapJSON, "data");
     if (data) { 
-    cJSON *data_local_map = NULL;
-    if(!cJSON_IsObject(data) && !cJSON_IsNull(data))
+    mazu_cJSON *data_local_map = NULL;
+    if(!mazu_cJSON_IsObject(data) && !mazu_cJSON_IsNull(data))
     {
         goto end;//primitive map container
     }
-    if(cJSON_IsObject(data))
+    if(mazu_cJSON_IsObject(data))
     {
         dataList = list_createList();
         keyValuePair_t *localMapKeyPair;
-        cJSON_ArrayForEach(data_local_map, data)
+        mazu_cJSON_ArrayForEach(data_local_map, data)
         {
-            cJSON *localMapObject = data_local_map;
-            if(!cJSON_IsString(localMapObject))
+            mazu_cJSON *localMapObject = data_local_map;
+            if(!mazu_cJSON_IsString(localMapObject))
             {
                 goto end;
             }
@@ -228,36 +228,36 @@ v1_config_map_t *v1_config_map_parseFromJSON(cJSON *v1_config_mapJSON){
     }
 
     // v1_config_map->immutable
-    cJSON *immutable = cJSON_GetObjectItemCaseSensitive(v1_config_mapJSON, "immutable");
+    mazu_cJSON *immutable = mazu_cJSON_GetObjectItemCaseSensitive(v1_config_mapJSON, "immutable");
     if (immutable) { 
-    if(!cJSON_IsBool(immutable))
+    if(!mazu_cJSON_IsBool(immutable))
     {
     goto end; //Bool
     }
     }
 
     // v1_config_map->kind
-    cJSON *kind = cJSON_GetObjectItemCaseSensitive(v1_config_mapJSON, "kind");
+    mazu_cJSON *kind = mazu_cJSON_GetObjectItemCaseSensitive(v1_config_mapJSON, "kind");
     if (kind) { 
-    if(!cJSON_IsString(kind) && !cJSON_IsNull(kind))
+    if(!mazu_cJSON_IsString(kind) && !mazu_cJSON_IsNull(kind))
     {
     goto end; //String
     }
     }
 
     // v1_config_map->metadata
-    cJSON *metadata = cJSON_GetObjectItemCaseSensitive(v1_config_mapJSON, "metadata");
+    mazu_cJSON *metadata = mazu_cJSON_GetObjectItemCaseSensitive(v1_config_mapJSON, "metadata");
     if (metadata) { 
     metadata_local_nonprim = v1_object_meta_parseFromJSON(metadata); //nonprimitive
     }
 
 
     v1_config_map_local_var = v1_config_map_create (
-        api_version && !cJSON_IsNull(api_version) ? strdup(api_version->valuestring) : NULL,
+        api_version && !mazu_cJSON_IsNull(api_version) ? strdup(api_version->valuestring) : NULL,
         binary_data ? binary_dataList : NULL,
         data ? dataList : NULL,
         immutable ? immutable->valueint : 0,
-        kind && !cJSON_IsNull(kind) ? strdup(kind->valuestring) : NULL,
+        kind && !mazu_cJSON_IsNull(kind) ? strdup(kind->valuestring) : NULL,
         metadata ? metadata_local_nonprim : NULL
         );
 

@@ -32,21 +32,21 @@ void v1_persistent_volume_claim_volume_source_free(v1_persistent_volume_claim_vo
     free(v1_persistent_volume_claim_volume_source);
 }
 
-cJSON *v1_persistent_volume_claim_volume_source_convertToJSON(v1_persistent_volume_claim_volume_source_t *v1_persistent_volume_claim_volume_source) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_persistent_volume_claim_volume_source_convertToJSON(v1_persistent_volume_claim_volume_source_t *v1_persistent_volume_claim_volume_source) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_persistent_volume_claim_volume_source->claim_name
     if (!v1_persistent_volume_claim_volume_source->claim_name) {
         goto fail;
     }
-    if(cJSON_AddStringToObject(item, "claimName", v1_persistent_volume_claim_volume_source->claim_name) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "claimName", v1_persistent_volume_claim_volume_source->claim_name) == NULL) {
     goto fail; //String
     }
 
 
     // v1_persistent_volume_claim_volume_source->read_only
     if(v1_persistent_volume_claim_volume_source->read_only) {
-    if(cJSON_AddBoolToObject(item, "readOnly", v1_persistent_volume_claim_volume_source->read_only) == NULL) {
+    if(mazu_cJSON_AddBoolToObject(item, "readOnly", v1_persistent_volume_claim_volume_source->read_only) == NULL) {
     goto fail; //Bool
     }
     }
@@ -54,31 +54,31 @@ cJSON *v1_persistent_volume_claim_volume_source_convertToJSON(v1_persistent_volu
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_persistent_volume_claim_volume_source_t *v1_persistent_volume_claim_volume_source_parseFromJSON(cJSON *v1_persistent_volume_claim_volume_sourceJSON){
+v1_persistent_volume_claim_volume_source_t *v1_persistent_volume_claim_volume_source_parseFromJSON(mazu_cJSON *v1_persistent_volume_claim_volume_sourceJSON){
 
     v1_persistent_volume_claim_volume_source_t *v1_persistent_volume_claim_volume_source_local_var = NULL;
 
     // v1_persistent_volume_claim_volume_source->claim_name
-    cJSON *claim_name = cJSON_GetObjectItemCaseSensitive(v1_persistent_volume_claim_volume_sourceJSON, "claimName");
+    mazu_cJSON *claim_name = mazu_cJSON_GetObjectItemCaseSensitive(v1_persistent_volume_claim_volume_sourceJSON, "claimName");
     if (!claim_name) {
         goto end;
     }
 
     
-    if(!cJSON_IsString(claim_name))
+    if(!mazu_cJSON_IsString(claim_name))
     {
     goto end; //String
     }
 
     // v1_persistent_volume_claim_volume_source->read_only
-    cJSON *read_only = cJSON_GetObjectItemCaseSensitive(v1_persistent_volume_claim_volume_sourceJSON, "readOnly");
+    mazu_cJSON *read_only = mazu_cJSON_GetObjectItemCaseSensitive(v1_persistent_volume_claim_volume_sourceJSON, "readOnly");
     if (read_only) { 
-    if(!cJSON_IsBool(read_only))
+    if(!mazu_cJSON_IsBool(read_only))
     {
     goto end; //Bool
     }

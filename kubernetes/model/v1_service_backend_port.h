@@ -8,7 +8,7 @@
 #define _v1_service_backend_port_H_
 
 #include <string.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
 #include "../include/binary.h"
@@ -31,9 +31,9 @@ v1_service_backend_port_t *v1_service_backend_port_create(
 
 void v1_service_backend_port_free(v1_service_backend_port_t *v1_service_backend_port);
 
-v1_service_backend_port_t *v1_service_backend_port_parseFromJSON(cJSON *v1_service_backend_portJSON);
+v1_service_backend_port_t *v1_service_backend_port_parseFromJSON(mazu_cJSON *v1_service_backend_portJSON);
 
-cJSON *v1_service_backend_port_convertToJSON(v1_service_backend_port_t *v1_service_backend_port);
+mazu_cJSON *v1_service_backend_port_convertToJSON(v1_service_backend_port_t *v1_service_backend_port);
 
 #endif /* _v1_service_backend_port_H_ */
 

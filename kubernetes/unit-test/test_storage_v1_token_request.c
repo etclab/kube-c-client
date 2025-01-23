@@ -11,7 +11,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdbool.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 
 #include "../model/storage_v1_token_request.h"
 storage_v1_token_request_t* instantiate_storage_v1_token_request(int include_optional);
@@ -41,11 +41,11 @@ storage_v1_token_request_t* instantiate_storage_v1_token_request(int include_opt
 void test_storage_v1_token_request(int include_optional) {
     storage_v1_token_request_t* storage_v1_token_request_1 = instantiate_storage_v1_token_request(include_optional);
 
-	cJSON* jsonstorage_v1_token_request_1 = storage_v1_token_request_convertToJSON(storage_v1_token_request_1);
-	printf("storage_v1_token_request :\n%s\n", cJSON_Print(jsonstorage_v1_token_request_1));
+	mazu_cJSON* jsonstorage_v1_token_request_1 = storage_v1_token_request_convertToJSON(storage_v1_token_request_1);
+	printf("storage_v1_token_request :\n%s\n", mazu_cJSON_Print(jsonstorage_v1_token_request_1));
 	storage_v1_token_request_t* storage_v1_token_request_2 = storage_v1_token_request_parseFromJSON(jsonstorage_v1_token_request_1);
-	cJSON* jsonstorage_v1_token_request_2 = storage_v1_token_request_convertToJSON(storage_v1_token_request_2);
-	printf("repeating storage_v1_token_request:\n%s\n", cJSON_Print(jsonstorage_v1_token_request_2));
+	mazu_cJSON* jsonstorage_v1_token_request_2 = storage_v1_token_request_convertToJSON(storage_v1_token_request_2);
+	printf("repeating storage_v1_token_request:\n%s\n", mazu_cJSON_Print(jsonstorage_v1_token_request_2));
 }
 
 int main() {

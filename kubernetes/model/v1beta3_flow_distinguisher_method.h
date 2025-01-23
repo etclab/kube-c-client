@@ -8,7 +8,7 @@
 #define _v1beta3_flow_distinguisher_method_H_
 
 #include <string.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
 #include "../include/binary.h"
@@ -29,9 +29,9 @@ v1beta3_flow_distinguisher_method_t *v1beta3_flow_distinguisher_method_create(
 
 void v1beta3_flow_distinguisher_method_free(v1beta3_flow_distinguisher_method_t *v1beta3_flow_distinguisher_method);
 
-v1beta3_flow_distinguisher_method_t *v1beta3_flow_distinguisher_method_parseFromJSON(cJSON *v1beta3_flow_distinguisher_methodJSON);
+v1beta3_flow_distinguisher_method_t *v1beta3_flow_distinguisher_method_parseFromJSON(mazu_cJSON *v1beta3_flow_distinguisher_methodJSON);
 
-cJSON *v1beta3_flow_distinguisher_method_convertToJSON(v1beta3_flow_distinguisher_method_t *v1beta3_flow_distinguisher_method);
+mazu_cJSON *v1beta3_flow_distinguisher_method_convertToJSON(v1beta3_flow_distinguisher_method_t *v1beta3_flow_distinguisher_method);
 
 #endif /* _v1beta3_flow_distinguisher_method_H_ */
 

@@ -48,12 +48,12 @@ void v1_eviction_free(v1_eviction_t *v1_eviction) {
     free(v1_eviction);
 }
 
-cJSON *v1_eviction_convertToJSON(v1_eviction_t *v1_eviction) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_eviction_convertToJSON(v1_eviction_t *v1_eviction) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_eviction->api_version
     if(v1_eviction->api_version) {
-    if(cJSON_AddStringToObject(item, "apiVersion", v1_eviction->api_version) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "apiVersion", v1_eviction->api_version) == NULL) {
     goto fail; //String
     }
     }
@@ -61,11 +61,11 @@ cJSON *v1_eviction_convertToJSON(v1_eviction_t *v1_eviction) {
 
     // v1_eviction->delete_options
     if(v1_eviction->delete_options) {
-    cJSON *delete_options_local_JSON = v1_delete_options_convertToJSON(v1_eviction->delete_options);
+    mazu_cJSON *delete_options_local_JSON = v1_delete_options_convertToJSON(v1_eviction->delete_options);
     if(delete_options_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "deleteOptions", delete_options_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "deleteOptions", delete_options_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -74,7 +74,7 @@ cJSON *v1_eviction_convertToJSON(v1_eviction_t *v1_eviction) {
 
     // v1_eviction->kind
     if(v1_eviction->kind) {
-    if(cJSON_AddStringToObject(item, "kind", v1_eviction->kind) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "kind", v1_eviction->kind) == NULL) {
     goto fail; //String
     }
     }
@@ -82,11 +82,11 @@ cJSON *v1_eviction_convertToJSON(v1_eviction_t *v1_eviction) {
 
     // v1_eviction->metadata
     if(v1_eviction->metadata) {
-    cJSON *metadata_local_JSON = v1_object_meta_convertToJSON(v1_eviction->metadata);
+    mazu_cJSON *metadata_local_JSON = v1_object_meta_convertToJSON(v1_eviction->metadata);
     if(metadata_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "metadata", metadata_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "metadata", metadata_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -95,12 +95,12 @@ cJSON *v1_eviction_convertToJSON(v1_eviction_t *v1_eviction) {
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_eviction_t *v1_eviction_parseFromJSON(cJSON *v1_evictionJSON){
+v1_eviction_t *v1_eviction_parseFromJSON(mazu_cJSON *v1_evictionJSON){
 
     v1_eviction_t *v1_eviction_local_var = NULL;
 
@@ -111,40 +111,40 @@ v1_eviction_t *v1_eviction_parseFromJSON(cJSON *v1_evictionJSON){
     v1_object_meta_t *metadata_local_nonprim = NULL;
 
     // v1_eviction->api_version
-    cJSON *api_version = cJSON_GetObjectItemCaseSensitive(v1_evictionJSON, "apiVersion");
+    mazu_cJSON *api_version = mazu_cJSON_GetObjectItemCaseSensitive(v1_evictionJSON, "apiVersion");
     if (api_version) { 
-    if(!cJSON_IsString(api_version) && !cJSON_IsNull(api_version))
+    if(!mazu_cJSON_IsString(api_version) && !mazu_cJSON_IsNull(api_version))
     {
     goto end; //String
     }
     }
 
     // v1_eviction->delete_options
-    cJSON *delete_options = cJSON_GetObjectItemCaseSensitive(v1_evictionJSON, "deleteOptions");
+    mazu_cJSON *delete_options = mazu_cJSON_GetObjectItemCaseSensitive(v1_evictionJSON, "deleteOptions");
     if (delete_options) { 
     delete_options_local_nonprim = v1_delete_options_parseFromJSON(delete_options); //nonprimitive
     }
 
     // v1_eviction->kind
-    cJSON *kind = cJSON_GetObjectItemCaseSensitive(v1_evictionJSON, "kind");
+    mazu_cJSON *kind = mazu_cJSON_GetObjectItemCaseSensitive(v1_evictionJSON, "kind");
     if (kind) { 
-    if(!cJSON_IsString(kind) && !cJSON_IsNull(kind))
+    if(!mazu_cJSON_IsString(kind) && !mazu_cJSON_IsNull(kind))
     {
     goto end; //String
     }
     }
 
     // v1_eviction->metadata
-    cJSON *metadata = cJSON_GetObjectItemCaseSensitive(v1_evictionJSON, "metadata");
+    mazu_cJSON *metadata = mazu_cJSON_GetObjectItemCaseSensitive(v1_evictionJSON, "metadata");
     if (metadata) { 
     metadata_local_nonprim = v1_object_meta_parseFromJSON(metadata); //nonprimitive
     }
 
 
     v1_eviction_local_var = v1_eviction_create (
-        api_version && !cJSON_IsNull(api_version) ? strdup(api_version->valuestring) : NULL,
+        api_version && !mazu_cJSON_IsNull(api_version) ? strdup(api_version->valuestring) : NULL,
         delete_options ? delete_options_local_nonprim : NULL,
-        kind && !cJSON_IsNull(kind) ? strdup(kind->valuestring) : NULL,
+        kind && !mazu_cJSON_IsNull(kind) ? strdup(kind->valuestring) : NULL,
         metadata ? metadata_local_nonprim : NULL
         );
 

@@ -8,7 +8,7 @@
 #define _v1_container_state_running_H_
 
 #include <string.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
 #include "../include/binary.h"
@@ -29,9 +29,9 @@ v1_container_state_running_t *v1_container_state_running_create(
 
 void v1_container_state_running_free(v1_container_state_running_t *v1_container_state_running);
 
-v1_container_state_running_t *v1_container_state_running_parseFromJSON(cJSON *v1_container_state_runningJSON);
+v1_container_state_running_t *v1_container_state_running_parseFromJSON(mazu_cJSON *v1_container_state_runningJSON);
 
-cJSON *v1_container_state_running_convertToJSON(v1_container_state_running_t *v1_container_state_running);
+mazu_cJSON *v1_container_state_running_convertToJSON(v1_container_state_running_t *v1_container_state_running);
 
 #endif /* _v1_container_state_running_H_ */
 

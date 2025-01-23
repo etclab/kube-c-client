@@ -11,7 +11,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdbool.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 
 #include "../model/v1_namespace.h"
 v1_namespace_t* instantiate_v1_namespace(int include_optional);
@@ -53,11 +53,11 @@ v1_namespace_t* instantiate_v1_namespace(int include_optional) {
 void test_v1_namespace(int include_optional) {
     v1_namespace_t* v1_namespace_1 = instantiate_v1_namespace(include_optional);
 
-	cJSON* jsonv1_namespace_1 = v1_namespace_convertToJSON(v1_namespace_1);
-	printf("v1_namespace :\n%s\n", cJSON_Print(jsonv1_namespace_1));
+	mazu_cJSON* jsonv1_namespace_1 = v1_namespace_convertToJSON(v1_namespace_1);
+	printf("v1_namespace :\n%s\n", mazu_cJSON_Print(jsonv1_namespace_1));
 	v1_namespace_t* v1_namespace_2 = v1_namespace_parseFromJSON(jsonv1_namespace_1);
-	cJSON* jsonv1_namespace_2 = v1_namespace_convertToJSON(v1_namespace_2);
-	printf("repeating v1_namespace:\n%s\n", cJSON_Print(jsonv1_namespace_2));
+	mazu_cJSON* jsonv1_namespace_2 = v1_namespace_convertToJSON(v1_namespace_2);
+	printf("repeating v1_namespace:\n%s\n", mazu_cJSON_Print(jsonv1_namespace_2));
 }
 
 int main() {

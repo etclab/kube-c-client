@@ -53,9 +53,9 @@ StoragemigrationAPI_getAPIGroup_20(apiClient_t *apiClient)
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *StoragemigrationAPIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    mazu_cJSON *StoragemigrationAPIlocalVarJSON = mazu_cJSON_Parse(apiClient->dataReceived);
     v1_api_group_t *elementToReturn = v1_api_group_parseFromJSON(StoragemigrationAPIlocalVarJSON);
-    cJSON_Delete(StoragemigrationAPIlocalVarJSON);
+    mazu_cJSON_Delete(StoragemigrationAPIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
     }

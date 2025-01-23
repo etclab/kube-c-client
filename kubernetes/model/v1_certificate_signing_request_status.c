@@ -39,12 +39,12 @@ void v1_certificate_signing_request_status_free(v1_certificate_signing_request_s
     free(v1_certificate_signing_request_status);
 }
 
-cJSON *v1_certificate_signing_request_status_convertToJSON(v1_certificate_signing_request_status_t *v1_certificate_signing_request_status) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_certificate_signing_request_status_convertToJSON(v1_certificate_signing_request_status_t *v1_certificate_signing_request_status) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_certificate_signing_request_status->certificate
     if(v1_certificate_signing_request_status->certificate) {
-    if(cJSON_AddStringToObject(item, "certificate", v1_certificate_signing_request_status->certificate) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "certificate", v1_certificate_signing_request_status->certificate) == NULL) {
     goto fail; //ByteArray
     }
     }
@@ -52,7 +52,7 @@ cJSON *v1_certificate_signing_request_status_convertToJSON(v1_certificate_signin
 
     // v1_certificate_signing_request_status->conditions
     if(v1_certificate_signing_request_status->conditions) {
-    cJSON *conditions = cJSON_AddArrayToObject(item, "conditions");
+    mazu_cJSON *conditions = mazu_cJSON_AddArrayToObject(item, "conditions");
     if(conditions == NULL) {
     goto fail; //nonprimitive container
     }
@@ -60,11 +60,11 @@ cJSON *v1_certificate_signing_request_status_convertToJSON(v1_certificate_signin
     listEntry_t *conditionsListEntry;
     if (v1_certificate_signing_request_status->conditions) {
     list_ForEach(conditionsListEntry, v1_certificate_signing_request_status->conditions) {
-    cJSON *itemLocal = v1_certificate_signing_request_condition_convertToJSON(conditionsListEntry->data);
+    mazu_cJSON *itemLocal = v1_certificate_signing_request_condition_convertToJSON(conditionsListEntry->data);
     if(itemLocal == NULL) {
     goto fail;
     }
-    cJSON_AddItemToArray(conditions, itemLocal);
+    mazu_cJSON_AddItemToArray(conditions, itemLocal);
     }
     }
     }
@@ -72,12 +72,12 @@ cJSON *v1_certificate_signing_request_status_convertToJSON(v1_certificate_signin
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_certificate_signing_request_status_t *v1_certificate_signing_request_status_parseFromJSON(cJSON *v1_certificate_signing_request_statusJSON){
+v1_certificate_signing_request_status_t *v1_certificate_signing_request_status_parseFromJSON(mazu_cJSON *v1_certificate_signing_request_statusJSON){
 
     v1_certificate_signing_request_status_t *v1_certificate_signing_request_status_local_var = NULL;
 
@@ -85,27 +85,27 @@ v1_certificate_signing_request_status_t *v1_certificate_signing_request_status_p
     list_t *conditionsList = NULL;
 
     // v1_certificate_signing_request_status->certificate
-    cJSON *certificate = cJSON_GetObjectItemCaseSensitive(v1_certificate_signing_request_statusJSON, "certificate");
+    mazu_cJSON *certificate = mazu_cJSON_GetObjectItemCaseSensitive(v1_certificate_signing_request_statusJSON, "certificate");
     if (certificate) { 
-    if(!cJSON_IsString(certificate))
+    if(!mazu_cJSON_IsString(certificate))
     {
     goto end; //ByteArray
     }
     }
 
     // v1_certificate_signing_request_status->conditions
-    cJSON *conditions = cJSON_GetObjectItemCaseSensitive(v1_certificate_signing_request_statusJSON, "conditions");
+    mazu_cJSON *conditions = mazu_cJSON_GetObjectItemCaseSensitive(v1_certificate_signing_request_statusJSON, "conditions");
     if (conditions) { 
-    cJSON *conditions_local_nonprimitive = NULL;
-    if(!cJSON_IsArray(conditions)){
+    mazu_cJSON *conditions_local_nonprimitive = NULL;
+    if(!mazu_cJSON_IsArray(conditions)){
         goto end; //nonprimitive container
     }
 
     conditionsList = list_createList();
 
-    cJSON_ArrayForEach(conditions_local_nonprimitive,conditions )
+    mazu_cJSON_ArrayForEach(conditions_local_nonprimitive,conditions )
     {
-        if(!cJSON_IsObject(conditions_local_nonprimitive)){
+        if(!mazu_cJSON_IsObject(conditions_local_nonprimitive)){
             goto end;
         }
         v1_certificate_signing_request_condition_t *conditionsItem = v1_certificate_signing_request_condition_parseFromJSON(conditions_local_nonprimitive);

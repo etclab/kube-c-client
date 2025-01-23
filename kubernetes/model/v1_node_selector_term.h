@@ -8,7 +8,7 @@
 #define _v1_node_selector_term_H_
 
 #include <string.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
 #include "../include/binary.h"
@@ -32,9 +32,9 @@ v1_node_selector_term_t *v1_node_selector_term_create(
 
 void v1_node_selector_term_free(v1_node_selector_term_t *v1_node_selector_term);
 
-v1_node_selector_term_t *v1_node_selector_term_parseFromJSON(cJSON *v1_node_selector_termJSON);
+v1_node_selector_term_t *v1_node_selector_term_parseFromJSON(mazu_cJSON *v1_node_selector_termJSON);
 
-cJSON *v1_node_selector_term_convertToJSON(v1_node_selector_term_t *v1_node_selector_term);
+mazu_cJSON *v1_node_selector_term_convertToJSON(v1_node_selector_term_t *v1_node_selector_term);
 
 #endif /* _v1_node_selector_term_H_ */
 

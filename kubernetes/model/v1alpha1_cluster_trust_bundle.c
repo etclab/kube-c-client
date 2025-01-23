@@ -48,12 +48,12 @@ void v1alpha1_cluster_trust_bundle_free(v1alpha1_cluster_trust_bundle_t *v1alpha
     free(v1alpha1_cluster_trust_bundle);
 }
 
-cJSON *v1alpha1_cluster_trust_bundle_convertToJSON(v1alpha1_cluster_trust_bundle_t *v1alpha1_cluster_trust_bundle) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1alpha1_cluster_trust_bundle_convertToJSON(v1alpha1_cluster_trust_bundle_t *v1alpha1_cluster_trust_bundle) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1alpha1_cluster_trust_bundle->api_version
     if(v1alpha1_cluster_trust_bundle->api_version) {
-    if(cJSON_AddStringToObject(item, "apiVersion", v1alpha1_cluster_trust_bundle->api_version) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "apiVersion", v1alpha1_cluster_trust_bundle->api_version) == NULL) {
     goto fail; //String
     }
     }
@@ -61,7 +61,7 @@ cJSON *v1alpha1_cluster_trust_bundle_convertToJSON(v1alpha1_cluster_trust_bundle
 
     // v1alpha1_cluster_trust_bundle->kind
     if(v1alpha1_cluster_trust_bundle->kind) {
-    if(cJSON_AddStringToObject(item, "kind", v1alpha1_cluster_trust_bundle->kind) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "kind", v1alpha1_cluster_trust_bundle->kind) == NULL) {
     goto fail; //String
     }
     }
@@ -69,11 +69,11 @@ cJSON *v1alpha1_cluster_trust_bundle_convertToJSON(v1alpha1_cluster_trust_bundle
 
     // v1alpha1_cluster_trust_bundle->metadata
     if(v1alpha1_cluster_trust_bundle->metadata) {
-    cJSON *metadata_local_JSON = v1_object_meta_convertToJSON(v1alpha1_cluster_trust_bundle->metadata);
+    mazu_cJSON *metadata_local_JSON = v1_object_meta_convertToJSON(v1alpha1_cluster_trust_bundle->metadata);
     if(metadata_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "metadata", metadata_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "metadata", metadata_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -84,11 +84,11 @@ cJSON *v1alpha1_cluster_trust_bundle_convertToJSON(v1alpha1_cluster_trust_bundle
     if (!v1alpha1_cluster_trust_bundle->spec) {
         goto fail;
     }
-    cJSON *spec_local_JSON = v1alpha1_cluster_trust_bundle_spec_convertToJSON(v1alpha1_cluster_trust_bundle->spec);
+    mazu_cJSON *spec_local_JSON = v1alpha1_cluster_trust_bundle_spec_convertToJSON(v1alpha1_cluster_trust_bundle->spec);
     if(spec_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "spec", spec_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "spec", spec_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -96,12 +96,12 @@ cJSON *v1alpha1_cluster_trust_bundle_convertToJSON(v1alpha1_cluster_trust_bundle
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1alpha1_cluster_trust_bundle_t *v1alpha1_cluster_trust_bundle_parseFromJSON(cJSON *v1alpha1_cluster_trust_bundleJSON){
+v1alpha1_cluster_trust_bundle_t *v1alpha1_cluster_trust_bundle_parseFromJSON(mazu_cJSON *v1alpha1_cluster_trust_bundleJSON){
 
     v1alpha1_cluster_trust_bundle_t *v1alpha1_cluster_trust_bundle_local_var = NULL;
 
@@ -112,31 +112,31 @@ v1alpha1_cluster_trust_bundle_t *v1alpha1_cluster_trust_bundle_parseFromJSON(cJS
     v1alpha1_cluster_trust_bundle_spec_t *spec_local_nonprim = NULL;
 
     // v1alpha1_cluster_trust_bundle->api_version
-    cJSON *api_version = cJSON_GetObjectItemCaseSensitive(v1alpha1_cluster_trust_bundleJSON, "apiVersion");
+    mazu_cJSON *api_version = mazu_cJSON_GetObjectItemCaseSensitive(v1alpha1_cluster_trust_bundleJSON, "apiVersion");
     if (api_version) { 
-    if(!cJSON_IsString(api_version) && !cJSON_IsNull(api_version))
+    if(!mazu_cJSON_IsString(api_version) && !mazu_cJSON_IsNull(api_version))
     {
     goto end; //String
     }
     }
 
     // v1alpha1_cluster_trust_bundle->kind
-    cJSON *kind = cJSON_GetObjectItemCaseSensitive(v1alpha1_cluster_trust_bundleJSON, "kind");
+    mazu_cJSON *kind = mazu_cJSON_GetObjectItemCaseSensitive(v1alpha1_cluster_trust_bundleJSON, "kind");
     if (kind) { 
-    if(!cJSON_IsString(kind) && !cJSON_IsNull(kind))
+    if(!mazu_cJSON_IsString(kind) && !mazu_cJSON_IsNull(kind))
     {
     goto end; //String
     }
     }
 
     // v1alpha1_cluster_trust_bundle->metadata
-    cJSON *metadata = cJSON_GetObjectItemCaseSensitive(v1alpha1_cluster_trust_bundleJSON, "metadata");
+    mazu_cJSON *metadata = mazu_cJSON_GetObjectItemCaseSensitive(v1alpha1_cluster_trust_bundleJSON, "metadata");
     if (metadata) { 
     metadata_local_nonprim = v1_object_meta_parseFromJSON(metadata); //nonprimitive
     }
 
     // v1alpha1_cluster_trust_bundle->spec
-    cJSON *spec = cJSON_GetObjectItemCaseSensitive(v1alpha1_cluster_trust_bundleJSON, "spec");
+    mazu_cJSON *spec = mazu_cJSON_GetObjectItemCaseSensitive(v1alpha1_cluster_trust_bundleJSON, "spec");
     if (!spec) {
         goto end;
     }
@@ -146,8 +146,8 @@ v1alpha1_cluster_trust_bundle_t *v1alpha1_cluster_trust_bundle_parseFromJSON(cJS
 
 
     v1alpha1_cluster_trust_bundle_local_var = v1alpha1_cluster_trust_bundle_create (
-        api_version && !cJSON_IsNull(api_version) ? strdup(api_version->valuestring) : NULL,
-        kind && !cJSON_IsNull(kind) ? strdup(kind->valuestring) : NULL,
+        api_version && !mazu_cJSON_IsNull(api_version) ? strdup(api_version->valuestring) : NULL,
+        kind && !mazu_cJSON_IsNull(kind) ? strdup(kind->valuestring) : NULL,
         metadata ? metadata_local_nonprim : NULL,
         spec_local_nonprim
         );

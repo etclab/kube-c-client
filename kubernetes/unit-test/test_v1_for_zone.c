@@ -11,7 +11,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdbool.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 
 #include "../model/v1_for_zone.h"
 v1_for_zone_t* instantiate_v1_for_zone(int include_optional);
@@ -39,11 +39,11 @@ v1_for_zone_t* instantiate_v1_for_zone(int include_optional) {
 void test_v1_for_zone(int include_optional) {
     v1_for_zone_t* v1_for_zone_1 = instantiate_v1_for_zone(include_optional);
 
-	cJSON* jsonv1_for_zone_1 = v1_for_zone_convertToJSON(v1_for_zone_1);
-	printf("v1_for_zone :\n%s\n", cJSON_Print(jsonv1_for_zone_1));
+	mazu_cJSON* jsonv1_for_zone_1 = v1_for_zone_convertToJSON(v1_for_zone_1);
+	printf("v1_for_zone :\n%s\n", mazu_cJSON_Print(jsonv1_for_zone_1));
 	v1_for_zone_t* v1_for_zone_2 = v1_for_zone_parseFromJSON(jsonv1_for_zone_1);
-	cJSON* jsonv1_for_zone_2 = v1_for_zone_convertToJSON(v1_for_zone_2);
-	printf("repeating v1_for_zone:\n%s\n", cJSON_Print(jsonv1_for_zone_2));
+	mazu_cJSON* jsonv1_for_zone_2 = v1_for_zone_convertToJSON(v1_for_zone_2);
+	printf("repeating v1_for_zone:\n%s\n", mazu_cJSON_Print(jsonv1_for_zone_2));
 }
 
 int main() {

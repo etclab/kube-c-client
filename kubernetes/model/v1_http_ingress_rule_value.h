@@ -8,7 +8,7 @@
 #define _v1_http_ingress_rule_value_H_
 
 #include <string.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
 #include "../include/binary.h"
@@ -30,9 +30,9 @@ v1_http_ingress_rule_value_t *v1_http_ingress_rule_value_create(
 
 void v1_http_ingress_rule_value_free(v1_http_ingress_rule_value_t *v1_http_ingress_rule_value);
 
-v1_http_ingress_rule_value_t *v1_http_ingress_rule_value_parseFromJSON(cJSON *v1_http_ingress_rule_valueJSON);
+v1_http_ingress_rule_value_t *v1_http_ingress_rule_value_parseFromJSON(mazu_cJSON *v1_http_ingress_rule_valueJSON);
 
-cJSON *v1_http_ingress_rule_value_convertToJSON(v1_http_ingress_rule_value_t *v1_http_ingress_rule_value);
+mazu_cJSON *v1_http_ingress_rule_value_convertToJSON(v1_http_ingress_rule_value_t *v1_http_ingress_rule_value);
 
 #endif /* _v1_http_ingress_rule_value_H_ */
 

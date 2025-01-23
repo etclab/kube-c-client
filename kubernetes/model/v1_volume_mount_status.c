@@ -44,14 +44,14 @@ void v1_volume_mount_status_free(v1_volume_mount_status_t *v1_volume_mount_statu
     free(v1_volume_mount_status);
 }
 
-cJSON *v1_volume_mount_status_convertToJSON(v1_volume_mount_status_t *v1_volume_mount_status) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_volume_mount_status_convertToJSON(v1_volume_mount_status_t *v1_volume_mount_status) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_volume_mount_status->mount_path
     if (!v1_volume_mount_status->mount_path) {
         goto fail;
     }
-    if(cJSON_AddStringToObject(item, "mountPath", v1_volume_mount_status->mount_path) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "mountPath", v1_volume_mount_status->mount_path) == NULL) {
     goto fail; //String
     }
 
@@ -60,14 +60,14 @@ cJSON *v1_volume_mount_status_convertToJSON(v1_volume_mount_status_t *v1_volume_
     if (!v1_volume_mount_status->name) {
         goto fail;
     }
-    if(cJSON_AddStringToObject(item, "name", v1_volume_mount_status->name) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "name", v1_volume_mount_status->name) == NULL) {
     goto fail; //String
     }
 
 
     // v1_volume_mount_status->read_only
     if(v1_volume_mount_status->read_only) {
-    if(cJSON_AddBoolToObject(item, "readOnly", v1_volume_mount_status->read_only) == NULL) {
+    if(mazu_cJSON_AddBoolToObject(item, "readOnly", v1_volume_mount_status->read_only) == NULL) {
     goto fail; //Bool
     }
     }
@@ -75,7 +75,7 @@ cJSON *v1_volume_mount_status_convertToJSON(v1_volume_mount_status_t *v1_volume_
 
     // v1_volume_mount_status->recursive_read_only
     if(v1_volume_mount_status->recursive_read_only) {
-    if(cJSON_AddStringToObject(item, "recursiveReadOnly", v1_volume_mount_status->recursive_read_only) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "recursiveReadOnly", v1_volume_mount_status->recursive_read_only) == NULL) {
     goto fail; //String
     }
     }
@@ -83,52 +83,52 @@ cJSON *v1_volume_mount_status_convertToJSON(v1_volume_mount_status_t *v1_volume_
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_volume_mount_status_t *v1_volume_mount_status_parseFromJSON(cJSON *v1_volume_mount_statusJSON){
+v1_volume_mount_status_t *v1_volume_mount_status_parseFromJSON(mazu_cJSON *v1_volume_mount_statusJSON){
 
     v1_volume_mount_status_t *v1_volume_mount_status_local_var = NULL;
 
     // v1_volume_mount_status->mount_path
-    cJSON *mount_path = cJSON_GetObjectItemCaseSensitive(v1_volume_mount_statusJSON, "mountPath");
+    mazu_cJSON *mount_path = mazu_cJSON_GetObjectItemCaseSensitive(v1_volume_mount_statusJSON, "mountPath");
     if (!mount_path) {
         goto end;
     }
 
     
-    if(!cJSON_IsString(mount_path))
+    if(!mazu_cJSON_IsString(mount_path))
     {
     goto end; //String
     }
 
     // v1_volume_mount_status->name
-    cJSON *name = cJSON_GetObjectItemCaseSensitive(v1_volume_mount_statusJSON, "name");
+    mazu_cJSON *name = mazu_cJSON_GetObjectItemCaseSensitive(v1_volume_mount_statusJSON, "name");
     if (!name) {
         goto end;
     }
 
     
-    if(!cJSON_IsString(name))
+    if(!mazu_cJSON_IsString(name))
     {
     goto end; //String
     }
 
     // v1_volume_mount_status->read_only
-    cJSON *read_only = cJSON_GetObjectItemCaseSensitive(v1_volume_mount_statusJSON, "readOnly");
+    mazu_cJSON *read_only = mazu_cJSON_GetObjectItemCaseSensitive(v1_volume_mount_statusJSON, "readOnly");
     if (read_only) { 
-    if(!cJSON_IsBool(read_only))
+    if(!mazu_cJSON_IsBool(read_only))
     {
     goto end; //Bool
     }
     }
 
     // v1_volume_mount_status->recursive_read_only
-    cJSON *recursive_read_only = cJSON_GetObjectItemCaseSensitive(v1_volume_mount_statusJSON, "recursiveReadOnly");
+    mazu_cJSON *recursive_read_only = mazu_cJSON_GetObjectItemCaseSensitive(v1_volume_mount_statusJSON, "recursiveReadOnly");
     if (recursive_read_only) { 
-    if(!cJSON_IsString(recursive_read_only) && !cJSON_IsNull(recursive_read_only))
+    if(!mazu_cJSON_IsString(recursive_read_only) && !mazu_cJSON_IsNull(recursive_read_only))
     {
     goto end; //String
     }
@@ -139,7 +139,7 @@ v1_volume_mount_status_t *v1_volume_mount_status_parseFromJSON(cJSON *v1_volume_
         strdup(mount_path->valuestring),
         strdup(name->valuestring),
         read_only ? read_only->valueint : 0,
-        recursive_read_only && !cJSON_IsNull(recursive_read_only) ? strdup(recursive_read_only->valuestring) : NULL
+        recursive_read_only && !mazu_cJSON_IsNull(recursive_read_only) ? strdup(recursive_read_only->valuestring) : NULL
         );
 
     return v1_volume_mount_status_local_var;

@@ -48,16 +48,16 @@ void flowcontrol_v1_subject_free(flowcontrol_v1_subject_t *flowcontrol_v1_subjec
     free(flowcontrol_v1_subject);
 }
 
-cJSON *flowcontrol_v1_subject_convertToJSON(flowcontrol_v1_subject_t *flowcontrol_v1_subject) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *flowcontrol_v1_subject_convertToJSON(flowcontrol_v1_subject_t *flowcontrol_v1_subject) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // flowcontrol_v1_subject->group
     if(flowcontrol_v1_subject->group) {
-    cJSON *group_local_JSON = v1_group_subject_convertToJSON(flowcontrol_v1_subject->group);
+    mazu_cJSON *group_local_JSON = v1_group_subject_convertToJSON(flowcontrol_v1_subject->group);
     if(group_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "group", group_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "group", group_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -68,18 +68,18 @@ cJSON *flowcontrol_v1_subject_convertToJSON(flowcontrol_v1_subject_t *flowcontro
     if (!flowcontrol_v1_subject->kind) {
         goto fail;
     }
-    if(cJSON_AddStringToObject(item, "kind", flowcontrol_v1_subject->kind) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "kind", flowcontrol_v1_subject->kind) == NULL) {
     goto fail; //String
     }
 
 
     // flowcontrol_v1_subject->service_account
     if(flowcontrol_v1_subject->service_account) {
-    cJSON *service_account_local_JSON = v1_service_account_subject_convertToJSON(flowcontrol_v1_subject->service_account);
+    mazu_cJSON *service_account_local_JSON = v1_service_account_subject_convertToJSON(flowcontrol_v1_subject->service_account);
     if(service_account_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "serviceAccount", service_account_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "serviceAccount", service_account_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -88,11 +88,11 @@ cJSON *flowcontrol_v1_subject_convertToJSON(flowcontrol_v1_subject_t *flowcontro
 
     // flowcontrol_v1_subject->user
     if(flowcontrol_v1_subject->user) {
-    cJSON *user_local_JSON = v1_user_subject_convertToJSON(flowcontrol_v1_subject->user);
+    mazu_cJSON *user_local_JSON = v1_user_subject_convertToJSON(flowcontrol_v1_subject->user);
     if(user_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "user", user_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "user", user_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -101,12 +101,12 @@ cJSON *flowcontrol_v1_subject_convertToJSON(flowcontrol_v1_subject_t *flowcontro
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-flowcontrol_v1_subject_t *flowcontrol_v1_subject_parseFromJSON(cJSON *flowcontrol_v1_subjectJSON){
+flowcontrol_v1_subject_t *flowcontrol_v1_subject_parseFromJSON(mazu_cJSON *flowcontrol_v1_subjectJSON){
 
     flowcontrol_v1_subject_t *flowcontrol_v1_subject_local_var = NULL;
 
@@ -120,31 +120,31 @@ flowcontrol_v1_subject_t *flowcontrol_v1_subject_parseFromJSON(cJSON *flowcontro
     v1_user_subject_t *user_local_nonprim = NULL;
 
     // flowcontrol_v1_subject->group
-    cJSON *group = cJSON_GetObjectItemCaseSensitive(flowcontrol_v1_subjectJSON, "group");
+    mazu_cJSON *group = mazu_cJSON_GetObjectItemCaseSensitive(flowcontrol_v1_subjectJSON, "group");
     if (group) { 
     group_local_nonprim = v1_group_subject_parseFromJSON(group); //nonprimitive
     }
 
     // flowcontrol_v1_subject->kind
-    cJSON *kind = cJSON_GetObjectItemCaseSensitive(flowcontrol_v1_subjectJSON, "kind");
+    mazu_cJSON *kind = mazu_cJSON_GetObjectItemCaseSensitive(flowcontrol_v1_subjectJSON, "kind");
     if (!kind) {
         goto end;
     }
 
     
-    if(!cJSON_IsString(kind))
+    if(!mazu_cJSON_IsString(kind))
     {
     goto end; //String
     }
 
     // flowcontrol_v1_subject->service_account
-    cJSON *service_account = cJSON_GetObjectItemCaseSensitive(flowcontrol_v1_subjectJSON, "serviceAccount");
+    mazu_cJSON *service_account = mazu_cJSON_GetObjectItemCaseSensitive(flowcontrol_v1_subjectJSON, "serviceAccount");
     if (service_account) { 
     service_account_local_nonprim = v1_service_account_subject_parseFromJSON(service_account); //nonprimitive
     }
 
     // flowcontrol_v1_subject->user
-    cJSON *user = cJSON_GetObjectItemCaseSensitive(flowcontrol_v1_subjectJSON, "user");
+    mazu_cJSON *user = mazu_cJSON_GetObjectItemCaseSensitive(flowcontrol_v1_subjectJSON, "user");
     if (user) { 
     user_local_nonprim = v1_user_subject_parseFromJSON(user); //nonprimitive
     }

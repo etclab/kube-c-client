@@ -46,12 +46,12 @@ void v1_daemon_set_spec_free(v1_daemon_set_spec_t *v1_daemon_set_spec) {
     free(v1_daemon_set_spec);
 }
 
-cJSON *v1_daemon_set_spec_convertToJSON(v1_daemon_set_spec_t *v1_daemon_set_spec) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_daemon_set_spec_convertToJSON(v1_daemon_set_spec_t *v1_daemon_set_spec) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_daemon_set_spec->min_ready_seconds
     if(v1_daemon_set_spec->min_ready_seconds) {
-    if(cJSON_AddNumberToObject(item, "minReadySeconds", v1_daemon_set_spec->min_ready_seconds) == NULL) {
+    if(mazu_cJSON_AddNumberToObject(item, "minReadySeconds", v1_daemon_set_spec->min_ready_seconds) == NULL) {
     goto fail; //Numeric
     }
     }
@@ -59,7 +59,7 @@ cJSON *v1_daemon_set_spec_convertToJSON(v1_daemon_set_spec_t *v1_daemon_set_spec
 
     // v1_daemon_set_spec->revision_history_limit
     if(v1_daemon_set_spec->revision_history_limit) {
-    if(cJSON_AddNumberToObject(item, "revisionHistoryLimit", v1_daemon_set_spec->revision_history_limit) == NULL) {
+    if(mazu_cJSON_AddNumberToObject(item, "revisionHistoryLimit", v1_daemon_set_spec->revision_history_limit) == NULL) {
     goto fail; //Numeric
     }
     }
@@ -69,11 +69,11 @@ cJSON *v1_daemon_set_spec_convertToJSON(v1_daemon_set_spec_t *v1_daemon_set_spec
     if (!v1_daemon_set_spec->selector) {
         goto fail;
     }
-    cJSON *selector_local_JSON = v1_label_selector_convertToJSON(v1_daemon_set_spec->selector);
+    mazu_cJSON *selector_local_JSON = v1_label_selector_convertToJSON(v1_daemon_set_spec->selector);
     if(selector_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "selector", selector_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "selector", selector_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -83,11 +83,11 @@ cJSON *v1_daemon_set_spec_convertToJSON(v1_daemon_set_spec_t *v1_daemon_set_spec
     if (!v1_daemon_set_spec->_template) {
         goto fail;
     }
-    cJSON *_template_local_JSON = v1_pod_template_spec_convertToJSON(v1_daemon_set_spec->_template);
+    mazu_cJSON *_template_local_JSON = v1_pod_template_spec_convertToJSON(v1_daemon_set_spec->_template);
     if(_template_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "template", _template_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "template", _template_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -95,11 +95,11 @@ cJSON *v1_daemon_set_spec_convertToJSON(v1_daemon_set_spec_t *v1_daemon_set_spec
 
     // v1_daemon_set_spec->update_strategy
     if(v1_daemon_set_spec->update_strategy) {
-    cJSON *update_strategy_local_JSON = v1_daemon_set_update_strategy_convertToJSON(v1_daemon_set_spec->update_strategy);
+    mazu_cJSON *update_strategy_local_JSON = v1_daemon_set_update_strategy_convertToJSON(v1_daemon_set_spec->update_strategy);
     if(update_strategy_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "updateStrategy", update_strategy_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "updateStrategy", update_strategy_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -108,12 +108,12 @@ cJSON *v1_daemon_set_spec_convertToJSON(v1_daemon_set_spec_t *v1_daemon_set_spec
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_daemon_set_spec_t *v1_daemon_set_spec_parseFromJSON(cJSON *v1_daemon_set_specJSON){
+v1_daemon_set_spec_t *v1_daemon_set_spec_parseFromJSON(mazu_cJSON *v1_daemon_set_specJSON){
 
     v1_daemon_set_spec_t *v1_daemon_set_spec_local_var = NULL;
 
@@ -127,25 +127,25 @@ v1_daemon_set_spec_t *v1_daemon_set_spec_parseFromJSON(cJSON *v1_daemon_set_spec
     v1_daemon_set_update_strategy_t *update_strategy_local_nonprim = NULL;
 
     // v1_daemon_set_spec->min_ready_seconds
-    cJSON *min_ready_seconds = cJSON_GetObjectItemCaseSensitive(v1_daemon_set_specJSON, "minReadySeconds");
+    mazu_cJSON *min_ready_seconds = mazu_cJSON_GetObjectItemCaseSensitive(v1_daemon_set_specJSON, "minReadySeconds");
     if (min_ready_seconds) { 
-    if(!cJSON_IsNumber(min_ready_seconds))
+    if(!mazu_cJSON_IsNumber(min_ready_seconds))
     {
     goto end; //Numeric
     }
     }
 
     // v1_daemon_set_spec->revision_history_limit
-    cJSON *revision_history_limit = cJSON_GetObjectItemCaseSensitive(v1_daemon_set_specJSON, "revisionHistoryLimit");
+    mazu_cJSON *revision_history_limit = mazu_cJSON_GetObjectItemCaseSensitive(v1_daemon_set_specJSON, "revisionHistoryLimit");
     if (revision_history_limit) { 
-    if(!cJSON_IsNumber(revision_history_limit))
+    if(!mazu_cJSON_IsNumber(revision_history_limit))
     {
     goto end; //Numeric
     }
     }
 
     // v1_daemon_set_spec->selector
-    cJSON *selector = cJSON_GetObjectItemCaseSensitive(v1_daemon_set_specJSON, "selector");
+    mazu_cJSON *selector = mazu_cJSON_GetObjectItemCaseSensitive(v1_daemon_set_specJSON, "selector");
     if (!selector) {
         goto end;
     }
@@ -154,7 +154,7 @@ v1_daemon_set_spec_t *v1_daemon_set_spec_parseFromJSON(cJSON *v1_daemon_set_spec
     selector_local_nonprim = v1_label_selector_parseFromJSON(selector); //nonprimitive
 
     // v1_daemon_set_spec->_template
-    cJSON *_template = cJSON_GetObjectItemCaseSensitive(v1_daemon_set_specJSON, "template");
+    mazu_cJSON *_template = mazu_cJSON_GetObjectItemCaseSensitive(v1_daemon_set_specJSON, "template");
     if (!_template) {
         goto end;
     }
@@ -163,7 +163,7 @@ v1_daemon_set_spec_t *v1_daemon_set_spec_parseFromJSON(cJSON *v1_daemon_set_spec
     _template_local_nonprim = v1_pod_template_spec_parseFromJSON(_template); //nonprimitive
 
     // v1_daemon_set_spec->update_strategy
-    cJSON *update_strategy = cJSON_GetObjectItemCaseSensitive(v1_daemon_set_specJSON, "updateStrategy");
+    mazu_cJSON *update_strategy = mazu_cJSON_GetObjectItemCaseSensitive(v1_daemon_set_specJSON, "updateStrategy");
     if (update_strategy) { 
     update_strategy_local_nonprim = v1_daemon_set_update_strategy_parseFromJSON(update_strategy); //nonprimitive
     }

@@ -8,7 +8,7 @@
 #define _v1_cluster_role_binding_H_
 
 #include <string.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
 #include "../include/binary.h"
@@ -40,9 +40,9 @@ v1_cluster_role_binding_t *v1_cluster_role_binding_create(
 
 void v1_cluster_role_binding_free(v1_cluster_role_binding_t *v1_cluster_role_binding);
 
-v1_cluster_role_binding_t *v1_cluster_role_binding_parseFromJSON(cJSON *v1_cluster_role_bindingJSON);
+v1_cluster_role_binding_t *v1_cluster_role_binding_parseFromJSON(mazu_cJSON *v1_cluster_role_bindingJSON);
 
-cJSON *v1_cluster_role_binding_convertToJSON(v1_cluster_role_binding_t *v1_cluster_role_binding);
+mazu_cJSON *v1_cluster_role_binding_convertToJSON(v1_cluster_role_binding_t *v1_cluster_role_binding);
 
 #endif /* _v1_cluster_role_binding_H_ */
 

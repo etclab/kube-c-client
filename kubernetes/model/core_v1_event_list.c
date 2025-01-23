@@ -51,12 +51,12 @@ void core_v1_event_list_free(core_v1_event_list_t *core_v1_event_list) {
     free(core_v1_event_list);
 }
 
-cJSON *core_v1_event_list_convertToJSON(core_v1_event_list_t *core_v1_event_list) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *core_v1_event_list_convertToJSON(core_v1_event_list_t *core_v1_event_list) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // core_v1_event_list->api_version
     if(core_v1_event_list->api_version) {
-    if(cJSON_AddStringToObject(item, "apiVersion", core_v1_event_list->api_version) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "apiVersion", core_v1_event_list->api_version) == NULL) {
     goto fail; //String
     }
     }
@@ -66,7 +66,7 @@ cJSON *core_v1_event_list_convertToJSON(core_v1_event_list_t *core_v1_event_list
     if (!core_v1_event_list->items) {
         goto fail;
     }
-    cJSON *items = cJSON_AddArrayToObject(item, "items");
+    mazu_cJSON *items = mazu_cJSON_AddArrayToObject(item, "items");
     if(items == NULL) {
     goto fail; //nonprimitive container
     }
@@ -74,18 +74,18 @@ cJSON *core_v1_event_list_convertToJSON(core_v1_event_list_t *core_v1_event_list
     listEntry_t *itemsListEntry;
     if (core_v1_event_list->items) {
     list_ForEach(itemsListEntry, core_v1_event_list->items) {
-    cJSON *itemLocal = core_v1_event_convertToJSON(itemsListEntry->data);
+    mazu_cJSON *itemLocal = core_v1_event_convertToJSON(itemsListEntry->data);
     if(itemLocal == NULL) {
     goto fail;
     }
-    cJSON_AddItemToArray(items, itemLocal);
+    mazu_cJSON_AddItemToArray(items, itemLocal);
     }
     }
 
 
     // core_v1_event_list->kind
     if(core_v1_event_list->kind) {
-    if(cJSON_AddStringToObject(item, "kind", core_v1_event_list->kind) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "kind", core_v1_event_list->kind) == NULL) {
     goto fail; //String
     }
     }
@@ -93,11 +93,11 @@ cJSON *core_v1_event_list_convertToJSON(core_v1_event_list_t *core_v1_event_list
 
     // core_v1_event_list->metadata
     if(core_v1_event_list->metadata) {
-    cJSON *metadata_local_JSON = v1_list_meta_convertToJSON(core_v1_event_list->metadata);
+    mazu_cJSON *metadata_local_JSON = v1_list_meta_convertToJSON(core_v1_event_list->metadata);
     if(metadata_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "metadata", metadata_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "metadata", metadata_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -106,12 +106,12 @@ cJSON *core_v1_event_list_convertToJSON(core_v1_event_list_t *core_v1_event_list
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-core_v1_event_list_t *core_v1_event_list_parseFromJSON(cJSON *core_v1_event_listJSON){
+core_v1_event_list_t *core_v1_event_list_parseFromJSON(mazu_cJSON *core_v1_event_listJSON){
 
     core_v1_event_list_t *core_v1_event_list_local_var = NULL;
 
@@ -122,31 +122,31 @@ core_v1_event_list_t *core_v1_event_list_parseFromJSON(cJSON *core_v1_event_list
     v1_list_meta_t *metadata_local_nonprim = NULL;
 
     // core_v1_event_list->api_version
-    cJSON *api_version = cJSON_GetObjectItemCaseSensitive(core_v1_event_listJSON, "apiVersion");
+    mazu_cJSON *api_version = mazu_cJSON_GetObjectItemCaseSensitive(core_v1_event_listJSON, "apiVersion");
     if (api_version) { 
-    if(!cJSON_IsString(api_version) && !cJSON_IsNull(api_version))
+    if(!mazu_cJSON_IsString(api_version) && !mazu_cJSON_IsNull(api_version))
     {
     goto end; //String
     }
     }
 
     // core_v1_event_list->items
-    cJSON *items = cJSON_GetObjectItemCaseSensitive(core_v1_event_listJSON, "items");
+    mazu_cJSON *items = mazu_cJSON_GetObjectItemCaseSensitive(core_v1_event_listJSON, "items");
     if (!items) {
         goto end;
     }
 
     
-    cJSON *items_local_nonprimitive = NULL;
-    if(!cJSON_IsArray(items)){
+    mazu_cJSON *items_local_nonprimitive = NULL;
+    if(!mazu_cJSON_IsArray(items)){
         goto end; //nonprimitive container
     }
 
     itemsList = list_createList();
 
-    cJSON_ArrayForEach(items_local_nonprimitive,items )
+    mazu_cJSON_ArrayForEach(items_local_nonprimitive,items )
     {
-        if(!cJSON_IsObject(items_local_nonprimitive)){
+        if(!mazu_cJSON_IsObject(items_local_nonprimitive)){
             goto end;
         }
         core_v1_event_t *itemsItem = core_v1_event_parseFromJSON(items_local_nonprimitive);
@@ -155,25 +155,25 @@ core_v1_event_list_t *core_v1_event_list_parseFromJSON(cJSON *core_v1_event_list
     }
 
     // core_v1_event_list->kind
-    cJSON *kind = cJSON_GetObjectItemCaseSensitive(core_v1_event_listJSON, "kind");
+    mazu_cJSON *kind = mazu_cJSON_GetObjectItemCaseSensitive(core_v1_event_listJSON, "kind");
     if (kind) { 
-    if(!cJSON_IsString(kind) && !cJSON_IsNull(kind))
+    if(!mazu_cJSON_IsString(kind) && !mazu_cJSON_IsNull(kind))
     {
     goto end; //String
     }
     }
 
     // core_v1_event_list->metadata
-    cJSON *metadata = cJSON_GetObjectItemCaseSensitive(core_v1_event_listJSON, "metadata");
+    mazu_cJSON *metadata = mazu_cJSON_GetObjectItemCaseSensitive(core_v1_event_listJSON, "metadata");
     if (metadata) { 
     metadata_local_nonprim = v1_list_meta_parseFromJSON(metadata); //nonprimitive
     }
 
 
     core_v1_event_list_local_var = core_v1_event_list_create (
-        api_version && !cJSON_IsNull(api_version) ? strdup(api_version->valuestring) : NULL,
+        api_version && !mazu_cJSON_IsNull(api_version) ? strdup(api_version->valuestring) : NULL,
         itemsList,
-        kind && !cJSON_IsNull(kind) ? strdup(kind->valuestring) : NULL,
+        kind && !mazu_cJSON_IsNull(kind) ? strdup(kind->valuestring) : NULL,
         metadata ? metadata_local_nonprim : NULL
         );
 

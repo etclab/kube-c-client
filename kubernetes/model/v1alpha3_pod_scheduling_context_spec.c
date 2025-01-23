@@ -39,19 +39,19 @@ void v1alpha3_pod_scheduling_context_spec_free(v1alpha3_pod_scheduling_context_s
     free(v1alpha3_pod_scheduling_context_spec);
 }
 
-cJSON *v1alpha3_pod_scheduling_context_spec_convertToJSON(v1alpha3_pod_scheduling_context_spec_t *v1alpha3_pod_scheduling_context_spec) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1alpha3_pod_scheduling_context_spec_convertToJSON(v1alpha3_pod_scheduling_context_spec_t *v1alpha3_pod_scheduling_context_spec) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1alpha3_pod_scheduling_context_spec->potential_nodes
     if(v1alpha3_pod_scheduling_context_spec->potential_nodes) {
-    cJSON *potential_nodes = cJSON_AddArrayToObject(item, "potentialNodes");
+    mazu_cJSON *potential_nodes = mazu_cJSON_AddArrayToObject(item, "potentialNodes");
     if(potential_nodes == NULL) {
         goto fail; //primitive container
     }
 
     listEntry_t *potential_nodesListEntry;
     list_ForEach(potential_nodesListEntry, v1alpha3_pod_scheduling_context_spec->potential_nodes) {
-    if(cJSON_AddStringToObject(potential_nodes, "", (char*)potential_nodesListEntry->data) == NULL)
+    if(mazu_cJSON_AddStringToObject(potential_nodes, "", (char*)potential_nodesListEntry->data) == NULL)
     {
         goto fail;
     }
@@ -61,7 +61,7 @@ cJSON *v1alpha3_pod_scheduling_context_spec_convertToJSON(v1alpha3_pod_schedulin
 
     // v1alpha3_pod_scheduling_context_spec->selected_node
     if(v1alpha3_pod_scheduling_context_spec->selected_node) {
-    if(cJSON_AddStringToObject(item, "selectedNode", v1alpha3_pod_scheduling_context_spec->selected_node) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "selectedNode", v1alpha3_pod_scheduling_context_spec->selected_node) == NULL) {
     goto fail; //String
     }
     }
@@ -69,12 +69,12 @@ cJSON *v1alpha3_pod_scheduling_context_spec_convertToJSON(v1alpha3_pod_schedulin
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1alpha3_pod_scheduling_context_spec_t *v1alpha3_pod_scheduling_context_spec_parseFromJSON(cJSON *v1alpha3_pod_scheduling_context_specJSON){
+v1alpha3_pod_scheduling_context_spec_t *v1alpha3_pod_scheduling_context_spec_parseFromJSON(mazu_cJSON *v1alpha3_pod_scheduling_context_specJSON){
 
     v1alpha3_pod_scheduling_context_spec_t *v1alpha3_pod_scheduling_context_spec_local_var = NULL;
 
@@ -82,17 +82,17 @@ v1alpha3_pod_scheduling_context_spec_t *v1alpha3_pod_scheduling_context_spec_par
     list_t *potential_nodesList = NULL;
 
     // v1alpha3_pod_scheduling_context_spec->potential_nodes
-    cJSON *potential_nodes = cJSON_GetObjectItemCaseSensitive(v1alpha3_pod_scheduling_context_specJSON, "potentialNodes");
+    mazu_cJSON *potential_nodes = mazu_cJSON_GetObjectItemCaseSensitive(v1alpha3_pod_scheduling_context_specJSON, "potentialNodes");
     if (potential_nodes) { 
-    cJSON *potential_nodes_local = NULL;
-    if(!cJSON_IsArray(potential_nodes)) {
+    mazu_cJSON *potential_nodes_local = NULL;
+    if(!mazu_cJSON_IsArray(potential_nodes)) {
         goto end;//primitive container
     }
     potential_nodesList = list_createList();
 
-    cJSON_ArrayForEach(potential_nodes_local, potential_nodes)
+    mazu_cJSON_ArrayForEach(potential_nodes_local, potential_nodes)
     {
-        if(!cJSON_IsString(potential_nodes_local))
+        if(!mazu_cJSON_IsString(potential_nodes_local))
         {
             goto end;
         }
@@ -101,9 +101,9 @@ v1alpha3_pod_scheduling_context_spec_t *v1alpha3_pod_scheduling_context_spec_par
     }
 
     // v1alpha3_pod_scheduling_context_spec->selected_node
-    cJSON *selected_node = cJSON_GetObjectItemCaseSensitive(v1alpha3_pod_scheduling_context_specJSON, "selectedNode");
+    mazu_cJSON *selected_node = mazu_cJSON_GetObjectItemCaseSensitive(v1alpha3_pod_scheduling_context_specJSON, "selectedNode");
     if (selected_node) { 
-    if(!cJSON_IsString(selected_node) && !cJSON_IsNull(selected_node))
+    if(!mazu_cJSON_IsString(selected_node) && !mazu_cJSON_IsNull(selected_node))
     {
     goto end; //String
     }
@@ -112,7 +112,7 @@ v1alpha3_pod_scheduling_context_spec_t *v1alpha3_pod_scheduling_context_spec_par
 
     v1alpha3_pod_scheduling_context_spec_local_var = v1alpha3_pod_scheduling_context_spec_create (
         potential_nodes ? potential_nodesList : NULL,
-        selected_node && !cJSON_IsNull(selected_node) ? strdup(selected_node->valuestring) : NULL
+        selected_node && !mazu_cJSON_IsNull(selected_node) ? strdup(selected_node->valuestring) : NULL
         );
 
     return v1alpha3_pod_scheduling_context_spec_local_var;

@@ -8,7 +8,7 @@
 #define _v1alpha1_storage_version_H_
 
 #include <string.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
 #include "../include/binary.h"
@@ -40,9 +40,9 @@ v1alpha1_storage_version_t *v1alpha1_storage_version_create(
 
 void v1alpha1_storage_version_free(v1alpha1_storage_version_t *v1alpha1_storage_version);
 
-v1alpha1_storage_version_t *v1alpha1_storage_version_parseFromJSON(cJSON *v1alpha1_storage_versionJSON);
+v1alpha1_storage_version_t *v1alpha1_storage_version_parseFromJSON(mazu_cJSON *v1alpha1_storage_versionJSON);
 
-cJSON *v1alpha1_storage_version_convertToJSON(v1alpha1_storage_version_t *v1alpha1_storage_version);
+mazu_cJSON *v1alpha1_storage_version_convertToJSON(v1alpha1_storage_version_t *v1alpha1_storage_version);
 
 #endif /* _v1alpha1_storage_version_H_ */
 

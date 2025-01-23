@@ -30,12 +30,12 @@ void v1beta3_queuing_configuration_free(v1beta3_queuing_configuration_t *v1beta3
     free(v1beta3_queuing_configuration);
 }
 
-cJSON *v1beta3_queuing_configuration_convertToJSON(v1beta3_queuing_configuration_t *v1beta3_queuing_configuration) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1beta3_queuing_configuration_convertToJSON(v1beta3_queuing_configuration_t *v1beta3_queuing_configuration) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1beta3_queuing_configuration->hand_size
     if(v1beta3_queuing_configuration->hand_size) {
-    if(cJSON_AddNumberToObject(item, "handSize", v1beta3_queuing_configuration->hand_size) == NULL) {
+    if(mazu_cJSON_AddNumberToObject(item, "handSize", v1beta3_queuing_configuration->hand_size) == NULL) {
     goto fail; //Numeric
     }
     }
@@ -43,7 +43,7 @@ cJSON *v1beta3_queuing_configuration_convertToJSON(v1beta3_queuing_configuration
 
     // v1beta3_queuing_configuration->queue_length_limit
     if(v1beta3_queuing_configuration->queue_length_limit) {
-    if(cJSON_AddNumberToObject(item, "queueLengthLimit", v1beta3_queuing_configuration->queue_length_limit) == NULL) {
+    if(mazu_cJSON_AddNumberToObject(item, "queueLengthLimit", v1beta3_queuing_configuration->queue_length_limit) == NULL) {
     goto fail; //Numeric
     }
     }
@@ -51,7 +51,7 @@ cJSON *v1beta3_queuing_configuration_convertToJSON(v1beta3_queuing_configuration
 
     // v1beta3_queuing_configuration->queues
     if(v1beta3_queuing_configuration->queues) {
-    if(cJSON_AddNumberToObject(item, "queues", v1beta3_queuing_configuration->queues) == NULL) {
+    if(mazu_cJSON_AddNumberToObject(item, "queues", v1beta3_queuing_configuration->queues) == NULL) {
     goto fail; //Numeric
     }
     }
@@ -59,37 +59,37 @@ cJSON *v1beta3_queuing_configuration_convertToJSON(v1beta3_queuing_configuration
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1beta3_queuing_configuration_t *v1beta3_queuing_configuration_parseFromJSON(cJSON *v1beta3_queuing_configurationJSON){
+v1beta3_queuing_configuration_t *v1beta3_queuing_configuration_parseFromJSON(mazu_cJSON *v1beta3_queuing_configurationJSON){
 
     v1beta3_queuing_configuration_t *v1beta3_queuing_configuration_local_var = NULL;
 
     // v1beta3_queuing_configuration->hand_size
-    cJSON *hand_size = cJSON_GetObjectItemCaseSensitive(v1beta3_queuing_configurationJSON, "handSize");
+    mazu_cJSON *hand_size = mazu_cJSON_GetObjectItemCaseSensitive(v1beta3_queuing_configurationJSON, "handSize");
     if (hand_size) { 
-    if(!cJSON_IsNumber(hand_size))
+    if(!mazu_cJSON_IsNumber(hand_size))
     {
     goto end; //Numeric
     }
     }
 
     // v1beta3_queuing_configuration->queue_length_limit
-    cJSON *queue_length_limit = cJSON_GetObjectItemCaseSensitive(v1beta3_queuing_configurationJSON, "queueLengthLimit");
+    mazu_cJSON *queue_length_limit = mazu_cJSON_GetObjectItemCaseSensitive(v1beta3_queuing_configurationJSON, "queueLengthLimit");
     if (queue_length_limit) { 
-    if(!cJSON_IsNumber(queue_length_limit))
+    if(!mazu_cJSON_IsNumber(queue_length_limit))
     {
     goto end; //Numeric
     }
     }
 
     // v1beta3_queuing_configuration->queues
-    cJSON *queues = cJSON_GetObjectItemCaseSensitive(v1beta3_queuing_configurationJSON, "queues");
+    mazu_cJSON *queues = mazu_cJSON_GetObjectItemCaseSensitive(v1beta3_queuing_configurationJSON, "queues");
     if (queues) { 
-    if(!cJSON_IsNumber(queues))
+    if(!mazu_cJSON_IsNumber(queues))
     {
     goto end; //Numeric
     }

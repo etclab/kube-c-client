@@ -50,16 +50,16 @@ void v1_volume_attachment_status_free(v1_volume_attachment_status_t *v1_volume_a
     free(v1_volume_attachment_status);
 }
 
-cJSON *v1_volume_attachment_status_convertToJSON(v1_volume_attachment_status_t *v1_volume_attachment_status) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_volume_attachment_status_convertToJSON(v1_volume_attachment_status_t *v1_volume_attachment_status) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_volume_attachment_status->attach_error
     if(v1_volume_attachment_status->attach_error) {
-    cJSON *attach_error_local_JSON = v1_volume_error_convertToJSON(v1_volume_attachment_status->attach_error);
+    mazu_cJSON *attach_error_local_JSON = v1_volume_error_convertToJSON(v1_volume_attachment_status->attach_error);
     if(attach_error_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "attachError", attach_error_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "attachError", attach_error_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -70,23 +70,23 @@ cJSON *v1_volume_attachment_status_convertToJSON(v1_volume_attachment_status_t *
     if (!v1_volume_attachment_status->attached) {
         goto fail;
     }
-    if(cJSON_AddBoolToObject(item, "attached", v1_volume_attachment_status->attached) == NULL) {
+    if(mazu_cJSON_AddBoolToObject(item, "attached", v1_volume_attachment_status->attached) == NULL) {
     goto fail; //Bool
     }
 
 
     // v1_volume_attachment_status->attachment_metadata
     if(v1_volume_attachment_status->attachment_metadata) {
-    cJSON *attachment_metadata = cJSON_AddObjectToObject(item, "attachmentMetadata");
+    mazu_cJSON *attachment_metadata = mazu_cJSON_AddObjectToObject(item, "attachmentMetadata");
     if(attachment_metadata == NULL) {
         goto fail; //primitive map container
     }
-    cJSON *localMapObject = attachment_metadata;
+    mazu_cJSON *localMapObject = attachment_metadata;
     listEntry_t *attachment_metadataListEntry;
     if (v1_volume_attachment_status->attachment_metadata) {
     list_ForEach(attachment_metadataListEntry, v1_volume_attachment_status->attachment_metadata) {
         keyValuePair_t *localKeyValue = (keyValuePair_t*)attachment_metadataListEntry->data;
-        if(cJSON_AddStringToObject(localMapObject, localKeyValue->key, (char*)localKeyValue->value) == NULL)
+        if(mazu_cJSON_AddStringToObject(localMapObject, localKeyValue->key, (char*)localKeyValue->value) == NULL)
         {
             goto fail;
         }
@@ -97,11 +97,11 @@ cJSON *v1_volume_attachment_status_convertToJSON(v1_volume_attachment_status_t *
 
     // v1_volume_attachment_status->detach_error
     if(v1_volume_attachment_status->detach_error) {
-    cJSON *detach_error_local_JSON = v1_volume_error_convertToJSON(v1_volume_attachment_status->detach_error);
+    mazu_cJSON *detach_error_local_JSON = v1_volume_error_convertToJSON(v1_volume_attachment_status->detach_error);
     if(detach_error_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "detachError", detach_error_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "detachError", detach_error_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -110,12 +110,12 @@ cJSON *v1_volume_attachment_status_convertToJSON(v1_volume_attachment_status_t *
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_volume_attachment_status_t *v1_volume_attachment_status_parseFromJSON(cJSON *v1_volume_attachment_statusJSON){
+v1_volume_attachment_status_t *v1_volume_attachment_status_parseFromJSON(mazu_cJSON *v1_volume_attachment_statusJSON){
 
     v1_volume_attachment_status_t *v1_volume_attachment_status_local_var = NULL;
 
@@ -129,39 +129,39 @@ v1_volume_attachment_status_t *v1_volume_attachment_status_parseFromJSON(cJSON *
     v1_volume_error_t *detach_error_local_nonprim = NULL;
 
     // v1_volume_attachment_status->attach_error
-    cJSON *attach_error = cJSON_GetObjectItemCaseSensitive(v1_volume_attachment_statusJSON, "attachError");
+    mazu_cJSON *attach_error = mazu_cJSON_GetObjectItemCaseSensitive(v1_volume_attachment_statusJSON, "attachError");
     if (attach_error) { 
     attach_error_local_nonprim = v1_volume_error_parseFromJSON(attach_error); //nonprimitive
     }
 
     // v1_volume_attachment_status->attached
-    cJSON *attached = cJSON_GetObjectItemCaseSensitive(v1_volume_attachment_statusJSON, "attached");
+    mazu_cJSON *attached = mazu_cJSON_GetObjectItemCaseSensitive(v1_volume_attachment_statusJSON, "attached");
     if (!attached) {
         goto end;
     }
 
     
-    if(!cJSON_IsBool(attached))
+    if(!mazu_cJSON_IsBool(attached))
     {
     goto end; //Bool
     }
 
     // v1_volume_attachment_status->attachment_metadata
-    cJSON *attachment_metadata = cJSON_GetObjectItemCaseSensitive(v1_volume_attachment_statusJSON, "attachmentMetadata");
+    mazu_cJSON *attachment_metadata = mazu_cJSON_GetObjectItemCaseSensitive(v1_volume_attachment_statusJSON, "attachmentMetadata");
     if (attachment_metadata) { 
-    cJSON *attachment_metadata_local_map = NULL;
-    if(!cJSON_IsObject(attachment_metadata) && !cJSON_IsNull(attachment_metadata))
+    mazu_cJSON *attachment_metadata_local_map = NULL;
+    if(!mazu_cJSON_IsObject(attachment_metadata) && !mazu_cJSON_IsNull(attachment_metadata))
     {
         goto end;//primitive map container
     }
-    if(cJSON_IsObject(attachment_metadata))
+    if(mazu_cJSON_IsObject(attachment_metadata))
     {
         attachment_metadataList = list_createList();
         keyValuePair_t *localMapKeyPair;
-        cJSON_ArrayForEach(attachment_metadata_local_map, attachment_metadata)
+        mazu_cJSON_ArrayForEach(attachment_metadata_local_map, attachment_metadata)
         {
-            cJSON *localMapObject = attachment_metadata_local_map;
-            if(!cJSON_IsString(localMapObject))
+            mazu_cJSON *localMapObject = attachment_metadata_local_map;
+            if(!mazu_cJSON_IsString(localMapObject))
             {
                 goto end;
             }
@@ -172,7 +172,7 @@ v1_volume_attachment_status_t *v1_volume_attachment_status_parseFromJSON(cJSON *
     }
 
     // v1_volume_attachment_status->detach_error
-    cJSON *detach_error = cJSON_GetObjectItemCaseSensitive(v1_volume_attachment_statusJSON, "detachError");
+    mazu_cJSON *detach_error = mazu_cJSON_GetObjectItemCaseSensitive(v1_volume_attachment_statusJSON, "detachError");
     if (detach_error) { 
     detach_error_local_nonprim = v1_volume_error_parseFromJSON(detach_error); //nonprimitive
     }

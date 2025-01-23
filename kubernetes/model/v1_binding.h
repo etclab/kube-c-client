@@ -8,7 +8,7 @@
 #define _v1_binding_H_
 
 #include <string.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
 #include "../include/binary.h"
@@ -37,9 +37,9 @@ v1_binding_t *v1_binding_create(
 
 void v1_binding_free(v1_binding_t *v1_binding);
 
-v1_binding_t *v1_binding_parseFromJSON(cJSON *v1_bindingJSON);
+v1_binding_t *v1_binding_parseFromJSON(mazu_cJSON *v1_bindingJSON);
 
-cJSON *v1_binding_convertToJSON(v1_binding_t *v1_binding);
+mazu_cJSON *v1_binding_convertToJSON(v1_binding_t *v1_binding);
 
 #endif /* _v1_binding_H_ */
 

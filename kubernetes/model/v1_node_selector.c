@@ -33,14 +33,14 @@ void v1_node_selector_free(v1_node_selector_t *v1_node_selector) {
     free(v1_node_selector);
 }
 
-cJSON *v1_node_selector_convertToJSON(v1_node_selector_t *v1_node_selector) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_node_selector_convertToJSON(v1_node_selector_t *v1_node_selector) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_node_selector->node_selector_terms
     if (!v1_node_selector->node_selector_terms) {
         goto fail;
     }
-    cJSON *node_selector_terms = cJSON_AddArrayToObject(item, "nodeSelectorTerms");
+    mazu_cJSON *node_selector_terms = mazu_cJSON_AddArrayToObject(item, "nodeSelectorTerms");
     if(node_selector_terms == NULL) {
     goto fail; //nonprimitive container
     }
@@ -48,23 +48,23 @@ cJSON *v1_node_selector_convertToJSON(v1_node_selector_t *v1_node_selector) {
     listEntry_t *node_selector_termsListEntry;
     if (v1_node_selector->node_selector_terms) {
     list_ForEach(node_selector_termsListEntry, v1_node_selector->node_selector_terms) {
-    cJSON *itemLocal = v1_node_selector_term_convertToJSON(node_selector_termsListEntry->data);
+    mazu_cJSON *itemLocal = v1_node_selector_term_convertToJSON(node_selector_termsListEntry->data);
     if(itemLocal == NULL) {
     goto fail;
     }
-    cJSON_AddItemToArray(node_selector_terms, itemLocal);
+    mazu_cJSON_AddItemToArray(node_selector_terms, itemLocal);
     }
     }
 
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_node_selector_t *v1_node_selector_parseFromJSON(cJSON *v1_node_selectorJSON){
+v1_node_selector_t *v1_node_selector_parseFromJSON(mazu_cJSON *v1_node_selectorJSON){
 
     v1_node_selector_t *v1_node_selector_local_var = NULL;
 
@@ -72,22 +72,22 @@ v1_node_selector_t *v1_node_selector_parseFromJSON(cJSON *v1_node_selectorJSON){
     list_t *node_selector_termsList = NULL;
 
     // v1_node_selector->node_selector_terms
-    cJSON *node_selector_terms = cJSON_GetObjectItemCaseSensitive(v1_node_selectorJSON, "nodeSelectorTerms");
+    mazu_cJSON *node_selector_terms = mazu_cJSON_GetObjectItemCaseSensitive(v1_node_selectorJSON, "nodeSelectorTerms");
     if (!node_selector_terms) {
         goto end;
     }
 
     
-    cJSON *node_selector_terms_local_nonprimitive = NULL;
-    if(!cJSON_IsArray(node_selector_terms)){
+    mazu_cJSON *node_selector_terms_local_nonprimitive = NULL;
+    if(!mazu_cJSON_IsArray(node_selector_terms)){
         goto end; //nonprimitive container
     }
 
     node_selector_termsList = list_createList();
 
-    cJSON_ArrayForEach(node_selector_terms_local_nonprimitive,node_selector_terms )
+    mazu_cJSON_ArrayForEach(node_selector_terms_local_nonprimitive,node_selector_terms )
     {
-        if(!cJSON_IsObject(node_selector_terms_local_nonprimitive)){
+        if(!mazu_cJSON_IsObject(node_selector_terms_local_nonprimitive)){
             goto end;
         }
         v1_node_selector_term_t *node_selector_termsItem = v1_node_selector_term_parseFromJSON(node_selector_terms_local_nonprimitive);

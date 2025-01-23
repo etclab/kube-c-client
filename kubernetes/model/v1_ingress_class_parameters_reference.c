@@ -54,12 +54,12 @@ void v1_ingress_class_parameters_reference_free(v1_ingress_class_parameters_refe
     free(v1_ingress_class_parameters_reference);
 }
 
-cJSON *v1_ingress_class_parameters_reference_convertToJSON(v1_ingress_class_parameters_reference_t *v1_ingress_class_parameters_reference) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_ingress_class_parameters_reference_convertToJSON(v1_ingress_class_parameters_reference_t *v1_ingress_class_parameters_reference) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_ingress_class_parameters_reference->api_group
     if(v1_ingress_class_parameters_reference->api_group) {
-    if(cJSON_AddStringToObject(item, "apiGroup", v1_ingress_class_parameters_reference->api_group) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "apiGroup", v1_ingress_class_parameters_reference->api_group) == NULL) {
     goto fail; //String
     }
     }
@@ -69,7 +69,7 @@ cJSON *v1_ingress_class_parameters_reference_convertToJSON(v1_ingress_class_para
     if (!v1_ingress_class_parameters_reference->kind) {
         goto fail;
     }
-    if(cJSON_AddStringToObject(item, "kind", v1_ingress_class_parameters_reference->kind) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "kind", v1_ingress_class_parameters_reference->kind) == NULL) {
     goto fail; //String
     }
 
@@ -78,14 +78,14 @@ cJSON *v1_ingress_class_parameters_reference_convertToJSON(v1_ingress_class_para
     if (!v1_ingress_class_parameters_reference->name) {
         goto fail;
     }
-    if(cJSON_AddStringToObject(item, "name", v1_ingress_class_parameters_reference->name) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "name", v1_ingress_class_parameters_reference->name) == NULL) {
     goto fail; //String
     }
 
 
     // v1_ingress_class_parameters_reference->_namespace
     if(v1_ingress_class_parameters_reference->_namespace) {
-    if(cJSON_AddStringToObject(item, "namespace", v1_ingress_class_parameters_reference->_namespace) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "namespace", v1_ingress_class_parameters_reference->_namespace) == NULL) {
     goto fail; //String
     }
     }
@@ -93,7 +93,7 @@ cJSON *v1_ingress_class_parameters_reference_convertToJSON(v1_ingress_class_para
 
     // v1_ingress_class_parameters_reference->scope
     if(v1_ingress_class_parameters_reference->scope) {
-    if(cJSON_AddStringToObject(item, "scope", v1_ingress_class_parameters_reference->scope) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "scope", v1_ingress_class_parameters_reference->scope) == NULL) {
     goto fail; //String
     }
     }
@@ -101,61 +101,61 @@ cJSON *v1_ingress_class_parameters_reference_convertToJSON(v1_ingress_class_para
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_ingress_class_parameters_reference_t *v1_ingress_class_parameters_reference_parseFromJSON(cJSON *v1_ingress_class_parameters_referenceJSON){
+v1_ingress_class_parameters_reference_t *v1_ingress_class_parameters_reference_parseFromJSON(mazu_cJSON *v1_ingress_class_parameters_referenceJSON){
 
     v1_ingress_class_parameters_reference_t *v1_ingress_class_parameters_reference_local_var = NULL;
 
     // v1_ingress_class_parameters_reference->api_group
-    cJSON *api_group = cJSON_GetObjectItemCaseSensitive(v1_ingress_class_parameters_referenceJSON, "apiGroup");
+    mazu_cJSON *api_group = mazu_cJSON_GetObjectItemCaseSensitive(v1_ingress_class_parameters_referenceJSON, "apiGroup");
     if (api_group) { 
-    if(!cJSON_IsString(api_group) && !cJSON_IsNull(api_group))
+    if(!mazu_cJSON_IsString(api_group) && !mazu_cJSON_IsNull(api_group))
     {
     goto end; //String
     }
     }
 
     // v1_ingress_class_parameters_reference->kind
-    cJSON *kind = cJSON_GetObjectItemCaseSensitive(v1_ingress_class_parameters_referenceJSON, "kind");
+    mazu_cJSON *kind = mazu_cJSON_GetObjectItemCaseSensitive(v1_ingress_class_parameters_referenceJSON, "kind");
     if (!kind) {
         goto end;
     }
 
     
-    if(!cJSON_IsString(kind))
+    if(!mazu_cJSON_IsString(kind))
     {
     goto end; //String
     }
 
     // v1_ingress_class_parameters_reference->name
-    cJSON *name = cJSON_GetObjectItemCaseSensitive(v1_ingress_class_parameters_referenceJSON, "name");
+    mazu_cJSON *name = mazu_cJSON_GetObjectItemCaseSensitive(v1_ingress_class_parameters_referenceJSON, "name");
     if (!name) {
         goto end;
     }
 
     
-    if(!cJSON_IsString(name))
+    if(!mazu_cJSON_IsString(name))
     {
     goto end; //String
     }
 
     // v1_ingress_class_parameters_reference->_namespace
-    cJSON *_namespace = cJSON_GetObjectItemCaseSensitive(v1_ingress_class_parameters_referenceJSON, "namespace");
+    mazu_cJSON *_namespace = mazu_cJSON_GetObjectItemCaseSensitive(v1_ingress_class_parameters_referenceJSON, "namespace");
     if (_namespace) { 
-    if(!cJSON_IsString(_namespace) && !cJSON_IsNull(_namespace))
+    if(!mazu_cJSON_IsString(_namespace) && !mazu_cJSON_IsNull(_namespace))
     {
     goto end; //String
     }
     }
 
     // v1_ingress_class_parameters_reference->scope
-    cJSON *scope = cJSON_GetObjectItemCaseSensitive(v1_ingress_class_parameters_referenceJSON, "scope");
+    mazu_cJSON *scope = mazu_cJSON_GetObjectItemCaseSensitive(v1_ingress_class_parameters_referenceJSON, "scope");
     if (scope) { 
-    if(!cJSON_IsString(scope) && !cJSON_IsNull(scope))
+    if(!mazu_cJSON_IsString(scope) && !mazu_cJSON_IsNull(scope))
     {
     goto end; //String
     }
@@ -163,11 +163,11 @@ v1_ingress_class_parameters_reference_t *v1_ingress_class_parameters_reference_p
 
 
     v1_ingress_class_parameters_reference_local_var = v1_ingress_class_parameters_reference_create (
-        api_group && !cJSON_IsNull(api_group) ? strdup(api_group->valuestring) : NULL,
+        api_group && !mazu_cJSON_IsNull(api_group) ? strdup(api_group->valuestring) : NULL,
         strdup(kind->valuestring),
         strdup(name->valuestring),
-        _namespace && !cJSON_IsNull(_namespace) ? strdup(_namespace->valuestring) : NULL,
-        scope && !cJSON_IsNull(scope) ? strdup(scope->valuestring) : NULL
+        _namespace && !mazu_cJSON_IsNull(_namespace) ? strdup(_namespace->valuestring) : NULL,
+        scope && !mazu_cJSON_IsNull(scope) ? strdup(scope->valuestring) : NULL
         );
 
     return v1_ingress_class_parameters_reference_local_var;

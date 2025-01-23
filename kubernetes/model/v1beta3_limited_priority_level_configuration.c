@@ -36,12 +36,12 @@ void v1beta3_limited_priority_level_configuration_free(v1beta3_limited_priority_
     free(v1beta3_limited_priority_level_configuration);
 }
 
-cJSON *v1beta3_limited_priority_level_configuration_convertToJSON(v1beta3_limited_priority_level_configuration_t *v1beta3_limited_priority_level_configuration) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1beta3_limited_priority_level_configuration_convertToJSON(v1beta3_limited_priority_level_configuration_t *v1beta3_limited_priority_level_configuration) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1beta3_limited_priority_level_configuration->borrowing_limit_percent
     if(v1beta3_limited_priority_level_configuration->borrowing_limit_percent) {
-    if(cJSON_AddNumberToObject(item, "borrowingLimitPercent", v1beta3_limited_priority_level_configuration->borrowing_limit_percent) == NULL) {
+    if(mazu_cJSON_AddNumberToObject(item, "borrowingLimitPercent", v1beta3_limited_priority_level_configuration->borrowing_limit_percent) == NULL) {
     goto fail; //Numeric
     }
     }
@@ -49,7 +49,7 @@ cJSON *v1beta3_limited_priority_level_configuration_convertToJSON(v1beta3_limite
 
     // v1beta3_limited_priority_level_configuration->lendable_percent
     if(v1beta3_limited_priority_level_configuration->lendable_percent) {
-    if(cJSON_AddNumberToObject(item, "lendablePercent", v1beta3_limited_priority_level_configuration->lendable_percent) == NULL) {
+    if(mazu_cJSON_AddNumberToObject(item, "lendablePercent", v1beta3_limited_priority_level_configuration->lendable_percent) == NULL) {
     goto fail; //Numeric
     }
     }
@@ -57,11 +57,11 @@ cJSON *v1beta3_limited_priority_level_configuration_convertToJSON(v1beta3_limite
 
     // v1beta3_limited_priority_level_configuration->limit_response
     if(v1beta3_limited_priority_level_configuration->limit_response) {
-    cJSON *limit_response_local_JSON = v1beta3_limit_response_convertToJSON(v1beta3_limited_priority_level_configuration->limit_response);
+    mazu_cJSON *limit_response_local_JSON = v1beta3_limit_response_convertToJSON(v1beta3_limited_priority_level_configuration->limit_response);
     if(limit_response_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "limitResponse", limit_response_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "limitResponse", limit_response_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -70,7 +70,7 @@ cJSON *v1beta3_limited_priority_level_configuration_convertToJSON(v1beta3_limite
 
     // v1beta3_limited_priority_level_configuration->nominal_concurrency_shares
     if(v1beta3_limited_priority_level_configuration->nominal_concurrency_shares) {
-    if(cJSON_AddNumberToObject(item, "nominalConcurrencyShares", v1beta3_limited_priority_level_configuration->nominal_concurrency_shares) == NULL) {
+    if(mazu_cJSON_AddNumberToObject(item, "nominalConcurrencyShares", v1beta3_limited_priority_level_configuration->nominal_concurrency_shares) == NULL) {
     goto fail; //Numeric
     }
     }
@@ -78,12 +78,12 @@ cJSON *v1beta3_limited_priority_level_configuration_convertToJSON(v1beta3_limite
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1beta3_limited_priority_level_configuration_t *v1beta3_limited_priority_level_configuration_parseFromJSON(cJSON *v1beta3_limited_priority_level_configurationJSON){
+v1beta3_limited_priority_level_configuration_t *v1beta3_limited_priority_level_configuration_parseFromJSON(mazu_cJSON *v1beta3_limited_priority_level_configurationJSON){
 
     v1beta3_limited_priority_level_configuration_t *v1beta3_limited_priority_level_configuration_local_var = NULL;
 
@@ -91,33 +91,33 @@ v1beta3_limited_priority_level_configuration_t *v1beta3_limited_priority_level_c
     v1beta3_limit_response_t *limit_response_local_nonprim = NULL;
 
     // v1beta3_limited_priority_level_configuration->borrowing_limit_percent
-    cJSON *borrowing_limit_percent = cJSON_GetObjectItemCaseSensitive(v1beta3_limited_priority_level_configurationJSON, "borrowingLimitPercent");
+    mazu_cJSON *borrowing_limit_percent = mazu_cJSON_GetObjectItemCaseSensitive(v1beta3_limited_priority_level_configurationJSON, "borrowingLimitPercent");
     if (borrowing_limit_percent) { 
-    if(!cJSON_IsNumber(borrowing_limit_percent))
+    if(!mazu_cJSON_IsNumber(borrowing_limit_percent))
     {
     goto end; //Numeric
     }
     }
 
     // v1beta3_limited_priority_level_configuration->lendable_percent
-    cJSON *lendable_percent = cJSON_GetObjectItemCaseSensitive(v1beta3_limited_priority_level_configurationJSON, "lendablePercent");
+    mazu_cJSON *lendable_percent = mazu_cJSON_GetObjectItemCaseSensitive(v1beta3_limited_priority_level_configurationJSON, "lendablePercent");
     if (lendable_percent) { 
-    if(!cJSON_IsNumber(lendable_percent))
+    if(!mazu_cJSON_IsNumber(lendable_percent))
     {
     goto end; //Numeric
     }
     }
 
     // v1beta3_limited_priority_level_configuration->limit_response
-    cJSON *limit_response = cJSON_GetObjectItemCaseSensitive(v1beta3_limited_priority_level_configurationJSON, "limitResponse");
+    mazu_cJSON *limit_response = mazu_cJSON_GetObjectItemCaseSensitive(v1beta3_limited_priority_level_configurationJSON, "limitResponse");
     if (limit_response) { 
     limit_response_local_nonprim = v1beta3_limit_response_parseFromJSON(limit_response); //nonprimitive
     }
 
     // v1beta3_limited_priority_level_configuration->nominal_concurrency_shares
-    cJSON *nominal_concurrency_shares = cJSON_GetObjectItemCaseSensitive(v1beta3_limited_priority_level_configurationJSON, "nominalConcurrencyShares");
+    mazu_cJSON *nominal_concurrency_shares = mazu_cJSON_GetObjectItemCaseSensitive(v1beta3_limited_priority_level_configurationJSON, "nominalConcurrencyShares");
     if (nominal_concurrency_shares) { 
-    if(!cJSON_IsNumber(nominal_concurrency_shares))
+    if(!mazu_cJSON_IsNumber(nominal_concurrency_shares))
     {
     goto end; //Numeric
     }

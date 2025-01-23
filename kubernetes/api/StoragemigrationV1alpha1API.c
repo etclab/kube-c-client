@@ -81,12 +81,12 @@ StoragemigrationV1alpha1API_createStorageVersionMigration(apiClient_t *apiClient
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body = NULL;
+    mazu_cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
         localVarSingleItemJSON_body = v1alpha1_storage_version_migration_convertToJSON(body);
-        localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyParameters = mazu_cJSON_Print(localVarSingleItemJSON_body);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
@@ -118,9 +118,9 @@ StoragemigrationV1alpha1API_createStorageVersionMigration(apiClient_t *apiClient
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *StoragemigrationV1alpha1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    mazu_cJSON *StoragemigrationV1alpha1APIlocalVarJSON = mazu_cJSON_Parse(apiClient->dataReceived);
     v1alpha1_storage_version_migration_t *elementToReturn = v1alpha1_storage_version_migration_parseFromJSON(StoragemigrationV1alpha1APIlocalVarJSON);
-    cJSON_Delete(StoragemigrationV1alpha1APIlocalVarJSON);
+    mazu_cJSON_Delete(StoragemigrationV1alpha1APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
     }
@@ -138,7 +138,7 @@ StoragemigrationV1alpha1API_createStorageVersionMigration(apiClient_t *apiClient
     
     free(localVarPath);
     if (localVarSingleItemJSON_body) {
-        cJSON_Delete(localVarSingleItemJSON_body);
+        mazu_cJSON_Delete(localVarSingleItemJSON_body);
         localVarSingleItemJSON_body = NULL;
     }
     free(localVarBodyParameters);
@@ -379,12 +379,12 @@ StoragemigrationV1alpha1API_deleteCollectionStorageVersionMigration(apiClient_t 
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body = NULL;
+    mazu_cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
         localVarSingleItemJSON_body = v1_delete_options_convertToJSON(body);
-        localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyParameters = mazu_cJSON_Print(localVarSingleItemJSON_body);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
@@ -408,9 +408,9 @@ StoragemigrationV1alpha1API_deleteCollectionStorageVersionMigration(apiClient_t 
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *StoragemigrationV1alpha1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    mazu_cJSON *StoragemigrationV1alpha1APIlocalVarJSON = mazu_cJSON_Parse(apiClient->dataReceived);
     v1_status_t *elementToReturn = v1_status_parseFromJSON(StoragemigrationV1alpha1APIlocalVarJSON);
-    cJSON_Delete(StoragemigrationV1alpha1APIlocalVarJSON);
+    mazu_cJSON_Delete(StoragemigrationV1alpha1APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
     }
@@ -428,7 +428,7 @@ StoragemigrationV1alpha1API_deleteCollectionStorageVersionMigration(apiClient_t 
     
     free(localVarPath);
     if (localVarSingleItemJSON_body) {
-        cJSON_Delete(localVarSingleItemJSON_body);
+        mazu_cJSON_Delete(localVarSingleItemJSON_body);
         localVarSingleItemJSON_body = NULL;
     }
     free(localVarBodyParameters);
@@ -688,12 +688,12 @@ StoragemigrationV1alpha1API_deleteStorageVersionMigration(apiClient_t *apiClient
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body = NULL;
+    mazu_cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
         localVarSingleItemJSON_body = v1_delete_options_convertToJSON(body);
-        localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyParameters = mazu_cJSON_Print(localVarSingleItemJSON_body);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
@@ -721,9 +721,9 @@ StoragemigrationV1alpha1API_deleteStorageVersionMigration(apiClient_t *apiClient
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *StoragemigrationV1alpha1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    mazu_cJSON *StoragemigrationV1alpha1APIlocalVarJSON = mazu_cJSON_Parse(apiClient->dataReceived);
     v1_status_t *elementToReturn = v1_status_parseFromJSON(StoragemigrationV1alpha1APIlocalVarJSON);
-    cJSON_Delete(StoragemigrationV1alpha1APIlocalVarJSON);
+    mazu_cJSON_Delete(StoragemigrationV1alpha1APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
     }
@@ -742,7 +742,7 @@ StoragemigrationV1alpha1API_deleteStorageVersionMigration(apiClient_t *apiClient
     free(localVarPath);
     free(localVarToReplace_name);
     if (localVarSingleItemJSON_body) {
-        cJSON_Delete(localVarSingleItemJSON_body);
+        mazu_cJSON_Delete(localVarSingleItemJSON_body);
         localVarSingleItemJSON_body = NULL;
     }
     free(localVarBodyParameters);
@@ -854,9 +854,9 @@ StoragemigrationV1alpha1API_getAPIResources_32(apiClient_t *apiClient)
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *StoragemigrationV1alpha1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    mazu_cJSON *StoragemigrationV1alpha1APIlocalVarJSON = mazu_cJSON_Parse(apiClient->dataReceived);
     v1_api_resource_list_t *elementToReturn = v1_api_resource_list_parseFromJSON(StoragemigrationV1alpha1APIlocalVarJSON);
-    cJSON_Delete(StoragemigrationV1alpha1APIlocalVarJSON);
+    mazu_cJSON_Delete(StoragemigrationV1alpha1APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
     }
@@ -1060,9 +1060,9 @@ StoragemigrationV1alpha1API_listStorageVersionMigration(apiClient_t *apiClient, 
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *StoragemigrationV1alpha1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    mazu_cJSON *StoragemigrationV1alpha1APIlocalVarJSON = mazu_cJSON_Parse(apiClient->dataReceived);
     v1alpha1_storage_version_migration_list_t *elementToReturn = v1alpha1_storage_version_migration_list_parseFromJSON(StoragemigrationV1alpha1APIlocalVarJSON);
-    cJSON_Delete(StoragemigrationV1alpha1APIlocalVarJSON);
+    mazu_cJSON_Delete(StoragemigrationV1alpha1APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
     }
@@ -1310,12 +1310,12 @@ StoragemigrationV1alpha1API_patchStorageVersionMigration(apiClient_t *apiClient,
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body = NULL;
+    mazu_cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
         localVarSingleItemJSON_body = object_convertToJSON(body);
-        localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyParameters = mazu_cJSON_Print(localVarSingleItemJSON_body);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
@@ -1347,9 +1347,9 @@ StoragemigrationV1alpha1API_patchStorageVersionMigration(apiClient_t *apiClient,
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *StoragemigrationV1alpha1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    mazu_cJSON *StoragemigrationV1alpha1APIlocalVarJSON = mazu_cJSON_Parse(apiClient->dataReceived);
     v1alpha1_storage_version_migration_t *elementToReturn = v1alpha1_storage_version_migration_parseFromJSON(StoragemigrationV1alpha1APIlocalVarJSON);
-    cJSON_Delete(StoragemigrationV1alpha1APIlocalVarJSON);
+    mazu_cJSON_Delete(StoragemigrationV1alpha1APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
     }
@@ -1368,7 +1368,7 @@ StoragemigrationV1alpha1API_patchStorageVersionMigration(apiClient_t *apiClient,
     free(localVarPath);
     free(localVarToReplace_name);
     if (localVarSingleItemJSON_body) {
-        cJSON_Delete(localVarSingleItemJSON_body);
+        mazu_cJSON_Delete(localVarSingleItemJSON_body);
         localVarSingleItemJSON_body = NULL;
     }
     free(localVarBodyParameters);
@@ -1531,12 +1531,12 @@ StoragemigrationV1alpha1API_patchStorageVersionMigrationStatus(apiClient_t *apiC
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body = NULL;
+    mazu_cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
         localVarSingleItemJSON_body = object_convertToJSON(body);
-        localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyParameters = mazu_cJSON_Print(localVarSingleItemJSON_body);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
@@ -1568,9 +1568,9 @@ StoragemigrationV1alpha1API_patchStorageVersionMigrationStatus(apiClient_t *apiC
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *StoragemigrationV1alpha1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    mazu_cJSON *StoragemigrationV1alpha1APIlocalVarJSON = mazu_cJSON_Parse(apiClient->dataReceived);
     v1alpha1_storage_version_migration_t *elementToReturn = v1alpha1_storage_version_migration_parseFromJSON(StoragemigrationV1alpha1APIlocalVarJSON);
-    cJSON_Delete(StoragemigrationV1alpha1APIlocalVarJSON);
+    mazu_cJSON_Delete(StoragemigrationV1alpha1APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
     }
@@ -1589,7 +1589,7 @@ StoragemigrationV1alpha1API_patchStorageVersionMigrationStatus(apiClient_t *apiC
     free(localVarPath);
     free(localVarToReplace_name);
     if (localVarSingleItemJSON_body) {
-        cJSON_Delete(localVarSingleItemJSON_body);
+        mazu_cJSON_Delete(localVarSingleItemJSON_body);
         localVarSingleItemJSON_body = NULL;
     }
     free(localVarBodyParameters);
@@ -1723,9 +1723,9 @@ StoragemigrationV1alpha1API_readStorageVersionMigration(apiClient_t *apiClient, 
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *StoragemigrationV1alpha1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    mazu_cJSON *StoragemigrationV1alpha1APIlocalVarJSON = mazu_cJSON_Parse(apiClient->dataReceived);
     v1alpha1_storage_version_migration_t *elementToReturn = v1alpha1_storage_version_migration_parseFromJSON(StoragemigrationV1alpha1APIlocalVarJSON);
-    cJSON_Delete(StoragemigrationV1alpha1APIlocalVarJSON);
+    mazu_cJSON_Delete(StoragemigrationV1alpha1APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
     }
@@ -1825,9 +1825,9 @@ StoragemigrationV1alpha1API_readStorageVersionMigrationStatus(apiClient_t *apiCl
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *StoragemigrationV1alpha1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    mazu_cJSON *StoragemigrationV1alpha1APIlocalVarJSON = mazu_cJSON_Parse(apiClient->dataReceived);
     v1alpha1_storage_version_migration_t *elementToReturn = v1alpha1_storage_version_migration_parseFromJSON(StoragemigrationV1alpha1APIlocalVarJSON);
-    cJSON_Delete(StoragemigrationV1alpha1APIlocalVarJSON);
+    mazu_cJSON_Delete(StoragemigrationV1alpha1APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
     }
@@ -1943,12 +1943,12 @@ StoragemigrationV1alpha1API_replaceStorageVersionMigration(apiClient_t *apiClien
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body = NULL;
+    mazu_cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
         localVarSingleItemJSON_body = v1alpha1_storage_version_migration_convertToJSON(body);
-        localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyParameters = mazu_cJSON_Print(localVarSingleItemJSON_body);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
@@ -1976,9 +1976,9 @@ StoragemigrationV1alpha1API_replaceStorageVersionMigration(apiClient_t *apiClien
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *StoragemigrationV1alpha1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    mazu_cJSON *StoragemigrationV1alpha1APIlocalVarJSON = mazu_cJSON_Parse(apiClient->dataReceived);
     v1alpha1_storage_version_migration_t *elementToReturn = v1alpha1_storage_version_migration_parseFromJSON(StoragemigrationV1alpha1APIlocalVarJSON);
-    cJSON_Delete(StoragemigrationV1alpha1APIlocalVarJSON);
+    mazu_cJSON_Delete(StoragemigrationV1alpha1APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
     }
@@ -1997,7 +1997,7 @@ StoragemigrationV1alpha1API_replaceStorageVersionMigration(apiClient_t *apiClien
     free(localVarPath);
     free(localVarToReplace_name);
     if (localVarSingleItemJSON_body) {
-        cJSON_Delete(localVarSingleItemJSON_body);
+        mazu_cJSON_Delete(localVarSingleItemJSON_body);
         localVarSingleItemJSON_body = NULL;
     }
     free(localVarBodyParameters);
@@ -2135,12 +2135,12 @@ StoragemigrationV1alpha1API_replaceStorageVersionMigrationStatus(apiClient_t *ap
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body = NULL;
+    mazu_cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
         localVarSingleItemJSON_body = v1alpha1_storage_version_migration_convertToJSON(body);
-        localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyParameters = mazu_cJSON_Print(localVarSingleItemJSON_body);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
@@ -2168,9 +2168,9 @@ StoragemigrationV1alpha1API_replaceStorageVersionMigrationStatus(apiClient_t *ap
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *StoragemigrationV1alpha1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    mazu_cJSON *StoragemigrationV1alpha1APIlocalVarJSON = mazu_cJSON_Parse(apiClient->dataReceived);
     v1alpha1_storage_version_migration_t *elementToReturn = v1alpha1_storage_version_migration_parseFromJSON(StoragemigrationV1alpha1APIlocalVarJSON);
-    cJSON_Delete(StoragemigrationV1alpha1APIlocalVarJSON);
+    mazu_cJSON_Delete(StoragemigrationV1alpha1APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
     }
@@ -2189,7 +2189,7 @@ StoragemigrationV1alpha1API_replaceStorageVersionMigrationStatus(apiClient_t *ap
     free(localVarPath);
     free(localVarToReplace_name);
     if (localVarSingleItemJSON_body) {
-        cJSON_Delete(localVarSingleItemJSON_body);
+        mazu_cJSON_Delete(localVarSingleItemJSON_body);
         localVarSingleItemJSON_body = NULL;
     }
     free(localVarBodyParameters);

@@ -42,16 +42,16 @@ void v1_network_policy_peer_free(v1_network_policy_peer_t *v1_network_policy_pee
     free(v1_network_policy_peer);
 }
 
-cJSON *v1_network_policy_peer_convertToJSON(v1_network_policy_peer_t *v1_network_policy_peer) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_network_policy_peer_convertToJSON(v1_network_policy_peer_t *v1_network_policy_peer) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_network_policy_peer->ip_block
     if(v1_network_policy_peer->ip_block) {
-    cJSON *ip_block_local_JSON = v1_ip_block_convertToJSON(v1_network_policy_peer->ip_block);
+    mazu_cJSON *ip_block_local_JSON = v1_ip_block_convertToJSON(v1_network_policy_peer->ip_block);
     if(ip_block_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "ipBlock", ip_block_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "ipBlock", ip_block_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -60,11 +60,11 @@ cJSON *v1_network_policy_peer_convertToJSON(v1_network_policy_peer_t *v1_network
 
     // v1_network_policy_peer->namespace_selector
     if(v1_network_policy_peer->namespace_selector) {
-    cJSON *namespace_selector_local_JSON = v1_label_selector_convertToJSON(v1_network_policy_peer->namespace_selector);
+    mazu_cJSON *namespace_selector_local_JSON = v1_label_selector_convertToJSON(v1_network_policy_peer->namespace_selector);
     if(namespace_selector_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "namespaceSelector", namespace_selector_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "namespaceSelector", namespace_selector_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -73,11 +73,11 @@ cJSON *v1_network_policy_peer_convertToJSON(v1_network_policy_peer_t *v1_network
 
     // v1_network_policy_peer->pod_selector
     if(v1_network_policy_peer->pod_selector) {
-    cJSON *pod_selector_local_JSON = v1_label_selector_convertToJSON(v1_network_policy_peer->pod_selector);
+    mazu_cJSON *pod_selector_local_JSON = v1_label_selector_convertToJSON(v1_network_policy_peer->pod_selector);
     if(pod_selector_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "podSelector", pod_selector_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "podSelector", pod_selector_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -86,12 +86,12 @@ cJSON *v1_network_policy_peer_convertToJSON(v1_network_policy_peer_t *v1_network
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_network_policy_peer_t *v1_network_policy_peer_parseFromJSON(cJSON *v1_network_policy_peerJSON){
+v1_network_policy_peer_t *v1_network_policy_peer_parseFromJSON(mazu_cJSON *v1_network_policy_peerJSON){
 
     v1_network_policy_peer_t *v1_network_policy_peer_local_var = NULL;
 
@@ -105,19 +105,19 @@ v1_network_policy_peer_t *v1_network_policy_peer_parseFromJSON(cJSON *v1_network
     v1_label_selector_t *pod_selector_local_nonprim = NULL;
 
     // v1_network_policy_peer->ip_block
-    cJSON *ip_block = cJSON_GetObjectItemCaseSensitive(v1_network_policy_peerJSON, "ipBlock");
+    mazu_cJSON *ip_block = mazu_cJSON_GetObjectItemCaseSensitive(v1_network_policy_peerJSON, "ipBlock");
     if (ip_block) { 
     ip_block_local_nonprim = v1_ip_block_parseFromJSON(ip_block); //nonprimitive
     }
 
     // v1_network_policy_peer->namespace_selector
-    cJSON *namespace_selector = cJSON_GetObjectItemCaseSensitive(v1_network_policy_peerJSON, "namespaceSelector");
+    mazu_cJSON *namespace_selector = mazu_cJSON_GetObjectItemCaseSensitive(v1_network_policy_peerJSON, "namespaceSelector");
     if (namespace_selector) { 
     namespace_selector_local_nonprim = v1_label_selector_parseFromJSON(namespace_selector); //nonprimitive
     }
 
     // v1_network_policy_peer->pod_selector
-    cJSON *pod_selector = cJSON_GetObjectItemCaseSensitive(v1_network_policy_peerJSON, "podSelector");
+    mazu_cJSON *pod_selector = mazu_cJSON_GetObjectItemCaseSensitive(v1_network_policy_peerJSON, "podSelector");
     if (pod_selector) { 
     pod_selector_local_nonprim = v1_label_selector_parseFromJSON(pod_selector); //nonprimitive
     }

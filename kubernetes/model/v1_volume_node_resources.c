@@ -26,12 +26,12 @@ void v1_volume_node_resources_free(v1_volume_node_resources_t *v1_volume_node_re
     free(v1_volume_node_resources);
 }
 
-cJSON *v1_volume_node_resources_convertToJSON(v1_volume_node_resources_t *v1_volume_node_resources) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_volume_node_resources_convertToJSON(v1_volume_node_resources_t *v1_volume_node_resources) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_volume_node_resources->count
     if(v1_volume_node_resources->count) {
-    if(cJSON_AddNumberToObject(item, "count", v1_volume_node_resources->count) == NULL) {
+    if(mazu_cJSON_AddNumberToObject(item, "count", v1_volume_node_resources->count) == NULL) {
     goto fail; //Numeric
     }
     }
@@ -39,19 +39,19 @@ cJSON *v1_volume_node_resources_convertToJSON(v1_volume_node_resources_t *v1_vol
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_volume_node_resources_t *v1_volume_node_resources_parseFromJSON(cJSON *v1_volume_node_resourcesJSON){
+v1_volume_node_resources_t *v1_volume_node_resources_parseFromJSON(mazu_cJSON *v1_volume_node_resourcesJSON){
 
     v1_volume_node_resources_t *v1_volume_node_resources_local_var = NULL;
 
     // v1_volume_node_resources->count
-    cJSON *count = cJSON_GetObjectItemCaseSensitive(v1_volume_node_resourcesJSON, "count");
+    mazu_cJSON *count = mazu_cJSON_GetObjectItemCaseSensitive(v1_volume_node_resourcesJSON, "count");
     if (count) { 
-    if(!cJSON_IsNumber(count))
+    if(!mazu_cJSON_IsNumber(count))
     {
     goto end; //Numeric
     }

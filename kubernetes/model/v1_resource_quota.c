@@ -54,12 +54,12 @@ void v1_resource_quota_free(v1_resource_quota_t *v1_resource_quota) {
     free(v1_resource_quota);
 }
 
-cJSON *v1_resource_quota_convertToJSON(v1_resource_quota_t *v1_resource_quota) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_resource_quota_convertToJSON(v1_resource_quota_t *v1_resource_quota) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_resource_quota->api_version
     if(v1_resource_quota->api_version) {
-    if(cJSON_AddStringToObject(item, "apiVersion", v1_resource_quota->api_version) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "apiVersion", v1_resource_quota->api_version) == NULL) {
     goto fail; //String
     }
     }
@@ -67,7 +67,7 @@ cJSON *v1_resource_quota_convertToJSON(v1_resource_quota_t *v1_resource_quota) {
 
     // v1_resource_quota->kind
     if(v1_resource_quota->kind) {
-    if(cJSON_AddStringToObject(item, "kind", v1_resource_quota->kind) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "kind", v1_resource_quota->kind) == NULL) {
     goto fail; //String
     }
     }
@@ -75,11 +75,11 @@ cJSON *v1_resource_quota_convertToJSON(v1_resource_quota_t *v1_resource_quota) {
 
     // v1_resource_quota->metadata
     if(v1_resource_quota->metadata) {
-    cJSON *metadata_local_JSON = v1_object_meta_convertToJSON(v1_resource_quota->metadata);
+    mazu_cJSON *metadata_local_JSON = v1_object_meta_convertToJSON(v1_resource_quota->metadata);
     if(metadata_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "metadata", metadata_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "metadata", metadata_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -88,11 +88,11 @@ cJSON *v1_resource_quota_convertToJSON(v1_resource_quota_t *v1_resource_quota) {
 
     // v1_resource_quota->spec
     if(v1_resource_quota->spec) {
-    cJSON *spec_local_JSON = v1_resource_quota_spec_convertToJSON(v1_resource_quota->spec);
+    mazu_cJSON *spec_local_JSON = v1_resource_quota_spec_convertToJSON(v1_resource_quota->spec);
     if(spec_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "spec", spec_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "spec", spec_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -101,11 +101,11 @@ cJSON *v1_resource_quota_convertToJSON(v1_resource_quota_t *v1_resource_quota) {
 
     // v1_resource_quota->status
     if(v1_resource_quota->status) {
-    cJSON *status_local_JSON = v1_resource_quota_status_convertToJSON(v1_resource_quota->status);
+    mazu_cJSON *status_local_JSON = v1_resource_quota_status_convertToJSON(v1_resource_quota->status);
     if(status_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "status", status_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "status", status_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -114,12 +114,12 @@ cJSON *v1_resource_quota_convertToJSON(v1_resource_quota_t *v1_resource_quota) {
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_resource_quota_t *v1_resource_quota_parseFromJSON(cJSON *v1_resource_quotaJSON){
+v1_resource_quota_t *v1_resource_quota_parseFromJSON(mazu_cJSON *v1_resource_quotaJSON){
 
     v1_resource_quota_t *v1_resource_quota_local_var = NULL;
 
@@ -133,45 +133,45 @@ v1_resource_quota_t *v1_resource_quota_parseFromJSON(cJSON *v1_resource_quotaJSO
     v1_resource_quota_status_t *status_local_nonprim = NULL;
 
     // v1_resource_quota->api_version
-    cJSON *api_version = cJSON_GetObjectItemCaseSensitive(v1_resource_quotaJSON, "apiVersion");
+    mazu_cJSON *api_version = mazu_cJSON_GetObjectItemCaseSensitive(v1_resource_quotaJSON, "apiVersion");
     if (api_version) { 
-    if(!cJSON_IsString(api_version) && !cJSON_IsNull(api_version))
+    if(!mazu_cJSON_IsString(api_version) && !mazu_cJSON_IsNull(api_version))
     {
     goto end; //String
     }
     }
 
     // v1_resource_quota->kind
-    cJSON *kind = cJSON_GetObjectItemCaseSensitive(v1_resource_quotaJSON, "kind");
+    mazu_cJSON *kind = mazu_cJSON_GetObjectItemCaseSensitive(v1_resource_quotaJSON, "kind");
     if (kind) { 
-    if(!cJSON_IsString(kind) && !cJSON_IsNull(kind))
+    if(!mazu_cJSON_IsString(kind) && !mazu_cJSON_IsNull(kind))
     {
     goto end; //String
     }
     }
 
     // v1_resource_quota->metadata
-    cJSON *metadata = cJSON_GetObjectItemCaseSensitive(v1_resource_quotaJSON, "metadata");
+    mazu_cJSON *metadata = mazu_cJSON_GetObjectItemCaseSensitive(v1_resource_quotaJSON, "metadata");
     if (metadata) { 
     metadata_local_nonprim = v1_object_meta_parseFromJSON(metadata); //nonprimitive
     }
 
     // v1_resource_quota->spec
-    cJSON *spec = cJSON_GetObjectItemCaseSensitive(v1_resource_quotaJSON, "spec");
+    mazu_cJSON *spec = mazu_cJSON_GetObjectItemCaseSensitive(v1_resource_quotaJSON, "spec");
     if (spec) { 
     spec_local_nonprim = v1_resource_quota_spec_parseFromJSON(spec); //nonprimitive
     }
 
     // v1_resource_quota->status
-    cJSON *status = cJSON_GetObjectItemCaseSensitive(v1_resource_quotaJSON, "status");
+    mazu_cJSON *status = mazu_cJSON_GetObjectItemCaseSensitive(v1_resource_quotaJSON, "status");
     if (status) { 
     status_local_nonprim = v1_resource_quota_status_parseFromJSON(status); //nonprimitive
     }
 
 
     v1_resource_quota_local_var = v1_resource_quota_create (
-        api_version && !cJSON_IsNull(api_version) ? strdup(api_version->valuestring) : NULL,
-        kind && !cJSON_IsNull(kind) ? strdup(kind->valuestring) : NULL,
+        api_version && !mazu_cJSON_IsNull(api_version) ? strdup(api_version->valuestring) : NULL,
+        kind && !mazu_cJSON_IsNull(kind) ? strdup(kind->valuestring) : NULL,
         metadata ? metadata_local_nonprim : NULL,
         spec ? spec_local_nonprim : NULL,
         status ? status_local_nonprim : NULL

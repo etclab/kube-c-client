@@ -11,7 +11,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdbool.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 
 #include "../model/v1_node_selector_requirement.h"
 v1_node_selector_requirement_t* instantiate_v1_node_selector_requirement(int include_optional);
@@ -43,11 +43,11 @@ v1_node_selector_requirement_t* instantiate_v1_node_selector_requirement(int inc
 void test_v1_node_selector_requirement(int include_optional) {
     v1_node_selector_requirement_t* v1_node_selector_requirement_1 = instantiate_v1_node_selector_requirement(include_optional);
 
-	cJSON* jsonv1_node_selector_requirement_1 = v1_node_selector_requirement_convertToJSON(v1_node_selector_requirement_1);
-	printf("v1_node_selector_requirement :\n%s\n", cJSON_Print(jsonv1_node_selector_requirement_1));
+	mazu_cJSON* jsonv1_node_selector_requirement_1 = v1_node_selector_requirement_convertToJSON(v1_node_selector_requirement_1);
+	printf("v1_node_selector_requirement :\n%s\n", mazu_cJSON_Print(jsonv1_node_selector_requirement_1));
 	v1_node_selector_requirement_t* v1_node_selector_requirement_2 = v1_node_selector_requirement_parseFromJSON(jsonv1_node_selector_requirement_1);
-	cJSON* jsonv1_node_selector_requirement_2 = v1_node_selector_requirement_convertToJSON(v1_node_selector_requirement_2);
-	printf("repeating v1_node_selector_requirement:\n%s\n", cJSON_Print(jsonv1_node_selector_requirement_2));
+	mazu_cJSON* jsonv1_node_selector_requirement_2 = v1_node_selector_requirement_convertToJSON(v1_node_selector_requirement_2);
+	printf("repeating v1_node_selector_requirement:\n%s\n", mazu_cJSON_Print(jsonv1_node_selector_requirement_2));
 }
 
 int main() {

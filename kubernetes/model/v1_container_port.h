@@ -8,7 +8,7 @@
 #define _v1_container_port_H_
 
 #include <string.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
 #include "../include/binary.h"
@@ -37,9 +37,9 @@ v1_container_port_t *v1_container_port_create(
 
 void v1_container_port_free(v1_container_port_t *v1_container_port);
 
-v1_container_port_t *v1_container_port_parseFromJSON(cJSON *v1_container_portJSON);
+v1_container_port_t *v1_container_port_parseFromJSON(mazu_cJSON *v1_container_portJSON);
 
-cJSON *v1_container_port_convertToJSON(v1_container_port_t *v1_container_port);
+mazu_cJSON *v1_container_port_convertToJSON(v1_container_port_t *v1_container_port);
 
 #endif /* _v1_container_port_H_ */
 

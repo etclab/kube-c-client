@@ -48,16 +48,16 @@ void v1_node_config_status_free(v1_node_config_status_t *v1_node_config_status) 
     free(v1_node_config_status);
 }
 
-cJSON *v1_node_config_status_convertToJSON(v1_node_config_status_t *v1_node_config_status) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_node_config_status_convertToJSON(v1_node_config_status_t *v1_node_config_status) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_node_config_status->active
     if(v1_node_config_status->active) {
-    cJSON *active_local_JSON = v1_node_config_source_convertToJSON(v1_node_config_status->active);
+    mazu_cJSON *active_local_JSON = v1_node_config_source_convertToJSON(v1_node_config_status->active);
     if(active_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "active", active_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "active", active_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -66,11 +66,11 @@ cJSON *v1_node_config_status_convertToJSON(v1_node_config_status_t *v1_node_conf
 
     // v1_node_config_status->assigned
     if(v1_node_config_status->assigned) {
-    cJSON *assigned_local_JSON = v1_node_config_source_convertToJSON(v1_node_config_status->assigned);
+    mazu_cJSON *assigned_local_JSON = v1_node_config_source_convertToJSON(v1_node_config_status->assigned);
     if(assigned_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "assigned", assigned_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "assigned", assigned_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -79,7 +79,7 @@ cJSON *v1_node_config_status_convertToJSON(v1_node_config_status_t *v1_node_conf
 
     // v1_node_config_status->error
     if(v1_node_config_status->error) {
-    if(cJSON_AddStringToObject(item, "error", v1_node_config_status->error) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "error", v1_node_config_status->error) == NULL) {
     goto fail; //String
     }
     }
@@ -87,11 +87,11 @@ cJSON *v1_node_config_status_convertToJSON(v1_node_config_status_t *v1_node_conf
 
     // v1_node_config_status->last_known_good
     if(v1_node_config_status->last_known_good) {
-    cJSON *last_known_good_local_JSON = v1_node_config_source_convertToJSON(v1_node_config_status->last_known_good);
+    mazu_cJSON *last_known_good_local_JSON = v1_node_config_source_convertToJSON(v1_node_config_status->last_known_good);
     if(last_known_good_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "lastKnownGood", last_known_good_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "lastKnownGood", last_known_good_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -100,12 +100,12 @@ cJSON *v1_node_config_status_convertToJSON(v1_node_config_status_t *v1_node_conf
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_node_config_status_t *v1_node_config_status_parseFromJSON(cJSON *v1_node_config_statusJSON){
+v1_node_config_status_t *v1_node_config_status_parseFromJSON(mazu_cJSON *v1_node_config_statusJSON){
 
     v1_node_config_status_t *v1_node_config_status_local_var = NULL;
 
@@ -119,28 +119,28 @@ v1_node_config_status_t *v1_node_config_status_parseFromJSON(cJSON *v1_node_conf
     v1_node_config_source_t *last_known_good_local_nonprim = NULL;
 
     // v1_node_config_status->active
-    cJSON *active = cJSON_GetObjectItemCaseSensitive(v1_node_config_statusJSON, "active");
+    mazu_cJSON *active = mazu_cJSON_GetObjectItemCaseSensitive(v1_node_config_statusJSON, "active");
     if (active) { 
     active_local_nonprim = v1_node_config_source_parseFromJSON(active); //nonprimitive
     }
 
     // v1_node_config_status->assigned
-    cJSON *assigned = cJSON_GetObjectItemCaseSensitive(v1_node_config_statusJSON, "assigned");
+    mazu_cJSON *assigned = mazu_cJSON_GetObjectItemCaseSensitive(v1_node_config_statusJSON, "assigned");
     if (assigned) { 
     assigned_local_nonprim = v1_node_config_source_parseFromJSON(assigned); //nonprimitive
     }
 
     // v1_node_config_status->error
-    cJSON *error = cJSON_GetObjectItemCaseSensitive(v1_node_config_statusJSON, "error");
+    mazu_cJSON *error = mazu_cJSON_GetObjectItemCaseSensitive(v1_node_config_statusJSON, "error");
     if (error) { 
-    if(!cJSON_IsString(error) && !cJSON_IsNull(error))
+    if(!mazu_cJSON_IsString(error) && !mazu_cJSON_IsNull(error))
     {
     goto end; //String
     }
     }
 
     // v1_node_config_status->last_known_good
-    cJSON *last_known_good = cJSON_GetObjectItemCaseSensitive(v1_node_config_statusJSON, "lastKnownGood");
+    mazu_cJSON *last_known_good = mazu_cJSON_GetObjectItemCaseSensitive(v1_node_config_statusJSON, "lastKnownGood");
     if (last_known_good) { 
     last_known_good_local_nonprim = v1_node_config_source_parseFromJSON(last_known_good); //nonprimitive
     }
@@ -149,7 +149,7 @@ v1_node_config_status_t *v1_node_config_status_parseFromJSON(cJSON *v1_node_conf
     v1_node_config_status_local_var = v1_node_config_status_create (
         active ? active_local_nonprim : NULL,
         assigned ? assigned_local_nonprim : NULL,
-        error && !cJSON_IsNull(error) ? strdup(error->valuestring) : NULL,
+        error && !mazu_cJSON_IsNull(error) ? strdup(error->valuestring) : NULL,
         last_known_good ? last_known_good_local_nonprim : NULL
         );
 

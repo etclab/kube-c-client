@@ -48,12 +48,12 @@ void v1alpha3_resource_claim_consumer_reference_free(v1alpha3_resource_claim_con
     free(v1alpha3_resource_claim_consumer_reference);
 }
 
-cJSON *v1alpha3_resource_claim_consumer_reference_convertToJSON(v1alpha3_resource_claim_consumer_reference_t *v1alpha3_resource_claim_consumer_reference) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1alpha3_resource_claim_consumer_reference_convertToJSON(v1alpha3_resource_claim_consumer_reference_t *v1alpha3_resource_claim_consumer_reference) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1alpha3_resource_claim_consumer_reference->api_group
     if(v1alpha3_resource_claim_consumer_reference->api_group) {
-    if(cJSON_AddStringToObject(item, "apiGroup", v1alpha3_resource_claim_consumer_reference->api_group) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "apiGroup", v1alpha3_resource_claim_consumer_reference->api_group) == NULL) {
     goto fail; //String
     }
     }
@@ -63,7 +63,7 @@ cJSON *v1alpha3_resource_claim_consumer_reference_convertToJSON(v1alpha3_resourc
     if (!v1alpha3_resource_claim_consumer_reference->name) {
         goto fail;
     }
-    if(cJSON_AddStringToObject(item, "name", v1alpha3_resource_claim_consumer_reference->name) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "name", v1alpha3_resource_claim_consumer_reference->name) == NULL) {
     goto fail; //String
     }
 
@@ -72,7 +72,7 @@ cJSON *v1alpha3_resource_claim_consumer_reference_convertToJSON(v1alpha3_resourc
     if (!v1alpha3_resource_claim_consumer_reference->resource) {
         goto fail;
     }
-    if(cJSON_AddStringToObject(item, "resource", v1alpha3_resource_claim_consumer_reference->resource) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "resource", v1alpha3_resource_claim_consumer_reference->resource) == NULL) {
     goto fail; //String
     }
 
@@ -81,70 +81,70 @@ cJSON *v1alpha3_resource_claim_consumer_reference_convertToJSON(v1alpha3_resourc
     if (!v1alpha3_resource_claim_consumer_reference->uid) {
         goto fail;
     }
-    if(cJSON_AddStringToObject(item, "uid", v1alpha3_resource_claim_consumer_reference->uid) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "uid", v1alpha3_resource_claim_consumer_reference->uid) == NULL) {
     goto fail; //String
     }
 
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1alpha3_resource_claim_consumer_reference_t *v1alpha3_resource_claim_consumer_reference_parseFromJSON(cJSON *v1alpha3_resource_claim_consumer_referenceJSON){
+v1alpha3_resource_claim_consumer_reference_t *v1alpha3_resource_claim_consumer_reference_parseFromJSON(mazu_cJSON *v1alpha3_resource_claim_consumer_referenceJSON){
 
     v1alpha3_resource_claim_consumer_reference_t *v1alpha3_resource_claim_consumer_reference_local_var = NULL;
 
     // v1alpha3_resource_claim_consumer_reference->api_group
-    cJSON *api_group = cJSON_GetObjectItemCaseSensitive(v1alpha3_resource_claim_consumer_referenceJSON, "apiGroup");
+    mazu_cJSON *api_group = mazu_cJSON_GetObjectItemCaseSensitive(v1alpha3_resource_claim_consumer_referenceJSON, "apiGroup");
     if (api_group) { 
-    if(!cJSON_IsString(api_group) && !cJSON_IsNull(api_group))
+    if(!mazu_cJSON_IsString(api_group) && !mazu_cJSON_IsNull(api_group))
     {
     goto end; //String
     }
     }
 
     // v1alpha3_resource_claim_consumer_reference->name
-    cJSON *name = cJSON_GetObjectItemCaseSensitive(v1alpha3_resource_claim_consumer_referenceJSON, "name");
+    mazu_cJSON *name = mazu_cJSON_GetObjectItemCaseSensitive(v1alpha3_resource_claim_consumer_referenceJSON, "name");
     if (!name) {
         goto end;
     }
 
     
-    if(!cJSON_IsString(name))
+    if(!mazu_cJSON_IsString(name))
     {
     goto end; //String
     }
 
     // v1alpha3_resource_claim_consumer_reference->resource
-    cJSON *resource = cJSON_GetObjectItemCaseSensitive(v1alpha3_resource_claim_consumer_referenceJSON, "resource");
+    mazu_cJSON *resource = mazu_cJSON_GetObjectItemCaseSensitive(v1alpha3_resource_claim_consumer_referenceJSON, "resource");
     if (!resource) {
         goto end;
     }
 
     
-    if(!cJSON_IsString(resource))
+    if(!mazu_cJSON_IsString(resource))
     {
     goto end; //String
     }
 
     // v1alpha3_resource_claim_consumer_reference->uid
-    cJSON *uid = cJSON_GetObjectItemCaseSensitive(v1alpha3_resource_claim_consumer_referenceJSON, "uid");
+    mazu_cJSON *uid = mazu_cJSON_GetObjectItemCaseSensitive(v1alpha3_resource_claim_consumer_referenceJSON, "uid");
     if (!uid) {
         goto end;
     }
 
     
-    if(!cJSON_IsString(uid))
+    if(!mazu_cJSON_IsString(uid))
     {
     goto end; //String
     }
 
 
     v1alpha3_resource_claim_consumer_reference_local_var = v1alpha3_resource_claim_consumer_reference_create (
-        api_group && !cJSON_IsNull(api_group) ? strdup(api_group->valuestring) : NULL,
+        api_group && !mazu_cJSON_IsNull(api_group) ? strdup(api_group->valuestring) : NULL,
         strdup(name->valuestring),
         strdup(resource->valuestring),
         strdup(uid->valuestring)

@@ -36,14 +36,14 @@ void v1_attached_volume_free(v1_attached_volume_t *v1_attached_volume) {
     free(v1_attached_volume);
 }
 
-cJSON *v1_attached_volume_convertToJSON(v1_attached_volume_t *v1_attached_volume) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_attached_volume_convertToJSON(v1_attached_volume_t *v1_attached_volume) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_attached_volume->device_path
     if (!v1_attached_volume->device_path) {
         goto fail;
     }
-    if(cJSON_AddStringToObject(item, "devicePath", v1_attached_volume->device_path) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "devicePath", v1_attached_volume->device_path) == NULL) {
     goto fail; //String
     }
 
@@ -52,42 +52,42 @@ cJSON *v1_attached_volume_convertToJSON(v1_attached_volume_t *v1_attached_volume
     if (!v1_attached_volume->name) {
         goto fail;
     }
-    if(cJSON_AddStringToObject(item, "name", v1_attached_volume->name) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "name", v1_attached_volume->name) == NULL) {
     goto fail; //String
     }
 
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_attached_volume_t *v1_attached_volume_parseFromJSON(cJSON *v1_attached_volumeJSON){
+v1_attached_volume_t *v1_attached_volume_parseFromJSON(mazu_cJSON *v1_attached_volumeJSON){
 
     v1_attached_volume_t *v1_attached_volume_local_var = NULL;
 
     // v1_attached_volume->device_path
-    cJSON *device_path = cJSON_GetObjectItemCaseSensitive(v1_attached_volumeJSON, "devicePath");
+    mazu_cJSON *device_path = mazu_cJSON_GetObjectItemCaseSensitive(v1_attached_volumeJSON, "devicePath");
     if (!device_path) {
         goto end;
     }
 
     
-    if(!cJSON_IsString(device_path))
+    if(!mazu_cJSON_IsString(device_path))
     {
     goto end; //String
     }
 
     // v1_attached_volume->name
-    cJSON *name = cJSON_GetObjectItemCaseSensitive(v1_attached_volumeJSON, "name");
+    mazu_cJSON *name = mazu_cJSON_GetObjectItemCaseSensitive(v1_attached_volumeJSON, "name");
     if (!name) {
         goto end;
     }
 
     
-    if(!cJSON_IsString(name))
+    if(!mazu_cJSON_IsString(name))
     {
     goto end; //String
     }

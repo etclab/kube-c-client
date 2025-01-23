@@ -53,9 +53,9 @@ SchedulingAPI_getAPIGroup_18(apiClient_t *apiClient)
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *SchedulingAPIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    mazu_cJSON *SchedulingAPIlocalVarJSON = mazu_cJSON_Parse(apiClient->dataReceived);
     v1_api_group_t *elementToReturn = v1_api_group_parseFromJSON(SchedulingAPIlocalVarJSON);
-    cJSON_Delete(SchedulingAPIlocalVarJSON);
+    mazu_cJSON_Delete(SchedulingAPIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
     }

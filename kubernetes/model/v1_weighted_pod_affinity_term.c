@@ -32,18 +32,18 @@ void v1_weighted_pod_affinity_term_free(v1_weighted_pod_affinity_term_t *v1_weig
     free(v1_weighted_pod_affinity_term);
 }
 
-cJSON *v1_weighted_pod_affinity_term_convertToJSON(v1_weighted_pod_affinity_term_t *v1_weighted_pod_affinity_term) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_weighted_pod_affinity_term_convertToJSON(v1_weighted_pod_affinity_term_t *v1_weighted_pod_affinity_term) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_weighted_pod_affinity_term->pod_affinity_term
     if (!v1_weighted_pod_affinity_term->pod_affinity_term) {
         goto fail;
     }
-    cJSON *pod_affinity_term_local_JSON = v1_pod_affinity_term_convertToJSON(v1_weighted_pod_affinity_term->pod_affinity_term);
+    mazu_cJSON *pod_affinity_term_local_JSON = v1_pod_affinity_term_convertToJSON(v1_weighted_pod_affinity_term->pod_affinity_term);
     if(pod_affinity_term_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "podAffinityTerm", pod_affinity_term_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "podAffinityTerm", pod_affinity_term_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -53,19 +53,19 @@ cJSON *v1_weighted_pod_affinity_term_convertToJSON(v1_weighted_pod_affinity_term
     if (!v1_weighted_pod_affinity_term->weight) {
         goto fail;
     }
-    if(cJSON_AddNumberToObject(item, "weight", v1_weighted_pod_affinity_term->weight) == NULL) {
+    if(mazu_cJSON_AddNumberToObject(item, "weight", v1_weighted_pod_affinity_term->weight) == NULL) {
     goto fail; //Numeric
     }
 
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_weighted_pod_affinity_term_t *v1_weighted_pod_affinity_term_parseFromJSON(cJSON *v1_weighted_pod_affinity_termJSON){
+v1_weighted_pod_affinity_term_t *v1_weighted_pod_affinity_term_parseFromJSON(mazu_cJSON *v1_weighted_pod_affinity_termJSON){
 
     v1_weighted_pod_affinity_term_t *v1_weighted_pod_affinity_term_local_var = NULL;
 
@@ -73,7 +73,7 @@ v1_weighted_pod_affinity_term_t *v1_weighted_pod_affinity_term_parseFromJSON(cJS
     v1_pod_affinity_term_t *pod_affinity_term_local_nonprim = NULL;
 
     // v1_weighted_pod_affinity_term->pod_affinity_term
-    cJSON *pod_affinity_term = cJSON_GetObjectItemCaseSensitive(v1_weighted_pod_affinity_termJSON, "podAffinityTerm");
+    mazu_cJSON *pod_affinity_term = mazu_cJSON_GetObjectItemCaseSensitive(v1_weighted_pod_affinity_termJSON, "podAffinityTerm");
     if (!pod_affinity_term) {
         goto end;
     }
@@ -82,13 +82,13 @@ v1_weighted_pod_affinity_term_t *v1_weighted_pod_affinity_term_parseFromJSON(cJS
     pod_affinity_term_local_nonprim = v1_pod_affinity_term_parseFromJSON(pod_affinity_term); //nonprimitive
 
     // v1_weighted_pod_affinity_term->weight
-    cJSON *weight = cJSON_GetObjectItemCaseSensitive(v1_weighted_pod_affinity_termJSON, "weight");
+    mazu_cJSON *weight = mazu_cJSON_GetObjectItemCaseSensitive(v1_weighted_pod_affinity_termJSON, "weight");
     if (!weight) {
         goto end;
     }
 
     
-    if(!cJSON_IsNumber(weight))
+    if(!mazu_cJSON_IsNumber(weight))
     {
     goto end; //Numeric
     }

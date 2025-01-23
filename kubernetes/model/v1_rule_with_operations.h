@@ -8,7 +8,7 @@
 #define _v1_rule_with_operations_H_
 
 #include <string.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
 #include "../include/binary.h"
@@ -37,9 +37,9 @@ v1_rule_with_operations_t *v1_rule_with_operations_create(
 
 void v1_rule_with_operations_free(v1_rule_with_operations_t *v1_rule_with_operations);
 
-v1_rule_with_operations_t *v1_rule_with_operations_parseFromJSON(cJSON *v1_rule_with_operationsJSON);
+v1_rule_with_operations_t *v1_rule_with_operations_parseFromJSON(mazu_cJSON *v1_rule_with_operationsJSON);
 
-cJSON *v1_rule_with_operations_convertToJSON(v1_rule_with_operations_t *v1_rule_with_operations);
+mazu_cJSON *v1_rule_with_operations_convertToJSON(v1_rule_with_operations_t *v1_rule_with_operations);
 
 #endif /* _v1_rule_with_operations_H_ */
 

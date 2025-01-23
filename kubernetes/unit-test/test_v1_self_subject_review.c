@@ -11,7 +11,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdbool.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 
 #include "../model/v1_self_subject_review.h"
 v1_self_subject_review_t* instantiate_v1_self_subject_review(int include_optional);
@@ -49,11 +49,11 @@ v1_self_subject_review_t* instantiate_v1_self_subject_review(int include_optiona
 void test_v1_self_subject_review(int include_optional) {
     v1_self_subject_review_t* v1_self_subject_review_1 = instantiate_v1_self_subject_review(include_optional);
 
-	cJSON* jsonv1_self_subject_review_1 = v1_self_subject_review_convertToJSON(v1_self_subject_review_1);
-	printf("v1_self_subject_review :\n%s\n", cJSON_Print(jsonv1_self_subject_review_1));
+	mazu_cJSON* jsonv1_self_subject_review_1 = v1_self_subject_review_convertToJSON(v1_self_subject_review_1);
+	printf("v1_self_subject_review :\n%s\n", mazu_cJSON_Print(jsonv1_self_subject_review_1));
 	v1_self_subject_review_t* v1_self_subject_review_2 = v1_self_subject_review_parseFromJSON(jsonv1_self_subject_review_1);
-	cJSON* jsonv1_self_subject_review_2 = v1_self_subject_review_convertToJSON(v1_self_subject_review_2);
-	printf("repeating v1_self_subject_review:\n%s\n", cJSON_Print(jsonv1_self_subject_review_2));
+	mazu_cJSON* jsonv1_self_subject_review_2 = v1_self_subject_review_convertToJSON(v1_self_subject_review_2);
+	printf("repeating v1_self_subject_review:\n%s\n", mazu_cJSON_Print(jsonv1_self_subject_review_2));
 }
 
 int main() {

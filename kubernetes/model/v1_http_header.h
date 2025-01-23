@@ -8,7 +8,7 @@
 #define _v1_http_header_H_
 
 #include <string.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
 #include "../include/binary.h"
@@ -31,9 +31,9 @@ v1_http_header_t *v1_http_header_create(
 
 void v1_http_header_free(v1_http_header_t *v1_http_header);
 
-v1_http_header_t *v1_http_header_parseFromJSON(cJSON *v1_http_headerJSON);
+v1_http_header_t *v1_http_header_parseFromJSON(mazu_cJSON *v1_http_headerJSON);
 
-cJSON *v1_http_header_convertToJSON(v1_http_header_t *v1_http_header);
+mazu_cJSON *v1_http_header_convertToJSON(v1_http_header_t *v1_http_header);
 
 #endif /* _v1_http_header_H_ */
 

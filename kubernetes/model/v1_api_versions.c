@@ -54,12 +54,12 @@ void v1_api_versions_free(v1_api_versions_t *v1_api_versions) {
     free(v1_api_versions);
 }
 
-cJSON *v1_api_versions_convertToJSON(v1_api_versions_t *v1_api_versions) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_api_versions_convertToJSON(v1_api_versions_t *v1_api_versions) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_api_versions->api_version
     if(v1_api_versions->api_version) {
-    if(cJSON_AddStringToObject(item, "apiVersion", v1_api_versions->api_version) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "apiVersion", v1_api_versions->api_version) == NULL) {
     goto fail; //String
     }
     }
@@ -67,7 +67,7 @@ cJSON *v1_api_versions_convertToJSON(v1_api_versions_t *v1_api_versions) {
 
     // v1_api_versions->kind
     if(v1_api_versions->kind) {
-    if(cJSON_AddStringToObject(item, "kind", v1_api_versions->kind) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "kind", v1_api_versions->kind) == NULL) {
     goto fail; //String
     }
     }
@@ -77,7 +77,7 @@ cJSON *v1_api_versions_convertToJSON(v1_api_versions_t *v1_api_versions) {
     if (!v1_api_versions->server_address_by_client_cidrs) {
         goto fail;
     }
-    cJSON *server_address_by_client_cidrs = cJSON_AddArrayToObject(item, "serverAddressByClientCIDRs");
+    mazu_cJSON *server_address_by_client_cidrs = mazu_cJSON_AddArrayToObject(item, "serverAddressByClientCIDRs");
     if(server_address_by_client_cidrs == NULL) {
     goto fail; //nonprimitive container
     }
@@ -85,11 +85,11 @@ cJSON *v1_api_versions_convertToJSON(v1_api_versions_t *v1_api_versions) {
     listEntry_t *server_address_by_client_cidrsListEntry;
     if (v1_api_versions->server_address_by_client_cidrs) {
     list_ForEach(server_address_by_client_cidrsListEntry, v1_api_versions->server_address_by_client_cidrs) {
-    cJSON *itemLocal = v1_server_address_by_client_cidr_convertToJSON(server_address_by_client_cidrsListEntry->data);
+    mazu_cJSON *itemLocal = v1_server_address_by_client_cidr_convertToJSON(server_address_by_client_cidrsListEntry->data);
     if(itemLocal == NULL) {
     goto fail;
     }
-    cJSON_AddItemToArray(server_address_by_client_cidrs, itemLocal);
+    mazu_cJSON_AddItemToArray(server_address_by_client_cidrs, itemLocal);
     }
     }
 
@@ -98,14 +98,14 @@ cJSON *v1_api_versions_convertToJSON(v1_api_versions_t *v1_api_versions) {
     if (!v1_api_versions->versions) {
         goto fail;
     }
-    cJSON *versions = cJSON_AddArrayToObject(item, "versions");
+    mazu_cJSON *versions = mazu_cJSON_AddArrayToObject(item, "versions");
     if(versions == NULL) {
         goto fail; //primitive container
     }
 
     listEntry_t *versionsListEntry;
     list_ForEach(versionsListEntry, v1_api_versions->versions) {
-    if(cJSON_AddStringToObject(versions, "", (char*)versionsListEntry->data) == NULL)
+    if(mazu_cJSON_AddStringToObject(versions, "", (char*)versionsListEntry->data) == NULL)
     {
         goto fail;
     }
@@ -114,12 +114,12 @@ cJSON *v1_api_versions_convertToJSON(v1_api_versions_t *v1_api_versions) {
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_api_versions_t *v1_api_versions_parseFromJSON(cJSON *v1_api_versionsJSON){
+v1_api_versions_t *v1_api_versions_parseFromJSON(mazu_cJSON *v1_api_versionsJSON){
 
     v1_api_versions_t *v1_api_versions_local_var = NULL;
 
@@ -130,40 +130,40 @@ v1_api_versions_t *v1_api_versions_parseFromJSON(cJSON *v1_api_versionsJSON){
     list_t *versionsList = NULL;
 
     // v1_api_versions->api_version
-    cJSON *api_version = cJSON_GetObjectItemCaseSensitive(v1_api_versionsJSON, "apiVersion");
+    mazu_cJSON *api_version = mazu_cJSON_GetObjectItemCaseSensitive(v1_api_versionsJSON, "apiVersion");
     if (api_version) { 
-    if(!cJSON_IsString(api_version) && !cJSON_IsNull(api_version))
+    if(!mazu_cJSON_IsString(api_version) && !mazu_cJSON_IsNull(api_version))
     {
     goto end; //String
     }
     }
 
     // v1_api_versions->kind
-    cJSON *kind = cJSON_GetObjectItemCaseSensitive(v1_api_versionsJSON, "kind");
+    mazu_cJSON *kind = mazu_cJSON_GetObjectItemCaseSensitive(v1_api_versionsJSON, "kind");
     if (kind) { 
-    if(!cJSON_IsString(kind) && !cJSON_IsNull(kind))
+    if(!mazu_cJSON_IsString(kind) && !mazu_cJSON_IsNull(kind))
     {
     goto end; //String
     }
     }
 
     // v1_api_versions->server_address_by_client_cidrs
-    cJSON *server_address_by_client_cidrs = cJSON_GetObjectItemCaseSensitive(v1_api_versionsJSON, "serverAddressByClientCIDRs");
+    mazu_cJSON *server_address_by_client_cidrs = mazu_cJSON_GetObjectItemCaseSensitive(v1_api_versionsJSON, "serverAddressByClientCIDRs");
     if (!server_address_by_client_cidrs) {
         goto end;
     }
 
     
-    cJSON *server_address_by_client_cidrs_local_nonprimitive = NULL;
-    if(!cJSON_IsArray(server_address_by_client_cidrs)){
+    mazu_cJSON *server_address_by_client_cidrs_local_nonprimitive = NULL;
+    if(!mazu_cJSON_IsArray(server_address_by_client_cidrs)){
         goto end; //nonprimitive container
     }
 
     server_address_by_client_cidrsList = list_createList();
 
-    cJSON_ArrayForEach(server_address_by_client_cidrs_local_nonprimitive,server_address_by_client_cidrs )
+    mazu_cJSON_ArrayForEach(server_address_by_client_cidrs_local_nonprimitive,server_address_by_client_cidrs )
     {
-        if(!cJSON_IsObject(server_address_by_client_cidrs_local_nonprimitive)){
+        if(!mazu_cJSON_IsObject(server_address_by_client_cidrs_local_nonprimitive)){
             goto end;
         }
         v1_server_address_by_client_cidr_t *server_address_by_client_cidrsItem = v1_server_address_by_client_cidr_parseFromJSON(server_address_by_client_cidrs_local_nonprimitive);
@@ -172,21 +172,21 @@ v1_api_versions_t *v1_api_versions_parseFromJSON(cJSON *v1_api_versionsJSON){
     }
 
     // v1_api_versions->versions
-    cJSON *versions = cJSON_GetObjectItemCaseSensitive(v1_api_versionsJSON, "versions");
+    mazu_cJSON *versions = mazu_cJSON_GetObjectItemCaseSensitive(v1_api_versionsJSON, "versions");
     if (!versions) {
         goto end;
     }
 
     
-    cJSON *versions_local = NULL;
-    if(!cJSON_IsArray(versions)) {
+    mazu_cJSON *versions_local = NULL;
+    if(!mazu_cJSON_IsArray(versions)) {
         goto end;//primitive container
     }
     versionsList = list_createList();
 
-    cJSON_ArrayForEach(versions_local, versions)
+    mazu_cJSON_ArrayForEach(versions_local, versions)
     {
-        if(!cJSON_IsString(versions_local))
+        if(!mazu_cJSON_IsString(versions_local))
         {
             goto end;
         }
@@ -195,8 +195,8 @@ v1_api_versions_t *v1_api_versions_parseFromJSON(cJSON *v1_api_versionsJSON){
 
 
     v1_api_versions_local_var = v1_api_versions_create (
-        api_version && !cJSON_IsNull(api_version) ? strdup(api_version->valuestring) : NULL,
-        kind && !cJSON_IsNull(kind) ? strdup(kind->valuestring) : NULL,
+        api_version && !mazu_cJSON_IsNull(api_version) ? strdup(api_version->valuestring) : NULL,
+        kind && !mazu_cJSON_IsNull(kind) ? strdup(kind->valuestring) : NULL,
         server_address_by_client_cidrsList,
         versionsList
         );

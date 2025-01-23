@@ -8,7 +8,7 @@
 #define _v1alpha1_match_resources_H_
 
 #include <string.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
 #include "../include/binary.h"
@@ -39,9 +39,9 @@ v1alpha1_match_resources_t *v1alpha1_match_resources_create(
 
 void v1alpha1_match_resources_free(v1alpha1_match_resources_t *v1alpha1_match_resources);
 
-v1alpha1_match_resources_t *v1alpha1_match_resources_parseFromJSON(cJSON *v1alpha1_match_resourcesJSON);
+v1alpha1_match_resources_t *v1alpha1_match_resources_parseFromJSON(mazu_cJSON *v1alpha1_match_resourcesJSON);
 
-cJSON *v1alpha1_match_resources_convertToJSON(v1alpha1_match_resources_t *v1alpha1_match_resources);
+mazu_cJSON *v1alpha1_match_resources_convertToJSON(v1alpha1_match_resources_t *v1alpha1_match_resources);
 
 #endif /* _v1alpha1_match_resources_H_ */
 

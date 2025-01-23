@@ -48,12 +48,12 @@ void v1_limit_range_free(v1_limit_range_t *v1_limit_range) {
     free(v1_limit_range);
 }
 
-cJSON *v1_limit_range_convertToJSON(v1_limit_range_t *v1_limit_range) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_limit_range_convertToJSON(v1_limit_range_t *v1_limit_range) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_limit_range->api_version
     if(v1_limit_range->api_version) {
-    if(cJSON_AddStringToObject(item, "apiVersion", v1_limit_range->api_version) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "apiVersion", v1_limit_range->api_version) == NULL) {
     goto fail; //String
     }
     }
@@ -61,7 +61,7 @@ cJSON *v1_limit_range_convertToJSON(v1_limit_range_t *v1_limit_range) {
 
     // v1_limit_range->kind
     if(v1_limit_range->kind) {
-    if(cJSON_AddStringToObject(item, "kind", v1_limit_range->kind) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "kind", v1_limit_range->kind) == NULL) {
     goto fail; //String
     }
     }
@@ -69,11 +69,11 @@ cJSON *v1_limit_range_convertToJSON(v1_limit_range_t *v1_limit_range) {
 
     // v1_limit_range->metadata
     if(v1_limit_range->metadata) {
-    cJSON *metadata_local_JSON = v1_object_meta_convertToJSON(v1_limit_range->metadata);
+    mazu_cJSON *metadata_local_JSON = v1_object_meta_convertToJSON(v1_limit_range->metadata);
     if(metadata_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "metadata", metadata_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "metadata", metadata_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -82,11 +82,11 @@ cJSON *v1_limit_range_convertToJSON(v1_limit_range_t *v1_limit_range) {
 
     // v1_limit_range->spec
     if(v1_limit_range->spec) {
-    cJSON *spec_local_JSON = v1_limit_range_spec_convertToJSON(v1_limit_range->spec);
+    mazu_cJSON *spec_local_JSON = v1_limit_range_spec_convertToJSON(v1_limit_range->spec);
     if(spec_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "spec", spec_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "spec", spec_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -95,12 +95,12 @@ cJSON *v1_limit_range_convertToJSON(v1_limit_range_t *v1_limit_range) {
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_limit_range_t *v1_limit_range_parseFromJSON(cJSON *v1_limit_rangeJSON){
+v1_limit_range_t *v1_limit_range_parseFromJSON(mazu_cJSON *v1_limit_rangeJSON){
 
     v1_limit_range_t *v1_limit_range_local_var = NULL;
 
@@ -111,39 +111,39 @@ v1_limit_range_t *v1_limit_range_parseFromJSON(cJSON *v1_limit_rangeJSON){
     v1_limit_range_spec_t *spec_local_nonprim = NULL;
 
     // v1_limit_range->api_version
-    cJSON *api_version = cJSON_GetObjectItemCaseSensitive(v1_limit_rangeJSON, "apiVersion");
+    mazu_cJSON *api_version = mazu_cJSON_GetObjectItemCaseSensitive(v1_limit_rangeJSON, "apiVersion");
     if (api_version) { 
-    if(!cJSON_IsString(api_version) && !cJSON_IsNull(api_version))
+    if(!mazu_cJSON_IsString(api_version) && !mazu_cJSON_IsNull(api_version))
     {
     goto end; //String
     }
     }
 
     // v1_limit_range->kind
-    cJSON *kind = cJSON_GetObjectItemCaseSensitive(v1_limit_rangeJSON, "kind");
+    mazu_cJSON *kind = mazu_cJSON_GetObjectItemCaseSensitive(v1_limit_rangeJSON, "kind");
     if (kind) { 
-    if(!cJSON_IsString(kind) && !cJSON_IsNull(kind))
+    if(!mazu_cJSON_IsString(kind) && !mazu_cJSON_IsNull(kind))
     {
     goto end; //String
     }
     }
 
     // v1_limit_range->metadata
-    cJSON *metadata = cJSON_GetObjectItemCaseSensitive(v1_limit_rangeJSON, "metadata");
+    mazu_cJSON *metadata = mazu_cJSON_GetObjectItemCaseSensitive(v1_limit_rangeJSON, "metadata");
     if (metadata) { 
     metadata_local_nonprim = v1_object_meta_parseFromJSON(metadata); //nonprimitive
     }
 
     // v1_limit_range->spec
-    cJSON *spec = cJSON_GetObjectItemCaseSensitive(v1_limit_rangeJSON, "spec");
+    mazu_cJSON *spec = mazu_cJSON_GetObjectItemCaseSensitive(v1_limit_rangeJSON, "spec");
     if (spec) { 
     spec_local_nonprim = v1_limit_range_spec_parseFromJSON(spec); //nonprimitive
     }
 
 
     v1_limit_range_local_var = v1_limit_range_create (
-        api_version && !cJSON_IsNull(api_version) ? strdup(api_version->valuestring) : NULL,
-        kind && !cJSON_IsNull(kind) ? strdup(kind->valuestring) : NULL,
+        api_version && !mazu_cJSON_IsNull(api_version) ? strdup(api_version->valuestring) : NULL,
+        kind && !mazu_cJSON_IsNull(kind) ? strdup(kind->valuestring) : NULL,
         metadata ? metadata_local_nonprim : NULL,
         spec ? spec_local_nonprim : NULL
         );

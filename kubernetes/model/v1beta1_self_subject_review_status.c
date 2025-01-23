@@ -30,16 +30,16 @@ void v1beta1_self_subject_review_status_free(v1beta1_self_subject_review_status_
     free(v1beta1_self_subject_review_status);
 }
 
-cJSON *v1beta1_self_subject_review_status_convertToJSON(v1beta1_self_subject_review_status_t *v1beta1_self_subject_review_status) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1beta1_self_subject_review_status_convertToJSON(v1beta1_self_subject_review_status_t *v1beta1_self_subject_review_status) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1beta1_self_subject_review_status->user_info
     if(v1beta1_self_subject_review_status->user_info) {
-    cJSON *user_info_local_JSON = v1_user_info_convertToJSON(v1beta1_self_subject_review_status->user_info);
+    mazu_cJSON *user_info_local_JSON = v1_user_info_convertToJSON(v1beta1_self_subject_review_status->user_info);
     if(user_info_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "userInfo", user_info_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "userInfo", user_info_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -48,12 +48,12 @@ cJSON *v1beta1_self_subject_review_status_convertToJSON(v1beta1_self_subject_rev
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1beta1_self_subject_review_status_t *v1beta1_self_subject_review_status_parseFromJSON(cJSON *v1beta1_self_subject_review_statusJSON){
+v1beta1_self_subject_review_status_t *v1beta1_self_subject_review_status_parseFromJSON(mazu_cJSON *v1beta1_self_subject_review_statusJSON){
 
     v1beta1_self_subject_review_status_t *v1beta1_self_subject_review_status_local_var = NULL;
 
@@ -61,7 +61,7 @@ v1beta1_self_subject_review_status_t *v1beta1_self_subject_review_status_parseFr
     v1_user_info_t *user_info_local_nonprim = NULL;
 
     // v1beta1_self_subject_review_status->user_info
-    cJSON *user_info = cJSON_GetObjectItemCaseSensitive(v1beta1_self_subject_review_statusJSON, "userInfo");
+    mazu_cJSON *user_info = mazu_cJSON_GetObjectItemCaseSensitive(v1beta1_self_subject_review_statusJSON, "userInfo");
     if (user_info) { 
     user_info_local_nonprim = v1_user_info_parseFromJSON(user_info); //nonprimitive
     }

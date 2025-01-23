@@ -11,7 +11,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdbool.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 
 #include "../model/v1_network_policy_port.h"
 v1_network_policy_port_t* instantiate_v1_network_policy_port(int include_optional);
@@ -43,11 +43,11 @@ v1_network_policy_port_t* instantiate_v1_network_policy_port(int include_optiona
 void test_v1_network_policy_port(int include_optional) {
     v1_network_policy_port_t* v1_network_policy_port_1 = instantiate_v1_network_policy_port(include_optional);
 
-	cJSON* jsonv1_network_policy_port_1 = v1_network_policy_port_convertToJSON(v1_network_policy_port_1);
-	printf("v1_network_policy_port :\n%s\n", cJSON_Print(jsonv1_network_policy_port_1));
+	mazu_cJSON* jsonv1_network_policy_port_1 = v1_network_policy_port_convertToJSON(v1_network_policy_port_1);
+	printf("v1_network_policy_port :\n%s\n", mazu_cJSON_Print(jsonv1_network_policy_port_1));
 	v1_network_policy_port_t* v1_network_policy_port_2 = v1_network_policy_port_parseFromJSON(jsonv1_network_policy_port_1);
-	cJSON* jsonv1_network_policy_port_2 = v1_network_policy_port_convertToJSON(v1_network_policy_port_2);
-	printf("repeating v1_network_policy_port:\n%s\n", cJSON_Print(jsonv1_network_policy_port_2));
+	mazu_cJSON* jsonv1_network_policy_port_2 = v1_network_policy_port_convertToJSON(v1_network_policy_port_2);
+	printf("repeating v1_network_policy_port:\n%s\n", mazu_cJSON_Print(jsonv1_network_policy_port_2));
 }
 
 int main() {

@@ -42,12 +42,12 @@ void v1_custom_resource_subresource_scale_free(v1_custom_resource_subresource_sc
     free(v1_custom_resource_subresource_scale);
 }
 
-cJSON *v1_custom_resource_subresource_scale_convertToJSON(v1_custom_resource_subresource_scale_t *v1_custom_resource_subresource_scale) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_custom_resource_subresource_scale_convertToJSON(v1_custom_resource_subresource_scale_t *v1_custom_resource_subresource_scale) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_custom_resource_subresource_scale->label_selector_path
     if(v1_custom_resource_subresource_scale->label_selector_path) {
-    if(cJSON_AddStringToObject(item, "labelSelectorPath", v1_custom_resource_subresource_scale->label_selector_path) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "labelSelectorPath", v1_custom_resource_subresource_scale->label_selector_path) == NULL) {
     goto fail; //String
     }
     }
@@ -57,7 +57,7 @@ cJSON *v1_custom_resource_subresource_scale_convertToJSON(v1_custom_resource_sub
     if (!v1_custom_resource_subresource_scale->spec_replicas_path) {
         goto fail;
     }
-    if(cJSON_AddStringToObject(item, "specReplicasPath", v1_custom_resource_subresource_scale->spec_replicas_path) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "specReplicasPath", v1_custom_resource_subresource_scale->spec_replicas_path) == NULL) {
     goto fail; //String
     }
 
@@ -66,58 +66,58 @@ cJSON *v1_custom_resource_subresource_scale_convertToJSON(v1_custom_resource_sub
     if (!v1_custom_resource_subresource_scale->status_replicas_path) {
         goto fail;
     }
-    if(cJSON_AddStringToObject(item, "statusReplicasPath", v1_custom_resource_subresource_scale->status_replicas_path) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "statusReplicasPath", v1_custom_resource_subresource_scale->status_replicas_path) == NULL) {
     goto fail; //String
     }
 
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_custom_resource_subresource_scale_t *v1_custom_resource_subresource_scale_parseFromJSON(cJSON *v1_custom_resource_subresource_scaleJSON){
+v1_custom_resource_subresource_scale_t *v1_custom_resource_subresource_scale_parseFromJSON(mazu_cJSON *v1_custom_resource_subresource_scaleJSON){
 
     v1_custom_resource_subresource_scale_t *v1_custom_resource_subresource_scale_local_var = NULL;
 
     // v1_custom_resource_subresource_scale->label_selector_path
-    cJSON *label_selector_path = cJSON_GetObjectItemCaseSensitive(v1_custom_resource_subresource_scaleJSON, "labelSelectorPath");
+    mazu_cJSON *label_selector_path = mazu_cJSON_GetObjectItemCaseSensitive(v1_custom_resource_subresource_scaleJSON, "labelSelectorPath");
     if (label_selector_path) { 
-    if(!cJSON_IsString(label_selector_path) && !cJSON_IsNull(label_selector_path))
+    if(!mazu_cJSON_IsString(label_selector_path) && !mazu_cJSON_IsNull(label_selector_path))
     {
     goto end; //String
     }
     }
 
     // v1_custom_resource_subresource_scale->spec_replicas_path
-    cJSON *spec_replicas_path = cJSON_GetObjectItemCaseSensitive(v1_custom_resource_subresource_scaleJSON, "specReplicasPath");
+    mazu_cJSON *spec_replicas_path = mazu_cJSON_GetObjectItemCaseSensitive(v1_custom_resource_subresource_scaleJSON, "specReplicasPath");
     if (!spec_replicas_path) {
         goto end;
     }
 
     
-    if(!cJSON_IsString(spec_replicas_path))
+    if(!mazu_cJSON_IsString(spec_replicas_path))
     {
     goto end; //String
     }
 
     // v1_custom_resource_subresource_scale->status_replicas_path
-    cJSON *status_replicas_path = cJSON_GetObjectItemCaseSensitive(v1_custom_resource_subresource_scaleJSON, "statusReplicasPath");
+    mazu_cJSON *status_replicas_path = mazu_cJSON_GetObjectItemCaseSensitive(v1_custom_resource_subresource_scaleJSON, "statusReplicasPath");
     if (!status_replicas_path) {
         goto end;
     }
 
     
-    if(!cJSON_IsString(status_replicas_path))
+    if(!mazu_cJSON_IsString(status_replicas_path))
     {
     goto end; //String
     }
 
 
     v1_custom_resource_subresource_scale_local_var = v1_custom_resource_subresource_scale_create (
-        label_selector_path && !cJSON_IsNull(label_selector_path) ? strdup(label_selector_path->valuestring) : NULL,
+        label_selector_path && !mazu_cJSON_IsNull(label_selector_path) ? strdup(label_selector_path->valuestring) : NULL,
         strdup(spec_replicas_path->valuestring),
         strdup(status_replicas_path->valuestring)
         );

@@ -11,7 +11,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdbool.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 
 #include "../model/v1_pod_affinity_term.h"
 v1_pod_affinity_term_t* instantiate_v1_pod_affinity_term(int include_optional);
@@ -53,11 +53,11 @@ v1_pod_affinity_term_t* instantiate_v1_pod_affinity_term(int include_optional) {
 void test_v1_pod_affinity_term(int include_optional) {
     v1_pod_affinity_term_t* v1_pod_affinity_term_1 = instantiate_v1_pod_affinity_term(include_optional);
 
-	cJSON* jsonv1_pod_affinity_term_1 = v1_pod_affinity_term_convertToJSON(v1_pod_affinity_term_1);
-	printf("v1_pod_affinity_term :\n%s\n", cJSON_Print(jsonv1_pod_affinity_term_1));
+	mazu_cJSON* jsonv1_pod_affinity_term_1 = v1_pod_affinity_term_convertToJSON(v1_pod_affinity_term_1);
+	printf("v1_pod_affinity_term :\n%s\n", mazu_cJSON_Print(jsonv1_pod_affinity_term_1));
 	v1_pod_affinity_term_t* v1_pod_affinity_term_2 = v1_pod_affinity_term_parseFromJSON(jsonv1_pod_affinity_term_1);
-	cJSON* jsonv1_pod_affinity_term_2 = v1_pod_affinity_term_convertToJSON(v1_pod_affinity_term_2);
-	printf("repeating v1_pod_affinity_term:\n%s\n", cJSON_Print(jsonv1_pod_affinity_term_2));
+	mazu_cJSON* jsonv1_pod_affinity_term_2 = v1_pod_affinity_term_convertToJSON(v1_pod_affinity_term_2);
+	printf("repeating v1_pod_affinity_term:\n%s\n", mazu_cJSON_Print(jsonv1_pod_affinity_term_2));
 }
 
 int main() {

@@ -36,12 +36,12 @@ void v1_container_state_waiting_free(v1_container_state_waiting_t *v1_container_
     free(v1_container_state_waiting);
 }
 
-cJSON *v1_container_state_waiting_convertToJSON(v1_container_state_waiting_t *v1_container_state_waiting) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_container_state_waiting_convertToJSON(v1_container_state_waiting_t *v1_container_state_waiting) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_container_state_waiting->message
     if(v1_container_state_waiting->message) {
-    if(cJSON_AddStringToObject(item, "message", v1_container_state_waiting->message) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "message", v1_container_state_waiting->message) == NULL) {
     goto fail; //String
     }
     }
@@ -49,7 +49,7 @@ cJSON *v1_container_state_waiting_convertToJSON(v1_container_state_waiting_t *v1
 
     // v1_container_state_waiting->reason
     if(v1_container_state_waiting->reason) {
-    if(cJSON_AddStringToObject(item, "reason", v1_container_state_waiting->reason) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "reason", v1_container_state_waiting->reason) == NULL) {
     goto fail; //String
     }
     }
@@ -57,28 +57,28 @@ cJSON *v1_container_state_waiting_convertToJSON(v1_container_state_waiting_t *v1
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_container_state_waiting_t *v1_container_state_waiting_parseFromJSON(cJSON *v1_container_state_waitingJSON){
+v1_container_state_waiting_t *v1_container_state_waiting_parseFromJSON(mazu_cJSON *v1_container_state_waitingJSON){
 
     v1_container_state_waiting_t *v1_container_state_waiting_local_var = NULL;
 
     // v1_container_state_waiting->message
-    cJSON *message = cJSON_GetObjectItemCaseSensitive(v1_container_state_waitingJSON, "message");
+    mazu_cJSON *message = mazu_cJSON_GetObjectItemCaseSensitive(v1_container_state_waitingJSON, "message");
     if (message) { 
-    if(!cJSON_IsString(message) && !cJSON_IsNull(message))
+    if(!mazu_cJSON_IsString(message) && !mazu_cJSON_IsNull(message))
     {
     goto end; //String
     }
     }
 
     // v1_container_state_waiting->reason
-    cJSON *reason = cJSON_GetObjectItemCaseSensitive(v1_container_state_waitingJSON, "reason");
+    mazu_cJSON *reason = mazu_cJSON_GetObjectItemCaseSensitive(v1_container_state_waitingJSON, "reason");
     if (reason) { 
-    if(!cJSON_IsString(reason) && !cJSON_IsNull(reason))
+    if(!mazu_cJSON_IsString(reason) && !mazu_cJSON_IsNull(reason))
     {
     goto end; //String
     }
@@ -86,8 +86,8 @@ v1_container_state_waiting_t *v1_container_state_waiting_parseFromJSON(cJSON *v1
 
 
     v1_container_state_waiting_local_var = v1_container_state_waiting_create (
-        message && !cJSON_IsNull(message) ? strdup(message->valuestring) : NULL,
-        reason && !cJSON_IsNull(reason) ? strdup(reason->valuestring) : NULL
+        message && !mazu_cJSON_IsNull(message) ? strdup(message->valuestring) : NULL,
+        reason && !mazu_cJSON_IsNull(reason) ? strdup(reason->valuestring) : NULL
         );
 
     return v1_container_state_waiting_local_var;

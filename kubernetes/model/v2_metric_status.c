@@ -60,16 +60,16 @@ void v2_metric_status_free(v2_metric_status_t *v2_metric_status) {
     free(v2_metric_status);
 }
 
-cJSON *v2_metric_status_convertToJSON(v2_metric_status_t *v2_metric_status) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v2_metric_status_convertToJSON(v2_metric_status_t *v2_metric_status) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v2_metric_status->container_resource
     if(v2_metric_status->container_resource) {
-    cJSON *container_resource_local_JSON = v2_container_resource_metric_status_convertToJSON(v2_metric_status->container_resource);
+    mazu_cJSON *container_resource_local_JSON = v2_container_resource_metric_status_convertToJSON(v2_metric_status->container_resource);
     if(container_resource_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "containerResource", container_resource_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "containerResource", container_resource_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -78,11 +78,11 @@ cJSON *v2_metric_status_convertToJSON(v2_metric_status_t *v2_metric_status) {
 
     // v2_metric_status->external
     if(v2_metric_status->external) {
-    cJSON *external_local_JSON = v2_external_metric_status_convertToJSON(v2_metric_status->external);
+    mazu_cJSON *external_local_JSON = v2_external_metric_status_convertToJSON(v2_metric_status->external);
     if(external_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "external", external_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "external", external_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -91,11 +91,11 @@ cJSON *v2_metric_status_convertToJSON(v2_metric_status_t *v2_metric_status) {
 
     // v2_metric_status->object
     if(v2_metric_status->object) {
-    cJSON *object_local_JSON = v2_object_metric_status_convertToJSON(v2_metric_status->object);
+    mazu_cJSON *object_local_JSON = v2_object_metric_status_convertToJSON(v2_metric_status->object);
     if(object_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "object", object_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "object", object_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -104,11 +104,11 @@ cJSON *v2_metric_status_convertToJSON(v2_metric_status_t *v2_metric_status) {
 
     // v2_metric_status->pods
     if(v2_metric_status->pods) {
-    cJSON *pods_local_JSON = v2_pods_metric_status_convertToJSON(v2_metric_status->pods);
+    mazu_cJSON *pods_local_JSON = v2_pods_metric_status_convertToJSON(v2_metric_status->pods);
     if(pods_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "pods", pods_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "pods", pods_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -117,11 +117,11 @@ cJSON *v2_metric_status_convertToJSON(v2_metric_status_t *v2_metric_status) {
 
     // v2_metric_status->resource
     if(v2_metric_status->resource) {
-    cJSON *resource_local_JSON = v2_resource_metric_status_convertToJSON(v2_metric_status->resource);
+    mazu_cJSON *resource_local_JSON = v2_resource_metric_status_convertToJSON(v2_metric_status->resource);
     if(resource_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "resource", resource_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "resource", resource_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -132,19 +132,19 @@ cJSON *v2_metric_status_convertToJSON(v2_metric_status_t *v2_metric_status) {
     if (!v2_metric_status->type) {
         goto fail;
     }
-    if(cJSON_AddStringToObject(item, "type", v2_metric_status->type) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "type", v2_metric_status->type) == NULL) {
     goto fail; //String
     }
 
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v2_metric_status_t *v2_metric_status_parseFromJSON(cJSON *v2_metric_statusJSON){
+v2_metric_status_t *v2_metric_status_parseFromJSON(mazu_cJSON *v2_metric_statusJSON){
 
     v2_metric_status_t *v2_metric_status_local_var = NULL;
 
@@ -164,43 +164,43 @@ v2_metric_status_t *v2_metric_status_parseFromJSON(cJSON *v2_metric_statusJSON){
     v2_resource_metric_status_t *resource_local_nonprim = NULL;
 
     // v2_metric_status->container_resource
-    cJSON *container_resource = cJSON_GetObjectItemCaseSensitive(v2_metric_statusJSON, "containerResource");
+    mazu_cJSON *container_resource = mazu_cJSON_GetObjectItemCaseSensitive(v2_metric_statusJSON, "containerResource");
     if (container_resource) { 
     container_resource_local_nonprim = v2_container_resource_metric_status_parseFromJSON(container_resource); //nonprimitive
     }
 
     // v2_metric_status->external
-    cJSON *external = cJSON_GetObjectItemCaseSensitive(v2_metric_statusJSON, "external");
+    mazu_cJSON *external = mazu_cJSON_GetObjectItemCaseSensitive(v2_metric_statusJSON, "external");
     if (external) { 
     external_local_nonprim = v2_external_metric_status_parseFromJSON(external); //nonprimitive
     }
 
     // v2_metric_status->object
-    cJSON *object = cJSON_GetObjectItemCaseSensitive(v2_metric_statusJSON, "object");
+    mazu_cJSON *object = mazu_cJSON_GetObjectItemCaseSensitive(v2_metric_statusJSON, "object");
     if (object) { 
     object_local_nonprim = v2_object_metric_status_parseFromJSON(object); //nonprimitive
     }
 
     // v2_metric_status->pods
-    cJSON *pods = cJSON_GetObjectItemCaseSensitive(v2_metric_statusJSON, "pods");
+    mazu_cJSON *pods = mazu_cJSON_GetObjectItemCaseSensitive(v2_metric_statusJSON, "pods");
     if (pods) { 
     pods_local_nonprim = v2_pods_metric_status_parseFromJSON(pods); //nonprimitive
     }
 
     // v2_metric_status->resource
-    cJSON *resource = cJSON_GetObjectItemCaseSensitive(v2_metric_statusJSON, "resource");
+    mazu_cJSON *resource = mazu_cJSON_GetObjectItemCaseSensitive(v2_metric_statusJSON, "resource");
     if (resource) { 
     resource_local_nonprim = v2_resource_metric_status_parseFromJSON(resource); //nonprimitive
     }
 
     // v2_metric_status->type
-    cJSON *type = cJSON_GetObjectItemCaseSensitive(v2_metric_statusJSON, "type");
+    mazu_cJSON *type = mazu_cJSON_GetObjectItemCaseSensitive(v2_metric_statusJSON, "type");
     if (!type) {
         goto end;
     }
 
     
-    if(!cJSON_IsString(type))
+    if(!mazu_cJSON_IsString(type))
     {
     goto end; //String
     }

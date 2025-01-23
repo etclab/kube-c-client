@@ -33,12 +33,12 @@ void v1_ingress_load_balancer_status_free(v1_ingress_load_balancer_status_t *v1_
     free(v1_ingress_load_balancer_status);
 }
 
-cJSON *v1_ingress_load_balancer_status_convertToJSON(v1_ingress_load_balancer_status_t *v1_ingress_load_balancer_status) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_ingress_load_balancer_status_convertToJSON(v1_ingress_load_balancer_status_t *v1_ingress_load_balancer_status) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_ingress_load_balancer_status->ingress
     if(v1_ingress_load_balancer_status->ingress) {
-    cJSON *ingress = cJSON_AddArrayToObject(item, "ingress");
+    mazu_cJSON *ingress = mazu_cJSON_AddArrayToObject(item, "ingress");
     if(ingress == NULL) {
     goto fail; //nonprimitive container
     }
@@ -46,11 +46,11 @@ cJSON *v1_ingress_load_balancer_status_convertToJSON(v1_ingress_load_balancer_st
     listEntry_t *ingressListEntry;
     if (v1_ingress_load_balancer_status->ingress) {
     list_ForEach(ingressListEntry, v1_ingress_load_balancer_status->ingress) {
-    cJSON *itemLocal = v1_ingress_load_balancer_ingress_convertToJSON(ingressListEntry->data);
+    mazu_cJSON *itemLocal = v1_ingress_load_balancer_ingress_convertToJSON(ingressListEntry->data);
     if(itemLocal == NULL) {
     goto fail;
     }
-    cJSON_AddItemToArray(ingress, itemLocal);
+    mazu_cJSON_AddItemToArray(ingress, itemLocal);
     }
     }
     }
@@ -58,12 +58,12 @@ cJSON *v1_ingress_load_balancer_status_convertToJSON(v1_ingress_load_balancer_st
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_ingress_load_balancer_status_t *v1_ingress_load_balancer_status_parseFromJSON(cJSON *v1_ingress_load_balancer_statusJSON){
+v1_ingress_load_balancer_status_t *v1_ingress_load_balancer_status_parseFromJSON(mazu_cJSON *v1_ingress_load_balancer_statusJSON){
 
     v1_ingress_load_balancer_status_t *v1_ingress_load_balancer_status_local_var = NULL;
 
@@ -71,18 +71,18 @@ v1_ingress_load_balancer_status_t *v1_ingress_load_balancer_status_parseFromJSON
     list_t *ingressList = NULL;
 
     // v1_ingress_load_balancer_status->ingress
-    cJSON *ingress = cJSON_GetObjectItemCaseSensitive(v1_ingress_load_balancer_statusJSON, "ingress");
+    mazu_cJSON *ingress = mazu_cJSON_GetObjectItemCaseSensitive(v1_ingress_load_balancer_statusJSON, "ingress");
     if (ingress) { 
-    cJSON *ingress_local_nonprimitive = NULL;
-    if(!cJSON_IsArray(ingress)){
+    mazu_cJSON *ingress_local_nonprimitive = NULL;
+    if(!mazu_cJSON_IsArray(ingress)){
         goto end; //nonprimitive container
     }
 
     ingressList = list_createList();
 
-    cJSON_ArrayForEach(ingress_local_nonprimitive,ingress )
+    mazu_cJSON_ArrayForEach(ingress_local_nonprimitive,ingress )
     {
-        if(!cJSON_IsObject(ingress_local_nonprimitive)){
+        if(!mazu_cJSON_IsObject(ingress_local_nonprimitive)){
             goto end;
         }
         v1_ingress_load_balancer_ingress_t *ingressItem = v1_ingress_load_balancer_ingress_parseFromJSON(ingress_local_nonprimitive);

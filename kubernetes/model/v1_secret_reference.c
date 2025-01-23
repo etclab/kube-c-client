@@ -36,12 +36,12 @@ void v1_secret_reference_free(v1_secret_reference_t *v1_secret_reference) {
     free(v1_secret_reference);
 }
 
-cJSON *v1_secret_reference_convertToJSON(v1_secret_reference_t *v1_secret_reference) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_secret_reference_convertToJSON(v1_secret_reference_t *v1_secret_reference) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_secret_reference->name
     if(v1_secret_reference->name) {
-    if(cJSON_AddStringToObject(item, "name", v1_secret_reference->name) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "name", v1_secret_reference->name) == NULL) {
     goto fail; //String
     }
     }
@@ -49,7 +49,7 @@ cJSON *v1_secret_reference_convertToJSON(v1_secret_reference_t *v1_secret_refere
 
     // v1_secret_reference->_namespace
     if(v1_secret_reference->_namespace) {
-    if(cJSON_AddStringToObject(item, "namespace", v1_secret_reference->_namespace) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "namespace", v1_secret_reference->_namespace) == NULL) {
     goto fail; //String
     }
     }
@@ -57,28 +57,28 @@ cJSON *v1_secret_reference_convertToJSON(v1_secret_reference_t *v1_secret_refere
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_secret_reference_t *v1_secret_reference_parseFromJSON(cJSON *v1_secret_referenceJSON){
+v1_secret_reference_t *v1_secret_reference_parseFromJSON(mazu_cJSON *v1_secret_referenceJSON){
 
     v1_secret_reference_t *v1_secret_reference_local_var = NULL;
 
     // v1_secret_reference->name
-    cJSON *name = cJSON_GetObjectItemCaseSensitive(v1_secret_referenceJSON, "name");
+    mazu_cJSON *name = mazu_cJSON_GetObjectItemCaseSensitive(v1_secret_referenceJSON, "name");
     if (name) { 
-    if(!cJSON_IsString(name) && !cJSON_IsNull(name))
+    if(!mazu_cJSON_IsString(name) && !mazu_cJSON_IsNull(name))
     {
     goto end; //String
     }
     }
 
     // v1_secret_reference->_namespace
-    cJSON *_namespace = cJSON_GetObjectItemCaseSensitive(v1_secret_referenceJSON, "namespace");
+    mazu_cJSON *_namespace = mazu_cJSON_GetObjectItemCaseSensitive(v1_secret_referenceJSON, "namespace");
     if (_namespace) { 
-    if(!cJSON_IsString(_namespace) && !cJSON_IsNull(_namespace))
+    if(!mazu_cJSON_IsString(_namespace) && !mazu_cJSON_IsNull(_namespace))
     {
     goto end; //String
     }
@@ -86,8 +86,8 @@ v1_secret_reference_t *v1_secret_reference_parseFromJSON(cJSON *v1_secret_refere
 
 
     v1_secret_reference_local_var = v1_secret_reference_create (
-        name && !cJSON_IsNull(name) ? strdup(name->valuestring) : NULL,
-        _namespace && !cJSON_IsNull(_namespace) ? strdup(_namespace->valuestring) : NULL
+        name && !mazu_cJSON_IsNull(name) ? strdup(name->valuestring) : NULL,
+        _namespace && !mazu_cJSON_IsNull(_namespace) ? strdup(_namespace->valuestring) : NULL
         );
 
     return v1_secret_reference_local_var;

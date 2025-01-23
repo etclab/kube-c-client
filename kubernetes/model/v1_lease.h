@@ -8,7 +8,7 @@
 #define _v1_lease_H_
 
 #include <string.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
 #include "../include/binary.h"
@@ -37,9 +37,9 @@ v1_lease_t *v1_lease_create(
 
 void v1_lease_free(v1_lease_t *v1_lease);
 
-v1_lease_t *v1_lease_parseFromJSON(cJSON *v1_leaseJSON);
+v1_lease_t *v1_lease_parseFromJSON(mazu_cJSON *v1_leaseJSON);
 
-cJSON *v1_lease_convertToJSON(v1_lease_t *v1_lease);
+mazu_cJSON *v1_lease_convertToJSON(v1_lease_t *v1_lease);
 
 #endif /* _v1_lease_H_ */
 

@@ -39,16 +39,16 @@ void v1alpha3_device_claim_configuration_free(v1alpha3_device_claim_configuratio
     free(v1alpha3_device_claim_configuration);
 }
 
-cJSON *v1alpha3_device_claim_configuration_convertToJSON(v1alpha3_device_claim_configuration_t *v1alpha3_device_claim_configuration) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1alpha3_device_claim_configuration_convertToJSON(v1alpha3_device_claim_configuration_t *v1alpha3_device_claim_configuration) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1alpha3_device_claim_configuration->opaque
     if(v1alpha3_device_claim_configuration->opaque) {
-    cJSON *opaque_local_JSON = v1alpha3_opaque_device_configuration_convertToJSON(v1alpha3_device_claim_configuration->opaque);
+    mazu_cJSON *opaque_local_JSON = v1alpha3_opaque_device_configuration_convertToJSON(v1alpha3_device_claim_configuration->opaque);
     if(opaque_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "opaque", opaque_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "opaque", opaque_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -57,14 +57,14 @@ cJSON *v1alpha3_device_claim_configuration_convertToJSON(v1alpha3_device_claim_c
 
     // v1alpha3_device_claim_configuration->requests
     if(v1alpha3_device_claim_configuration->requests) {
-    cJSON *requests = cJSON_AddArrayToObject(item, "requests");
+    mazu_cJSON *requests = mazu_cJSON_AddArrayToObject(item, "requests");
     if(requests == NULL) {
         goto fail; //primitive container
     }
 
     listEntry_t *requestsListEntry;
     list_ForEach(requestsListEntry, v1alpha3_device_claim_configuration->requests) {
-    if(cJSON_AddStringToObject(requests, "", (char*)requestsListEntry->data) == NULL)
+    if(mazu_cJSON_AddStringToObject(requests, "", (char*)requestsListEntry->data) == NULL)
     {
         goto fail;
     }
@@ -74,12 +74,12 @@ cJSON *v1alpha3_device_claim_configuration_convertToJSON(v1alpha3_device_claim_c
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1alpha3_device_claim_configuration_t *v1alpha3_device_claim_configuration_parseFromJSON(cJSON *v1alpha3_device_claim_configurationJSON){
+v1alpha3_device_claim_configuration_t *v1alpha3_device_claim_configuration_parseFromJSON(mazu_cJSON *v1alpha3_device_claim_configurationJSON){
 
     v1alpha3_device_claim_configuration_t *v1alpha3_device_claim_configuration_local_var = NULL;
 
@@ -90,23 +90,23 @@ v1alpha3_device_claim_configuration_t *v1alpha3_device_claim_configuration_parse
     list_t *requestsList = NULL;
 
     // v1alpha3_device_claim_configuration->opaque
-    cJSON *opaque = cJSON_GetObjectItemCaseSensitive(v1alpha3_device_claim_configurationJSON, "opaque");
+    mazu_cJSON *opaque = mazu_cJSON_GetObjectItemCaseSensitive(v1alpha3_device_claim_configurationJSON, "opaque");
     if (opaque) { 
     opaque_local_nonprim = v1alpha3_opaque_device_configuration_parseFromJSON(opaque); //nonprimitive
     }
 
     // v1alpha3_device_claim_configuration->requests
-    cJSON *requests = cJSON_GetObjectItemCaseSensitive(v1alpha3_device_claim_configurationJSON, "requests");
+    mazu_cJSON *requests = mazu_cJSON_GetObjectItemCaseSensitive(v1alpha3_device_claim_configurationJSON, "requests");
     if (requests) { 
-    cJSON *requests_local = NULL;
-    if(!cJSON_IsArray(requests)) {
+    mazu_cJSON *requests_local = NULL;
+    if(!mazu_cJSON_IsArray(requests)) {
         goto end;//primitive container
     }
     requestsList = list_createList();
 
-    cJSON_ArrayForEach(requests_local, requests)
+    mazu_cJSON_ArrayForEach(requests_local, requests)
     {
-        if(!cJSON_IsString(requests_local))
+        if(!mazu_cJSON_IsString(requests_local))
         {
             goto end;
         }

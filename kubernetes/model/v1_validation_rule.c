@@ -56,12 +56,12 @@ void v1_validation_rule_free(v1_validation_rule_t *v1_validation_rule) {
     free(v1_validation_rule);
 }
 
-cJSON *v1_validation_rule_convertToJSON(v1_validation_rule_t *v1_validation_rule) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_validation_rule_convertToJSON(v1_validation_rule_t *v1_validation_rule) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_validation_rule->field_path
     if(v1_validation_rule->field_path) {
-    if(cJSON_AddStringToObject(item, "fieldPath", v1_validation_rule->field_path) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "fieldPath", v1_validation_rule->field_path) == NULL) {
     goto fail; //String
     }
     }
@@ -69,7 +69,7 @@ cJSON *v1_validation_rule_convertToJSON(v1_validation_rule_t *v1_validation_rule
 
     // v1_validation_rule->message
     if(v1_validation_rule->message) {
-    if(cJSON_AddStringToObject(item, "message", v1_validation_rule->message) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "message", v1_validation_rule->message) == NULL) {
     goto fail; //String
     }
     }
@@ -77,7 +77,7 @@ cJSON *v1_validation_rule_convertToJSON(v1_validation_rule_t *v1_validation_rule
 
     // v1_validation_rule->message_expression
     if(v1_validation_rule->message_expression) {
-    if(cJSON_AddStringToObject(item, "messageExpression", v1_validation_rule->message_expression) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "messageExpression", v1_validation_rule->message_expression) == NULL) {
     goto fail; //String
     }
     }
@@ -85,7 +85,7 @@ cJSON *v1_validation_rule_convertToJSON(v1_validation_rule_t *v1_validation_rule
 
     // v1_validation_rule->optional_old_self
     if(v1_validation_rule->optional_old_self) {
-    if(cJSON_AddBoolToObject(item, "optionalOldSelf", v1_validation_rule->optional_old_self) == NULL) {
+    if(mazu_cJSON_AddBoolToObject(item, "optionalOldSelf", v1_validation_rule->optional_old_self) == NULL) {
     goto fail; //Bool
     }
     }
@@ -93,7 +93,7 @@ cJSON *v1_validation_rule_convertToJSON(v1_validation_rule_t *v1_validation_rule
 
     // v1_validation_rule->reason
     if(v1_validation_rule->reason) {
-    if(cJSON_AddStringToObject(item, "reason", v1_validation_rule->reason) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "reason", v1_validation_rule->reason) == NULL) {
     goto fail; //String
     }
     }
@@ -103,86 +103,86 @@ cJSON *v1_validation_rule_convertToJSON(v1_validation_rule_t *v1_validation_rule
     if (!v1_validation_rule->rule) {
         goto fail;
     }
-    if(cJSON_AddStringToObject(item, "rule", v1_validation_rule->rule) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "rule", v1_validation_rule->rule) == NULL) {
     goto fail; //String
     }
 
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_validation_rule_t *v1_validation_rule_parseFromJSON(cJSON *v1_validation_ruleJSON){
+v1_validation_rule_t *v1_validation_rule_parseFromJSON(mazu_cJSON *v1_validation_ruleJSON){
 
     v1_validation_rule_t *v1_validation_rule_local_var = NULL;
 
     // v1_validation_rule->field_path
-    cJSON *field_path = cJSON_GetObjectItemCaseSensitive(v1_validation_ruleJSON, "fieldPath");
+    mazu_cJSON *field_path = mazu_cJSON_GetObjectItemCaseSensitive(v1_validation_ruleJSON, "fieldPath");
     if (field_path) { 
-    if(!cJSON_IsString(field_path) && !cJSON_IsNull(field_path))
+    if(!mazu_cJSON_IsString(field_path) && !mazu_cJSON_IsNull(field_path))
     {
     goto end; //String
     }
     }
 
     // v1_validation_rule->message
-    cJSON *message = cJSON_GetObjectItemCaseSensitive(v1_validation_ruleJSON, "message");
+    mazu_cJSON *message = mazu_cJSON_GetObjectItemCaseSensitive(v1_validation_ruleJSON, "message");
     if (message) { 
-    if(!cJSON_IsString(message) && !cJSON_IsNull(message))
+    if(!mazu_cJSON_IsString(message) && !mazu_cJSON_IsNull(message))
     {
     goto end; //String
     }
     }
 
     // v1_validation_rule->message_expression
-    cJSON *message_expression = cJSON_GetObjectItemCaseSensitive(v1_validation_ruleJSON, "messageExpression");
+    mazu_cJSON *message_expression = mazu_cJSON_GetObjectItemCaseSensitive(v1_validation_ruleJSON, "messageExpression");
     if (message_expression) { 
-    if(!cJSON_IsString(message_expression) && !cJSON_IsNull(message_expression))
+    if(!mazu_cJSON_IsString(message_expression) && !mazu_cJSON_IsNull(message_expression))
     {
     goto end; //String
     }
     }
 
     // v1_validation_rule->optional_old_self
-    cJSON *optional_old_self = cJSON_GetObjectItemCaseSensitive(v1_validation_ruleJSON, "optionalOldSelf");
+    mazu_cJSON *optional_old_self = mazu_cJSON_GetObjectItemCaseSensitive(v1_validation_ruleJSON, "optionalOldSelf");
     if (optional_old_self) { 
-    if(!cJSON_IsBool(optional_old_self))
+    if(!mazu_cJSON_IsBool(optional_old_self))
     {
     goto end; //Bool
     }
     }
 
     // v1_validation_rule->reason
-    cJSON *reason = cJSON_GetObjectItemCaseSensitive(v1_validation_ruleJSON, "reason");
+    mazu_cJSON *reason = mazu_cJSON_GetObjectItemCaseSensitive(v1_validation_ruleJSON, "reason");
     if (reason) { 
-    if(!cJSON_IsString(reason) && !cJSON_IsNull(reason))
+    if(!mazu_cJSON_IsString(reason) && !mazu_cJSON_IsNull(reason))
     {
     goto end; //String
     }
     }
 
     // v1_validation_rule->rule
-    cJSON *rule = cJSON_GetObjectItemCaseSensitive(v1_validation_ruleJSON, "rule");
+    mazu_cJSON *rule = mazu_cJSON_GetObjectItemCaseSensitive(v1_validation_ruleJSON, "rule");
     if (!rule) {
         goto end;
     }
 
     
-    if(!cJSON_IsString(rule))
+    if(!mazu_cJSON_IsString(rule))
     {
     goto end; //String
     }
 
 
     v1_validation_rule_local_var = v1_validation_rule_create (
-        field_path && !cJSON_IsNull(field_path) ? strdup(field_path->valuestring) : NULL,
-        message && !cJSON_IsNull(message) ? strdup(message->valuestring) : NULL,
-        message_expression && !cJSON_IsNull(message_expression) ? strdup(message_expression->valuestring) : NULL,
+        field_path && !mazu_cJSON_IsNull(field_path) ? strdup(field_path->valuestring) : NULL,
+        message && !mazu_cJSON_IsNull(message) ? strdup(message->valuestring) : NULL,
+        message_expression && !mazu_cJSON_IsNull(message_expression) ? strdup(message_expression->valuestring) : NULL,
         optional_old_self ? optional_old_self->valueint : 0,
-        reason && !cJSON_IsNull(reason) ? strdup(reason->valuestring) : NULL,
+        reason && !mazu_cJSON_IsNull(reason) ? strdup(reason->valuestring) : NULL,
         strdup(rule->valuestring)
         );
 

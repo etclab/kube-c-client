@@ -8,7 +8,7 @@
 #define _admissionregistration_v1_webhook_client_config_H_
 
 #include <string.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
 #include "../include/binary.h"
@@ -34,9 +34,9 @@ admissionregistration_v1_webhook_client_config_t *admissionregistration_v1_webho
 
 void admissionregistration_v1_webhook_client_config_free(admissionregistration_v1_webhook_client_config_t *admissionregistration_v1_webhook_client_config);
 
-admissionregistration_v1_webhook_client_config_t *admissionregistration_v1_webhook_client_config_parseFromJSON(cJSON *admissionregistration_v1_webhook_client_configJSON);
+admissionregistration_v1_webhook_client_config_t *admissionregistration_v1_webhook_client_config_parseFromJSON(mazu_cJSON *admissionregistration_v1_webhook_client_configJSON);
 
-cJSON *admissionregistration_v1_webhook_client_config_convertToJSON(admissionregistration_v1_webhook_client_config_t *admissionregistration_v1_webhook_client_config);
+mazu_cJSON *admissionregistration_v1_webhook_client_config_convertToJSON(admissionregistration_v1_webhook_client_config_t *admissionregistration_v1_webhook_client_config);
 
 #endif /* _admissionregistration_v1_webhook_client_config_H_ */
 

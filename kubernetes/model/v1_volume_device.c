@@ -36,14 +36,14 @@ void v1_volume_device_free(v1_volume_device_t *v1_volume_device) {
     free(v1_volume_device);
 }
 
-cJSON *v1_volume_device_convertToJSON(v1_volume_device_t *v1_volume_device) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_volume_device_convertToJSON(v1_volume_device_t *v1_volume_device) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_volume_device->device_path
     if (!v1_volume_device->device_path) {
         goto fail;
     }
-    if(cJSON_AddStringToObject(item, "devicePath", v1_volume_device->device_path) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "devicePath", v1_volume_device->device_path) == NULL) {
     goto fail; //String
     }
 
@@ -52,42 +52,42 @@ cJSON *v1_volume_device_convertToJSON(v1_volume_device_t *v1_volume_device) {
     if (!v1_volume_device->name) {
         goto fail;
     }
-    if(cJSON_AddStringToObject(item, "name", v1_volume_device->name) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "name", v1_volume_device->name) == NULL) {
     goto fail; //String
     }
 
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_volume_device_t *v1_volume_device_parseFromJSON(cJSON *v1_volume_deviceJSON){
+v1_volume_device_t *v1_volume_device_parseFromJSON(mazu_cJSON *v1_volume_deviceJSON){
 
     v1_volume_device_t *v1_volume_device_local_var = NULL;
 
     // v1_volume_device->device_path
-    cJSON *device_path = cJSON_GetObjectItemCaseSensitive(v1_volume_deviceJSON, "devicePath");
+    mazu_cJSON *device_path = mazu_cJSON_GetObjectItemCaseSensitive(v1_volume_deviceJSON, "devicePath");
     if (!device_path) {
         goto end;
     }
 
     
-    if(!cJSON_IsString(device_path))
+    if(!mazu_cJSON_IsString(device_path))
     {
     goto end; //String
     }
 
     // v1_volume_device->name
-    cJSON *name = cJSON_GetObjectItemCaseSensitive(v1_volume_deviceJSON, "name");
+    mazu_cJSON *name = mazu_cJSON_GetObjectItemCaseSensitive(v1_volume_deviceJSON, "name");
     if (!name) {
         goto end;
     }
 
     
-    if(!cJSON_IsString(name))
+    if(!mazu_cJSON_IsString(name))
     {
     goto end; //String
     }

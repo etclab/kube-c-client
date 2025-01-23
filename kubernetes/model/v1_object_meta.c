@@ -127,21 +127,21 @@ void v1_object_meta_free(v1_object_meta_t *v1_object_meta) {
     free(v1_object_meta);
 }
 
-cJSON *v1_object_meta_convertToJSON(v1_object_meta_t *v1_object_meta) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_object_meta_convertToJSON(v1_object_meta_t *v1_object_meta) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_object_meta->annotations
     if(v1_object_meta->annotations) {
-    cJSON *annotations = cJSON_AddObjectToObject(item, "annotations");
+    mazu_cJSON *annotations = mazu_cJSON_AddObjectToObject(item, "annotations");
     if(annotations == NULL) {
         goto fail; //primitive map container
     }
-    cJSON *localMapObject = annotations;
+    mazu_cJSON *localMapObject = annotations;
     listEntry_t *annotationsListEntry;
     if (v1_object_meta->annotations) {
     list_ForEach(annotationsListEntry, v1_object_meta->annotations) {
         keyValuePair_t *localKeyValue = (keyValuePair_t*)annotationsListEntry->data;
-        if(cJSON_AddStringToObject(localMapObject, localKeyValue->key, (char*)localKeyValue->value) == NULL)
+        if(mazu_cJSON_AddStringToObject(localMapObject, localKeyValue->key, (char*)localKeyValue->value) == NULL)
         {
             goto fail;
         }
@@ -152,7 +152,7 @@ cJSON *v1_object_meta_convertToJSON(v1_object_meta_t *v1_object_meta) {
 
     // v1_object_meta->creation_timestamp
     if(v1_object_meta->creation_timestamp) {
-    if(cJSON_AddStringToObject(item, "creationTimestamp", v1_object_meta->creation_timestamp) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "creationTimestamp", v1_object_meta->creation_timestamp) == NULL) {
     goto fail; //Date-Time
     }
     }
@@ -160,7 +160,7 @@ cJSON *v1_object_meta_convertToJSON(v1_object_meta_t *v1_object_meta) {
 
     // v1_object_meta->deletion_grace_period_seconds
     if(v1_object_meta->deletion_grace_period_seconds) {
-    if(cJSON_AddNumberToObject(item, "deletionGracePeriodSeconds", v1_object_meta->deletion_grace_period_seconds) == NULL) {
+    if(mazu_cJSON_AddNumberToObject(item, "deletionGracePeriodSeconds", v1_object_meta->deletion_grace_period_seconds) == NULL) {
     goto fail; //Numeric
     }
     }
@@ -168,7 +168,7 @@ cJSON *v1_object_meta_convertToJSON(v1_object_meta_t *v1_object_meta) {
 
     // v1_object_meta->deletion_timestamp
     if(v1_object_meta->deletion_timestamp) {
-    if(cJSON_AddStringToObject(item, "deletionTimestamp", v1_object_meta->deletion_timestamp) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "deletionTimestamp", v1_object_meta->deletion_timestamp) == NULL) {
     goto fail; //Date-Time
     }
     }
@@ -176,14 +176,14 @@ cJSON *v1_object_meta_convertToJSON(v1_object_meta_t *v1_object_meta) {
 
     // v1_object_meta->finalizers
     if(v1_object_meta->finalizers) {
-    cJSON *finalizers = cJSON_AddArrayToObject(item, "finalizers");
+    mazu_cJSON *finalizers = mazu_cJSON_AddArrayToObject(item, "finalizers");
     if(finalizers == NULL) {
         goto fail; //primitive container
     }
 
     listEntry_t *finalizersListEntry;
     list_ForEach(finalizersListEntry, v1_object_meta->finalizers) {
-    if(cJSON_AddStringToObject(finalizers, "", (char*)finalizersListEntry->data) == NULL)
+    if(mazu_cJSON_AddStringToObject(finalizers, "", (char*)finalizersListEntry->data) == NULL)
     {
         goto fail;
     }
@@ -193,7 +193,7 @@ cJSON *v1_object_meta_convertToJSON(v1_object_meta_t *v1_object_meta) {
 
     // v1_object_meta->generate_name
     if(v1_object_meta->generate_name) {
-    if(cJSON_AddStringToObject(item, "generateName", v1_object_meta->generate_name) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "generateName", v1_object_meta->generate_name) == NULL) {
     goto fail; //String
     }
     }
@@ -201,7 +201,7 @@ cJSON *v1_object_meta_convertToJSON(v1_object_meta_t *v1_object_meta) {
 
     // v1_object_meta->generation
     if(v1_object_meta->generation) {
-    if(cJSON_AddNumberToObject(item, "generation", v1_object_meta->generation) == NULL) {
+    if(mazu_cJSON_AddNumberToObject(item, "generation", v1_object_meta->generation) == NULL) {
     goto fail; //Numeric
     }
     }
@@ -209,16 +209,16 @@ cJSON *v1_object_meta_convertToJSON(v1_object_meta_t *v1_object_meta) {
 
     // v1_object_meta->labels
     if(v1_object_meta->labels) {
-    cJSON *labels = cJSON_AddObjectToObject(item, "labels");
+    mazu_cJSON *labels = mazu_cJSON_AddObjectToObject(item, "labels");
     if(labels == NULL) {
         goto fail; //primitive map container
     }
-    cJSON *localMapObject = labels;
+    mazu_cJSON *localMapObject = labels;
     listEntry_t *labelsListEntry;
     if (v1_object_meta->labels) {
     list_ForEach(labelsListEntry, v1_object_meta->labels) {
         keyValuePair_t *localKeyValue = (keyValuePair_t*)labelsListEntry->data;
-        if(cJSON_AddStringToObject(localMapObject, localKeyValue->key, (char*)localKeyValue->value) == NULL)
+        if(mazu_cJSON_AddStringToObject(localMapObject, localKeyValue->key, (char*)localKeyValue->value) == NULL)
         {
             goto fail;
         }
@@ -229,7 +229,7 @@ cJSON *v1_object_meta_convertToJSON(v1_object_meta_t *v1_object_meta) {
 
     // v1_object_meta->managed_fields
     if(v1_object_meta->managed_fields) {
-    cJSON *managed_fields = cJSON_AddArrayToObject(item, "managedFields");
+    mazu_cJSON *managed_fields = mazu_cJSON_AddArrayToObject(item, "managedFields");
     if(managed_fields == NULL) {
     goto fail; //nonprimitive container
     }
@@ -237,11 +237,11 @@ cJSON *v1_object_meta_convertToJSON(v1_object_meta_t *v1_object_meta) {
     listEntry_t *managed_fieldsListEntry;
     if (v1_object_meta->managed_fields) {
     list_ForEach(managed_fieldsListEntry, v1_object_meta->managed_fields) {
-    cJSON *itemLocal = v1_managed_fields_entry_convertToJSON(managed_fieldsListEntry->data);
+    mazu_cJSON *itemLocal = v1_managed_fields_entry_convertToJSON(managed_fieldsListEntry->data);
     if(itemLocal == NULL) {
     goto fail;
     }
-    cJSON_AddItemToArray(managed_fields, itemLocal);
+    mazu_cJSON_AddItemToArray(managed_fields, itemLocal);
     }
     }
     }
@@ -249,7 +249,7 @@ cJSON *v1_object_meta_convertToJSON(v1_object_meta_t *v1_object_meta) {
 
     // v1_object_meta->name
     if(v1_object_meta->name) {
-    if(cJSON_AddStringToObject(item, "name", v1_object_meta->name) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "name", v1_object_meta->name) == NULL) {
     goto fail; //String
     }
     }
@@ -257,7 +257,7 @@ cJSON *v1_object_meta_convertToJSON(v1_object_meta_t *v1_object_meta) {
 
     // v1_object_meta->_namespace
     if(v1_object_meta->_namespace) {
-    if(cJSON_AddStringToObject(item, "namespace", v1_object_meta->_namespace) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "namespace", v1_object_meta->_namespace) == NULL) {
     goto fail; //String
     }
     }
@@ -265,7 +265,7 @@ cJSON *v1_object_meta_convertToJSON(v1_object_meta_t *v1_object_meta) {
 
     // v1_object_meta->owner_references
     if(v1_object_meta->owner_references) {
-    cJSON *owner_references = cJSON_AddArrayToObject(item, "ownerReferences");
+    mazu_cJSON *owner_references = mazu_cJSON_AddArrayToObject(item, "ownerReferences");
     if(owner_references == NULL) {
     goto fail; //nonprimitive container
     }
@@ -273,11 +273,11 @@ cJSON *v1_object_meta_convertToJSON(v1_object_meta_t *v1_object_meta) {
     listEntry_t *owner_referencesListEntry;
     if (v1_object_meta->owner_references) {
     list_ForEach(owner_referencesListEntry, v1_object_meta->owner_references) {
-    cJSON *itemLocal = v1_owner_reference_convertToJSON(owner_referencesListEntry->data);
+    mazu_cJSON *itemLocal = v1_owner_reference_convertToJSON(owner_referencesListEntry->data);
     if(itemLocal == NULL) {
     goto fail;
     }
-    cJSON_AddItemToArray(owner_references, itemLocal);
+    mazu_cJSON_AddItemToArray(owner_references, itemLocal);
     }
     }
     }
@@ -285,7 +285,7 @@ cJSON *v1_object_meta_convertToJSON(v1_object_meta_t *v1_object_meta) {
 
     // v1_object_meta->resource_version
     if(v1_object_meta->resource_version) {
-    if(cJSON_AddStringToObject(item, "resourceVersion", v1_object_meta->resource_version) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "resourceVersion", v1_object_meta->resource_version) == NULL) {
     goto fail; //String
     }
     }
@@ -293,7 +293,7 @@ cJSON *v1_object_meta_convertToJSON(v1_object_meta_t *v1_object_meta) {
 
     // v1_object_meta->self_link
     if(v1_object_meta->self_link) {
-    if(cJSON_AddStringToObject(item, "selfLink", v1_object_meta->self_link) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "selfLink", v1_object_meta->self_link) == NULL) {
     goto fail; //String
     }
     }
@@ -301,7 +301,7 @@ cJSON *v1_object_meta_convertToJSON(v1_object_meta_t *v1_object_meta) {
 
     // v1_object_meta->uid
     if(v1_object_meta->uid) {
-    if(cJSON_AddStringToObject(item, "uid", v1_object_meta->uid) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "uid", v1_object_meta->uid) == NULL) {
     goto fail; //String
     }
     }
@@ -309,12 +309,12 @@ cJSON *v1_object_meta_convertToJSON(v1_object_meta_t *v1_object_meta) {
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_object_meta_t *v1_object_meta_parseFromJSON(cJSON *v1_object_metaJSON){
+v1_object_meta_t *v1_object_meta_parseFromJSON(mazu_cJSON *v1_object_metaJSON){
 
     v1_object_meta_t *v1_object_meta_local_var = NULL;
 
@@ -334,21 +334,21 @@ v1_object_meta_t *v1_object_meta_parseFromJSON(cJSON *v1_object_metaJSON){
     list_t *owner_referencesList = NULL;
 
     // v1_object_meta->annotations
-    cJSON *annotations = cJSON_GetObjectItemCaseSensitive(v1_object_metaJSON, "annotations");
+    mazu_cJSON *annotations = mazu_cJSON_GetObjectItemCaseSensitive(v1_object_metaJSON, "annotations");
     if (annotations) { 
-    cJSON *annotations_local_map = NULL;
-    if(!cJSON_IsObject(annotations) && !cJSON_IsNull(annotations))
+    mazu_cJSON *annotations_local_map = NULL;
+    if(!mazu_cJSON_IsObject(annotations) && !mazu_cJSON_IsNull(annotations))
     {
         goto end;//primitive map container
     }
-    if(cJSON_IsObject(annotations))
+    if(mazu_cJSON_IsObject(annotations))
     {
         annotationsList = list_createList();
         keyValuePair_t *localMapKeyPair;
-        cJSON_ArrayForEach(annotations_local_map, annotations)
+        mazu_cJSON_ArrayForEach(annotations_local_map, annotations)
         {
-            cJSON *localMapObject = annotations_local_map;
-            if(!cJSON_IsString(localMapObject))
+            mazu_cJSON *localMapObject = annotations_local_map;
+            if(!mazu_cJSON_IsString(localMapObject))
             {
                 goto end;
             }
@@ -359,44 +359,44 @@ v1_object_meta_t *v1_object_meta_parseFromJSON(cJSON *v1_object_metaJSON){
     }
 
     // v1_object_meta->creation_timestamp
-    cJSON *creation_timestamp = cJSON_GetObjectItemCaseSensitive(v1_object_metaJSON, "creationTimestamp");
+    mazu_cJSON *creation_timestamp = mazu_cJSON_GetObjectItemCaseSensitive(v1_object_metaJSON, "creationTimestamp");
     if (creation_timestamp) { 
-    if(!cJSON_IsString(creation_timestamp) && !cJSON_IsNull(creation_timestamp))
+    if(!mazu_cJSON_IsString(creation_timestamp) && !mazu_cJSON_IsNull(creation_timestamp))
     {
     goto end; //DateTime
     }
     }
 
     // v1_object_meta->deletion_grace_period_seconds
-    cJSON *deletion_grace_period_seconds = cJSON_GetObjectItemCaseSensitive(v1_object_metaJSON, "deletionGracePeriodSeconds");
+    mazu_cJSON *deletion_grace_period_seconds = mazu_cJSON_GetObjectItemCaseSensitive(v1_object_metaJSON, "deletionGracePeriodSeconds");
     if (deletion_grace_period_seconds) { 
-    if(!cJSON_IsNumber(deletion_grace_period_seconds))
+    if(!mazu_cJSON_IsNumber(deletion_grace_period_seconds))
     {
     goto end; //Numeric
     }
     }
 
     // v1_object_meta->deletion_timestamp
-    cJSON *deletion_timestamp = cJSON_GetObjectItemCaseSensitive(v1_object_metaJSON, "deletionTimestamp");
+    mazu_cJSON *deletion_timestamp = mazu_cJSON_GetObjectItemCaseSensitive(v1_object_metaJSON, "deletionTimestamp");
     if (deletion_timestamp) { 
-    if(!cJSON_IsString(deletion_timestamp) && !cJSON_IsNull(deletion_timestamp))
+    if(!mazu_cJSON_IsString(deletion_timestamp) && !mazu_cJSON_IsNull(deletion_timestamp))
     {
     goto end; //DateTime
     }
     }
 
     // v1_object_meta->finalizers
-    cJSON *finalizers = cJSON_GetObjectItemCaseSensitive(v1_object_metaJSON, "finalizers");
+    mazu_cJSON *finalizers = mazu_cJSON_GetObjectItemCaseSensitive(v1_object_metaJSON, "finalizers");
     if (finalizers) { 
-    cJSON *finalizers_local = NULL;
-    if(!cJSON_IsArray(finalizers)) {
+    mazu_cJSON *finalizers_local = NULL;
+    if(!mazu_cJSON_IsArray(finalizers)) {
         goto end;//primitive container
     }
     finalizersList = list_createList();
 
-    cJSON_ArrayForEach(finalizers_local, finalizers)
+    mazu_cJSON_ArrayForEach(finalizers_local, finalizers)
     {
-        if(!cJSON_IsString(finalizers_local))
+        if(!mazu_cJSON_IsString(finalizers_local))
         {
             goto end;
         }
@@ -405,39 +405,39 @@ v1_object_meta_t *v1_object_meta_parseFromJSON(cJSON *v1_object_metaJSON){
     }
 
     // v1_object_meta->generate_name
-    cJSON *generate_name = cJSON_GetObjectItemCaseSensitive(v1_object_metaJSON, "generateName");
+    mazu_cJSON *generate_name = mazu_cJSON_GetObjectItemCaseSensitive(v1_object_metaJSON, "generateName");
     if (generate_name) { 
-    if(!cJSON_IsString(generate_name) && !cJSON_IsNull(generate_name))
+    if(!mazu_cJSON_IsString(generate_name) && !mazu_cJSON_IsNull(generate_name))
     {
     goto end; //String
     }
     }
 
     // v1_object_meta->generation
-    cJSON *generation = cJSON_GetObjectItemCaseSensitive(v1_object_metaJSON, "generation");
+    mazu_cJSON *generation = mazu_cJSON_GetObjectItemCaseSensitive(v1_object_metaJSON, "generation");
     if (generation) { 
-    if(!cJSON_IsNumber(generation))
+    if(!mazu_cJSON_IsNumber(generation))
     {
     goto end; //Numeric
     }
     }
 
     // v1_object_meta->labels
-    cJSON *labels = cJSON_GetObjectItemCaseSensitive(v1_object_metaJSON, "labels");
+    mazu_cJSON *labels = mazu_cJSON_GetObjectItemCaseSensitive(v1_object_metaJSON, "labels");
     if (labels) { 
-    cJSON *labels_local_map = NULL;
-    if(!cJSON_IsObject(labels) && !cJSON_IsNull(labels))
+    mazu_cJSON *labels_local_map = NULL;
+    if(!mazu_cJSON_IsObject(labels) && !mazu_cJSON_IsNull(labels))
     {
         goto end;//primitive map container
     }
-    if(cJSON_IsObject(labels))
+    if(mazu_cJSON_IsObject(labels))
     {
         labelsList = list_createList();
         keyValuePair_t *localMapKeyPair;
-        cJSON_ArrayForEach(labels_local_map, labels)
+        mazu_cJSON_ArrayForEach(labels_local_map, labels)
         {
-            cJSON *localMapObject = labels_local_map;
-            if(!cJSON_IsString(localMapObject))
+            mazu_cJSON *localMapObject = labels_local_map;
+            if(!mazu_cJSON_IsString(localMapObject))
             {
                 goto end;
             }
@@ -448,18 +448,18 @@ v1_object_meta_t *v1_object_meta_parseFromJSON(cJSON *v1_object_metaJSON){
     }
 
     // v1_object_meta->managed_fields
-    cJSON *managed_fields = cJSON_GetObjectItemCaseSensitive(v1_object_metaJSON, "managedFields");
+    mazu_cJSON *managed_fields = mazu_cJSON_GetObjectItemCaseSensitive(v1_object_metaJSON, "managedFields");
     if (managed_fields) { 
-    cJSON *managed_fields_local_nonprimitive = NULL;
-    if(!cJSON_IsArray(managed_fields)){
+    mazu_cJSON *managed_fields_local_nonprimitive = NULL;
+    if(!mazu_cJSON_IsArray(managed_fields)){
         goto end; //nonprimitive container
     }
 
     managed_fieldsList = list_createList();
 
-    cJSON_ArrayForEach(managed_fields_local_nonprimitive,managed_fields )
+    mazu_cJSON_ArrayForEach(managed_fields_local_nonprimitive,managed_fields )
     {
-        if(!cJSON_IsObject(managed_fields_local_nonprimitive)){
+        if(!mazu_cJSON_IsObject(managed_fields_local_nonprimitive)){
             goto end;
         }
         v1_managed_fields_entry_t *managed_fieldsItem = v1_managed_fields_entry_parseFromJSON(managed_fields_local_nonprimitive);
@@ -469,36 +469,36 @@ v1_object_meta_t *v1_object_meta_parseFromJSON(cJSON *v1_object_metaJSON){
     }
 
     // v1_object_meta->name
-    cJSON *name = cJSON_GetObjectItemCaseSensitive(v1_object_metaJSON, "name");
+    mazu_cJSON *name = mazu_cJSON_GetObjectItemCaseSensitive(v1_object_metaJSON, "name");
     if (name) { 
-    if(!cJSON_IsString(name) && !cJSON_IsNull(name))
+    if(!mazu_cJSON_IsString(name) && !mazu_cJSON_IsNull(name))
     {
     goto end; //String
     }
     }
 
     // v1_object_meta->_namespace
-    cJSON *_namespace = cJSON_GetObjectItemCaseSensitive(v1_object_metaJSON, "namespace");
+    mazu_cJSON *_namespace = mazu_cJSON_GetObjectItemCaseSensitive(v1_object_metaJSON, "namespace");
     if (_namespace) { 
-    if(!cJSON_IsString(_namespace) && !cJSON_IsNull(_namespace))
+    if(!mazu_cJSON_IsString(_namespace) && !mazu_cJSON_IsNull(_namespace))
     {
     goto end; //String
     }
     }
 
     // v1_object_meta->owner_references
-    cJSON *owner_references = cJSON_GetObjectItemCaseSensitive(v1_object_metaJSON, "ownerReferences");
+    mazu_cJSON *owner_references = mazu_cJSON_GetObjectItemCaseSensitive(v1_object_metaJSON, "ownerReferences");
     if (owner_references) { 
-    cJSON *owner_references_local_nonprimitive = NULL;
-    if(!cJSON_IsArray(owner_references)){
+    mazu_cJSON *owner_references_local_nonprimitive = NULL;
+    if(!mazu_cJSON_IsArray(owner_references)){
         goto end; //nonprimitive container
     }
 
     owner_referencesList = list_createList();
 
-    cJSON_ArrayForEach(owner_references_local_nonprimitive,owner_references )
+    mazu_cJSON_ArrayForEach(owner_references_local_nonprimitive,owner_references )
     {
-        if(!cJSON_IsObject(owner_references_local_nonprimitive)){
+        if(!mazu_cJSON_IsObject(owner_references_local_nonprimitive)){
             goto end;
         }
         v1_owner_reference_t *owner_referencesItem = v1_owner_reference_parseFromJSON(owner_references_local_nonprimitive);
@@ -508,27 +508,27 @@ v1_object_meta_t *v1_object_meta_parseFromJSON(cJSON *v1_object_metaJSON){
     }
 
     // v1_object_meta->resource_version
-    cJSON *resource_version = cJSON_GetObjectItemCaseSensitive(v1_object_metaJSON, "resourceVersion");
+    mazu_cJSON *resource_version = mazu_cJSON_GetObjectItemCaseSensitive(v1_object_metaJSON, "resourceVersion");
     if (resource_version) { 
-    if(!cJSON_IsString(resource_version) && !cJSON_IsNull(resource_version))
+    if(!mazu_cJSON_IsString(resource_version) && !mazu_cJSON_IsNull(resource_version))
     {
     goto end; //String
     }
     }
 
     // v1_object_meta->self_link
-    cJSON *self_link = cJSON_GetObjectItemCaseSensitive(v1_object_metaJSON, "selfLink");
+    mazu_cJSON *self_link = mazu_cJSON_GetObjectItemCaseSensitive(v1_object_metaJSON, "selfLink");
     if (self_link) { 
-    if(!cJSON_IsString(self_link) && !cJSON_IsNull(self_link))
+    if(!mazu_cJSON_IsString(self_link) && !mazu_cJSON_IsNull(self_link))
     {
     goto end; //String
     }
     }
 
     // v1_object_meta->uid
-    cJSON *uid = cJSON_GetObjectItemCaseSensitive(v1_object_metaJSON, "uid");
+    mazu_cJSON *uid = mazu_cJSON_GetObjectItemCaseSensitive(v1_object_metaJSON, "uid");
     if (uid) { 
-    if(!cJSON_IsString(uid) && !cJSON_IsNull(uid))
+    if(!mazu_cJSON_IsString(uid) && !mazu_cJSON_IsNull(uid))
     {
     goto end; //String
     }
@@ -537,20 +537,20 @@ v1_object_meta_t *v1_object_meta_parseFromJSON(cJSON *v1_object_metaJSON){
 
     v1_object_meta_local_var = v1_object_meta_create (
         annotations ? annotationsList : NULL,
-        creation_timestamp && !cJSON_IsNull(creation_timestamp) ? strdup(creation_timestamp->valuestring) : NULL,
+        creation_timestamp && !mazu_cJSON_IsNull(creation_timestamp) ? strdup(creation_timestamp->valuestring) : NULL,
         deletion_grace_period_seconds ? deletion_grace_period_seconds->valuedouble : 0,
-        deletion_timestamp && !cJSON_IsNull(deletion_timestamp) ? strdup(deletion_timestamp->valuestring) : NULL,
+        deletion_timestamp && !mazu_cJSON_IsNull(deletion_timestamp) ? strdup(deletion_timestamp->valuestring) : NULL,
         finalizers ? finalizersList : NULL,
-        generate_name && !cJSON_IsNull(generate_name) ? strdup(generate_name->valuestring) : NULL,
+        generate_name && !mazu_cJSON_IsNull(generate_name) ? strdup(generate_name->valuestring) : NULL,
         generation ? generation->valuedouble : 0,
         labels ? labelsList : NULL,
         managed_fields ? managed_fieldsList : NULL,
-        name && !cJSON_IsNull(name) ? strdup(name->valuestring) : NULL,
-        _namespace && !cJSON_IsNull(_namespace) ? strdup(_namespace->valuestring) : NULL,
+        name && !mazu_cJSON_IsNull(name) ? strdup(name->valuestring) : NULL,
+        _namespace && !mazu_cJSON_IsNull(_namespace) ? strdup(_namespace->valuestring) : NULL,
         owner_references ? owner_referencesList : NULL,
-        resource_version && !cJSON_IsNull(resource_version) ? strdup(resource_version->valuestring) : NULL,
-        self_link && !cJSON_IsNull(self_link) ? strdup(self_link->valuestring) : NULL,
-        uid && !cJSON_IsNull(uid) ? strdup(uid->valuestring) : NULL
+        resource_version && !mazu_cJSON_IsNull(resource_version) ? strdup(resource_version->valuestring) : NULL,
+        self_link && !mazu_cJSON_IsNull(self_link) ? strdup(self_link->valuestring) : NULL,
+        uid && !mazu_cJSON_IsNull(uid) ? strdup(uid->valuestring) : NULL
         );
 
     return v1_object_meta_local_var;

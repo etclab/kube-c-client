@@ -42,12 +42,12 @@ void v1_resource_field_selector_free(v1_resource_field_selector_t *v1_resource_f
     free(v1_resource_field_selector);
 }
 
-cJSON *v1_resource_field_selector_convertToJSON(v1_resource_field_selector_t *v1_resource_field_selector) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_resource_field_selector_convertToJSON(v1_resource_field_selector_t *v1_resource_field_selector) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_resource_field_selector->container_name
     if(v1_resource_field_selector->container_name) {
-    if(cJSON_AddStringToObject(item, "containerName", v1_resource_field_selector->container_name) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "containerName", v1_resource_field_selector->container_name) == NULL) {
     goto fail; //String
     }
     }
@@ -55,7 +55,7 @@ cJSON *v1_resource_field_selector_convertToJSON(v1_resource_field_selector_t *v1
 
     // v1_resource_field_selector->divisor
     if(v1_resource_field_selector->divisor) {
-    if(cJSON_AddStringToObject(item, "divisor", v1_resource_field_selector->divisor) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "divisor", v1_resource_field_selector->divisor) == NULL) {
     goto fail; //String
     }
     }
@@ -65,56 +65,56 @@ cJSON *v1_resource_field_selector_convertToJSON(v1_resource_field_selector_t *v1
     if (!v1_resource_field_selector->resource) {
         goto fail;
     }
-    if(cJSON_AddStringToObject(item, "resource", v1_resource_field_selector->resource) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "resource", v1_resource_field_selector->resource) == NULL) {
     goto fail; //String
     }
 
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_resource_field_selector_t *v1_resource_field_selector_parseFromJSON(cJSON *v1_resource_field_selectorJSON){
+v1_resource_field_selector_t *v1_resource_field_selector_parseFromJSON(mazu_cJSON *v1_resource_field_selectorJSON){
 
     v1_resource_field_selector_t *v1_resource_field_selector_local_var = NULL;
 
     // v1_resource_field_selector->container_name
-    cJSON *container_name = cJSON_GetObjectItemCaseSensitive(v1_resource_field_selectorJSON, "containerName");
+    mazu_cJSON *container_name = mazu_cJSON_GetObjectItemCaseSensitive(v1_resource_field_selectorJSON, "containerName");
     if (container_name) { 
-    if(!cJSON_IsString(container_name) && !cJSON_IsNull(container_name))
+    if(!mazu_cJSON_IsString(container_name) && !mazu_cJSON_IsNull(container_name))
     {
     goto end; //String
     }
     }
 
     // v1_resource_field_selector->divisor
-    cJSON *divisor = cJSON_GetObjectItemCaseSensitive(v1_resource_field_selectorJSON, "divisor");
+    mazu_cJSON *divisor = mazu_cJSON_GetObjectItemCaseSensitive(v1_resource_field_selectorJSON, "divisor");
     if (divisor) { 
-    if(!cJSON_IsString(divisor) && !cJSON_IsNull(divisor))
+    if(!mazu_cJSON_IsString(divisor) && !mazu_cJSON_IsNull(divisor))
     {
     goto end; //String
     }
     }
 
     // v1_resource_field_selector->resource
-    cJSON *resource = cJSON_GetObjectItemCaseSensitive(v1_resource_field_selectorJSON, "resource");
+    mazu_cJSON *resource = mazu_cJSON_GetObjectItemCaseSensitive(v1_resource_field_selectorJSON, "resource");
     if (!resource) {
         goto end;
     }
 
     
-    if(!cJSON_IsString(resource))
+    if(!mazu_cJSON_IsString(resource))
     {
     goto end; //String
     }
 
 
     v1_resource_field_selector_local_var = v1_resource_field_selector_create (
-        container_name && !cJSON_IsNull(container_name) ? strdup(container_name->valuestring) : NULL,
-        divisor && !cJSON_IsNull(divisor) ? strdup(divisor->valuestring) : NULL,
+        container_name && !mazu_cJSON_IsNull(container_name) ? strdup(container_name->valuestring) : NULL,
+        divisor && !mazu_cJSON_IsNull(divisor) ? strdup(divisor->valuestring) : NULL,
         strdup(resource->valuestring)
         );
 

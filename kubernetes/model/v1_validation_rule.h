@@ -8,7 +8,7 @@
 #define _v1_validation_rule_H_
 
 #include <string.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
 #include "../include/binary.h"
@@ -39,9 +39,9 @@ v1_validation_rule_t *v1_validation_rule_create(
 
 void v1_validation_rule_free(v1_validation_rule_t *v1_validation_rule);
 
-v1_validation_rule_t *v1_validation_rule_parseFromJSON(cJSON *v1_validation_ruleJSON);
+v1_validation_rule_t *v1_validation_rule_parseFromJSON(mazu_cJSON *v1_validation_ruleJSON);
 
-cJSON *v1_validation_rule_convertToJSON(v1_validation_rule_t *v1_validation_rule);
+mazu_cJSON *v1_validation_rule_convertToJSON(v1_validation_rule_t *v1_validation_rule);
 
 #endif /* _v1_validation_rule_H_ */
 

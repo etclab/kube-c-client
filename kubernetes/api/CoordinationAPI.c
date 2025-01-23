@@ -53,9 +53,9 @@ CoordinationAPI_getAPIGroup_8(apiClient_t *apiClient)
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CoordinationAPIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    mazu_cJSON *CoordinationAPIlocalVarJSON = mazu_cJSON_Parse(apiClient->dataReceived);
     v1_api_group_t *elementToReturn = v1_api_group_parseFromJSON(CoordinationAPIlocalVarJSON);
-    cJSON_Delete(CoordinationAPIlocalVarJSON);
+    mazu_cJSON_Delete(CoordinationAPIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
     }

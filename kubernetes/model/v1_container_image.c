@@ -35,19 +35,19 @@ void v1_container_image_free(v1_container_image_t *v1_container_image) {
     free(v1_container_image);
 }
 
-cJSON *v1_container_image_convertToJSON(v1_container_image_t *v1_container_image) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_container_image_convertToJSON(v1_container_image_t *v1_container_image) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_container_image->names
     if(v1_container_image->names) {
-    cJSON *names = cJSON_AddArrayToObject(item, "names");
+    mazu_cJSON *names = mazu_cJSON_AddArrayToObject(item, "names");
     if(names == NULL) {
         goto fail; //primitive container
     }
 
     listEntry_t *namesListEntry;
     list_ForEach(namesListEntry, v1_container_image->names) {
-    if(cJSON_AddStringToObject(names, "", (char*)namesListEntry->data) == NULL)
+    if(mazu_cJSON_AddStringToObject(names, "", (char*)namesListEntry->data) == NULL)
     {
         goto fail;
     }
@@ -57,7 +57,7 @@ cJSON *v1_container_image_convertToJSON(v1_container_image_t *v1_container_image
 
     // v1_container_image->size_bytes
     if(v1_container_image->size_bytes) {
-    if(cJSON_AddNumberToObject(item, "sizeBytes", v1_container_image->size_bytes) == NULL) {
+    if(mazu_cJSON_AddNumberToObject(item, "sizeBytes", v1_container_image->size_bytes) == NULL) {
     goto fail; //Numeric
     }
     }
@@ -65,12 +65,12 @@ cJSON *v1_container_image_convertToJSON(v1_container_image_t *v1_container_image
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_container_image_t *v1_container_image_parseFromJSON(cJSON *v1_container_imageJSON){
+v1_container_image_t *v1_container_image_parseFromJSON(mazu_cJSON *v1_container_imageJSON){
 
     v1_container_image_t *v1_container_image_local_var = NULL;
 
@@ -78,17 +78,17 @@ v1_container_image_t *v1_container_image_parseFromJSON(cJSON *v1_container_image
     list_t *namesList = NULL;
 
     // v1_container_image->names
-    cJSON *names = cJSON_GetObjectItemCaseSensitive(v1_container_imageJSON, "names");
+    mazu_cJSON *names = mazu_cJSON_GetObjectItemCaseSensitive(v1_container_imageJSON, "names");
     if (names) { 
-    cJSON *names_local = NULL;
-    if(!cJSON_IsArray(names)) {
+    mazu_cJSON *names_local = NULL;
+    if(!mazu_cJSON_IsArray(names)) {
         goto end;//primitive container
     }
     namesList = list_createList();
 
-    cJSON_ArrayForEach(names_local, names)
+    mazu_cJSON_ArrayForEach(names_local, names)
     {
-        if(!cJSON_IsString(names_local))
+        if(!mazu_cJSON_IsString(names_local))
         {
             goto end;
         }
@@ -97,9 +97,9 @@ v1_container_image_t *v1_container_image_parseFromJSON(cJSON *v1_container_image
     }
 
     // v1_container_image->size_bytes
-    cJSON *size_bytes = cJSON_GetObjectItemCaseSensitive(v1_container_imageJSON, "sizeBytes");
+    mazu_cJSON *size_bytes = mazu_cJSON_GetObjectItemCaseSensitive(v1_container_imageJSON, "sizeBytes");
     if (size_bytes) { 
-    if(!cJSON_IsNumber(size_bytes))
+    if(!mazu_cJSON_IsNumber(size_bytes))
     {
     goto end; //Numeric
     }

@@ -8,7 +8,7 @@
 #define _v1_daemon_endpoint_H_
 
 #include <string.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
 #include "../include/binary.h"
@@ -29,9 +29,9 @@ v1_daemon_endpoint_t *v1_daemon_endpoint_create(
 
 void v1_daemon_endpoint_free(v1_daemon_endpoint_t *v1_daemon_endpoint);
 
-v1_daemon_endpoint_t *v1_daemon_endpoint_parseFromJSON(cJSON *v1_daemon_endpointJSON);
+v1_daemon_endpoint_t *v1_daemon_endpoint_parseFromJSON(mazu_cJSON *v1_daemon_endpointJSON);
 
-cJSON *v1_daemon_endpoint_convertToJSON(v1_daemon_endpoint_t *v1_daemon_endpoint);
+mazu_cJSON *v1_daemon_endpoint_convertToJSON(v1_daemon_endpoint_t *v1_daemon_endpoint);
 
 #endif /* _v1_daemon_endpoint_H_ */
 

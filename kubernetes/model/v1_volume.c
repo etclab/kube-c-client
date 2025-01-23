@@ -210,16 +210,16 @@ void v1_volume_free(v1_volume_t *v1_volume) {
     free(v1_volume);
 }
 
-cJSON *v1_volume_convertToJSON(v1_volume_t *v1_volume) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_volume_convertToJSON(v1_volume_t *v1_volume) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_volume->aws_elastic_block_store
     if(v1_volume->aws_elastic_block_store) {
-    cJSON *aws_elastic_block_store_local_JSON = v1_aws_elastic_block_store_volume_source_convertToJSON(v1_volume->aws_elastic_block_store);
+    mazu_cJSON *aws_elastic_block_store_local_JSON = v1_aws_elastic_block_store_volume_source_convertToJSON(v1_volume->aws_elastic_block_store);
     if(aws_elastic_block_store_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "awsElasticBlockStore", aws_elastic_block_store_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "awsElasticBlockStore", aws_elastic_block_store_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -228,11 +228,11 @@ cJSON *v1_volume_convertToJSON(v1_volume_t *v1_volume) {
 
     // v1_volume->azure_disk
     if(v1_volume->azure_disk) {
-    cJSON *azure_disk_local_JSON = v1_azure_disk_volume_source_convertToJSON(v1_volume->azure_disk);
+    mazu_cJSON *azure_disk_local_JSON = v1_azure_disk_volume_source_convertToJSON(v1_volume->azure_disk);
     if(azure_disk_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "azureDisk", azure_disk_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "azureDisk", azure_disk_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -241,11 +241,11 @@ cJSON *v1_volume_convertToJSON(v1_volume_t *v1_volume) {
 
     // v1_volume->azure_file
     if(v1_volume->azure_file) {
-    cJSON *azure_file_local_JSON = v1_azure_file_volume_source_convertToJSON(v1_volume->azure_file);
+    mazu_cJSON *azure_file_local_JSON = v1_azure_file_volume_source_convertToJSON(v1_volume->azure_file);
     if(azure_file_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "azureFile", azure_file_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "azureFile", azure_file_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -254,11 +254,11 @@ cJSON *v1_volume_convertToJSON(v1_volume_t *v1_volume) {
 
     // v1_volume->cephfs
     if(v1_volume->cephfs) {
-    cJSON *cephfs_local_JSON = v1_ceph_fs_volume_source_convertToJSON(v1_volume->cephfs);
+    mazu_cJSON *cephfs_local_JSON = v1_ceph_fs_volume_source_convertToJSON(v1_volume->cephfs);
     if(cephfs_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "cephfs", cephfs_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "cephfs", cephfs_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -267,11 +267,11 @@ cJSON *v1_volume_convertToJSON(v1_volume_t *v1_volume) {
 
     // v1_volume->cinder
     if(v1_volume->cinder) {
-    cJSON *cinder_local_JSON = v1_cinder_volume_source_convertToJSON(v1_volume->cinder);
+    mazu_cJSON *cinder_local_JSON = v1_cinder_volume_source_convertToJSON(v1_volume->cinder);
     if(cinder_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "cinder", cinder_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "cinder", cinder_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -280,11 +280,11 @@ cJSON *v1_volume_convertToJSON(v1_volume_t *v1_volume) {
 
     // v1_volume->config_map
     if(v1_volume->config_map) {
-    cJSON *config_map_local_JSON = v1_config_map_volume_source_convertToJSON(v1_volume->config_map);
+    mazu_cJSON *config_map_local_JSON = v1_config_map_volume_source_convertToJSON(v1_volume->config_map);
     if(config_map_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "configMap", config_map_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "configMap", config_map_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -293,11 +293,11 @@ cJSON *v1_volume_convertToJSON(v1_volume_t *v1_volume) {
 
     // v1_volume->csi
     if(v1_volume->csi) {
-    cJSON *csi_local_JSON = v1_csi_volume_source_convertToJSON(v1_volume->csi);
+    mazu_cJSON *csi_local_JSON = v1_csi_volume_source_convertToJSON(v1_volume->csi);
     if(csi_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "csi", csi_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "csi", csi_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -306,11 +306,11 @@ cJSON *v1_volume_convertToJSON(v1_volume_t *v1_volume) {
 
     // v1_volume->downward_api
     if(v1_volume->downward_api) {
-    cJSON *downward_api_local_JSON = v1_downward_api_volume_source_convertToJSON(v1_volume->downward_api);
+    mazu_cJSON *downward_api_local_JSON = v1_downward_api_volume_source_convertToJSON(v1_volume->downward_api);
     if(downward_api_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "downwardAPI", downward_api_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "downwardAPI", downward_api_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -319,11 +319,11 @@ cJSON *v1_volume_convertToJSON(v1_volume_t *v1_volume) {
 
     // v1_volume->empty_dir
     if(v1_volume->empty_dir) {
-    cJSON *empty_dir_local_JSON = v1_empty_dir_volume_source_convertToJSON(v1_volume->empty_dir);
+    mazu_cJSON *empty_dir_local_JSON = v1_empty_dir_volume_source_convertToJSON(v1_volume->empty_dir);
     if(empty_dir_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "emptyDir", empty_dir_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "emptyDir", empty_dir_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -332,11 +332,11 @@ cJSON *v1_volume_convertToJSON(v1_volume_t *v1_volume) {
 
     // v1_volume->ephemeral
     if(v1_volume->ephemeral) {
-    cJSON *ephemeral_local_JSON = v1_ephemeral_volume_source_convertToJSON(v1_volume->ephemeral);
+    mazu_cJSON *ephemeral_local_JSON = v1_ephemeral_volume_source_convertToJSON(v1_volume->ephemeral);
     if(ephemeral_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "ephemeral", ephemeral_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "ephemeral", ephemeral_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -345,11 +345,11 @@ cJSON *v1_volume_convertToJSON(v1_volume_t *v1_volume) {
 
     // v1_volume->fc
     if(v1_volume->fc) {
-    cJSON *fc_local_JSON = v1_fc_volume_source_convertToJSON(v1_volume->fc);
+    mazu_cJSON *fc_local_JSON = v1_fc_volume_source_convertToJSON(v1_volume->fc);
     if(fc_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "fc", fc_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "fc", fc_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -358,11 +358,11 @@ cJSON *v1_volume_convertToJSON(v1_volume_t *v1_volume) {
 
     // v1_volume->flex_volume
     if(v1_volume->flex_volume) {
-    cJSON *flex_volume_local_JSON = v1_flex_volume_source_convertToJSON(v1_volume->flex_volume);
+    mazu_cJSON *flex_volume_local_JSON = v1_flex_volume_source_convertToJSON(v1_volume->flex_volume);
     if(flex_volume_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "flexVolume", flex_volume_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "flexVolume", flex_volume_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -371,11 +371,11 @@ cJSON *v1_volume_convertToJSON(v1_volume_t *v1_volume) {
 
     // v1_volume->flocker
     if(v1_volume->flocker) {
-    cJSON *flocker_local_JSON = v1_flocker_volume_source_convertToJSON(v1_volume->flocker);
+    mazu_cJSON *flocker_local_JSON = v1_flocker_volume_source_convertToJSON(v1_volume->flocker);
     if(flocker_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "flocker", flocker_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "flocker", flocker_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -384,11 +384,11 @@ cJSON *v1_volume_convertToJSON(v1_volume_t *v1_volume) {
 
     // v1_volume->gce_persistent_disk
     if(v1_volume->gce_persistent_disk) {
-    cJSON *gce_persistent_disk_local_JSON = v1_gce_persistent_disk_volume_source_convertToJSON(v1_volume->gce_persistent_disk);
+    mazu_cJSON *gce_persistent_disk_local_JSON = v1_gce_persistent_disk_volume_source_convertToJSON(v1_volume->gce_persistent_disk);
     if(gce_persistent_disk_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "gcePersistentDisk", gce_persistent_disk_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "gcePersistentDisk", gce_persistent_disk_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -397,11 +397,11 @@ cJSON *v1_volume_convertToJSON(v1_volume_t *v1_volume) {
 
     // v1_volume->git_repo
     if(v1_volume->git_repo) {
-    cJSON *git_repo_local_JSON = v1_git_repo_volume_source_convertToJSON(v1_volume->git_repo);
+    mazu_cJSON *git_repo_local_JSON = v1_git_repo_volume_source_convertToJSON(v1_volume->git_repo);
     if(git_repo_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "gitRepo", git_repo_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "gitRepo", git_repo_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -410,11 +410,11 @@ cJSON *v1_volume_convertToJSON(v1_volume_t *v1_volume) {
 
     // v1_volume->glusterfs
     if(v1_volume->glusterfs) {
-    cJSON *glusterfs_local_JSON = v1_glusterfs_volume_source_convertToJSON(v1_volume->glusterfs);
+    mazu_cJSON *glusterfs_local_JSON = v1_glusterfs_volume_source_convertToJSON(v1_volume->glusterfs);
     if(glusterfs_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "glusterfs", glusterfs_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "glusterfs", glusterfs_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -423,11 +423,11 @@ cJSON *v1_volume_convertToJSON(v1_volume_t *v1_volume) {
 
     // v1_volume->host_path
     if(v1_volume->host_path) {
-    cJSON *host_path_local_JSON = v1_host_path_volume_source_convertToJSON(v1_volume->host_path);
+    mazu_cJSON *host_path_local_JSON = v1_host_path_volume_source_convertToJSON(v1_volume->host_path);
     if(host_path_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "hostPath", host_path_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "hostPath", host_path_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -436,11 +436,11 @@ cJSON *v1_volume_convertToJSON(v1_volume_t *v1_volume) {
 
     // v1_volume->image
     if(v1_volume->image) {
-    cJSON *image_local_JSON = v1_image_volume_source_convertToJSON(v1_volume->image);
+    mazu_cJSON *image_local_JSON = v1_image_volume_source_convertToJSON(v1_volume->image);
     if(image_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "image", image_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "image", image_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -449,11 +449,11 @@ cJSON *v1_volume_convertToJSON(v1_volume_t *v1_volume) {
 
     // v1_volume->iscsi
     if(v1_volume->iscsi) {
-    cJSON *iscsi_local_JSON = v1_iscsi_volume_source_convertToJSON(v1_volume->iscsi);
+    mazu_cJSON *iscsi_local_JSON = v1_iscsi_volume_source_convertToJSON(v1_volume->iscsi);
     if(iscsi_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "iscsi", iscsi_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "iscsi", iscsi_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -464,18 +464,18 @@ cJSON *v1_volume_convertToJSON(v1_volume_t *v1_volume) {
     if (!v1_volume->name) {
         goto fail;
     }
-    if(cJSON_AddStringToObject(item, "name", v1_volume->name) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "name", v1_volume->name) == NULL) {
     goto fail; //String
     }
 
 
     // v1_volume->nfs
     if(v1_volume->nfs) {
-    cJSON *nfs_local_JSON = v1_nfs_volume_source_convertToJSON(v1_volume->nfs);
+    mazu_cJSON *nfs_local_JSON = v1_nfs_volume_source_convertToJSON(v1_volume->nfs);
     if(nfs_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "nfs", nfs_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "nfs", nfs_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -484,11 +484,11 @@ cJSON *v1_volume_convertToJSON(v1_volume_t *v1_volume) {
 
     // v1_volume->persistent_volume_claim
     if(v1_volume->persistent_volume_claim) {
-    cJSON *persistent_volume_claim_local_JSON = v1_persistent_volume_claim_volume_source_convertToJSON(v1_volume->persistent_volume_claim);
+    mazu_cJSON *persistent_volume_claim_local_JSON = v1_persistent_volume_claim_volume_source_convertToJSON(v1_volume->persistent_volume_claim);
     if(persistent_volume_claim_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "persistentVolumeClaim", persistent_volume_claim_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "persistentVolumeClaim", persistent_volume_claim_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -497,11 +497,11 @@ cJSON *v1_volume_convertToJSON(v1_volume_t *v1_volume) {
 
     // v1_volume->photon_persistent_disk
     if(v1_volume->photon_persistent_disk) {
-    cJSON *photon_persistent_disk_local_JSON = v1_photon_persistent_disk_volume_source_convertToJSON(v1_volume->photon_persistent_disk);
+    mazu_cJSON *photon_persistent_disk_local_JSON = v1_photon_persistent_disk_volume_source_convertToJSON(v1_volume->photon_persistent_disk);
     if(photon_persistent_disk_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "photonPersistentDisk", photon_persistent_disk_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "photonPersistentDisk", photon_persistent_disk_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -510,11 +510,11 @@ cJSON *v1_volume_convertToJSON(v1_volume_t *v1_volume) {
 
     // v1_volume->portworx_volume
     if(v1_volume->portworx_volume) {
-    cJSON *portworx_volume_local_JSON = v1_portworx_volume_source_convertToJSON(v1_volume->portworx_volume);
+    mazu_cJSON *portworx_volume_local_JSON = v1_portworx_volume_source_convertToJSON(v1_volume->portworx_volume);
     if(portworx_volume_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "portworxVolume", portworx_volume_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "portworxVolume", portworx_volume_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -523,11 +523,11 @@ cJSON *v1_volume_convertToJSON(v1_volume_t *v1_volume) {
 
     // v1_volume->projected
     if(v1_volume->projected) {
-    cJSON *projected_local_JSON = v1_projected_volume_source_convertToJSON(v1_volume->projected);
+    mazu_cJSON *projected_local_JSON = v1_projected_volume_source_convertToJSON(v1_volume->projected);
     if(projected_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "projected", projected_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "projected", projected_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -536,11 +536,11 @@ cJSON *v1_volume_convertToJSON(v1_volume_t *v1_volume) {
 
     // v1_volume->quobyte
     if(v1_volume->quobyte) {
-    cJSON *quobyte_local_JSON = v1_quobyte_volume_source_convertToJSON(v1_volume->quobyte);
+    mazu_cJSON *quobyte_local_JSON = v1_quobyte_volume_source_convertToJSON(v1_volume->quobyte);
     if(quobyte_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "quobyte", quobyte_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "quobyte", quobyte_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -549,11 +549,11 @@ cJSON *v1_volume_convertToJSON(v1_volume_t *v1_volume) {
 
     // v1_volume->rbd
     if(v1_volume->rbd) {
-    cJSON *rbd_local_JSON = v1_rbd_volume_source_convertToJSON(v1_volume->rbd);
+    mazu_cJSON *rbd_local_JSON = v1_rbd_volume_source_convertToJSON(v1_volume->rbd);
     if(rbd_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "rbd", rbd_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "rbd", rbd_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -562,11 +562,11 @@ cJSON *v1_volume_convertToJSON(v1_volume_t *v1_volume) {
 
     // v1_volume->scale_io
     if(v1_volume->scale_io) {
-    cJSON *scale_io_local_JSON = v1_scale_io_volume_source_convertToJSON(v1_volume->scale_io);
+    mazu_cJSON *scale_io_local_JSON = v1_scale_io_volume_source_convertToJSON(v1_volume->scale_io);
     if(scale_io_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "scaleIO", scale_io_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "scaleIO", scale_io_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -575,11 +575,11 @@ cJSON *v1_volume_convertToJSON(v1_volume_t *v1_volume) {
 
     // v1_volume->secret
     if(v1_volume->secret) {
-    cJSON *secret_local_JSON = v1_secret_volume_source_convertToJSON(v1_volume->secret);
+    mazu_cJSON *secret_local_JSON = v1_secret_volume_source_convertToJSON(v1_volume->secret);
     if(secret_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "secret", secret_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "secret", secret_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -588,11 +588,11 @@ cJSON *v1_volume_convertToJSON(v1_volume_t *v1_volume) {
 
     // v1_volume->storageos
     if(v1_volume->storageos) {
-    cJSON *storageos_local_JSON = v1_storage_os_volume_source_convertToJSON(v1_volume->storageos);
+    mazu_cJSON *storageos_local_JSON = v1_storage_os_volume_source_convertToJSON(v1_volume->storageos);
     if(storageos_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "storageos", storageos_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "storageos", storageos_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -601,11 +601,11 @@ cJSON *v1_volume_convertToJSON(v1_volume_t *v1_volume) {
 
     // v1_volume->vsphere_volume
     if(v1_volume->vsphere_volume) {
-    cJSON *vsphere_volume_local_JSON = v1_vsphere_virtual_disk_volume_source_convertToJSON(v1_volume->vsphere_volume);
+    mazu_cJSON *vsphere_volume_local_JSON = v1_vsphere_virtual_disk_volume_source_convertToJSON(v1_volume->vsphere_volume);
     if(vsphere_volume_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "vsphereVolume", vsphere_volume_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "vsphereVolume", vsphere_volume_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -614,12 +614,12 @@ cJSON *v1_volume_convertToJSON(v1_volume_t *v1_volume) {
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_volume_t *v1_volume_parseFromJSON(cJSON *v1_volumeJSON){
+v1_volume_t *v1_volume_parseFromJSON(mazu_cJSON *v1_volumeJSON){
 
     v1_volume_t *v1_volume_local_var = NULL;
 
@@ -714,193 +714,193 @@ v1_volume_t *v1_volume_parseFromJSON(cJSON *v1_volumeJSON){
     v1_vsphere_virtual_disk_volume_source_t *vsphere_volume_local_nonprim = NULL;
 
     // v1_volume->aws_elastic_block_store
-    cJSON *aws_elastic_block_store = cJSON_GetObjectItemCaseSensitive(v1_volumeJSON, "awsElasticBlockStore");
+    mazu_cJSON *aws_elastic_block_store = mazu_cJSON_GetObjectItemCaseSensitive(v1_volumeJSON, "awsElasticBlockStore");
     if (aws_elastic_block_store) { 
     aws_elastic_block_store_local_nonprim = v1_aws_elastic_block_store_volume_source_parseFromJSON(aws_elastic_block_store); //nonprimitive
     }
 
     // v1_volume->azure_disk
-    cJSON *azure_disk = cJSON_GetObjectItemCaseSensitive(v1_volumeJSON, "azureDisk");
+    mazu_cJSON *azure_disk = mazu_cJSON_GetObjectItemCaseSensitive(v1_volumeJSON, "azureDisk");
     if (azure_disk) { 
     azure_disk_local_nonprim = v1_azure_disk_volume_source_parseFromJSON(azure_disk); //nonprimitive
     }
 
     // v1_volume->azure_file
-    cJSON *azure_file = cJSON_GetObjectItemCaseSensitive(v1_volumeJSON, "azureFile");
+    mazu_cJSON *azure_file = mazu_cJSON_GetObjectItemCaseSensitive(v1_volumeJSON, "azureFile");
     if (azure_file) { 
     azure_file_local_nonprim = v1_azure_file_volume_source_parseFromJSON(azure_file); //nonprimitive
     }
 
     // v1_volume->cephfs
-    cJSON *cephfs = cJSON_GetObjectItemCaseSensitive(v1_volumeJSON, "cephfs");
+    mazu_cJSON *cephfs = mazu_cJSON_GetObjectItemCaseSensitive(v1_volumeJSON, "cephfs");
     if (cephfs) { 
     cephfs_local_nonprim = v1_ceph_fs_volume_source_parseFromJSON(cephfs); //nonprimitive
     }
 
     // v1_volume->cinder
-    cJSON *cinder = cJSON_GetObjectItemCaseSensitive(v1_volumeJSON, "cinder");
+    mazu_cJSON *cinder = mazu_cJSON_GetObjectItemCaseSensitive(v1_volumeJSON, "cinder");
     if (cinder) { 
     cinder_local_nonprim = v1_cinder_volume_source_parseFromJSON(cinder); //nonprimitive
     }
 
     // v1_volume->config_map
-    cJSON *config_map = cJSON_GetObjectItemCaseSensitive(v1_volumeJSON, "configMap");
+    mazu_cJSON *config_map = mazu_cJSON_GetObjectItemCaseSensitive(v1_volumeJSON, "configMap");
     if (config_map) { 
     config_map_local_nonprim = v1_config_map_volume_source_parseFromJSON(config_map); //nonprimitive
     }
 
     // v1_volume->csi
-    cJSON *csi = cJSON_GetObjectItemCaseSensitive(v1_volumeJSON, "csi");
+    mazu_cJSON *csi = mazu_cJSON_GetObjectItemCaseSensitive(v1_volumeJSON, "csi");
     if (csi) { 
     csi_local_nonprim = v1_csi_volume_source_parseFromJSON(csi); //nonprimitive
     }
 
     // v1_volume->downward_api
-    cJSON *downward_api = cJSON_GetObjectItemCaseSensitive(v1_volumeJSON, "downwardAPI");
+    mazu_cJSON *downward_api = mazu_cJSON_GetObjectItemCaseSensitive(v1_volumeJSON, "downwardAPI");
     if (downward_api) { 
     downward_api_local_nonprim = v1_downward_api_volume_source_parseFromJSON(downward_api); //nonprimitive
     }
 
     // v1_volume->empty_dir
-    cJSON *empty_dir = cJSON_GetObjectItemCaseSensitive(v1_volumeJSON, "emptyDir");
+    mazu_cJSON *empty_dir = mazu_cJSON_GetObjectItemCaseSensitive(v1_volumeJSON, "emptyDir");
     if (empty_dir) { 
     empty_dir_local_nonprim = v1_empty_dir_volume_source_parseFromJSON(empty_dir); //nonprimitive
     }
 
     // v1_volume->ephemeral
-    cJSON *ephemeral = cJSON_GetObjectItemCaseSensitive(v1_volumeJSON, "ephemeral");
+    mazu_cJSON *ephemeral = mazu_cJSON_GetObjectItemCaseSensitive(v1_volumeJSON, "ephemeral");
     if (ephemeral) { 
     ephemeral_local_nonprim = v1_ephemeral_volume_source_parseFromJSON(ephemeral); //nonprimitive
     }
 
     // v1_volume->fc
-    cJSON *fc = cJSON_GetObjectItemCaseSensitive(v1_volumeJSON, "fc");
+    mazu_cJSON *fc = mazu_cJSON_GetObjectItemCaseSensitive(v1_volumeJSON, "fc");
     if (fc) { 
     fc_local_nonprim = v1_fc_volume_source_parseFromJSON(fc); //nonprimitive
     }
 
     // v1_volume->flex_volume
-    cJSON *flex_volume = cJSON_GetObjectItemCaseSensitive(v1_volumeJSON, "flexVolume");
+    mazu_cJSON *flex_volume = mazu_cJSON_GetObjectItemCaseSensitive(v1_volumeJSON, "flexVolume");
     if (flex_volume) { 
     flex_volume_local_nonprim = v1_flex_volume_source_parseFromJSON(flex_volume); //nonprimitive
     }
 
     // v1_volume->flocker
-    cJSON *flocker = cJSON_GetObjectItemCaseSensitive(v1_volumeJSON, "flocker");
+    mazu_cJSON *flocker = mazu_cJSON_GetObjectItemCaseSensitive(v1_volumeJSON, "flocker");
     if (flocker) { 
     flocker_local_nonprim = v1_flocker_volume_source_parseFromJSON(flocker); //nonprimitive
     }
 
     // v1_volume->gce_persistent_disk
-    cJSON *gce_persistent_disk = cJSON_GetObjectItemCaseSensitive(v1_volumeJSON, "gcePersistentDisk");
+    mazu_cJSON *gce_persistent_disk = mazu_cJSON_GetObjectItemCaseSensitive(v1_volumeJSON, "gcePersistentDisk");
     if (gce_persistent_disk) { 
     gce_persistent_disk_local_nonprim = v1_gce_persistent_disk_volume_source_parseFromJSON(gce_persistent_disk); //nonprimitive
     }
 
     // v1_volume->git_repo
-    cJSON *git_repo = cJSON_GetObjectItemCaseSensitive(v1_volumeJSON, "gitRepo");
+    mazu_cJSON *git_repo = mazu_cJSON_GetObjectItemCaseSensitive(v1_volumeJSON, "gitRepo");
     if (git_repo) { 
     git_repo_local_nonprim = v1_git_repo_volume_source_parseFromJSON(git_repo); //nonprimitive
     }
 
     // v1_volume->glusterfs
-    cJSON *glusterfs = cJSON_GetObjectItemCaseSensitive(v1_volumeJSON, "glusterfs");
+    mazu_cJSON *glusterfs = mazu_cJSON_GetObjectItemCaseSensitive(v1_volumeJSON, "glusterfs");
     if (glusterfs) { 
     glusterfs_local_nonprim = v1_glusterfs_volume_source_parseFromJSON(glusterfs); //nonprimitive
     }
 
     // v1_volume->host_path
-    cJSON *host_path = cJSON_GetObjectItemCaseSensitive(v1_volumeJSON, "hostPath");
+    mazu_cJSON *host_path = mazu_cJSON_GetObjectItemCaseSensitive(v1_volumeJSON, "hostPath");
     if (host_path) { 
     host_path_local_nonprim = v1_host_path_volume_source_parseFromJSON(host_path); //nonprimitive
     }
 
     // v1_volume->image
-    cJSON *image = cJSON_GetObjectItemCaseSensitive(v1_volumeJSON, "image");
+    mazu_cJSON *image = mazu_cJSON_GetObjectItemCaseSensitive(v1_volumeJSON, "image");
     if (image) { 
     image_local_nonprim = v1_image_volume_source_parseFromJSON(image); //nonprimitive
     }
 
     // v1_volume->iscsi
-    cJSON *iscsi = cJSON_GetObjectItemCaseSensitive(v1_volumeJSON, "iscsi");
+    mazu_cJSON *iscsi = mazu_cJSON_GetObjectItemCaseSensitive(v1_volumeJSON, "iscsi");
     if (iscsi) { 
     iscsi_local_nonprim = v1_iscsi_volume_source_parseFromJSON(iscsi); //nonprimitive
     }
 
     // v1_volume->name
-    cJSON *name = cJSON_GetObjectItemCaseSensitive(v1_volumeJSON, "name");
+    mazu_cJSON *name = mazu_cJSON_GetObjectItemCaseSensitive(v1_volumeJSON, "name");
     if (!name) {
         goto end;
     }
 
     
-    if(!cJSON_IsString(name))
+    if(!mazu_cJSON_IsString(name))
     {
     goto end; //String
     }
 
     // v1_volume->nfs
-    cJSON *nfs = cJSON_GetObjectItemCaseSensitive(v1_volumeJSON, "nfs");
+    mazu_cJSON *nfs = mazu_cJSON_GetObjectItemCaseSensitive(v1_volumeJSON, "nfs");
     if (nfs) { 
     nfs_local_nonprim = v1_nfs_volume_source_parseFromJSON(nfs); //nonprimitive
     }
 
     // v1_volume->persistent_volume_claim
-    cJSON *persistent_volume_claim = cJSON_GetObjectItemCaseSensitive(v1_volumeJSON, "persistentVolumeClaim");
+    mazu_cJSON *persistent_volume_claim = mazu_cJSON_GetObjectItemCaseSensitive(v1_volumeJSON, "persistentVolumeClaim");
     if (persistent_volume_claim) { 
     persistent_volume_claim_local_nonprim = v1_persistent_volume_claim_volume_source_parseFromJSON(persistent_volume_claim); //nonprimitive
     }
 
     // v1_volume->photon_persistent_disk
-    cJSON *photon_persistent_disk = cJSON_GetObjectItemCaseSensitive(v1_volumeJSON, "photonPersistentDisk");
+    mazu_cJSON *photon_persistent_disk = mazu_cJSON_GetObjectItemCaseSensitive(v1_volumeJSON, "photonPersistentDisk");
     if (photon_persistent_disk) { 
     photon_persistent_disk_local_nonprim = v1_photon_persistent_disk_volume_source_parseFromJSON(photon_persistent_disk); //nonprimitive
     }
 
     // v1_volume->portworx_volume
-    cJSON *portworx_volume = cJSON_GetObjectItemCaseSensitive(v1_volumeJSON, "portworxVolume");
+    mazu_cJSON *portworx_volume = mazu_cJSON_GetObjectItemCaseSensitive(v1_volumeJSON, "portworxVolume");
     if (portworx_volume) { 
     portworx_volume_local_nonprim = v1_portworx_volume_source_parseFromJSON(portworx_volume); //nonprimitive
     }
 
     // v1_volume->projected
-    cJSON *projected = cJSON_GetObjectItemCaseSensitive(v1_volumeJSON, "projected");
+    mazu_cJSON *projected = mazu_cJSON_GetObjectItemCaseSensitive(v1_volumeJSON, "projected");
     if (projected) { 
     projected_local_nonprim = v1_projected_volume_source_parseFromJSON(projected); //nonprimitive
     }
 
     // v1_volume->quobyte
-    cJSON *quobyte = cJSON_GetObjectItemCaseSensitive(v1_volumeJSON, "quobyte");
+    mazu_cJSON *quobyte = mazu_cJSON_GetObjectItemCaseSensitive(v1_volumeJSON, "quobyte");
     if (quobyte) { 
     quobyte_local_nonprim = v1_quobyte_volume_source_parseFromJSON(quobyte); //nonprimitive
     }
 
     // v1_volume->rbd
-    cJSON *rbd = cJSON_GetObjectItemCaseSensitive(v1_volumeJSON, "rbd");
+    mazu_cJSON *rbd = mazu_cJSON_GetObjectItemCaseSensitive(v1_volumeJSON, "rbd");
     if (rbd) { 
     rbd_local_nonprim = v1_rbd_volume_source_parseFromJSON(rbd); //nonprimitive
     }
 
     // v1_volume->scale_io
-    cJSON *scale_io = cJSON_GetObjectItemCaseSensitive(v1_volumeJSON, "scaleIO");
+    mazu_cJSON *scale_io = mazu_cJSON_GetObjectItemCaseSensitive(v1_volumeJSON, "scaleIO");
     if (scale_io) { 
     scale_io_local_nonprim = v1_scale_io_volume_source_parseFromJSON(scale_io); //nonprimitive
     }
 
     // v1_volume->secret
-    cJSON *secret = cJSON_GetObjectItemCaseSensitive(v1_volumeJSON, "secret");
+    mazu_cJSON *secret = mazu_cJSON_GetObjectItemCaseSensitive(v1_volumeJSON, "secret");
     if (secret) { 
     secret_local_nonprim = v1_secret_volume_source_parseFromJSON(secret); //nonprimitive
     }
 
     // v1_volume->storageos
-    cJSON *storageos = cJSON_GetObjectItemCaseSensitive(v1_volumeJSON, "storageos");
+    mazu_cJSON *storageos = mazu_cJSON_GetObjectItemCaseSensitive(v1_volumeJSON, "storageos");
     if (storageos) { 
     storageos_local_nonprim = v1_storage_os_volume_source_parseFromJSON(storageos); //nonprimitive
     }
 
     // v1_volume->vsphere_volume
-    cJSON *vsphere_volume = cJSON_GetObjectItemCaseSensitive(v1_volumeJSON, "vsphereVolume");
+    mazu_cJSON *vsphere_volume = mazu_cJSON_GetObjectItemCaseSensitive(v1_volumeJSON, "vsphereVolume");
     if (vsphere_volume) { 
     vsphere_volume_local_nonprim = v1_vsphere_virtual_disk_volume_source_parseFromJSON(vsphere_volume); //nonprimitive
     }

@@ -56,12 +56,12 @@ void v1_custom_resource_column_definition_free(v1_custom_resource_column_definit
     free(v1_custom_resource_column_definition);
 }
 
-cJSON *v1_custom_resource_column_definition_convertToJSON(v1_custom_resource_column_definition_t *v1_custom_resource_column_definition) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_custom_resource_column_definition_convertToJSON(v1_custom_resource_column_definition_t *v1_custom_resource_column_definition) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_custom_resource_column_definition->description
     if(v1_custom_resource_column_definition->description) {
-    if(cJSON_AddStringToObject(item, "description", v1_custom_resource_column_definition->description) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "description", v1_custom_resource_column_definition->description) == NULL) {
     goto fail; //String
     }
     }
@@ -69,7 +69,7 @@ cJSON *v1_custom_resource_column_definition_convertToJSON(v1_custom_resource_col
 
     // v1_custom_resource_column_definition->format
     if(v1_custom_resource_column_definition->format) {
-    if(cJSON_AddStringToObject(item, "format", v1_custom_resource_column_definition->format) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "format", v1_custom_resource_column_definition->format) == NULL) {
     goto fail; //String
     }
     }
@@ -79,7 +79,7 @@ cJSON *v1_custom_resource_column_definition_convertToJSON(v1_custom_resource_col
     if (!v1_custom_resource_column_definition->json_path) {
         goto fail;
     }
-    if(cJSON_AddStringToObject(item, "jsonPath", v1_custom_resource_column_definition->json_path) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "jsonPath", v1_custom_resource_column_definition->json_path) == NULL) {
     goto fail; //String
     }
 
@@ -88,14 +88,14 @@ cJSON *v1_custom_resource_column_definition_convertToJSON(v1_custom_resource_col
     if (!v1_custom_resource_column_definition->name) {
         goto fail;
     }
-    if(cJSON_AddStringToObject(item, "name", v1_custom_resource_column_definition->name) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "name", v1_custom_resource_column_definition->name) == NULL) {
     goto fail; //String
     }
 
 
     // v1_custom_resource_column_definition->priority
     if(v1_custom_resource_column_definition->priority) {
-    if(cJSON_AddNumberToObject(item, "priority", v1_custom_resource_column_definition->priority) == NULL) {
+    if(mazu_cJSON_AddNumberToObject(item, "priority", v1_custom_resource_column_definition->priority) == NULL) {
     goto fail; //Numeric
     }
     }
@@ -105,89 +105,89 @@ cJSON *v1_custom_resource_column_definition_convertToJSON(v1_custom_resource_col
     if (!v1_custom_resource_column_definition->type) {
         goto fail;
     }
-    if(cJSON_AddStringToObject(item, "type", v1_custom_resource_column_definition->type) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "type", v1_custom_resource_column_definition->type) == NULL) {
     goto fail; //String
     }
 
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_custom_resource_column_definition_t *v1_custom_resource_column_definition_parseFromJSON(cJSON *v1_custom_resource_column_definitionJSON){
+v1_custom_resource_column_definition_t *v1_custom_resource_column_definition_parseFromJSON(mazu_cJSON *v1_custom_resource_column_definitionJSON){
 
     v1_custom_resource_column_definition_t *v1_custom_resource_column_definition_local_var = NULL;
 
     // v1_custom_resource_column_definition->description
-    cJSON *description = cJSON_GetObjectItemCaseSensitive(v1_custom_resource_column_definitionJSON, "description");
+    mazu_cJSON *description = mazu_cJSON_GetObjectItemCaseSensitive(v1_custom_resource_column_definitionJSON, "description");
     if (description) { 
-    if(!cJSON_IsString(description) && !cJSON_IsNull(description))
+    if(!mazu_cJSON_IsString(description) && !mazu_cJSON_IsNull(description))
     {
     goto end; //String
     }
     }
 
     // v1_custom_resource_column_definition->format
-    cJSON *format = cJSON_GetObjectItemCaseSensitive(v1_custom_resource_column_definitionJSON, "format");
+    mazu_cJSON *format = mazu_cJSON_GetObjectItemCaseSensitive(v1_custom_resource_column_definitionJSON, "format");
     if (format) { 
-    if(!cJSON_IsString(format) && !cJSON_IsNull(format))
+    if(!mazu_cJSON_IsString(format) && !mazu_cJSON_IsNull(format))
     {
     goto end; //String
     }
     }
 
     // v1_custom_resource_column_definition->json_path
-    cJSON *json_path = cJSON_GetObjectItemCaseSensitive(v1_custom_resource_column_definitionJSON, "jsonPath");
+    mazu_cJSON *json_path = mazu_cJSON_GetObjectItemCaseSensitive(v1_custom_resource_column_definitionJSON, "jsonPath");
     if (!json_path) {
         goto end;
     }
 
     
-    if(!cJSON_IsString(json_path))
+    if(!mazu_cJSON_IsString(json_path))
     {
     goto end; //String
     }
 
     // v1_custom_resource_column_definition->name
-    cJSON *name = cJSON_GetObjectItemCaseSensitive(v1_custom_resource_column_definitionJSON, "name");
+    mazu_cJSON *name = mazu_cJSON_GetObjectItemCaseSensitive(v1_custom_resource_column_definitionJSON, "name");
     if (!name) {
         goto end;
     }
 
     
-    if(!cJSON_IsString(name))
+    if(!mazu_cJSON_IsString(name))
     {
     goto end; //String
     }
 
     // v1_custom_resource_column_definition->priority
-    cJSON *priority = cJSON_GetObjectItemCaseSensitive(v1_custom_resource_column_definitionJSON, "priority");
+    mazu_cJSON *priority = mazu_cJSON_GetObjectItemCaseSensitive(v1_custom_resource_column_definitionJSON, "priority");
     if (priority) { 
-    if(!cJSON_IsNumber(priority))
+    if(!mazu_cJSON_IsNumber(priority))
     {
     goto end; //Numeric
     }
     }
 
     // v1_custom_resource_column_definition->type
-    cJSON *type = cJSON_GetObjectItemCaseSensitive(v1_custom_resource_column_definitionJSON, "type");
+    mazu_cJSON *type = mazu_cJSON_GetObjectItemCaseSensitive(v1_custom_resource_column_definitionJSON, "type");
     if (!type) {
         goto end;
     }
 
     
-    if(!cJSON_IsString(type))
+    if(!mazu_cJSON_IsString(type))
     {
     goto end; //String
     }
 
 
     v1_custom_resource_column_definition_local_var = v1_custom_resource_column_definition_create (
-        description && !cJSON_IsNull(description) ? strdup(description->valuestring) : NULL,
-        format && !cJSON_IsNull(format) ? strdup(format->valuestring) : NULL,
+        description && !mazu_cJSON_IsNull(description) ? strdup(description->valuestring) : NULL,
+        format && !mazu_cJSON_IsNull(format) ? strdup(format->valuestring) : NULL,
         strdup(json_path->valuestring),
         strdup(name->valuestring),
         priority ? priority->valuedouble : 0,

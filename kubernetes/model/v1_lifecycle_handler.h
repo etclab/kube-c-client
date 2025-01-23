@@ -8,7 +8,7 @@
 #define _v1_lifecycle_handler_H_
 
 #include <string.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
 #include "../include/binary.h"
@@ -39,9 +39,9 @@ v1_lifecycle_handler_t *v1_lifecycle_handler_create(
 
 void v1_lifecycle_handler_free(v1_lifecycle_handler_t *v1_lifecycle_handler);
 
-v1_lifecycle_handler_t *v1_lifecycle_handler_parseFromJSON(cJSON *v1_lifecycle_handlerJSON);
+v1_lifecycle_handler_t *v1_lifecycle_handler_parseFromJSON(mazu_cJSON *v1_lifecycle_handlerJSON);
 
-cJSON *v1_lifecycle_handler_convertToJSON(v1_lifecycle_handler_t *v1_lifecycle_handler);
+mazu_cJSON *v1_lifecycle_handler_convertToJSON(v1_lifecycle_handler_t *v1_lifecycle_handler);
 
 #endif /* _v1_lifecycle_handler_H_ */
 

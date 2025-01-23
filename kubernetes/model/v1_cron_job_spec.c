@@ -56,12 +56,12 @@ void v1_cron_job_spec_free(v1_cron_job_spec_t *v1_cron_job_spec) {
     free(v1_cron_job_spec);
 }
 
-cJSON *v1_cron_job_spec_convertToJSON(v1_cron_job_spec_t *v1_cron_job_spec) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_cron_job_spec_convertToJSON(v1_cron_job_spec_t *v1_cron_job_spec) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_cron_job_spec->concurrency_policy
     if(v1_cron_job_spec->concurrency_policy) {
-    if(cJSON_AddStringToObject(item, "concurrencyPolicy", v1_cron_job_spec->concurrency_policy) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "concurrencyPolicy", v1_cron_job_spec->concurrency_policy) == NULL) {
     goto fail; //String
     }
     }
@@ -69,7 +69,7 @@ cJSON *v1_cron_job_spec_convertToJSON(v1_cron_job_spec_t *v1_cron_job_spec) {
 
     // v1_cron_job_spec->failed_jobs_history_limit
     if(v1_cron_job_spec->failed_jobs_history_limit) {
-    if(cJSON_AddNumberToObject(item, "failedJobsHistoryLimit", v1_cron_job_spec->failed_jobs_history_limit) == NULL) {
+    if(mazu_cJSON_AddNumberToObject(item, "failedJobsHistoryLimit", v1_cron_job_spec->failed_jobs_history_limit) == NULL) {
     goto fail; //Numeric
     }
     }
@@ -79,11 +79,11 @@ cJSON *v1_cron_job_spec_convertToJSON(v1_cron_job_spec_t *v1_cron_job_spec) {
     if (!v1_cron_job_spec->job_template) {
         goto fail;
     }
-    cJSON *job_template_local_JSON = v1_job_template_spec_convertToJSON(v1_cron_job_spec->job_template);
+    mazu_cJSON *job_template_local_JSON = v1_job_template_spec_convertToJSON(v1_cron_job_spec->job_template);
     if(job_template_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "jobTemplate", job_template_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "jobTemplate", job_template_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -93,14 +93,14 @@ cJSON *v1_cron_job_spec_convertToJSON(v1_cron_job_spec_t *v1_cron_job_spec) {
     if (!v1_cron_job_spec->schedule) {
         goto fail;
     }
-    if(cJSON_AddStringToObject(item, "schedule", v1_cron_job_spec->schedule) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "schedule", v1_cron_job_spec->schedule) == NULL) {
     goto fail; //String
     }
 
 
     // v1_cron_job_spec->starting_deadline_seconds
     if(v1_cron_job_spec->starting_deadline_seconds) {
-    if(cJSON_AddNumberToObject(item, "startingDeadlineSeconds", v1_cron_job_spec->starting_deadline_seconds) == NULL) {
+    if(mazu_cJSON_AddNumberToObject(item, "startingDeadlineSeconds", v1_cron_job_spec->starting_deadline_seconds) == NULL) {
     goto fail; //Numeric
     }
     }
@@ -108,7 +108,7 @@ cJSON *v1_cron_job_spec_convertToJSON(v1_cron_job_spec_t *v1_cron_job_spec) {
 
     // v1_cron_job_spec->successful_jobs_history_limit
     if(v1_cron_job_spec->successful_jobs_history_limit) {
-    if(cJSON_AddNumberToObject(item, "successfulJobsHistoryLimit", v1_cron_job_spec->successful_jobs_history_limit) == NULL) {
+    if(mazu_cJSON_AddNumberToObject(item, "successfulJobsHistoryLimit", v1_cron_job_spec->successful_jobs_history_limit) == NULL) {
     goto fail; //Numeric
     }
     }
@@ -116,7 +116,7 @@ cJSON *v1_cron_job_spec_convertToJSON(v1_cron_job_spec_t *v1_cron_job_spec) {
 
     // v1_cron_job_spec->suspend
     if(v1_cron_job_spec->suspend) {
-    if(cJSON_AddBoolToObject(item, "suspend", v1_cron_job_spec->suspend) == NULL) {
+    if(mazu_cJSON_AddBoolToObject(item, "suspend", v1_cron_job_spec->suspend) == NULL) {
     goto fail; //Bool
     }
     }
@@ -124,7 +124,7 @@ cJSON *v1_cron_job_spec_convertToJSON(v1_cron_job_spec_t *v1_cron_job_spec) {
 
     // v1_cron_job_spec->time_zone
     if(v1_cron_job_spec->time_zone) {
-    if(cJSON_AddStringToObject(item, "timeZone", v1_cron_job_spec->time_zone) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "timeZone", v1_cron_job_spec->time_zone) == NULL) {
     goto fail; //String
     }
     }
@@ -132,12 +132,12 @@ cJSON *v1_cron_job_spec_convertToJSON(v1_cron_job_spec_t *v1_cron_job_spec) {
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_cron_job_spec_t *v1_cron_job_spec_parseFromJSON(cJSON *v1_cron_job_specJSON){
+v1_cron_job_spec_t *v1_cron_job_spec_parseFromJSON(mazu_cJSON *v1_cron_job_specJSON){
 
     v1_cron_job_spec_t *v1_cron_job_spec_local_var = NULL;
 
@@ -145,25 +145,25 @@ v1_cron_job_spec_t *v1_cron_job_spec_parseFromJSON(cJSON *v1_cron_job_specJSON){
     v1_job_template_spec_t *job_template_local_nonprim = NULL;
 
     // v1_cron_job_spec->concurrency_policy
-    cJSON *concurrency_policy = cJSON_GetObjectItemCaseSensitive(v1_cron_job_specJSON, "concurrencyPolicy");
+    mazu_cJSON *concurrency_policy = mazu_cJSON_GetObjectItemCaseSensitive(v1_cron_job_specJSON, "concurrencyPolicy");
     if (concurrency_policy) { 
-    if(!cJSON_IsString(concurrency_policy) && !cJSON_IsNull(concurrency_policy))
+    if(!mazu_cJSON_IsString(concurrency_policy) && !mazu_cJSON_IsNull(concurrency_policy))
     {
     goto end; //String
     }
     }
 
     // v1_cron_job_spec->failed_jobs_history_limit
-    cJSON *failed_jobs_history_limit = cJSON_GetObjectItemCaseSensitive(v1_cron_job_specJSON, "failedJobsHistoryLimit");
+    mazu_cJSON *failed_jobs_history_limit = mazu_cJSON_GetObjectItemCaseSensitive(v1_cron_job_specJSON, "failedJobsHistoryLimit");
     if (failed_jobs_history_limit) { 
-    if(!cJSON_IsNumber(failed_jobs_history_limit))
+    if(!mazu_cJSON_IsNumber(failed_jobs_history_limit))
     {
     goto end; //Numeric
     }
     }
 
     // v1_cron_job_spec->job_template
-    cJSON *job_template = cJSON_GetObjectItemCaseSensitive(v1_cron_job_specJSON, "jobTemplate");
+    mazu_cJSON *job_template = mazu_cJSON_GetObjectItemCaseSensitive(v1_cron_job_specJSON, "jobTemplate");
     if (!job_template) {
         goto end;
     }
@@ -172,48 +172,48 @@ v1_cron_job_spec_t *v1_cron_job_spec_parseFromJSON(cJSON *v1_cron_job_specJSON){
     job_template_local_nonprim = v1_job_template_spec_parseFromJSON(job_template); //nonprimitive
 
     // v1_cron_job_spec->schedule
-    cJSON *schedule = cJSON_GetObjectItemCaseSensitive(v1_cron_job_specJSON, "schedule");
+    mazu_cJSON *schedule = mazu_cJSON_GetObjectItemCaseSensitive(v1_cron_job_specJSON, "schedule");
     if (!schedule) {
         goto end;
     }
 
     
-    if(!cJSON_IsString(schedule))
+    if(!mazu_cJSON_IsString(schedule))
     {
     goto end; //String
     }
 
     // v1_cron_job_spec->starting_deadline_seconds
-    cJSON *starting_deadline_seconds = cJSON_GetObjectItemCaseSensitive(v1_cron_job_specJSON, "startingDeadlineSeconds");
+    mazu_cJSON *starting_deadline_seconds = mazu_cJSON_GetObjectItemCaseSensitive(v1_cron_job_specJSON, "startingDeadlineSeconds");
     if (starting_deadline_seconds) { 
-    if(!cJSON_IsNumber(starting_deadline_seconds))
+    if(!mazu_cJSON_IsNumber(starting_deadline_seconds))
     {
     goto end; //Numeric
     }
     }
 
     // v1_cron_job_spec->successful_jobs_history_limit
-    cJSON *successful_jobs_history_limit = cJSON_GetObjectItemCaseSensitive(v1_cron_job_specJSON, "successfulJobsHistoryLimit");
+    mazu_cJSON *successful_jobs_history_limit = mazu_cJSON_GetObjectItemCaseSensitive(v1_cron_job_specJSON, "successfulJobsHistoryLimit");
     if (successful_jobs_history_limit) { 
-    if(!cJSON_IsNumber(successful_jobs_history_limit))
+    if(!mazu_cJSON_IsNumber(successful_jobs_history_limit))
     {
     goto end; //Numeric
     }
     }
 
     // v1_cron_job_spec->suspend
-    cJSON *suspend = cJSON_GetObjectItemCaseSensitive(v1_cron_job_specJSON, "suspend");
+    mazu_cJSON *suspend = mazu_cJSON_GetObjectItemCaseSensitive(v1_cron_job_specJSON, "suspend");
     if (suspend) { 
-    if(!cJSON_IsBool(suspend))
+    if(!mazu_cJSON_IsBool(suspend))
     {
     goto end; //Bool
     }
     }
 
     // v1_cron_job_spec->time_zone
-    cJSON *time_zone = cJSON_GetObjectItemCaseSensitive(v1_cron_job_specJSON, "timeZone");
+    mazu_cJSON *time_zone = mazu_cJSON_GetObjectItemCaseSensitive(v1_cron_job_specJSON, "timeZone");
     if (time_zone) { 
-    if(!cJSON_IsString(time_zone) && !cJSON_IsNull(time_zone))
+    if(!mazu_cJSON_IsString(time_zone) && !mazu_cJSON_IsNull(time_zone))
     {
     goto end; //String
     }
@@ -221,14 +221,14 @@ v1_cron_job_spec_t *v1_cron_job_spec_parseFromJSON(cJSON *v1_cron_job_specJSON){
 
 
     v1_cron_job_spec_local_var = v1_cron_job_spec_create (
-        concurrency_policy && !cJSON_IsNull(concurrency_policy) ? strdup(concurrency_policy->valuestring) : NULL,
+        concurrency_policy && !mazu_cJSON_IsNull(concurrency_policy) ? strdup(concurrency_policy->valuestring) : NULL,
         failed_jobs_history_limit ? failed_jobs_history_limit->valuedouble : 0,
         job_template_local_nonprim,
         strdup(schedule->valuestring),
         starting_deadline_seconds ? starting_deadline_seconds->valuedouble : 0,
         successful_jobs_history_limit ? successful_jobs_history_limit->valuedouble : 0,
         suspend ? suspend->valueint : 0,
-        time_zone && !cJSON_IsNull(time_zone) ? strdup(time_zone->valuestring) : NULL
+        time_zone && !mazu_cJSON_IsNull(time_zone) ? strdup(time_zone->valuestring) : NULL
         );
 
     return v1_cron_job_spec_local_var;

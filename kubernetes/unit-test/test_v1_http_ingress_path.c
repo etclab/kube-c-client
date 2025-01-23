@@ -11,7 +11,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdbool.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 
 #include "../model/v1_http_ingress_path.h"
 v1_http_ingress_path_t* instantiate_v1_http_ingress_path(int include_optional);
@@ -45,11 +45,11 @@ v1_http_ingress_path_t* instantiate_v1_http_ingress_path(int include_optional) {
 void test_v1_http_ingress_path(int include_optional) {
     v1_http_ingress_path_t* v1_http_ingress_path_1 = instantiate_v1_http_ingress_path(include_optional);
 
-	cJSON* jsonv1_http_ingress_path_1 = v1_http_ingress_path_convertToJSON(v1_http_ingress_path_1);
-	printf("v1_http_ingress_path :\n%s\n", cJSON_Print(jsonv1_http_ingress_path_1));
+	mazu_cJSON* jsonv1_http_ingress_path_1 = v1_http_ingress_path_convertToJSON(v1_http_ingress_path_1);
+	printf("v1_http_ingress_path :\n%s\n", mazu_cJSON_Print(jsonv1_http_ingress_path_1));
 	v1_http_ingress_path_t* v1_http_ingress_path_2 = v1_http_ingress_path_parseFromJSON(jsonv1_http_ingress_path_1);
-	cJSON* jsonv1_http_ingress_path_2 = v1_http_ingress_path_convertToJSON(v1_http_ingress_path_2);
-	printf("repeating v1_http_ingress_path:\n%s\n", cJSON_Print(jsonv1_http_ingress_path_2));
+	mazu_cJSON* jsonv1_http_ingress_path_2 = v1_http_ingress_path_convertToJSON(v1_http_ingress_path_2);
+	printf("repeating v1_http_ingress_path:\n%s\n", mazu_cJSON_Print(jsonv1_http_ingress_path_2));
 }
 
 int main() {

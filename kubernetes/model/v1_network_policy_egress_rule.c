@@ -42,12 +42,12 @@ void v1_network_policy_egress_rule_free(v1_network_policy_egress_rule_t *v1_netw
     free(v1_network_policy_egress_rule);
 }
 
-cJSON *v1_network_policy_egress_rule_convertToJSON(v1_network_policy_egress_rule_t *v1_network_policy_egress_rule) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_network_policy_egress_rule_convertToJSON(v1_network_policy_egress_rule_t *v1_network_policy_egress_rule) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_network_policy_egress_rule->ports
     if(v1_network_policy_egress_rule->ports) {
-    cJSON *ports = cJSON_AddArrayToObject(item, "ports");
+    mazu_cJSON *ports = mazu_cJSON_AddArrayToObject(item, "ports");
     if(ports == NULL) {
     goto fail; //nonprimitive container
     }
@@ -55,11 +55,11 @@ cJSON *v1_network_policy_egress_rule_convertToJSON(v1_network_policy_egress_rule
     listEntry_t *portsListEntry;
     if (v1_network_policy_egress_rule->ports) {
     list_ForEach(portsListEntry, v1_network_policy_egress_rule->ports) {
-    cJSON *itemLocal = v1_network_policy_port_convertToJSON(portsListEntry->data);
+    mazu_cJSON *itemLocal = v1_network_policy_port_convertToJSON(portsListEntry->data);
     if(itemLocal == NULL) {
     goto fail;
     }
-    cJSON_AddItemToArray(ports, itemLocal);
+    mazu_cJSON_AddItemToArray(ports, itemLocal);
     }
     }
     }
@@ -67,7 +67,7 @@ cJSON *v1_network_policy_egress_rule_convertToJSON(v1_network_policy_egress_rule
 
     // v1_network_policy_egress_rule->to
     if(v1_network_policy_egress_rule->to) {
-    cJSON *to = cJSON_AddArrayToObject(item, "to");
+    mazu_cJSON *to = mazu_cJSON_AddArrayToObject(item, "to");
     if(to == NULL) {
     goto fail; //nonprimitive container
     }
@@ -75,11 +75,11 @@ cJSON *v1_network_policy_egress_rule_convertToJSON(v1_network_policy_egress_rule
     listEntry_t *toListEntry;
     if (v1_network_policy_egress_rule->to) {
     list_ForEach(toListEntry, v1_network_policy_egress_rule->to) {
-    cJSON *itemLocal = v1_network_policy_peer_convertToJSON(toListEntry->data);
+    mazu_cJSON *itemLocal = v1_network_policy_peer_convertToJSON(toListEntry->data);
     if(itemLocal == NULL) {
     goto fail;
     }
-    cJSON_AddItemToArray(to, itemLocal);
+    mazu_cJSON_AddItemToArray(to, itemLocal);
     }
     }
     }
@@ -87,12 +87,12 @@ cJSON *v1_network_policy_egress_rule_convertToJSON(v1_network_policy_egress_rule
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_network_policy_egress_rule_t *v1_network_policy_egress_rule_parseFromJSON(cJSON *v1_network_policy_egress_ruleJSON){
+v1_network_policy_egress_rule_t *v1_network_policy_egress_rule_parseFromJSON(mazu_cJSON *v1_network_policy_egress_ruleJSON){
 
     v1_network_policy_egress_rule_t *v1_network_policy_egress_rule_local_var = NULL;
 
@@ -103,18 +103,18 @@ v1_network_policy_egress_rule_t *v1_network_policy_egress_rule_parseFromJSON(cJS
     list_t *toList = NULL;
 
     // v1_network_policy_egress_rule->ports
-    cJSON *ports = cJSON_GetObjectItemCaseSensitive(v1_network_policy_egress_ruleJSON, "ports");
+    mazu_cJSON *ports = mazu_cJSON_GetObjectItemCaseSensitive(v1_network_policy_egress_ruleJSON, "ports");
     if (ports) { 
-    cJSON *ports_local_nonprimitive = NULL;
-    if(!cJSON_IsArray(ports)){
+    mazu_cJSON *ports_local_nonprimitive = NULL;
+    if(!mazu_cJSON_IsArray(ports)){
         goto end; //nonprimitive container
     }
 
     portsList = list_createList();
 
-    cJSON_ArrayForEach(ports_local_nonprimitive,ports )
+    mazu_cJSON_ArrayForEach(ports_local_nonprimitive,ports )
     {
-        if(!cJSON_IsObject(ports_local_nonprimitive)){
+        if(!mazu_cJSON_IsObject(ports_local_nonprimitive)){
             goto end;
         }
         v1_network_policy_port_t *portsItem = v1_network_policy_port_parseFromJSON(ports_local_nonprimitive);
@@ -124,18 +124,18 @@ v1_network_policy_egress_rule_t *v1_network_policy_egress_rule_parseFromJSON(cJS
     }
 
     // v1_network_policy_egress_rule->to
-    cJSON *to = cJSON_GetObjectItemCaseSensitive(v1_network_policy_egress_ruleJSON, "to");
+    mazu_cJSON *to = mazu_cJSON_GetObjectItemCaseSensitive(v1_network_policy_egress_ruleJSON, "to");
     if (to) { 
-    cJSON *to_local_nonprimitive = NULL;
-    if(!cJSON_IsArray(to)){
+    mazu_cJSON *to_local_nonprimitive = NULL;
+    if(!mazu_cJSON_IsArray(to)){
         goto end; //nonprimitive container
     }
 
     toList = list_createList();
 
-    cJSON_ArrayForEach(to_local_nonprimitive,to )
+    mazu_cJSON_ArrayForEach(to_local_nonprimitive,to )
     {
-        if(!cJSON_IsObject(to_local_nonprimitive)){
+        if(!mazu_cJSON_IsObject(to_local_nonprimitive)){
             goto end;
         }
         v1_network_policy_peer_t *toItem = v1_network_policy_peer_parseFromJSON(to_local_nonprimitive);

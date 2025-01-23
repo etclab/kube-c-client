@@ -11,7 +11,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdbool.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 
 #include "../model/v1beta1_service_cidr_spec.h"
 v1beta1_service_cidr_spec_t* instantiate_v1beta1_service_cidr_spec(int include_optional);
@@ -39,11 +39,11 @@ v1beta1_service_cidr_spec_t* instantiate_v1beta1_service_cidr_spec(int include_o
 void test_v1beta1_service_cidr_spec(int include_optional) {
     v1beta1_service_cidr_spec_t* v1beta1_service_cidr_spec_1 = instantiate_v1beta1_service_cidr_spec(include_optional);
 
-	cJSON* jsonv1beta1_service_cidr_spec_1 = v1beta1_service_cidr_spec_convertToJSON(v1beta1_service_cidr_spec_1);
-	printf("v1beta1_service_cidr_spec :\n%s\n", cJSON_Print(jsonv1beta1_service_cidr_spec_1));
+	mazu_cJSON* jsonv1beta1_service_cidr_spec_1 = v1beta1_service_cidr_spec_convertToJSON(v1beta1_service_cidr_spec_1);
+	printf("v1beta1_service_cidr_spec :\n%s\n", mazu_cJSON_Print(jsonv1beta1_service_cidr_spec_1));
 	v1beta1_service_cidr_spec_t* v1beta1_service_cidr_spec_2 = v1beta1_service_cidr_spec_parseFromJSON(jsonv1beta1_service_cidr_spec_1);
-	cJSON* jsonv1beta1_service_cidr_spec_2 = v1beta1_service_cidr_spec_convertToJSON(v1beta1_service_cidr_spec_2);
-	printf("repeating v1beta1_service_cidr_spec:\n%s\n", cJSON_Print(jsonv1beta1_service_cidr_spec_2));
+	mazu_cJSON* jsonv1beta1_service_cidr_spec_2 = v1beta1_service_cidr_spec_convertToJSON(v1beta1_service_cidr_spec_2);
+	printf("repeating v1beta1_service_cidr_spec:\n%s\n", mazu_cJSON_Print(jsonv1beta1_service_cidr_spec_2));
 }
 
 int main() {

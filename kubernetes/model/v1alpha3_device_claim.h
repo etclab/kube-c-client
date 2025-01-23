@@ -8,7 +8,7 @@
 #define _v1alpha3_device_claim_H_
 
 #include <string.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
 #include "../include/binary.h"
@@ -36,9 +36,9 @@ v1alpha3_device_claim_t *v1alpha3_device_claim_create(
 
 void v1alpha3_device_claim_free(v1alpha3_device_claim_t *v1alpha3_device_claim);
 
-v1alpha3_device_claim_t *v1alpha3_device_claim_parseFromJSON(cJSON *v1alpha3_device_claimJSON);
+v1alpha3_device_claim_t *v1alpha3_device_claim_parseFromJSON(mazu_cJSON *v1alpha3_device_claimJSON);
 
-cJSON *v1alpha3_device_claim_convertToJSON(v1alpha3_device_claim_t *v1alpha3_device_claim);
+mazu_cJSON *v1alpha3_device_claim_convertToJSON(v1alpha3_device_claim_t *v1alpha3_device_claim);
 
 #endif /* _v1alpha3_device_claim_H_ */
 

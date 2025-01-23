@@ -8,7 +8,7 @@
 #define _v2_pods_metric_status_H_
 
 #include <string.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
 #include "../include/binary.h"
@@ -33,9 +33,9 @@ v2_pods_metric_status_t *v2_pods_metric_status_create(
 
 void v2_pods_metric_status_free(v2_pods_metric_status_t *v2_pods_metric_status);
 
-v2_pods_metric_status_t *v2_pods_metric_status_parseFromJSON(cJSON *v2_pods_metric_statusJSON);
+v2_pods_metric_status_t *v2_pods_metric_status_parseFromJSON(mazu_cJSON *v2_pods_metric_statusJSON);
 
-cJSON *v2_pods_metric_status_convertToJSON(v2_pods_metric_status_t *v2_pods_metric_status);
+mazu_cJSON *v2_pods_metric_status_convertToJSON(v2_pods_metric_status_t *v2_pods_metric_status);
 
 #endif /* _v2_pods_metric_status_H_ */
 

@@ -36,16 +36,16 @@ void v1_node_runtime_handler_free(v1_node_runtime_handler_t *v1_node_runtime_han
     free(v1_node_runtime_handler);
 }
 
-cJSON *v1_node_runtime_handler_convertToJSON(v1_node_runtime_handler_t *v1_node_runtime_handler) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_node_runtime_handler_convertToJSON(v1_node_runtime_handler_t *v1_node_runtime_handler) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_node_runtime_handler->features
     if(v1_node_runtime_handler->features) {
-    cJSON *features_local_JSON = v1_node_runtime_handler_features_convertToJSON(v1_node_runtime_handler->features);
+    mazu_cJSON *features_local_JSON = v1_node_runtime_handler_features_convertToJSON(v1_node_runtime_handler->features);
     if(features_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "features", features_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "features", features_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -54,7 +54,7 @@ cJSON *v1_node_runtime_handler_convertToJSON(v1_node_runtime_handler_t *v1_node_
 
     // v1_node_runtime_handler->name
     if(v1_node_runtime_handler->name) {
-    if(cJSON_AddStringToObject(item, "name", v1_node_runtime_handler->name) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "name", v1_node_runtime_handler->name) == NULL) {
     goto fail; //String
     }
     }
@@ -62,12 +62,12 @@ cJSON *v1_node_runtime_handler_convertToJSON(v1_node_runtime_handler_t *v1_node_
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_node_runtime_handler_t *v1_node_runtime_handler_parseFromJSON(cJSON *v1_node_runtime_handlerJSON){
+v1_node_runtime_handler_t *v1_node_runtime_handler_parseFromJSON(mazu_cJSON *v1_node_runtime_handlerJSON){
 
     v1_node_runtime_handler_t *v1_node_runtime_handler_local_var = NULL;
 
@@ -75,15 +75,15 @@ v1_node_runtime_handler_t *v1_node_runtime_handler_parseFromJSON(cJSON *v1_node_
     v1_node_runtime_handler_features_t *features_local_nonprim = NULL;
 
     // v1_node_runtime_handler->features
-    cJSON *features = cJSON_GetObjectItemCaseSensitive(v1_node_runtime_handlerJSON, "features");
+    mazu_cJSON *features = mazu_cJSON_GetObjectItemCaseSensitive(v1_node_runtime_handlerJSON, "features");
     if (features) { 
     features_local_nonprim = v1_node_runtime_handler_features_parseFromJSON(features); //nonprimitive
     }
 
     // v1_node_runtime_handler->name
-    cJSON *name = cJSON_GetObjectItemCaseSensitive(v1_node_runtime_handlerJSON, "name");
+    mazu_cJSON *name = mazu_cJSON_GetObjectItemCaseSensitive(v1_node_runtime_handlerJSON, "name");
     if (name) { 
-    if(!cJSON_IsString(name) && !cJSON_IsNull(name))
+    if(!mazu_cJSON_IsString(name) && !mazu_cJSON_IsNull(name))
     {
     goto end; //String
     }
@@ -92,7 +92,7 @@ v1_node_runtime_handler_t *v1_node_runtime_handler_parseFromJSON(cJSON *v1_node_
 
     v1_node_runtime_handler_local_var = v1_node_runtime_handler_create (
         features ? features_local_nonprim : NULL,
-        name && !cJSON_IsNull(name) ? strdup(name->valuestring) : NULL
+        name && !mazu_cJSON_IsNull(name) ? strdup(name->valuestring) : NULL
         );
 
     return v1_node_runtime_handler_local_var;

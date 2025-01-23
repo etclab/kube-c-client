@@ -91,12 +91,12 @@ CoordinationV1alpha1API_createNamespacedLeaseCandidate(apiClient_t *apiClient, c
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body = NULL;
+    mazu_cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
         localVarSingleItemJSON_body = v1alpha1_lease_candidate_convertToJSON(body);
-        localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyParameters = mazu_cJSON_Print(localVarSingleItemJSON_body);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
@@ -128,9 +128,9 @@ CoordinationV1alpha1API_createNamespacedLeaseCandidate(apiClient_t *apiClient, c
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CoordinationV1alpha1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    mazu_cJSON *CoordinationV1alpha1APIlocalVarJSON = mazu_cJSON_Parse(apiClient->dataReceived);
     v1alpha1_lease_candidate_t *elementToReturn = v1alpha1_lease_candidate_parseFromJSON(CoordinationV1alpha1APIlocalVarJSON);
-    cJSON_Delete(CoordinationV1alpha1APIlocalVarJSON);
+    mazu_cJSON_Delete(CoordinationV1alpha1APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
     }
@@ -149,7 +149,7 @@ CoordinationV1alpha1API_createNamespacedLeaseCandidate(apiClient_t *apiClient, c
     free(localVarPath);
     free(localVarToReplace__namespace);
     if (localVarSingleItemJSON_body) {
-        cJSON_Delete(localVarSingleItemJSON_body);
+        mazu_cJSON_Delete(localVarSingleItemJSON_body);
         localVarSingleItemJSON_body = NULL;
     }
     free(localVarBodyParameters);
@@ -400,12 +400,12 @@ CoordinationV1alpha1API_deleteCollectionNamespacedLeaseCandidate(apiClient_t *ap
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body = NULL;
+    mazu_cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
         localVarSingleItemJSON_body = v1_delete_options_convertToJSON(body);
-        localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyParameters = mazu_cJSON_Print(localVarSingleItemJSON_body);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
@@ -429,9 +429,9 @@ CoordinationV1alpha1API_deleteCollectionNamespacedLeaseCandidate(apiClient_t *ap
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CoordinationV1alpha1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    mazu_cJSON *CoordinationV1alpha1APIlocalVarJSON = mazu_cJSON_Parse(apiClient->dataReceived);
     v1_status_t *elementToReturn = v1_status_parseFromJSON(CoordinationV1alpha1APIlocalVarJSON);
-    cJSON_Delete(CoordinationV1alpha1APIlocalVarJSON);
+    mazu_cJSON_Delete(CoordinationV1alpha1APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
     }
@@ -450,7 +450,7 @@ CoordinationV1alpha1API_deleteCollectionNamespacedLeaseCandidate(apiClient_t *ap
     free(localVarPath);
     free(localVarToReplace__namespace);
     if (localVarSingleItemJSON_body) {
-        cJSON_Delete(localVarSingleItemJSON_body);
+        mazu_cJSON_Delete(localVarSingleItemJSON_body);
         localVarSingleItemJSON_body = NULL;
     }
     free(localVarBodyParameters);
@@ -720,12 +720,12 @@ CoordinationV1alpha1API_deleteNamespacedLeaseCandidate(apiClient_t *apiClient, c
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body = NULL;
+    mazu_cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
         localVarSingleItemJSON_body = v1_delete_options_convertToJSON(body);
-        localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyParameters = mazu_cJSON_Print(localVarSingleItemJSON_body);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
@@ -753,9 +753,9 @@ CoordinationV1alpha1API_deleteNamespacedLeaseCandidate(apiClient_t *apiClient, c
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CoordinationV1alpha1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    mazu_cJSON *CoordinationV1alpha1APIlocalVarJSON = mazu_cJSON_Parse(apiClient->dataReceived);
     v1_status_t *elementToReturn = v1_status_parseFromJSON(CoordinationV1alpha1APIlocalVarJSON);
-    cJSON_Delete(CoordinationV1alpha1APIlocalVarJSON);
+    mazu_cJSON_Delete(CoordinationV1alpha1APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
     }
@@ -775,7 +775,7 @@ CoordinationV1alpha1API_deleteNamespacedLeaseCandidate(apiClient_t *apiClient, c
     free(localVarToReplace_name);
     free(localVarToReplace__namespace);
     if (localVarSingleItemJSON_body) {
-        cJSON_Delete(localVarSingleItemJSON_body);
+        mazu_cJSON_Delete(localVarSingleItemJSON_body);
         localVarSingleItemJSON_body = NULL;
     }
     free(localVarBodyParameters);
@@ -887,9 +887,9 @@ CoordinationV1alpha1API_getAPIResources_16(apiClient_t *apiClient)
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CoordinationV1alpha1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    mazu_cJSON *CoordinationV1alpha1APIlocalVarJSON = mazu_cJSON_Parse(apiClient->dataReceived);
     v1_api_resource_list_t *elementToReturn = v1_api_resource_list_parseFromJSON(CoordinationV1alpha1APIlocalVarJSON);
-    cJSON_Delete(CoordinationV1alpha1APIlocalVarJSON);
+    mazu_cJSON_Delete(CoordinationV1alpha1APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
     }
@@ -1093,9 +1093,9 @@ CoordinationV1alpha1API_listLeaseCandidateForAllNamespaces(apiClient_t *apiClien
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CoordinationV1alpha1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    mazu_cJSON *CoordinationV1alpha1APIlocalVarJSON = mazu_cJSON_Parse(apiClient->dataReceived);
     v1alpha1_lease_candidate_list_t *elementToReturn = v1alpha1_lease_candidate_list_parseFromJSON(CoordinationV1alpha1APIlocalVarJSON);
-    cJSON_Delete(CoordinationV1alpha1APIlocalVarJSON);
+    mazu_cJSON_Delete(CoordinationV1alpha1APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
     }
@@ -1441,9 +1441,9 @@ CoordinationV1alpha1API_listNamespacedLeaseCandidate(apiClient_t *apiClient, cha
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CoordinationV1alpha1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    mazu_cJSON *CoordinationV1alpha1APIlocalVarJSON = mazu_cJSON_Parse(apiClient->dataReceived);
     v1alpha1_lease_candidate_list_t *elementToReturn = v1alpha1_lease_candidate_list_parseFromJSON(CoordinationV1alpha1APIlocalVarJSON);
-    cJSON_Delete(CoordinationV1alpha1APIlocalVarJSON);
+    mazu_cJSON_Delete(CoordinationV1alpha1APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
     }
@@ -1702,12 +1702,12 @@ CoordinationV1alpha1API_patchNamespacedLeaseCandidate(apiClient_t *apiClient, ch
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body = NULL;
+    mazu_cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
         localVarSingleItemJSON_body = object_convertToJSON(body);
-        localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyParameters = mazu_cJSON_Print(localVarSingleItemJSON_body);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
@@ -1739,9 +1739,9 @@ CoordinationV1alpha1API_patchNamespacedLeaseCandidate(apiClient_t *apiClient, ch
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CoordinationV1alpha1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    mazu_cJSON *CoordinationV1alpha1APIlocalVarJSON = mazu_cJSON_Parse(apiClient->dataReceived);
     v1alpha1_lease_candidate_t *elementToReturn = v1alpha1_lease_candidate_parseFromJSON(CoordinationV1alpha1APIlocalVarJSON);
-    cJSON_Delete(CoordinationV1alpha1APIlocalVarJSON);
+    mazu_cJSON_Delete(CoordinationV1alpha1APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
     }
@@ -1761,7 +1761,7 @@ CoordinationV1alpha1API_patchNamespacedLeaseCandidate(apiClient_t *apiClient, ch
     free(localVarToReplace_name);
     free(localVarToReplace__namespace);
     if (localVarSingleItemJSON_body) {
-        cJSON_Delete(localVarSingleItemJSON_body);
+        mazu_cJSON_Delete(localVarSingleItemJSON_body);
         localVarSingleItemJSON_body = NULL;
     }
     free(localVarBodyParameters);
@@ -1905,9 +1905,9 @@ CoordinationV1alpha1API_readNamespacedLeaseCandidate(apiClient_t *apiClient, cha
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CoordinationV1alpha1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    mazu_cJSON *CoordinationV1alpha1APIlocalVarJSON = mazu_cJSON_Parse(apiClient->dataReceived);
     v1alpha1_lease_candidate_t *elementToReturn = v1alpha1_lease_candidate_parseFromJSON(CoordinationV1alpha1APIlocalVarJSON);
-    cJSON_Delete(CoordinationV1alpha1APIlocalVarJSON);
+    mazu_cJSON_Delete(CoordinationV1alpha1APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
     }
@@ -2034,12 +2034,12 @@ CoordinationV1alpha1API_replaceNamespacedLeaseCandidate(apiClient_t *apiClient, 
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body = NULL;
+    mazu_cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
         localVarSingleItemJSON_body = v1alpha1_lease_candidate_convertToJSON(body);
-        localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyParameters = mazu_cJSON_Print(localVarSingleItemJSON_body);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
@@ -2067,9 +2067,9 @@ CoordinationV1alpha1API_replaceNamespacedLeaseCandidate(apiClient_t *apiClient, 
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CoordinationV1alpha1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    mazu_cJSON *CoordinationV1alpha1APIlocalVarJSON = mazu_cJSON_Parse(apiClient->dataReceived);
     v1alpha1_lease_candidate_t *elementToReturn = v1alpha1_lease_candidate_parseFromJSON(CoordinationV1alpha1APIlocalVarJSON);
-    cJSON_Delete(CoordinationV1alpha1APIlocalVarJSON);
+    mazu_cJSON_Delete(CoordinationV1alpha1APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
     }
@@ -2089,7 +2089,7 @@ CoordinationV1alpha1API_replaceNamespacedLeaseCandidate(apiClient_t *apiClient, 
     free(localVarToReplace_name);
     free(localVarToReplace__namespace);
     if (localVarSingleItemJSON_body) {
-        cJSON_Delete(localVarSingleItemJSON_body);
+        mazu_cJSON_Delete(localVarSingleItemJSON_body);
         localVarSingleItemJSON_body = NULL;
     }
     free(localVarBodyParameters);

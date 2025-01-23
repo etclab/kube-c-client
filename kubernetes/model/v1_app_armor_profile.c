@@ -36,12 +36,12 @@ void v1_app_armor_profile_free(v1_app_armor_profile_t *v1_app_armor_profile) {
     free(v1_app_armor_profile);
 }
 
-cJSON *v1_app_armor_profile_convertToJSON(v1_app_armor_profile_t *v1_app_armor_profile) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_app_armor_profile_convertToJSON(v1_app_armor_profile_t *v1_app_armor_profile) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_app_armor_profile->localhost_profile
     if(v1_app_armor_profile->localhost_profile) {
-    if(cJSON_AddStringToObject(item, "localhostProfile", v1_app_armor_profile->localhost_profile) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "localhostProfile", v1_app_armor_profile->localhost_profile) == NULL) {
     goto fail; //String
     }
     }
@@ -51,46 +51,46 @@ cJSON *v1_app_armor_profile_convertToJSON(v1_app_armor_profile_t *v1_app_armor_p
     if (!v1_app_armor_profile->type) {
         goto fail;
     }
-    if(cJSON_AddStringToObject(item, "type", v1_app_armor_profile->type) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "type", v1_app_armor_profile->type) == NULL) {
     goto fail; //String
     }
 
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_app_armor_profile_t *v1_app_armor_profile_parseFromJSON(cJSON *v1_app_armor_profileJSON){
+v1_app_armor_profile_t *v1_app_armor_profile_parseFromJSON(mazu_cJSON *v1_app_armor_profileJSON){
 
     v1_app_armor_profile_t *v1_app_armor_profile_local_var = NULL;
 
     // v1_app_armor_profile->localhost_profile
-    cJSON *localhost_profile = cJSON_GetObjectItemCaseSensitive(v1_app_armor_profileJSON, "localhostProfile");
+    mazu_cJSON *localhost_profile = mazu_cJSON_GetObjectItemCaseSensitive(v1_app_armor_profileJSON, "localhostProfile");
     if (localhost_profile) { 
-    if(!cJSON_IsString(localhost_profile) && !cJSON_IsNull(localhost_profile))
+    if(!mazu_cJSON_IsString(localhost_profile) && !mazu_cJSON_IsNull(localhost_profile))
     {
     goto end; //String
     }
     }
 
     // v1_app_armor_profile->type
-    cJSON *type = cJSON_GetObjectItemCaseSensitive(v1_app_armor_profileJSON, "type");
+    mazu_cJSON *type = mazu_cJSON_GetObjectItemCaseSensitive(v1_app_armor_profileJSON, "type");
     if (!type) {
         goto end;
     }
 
     
-    if(!cJSON_IsString(type))
+    if(!mazu_cJSON_IsString(type))
     {
     goto end; //String
     }
 
 
     v1_app_armor_profile_local_var = v1_app_armor_profile_create (
-        localhost_profile && !cJSON_IsNull(localhost_profile) ? strdup(localhost_profile->valuestring) : NULL,
+        localhost_profile && !mazu_cJSON_IsNull(localhost_profile) ? strdup(localhost_profile->valuestring) : NULL,
         strdup(type->valuestring)
         );
 

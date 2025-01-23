@@ -8,7 +8,7 @@
 #define _admissionregistration_v1_service_reference_H_
 
 #include <string.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
 #include "../include/binary.h"
@@ -35,9 +35,9 @@ admissionregistration_v1_service_reference_t *admissionregistration_v1_service_r
 
 void admissionregistration_v1_service_reference_free(admissionregistration_v1_service_reference_t *admissionregistration_v1_service_reference);
 
-admissionregistration_v1_service_reference_t *admissionregistration_v1_service_reference_parseFromJSON(cJSON *admissionregistration_v1_service_referenceJSON);
+admissionregistration_v1_service_reference_t *admissionregistration_v1_service_reference_parseFromJSON(mazu_cJSON *admissionregistration_v1_service_referenceJSON);
 
-cJSON *admissionregistration_v1_service_reference_convertToJSON(admissionregistration_v1_service_reference_t *admissionregistration_v1_service_reference);
+mazu_cJSON *admissionregistration_v1_service_reference_convertToJSON(admissionregistration_v1_service_reference_t *admissionregistration_v1_service_reference);
 
 #endif /* _admissionregistration_v1_service_reference_H_ */
 

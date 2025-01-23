@@ -30,37 +30,37 @@ void v1_selectable_field_free(v1_selectable_field_t *v1_selectable_field) {
     free(v1_selectable_field);
 }
 
-cJSON *v1_selectable_field_convertToJSON(v1_selectable_field_t *v1_selectable_field) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_selectable_field_convertToJSON(v1_selectable_field_t *v1_selectable_field) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_selectable_field->json_path
     if (!v1_selectable_field->json_path) {
         goto fail;
     }
-    if(cJSON_AddStringToObject(item, "jsonPath", v1_selectable_field->json_path) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "jsonPath", v1_selectable_field->json_path) == NULL) {
     goto fail; //String
     }
 
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_selectable_field_t *v1_selectable_field_parseFromJSON(cJSON *v1_selectable_fieldJSON){
+v1_selectable_field_t *v1_selectable_field_parseFromJSON(mazu_cJSON *v1_selectable_fieldJSON){
 
     v1_selectable_field_t *v1_selectable_field_local_var = NULL;
 
     // v1_selectable_field->json_path
-    cJSON *json_path = cJSON_GetObjectItemCaseSensitive(v1_selectable_fieldJSON, "jsonPath");
+    mazu_cJSON *json_path = mazu_cJSON_GetObjectItemCaseSensitive(v1_selectable_fieldJSON, "jsonPath");
     if (!json_path) {
         goto end;
     }
 
     
-    if(!cJSON_IsString(json_path))
+    if(!mazu_cJSON_IsString(json_path))
     {
     goto end; //String
     }

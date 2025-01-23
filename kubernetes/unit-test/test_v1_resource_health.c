@@ -11,7 +11,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdbool.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 
 #include "../model/v1_resource_health.h"
 v1_resource_health_t* instantiate_v1_resource_health(int include_optional);
@@ -41,11 +41,11 @@ v1_resource_health_t* instantiate_v1_resource_health(int include_optional) {
 void test_v1_resource_health(int include_optional) {
     v1_resource_health_t* v1_resource_health_1 = instantiate_v1_resource_health(include_optional);
 
-	cJSON* jsonv1_resource_health_1 = v1_resource_health_convertToJSON(v1_resource_health_1);
-	printf("v1_resource_health :\n%s\n", cJSON_Print(jsonv1_resource_health_1));
+	mazu_cJSON* jsonv1_resource_health_1 = v1_resource_health_convertToJSON(v1_resource_health_1);
+	printf("v1_resource_health :\n%s\n", mazu_cJSON_Print(jsonv1_resource_health_1));
 	v1_resource_health_t* v1_resource_health_2 = v1_resource_health_parseFromJSON(jsonv1_resource_health_1);
-	cJSON* jsonv1_resource_health_2 = v1_resource_health_convertToJSON(v1_resource_health_2);
-	printf("repeating v1_resource_health:\n%s\n", cJSON_Print(jsonv1_resource_health_2));
+	mazu_cJSON* jsonv1_resource_health_2 = v1_resource_health_convertToJSON(v1_resource_health_2);
+	printf("repeating v1_resource_health:\n%s\n", mazu_cJSON_Print(jsonv1_resource_health_2));
 }
 
 int main() {

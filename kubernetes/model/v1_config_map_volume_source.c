@@ -43,12 +43,12 @@ void v1_config_map_volume_source_free(v1_config_map_volume_source_t *v1_config_m
     free(v1_config_map_volume_source);
 }
 
-cJSON *v1_config_map_volume_source_convertToJSON(v1_config_map_volume_source_t *v1_config_map_volume_source) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_config_map_volume_source_convertToJSON(v1_config_map_volume_source_t *v1_config_map_volume_source) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_config_map_volume_source->default_mode
     if(v1_config_map_volume_source->default_mode) {
-    if(cJSON_AddNumberToObject(item, "defaultMode", v1_config_map_volume_source->default_mode) == NULL) {
+    if(mazu_cJSON_AddNumberToObject(item, "defaultMode", v1_config_map_volume_source->default_mode) == NULL) {
     goto fail; //Numeric
     }
     }
@@ -56,7 +56,7 @@ cJSON *v1_config_map_volume_source_convertToJSON(v1_config_map_volume_source_t *
 
     // v1_config_map_volume_source->items
     if(v1_config_map_volume_source->items) {
-    cJSON *items = cJSON_AddArrayToObject(item, "items");
+    mazu_cJSON *items = mazu_cJSON_AddArrayToObject(item, "items");
     if(items == NULL) {
     goto fail; //nonprimitive container
     }
@@ -64,11 +64,11 @@ cJSON *v1_config_map_volume_source_convertToJSON(v1_config_map_volume_source_t *
     listEntry_t *itemsListEntry;
     if (v1_config_map_volume_source->items) {
     list_ForEach(itemsListEntry, v1_config_map_volume_source->items) {
-    cJSON *itemLocal = v1_key_to_path_convertToJSON(itemsListEntry->data);
+    mazu_cJSON *itemLocal = v1_key_to_path_convertToJSON(itemsListEntry->data);
     if(itemLocal == NULL) {
     goto fail;
     }
-    cJSON_AddItemToArray(items, itemLocal);
+    mazu_cJSON_AddItemToArray(items, itemLocal);
     }
     }
     }
@@ -76,7 +76,7 @@ cJSON *v1_config_map_volume_source_convertToJSON(v1_config_map_volume_source_t *
 
     // v1_config_map_volume_source->name
     if(v1_config_map_volume_source->name) {
-    if(cJSON_AddStringToObject(item, "name", v1_config_map_volume_source->name) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "name", v1_config_map_volume_source->name) == NULL) {
     goto fail; //String
     }
     }
@@ -84,7 +84,7 @@ cJSON *v1_config_map_volume_source_convertToJSON(v1_config_map_volume_source_t *
 
     // v1_config_map_volume_source->optional
     if(v1_config_map_volume_source->optional) {
-    if(cJSON_AddBoolToObject(item, "optional", v1_config_map_volume_source->optional) == NULL) {
+    if(mazu_cJSON_AddBoolToObject(item, "optional", v1_config_map_volume_source->optional) == NULL) {
     goto fail; //Bool
     }
     }
@@ -92,12 +92,12 @@ cJSON *v1_config_map_volume_source_convertToJSON(v1_config_map_volume_source_t *
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_config_map_volume_source_t *v1_config_map_volume_source_parseFromJSON(cJSON *v1_config_map_volume_sourceJSON){
+v1_config_map_volume_source_t *v1_config_map_volume_source_parseFromJSON(mazu_cJSON *v1_config_map_volume_sourceJSON){
 
     v1_config_map_volume_source_t *v1_config_map_volume_source_local_var = NULL;
 
@@ -105,27 +105,27 @@ v1_config_map_volume_source_t *v1_config_map_volume_source_parseFromJSON(cJSON *
     list_t *itemsList = NULL;
 
     // v1_config_map_volume_source->default_mode
-    cJSON *default_mode = cJSON_GetObjectItemCaseSensitive(v1_config_map_volume_sourceJSON, "defaultMode");
+    mazu_cJSON *default_mode = mazu_cJSON_GetObjectItemCaseSensitive(v1_config_map_volume_sourceJSON, "defaultMode");
     if (default_mode) { 
-    if(!cJSON_IsNumber(default_mode))
+    if(!mazu_cJSON_IsNumber(default_mode))
     {
     goto end; //Numeric
     }
     }
 
     // v1_config_map_volume_source->items
-    cJSON *items = cJSON_GetObjectItemCaseSensitive(v1_config_map_volume_sourceJSON, "items");
+    mazu_cJSON *items = mazu_cJSON_GetObjectItemCaseSensitive(v1_config_map_volume_sourceJSON, "items");
     if (items) { 
-    cJSON *items_local_nonprimitive = NULL;
-    if(!cJSON_IsArray(items)){
+    mazu_cJSON *items_local_nonprimitive = NULL;
+    if(!mazu_cJSON_IsArray(items)){
         goto end; //nonprimitive container
     }
 
     itemsList = list_createList();
 
-    cJSON_ArrayForEach(items_local_nonprimitive,items )
+    mazu_cJSON_ArrayForEach(items_local_nonprimitive,items )
     {
-        if(!cJSON_IsObject(items_local_nonprimitive)){
+        if(!mazu_cJSON_IsObject(items_local_nonprimitive)){
             goto end;
         }
         v1_key_to_path_t *itemsItem = v1_key_to_path_parseFromJSON(items_local_nonprimitive);
@@ -135,18 +135,18 @@ v1_config_map_volume_source_t *v1_config_map_volume_source_parseFromJSON(cJSON *
     }
 
     // v1_config_map_volume_source->name
-    cJSON *name = cJSON_GetObjectItemCaseSensitive(v1_config_map_volume_sourceJSON, "name");
+    mazu_cJSON *name = mazu_cJSON_GetObjectItemCaseSensitive(v1_config_map_volume_sourceJSON, "name");
     if (name) { 
-    if(!cJSON_IsString(name) && !cJSON_IsNull(name))
+    if(!mazu_cJSON_IsString(name) && !mazu_cJSON_IsNull(name))
     {
     goto end; //String
     }
     }
 
     // v1_config_map_volume_source->optional
-    cJSON *optional = cJSON_GetObjectItemCaseSensitive(v1_config_map_volume_sourceJSON, "optional");
+    mazu_cJSON *optional = mazu_cJSON_GetObjectItemCaseSensitive(v1_config_map_volume_sourceJSON, "optional");
     if (optional) { 
-    if(!cJSON_IsBool(optional))
+    if(!mazu_cJSON_IsBool(optional))
     {
     goto end; //Bool
     }
@@ -156,7 +156,7 @@ v1_config_map_volume_source_t *v1_config_map_volume_source_parseFromJSON(cJSON *
     v1_config_map_volume_source_local_var = v1_config_map_volume_source_create (
         default_mode ? default_mode->valuedouble : 0,
         items ? itemsList : NULL,
-        name && !cJSON_IsNull(name) ? strdup(name->valuestring) : NULL,
+        name && !mazu_cJSON_IsNull(name) ? strdup(name->valuestring) : NULL,
         optional ? optional->valueint : 0
         );
 

@@ -11,7 +11,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdbool.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 
 #include "../model/v1_server_address_by_client_cidr.h"
 v1_server_address_by_client_cidr_t* instantiate_v1_server_address_by_client_cidr(int include_optional);
@@ -41,11 +41,11 @@ v1_server_address_by_client_cidr_t* instantiate_v1_server_address_by_client_cidr
 void test_v1_server_address_by_client_cidr(int include_optional) {
     v1_server_address_by_client_cidr_t* v1_server_address_by_client_cidr_1 = instantiate_v1_server_address_by_client_cidr(include_optional);
 
-	cJSON* jsonv1_server_address_by_client_cidr_1 = v1_server_address_by_client_cidr_convertToJSON(v1_server_address_by_client_cidr_1);
-	printf("v1_server_address_by_client_cidr :\n%s\n", cJSON_Print(jsonv1_server_address_by_client_cidr_1));
+	mazu_cJSON* jsonv1_server_address_by_client_cidr_1 = v1_server_address_by_client_cidr_convertToJSON(v1_server_address_by_client_cidr_1);
+	printf("v1_server_address_by_client_cidr :\n%s\n", mazu_cJSON_Print(jsonv1_server_address_by_client_cidr_1));
 	v1_server_address_by_client_cidr_t* v1_server_address_by_client_cidr_2 = v1_server_address_by_client_cidr_parseFromJSON(jsonv1_server_address_by_client_cidr_1);
-	cJSON* jsonv1_server_address_by_client_cidr_2 = v1_server_address_by_client_cidr_convertToJSON(v1_server_address_by_client_cidr_2);
-	printf("repeating v1_server_address_by_client_cidr:\n%s\n", cJSON_Print(jsonv1_server_address_by_client_cidr_2));
+	mazu_cJSON* jsonv1_server_address_by_client_cidr_2 = v1_server_address_by_client_cidr_convertToJSON(v1_server_address_by_client_cidr_2);
+	printf("repeating v1_server_address_by_client_cidr:\n%s\n", mazu_cJSON_Print(jsonv1_server_address_by_client_cidr_2));
 }
 
 int main() {

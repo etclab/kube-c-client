@@ -11,7 +11,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdbool.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 
 #include "../model/v1_pod_failure_policy_on_pod_conditions_pattern.h"
 v1_pod_failure_policy_on_pod_conditions_pattern_t* instantiate_v1_pod_failure_policy_on_pod_conditions_pattern(int include_optional);
@@ -41,11 +41,11 @@ v1_pod_failure_policy_on_pod_conditions_pattern_t* instantiate_v1_pod_failure_po
 void test_v1_pod_failure_policy_on_pod_conditions_pattern(int include_optional) {
     v1_pod_failure_policy_on_pod_conditions_pattern_t* v1_pod_failure_policy_on_pod_conditions_pattern_1 = instantiate_v1_pod_failure_policy_on_pod_conditions_pattern(include_optional);
 
-	cJSON* jsonv1_pod_failure_policy_on_pod_conditions_pattern_1 = v1_pod_failure_policy_on_pod_conditions_pattern_convertToJSON(v1_pod_failure_policy_on_pod_conditions_pattern_1);
-	printf("v1_pod_failure_policy_on_pod_conditions_pattern :\n%s\n", cJSON_Print(jsonv1_pod_failure_policy_on_pod_conditions_pattern_1));
+	mazu_cJSON* jsonv1_pod_failure_policy_on_pod_conditions_pattern_1 = v1_pod_failure_policy_on_pod_conditions_pattern_convertToJSON(v1_pod_failure_policy_on_pod_conditions_pattern_1);
+	printf("v1_pod_failure_policy_on_pod_conditions_pattern :\n%s\n", mazu_cJSON_Print(jsonv1_pod_failure_policy_on_pod_conditions_pattern_1));
 	v1_pod_failure_policy_on_pod_conditions_pattern_t* v1_pod_failure_policy_on_pod_conditions_pattern_2 = v1_pod_failure_policy_on_pod_conditions_pattern_parseFromJSON(jsonv1_pod_failure_policy_on_pod_conditions_pattern_1);
-	cJSON* jsonv1_pod_failure_policy_on_pod_conditions_pattern_2 = v1_pod_failure_policy_on_pod_conditions_pattern_convertToJSON(v1_pod_failure_policy_on_pod_conditions_pattern_2);
-	printf("repeating v1_pod_failure_policy_on_pod_conditions_pattern:\n%s\n", cJSON_Print(jsonv1_pod_failure_policy_on_pod_conditions_pattern_2));
+	mazu_cJSON* jsonv1_pod_failure_policy_on_pod_conditions_pattern_2 = v1_pod_failure_policy_on_pod_conditions_pattern_convertToJSON(v1_pod_failure_policy_on_pod_conditions_pattern_2);
+	printf("repeating v1_pod_failure_policy_on_pod_conditions_pattern:\n%s\n", mazu_cJSON_Print(jsonv1_pod_failure_policy_on_pod_conditions_pattern_2));
 }
 
 int main() {

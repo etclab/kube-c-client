@@ -8,7 +8,7 @@
 #define _v1_endpoint_slice_H_
 
 #include <string.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
 #include "../include/binary.h"
@@ -42,9 +42,9 @@ v1_endpoint_slice_t *v1_endpoint_slice_create(
 
 void v1_endpoint_slice_free(v1_endpoint_slice_t *v1_endpoint_slice);
 
-v1_endpoint_slice_t *v1_endpoint_slice_parseFromJSON(cJSON *v1_endpoint_sliceJSON);
+v1_endpoint_slice_t *v1_endpoint_slice_parseFromJSON(mazu_cJSON *v1_endpoint_sliceJSON);
 
-cJSON *v1_endpoint_slice_convertToJSON(v1_endpoint_slice_t *v1_endpoint_slice);
+mazu_cJSON *v1_endpoint_slice_convertToJSON(v1_endpoint_slice_t *v1_endpoint_slice);
 
 #endif /* _v1_endpoint_slice_H_ */
 

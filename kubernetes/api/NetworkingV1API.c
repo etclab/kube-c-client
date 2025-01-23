@@ -81,12 +81,12 @@ NetworkingV1API_createIngressClass(apiClient_t *apiClient, v1_ingress_class_t *b
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body = NULL;
+    mazu_cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
         localVarSingleItemJSON_body = v1_ingress_class_convertToJSON(body);
-        localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyParameters = mazu_cJSON_Print(localVarSingleItemJSON_body);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
@@ -118,9 +118,9 @@ NetworkingV1API_createIngressClass(apiClient_t *apiClient, v1_ingress_class_t *b
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *NetworkingV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    mazu_cJSON *NetworkingV1APIlocalVarJSON = mazu_cJSON_Parse(apiClient->dataReceived);
     v1_ingress_class_t *elementToReturn = v1_ingress_class_parseFromJSON(NetworkingV1APIlocalVarJSON);
-    cJSON_Delete(NetworkingV1APIlocalVarJSON);
+    mazu_cJSON_Delete(NetworkingV1APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
     }
@@ -138,7 +138,7 @@ NetworkingV1API_createIngressClass(apiClient_t *apiClient, v1_ingress_class_t *b
     
     free(localVarPath);
     if (localVarSingleItemJSON_body) {
-        cJSON_Delete(localVarSingleItemJSON_body);
+        mazu_cJSON_Delete(localVarSingleItemJSON_body);
         localVarSingleItemJSON_body = NULL;
     }
     free(localVarBodyParameters);
@@ -276,12 +276,12 @@ NetworkingV1API_createNamespacedIngress(apiClient_t *apiClient, char *_namespace
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body = NULL;
+    mazu_cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
         localVarSingleItemJSON_body = v1_ingress_convertToJSON(body);
-        localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyParameters = mazu_cJSON_Print(localVarSingleItemJSON_body);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
@@ -313,9 +313,9 @@ NetworkingV1API_createNamespacedIngress(apiClient_t *apiClient, char *_namespace
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *NetworkingV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    mazu_cJSON *NetworkingV1APIlocalVarJSON = mazu_cJSON_Parse(apiClient->dataReceived);
     v1_ingress_t *elementToReturn = v1_ingress_parseFromJSON(NetworkingV1APIlocalVarJSON);
-    cJSON_Delete(NetworkingV1APIlocalVarJSON);
+    mazu_cJSON_Delete(NetworkingV1APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
     }
@@ -334,7 +334,7 @@ NetworkingV1API_createNamespacedIngress(apiClient_t *apiClient, char *_namespace
     free(localVarPath);
     free(localVarToReplace__namespace);
     if (localVarSingleItemJSON_body) {
-        cJSON_Delete(localVarSingleItemJSON_body);
+        mazu_cJSON_Delete(localVarSingleItemJSON_body);
         localVarSingleItemJSON_body = NULL;
     }
     free(localVarBodyParameters);
@@ -472,12 +472,12 @@ NetworkingV1API_createNamespacedNetworkPolicy(apiClient_t *apiClient, char *_nam
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body = NULL;
+    mazu_cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
         localVarSingleItemJSON_body = v1_network_policy_convertToJSON(body);
-        localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyParameters = mazu_cJSON_Print(localVarSingleItemJSON_body);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
@@ -509,9 +509,9 @@ NetworkingV1API_createNamespacedNetworkPolicy(apiClient_t *apiClient, char *_nam
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *NetworkingV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    mazu_cJSON *NetworkingV1APIlocalVarJSON = mazu_cJSON_Parse(apiClient->dataReceived);
     v1_network_policy_t *elementToReturn = v1_network_policy_parseFromJSON(NetworkingV1APIlocalVarJSON);
-    cJSON_Delete(NetworkingV1APIlocalVarJSON);
+    mazu_cJSON_Delete(NetworkingV1APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
     }
@@ -530,7 +530,7 @@ NetworkingV1API_createNamespacedNetworkPolicy(apiClient_t *apiClient, char *_nam
     free(localVarPath);
     free(localVarToReplace__namespace);
     if (localVarSingleItemJSON_body) {
-        cJSON_Delete(localVarSingleItemJSON_body);
+        mazu_cJSON_Delete(localVarSingleItemJSON_body);
         localVarSingleItemJSON_body = NULL;
     }
     free(localVarBodyParameters);
@@ -771,12 +771,12 @@ NetworkingV1API_deleteCollectionIngressClass(apiClient_t *apiClient, char *prett
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body = NULL;
+    mazu_cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
         localVarSingleItemJSON_body = v1_delete_options_convertToJSON(body);
-        localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyParameters = mazu_cJSON_Print(localVarSingleItemJSON_body);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
@@ -800,9 +800,9 @@ NetworkingV1API_deleteCollectionIngressClass(apiClient_t *apiClient, char *prett
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *NetworkingV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    mazu_cJSON *NetworkingV1APIlocalVarJSON = mazu_cJSON_Parse(apiClient->dataReceived);
     v1_status_t *elementToReturn = v1_status_parseFromJSON(NetworkingV1APIlocalVarJSON);
-    cJSON_Delete(NetworkingV1APIlocalVarJSON);
+    mazu_cJSON_Delete(NetworkingV1APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
     }
@@ -820,7 +820,7 @@ NetworkingV1API_deleteCollectionIngressClass(apiClient_t *apiClient, char *prett
     
     free(localVarPath);
     if (localVarSingleItemJSON_body) {
-        cJSON_Delete(localVarSingleItemJSON_body);
+        mazu_cJSON_Delete(localVarSingleItemJSON_body);
         localVarSingleItemJSON_body = NULL;
     }
     free(localVarBodyParameters);
@@ -1179,12 +1179,12 @@ NetworkingV1API_deleteCollectionNamespacedIngress(apiClient_t *apiClient, char *
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body = NULL;
+    mazu_cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
         localVarSingleItemJSON_body = v1_delete_options_convertToJSON(body);
-        localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyParameters = mazu_cJSON_Print(localVarSingleItemJSON_body);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
@@ -1208,9 +1208,9 @@ NetworkingV1API_deleteCollectionNamespacedIngress(apiClient_t *apiClient, char *
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *NetworkingV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    mazu_cJSON *NetworkingV1APIlocalVarJSON = mazu_cJSON_Parse(apiClient->dataReceived);
     v1_status_t *elementToReturn = v1_status_parseFromJSON(NetworkingV1APIlocalVarJSON);
-    cJSON_Delete(NetworkingV1APIlocalVarJSON);
+    mazu_cJSON_Delete(NetworkingV1APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
     }
@@ -1229,7 +1229,7 @@ NetworkingV1API_deleteCollectionNamespacedIngress(apiClient_t *apiClient, char *
     free(localVarPath);
     free(localVarToReplace__namespace);
     if (localVarSingleItemJSON_body) {
-        cJSON_Delete(localVarSingleItemJSON_body);
+        mazu_cJSON_Delete(localVarSingleItemJSON_body);
         localVarSingleItemJSON_body = NULL;
     }
     free(localVarBodyParameters);
@@ -1588,12 +1588,12 @@ NetworkingV1API_deleteCollectionNamespacedNetworkPolicy(apiClient_t *apiClient, 
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body = NULL;
+    mazu_cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
         localVarSingleItemJSON_body = v1_delete_options_convertToJSON(body);
-        localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyParameters = mazu_cJSON_Print(localVarSingleItemJSON_body);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
@@ -1617,9 +1617,9 @@ NetworkingV1API_deleteCollectionNamespacedNetworkPolicy(apiClient_t *apiClient, 
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *NetworkingV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    mazu_cJSON *NetworkingV1APIlocalVarJSON = mazu_cJSON_Parse(apiClient->dataReceived);
     v1_status_t *elementToReturn = v1_status_parseFromJSON(NetworkingV1APIlocalVarJSON);
-    cJSON_Delete(NetworkingV1APIlocalVarJSON);
+    mazu_cJSON_Delete(NetworkingV1APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
     }
@@ -1638,7 +1638,7 @@ NetworkingV1API_deleteCollectionNamespacedNetworkPolicy(apiClient_t *apiClient, 
     free(localVarPath);
     free(localVarToReplace__namespace);
     if (localVarSingleItemJSON_body) {
-        cJSON_Delete(localVarSingleItemJSON_body);
+        mazu_cJSON_Delete(localVarSingleItemJSON_body);
         localVarSingleItemJSON_body = NULL;
     }
     free(localVarBodyParameters);
@@ -1898,12 +1898,12 @@ NetworkingV1API_deleteIngressClass(apiClient_t *apiClient, char *name, char *pre
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body = NULL;
+    mazu_cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
         localVarSingleItemJSON_body = v1_delete_options_convertToJSON(body);
-        localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyParameters = mazu_cJSON_Print(localVarSingleItemJSON_body);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
@@ -1931,9 +1931,9 @@ NetworkingV1API_deleteIngressClass(apiClient_t *apiClient, char *name, char *pre
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *NetworkingV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    mazu_cJSON *NetworkingV1APIlocalVarJSON = mazu_cJSON_Parse(apiClient->dataReceived);
     v1_status_t *elementToReturn = v1_status_parseFromJSON(NetworkingV1APIlocalVarJSON);
-    cJSON_Delete(NetworkingV1APIlocalVarJSON);
+    mazu_cJSON_Delete(NetworkingV1APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
     }
@@ -1952,7 +1952,7 @@ NetworkingV1API_deleteIngressClass(apiClient_t *apiClient, char *name, char *pre
     free(localVarPath);
     free(localVarToReplace_name);
     if (localVarSingleItemJSON_body) {
-        cJSON_Delete(localVarSingleItemJSON_body);
+        mazu_cJSON_Delete(localVarSingleItemJSON_body);
         localVarSingleItemJSON_body = NULL;
     }
     free(localVarBodyParameters);
@@ -2126,12 +2126,12 @@ NetworkingV1API_deleteNamespacedIngress(apiClient_t *apiClient, char *name, char
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body = NULL;
+    mazu_cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
         localVarSingleItemJSON_body = v1_delete_options_convertToJSON(body);
-        localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyParameters = mazu_cJSON_Print(localVarSingleItemJSON_body);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
@@ -2159,9 +2159,9 @@ NetworkingV1API_deleteNamespacedIngress(apiClient_t *apiClient, char *name, char
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *NetworkingV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    mazu_cJSON *NetworkingV1APIlocalVarJSON = mazu_cJSON_Parse(apiClient->dataReceived);
     v1_status_t *elementToReturn = v1_status_parseFromJSON(NetworkingV1APIlocalVarJSON);
-    cJSON_Delete(NetworkingV1APIlocalVarJSON);
+    mazu_cJSON_Delete(NetworkingV1APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
     }
@@ -2181,7 +2181,7 @@ NetworkingV1API_deleteNamespacedIngress(apiClient_t *apiClient, char *name, char
     free(localVarToReplace_name);
     free(localVarToReplace__namespace);
     if (localVarSingleItemJSON_body) {
-        cJSON_Delete(localVarSingleItemJSON_body);
+        mazu_cJSON_Delete(localVarSingleItemJSON_body);
         localVarSingleItemJSON_body = NULL;
     }
     free(localVarBodyParameters);
@@ -2355,12 +2355,12 @@ NetworkingV1API_deleteNamespacedNetworkPolicy(apiClient_t *apiClient, char *name
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body = NULL;
+    mazu_cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
         localVarSingleItemJSON_body = v1_delete_options_convertToJSON(body);
-        localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyParameters = mazu_cJSON_Print(localVarSingleItemJSON_body);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
@@ -2388,9 +2388,9 @@ NetworkingV1API_deleteNamespacedNetworkPolicy(apiClient_t *apiClient, char *name
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *NetworkingV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    mazu_cJSON *NetworkingV1APIlocalVarJSON = mazu_cJSON_Parse(apiClient->dataReceived);
     v1_status_t *elementToReturn = v1_status_parseFromJSON(NetworkingV1APIlocalVarJSON);
-    cJSON_Delete(NetworkingV1APIlocalVarJSON);
+    mazu_cJSON_Delete(NetworkingV1APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
     }
@@ -2410,7 +2410,7 @@ NetworkingV1API_deleteNamespacedNetworkPolicy(apiClient_t *apiClient, char *name
     free(localVarToReplace_name);
     free(localVarToReplace__namespace);
     if (localVarSingleItemJSON_body) {
-        cJSON_Delete(localVarSingleItemJSON_body);
+        mazu_cJSON_Delete(localVarSingleItemJSON_body);
         localVarSingleItemJSON_body = NULL;
     }
     free(localVarBodyParameters);
@@ -2522,9 +2522,9 @@ NetworkingV1API_getAPIResources_22(apiClient_t *apiClient)
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *NetworkingV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    mazu_cJSON *NetworkingV1APIlocalVarJSON = mazu_cJSON_Parse(apiClient->dataReceived);
     v1_api_resource_list_t *elementToReturn = v1_api_resource_list_parseFromJSON(NetworkingV1APIlocalVarJSON);
-    cJSON_Delete(NetworkingV1APIlocalVarJSON);
+    mazu_cJSON_Delete(NetworkingV1APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
     }
@@ -2728,9 +2728,9 @@ NetworkingV1API_listIngressClass(apiClient_t *apiClient, char *pretty, int *allo
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *NetworkingV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    mazu_cJSON *NetworkingV1APIlocalVarJSON = mazu_cJSON_Parse(apiClient->dataReceived);
     v1_ingress_class_list_t *elementToReturn = v1_ingress_class_list_parseFromJSON(NetworkingV1APIlocalVarJSON);
-    cJSON_Delete(NetworkingV1APIlocalVarJSON);
+    mazu_cJSON_Delete(NetworkingV1APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
     }
@@ -3066,9 +3066,9 @@ NetworkingV1API_listIngressForAllNamespaces(apiClient_t *apiClient, int *allowWa
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *NetworkingV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    mazu_cJSON *NetworkingV1APIlocalVarJSON = mazu_cJSON_Parse(apiClient->dataReceived);
     v1_ingress_list_t *elementToReturn = v1_ingress_list_parseFromJSON(NetworkingV1APIlocalVarJSON);
-    cJSON_Delete(NetworkingV1APIlocalVarJSON);
+    mazu_cJSON_Delete(NetworkingV1APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
     }
@@ -3414,9 +3414,9 @@ NetworkingV1API_listNamespacedIngress(apiClient_t *apiClient, char *_namespace, 
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *NetworkingV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    mazu_cJSON *NetworkingV1APIlocalVarJSON = mazu_cJSON_Parse(apiClient->dataReceived);
     v1_ingress_list_t *elementToReturn = v1_ingress_list_parseFromJSON(NetworkingV1APIlocalVarJSON);
-    cJSON_Delete(NetworkingV1APIlocalVarJSON);
+    mazu_cJSON_Delete(NetworkingV1APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
     }
@@ -3763,9 +3763,9 @@ NetworkingV1API_listNamespacedNetworkPolicy(apiClient_t *apiClient, char *_names
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *NetworkingV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    mazu_cJSON *NetworkingV1APIlocalVarJSON = mazu_cJSON_Parse(apiClient->dataReceived);
     v1_network_policy_list_t *elementToReturn = v1_network_policy_list_parseFromJSON(NetworkingV1APIlocalVarJSON);
-    cJSON_Delete(NetworkingV1APIlocalVarJSON);
+    mazu_cJSON_Delete(NetworkingV1APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
     }
@@ -4102,9 +4102,9 @@ NetworkingV1API_listNetworkPolicyForAllNamespaces(apiClient_t *apiClient, int *a
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *NetworkingV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    mazu_cJSON *NetworkingV1APIlocalVarJSON = mazu_cJSON_Parse(apiClient->dataReceived);
     v1_network_policy_list_t *elementToReturn = v1_network_policy_list_parseFromJSON(NetworkingV1APIlocalVarJSON);
-    cJSON_Delete(NetworkingV1APIlocalVarJSON);
+    mazu_cJSON_Delete(NetworkingV1APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
     }
@@ -4352,12 +4352,12 @@ NetworkingV1API_patchIngressClass(apiClient_t *apiClient, char *name, object_t *
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body = NULL;
+    mazu_cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
         localVarSingleItemJSON_body = object_convertToJSON(body);
-        localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyParameters = mazu_cJSON_Print(localVarSingleItemJSON_body);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
@@ -4389,9 +4389,9 @@ NetworkingV1API_patchIngressClass(apiClient_t *apiClient, char *name, object_t *
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *NetworkingV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    mazu_cJSON *NetworkingV1APIlocalVarJSON = mazu_cJSON_Parse(apiClient->dataReceived);
     v1_ingress_class_t *elementToReturn = v1_ingress_class_parseFromJSON(NetworkingV1APIlocalVarJSON);
-    cJSON_Delete(NetworkingV1APIlocalVarJSON);
+    mazu_cJSON_Delete(NetworkingV1APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
     }
@@ -4410,7 +4410,7 @@ NetworkingV1API_patchIngressClass(apiClient_t *apiClient, char *name, object_t *
     free(localVarPath);
     free(localVarToReplace_name);
     if (localVarSingleItemJSON_body) {
-        cJSON_Delete(localVarSingleItemJSON_body);
+        mazu_cJSON_Delete(localVarSingleItemJSON_body);
         localVarSingleItemJSON_body = NULL;
     }
     free(localVarBodyParameters);
@@ -4583,12 +4583,12 @@ NetworkingV1API_patchNamespacedIngress(apiClient_t *apiClient, char *name, char 
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body = NULL;
+    mazu_cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
         localVarSingleItemJSON_body = object_convertToJSON(body);
-        localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyParameters = mazu_cJSON_Print(localVarSingleItemJSON_body);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
@@ -4620,9 +4620,9 @@ NetworkingV1API_patchNamespacedIngress(apiClient_t *apiClient, char *name, char 
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *NetworkingV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    mazu_cJSON *NetworkingV1APIlocalVarJSON = mazu_cJSON_Parse(apiClient->dataReceived);
     v1_ingress_t *elementToReturn = v1_ingress_parseFromJSON(NetworkingV1APIlocalVarJSON);
-    cJSON_Delete(NetworkingV1APIlocalVarJSON);
+    mazu_cJSON_Delete(NetworkingV1APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
     }
@@ -4642,7 +4642,7 @@ NetworkingV1API_patchNamespacedIngress(apiClient_t *apiClient, char *name, char 
     free(localVarToReplace_name);
     free(localVarToReplace__namespace);
     if (localVarSingleItemJSON_body) {
-        cJSON_Delete(localVarSingleItemJSON_body);
+        mazu_cJSON_Delete(localVarSingleItemJSON_body);
         localVarSingleItemJSON_body = NULL;
     }
     free(localVarBodyParameters);
@@ -4815,12 +4815,12 @@ NetworkingV1API_patchNamespacedIngressStatus(apiClient_t *apiClient, char *name,
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body = NULL;
+    mazu_cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
         localVarSingleItemJSON_body = object_convertToJSON(body);
-        localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyParameters = mazu_cJSON_Print(localVarSingleItemJSON_body);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
@@ -4852,9 +4852,9 @@ NetworkingV1API_patchNamespacedIngressStatus(apiClient_t *apiClient, char *name,
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *NetworkingV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    mazu_cJSON *NetworkingV1APIlocalVarJSON = mazu_cJSON_Parse(apiClient->dataReceived);
     v1_ingress_t *elementToReturn = v1_ingress_parseFromJSON(NetworkingV1APIlocalVarJSON);
-    cJSON_Delete(NetworkingV1APIlocalVarJSON);
+    mazu_cJSON_Delete(NetworkingV1APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
     }
@@ -4874,7 +4874,7 @@ NetworkingV1API_patchNamespacedIngressStatus(apiClient_t *apiClient, char *name,
     free(localVarToReplace_name);
     free(localVarToReplace__namespace);
     if (localVarSingleItemJSON_body) {
-        cJSON_Delete(localVarSingleItemJSON_body);
+        mazu_cJSON_Delete(localVarSingleItemJSON_body);
         localVarSingleItemJSON_body = NULL;
     }
     free(localVarBodyParameters);
@@ -5047,12 +5047,12 @@ NetworkingV1API_patchNamespacedNetworkPolicy(apiClient_t *apiClient, char *name,
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body = NULL;
+    mazu_cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
         localVarSingleItemJSON_body = object_convertToJSON(body);
-        localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyParameters = mazu_cJSON_Print(localVarSingleItemJSON_body);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
@@ -5084,9 +5084,9 @@ NetworkingV1API_patchNamespacedNetworkPolicy(apiClient_t *apiClient, char *name,
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *NetworkingV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    mazu_cJSON *NetworkingV1APIlocalVarJSON = mazu_cJSON_Parse(apiClient->dataReceived);
     v1_network_policy_t *elementToReturn = v1_network_policy_parseFromJSON(NetworkingV1APIlocalVarJSON);
-    cJSON_Delete(NetworkingV1APIlocalVarJSON);
+    mazu_cJSON_Delete(NetworkingV1APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
     }
@@ -5106,7 +5106,7 @@ NetworkingV1API_patchNamespacedNetworkPolicy(apiClient_t *apiClient, char *name,
     free(localVarToReplace_name);
     free(localVarToReplace__namespace);
     if (localVarSingleItemJSON_body) {
-        cJSON_Delete(localVarSingleItemJSON_body);
+        mazu_cJSON_Delete(localVarSingleItemJSON_body);
         localVarSingleItemJSON_body = NULL;
     }
     free(localVarBodyParameters);
@@ -5240,9 +5240,9 @@ NetworkingV1API_readIngressClass(apiClient_t *apiClient, char *name, char *prett
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *NetworkingV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    mazu_cJSON *NetworkingV1APIlocalVarJSON = mazu_cJSON_Parse(apiClient->dataReceived);
     v1_ingress_class_t *elementToReturn = v1_ingress_class_parseFromJSON(NetworkingV1APIlocalVarJSON);
-    cJSON_Delete(NetworkingV1APIlocalVarJSON);
+    mazu_cJSON_Delete(NetworkingV1APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
     }
@@ -5352,9 +5352,9 @@ NetworkingV1API_readNamespacedIngress(apiClient_t *apiClient, char *name, char *
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *NetworkingV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    mazu_cJSON *NetworkingV1APIlocalVarJSON = mazu_cJSON_Parse(apiClient->dataReceived);
     v1_ingress_t *elementToReturn = v1_ingress_parseFromJSON(NetworkingV1APIlocalVarJSON);
-    cJSON_Delete(NetworkingV1APIlocalVarJSON);
+    mazu_cJSON_Delete(NetworkingV1APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
     }
@@ -5465,9 +5465,9 @@ NetworkingV1API_readNamespacedIngressStatus(apiClient_t *apiClient, char *name, 
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *NetworkingV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    mazu_cJSON *NetworkingV1APIlocalVarJSON = mazu_cJSON_Parse(apiClient->dataReceived);
     v1_ingress_t *elementToReturn = v1_ingress_parseFromJSON(NetworkingV1APIlocalVarJSON);
-    cJSON_Delete(NetworkingV1APIlocalVarJSON);
+    mazu_cJSON_Delete(NetworkingV1APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
     }
@@ -5578,9 +5578,9 @@ NetworkingV1API_readNamespacedNetworkPolicy(apiClient_t *apiClient, char *name, 
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *NetworkingV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    mazu_cJSON *NetworkingV1APIlocalVarJSON = mazu_cJSON_Parse(apiClient->dataReceived);
     v1_network_policy_t *elementToReturn = v1_network_policy_parseFromJSON(NetworkingV1APIlocalVarJSON);
-    cJSON_Delete(NetworkingV1APIlocalVarJSON);
+    mazu_cJSON_Delete(NetworkingV1APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
     }
@@ -5697,12 +5697,12 @@ NetworkingV1API_replaceIngressClass(apiClient_t *apiClient, char *name, v1_ingre
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body = NULL;
+    mazu_cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
         localVarSingleItemJSON_body = v1_ingress_class_convertToJSON(body);
-        localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyParameters = mazu_cJSON_Print(localVarSingleItemJSON_body);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
@@ -5730,9 +5730,9 @@ NetworkingV1API_replaceIngressClass(apiClient_t *apiClient, char *name, v1_ingre
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *NetworkingV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    mazu_cJSON *NetworkingV1APIlocalVarJSON = mazu_cJSON_Parse(apiClient->dataReceived);
     v1_ingress_class_t *elementToReturn = v1_ingress_class_parseFromJSON(NetworkingV1APIlocalVarJSON);
-    cJSON_Delete(NetworkingV1APIlocalVarJSON);
+    mazu_cJSON_Delete(NetworkingV1APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
     }
@@ -5751,7 +5751,7 @@ NetworkingV1API_replaceIngressClass(apiClient_t *apiClient, char *name, v1_ingre
     free(localVarPath);
     free(localVarToReplace_name);
     if (localVarSingleItemJSON_body) {
-        cJSON_Delete(localVarSingleItemJSON_body);
+        mazu_cJSON_Delete(localVarSingleItemJSON_body);
         localVarSingleItemJSON_body = NULL;
     }
     free(localVarBodyParameters);
@@ -5899,12 +5899,12 @@ NetworkingV1API_replaceNamespacedIngress(apiClient_t *apiClient, char *name, cha
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body = NULL;
+    mazu_cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
         localVarSingleItemJSON_body = v1_ingress_convertToJSON(body);
-        localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyParameters = mazu_cJSON_Print(localVarSingleItemJSON_body);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
@@ -5932,9 +5932,9 @@ NetworkingV1API_replaceNamespacedIngress(apiClient_t *apiClient, char *name, cha
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *NetworkingV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    mazu_cJSON *NetworkingV1APIlocalVarJSON = mazu_cJSON_Parse(apiClient->dataReceived);
     v1_ingress_t *elementToReturn = v1_ingress_parseFromJSON(NetworkingV1APIlocalVarJSON);
-    cJSON_Delete(NetworkingV1APIlocalVarJSON);
+    mazu_cJSON_Delete(NetworkingV1APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
     }
@@ -5954,7 +5954,7 @@ NetworkingV1API_replaceNamespacedIngress(apiClient_t *apiClient, char *name, cha
     free(localVarToReplace_name);
     free(localVarToReplace__namespace);
     if (localVarSingleItemJSON_body) {
-        cJSON_Delete(localVarSingleItemJSON_body);
+        mazu_cJSON_Delete(localVarSingleItemJSON_body);
         localVarSingleItemJSON_body = NULL;
     }
     free(localVarBodyParameters);
@@ -6102,12 +6102,12 @@ NetworkingV1API_replaceNamespacedIngressStatus(apiClient_t *apiClient, char *nam
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body = NULL;
+    mazu_cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
         localVarSingleItemJSON_body = v1_ingress_convertToJSON(body);
-        localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyParameters = mazu_cJSON_Print(localVarSingleItemJSON_body);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
@@ -6135,9 +6135,9 @@ NetworkingV1API_replaceNamespacedIngressStatus(apiClient_t *apiClient, char *nam
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *NetworkingV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    mazu_cJSON *NetworkingV1APIlocalVarJSON = mazu_cJSON_Parse(apiClient->dataReceived);
     v1_ingress_t *elementToReturn = v1_ingress_parseFromJSON(NetworkingV1APIlocalVarJSON);
-    cJSON_Delete(NetworkingV1APIlocalVarJSON);
+    mazu_cJSON_Delete(NetworkingV1APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
     }
@@ -6157,7 +6157,7 @@ NetworkingV1API_replaceNamespacedIngressStatus(apiClient_t *apiClient, char *nam
     free(localVarToReplace_name);
     free(localVarToReplace__namespace);
     if (localVarSingleItemJSON_body) {
-        cJSON_Delete(localVarSingleItemJSON_body);
+        mazu_cJSON_Delete(localVarSingleItemJSON_body);
         localVarSingleItemJSON_body = NULL;
     }
     free(localVarBodyParameters);
@@ -6305,12 +6305,12 @@ NetworkingV1API_replaceNamespacedNetworkPolicy(apiClient_t *apiClient, char *nam
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body = NULL;
+    mazu_cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
         localVarSingleItemJSON_body = v1_network_policy_convertToJSON(body);
-        localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyParameters = mazu_cJSON_Print(localVarSingleItemJSON_body);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
@@ -6338,9 +6338,9 @@ NetworkingV1API_replaceNamespacedNetworkPolicy(apiClient_t *apiClient, char *nam
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *NetworkingV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    mazu_cJSON *NetworkingV1APIlocalVarJSON = mazu_cJSON_Parse(apiClient->dataReceived);
     v1_network_policy_t *elementToReturn = v1_network_policy_parseFromJSON(NetworkingV1APIlocalVarJSON);
-    cJSON_Delete(NetworkingV1APIlocalVarJSON);
+    mazu_cJSON_Delete(NetworkingV1APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
     }
@@ -6360,7 +6360,7 @@ NetworkingV1API_replaceNamespacedNetworkPolicy(apiClient_t *apiClient, char *nam
     free(localVarToReplace_name);
     free(localVarToReplace__namespace);
     if (localVarSingleItemJSON_body) {
-        cJSON_Delete(localVarSingleItemJSON_body);
+        mazu_cJSON_Delete(localVarSingleItemJSON_body);
         localVarSingleItemJSON_body = NULL;
     }
     free(localVarBodyParameters);

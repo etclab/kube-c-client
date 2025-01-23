@@ -36,16 +36,16 @@ void v1_stateful_set_update_strategy_free(v1_stateful_set_update_strategy_t *v1_
     free(v1_stateful_set_update_strategy);
 }
 
-cJSON *v1_stateful_set_update_strategy_convertToJSON(v1_stateful_set_update_strategy_t *v1_stateful_set_update_strategy) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_stateful_set_update_strategy_convertToJSON(v1_stateful_set_update_strategy_t *v1_stateful_set_update_strategy) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_stateful_set_update_strategy->rolling_update
     if(v1_stateful_set_update_strategy->rolling_update) {
-    cJSON *rolling_update_local_JSON = v1_rolling_update_stateful_set_strategy_convertToJSON(v1_stateful_set_update_strategy->rolling_update);
+    mazu_cJSON *rolling_update_local_JSON = v1_rolling_update_stateful_set_strategy_convertToJSON(v1_stateful_set_update_strategy->rolling_update);
     if(rolling_update_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "rollingUpdate", rolling_update_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "rollingUpdate", rolling_update_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -54,7 +54,7 @@ cJSON *v1_stateful_set_update_strategy_convertToJSON(v1_stateful_set_update_stra
 
     // v1_stateful_set_update_strategy->type
     if(v1_stateful_set_update_strategy->type) {
-    if(cJSON_AddStringToObject(item, "type", v1_stateful_set_update_strategy->type) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "type", v1_stateful_set_update_strategy->type) == NULL) {
     goto fail; //String
     }
     }
@@ -62,12 +62,12 @@ cJSON *v1_stateful_set_update_strategy_convertToJSON(v1_stateful_set_update_stra
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_stateful_set_update_strategy_t *v1_stateful_set_update_strategy_parseFromJSON(cJSON *v1_stateful_set_update_strategyJSON){
+v1_stateful_set_update_strategy_t *v1_stateful_set_update_strategy_parseFromJSON(mazu_cJSON *v1_stateful_set_update_strategyJSON){
 
     v1_stateful_set_update_strategy_t *v1_stateful_set_update_strategy_local_var = NULL;
 
@@ -75,15 +75,15 @@ v1_stateful_set_update_strategy_t *v1_stateful_set_update_strategy_parseFromJSON
     v1_rolling_update_stateful_set_strategy_t *rolling_update_local_nonprim = NULL;
 
     // v1_stateful_set_update_strategy->rolling_update
-    cJSON *rolling_update = cJSON_GetObjectItemCaseSensitive(v1_stateful_set_update_strategyJSON, "rollingUpdate");
+    mazu_cJSON *rolling_update = mazu_cJSON_GetObjectItemCaseSensitive(v1_stateful_set_update_strategyJSON, "rollingUpdate");
     if (rolling_update) { 
     rolling_update_local_nonprim = v1_rolling_update_stateful_set_strategy_parseFromJSON(rolling_update); //nonprimitive
     }
 
     // v1_stateful_set_update_strategy->type
-    cJSON *type = cJSON_GetObjectItemCaseSensitive(v1_stateful_set_update_strategyJSON, "type");
+    mazu_cJSON *type = mazu_cJSON_GetObjectItemCaseSensitive(v1_stateful_set_update_strategyJSON, "type");
     if (type) { 
-    if(!cJSON_IsString(type) && !cJSON_IsNull(type))
+    if(!mazu_cJSON_IsString(type) && !mazu_cJSON_IsNull(type))
     {
     goto end; //String
     }
@@ -92,7 +92,7 @@ v1_stateful_set_update_strategy_t *v1_stateful_set_update_strategy_parseFromJSON
 
     v1_stateful_set_update_strategy_local_var = v1_stateful_set_update_strategy_create (
         rolling_update ? rolling_update_local_nonprim : NULL,
-        type && !cJSON_IsNull(type) ? strdup(type->valuestring) : NULL
+        type && !mazu_cJSON_IsNull(type) ? strdup(type->valuestring) : NULL
         );
 
     return v1_stateful_set_update_strategy_local_var;

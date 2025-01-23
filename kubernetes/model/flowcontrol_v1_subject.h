@@ -8,7 +8,7 @@
 #define _flowcontrol_v1_subject_H_
 
 #include <string.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
 #include "../include/binary.h"
@@ -38,9 +38,9 @@ flowcontrol_v1_subject_t *flowcontrol_v1_subject_create(
 
 void flowcontrol_v1_subject_free(flowcontrol_v1_subject_t *flowcontrol_v1_subject);
 
-flowcontrol_v1_subject_t *flowcontrol_v1_subject_parseFromJSON(cJSON *flowcontrol_v1_subjectJSON);
+flowcontrol_v1_subject_t *flowcontrol_v1_subject_parseFromJSON(mazu_cJSON *flowcontrol_v1_subjectJSON);
 
-cJSON *flowcontrol_v1_subject_convertToJSON(flowcontrol_v1_subject_t *flowcontrol_v1_subject);
+mazu_cJSON *flowcontrol_v1_subject_convertToJSON(flowcontrol_v1_subject_t *flowcontrol_v1_subject);
 
 #endif /* _flowcontrol_v1_subject_H_ */
 

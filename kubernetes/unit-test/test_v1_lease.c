@@ -11,7 +11,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdbool.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 
 #include "../model/v1_lease.h"
 v1_lease_t* instantiate_v1_lease(int include_optional);
@@ -49,11 +49,11 @@ v1_lease_t* instantiate_v1_lease(int include_optional) {
 void test_v1_lease(int include_optional) {
     v1_lease_t* v1_lease_1 = instantiate_v1_lease(include_optional);
 
-	cJSON* jsonv1_lease_1 = v1_lease_convertToJSON(v1_lease_1);
-	printf("v1_lease :\n%s\n", cJSON_Print(jsonv1_lease_1));
+	mazu_cJSON* jsonv1_lease_1 = v1_lease_convertToJSON(v1_lease_1);
+	printf("v1_lease :\n%s\n", mazu_cJSON_Print(jsonv1_lease_1));
 	v1_lease_t* v1_lease_2 = v1_lease_parseFromJSON(jsonv1_lease_1);
-	cJSON* jsonv1_lease_2 = v1_lease_convertToJSON(v1_lease_2);
-	printf("repeating v1_lease:\n%s\n", cJSON_Print(jsonv1_lease_2));
+	mazu_cJSON* jsonv1_lease_2 = v1_lease_convertToJSON(v1_lease_2);
+	printf("repeating v1_lease:\n%s\n", mazu_cJSON_Print(jsonv1_lease_2));
 }
 
 int main() {

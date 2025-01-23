@@ -8,7 +8,7 @@
 #define _v1_condition_H_
 
 #include <string.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
 #include "../include/binary.h"
@@ -39,9 +39,9 @@ v1_condition_t *v1_condition_create(
 
 void v1_condition_free(v1_condition_t *v1_condition);
 
-v1_condition_t *v1_condition_parseFromJSON(cJSON *v1_conditionJSON);
+v1_condition_t *v1_condition_parseFromJSON(mazu_cJSON *v1_conditionJSON);
 
-cJSON *v1_condition_convertToJSON(v1_condition_t *v1_condition);
+mazu_cJSON *v1_condition_convertToJSON(v1_condition_t *v1_condition);
 
 #endif /* _v1_condition_H_ */
 

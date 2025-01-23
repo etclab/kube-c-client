@@ -30,12 +30,12 @@ void v1_container_state_running_free(v1_container_state_running_t *v1_container_
     free(v1_container_state_running);
 }
 
-cJSON *v1_container_state_running_convertToJSON(v1_container_state_running_t *v1_container_state_running) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_container_state_running_convertToJSON(v1_container_state_running_t *v1_container_state_running) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_container_state_running->started_at
     if(v1_container_state_running->started_at) {
-    if(cJSON_AddStringToObject(item, "startedAt", v1_container_state_running->started_at) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "startedAt", v1_container_state_running->started_at) == NULL) {
     goto fail; //Date-Time
     }
     }
@@ -43,19 +43,19 @@ cJSON *v1_container_state_running_convertToJSON(v1_container_state_running_t *v1
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_container_state_running_t *v1_container_state_running_parseFromJSON(cJSON *v1_container_state_runningJSON){
+v1_container_state_running_t *v1_container_state_running_parseFromJSON(mazu_cJSON *v1_container_state_runningJSON){
 
     v1_container_state_running_t *v1_container_state_running_local_var = NULL;
 
     // v1_container_state_running->started_at
-    cJSON *started_at = cJSON_GetObjectItemCaseSensitive(v1_container_state_runningJSON, "startedAt");
+    mazu_cJSON *started_at = mazu_cJSON_GetObjectItemCaseSensitive(v1_container_state_runningJSON, "startedAt");
     if (started_at) { 
-    if(!cJSON_IsString(started_at) && !cJSON_IsNull(started_at))
+    if(!mazu_cJSON_IsString(started_at) && !mazu_cJSON_IsNull(started_at))
     {
     goto end; //DateTime
     }
@@ -63,7 +63,7 @@ v1_container_state_running_t *v1_container_state_running_parseFromJSON(cJSON *v1
 
 
     v1_container_state_running_local_var = v1_container_state_running_create (
-        started_at && !cJSON_IsNull(started_at) ? strdup(started_at->valuestring) : NULL
+        started_at && !mazu_cJSON_IsNull(started_at) ? strdup(started_at->valuestring) : NULL
         );
 
     return v1_container_state_running_local_var;

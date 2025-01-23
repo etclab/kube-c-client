@@ -8,7 +8,7 @@
 #define _v1_container_state_waiting_H_
 
 #include <string.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
 #include "../include/binary.h"
@@ -31,9 +31,9 @@ v1_container_state_waiting_t *v1_container_state_waiting_create(
 
 void v1_container_state_waiting_free(v1_container_state_waiting_t *v1_container_state_waiting);
 
-v1_container_state_waiting_t *v1_container_state_waiting_parseFromJSON(cJSON *v1_container_state_waitingJSON);
+v1_container_state_waiting_t *v1_container_state_waiting_parseFromJSON(mazu_cJSON *v1_container_state_waitingJSON);
 
-cJSON *v1_container_state_waiting_convertToJSON(v1_container_state_waiting_t *v1_container_state_waiting);
+mazu_cJSON *v1_container_state_waiting_convertToJSON(v1_container_state_waiting_t *v1_container_state_waiting);
 
 #endif /* _v1_container_state_waiting_H_ */
 

@@ -54,12 +54,12 @@ void v1alpha1_migration_condition_free(v1alpha1_migration_condition_t *v1alpha1_
     free(v1alpha1_migration_condition);
 }
 
-cJSON *v1alpha1_migration_condition_convertToJSON(v1alpha1_migration_condition_t *v1alpha1_migration_condition) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1alpha1_migration_condition_convertToJSON(v1alpha1_migration_condition_t *v1alpha1_migration_condition) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1alpha1_migration_condition->last_update_time
     if(v1alpha1_migration_condition->last_update_time) {
-    if(cJSON_AddStringToObject(item, "lastUpdateTime", v1alpha1_migration_condition->last_update_time) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "lastUpdateTime", v1alpha1_migration_condition->last_update_time) == NULL) {
     goto fail; //Date-Time
     }
     }
@@ -67,7 +67,7 @@ cJSON *v1alpha1_migration_condition_convertToJSON(v1alpha1_migration_condition_t
 
     // v1alpha1_migration_condition->message
     if(v1alpha1_migration_condition->message) {
-    if(cJSON_AddStringToObject(item, "message", v1alpha1_migration_condition->message) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "message", v1alpha1_migration_condition->message) == NULL) {
     goto fail; //String
     }
     }
@@ -75,7 +75,7 @@ cJSON *v1alpha1_migration_condition_convertToJSON(v1alpha1_migration_condition_t
 
     // v1alpha1_migration_condition->reason
     if(v1alpha1_migration_condition->reason) {
-    if(cJSON_AddStringToObject(item, "reason", v1alpha1_migration_condition->reason) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "reason", v1alpha1_migration_condition->reason) == NULL) {
     goto fail; //String
     }
     }
@@ -85,7 +85,7 @@ cJSON *v1alpha1_migration_condition_convertToJSON(v1alpha1_migration_condition_t
     if (!v1alpha1_migration_condition->status) {
         goto fail;
     }
-    if(cJSON_AddStringToObject(item, "status", v1alpha1_migration_condition->status) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "status", v1alpha1_migration_condition->status) == NULL) {
     goto fail; //String
     }
 
@@ -94,78 +94,78 @@ cJSON *v1alpha1_migration_condition_convertToJSON(v1alpha1_migration_condition_t
     if (!v1alpha1_migration_condition->type) {
         goto fail;
     }
-    if(cJSON_AddStringToObject(item, "type", v1alpha1_migration_condition->type) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "type", v1alpha1_migration_condition->type) == NULL) {
     goto fail; //String
     }
 
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1alpha1_migration_condition_t *v1alpha1_migration_condition_parseFromJSON(cJSON *v1alpha1_migration_conditionJSON){
+v1alpha1_migration_condition_t *v1alpha1_migration_condition_parseFromJSON(mazu_cJSON *v1alpha1_migration_conditionJSON){
 
     v1alpha1_migration_condition_t *v1alpha1_migration_condition_local_var = NULL;
 
     // v1alpha1_migration_condition->last_update_time
-    cJSON *last_update_time = cJSON_GetObjectItemCaseSensitive(v1alpha1_migration_conditionJSON, "lastUpdateTime");
+    mazu_cJSON *last_update_time = mazu_cJSON_GetObjectItemCaseSensitive(v1alpha1_migration_conditionJSON, "lastUpdateTime");
     if (last_update_time) { 
-    if(!cJSON_IsString(last_update_time) && !cJSON_IsNull(last_update_time))
+    if(!mazu_cJSON_IsString(last_update_time) && !mazu_cJSON_IsNull(last_update_time))
     {
     goto end; //DateTime
     }
     }
 
     // v1alpha1_migration_condition->message
-    cJSON *message = cJSON_GetObjectItemCaseSensitive(v1alpha1_migration_conditionJSON, "message");
+    mazu_cJSON *message = mazu_cJSON_GetObjectItemCaseSensitive(v1alpha1_migration_conditionJSON, "message");
     if (message) { 
-    if(!cJSON_IsString(message) && !cJSON_IsNull(message))
+    if(!mazu_cJSON_IsString(message) && !mazu_cJSON_IsNull(message))
     {
     goto end; //String
     }
     }
 
     // v1alpha1_migration_condition->reason
-    cJSON *reason = cJSON_GetObjectItemCaseSensitive(v1alpha1_migration_conditionJSON, "reason");
+    mazu_cJSON *reason = mazu_cJSON_GetObjectItemCaseSensitive(v1alpha1_migration_conditionJSON, "reason");
     if (reason) { 
-    if(!cJSON_IsString(reason) && !cJSON_IsNull(reason))
+    if(!mazu_cJSON_IsString(reason) && !mazu_cJSON_IsNull(reason))
     {
     goto end; //String
     }
     }
 
     // v1alpha1_migration_condition->status
-    cJSON *status = cJSON_GetObjectItemCaseSensitive(v1alpha1_migration_conditionJSON, "status");
+    mazu_cJSON *status = mazu_cJSON_GetObjectItemCaseSensitive(v1alpha1_migration_conditionJSON, "status");
     if (!status) {
         goto end;
     }
 
     
-    if(!cJSON_IsString(status))
+    if(!mazu_cJSON_IsString(status))
     {
     goto end; //String
     }
 
     // v1alpha1_migration_condition->type
-    cJSON *type = cJSON_GetObjectItemCaseSensitive(v1alpha1_migration_conditionJSON, "type");
+    mazu_cJSON *type = mazu_cJSON_GetObjectItemCaseSensitive(v1alpha1_migration_conditionJSON, "type");
     if (!type) {
         goto end;
     }
 
     
-    if(!cJSON_IsString(type))
+    if(!mazu_cJSON_IsString(type))
     {
     goto end; //String
     }
 
 
     v1alpha1_migration_condition_local_var = v1alpha1_migration_condition_create (
-        last_update_time && !cJSON_IsNull(last_update_time) ? strdup(last_update_time->valuestring) : NULL,
-        message && !cJSON_IsNull(message) ? strdup(message->valuestring) : NULL,
-        reason && !cJSON_IsNull(reason) ? strdup(reason->valuestring) : NULL,
+        last_update_time && !mazu_cJSON_IsNull(last_update_time) ? strdup(last_update_time->valuestring) : NULL,
+        message && !mazu_cJSON_IsNull(message) ? strdup(message->valuestring) : NULL,
+        reason && !mazu_cJSON_IsNull(reason) ? strdup(reason->valuestring) : NULL,
         strdup(status->valuestring),
         strdup(type->valuestring)
         );

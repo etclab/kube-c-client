@@ -8,7 +8,7 @@
 #define _v2_hpa_scaling_policy_H_
 
 #include <string.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
 #include "../include/binary.h"
@@ -33,9 +33,9 @@ v2_hpa_scaling_policy_t *v2_hpa_scaling_policy_create(
 
 void v2_hpa_scaling_policy_free(v2_hpa_scaling_policy_t *v2_hpa_scaling_policy);
 
-v2_hpa_scaling_policy_t *v2_hpa_scaling_policy_parseFromJSON(cJSON *v2_hpa_scaling_policyJSON);
+v2_hpa_scaling_policy_t *v2_hpa_scaling_policy_parseFromJSON(mazu_cJSON *v2_hpa_scaling_policyJSON);
 
-cJSON *v2_hpa_scaling_policy_convertToJSON(v2_hpa_scaling_policy_t *v2_hpa_scaling_policy);
+mazu_cJSON *v2_hpa_scaling_policy_convertToJSON(v2_hpa_scaling_policy_t *v2_hpa_scaling_policy);
 
 #endif /* _v2_hpa_scaling_policy_H_ */
 

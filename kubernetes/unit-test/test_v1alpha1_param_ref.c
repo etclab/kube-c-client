@@ -11,7 +11,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdbool.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 
 #include "../model/v1alpha1_param_ref.h"
 v1alpha1_param_ref_t* instantiate_v1alpha1_param_ref(int include_optional);
@@ -47,11 +47,11 @@ v1alpha1_param_ref_t* instantiate_v1alpha1_param_ref(int include_optional) {
 void test_v1alpha1_param_ref(int include_optional) {
     v1alpha1_param_ref_t* v1alpha1_param_ref_1 = instantiate_v1alpha1_param_ref(include_optional);
 
-	cJSON* jsonv1alpha1_param_ref_1 = v1alpha1_param_ref_convertToJSON(v1alpha1_param_ref_1);
-	printf("v1alpha1_param_ref :\n%s\n", cJSON_Print(jsonv1alpha1_param_ref_1));
+	mazu_cJSON* jsonv1alpha1_param_ref_1 = v1alpha1_param_ref_convertToJSON(v1alpha1_param_ref_1);
+	printf("v1alpha1_param_ref :\n%s\n", mazu_cJSON_Print(jsonv1alpha1_param_ref_1));
 	v1alpha1_param_ref_t* v1alpha1_param_ref_2 = v1alpha1_param_ref_parseFromJSON(jsonv1alpha1_param_ref_1);
-	cJSON* jsonv1alpha1_param_ref_2 = v1alpha1_param_ref_convertToJSON(v1alpha1_param_ref_2);
-	printf("repeating v1alpha1_param_ref:\n%s\n", cJSON_Print(jsonv1alpha1_param_ref_2));
+	mazu_cJSON* jsonv1alpha1_param_ref_2 = v1alpha1_param_ref_convertToJSON(v1alpha1_param_ref_2);
+	printf("repeating v1alpha1_param_ref:\n%s\n", mazu_cJSON_Print(jsonv1alpha1_param_ref_2));
 }
 
 int main() {

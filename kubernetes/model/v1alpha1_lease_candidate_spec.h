@@ -8,7 +8,7 @@
 #define _v1alpha1_lease_candidate_spec_H_
 
 #include <string.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
 #include "../include/binary.h"
@@ -39,9 +39,9 @@ v1alpha1_lease_candidate_spec_t *v1alpha1_lease_candidate_spec_create(
 
 void v1alpha1_lease_candidate_spec_free(v1alpha1_lease_candidate_spec_t *v1alpha1_lease_candidate_spec);
 
-v1alpha1_lease_candidate_spec_t *v1alpha1_lease_candidate_spec_parseFromJSON(cJSON *v1alpha1_lease_candidate_specJSON);
+v1alpha1_lease_candidate_spec_t *v1alpha1_lease_candidate_spec_parseFromJSON(mazu_cJSON *v1alpha1_lease_candidate_specJSON);
 
-cJSON *v1alpha1_lease_candidate_spec_convertToJSON(v1alpha1_lease_candidate_spec_t *v1alpha1_lease_candidate_spec);
+mazu_cJSON *v1alpha1_lease_candidate_spec_convertToJSON(v1alpha1_lease_candidate_spec_t *v1alpha1_lease_candidate_spec);
 
 #endif /* _v1alpha1_lease_candidate_spec_H_ */
 

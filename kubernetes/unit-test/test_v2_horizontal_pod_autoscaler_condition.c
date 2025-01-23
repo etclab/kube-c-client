@@ -11,7 +11,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdbool.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 
 #include "../model/v2_horizontal_pod_autoscaler_condition.h"
 v2_horizontal_pod_autoscaler_condition_t* instantiate_v2_horizontal_pod_autoscaler_condition(int include_optional);
@@ -47,11 +47,11 @@ v2_horizontal_pod_autoscaler_condition_t* instantiate_v2_horizontal_pod_autoscal
 void test_v2_horizontal_pod_autoscaler_condition(int include_optional) {
     v2_horizontal_pod_autoscaler_condition_t* v2_horizontal_pod_autoscaler_condition_1 = instantiate_v2_horizontal_pod_autoscaler_condition(include_optional);
 
-	cJSON* jsonv2_horizontal_pod_autoscaler_condition_1 = v2_horizontal_pod_autoscaler_condition_convertToJSON(v2_horizontal_pod_autoscaler_condition_1);
-	printf("v2_horizontal_pod_autoscaler_condition :\n%s\n", cJSON_Print(jsonv2_horizontal_pod_autoscaler_condition_1));
+	mazu_cJSON* jsonv2_horizontal_pod_autoscaler_condition_1 = v2_horizontal_pod_autoscaler_condition_convertToJSON(v2_horizontal_pod_autoscaler_condition_1);
+	printf("v2_horizontal_pod_autoscaler_condition :\n%s\n", mazu_cJSON_Print(jsonv2_horizontal_pod_autoscaler_condition_1));
 	v2_horizontal_pod_autoscaler_condition_t* v2_horizontal_pod_autoscaler_condition_2 = v2_horizontal_pod_autoscaler_condition_parseFromJSON(jsonv2_horizontal_pod_autoscaler_condition_1);
-	cJSON* jsonv2_horizontal_pod_autoscaler_condition_2 = v2_horizontal_pod_autoscaler_condition_convertToJSON(v2_horizontal_pod_autoscaler_condition_2);
-	printf("repeating v2_horizontal_pod_autoscaler_condition:\n%s\n", cJSON_Print(jsonv2_horizontal_pod_autoscaler_condition_2));
+	mazu_cJSON* jsonv2_horizontal_pod_autoscaler_condition_2 = v2_horizontal_pod_autoscaler_condition_convertToJSON(v2_horizontal_pod_autoscaler_condition_2);
+	printf("repeating v2_horizontal_pod_autoscaler_condition:\n%s\n", mazu_cJSON_Print(jsonv2_horizontal_pod_autoscaler_condition_2));
 }
 
 int main() {

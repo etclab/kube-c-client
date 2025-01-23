@@ -50,12 +50,12 @@ void v1_subject_rules_review_status_free(v1_subject_rules_review_status_t *v1_su
     free(v1_subject_rules_review_status);
 }
 
-cJSON *v1_subject_rules_review_status_convertToJSON(v1_subject_rules_review_status_t *v1_subject_rules_review_status) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_subject_rules_review_status_convertToJSON(v1_subject_rules_review_status_t *v1_subject_rules_review_status) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_subject_rules_review_status->evaluation_error
     if(v1_subject_rules_review_status->evaluation_error) {
-    if(cJSON_AddStringToObject(item, "evaluationError", v1_subject_rules_review_status->evaluation_error) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "evaluationError", v1_subject_rules_review_status->evaluation_error) == NULL) {
     goto fail; //String
     }
     }
@@ -65,7 +65,7 @@ cJSON *v1_subject_rules_review_status_convertToJSON(v1_subject_rules_review_stat
     if (!v1_subject_rules_review_status->incomplete) {
         goto fail;
     }
-    if(cJSON_AddBoolToObject(item, "incomplete", v1_subject_rules_review_status->incomplete) == NULL) {
+    if(mazu_cJSON_AddBoolToObject(item, "incomplete", v1_subject_rules_review_status->incomplete) == NULL) {
     goto fail; //Bool
     }
 
@@ -74,7 +74,7 @@ cJSON *v1_subject_rules_review_status_convertToJSON(v1_subject_rules_review_stat
     if (!v1_subject_rules_review_status->non_resource_rules) {
         goto fail;
     }
-    cJSON *non_resource_rules = cJSON_AddArrayToObject(item, "nonResourceRules");
+    mazu_cJSON *non_resource_rules = mazu_cJSON_AddArrayToObject(item, "nonResourceRules");
     if(non_resource_rules == NULL) {
     goto fail; //nonprimitive container
     }
@@ -82,11 +82,11 @@ cJSON *v1_subject_rules_review_status_convertToJSON(v1_subject_rules_review_stat
     listEntry_t *non_resource_rulesListEntry;
     if (v1_subject_rules_review_status->non_resource_rules) {
     list_ForEach(non_resource_rulesListEntry, v1_subject_rules_review_status->non_resource_rules) {
-    cJSON *itemLocal = v1_non_resource_rule_convertToJSON(non_resource_rulesListEntry->data);
+    mazu_cJSON *itemLocal = v1_non_resource_rule_convertToJSON(non_resource_rulesListEntry->data);
     if(itemLocal == NULL) {
     goto fail;
     }
-    cJSON_AddItemToArray(non_resource_rules, itemLocal);
+    mazu_cJSON_AddItemToArray(non_resource_rules, itemLocal);
     }
     }
 
@@ -95,7 +95,7 @@ cJSON *v1_subject_rules_review_status_convertToJSON(v1_subject_rules_review_stat
     if (!v1_subject_rules_review_status->resource_rules) {
         goto fail;
     }
-    cJSON *resource_rules = cJSON_AddArrayToObject(item, "resourceRules");
+    mazu_cJSON *resource_rules = mazu_cJSON_AddArrayToObject(item, "resourceRules");
     if(resource_rules == NULL) {
     goto fail; //nonprimitive container
     }
@@ -103,23 +103,23 @@ cJSON *v1_subject_rules_review_status_convertToJSON(v1_subject_rules_review_stat
     listEntry_t *resource_rulesListEntry;
     if (v1_subject_rules_review_status->resource_rules) {
     list_ForEach(resource_rulesListEntry, v1_subject_rules_review_status->resource_rules) {
-    cJSON *itemLocal = v1_resource_rule_convertToJSON(resource_rulesListEntry->data);
+    mazu_cJSON *itemLocal = v1_resource_rule_convertToJSON(resource_rulesListEntry->data);
     if(itemLocal == NULL) {
     goto fail;
     }
-    cJSON_AddItemToArray(resource_rules, itemLocal);
+    mazu_cJSON_AddItemToArray(resource_rules, itemLocal);
     }
     }
 
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_subject_rules_review_status_t *v1_subject_rules_review_status_parseFromJSON(cJSON *v1_subject_rules_review_statusJSON){
+v1_subject_rules_review_status_t *v1_subject_rules_review_status_parseFromJSON(mazu_cJSON *v1_subject_rules_review_statusJSON){
 
     v1_subject_rules_review_status_t *v1_subject_rules_review_status_local_var = NULL;
 
@@ -130,43 +130,43 @@ v1_subject_rules_review_status_t *v1_subject_rules_review_status_parseFromJSON(c
     list_t *resource_rulesList = NULL;
 
     // v1_subject_rules_review_status->evaluation_error
-    cJSON *evaluation_error = cJSON_GetObjectItemCaseSensitive(v1_subject_rules_review_statusJSON, "evaluationError");
+    mazu_cJSON *evaluation_error = mazu_cJSON_GetObjectItemCaseSensitive(v1_subject_rules_review_statusJSON, "evaluationError");
     if (evaluation_error) { 
-    if(!cJSON_IsString(evaluation_error) && !cJSON_IsNull(evaluation_error))
+    if(!mazu_cJSON_IsString(evaluation_error) && !mazu_cJSON_IsNull(evaluation_error))
     {
     goto end; //String
     }
     }
 
     // v1_subject_rules_review_status->incomplete
-    cJSON *incomplete = cJSON_GetObjectItemCaseSensitive(v1_subject_rules_review_statusJSON, "incomplete");
+    mazu_cJSON *incomplete = mazu_cJSON_GetObjectItemCaseSensitive(v1_subject_rules_review_statusJSON, "incomplete");
     if (!incomplete) {
         goto end;
     }
 
     
-    if(!cJSON_IsBool(incomplete))
+    if(!mazu_cJSON_IsBool(incomplete))
     {
     goto end; //Bool
     }
 
     // v1_subject_rules_review_status->non_resource_rules
-    cJSON *non_resource_rules = cJSON_GetObjectItemCaseSensitive(v1_subject_rules_review_statusJSON, "nonResourceRules");
+    mazu_cJSON *non_resource_rules = mazu_cJSON_GetObjectItemCaseSensitive(v1_subject_rules_review_statusJSON, "nonResourceRules");
     if (!non_resource_rules) {
         goto end;
     }
 
     
-    cJSON *non_resource_rules_local_nonprimitive = NULL;
-    if(!cJSON_IsArray(non_resource_rules)){
+    mazu_cJSON *non_resource_rules_local_nonprimitive = NULL;
+    if(!mazu_cJSON_IsArray(non_resource_rules)){
         goto end; //nonprimitive container
     }
 
     non_resource_rulesList = list_createList();
 
-    cJSON_ArrayForEach(non_resource_rules_local_nonprimitive,non_resource_rules )
+    mazu_cJSON_ArrayForEach(non_resource_rules_local_nonprimitive,non_resource_rules )
     {
-        if(!cJSON_IsObject(non_resource_rules_local_nonprimitive)){
+        if(!mazu_cJSON_IsObject(non_resource_rules_local_nonprimitive)){
             goto end;
         }
         v1_non_resource_rule_t *non_resource_rulesItem = v1_non_resource_rule_parseFromJSON(non_resource_rules_local_nonprimitive);
@@ -175,22 +175,22 @@ v1_subject_rules_review_status_t *v1_subject_rules_review_status_parseFromJSON(c
     }
 
     // v1_subject_rules_review_status->resource_rules
-    cJSON *resource_rules = cJSON_GetObjectItemCaseSensitive(v1_subject_rules_review_statusJSON, "resourceRules");
+    mazu_cJSON *resource_rules = mazu_cJSON_GetObjectItemCaseSensitive(v1_subject_rules_review_statusJSON, "resourceRules");
     if (!resource_rules) {
         goto end;
     }
 
     
-    cJSON *resource_rules_local_nonprimitive = NULL;
-    if(!cJSON_IsArray(resource_rules)){
+    mazu_cJSON *resource_rules_local_nonprimitive = NULL;
+    if(!mazu_cJSON_IsArray(resource_rules)){
         goto end; //nonprimitive container
     }
 
     resource_rulesList = list_createList();
 
-    cJSON_ArrayForEach(resource_rules_local_nonprimitive,resource_rules )
+    mazu_cJSON_ArrayForEach(resource_rules_local_nonprimitive,resource_rules )
     {
-        if(!cJSON_IsObject(resource_rules_local_nonprimitive)){
+        if(!mazu_cJSON_IsObject(resource_rules_local_nonprimitive)){
             goto end;
         }
         v1_resource_rule_t *resource_rulesItem = v1_resource_rule_parseFromJSON(resource_rules_local_nonprimitive);
@@ -200,7 +200,7 @@ v1_subject_rules_review_status_t *v1_subject_rules_review_status_parseFromJSON(c
 
 
     v1_subject_rules_review_status_local_var = v1_subject_rules_review_status_create (
-        evaluation_error && !cJSON_IsNull(evaluation_error) ? strdup(evaluation_error->valuestring) : NULL,
+        evaluation_error && !mazu_cJSON_IsNull(evaluation_error) ? strdup(evaluation_error->valuestring) : NULL,
         incomplete->valueint,
         non_resource_rulesList,
         resource_rulesList

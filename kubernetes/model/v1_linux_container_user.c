@@ -37,28 +37,28 @@ void v1_linux_container_user_free(v1_linux_container_user_t *v1_linux_container_
     free(v1_linux_container_user);
 }
 
-cJSON *v1_linux_container_user_convertToJSON(v1_linux_container_user_t *v1_linux_container_user) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_linux_container_user_convertToJSON(v1_linux_container_user_t *v1_linux_container_user) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_linux_container_user->gid
     if (!v1_linux_container_user->gid) {
         goto fail;
     }
-    if(cJSON_AddNumberToObject(item, "gid", v1_linux_container_user->gid) == NULL) {
+    if(mazu_cJSON_AddNumberToObject(item, "gid", v1_linux_container_user->gid) == NULL) {
     goto fail; //Numeric
     }
 
 
     // v1_linux_container_user->supplemental_groups
     if(v1_linux_container_user->supplemental_groups) {
-    cJSON *supplemental_groups = cJSON_AddArrayToObject(item, "supplementalGroups");
+    mazu_cJSON *supplemental_groups = mazu_cJSON_AddArrayToObject(item, "supplementalGroups");
     if(supplemental_groups == NULL) {
         goto fail; //primitive container
     }
 
     listEntry_t *supplemental_groupsListEntry;
     list_ForEach(supplemental_groupsListEntry, v1_linux_container_user->supplemental_groups) {
-    if(cJSON_AddNumberToObject(supplemental_groups, "", *(double *)supplemental_groupsListEntry->data) == NULL)
+    if(mazu_cJSON_AddNumberToObject(supplemental_groups, "", *(double *)supplemental_groupsListEntry->data) == NULL)
     {
         goto fail;
     }
@@ -70,19 +70,19 @@ cJSON *v1_linux_container_user_convertToJSON(v1_linux_container_user_t *v1_linux
     if (!v1_linux_container_user->uid) {
         goto fail;
     }
-    if(cJSON_AddNumberToObject(item, "uid", v1_linux_container_user->uid) == NULL) {
+    if(mazu_cJSON_AddNumberToObject(item, "uid", v1_linux_container_user->uid) == NULL) {
     goto fail; //Numeric
     }
 
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_linux_container_user_t *v1_linux_container_user_parseFromJSON(cJSON *v1_linux_container_userJSON){
+v1_linux_container_user_t *v1_linux_container_user_parseFromJSON(mazu_cJSON *v1_linux_container_userJSON){
 
     v1_linux_container_user_t *v1_linux_container_user_local_var = NULL;
 
@@ -90,29 +90,29 @@ v1_linux_container_user_t *v1_linux_container_user_parseFromJSON(cJSON *v1_linux
     list_t *supplemental_groupsList = NULL;
 
     // v1_linux_container_user->gid
-    cJSON *gid = cJSON_GetObjectItemCaseSensitive(v1_linux_container_userJSON, "gid");
+    mazu_cJSON *gid = mazu_cJSON_GetObjectItemCaseSensitive(v1_linux_container_userJSON, "gid");
     if (!gid) {
         goto end;
     }
 
     
-    if(!cJSON_IsNumber(gid))
+    if(!mazu_cJSON_IsNumber(gid))
     {
     goto end; //Numeric
     }
 
     // v1_linux_container_user->supplemental_groups
-    cJSON *supplemental_groups = cJSON_GetObjectItemCaseSensitive(v1_linux_container_userJSON, "supplementalGroups");
+    mazu_cJSON *supplemental_groups = mazu_cJSON_GetObjectItemCaseSensitive(v1_linux_container_userJSON, "supplementalGroups");
     if (supplemental_groups) { 
-    cJSON *supplemental_groups_local = NULL;
-    if(!cJSON_IsArray(supplemental_groups)) {
+    mazu_cJSON *supplemental_groups_local = NULL;
+    if(!mazu_cJSON_IsArray(supplemental_groups)) {
         goto end;//primitive container
     }
     supplemental_groupsList = list_createList();
 
-    cJSON_ArrayForEach(supplemental_groups_local, supplemental_groups)
+    mazu_cJSON_ArrayForEach(supplemental_groups_local, supplemental_groups)
     {
-        if(!cJSON_IsNumber(supplemental_groups_local))
+        if(!mazu_cJSON_IsNumber(supplemental_groups_local))
         {
             goto end;
         }
@@ -127,13 +127,13 @@ v1_linux_container_user_t *v1_linux_container_user_parseFromJSON(cJSON *v1_linux
     }
 
     // v1_linux_container_user->uid
-    cJSON *uid = cJSON_GetObjectItemCaseSensitive(v1_linux_container_userJSON, "uid");
+    mazu_cJSON *uid = mazu_cJSON_GetObjectItemCaseSensitive(v1_linux_container_userJSON, "uid");
     if (!uid) {
         goto end;
     }
 
     
-    if(!cJSON_IsNumber(uid))
+    if(!mazu_cJSON_IsNumber(uid))
     {
     goto end; //Numeric
     }

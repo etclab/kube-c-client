@@ -38,21 +38,21 @@ void v1_config_map_key_selector_free(v1_config_map_key_selector_t *v1_config_map
     free(v1_config_map_key_selector);
 }
 
-cJSON *v1_config_map_key_selector_convertToJSON(v1_config_map_key_selector_t *v1_config_map_key_selector) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_config_map_key_selector_convertToJSON(v1_config_map_key_selector_t *v1_config_map_key_selector) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_config_map_key_selector->key
     if (!v1_config_map_key_selector->key) {
         goto fail;
     }
-    if(cJSON_AddStringToObject(item, "key", v1_config_map_key_selector->key) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "key", v1_config_map_key_selector->key) == NULL) {
     goto fail; //String
     }
 
 
     // v1_config_map_key_selector->name
     if(v1_config_map_key_selector->name) {
-    if(cJSON_AddStringToObject(item, "name", v1_config_map_key_selector->name) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "name", v1_config_map_key_selector->name) == NULL) {
     goto fail; //String
     }
     }
@@ -60,7 +60,7 @@ cJSON *v1_config_map_key_selector_convertToJSON(v1_config_map_key_selector_t *v1
 
     // v1_config_map_key_selector->optional
     if(v1_config_map_key_selector->optional) {
-    if(cJSON_AddBoolToObject(item, "optional", v1_config_map_key_selector->optional) == NULL) {
+    if(mazu_cJSON_AddBoolToObject(item, "optional", v1_config_map_key_selector->optional) == NULL) {
     goto fail; //Bool
     }
     }
@@ -68,40 +68,40 @@ cJSON *v1_config_map_key_selector_convertToJSON(v1_config_map_key_selector_t *v1
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_config_map_key_selector_t *v1_config_map_key_selector_parseFromJSON(cJSON *v1_config_map_key_selectorJSON){
+v1_config_map_key_selector_t *v1_config_map_key_selector_parseFromJSON(mazu_cJSON *v1_config_map_key_selectorJSON){
 
     v1_config_map_key_selector_t *v1_config_map_key_selector_local_var = NULL;
 
     // v1_config_map_key_selector->key
-    cJSON *key = cJSON_GetObjectItemCaseSensitive(v1_config_map_key_selectorJSON, "key");
+    mazu_cJSON *key = mazu_cJSON_GetObjectItemCaseSensitive(v1_config_map_key_selectorJSON, "key");
     if (!key) {
         goto end;
     }
 
     
-    if(!cJSON_IsString(key))
+    if(!mazu_cJSON_IsString(key))
     {
     goto end; //String
     }
 
     // v1_config_map_key_selector->name
-    cJSON *name = cJSON_GetObjectItemCaseSensitive(v1_config_map_key_selectorJSON, "name");
+    mazu_cJSON *name = mazu_cJSON_GetObjectItemCaseSensitive(v1_config_map_key_selectorJSON, "name");
     if (name) { 
-    if(!cJSON_IsString(name) && !cJSON_IsNull(name))
+    if(!mazu_cJSON_IsString(name) && !mazu_cJSON_IsNull(name))
     {
     goto end; //String
     }
     }
 
     // v1_config_map_key_selector->optional
-    cJSON *optional = cJSON_GetObjectItemCaseSensitive(v1_config_map_key_selectorJSON, "optional");
+    mazu_cJSON *optional = mazu_cJSON_GetObjectItemCaseSensitive(v1_config_map_key_selectorJSON, "optional");
     if (optional) { 
-    if(!cJSON_IsBool(optional))
+    if(!mazu_cJSON_IsBool(optional))
     {
     goto end; //Bool
     }
@@ -110,7 +110,7 @@ v1_config_map_key_selector_t *v1_config_map_key_selector_parseFromJSON(cJSON *v1
 
     v1_config_map_key_selector_local_var = v1_config_map_key_selector_create (
         strdup(key->valuestring),
-        name && !cJSON_IsNull(name) ? strdup(name->valuestring) : NULL,
+        name && !mazu_cJSON_IsNull(name) ? strdup(name->valuestring) : NULL,
         optional ? optional->valueint : 0
         );
 

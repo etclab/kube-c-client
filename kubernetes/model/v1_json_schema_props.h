@@ -8,7 +8,7 @@
 #define _v1_json_schema_props_H_
 
 #include <string.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
 #include "../include/binary.h"
@@ -118,9 +118,9 @@ v1_json_schema_props_t *v1_json_schema_props_create(
 
 void v1_json_schema_props_free(v1_json_schema_props_t *v1_json_schema_props);
 
-v1_json_schema_props_t *v1_json_schema_props_parseFromJSON(cJSON *v1_json_schema_propsJSON);
+v1_json_schema_props_t *v1_json_schema_props_parseFromJSON(mazu_cJSON *v1_json_schema_propsJSON);
 
-cJSON *v1_json_schema_props_convertToJSON(v1_json_schema_props_t *v1_json_schema_props);
+mazu_cJSON *v1_json_schema_props_convertToJSON(v1_json_schema_props_t *v1_json_schema_props);
 
 #endif /* _v1_json_schema_props_H_ */
 

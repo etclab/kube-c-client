@@ -36,25 +36,25 @@ void v2_metric_identifier_free(v2_metric_identifier_t *v2_metric_identifier) {
     free(v2_metric_identifier);
 }
 
-cJSON *v2_metric_identifier_convertToJSON(v2_metric_identifier_t *v2_metric_identifier) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v2_metric_identifier_convertToJSON(v2_metric_identifier_t *v2_metric_identifier) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v2_metric_identifier->name
     if (!v2_metric_identifier->name) {
         goto fail;
     }
-    if(cJSON_AddStringToObject(item, "name", v2_metric_identifier->name) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "name", v2_metric_identifier->name) == NULL) {
     goto fail; //String
     }
 
 
     // v2_metric_identifier->selector
     if(v2_metric_identifier->selector) {
-    cJSON *selector_local_JSON = v1_label_selector_convertToJSON(v2_metric_identifier->selector);
+    mazu_cJSON *selector_local_JSON = v1_label_selector_convertToJSON(v2_metric_identifier->selector);
     if(selector_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "selector", selector_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "selector", selector_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -63,12 +63,12 @@ cJSON *v2_metric_identifier_convertToJSON(v2_metric_identifier_t *v2_metric_iden
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v2_metric_identifier_t *v2_metric_identifier_parseFromJSON(cJSON *v2_metric_identifierJSON){
+v2_metric_identifier_t *v2_metric_identifier_parseFromJSON(mazu_cJSON *v2_metric_identifierJSON){
 
     v2_metric_identifier_t *v2_metric_identifier_local_var = NULL;
 
@@ -76,19 +76,19 @@ v2_metric_identifier_t *v2_metric_identifier_parseFromJSON(cJSON *v2_metric_iden
     v1_label_selector_t *selector_local_nonprim = NULL;
 
     // v2_metric_identifier->name
-    cJSON *name = cJSON_GetObjectItemCaseSensitive(v2_metric_identifierJSON, "name");
+    mazu_cJSON *name = mazu_cJSON_GetObjectItemCaseSensitive(v2_metric_identifierJSON, "name");
     if (!name) {
         goto end;
     }
 
     
-    if(!cJSON_IsString(name))
+    if(!mazu_cJSON_IsString(name))
     {
     goto end; //String
     }
 
     // v2_metric_identifier->selector
-    cJSON *selector = cJSON_GetObjectItemCaseSensitive(v2_metric_identifierJSON, "selector");
+    mazu_cJSON *selector = mazu_cJSON_GetObjectItemCaseSensitive(v2_metric_identifierJSON, "selector");
     if (selector) { 
     selector_local_nonprim = v1_label_selector_parseFromJSON(selector); //nonprimitive
     }

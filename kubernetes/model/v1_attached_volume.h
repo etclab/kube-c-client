@@ -8,7 +8,7 @@
 #define _v1_attached_volume_H_
 
 #include <string.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
 #include "../include/binary.h"
@@ -31,9 +31,9 @@ v1_attached_volume_t *v1_attached_volume_create(
 
 void v1_attached_volume_free(v1_attached_volume_t *v1_attached_volume);
 
-v1_attached_volume_t *v1_attached_volume_parseFromJSON(cJSON *v1_attached_volumeJSON);
+v1_attached_volume_t *v1_attached_volume_parseFromJSON(mazu_cJSON *v1_attached_volumeJSON);
 
-cJSON *v1_attached_volume_convertToJSON(v1_attached_volume_t *v1_attached_volume);
+mazu_cJSON *v1_attached_volume_convertToJSON(v1_attached_volume_t *v1_attached_volume);
 
 #endif /* _v1_attached_volume_H_ */
 

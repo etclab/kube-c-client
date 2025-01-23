@@ -8,7 +8,7 @@
 #define _v1_network_policy_ingress_rule_H_
 
 #include <string.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
 #include "../include/binary.h"
@@ -33,9 +33,9 @@ v1_network_policy_ingress_rule_t *v1_network_policy_ingress_rule_create(
 
 void v1_network_policy_ingress_rule_free(v1_network_policy_ingress_rule_t *v1_network_policy_ingress_rule);
 
-v1_network_policy_ingress_rule_t *v1_network_policy_ingress_rule_parseFromJSON(cJSON *v1_network_policy_ingress_ruleJSON);
+v1_network_policy_ingress_rule_t *v1_network_policy_ingress_rule_parseFromJSON(mazu_cJSON *v1_network_policy_ingress_ruleJSON);
 
-cJSON *v1_network_policy_ingress_rule_convertToJSON(v1_network_policy_ingress_rule_t *v1_network_policy_ingress_rule);
+mazu_cJSON *v1_network_policy_ingress_rule_convertToJSON(v1_network_policy_ingress_rule_t *v1_network_policy_ingress_rule);
 
 #endif /* _v1_network_policy_ingress_rule_H_ */
 

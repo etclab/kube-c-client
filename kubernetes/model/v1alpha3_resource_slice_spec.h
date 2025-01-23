@@ -8,7 +8,7 @@
 #define _v1alpha3_resource_slice_spec_H_
 
 #include <string.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
 #include "../include/binary.h"
@@ -42,9 +42,9 @@ v1alpha3_resource_slice_spec_t *v1alpha3_resource_slice_spec_create(
 
 void v1alpha3_resource_slice_spec_free(v1alpha3_resource_slice_spec_t *v1alpha3_resource_slice_spec);
 
-v1alpha3_resource_slice_spec_t *v1alpha3_resource_slice_spec_parseFromJSON(cJSON *v1alpha3_resource_slice_specJSON);
+v1alpha3_resource_slice_spec_t *v1alpha3_resource_slice_spec_parseFromJSON(mazu_cJSON *v1alpha3_resource_slice_specJSON);
 
-cJSON *v1alpha3_resource_slice_spec_convertToJSON(v1alpha3_resource_slice_spec_t *v1alpha3_resource_slice_spec);
+mazu_cJSON *v1alpha3_resource_slice_spec_convertToJSON(v1alpha3_resource_slice_spec_t *v1alpha3_resource_slice_spec);
 
 #endif /* _v1alpha3_resource_slice_spec_H_ */
 

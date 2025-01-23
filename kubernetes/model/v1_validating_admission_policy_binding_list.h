@@ -8,7 +8,7 @@
 #define _v1_validating_admission_policy_binding_list_H_
 
 #include <string.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
 #include "../include/binary.h"
@@ -37,9 +37,9 @@ v1_validating_admission_policy_binding_list_t *v1_validating_admission_policy_bi
 
 void v1_validating_admission_policy_binding_list_free(v1_validating_admission_policy_binding_list_t *v1_validating_admission_policy_binding_list);
 
-v1_validating_admission_policy_binding_list_t *v1_validating_admission_policy_binding_list_parseFromJSON(cJSON *v1_validating_admission_policy_binding_listJSON);
+v1_validating_admission_policy_binding_list_t *v1_validating_admission_policy_binding_list_parseFromJSON(mazu_cJSON *v1_validating_admission_policy_binding_listJSON);
 
-cJSON *v1_validating_admission_policy_binding_list_convertToJSON(v1_validating_admission_policy_binding_list_t *v1_validating_admission_policy_binding_list);
+mazu_cJSON *v1_validating_admission_policy_binding_list_convertToJSON(v1_validating_admission_policy_binding_list_t *v1_validating_admission_policy_binding_list);
 
 #endif /* _v1_validating_admission_policy_binding_list_H_ */
 

@@ -36,12 +36,12 @@ void v1_stateful_set_persistent_volume_claim_retention_policy_free(v1_stateful_s
     free(v1_stateful_set_persistent_volume_claim_retention_policy);
 }
 
-cJSON *v1_stateful_set_persistent_volume_claim_retention_policy_convertToJSON(v1_stateful_set_persistent_volume_claim_retention_policy_t *v1_stateful_set_persistent_volume_claim_retention_policy) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_stateful_set_persistent_volume_claim_retention_policy_convertToJSON(v1_stateful_set_persistent_volume_claim_retention_policy_t *v1_stateful_set_persistent_volume_claim_retention_policy) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_stateful_set_persistent_volume_claim_retention_policy->when_deleted
     if(v1_stateful_set_persistent_volume_claim_retention_policy->when_deleted) {
-    if(cJSON_AddStringToObject(item, "whenDeleted", v1_stateful_set_persistent_volume_claim_retention_policy->when_deleted) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "whenDeleted", v1_stateful_set_persistent_volume_claim_retention_policy->when_deleted) == NULL) {
     goto fail; //String
     }
     }
@@ -49,7 +49,7 @@ cJSON *v1_stateful_set_persistent_volume_claim_retention_policy_convertToJSON(v1
 
     // v1_stateful_set_persistent_volume_claim_retention_policy->when_scaled
     if(v1_stateful_set_persistent_volume_claim_retention_policy->when_scaled) {
-    if(cJSON_AddStringToObject(item, "whenScaled", v1_stateful_set_persistent_volume_claim_retention_policy->when_scaled) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "whenScaled", v1_stateful_set_persistent_volume_claim_retention_policy->when_scaled) == NULL) {
     goto fail; //String
     }
     }
@@ -57,28 +57,28 @@ cJSON *v1_stateful_set_persistent_volume_claim_retention_policy_convertToJSON(v1
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_stateful_set_persistent_volume_claim_retention_policy_t *v1_stateful_set_persistent_volume_claim_retention_policy_parseFromJSON(cJSON *v1_stateful_set_persistent_volume_claim_retention_policyJSON){
+v1_stateful_set_persistent_volume_claim_retention_policy_t *v1_stateful_set_persistent_volume_claim_retention_policy_parseFromJSON(mazu_cJSON *v1_stateful_set_persistent_volume_claim_retention_policyJSON){
 
     v1_stateful_set_persistent_volume_claim_retention_policy_t *v1_stateful_set_persistent_volume_claim_retention_policy_local_var = NULL;
 
     // v1_stateful_set_persistent_volume_claim_retention_policy->when_deleted
-    cJSON *when_deleted = cJSON_GetObjectItemCaseSensitive(v1_stateful_set_persistent_volume_claim_retention_policyJSON, "whenDeleted");
+    mazu_cJSON *when_deleted = mazu_cJSON_GetObjectItemCaseSensitive(v1_stateful_set_persistent_volume_claim_retention_policyJSON, "whenDeleted");
     if (when_deleted) { 
-    if(!cJSON_IsString(when_deleted) && !cJSON_IsNull(when_deleted))
+    if(!mazu_cJSON_IsString(when_deleted) && !mazu_cJSON_IsNull(when_deleted))
     {
     goto end; //String
     }
     }
 
     // v1_stateful_set_persistent_volume_claim_retention_policy->when_scaled
-    cJSON *when_scaled = cJSON_GetObjectItemCaseSensitive(v1_stateful_set_persistent_volume_claim_retention_policyJSON, "whenScaled");
+    mazu_cJSON *when_scaled = mazu_cJSON_GetObjectItemCaseSensitive(v1_stateful_set_persistent_volume_claim_retention_policyJSON, "whenScaled");
     if (when_scaled) { 
-    if(!cJSON_IsString(when_scaled) && !cJSON_IsNull(when_scaled))
+    if(!mazu_cJSON_IsString(when_scaled) && !mazu_cJSON_IsNull(when_scaled))
     {
     goto end; //String
     }
@@ -86,8 +86,8 @@ v1_stateful_set_persistent_volume_claim_retention_policy_t *v1_stateful_set_pers
 
 
     v1_stateful_set_persistent_volume_claim_retention_policy_local_var = v1_stateful_set_persistent_volume_claim_retention_policy_create (
-        when_deleted && !cJSON_IsNull(when_deleted) ? strdup(when_deleted->valuestring) : NULL,
-        when_scaled && !cJSON_IsNull(when_scaled) ? strdup(when_scaled->valuestring) : NULL
+        when_deleted && !mazu_cJSON_IsNull(when_deleted) ? strdup(when_deleted->valuestring) : NULL,
+        when_scaled && !mazu_cJSON_IsNull(when_scaled) ? strdup(when_scaled->valuestring) : NULL
         );
 
     return v1_stateful_set_persistent_volume_claim_retention_policy_local_var;

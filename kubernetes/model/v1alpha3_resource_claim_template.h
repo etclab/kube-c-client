@@ -8,7 +8,7 @@
 #define _v1alpha3_resource_claim_template_H_
 
 #include <string.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
 #include "../include/binary.h"
@@ -37,9 +37,9 @@ v1alpha3_resource_claim_template_t *v1alpha3_resource_claim_template_create(
 
 void v1alpha3_resource_claim_template_free(v1alpha3_resource_claim_template_t *v1alpha3_resource_claim_template);
 
-v1alpha3_resource_claim_template_t *v1alpha3_resource_claim_template_parseFromJSON(cJSON *v1alpha3_resource_claim_templateJSON);
+v1alpha3_resource_claim_template_t *v1alpha3_resource_claim_template_parseFromJSON(mazu_cJSON *v1alpha3_resource_claim_templateJSON);
 
-cJSON *v1alpha3_resource_claim_template_convertToJSON(v1alpha3_resource_claim_template_t *v1alpha3_resource_claim_template);
+mazu_cJSON *v1alpha3_resource_claim_template_convertToJSON(v1alpha3_resource_claim_template_t *v1alpha3_resource_claim_template);
 
 #endif /* _v1alpha3_resource_claim_template_H_ */
 

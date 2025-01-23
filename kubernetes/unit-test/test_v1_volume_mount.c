@@ -11,7 +11,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdbool.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 
 #include "../model/v1_volume_mount.h"
 v1_volume_mount_t* instantiate_v1_volume_mount(int include_optional);
@@ -51,11 +51,11 @@ v1_volume_mount_t* instantiate_v1_volume_mount(int include_optional) {
 void test_v1_volume_mount(int include_optional) {
     v1_volume_mount_t* v1_volume_mount_1 = instantiate_v1_volume_mount(include_optional);
 
-	cJSON* jsonv1_volume_mount_1 = v1_volume_mount_convertToJSON(v1_volume_mount_1);
-	printf("v1_volume_mount :\n%s\n", cJSON_Print(jsonv1_volume_mount_1));
+	mazu_cJSON* jsonv1_volume_mount_1 = v1_volume_mount_convertToJSON(v1_volume_mount_1);
+	printf("v1_volume_mount :\n%s\n", mazu_cJSON_Print(jsonv1_volume_mount_1));
 	v1_volume_mount_t* v1_volume_mount_2 = v1_volume_mount_parseFromJSON(jsonv1_volume_mount_1);
-	cJSON* jsonv1_volume_mount_2 = v1_volume_mount_convertToJSON(v1_volume_mount_2);
-	printf("repeating v1_volume_mount:\n%s\n", cJSON_Print(jsonv1_volume_mount_2));
+	mazu_cJSON* jsonv1_volume_mount_2 = v1_volume_mount_convertToJSON(v1_volume_mount_2);
+	printf("repeating v1_volume_mount:\n%s\n", mazu_cJSON_Print(jsonv1_volume_mount_2));
 }
 
 int main() {

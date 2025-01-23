@@ -8,7 +8,7 @@
 #define _v1_persistent_volume_status_H_
 
 #include <string.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
 #include "../include/binary.h"
@@ -35,9 +35,9 @@ v1_persistent_volume_status_t *v1_persistent_volume_status_create(
 
 void v1_persistent_volume_status_free(v1_persistent_volume_status_t *v1_persistent_volume_status);
 
-v1_persistent_volume_status_t *v1_persistent_volume_status_parseFromJSON(cJSON *v1_persistent_volume_statusJSON);
+v1_persistent_volume_status_t *v1_persistent_volume_status_parseFromJSON(mazu_cJSON *v1_persistent_volume_statusJSON);
 
-cJSON *v1_persistent_volume_status_convertToJSON(v1_persistent_volume_status_t *v1_persistent_volume_status);
+mazu_cJSON *v1_persistent_volume_status_convertToJSON(v1_persistent_volume_status_t *v1_persistent_volume_status);
 
 #endif /* _v1_persistent_volume_status_H_ */
 

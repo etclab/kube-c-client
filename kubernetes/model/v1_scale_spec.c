@@ -26,12 +26,12 @@ void v1_scale_spec_free(v1_scale_spec_t *v1_scale_spec) {
     free(v1_scale_spec);
 }
 
-cJSON *v1_scale_spec_convertToJSON(v1_scale_spec_t *v1_scale_spec) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_scale_spec_convertToJSON(v1_scale_spec_t *v1_scale_spec) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_scale_spec->replicas
     if(v1_scale_spec->replicas) {
-    if(cJSON_AddNumberToObject(item, "replicas", v1_scale_spec->replicas) == NULL) {
+    if(mazu_cJSON_AddNumberToObject(item, "replicas", v1_scale_spec->replicas) == NULL) {
     goto fail; //Numeric
     }
     }
@@ -39,19 +39,19 @@ cJSON *v1_scale_spec_convertToJSON(v1_scale_spec_t *v1_scale_spec) {
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_scale_spec_t *v1_scale_spec_parseFromJSON(cJSON *v1_scale_specJSON){
+v1_scale_spec_t *v1_scale_spec_parseFromJSON(mazu_cJSON *v1_scale_specJSON){
 
     v1_scale_spec_t *v1_scale_spec_local_var = NULL;
 
     // v1_scale_spec->replicas
-    cJSON *replicas = cJSON_GetObjectItemCaseSensitive(v1_scale_specJSON, "replicas");
+    mazu_cJSON *replicas = mazu_cJSON_GetObjectItemCaseSensitive(v1_scale_specJSON, "replicas");
     if (replicas) { 
-    if(!cJSON_IsNumber(replicas))
+    if(!mazu_cJSON_IsNumber(replicas))
     {
     goto end; //Numeric
     }

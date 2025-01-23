@@ -53,9 +53,9 @@ CertificatesAPI_getAPIGroup_7(apiClient_t *apiClient)
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *CertificatesAPIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    mazu_cJSON *CertificatesAPIlocalVarJSON = mazu_cJSON_Parse(apiClient->dataReceived);
     v1_api_group_t *elementToReturn = v1_api_group_parseFromJSON(CertificatesAPIlocalVarJSON);
-    cJSON_Delete(CertificatesAPIlocalVarJSON);
+    mazu_cJSON_Delete(CertificatesAPIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
     }

@@ -33,14 +33,14 @@ void v1_limit_range_spec_free(v1_limit_range_spec_t *v1_limit_range_spec) {
     free(v1_limit_range_spec);
 }
 
-cJSON *v1_limit_range_spec_convertToJSON(v1_limit_range_spec_t *v1_limit_range_spec) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_limit_range_spec_convertToJSON(v1_limit_range_spec_t *v1_limit_range_spec) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_limit_range_spec->limits
     if (!v1_limit_range_spec->limits) {
         goto fail;
     }
-    cJSON *limits = cJSON_AddArrayToObject(item, "limits");
+    mazu_cJSON *limits = mazu_cJSON_AddArrayToObject(item, "limits");
     if(limits == NULL) {
     goto fail; //nonprimitive container
     }
@@ -48,23 +48,23 @@ cJSON *v1_limit_range_spec_convertToJSON(v1_limit_range_spec_t *v1_limit_range_s
     listEntry_t *limitsListEntry;
     if (v1_limit_range_spec->limits) {
     list_ForEach(limitsListEntry, v1_limit_range_spec->limits) {
-    cJSON *itemLocal = v1_limit_range_item_convertToJSON(limitsListEntry->data);
+    mazu_cJSON *itemLocal = v1_limit_range_item_convertToJSON(limitsListEntry->data);
     if(itemLocal == NULL) {
     goto fail;
     }
-    cJSON_AddItemToArray(limits, itemLocal);
+    mazu_cJSON_AddItemToArray(limits, itemLocal);
     }
     }
 
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_limit_range_spec_t *v1_limit_range_spec_parseFromJSON(cJSON *v1_limit_range_specJSON){
+v1_limit_range_spec_t *v1_limit_range_spec_parseFromJSON(mazu_cJSON *v1_limit_range_specJSON){
 
     v1_limit_range_spec_t *v1_limit_range_spec_local_var = NULL;
 
@@ -72,22 +72,22 @@ v1_limit_range_spec_t *v1_limit_range_spec_parseFromJSON(cJSON *v1_limit_range_s
     list_t *limitsList = NULL;
 
     // v1_limit_range_spec->limits
-    cJSON *limits = cJSON_GetObjectItemCaseSensitive(v1_limit_range_specJSON, "limits");
+    mazu_cJSON *limits = mazu_cJSON_GetObjectItemCaseSensitive(v1_limit_range_specJSON, "limits");
     if (!limits) {
         goto end;
     }
 
     
-    cJSON *limits_local_nonprimitive = NULL;
-    if(!cJSON_IsArray(limits)){
+    mazu_cJSON *limits_local_nonprimitive = NULL;
+    if(!mazu_cJSON_IsArray(limits)){
         goto end; //nonprimitive container
     }
 
     limitsList = list_createList();
 
-    cJSON_ArrayForEach(limits_local_nonprimitive,limits )
+    mazu_cJSON_ArrayForEach(limits_local_nonprimitive,limits )
     {
-        if(!cJSON_IsObject(limits_local_nonprimitive)){
+        if(!mazu_cJSON_IsObject(limits_local_nonprimitive)){
             goto end;
         }
         v1_limit_range_item_t *limitsItem = v1_limit_range_item_parseFromJSON(limits_local_nonprimitive);

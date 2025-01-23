@@ -81,12 +81,12 @@ RbacAuthorizationV1API_createClusterRole(apiClient_t *apiClient, v1_cluster_role
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body = NULL;
+    mazu_cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
         localVarSingleItemJSON_body = v1_cluster_role_convertToJSON(body);
-        localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyParameters = mazu_cJSON_Print(localVarSingleItemJSON_body);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
@@ -118,9 +118,9 @@ RbacAuthorizationV1API_createClusterRole(apiClient_t *apiClient, v1_cluster_role
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *RbacAuthorizationV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    mazu_cJSON *RbacAuthorizationV1APIlocalVarJSON = mazu_cJSON_Parse(apiClient->dataReceived);
     v1_cluster_role_t *elementToReturn = v1_cluster_role_parseFromJSON(RbacAuthorizationV1APIlocalVarJSON);
-    cJSON_Delete(RbacAuthorizationV1APIlocalVarJSON);
+    mazu_cJSON_Delete(RbacAuthorizationV1APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
     }
@@ -138,7 +138,7 @@ RbacAuthorizationV1API_createClusterRole(apiClient_t *apiClient, v1_cluster_role
     
     free(localVarPath);
     if (localVarSingleItemJSON_body) {
-        cJSON_Delete(localVarSingleItemJSON_body);
+        mazu_cJSON_Delete(localVarSingleItemJSON_body);
         localVarSingleItemJSON_body = NULL;
     }
     free(localVarBodyParameters);
@@ -266,12 +266,12 @@ RbacAuthorizationV1API_createClusterRoleBinding(apiClient_t *apiClient, v1_clust
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body = NULL;
+    mazu_cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
         localVarSingleItemJSON_body = v1_cluster_role_binding_convertToJSON(body);
-        localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyParameters = mazu_cJSON_Print(localVarSingleItemJSON_body);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
@@ -303,9 +303,9 @@ RbacAuthorizationV1API_createClusterRoleBinding(apiClient_t *apiClient, v1_clust
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *RbacAuthorizationV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    mazu_cJSON *RbacAuthorizationV1APIlocalVarJSON = mazu_cJSON_Parse(apiClient->dataReceived);
     v1_cluster_role_binding_t *elementToReturn = v1_cluster_role_binding_parseFromJSON(RbacAuthorizationV1APIlocalVarJSON);
-    cJSON_Delete(RbacAuthorizationV1APIlocalVarJSON);
+    mazu_cJSON_Delete(RbacAuthorizationV1APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
     }
@@ -323,7 +323,7 @@ RbacAuthorizationV1API_createClusterRoleBinding(apiClient_t *apiClient, v1_clust
     
     free(localVarPath);
     if (localVarSingleItemJSON_body) {
-        cJSON_Delete(localVarSingleItemJSON_body);
+        mazu_cJSON_Delete(localVarSingleItemJSON_body);
         localVarSingleItemJSON_body = NULL;
     }
     free(localVarBodyParameters);
@@ -461,12 +461,12 @@ RbacAuthorizationV1API_createNamespacedRole(apiClient_t *apiClient, char *_names
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body = NULL;
+    mazu_cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
         localVarSingleItemJSON_body = v1_role_convertToJSON(body);
-        localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyParameters = mazu_cJSON_Print(localVarSingleItemJSON_body);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
@@ -498,9 +498,9 @@ RbacAuthorizationV1API_createNamespacedRole(apiClient_t *apiClient, char *_names
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *RbacAuthorizationV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    mazu_cJSON *RbacAuthorizationV1APIlocalVarJSON = mazu_cJSON_Parse(apiClient->dataReceived);
     v1_role_t *elementToReturn = v1_role_parseFromJSON(RbacAuthorizationV1APIlocalVarJSON);
-    cJSON_Delete(RbacAuthorizationV1APIlocalVarJSON);
+    mazu_cJSON_Delete(RbacAuthorizationV1APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
     }
@@ -519,7 +519,7 @@ RbacAuthorizationV1API_createNamespacedRole(apiClient_t *apiClient, char *_names
     free(localVarPath);
     free(localVarToReplace__namespace);
     if (localVarSingleItemJSON_body) {
-        cJSON_Delete(localVarSingleItemJSON_body);
+        mazu_cJSON_Delete(localVarSingleItemJSON_body);
         localVarSingleItemJSON_body = NULL;
     }
     free(localVarBodyParameters);
@@ -657,12 +657,12 @@ RbacAuthorizationV1API_createNamespacedRoleBinding(apiClient_t *apiClient, char 
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body = NULL;
+    mazu_cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
         localVarSingleItemJSON_body = v1_role_binding_convertToJSON(body);
-        localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyParameters = mazu_cJSON_Print(localVarSingleItemJSON_body);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
@@ -694,9 +694,9 @@ RbacAuthorizationV1API_createNamespacedRoleBinding(apiClient_t *apiClient, char 
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *RbacAuthorizationV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    mazu_cJSON *RbacAuthorizationV1APIlocalVarJSON = mazu_cJSON_Parse(apiClient->dataReceived);
     v1_role_binding_t *elementToReturn = v1_role_binding_parseFromJSON(RbacAuthorizationV1APIlocalVarJSON);
-    cJSON_Delete(RbacAuthorizationV1APIlocalVarJSON);
+    mazu_cJSON_Delete(RbacAuthorizationV1APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
     }
@@ -715,7 +715,7 @@ RbacAuthorizationV1API_createNamespacedRoleBinding(apiClient_t *apiClient, char 
     free(localVarPath);
     free(localVarToReplace__namespace);
     if (localVarSingleItemJSON_body) {
-        cJSON_Delete(localVarSingleItemJSON_body);
+        mazu_cJSON_Delete(localVarSingleItemJSON_body);
         localVarSingleItemJSON_body = NULL;
     }
     free(localVarBodyParameters);
@@ -867,12 +867,12 @@ RbacAuthorizationV1API_deleteClusterRole(apiClient_t *apiClient, char *name, cha
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body = NULL;
+    mazu_cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
         localVarSingleItemJSON_body = v1_delete_options_convertToJSON(body);
-        localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyParameters = mazu_cJSON_Print(localVarSingleItemJSON_body);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
@@ -900,9 +900,9 @@ RbacAuthorizationV1API_deleteClusterRole(apiClient_t *apiClient, char *name, cha
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *RbacAuthorizationV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    mazu_cJSON *RbacAuthorizationV1APIlocalVarJSON = mazu_cJSON_Parse(apiClient->dataReceived);
     v1_status_t *elementToReturn = v1_status_parseFromJSON(RbacAuthorizationV1APIlocalVarJSON);
-    cJSON_Delete(RbacAuthorizationV1APIlocalVarJSON);
+    mazu_cJSON_Delete(RbacAuthorizationV1APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
     }
@@ -921,7 +921,7 @@ RbacAuthorizationV1API_deleteClusterRole(apiClient_t *apiClient, char *name, cha
     free(localVarPath);
     free(localVarToReplace_name);
     if (localVarSingleItemJSON_body) {
-        cJSON_Delete(localVarSingleItemJSON_body);
+        mazu_cJSON_Delete(localVarSingleItemJSON_body);
         localVarSingleItemJSON_body = NULL;
     }
     free(localVarBodyParameters);
@@ -1085,12 +1085,12 @@ RbacAuthorizationV1API_deleteClusterRoleBinding(apiClient_t *apiClient, char *na
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body = NULL;
+    mazu_cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
         localVarSingleItemJSON_body = v1_delete_options_convertToJSON(body);
-        localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyParameters = mazu_cJSON_Print(localVarSingleItemJSON_body);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
@@ -1118,9 +1118,9 @@ RbacAuthorizationV1API_deleteClusterRoleBinding(apiClient_t *apiClient, char *na
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *RbacAuthorizationV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    mazu_cJSON *RbacAuthorizationV1APIlocalVarJSON = mazu_cJSON_Parse(apiClient->dataReceived);
     v1_status_t *elementToReturn = v1_status_parseFromJSON(RbacAuthorizationV1APIlocalVarJSON);
-    cJSON_Delete(RbacAuthorizationV1APIlocalVarJSON);
+    mazu_cJSON_Delete(RbacAuthorizationV1APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
     }
@@ -1139,7 +1139,7 @@ RbacAuthorizationV1API_deleteClusterRoleBinding(apiClient_t *apiClient, char *na
     free(localVarPath);
     free(localVarToReplace_name);
     if (localVarSingleItemJSON_body) {
-        cJSON_Delete(localVarSingleItemJSON_body);
+        mazu_cJSON_Delete(localVarSingleItemJSON_body);
         localVarSingleItemJSON_body = NULL;
     }
     free(localVarBodyParameters);
@@ -1392,12 +1392,12 @@ RbacAuthorizationV1API_deleteCollectionClusterRole(apiClient_t *apiClient, char 
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body = NULL;
+    mazu_cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
         localVarSingleItemJSON_body = v1_delete_options_convertToJSON(body);
-        localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyParameters = mazu_cJSON_Print(localVarSingleItemJSON_body);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
@@ -1421,9 +1421,9 @@ RbacAuthorizationV1API_deleteCollectionClusterRole(apiClient_t *apiClient, char 
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *RbacAuthorizationV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    mazu_cJSON *RbacAuthorizationV1APIlocalVarJSON = mazu_cJSON_Parse(apiClient->dataReceived);
     v1_status_t *elementToReturn = v1_status_parseFromJSON(RbacAuthorizationV1APIlocalVarJSON);
-    cJSON_Delete(RbacAuthorizationV1APIlocalVarJSON);
+    mazu_cJSON_Delete(RbacAuthorizationV1APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
     }
@@ -1441,7 +1441,7 @@ RbacAuthorizationV1API_deleteCollectionClusterRole(apiClient_t *apiClient, char 
     
     free(localVarPath);
     if (localVarSingleItemJSON_body) {
-        cJSON_Delete(localVarSingleItemJSON_body);
+        mazu_cJSON_Delete(localVarSingleItemJSON_body);
         localVarSingleItemJSON_body = NULL;
     }
     free(localVarBodyParameters);
@@ -1790,12 +1790,12 @@ RbacAuthorizationV1API_deleteCollectionClusterRoleBinding(apiClient_t *apiClient
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body = NULL;
+    mazu_cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
         localVarSingleItemJSON_body = v1_delete_options_convertToJSON(body);
-        localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyParameters = mazu_cJSON_Print(localVarSingleItemJSON_body);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
@@ -1819,9 +1819,9 @@ RbacAuthorizationV1API_deleteCollectionClusterRoleBinding(apiClient_t *apiClient
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *RbacAuthorizationV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    mazu_cJSON *RbacAuthorizationV1APIlocalVarJSON = mazu_cJSON_Parse(apiClient->dataReceived);
     v1_status_t *elementToReturn = v1_status_parseFromJSON(RbacAuthorizationV1APIlocalVarJSON);
-    cJSON_Delete(RbacAuthorizationV1APIlocalVarJSON);
+    mazu_cJSON_Delete(RbacAuthorizationV1APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
     }
@@ -1839,7 +1839,7 @@ RbacAuthorizationV1API_deleteCollectionClusterRoleBinding(apiClient_t *apiClient
     
     free(localVarPath);
     if (localVarSingleItemJSON_body) {
-        cJSON_Delete(localVarSingleItemJSON_body);
+        mazu_cJSON_Delete(localVarSingleItemJSON_body);
         localVarSingleItemJSON_body = NULL;
     }
     free(localVarBodyParameters);
@@ -2198,12 +2198,12 @@ RbacAuthorizationV1API_deleteCollectionNamespacedRole(apiClient_t *apiClient, ch
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body = NULL;
+    mazu_cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
         localVarSingleItemJSON_body = v1_delete_options_convertToJSON(body);
-        localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyParameters = mazu_cJSON_Print(localVarSingleItemJSON_body);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
@@ -2227,9 +2227,9 @@ RbacAuthorizationV1API_deleteCollectionNamespacedRole(apiClient_t *apiClient, ch
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *RbacAuthorizationV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    mazu_cJSON *RbacAuthorizationV1APIlocalVarJSON = mazu_cJSON_Parse(apiClient->dataReceived);
     v1_status_t *elementToReturn = v1_status_parseFromJSON(RbacAuthorizationV1APIlocalVarJSON);
-    cJSON_Delete(RbacAuthorizationV1APIlocalVarJSON);
+    mazu_cJSON_Delete(RbacAuthorizationV1APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
     }
@@ -2248,7 +2248,7 @@ RbacAuthorizationV1API_deleteCollectionNamespacedRole(apiClient_t *apiClient, ch
     free(localVarPath);
     free(localVarToReplace__namespace);
     if (localVarSingleItemJSON_body) {
-        cJSON_Delete(localVarSingleItemJSON_body);
+        mazu_cJSON_Delete(localVarSingleItemJSON_body);
         localVarSingleItemJSON_body = NULL;
     }
     free(localVarBodyParameters);
@@ -2607,12 +2607,12 @@ RbacAuthorizationV1API_deleteCollectionNamespacedRoleBinding(apiClient_t *apiCli
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body = NULL;
+    mazu_cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
         localVarSingleItemJSON_body = v1_delete_options_convertToJSON(body);
-        localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyParameters = mazu_cJSON_Print(localVarSingleItemJSON_body);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
@@ -2636,9 +2636,9 @@ RbacAuthorizationV1API_deleteCollectionNamespacedRoleBinding(apiClient_t *apiCli
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *RbacAuthorizationV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    mazu_cJSON *RbacAuthorizationV1APIlocalVarJSON = mazu_cJSON_Parse(apiClient->dataReceived);
     v1_status_t *elementToReturn = v1_status_parseFromJSON(RbacAuthorizationV1APIlocalVarJSON);
-    cJSON_Delete(RbacAuthorizationV1APIlocalVarJSON);
+    mazu_cJSON_Delete(RbacAuthorizationV1APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
     }
@@ -2657,7 +2657,7 @@ RbacAuthorizationV1API_deleteCollectionNamespacedRoleBinding(apiClient_t *apiCli
     free(localVarPath);
     free(localVarToReplace__namespace);
     if (localVarSingleItemJSON_body) {
-        cJSON_Delete(localVarSingleItemJSON_body);
+        mazu_cJSON_Delete(localVarSingleItemJSON_body);
         localVarSingleItemJSON_body = NULL;
     }
     free(localVarBodyParameters);
@@ -2927,12 +2927,12 @@ RbacAuthorizationV1API_deleteNamespacedRole(apiClient_t *apiClient, char *name, 
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body = NULL;
+    mazu_cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
         localVarSingleItemJSON_body = v1_delete_options_convertToJSON(body);
-        localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyParameters = mazu_cJSON_Print(localVarSingleItemJSON_body);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
@@ -2960,9 +2960,9 @@ RbacAuthorizationV1API_deleteNamespacedRole(apiClient_t *apiClient, char *name, 
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *RbacAuthorizationV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    mazu_cJSON *RbacAuthorizationV1APIlocalVarJSON = mazu_cJSON_Parse(apiClient->dataReceived);
     v1_status_t *elementToReturn = v1_status_parseFromJSON(RbacAuthorizationV1APIlocalVarJSON);
-    cJSON_Delete(RbacAuthorizationV1APIlocalVarJSON);
+    mazu_cJSON_Delete(RbacAuthorizationV1APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
     }
@@ -2982,7 +2982,7 @@ RbacAuthorizationV1API_deleteNamespacedRole(apiClient_t *apiClient, char *name, 
     free(localVarToReplace_name);
     free(localVarToReplace__namespace);
     if (localVarSingleItemJSON_body) {
-        cJSON_Delete(localVarSingleItemJSON_body);
+        mazu_cJSON_Delete(localVarSingleItemJSON_body);
         localVarSingleItemJSON_body = NULL;
     }
     free(localVarBodyParameters);
@@ -3156,12 +3156,12 @@ RbacAuthorizationV1API_deleteNamespacedRoleBinding(apiClient_t *apiClient, char 
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body = NULL;
+    mazu_cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
         localVarSingleItemJSON_body = v1_delete_options_convertToJSON(body);
-        localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyParameters = mazu_cJSON_Print(localVarSingleItemJSON_body);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
@@ -3189,9 +3189,9 @@ RbacAuthorizationV1API_deleteNamespacedRoleBinding(apiClient_t *apiClient, char 
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *RbacAuthorizationV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    mazu_cJSON *RbacAuthorizationV1APIlocalVarJSON = mazu_cJSON_Parse(apiClient->dataReceived);
     v1_status_t *elementToReturn = v1_status_parseFromJSON(RbacAuthorizationV1APIlocalVarJSON);
-    cJSON_Delete(RbacAuthorizationV1APIlocalVarJSON);
+    mazu_cJSON_Delete(RbacAuthorizationV1APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
     }
@@ -3211,7 +3211,7 @@ RbacAuthorizationV1API_deleteNamespacedRoleBinding(apiClient_t *apiClient, char 
     free(localVarToReplace_name);
     free(localVarToReplace__namespace);
     if (localVarSingleItemJSON_body) {
-        cJSON_Delete(localVarSingleItemJSON_body);
+        mazu_cJSON_Delete(localVarSingleItemJSON_body);
         localVarSingleItemJSON_body = NULL;
     }
     free(localVarBodyParameters);
@@ -3323,9 +3323,9 @@ RbacAuthorizationV1API_getAPIResources_26(apiClient_t *apiClient)
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *RbacAuthorizationV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    mazu_cJSON *RbacAuthorizationV1APIlocalVarJSON = mazu_cJSON_Parse(apiClient->dataReceived);
     v1_api_resource_list_t *elementToReturn = v1_api_resource_list_parseFromJSON(RbacAuthorizationV1APIlocalVarJSON);
-    cJSON_Delete(RbacAuthorizationV1APIlocalVarJSON);
+    mazu_cJSON_Delete(RbacAuthorizationV1APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
     }
@@ -3529,9 +3529,9 @@ RbacAuthorizationV1API_listClusterRole(apiClient_t *apiClient, char *pretty, int
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *RbacAuthorizationV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    mazu_cJSON *RbacAuthorizationV1APIlocalVarJSON = mazu_cJSON_Parse(apiClient->dataReceived);
     v1_cluster_role_list_t *elementToReturn = v1_cluster_role_list_parseFromJSON(RbacAuthorizationV1APIlocalVarJSON);
-    cJSON_Delete(RbacAuthorizationV1APIlocalVarJSON);
+    mazu_cJSON_Delete(RbacAuthorizationV1APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
     }
@@ -3867,9 +3867,9 @@ RbacAuthorizationV1API_listClusterRoleBinding(apiClient_t *apiClient, char *pret
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *RbacAuthorizationV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    mazu_cJSON *RbacAuthorizationV1APIlocalVarJSON = mazu_cJSON_Parse(apiClient->dataReceived);
     v1_cluster_role_binding_list_t *elementToReturn = v1_cluster_role_binding_list_parseFromJSON(RbacAuthorizationV1APIlocalVarJSON);
-    cJSON_Delete(RbacAuthorizationV1APIlocalVarJSON);
+    mazu_cJSON_Delete(RbacAuthorizationV1APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
     }
@@ -4215,9 +4215,9 @@ RbacAuthorizationV1API_listNamespacedRole(apiClient_t *apiClient, char *_namespa
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *RbacAuthorizationV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    mazu_cJSON *RbacAuthorizationV1APIlocalVarJSON = mazu_cJSON_Parse(apiClient->dataReceived);
     v1_role_list_t *elementToReturn = v1_role_list_parseFromJSON(RbacAuthorizationV1APIlocalVarJSON);
-    cJSON_Delete(RbacAuthorizationV1APIlocalVarJSON);
+    mazu_cJSON_Delete(RbacAuthorizationV1APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
     }
@@ -4564,9 +4564,9 @@ RbacAuthorizationV1API_listNamespacedRoleBinding(apiClient_t *apiClient, char *_
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *RbacAuthorizationV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    mazu_cJSON *RbacAuthorizationV1APIlocalVarJSON = mazu_cJSON_Parse(apiClient->dataReceived);
     v1_role_binding_list_t *elementToReturn = v1_role_binding_list_parseFromJSON(RbacAuthorizationV1APIlocalVarJSON);
-    cJSON_Delete(RbacAuthorizationV1APIlocalVarJSON);
+    mazu_cJSON_Delete(RbacAuthorizationV1APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
     }
@@ -4903,9 +4903,9 @@ RbacAuthorizationV1API_listRoleBindingForAllNamespaces(apiClient_t *apiClient, i
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *RbacAuthorizationV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    mazu_cJSON *RbacAuthorizationV1APIlocalVarJSON = mazu_cJSON_Parse(apiClient->dataReceived);
     v1_role_binding_list_t *elementToReturn = v1_role_binding_list_parseFromJSON(RbacAuthorizationV1APIlocalVarJSON);
-    cJSON_Delete(RbacAuthorizationV1APIlocalVarJSON);
+    mazu_cJSON_Delete(RbacAuthorizationV1APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
     }
@@ -5241,9 +5241,9 @@ RbacAuthorizationV1API_listRoleForAllNamespaces(apiClient_t *apiClient, int *all
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *RbacAuthorizationV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    mazu_cJSON *RbacAuthorizationV1APIlocalVarJSON = mazu_cJSON_Parse(apiClient->dataReceived);
     v1_role_list_t *elementToReturn = v1_role_list_parseFromJSON(RbacAuthorizationV1APIlocalVarJSON);
-    cJSON_Delete(RbacAuthorizationV1APIlocalVarJSON);
+    mazu_cJSON_Delete(RbacAuthorizationV1APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
     }
@@ -5491,12 +5491,12 @@ RbacAuthorizationV1API_patchClusterRole(apiClient_t *apiClient, char *name, obje
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body = NULL;
+    mazu_cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
         localVarSingleItemJSON_body = object_convertToJSON(body);
-        localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyParameters = mazu_cJSON_Print(localVarSingleItemJSON_body);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
@@ -5528,9 +5528,9 @@ RbacAuthorizationV1API_patchClusterRole(apiClient_t *apiClient, char *name, obje
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *RbacAuthorizationV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    mazu_cJSON *RbacAuthorizationV1APIlocalVarJSON = mazu_cJSON_Parse(apiClient->dataReceived);
     v1_cluster_role_t *elementToReturn = v1_cluster_role_parseFromJSON(RbacAuthorizationV1APIlocalVarJSON);
-    cJSON_Delete(RbacAuthorizationV1APIlocalVarJSON);
+    mazu_cJSON_Delete(RbacAuthorizationV1APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
     }
@@ -5549,7 +5549,7 @@ RbacAuthorizationV1API_patchClusterRole(apiClient_t *apiClient, char *name, obje
     free(localVarPath);
     free(localVarToReplace_name);
     if (localVarSingleItemJSON_body) {
-        cJSON_Delete(localVarSingleItemJSON_body);
+        mazu_cJSON_Delete(localVarSingleItemJSON_body);
         localVarSingleItemJSON_body = NULL;
     }
     free(localVarBodyParameters);
@@ -5712,12 +5712,12 @@ RbacAuthorizationV1API_patchClusterRoleBinding(apiClient_t *apiClient, char *nam
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body = NULL;
+    mazu_cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
         localVarSingleItemJSON_body = object_convertToJSON(body);
-        localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyParameters = mazu_cJSON_Print(localVarSingleItemJSON_body);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
@@ -5749,9 +5749,9 @@ RbacAuthorizationV1API_patchClusterRoleBinding(apiClient_t *apiClient, char *nam
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *RbacAuthorizationV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    mazu_cJSON *RbacAuthorizationV1APIlocalVarJSON = mazu_cJSON_Parse(apiClient->dataReceived);
     v1_cluster_role_binding_t *elementToReturn = v1_cluster_role_binding_parseFromJSON(RbacAuthorizationV1APIlocalVarJSON);
-    cJSON_Delete(RbacAuthorizationV1APIlocalVarJSON);
+    mazu_cJSON_Delete(RbacAuthorizationV1APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
     }
@@ -5770,7 +5770,7 @@ RbacAuthorizationV1API_patchClusterRoleBinding(apiClient_t *apiClient, char *nam
     free(localVarPath);
     free(localVarToReplace_name);
     if (localVarSingleItemJSON_body) {
-        cJSON_Delete(localVarSingleItemJSON_body);
+        mazu_cJSON_Delete(localVarSingleItemJSON_body);
         localVarSingleItemJSON_body = NULL;
     }
     free(localVarBodyParameters);
@@ -5943,12 +5943,12 @@ RbacAuthorizationV1API_patchNamespacedRole(apiClient_t *apiClient, char *name, c
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body = NULL;
+    mazu_cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
         localVarSingleItemJSON_body = object_convertToJSON(body);
-        localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyParameters = mazu_cJSON_Print(localVarSingleItemJSON_body);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
@@ -5980,9 +5980,9 @@ RbacAuthorizationV1API_patchNamespacedRole(apiClient_t *apiClient, char *name, c
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *RbacAuthorizationV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    mazu_cJSON *RbacAuthorizationV1APIlocalVarJSON = mazu_cJSON_Parse(apiClient->dataReceived);
     v1_role_t *elementToReturn = v1_role_parseFromJSON(RbacAuthorizationV1APIlocalVarJSON);
-    cJSON_Delete(RbacAuthorizationV1APIlocalVarJSON);
+    mazu_cJSON_Delete(RbacAuthorizationV1APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
     }
@@ -6002,7 +6002,7 @@ RbacAuthorizationV1API_patchNamespacedRole(apiClient_t *apiClient, char *name, c
     free(localVarToReplace_name);
     free(localVarToReplace__namespace);
     if (localVarSingleItemJSON_body) {
-        cJSON_Delete(localVarSingleItemJSON_body);
+        mazu_cJSON_Delete(localVarSingleItemJSON_body);
         localVarSingleItemJSON_body = NULL;
     }
     free(localVarBodyParameters);
@@ -6175,12 +6175,12 @@ RbacAuthorizationV1API_patchNamespacedRoleBinding(apiClient_t *apiClient, char *
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body = NULL;
+    mazu_cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
         localVarSingleItemJSON_body = object_convertToJSON(body);
-        localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyParameters = mazu_cJSON_Print(localVarSingleItemJSON_body);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
@@ -6212,9 +6212,9 @@ RbacAuthorizationV1API_patchNamespacedRoleBinding(apiClient_t *apiClient, char *
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *RbacAuthorizationV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    mazu_cJSON *RbacAuthorizationV1APIlocalVarJSON = mazu_cJSON_Parse(apiClient->dataReceived);
     v1_role_binding_t *elementToReturn = v1_role_binding_parseFromJSON(RbacAuthorizationV1APIlocalVarJSON);
-    cJSON_Delete(RbacAuthorizationV1APIlocalVarJSON);
+    mazu_cJSON_Delete(RbacAuthorizationV1APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
     }
@@ -6234,7 +6234,7 @@ RbacAuthorizationV1API_patchNamespacedRoleBinding(apiClient_t *apiClient, char *
     free(localVarToReplace_name);
     free(localVarToReplace__namespace);
     if (localVarSingleItemJSON_body) {
-        cJSON_Delete(localVarSingleItemJSON_body);
+        mazu_cJSON_Delete(localVarSingleItemJSON_body);
         localVarSingleItemJSON_body = NULL;
     }
     free(localVarBodyParameters);
@@ -6368,9 +6368,9 @@ RbacAuthorizationV1API_readClusterRole(apiClient_t *apiClient, char *name, char 
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *RbacAuthorizationV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    mazu_cJSON *RbacAuthorizationV1APIlocalVarJSON = mazu_cJSON_Parse(apiClient->dataReceived);
     v1_cluster_role_t *elementToReturn = v1_cluster_role_parseFromJSON(RbacAuthorizationV1APIlocalVarJSON);
-    cJSON_Delete(RbacAuthorizationV1APIlocalVarJSON);
+    mazu_cJSON_Delete(RbacAuthorizationV1APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
     }
@@ -6470,9 +6470,9 @@ RbacAuthorizationV1API_readClusterRoleBinding(apiClient_t *apiClient, char *name
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *RbacAuthorizationV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    mazu_cJSON *RbacAuthorizationV1APIlocalVarJSON = mazu_cJSON_Parse(apiClient->dataReceived);
     v1_cluster_role_binding_t *elementToReturn = v1_cluster_role_binding_parseFromJSON(RbacAuthorizationV1APIlocalVarJSON);
-    cJSON_Delete(RbacAuthorizationV1APIlocalVarJSON);
+    mazu_cJSON_Delete(RbacAuthorizationV1APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
     }
@@ -6582,9 +6582,9 @@ RbacAuthorizationV1API_readNamespacedRole(apiClient_t *apiClient, char *name, ch
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *RbacAuthorizationV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    mazu_cJSON *RbacAuthorizationV1APIlocalVarJSON = mazu_cJSON_Parse(apiClient->dataReceived);
     v1_role_t *elementToReturn = v1_role_parseFromJSON(RbacAuthorizationV1APIlocalVarJSON);
-    cJSON_Delete(RbacAuthorizationV1APIlocalVarJSON);
+    mazu_cJSON_Delete(RbacAuthorizationV1APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
     }
@@ -6695,9 +6695,9 @@ RbacAuthorizationV1API_readNamespacedRoleBinding(apiClient_t *apiClient, char *n
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *RbacAuthorizationV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    mazu_cJSON *RbacAuthorizationV1APIlocalVarJSON = mazu_cJSON_Parse(apiClient->dataReceived);
     v1_role_binding_t *elementToReturn = v1_role_binding_parseFromJSON(RbacAuthorizationV1APIlocalVarJSON);
-    cJSON_Delete(RbacAuthorizationV1APIlocalVarJSON);
+    mazu_cJSON_Delete(RbacAuthorizationV1APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
     }
@@ -6814,12 +6814,12 @@ RbacAuthorizationV1API_replaceClusterRole(apiClient_t *apiClient, char *name, v1
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body = NULL;
+    mazu_cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
         localVarSingleItemJSON_body = v1_cluster_role_convertToJSON(body);
-        localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyParameters = mazu_cJSON_Print(localVarSingleItemJSON_body);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
@@ -6847,9 +6847,9 @@ RbacAuthorizationV1API_replaceClusterRole(apiClient_t *apiClient, char *name, v1
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *RbacAuthorizationV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    mazu_cJSON *RbacAuthorizationV1APIlocalVarJSON = mazu_cJSON_Parse(apiClient->dataReceived);
     v1_cluster_role_t *elementToReturn = v1_cluster_role_parseFromJSON(RbacAuthorizationV1APIlocalVarJSON);
-    cJSON_Delete(RbacAuthorizationV1APIlocalVarJSON);
+    mazu_cJSON_Delete(RbacAuthorizationV1APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
     }
@@ -6868,7 +6868,7 @@ RbacAuthorizationV1API_replaceClusterRole(apiClient_t *apiClient, char *name, v1
     free(localVarPath);
     free(localVarToReplace_name);
     if (localVarSingleItemJSON_body) {
-        cJSON_Delete(localVarSingleItemJSON_body);
+        mazu_cJSON_Delete(localVarSingleItemJSON_body);
         localVarSingleItemJSON_body = NULL;
     }
     free(localVarBodyParameters);
@@ -7006,12 +7006,12 @@ RbacAuthorizationV1API_replaceClusterRoleBinding(apiClient_t *apiClient, char *n
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body = NULL;
+    mazu_cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
         localVarSingleItemJSON_body = v1_cluster_role_binding_convertToJSON(body);
-        localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyParameters = mazu_cJSON_Print(localVarSingleItemJSON_body);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
@@ -7039,9 +7039,9 @@ RbacAuthorizationV1API_replaceClusterRoleBinding(apiClient_t *apiClient, char *n
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *RbacAuthorizationV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    mazu_cJSON *RbacAuthorizationV1APIlocalVarJSON = mazu_cJSON_Parse(apiClient->dataReceived);
     v1_cluster_role_binding_t *elementToReturn = v1_cluster_role_binding_parseFromJSON(RbacAuthorizationV1APIlocalVarJSON);
-    cJSON_Delete(RbacAuthorizationV1APIlocalVarJSON);
+    mazu_cJSON_Delete(RbacAuthorizationV1APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
     }
@@ -7060,7 +7060,7 @@ RbacAuthorizationV1API_replaceClusterRoleBinding(apiClient_t *apiClient, char *n
     free(localVarPath);
     free(localVarToReplace_name);
     if (localVarSingleItemJSON_body) {
-        cJSON_Delete(localVarSingleItemJSON_body);
+        mazu_cJSON_Delete(localVarSingleItemJSON_body);
         localVarSingleItemJSON_body = NULL;
     }
     free(localVarBodyParameters);
@@ -7208,12 +7208,12 @@ RbacAuthorizationV1API_replaceNamespacedRole(apiClient_t *apiClient, char *name,
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body = NULL;
+    mazu_cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
         localVarSingleItemJSON_body = v1_role_convertToJSON(body);
-        localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyParameters = mazu_cJSON_Print(localVarSingleItemJSON_body);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
@@ -7241,9 +7241,9 @@ RbacAuthorizationV1API_replaceNamespacedRole(apiClient_t *apiClient, char *name,
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *RbacAuthorizationV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    mazu_cJSON *RbacAuthorizationV1APIlocalVarJSON = mazu_cJSON_Parse(apiClient->dataReceived);
     v1_role_t *elementToReturn = v1_role_parseFromJSON(RbacAuthorizationV1APIlocalVarJSON);
-    cJSON_Delete(RbacAuthorizationV1APIlocalVarJSON);
+    mazu_cJSON_Delete(RbacAuthorizationV1APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
     }
@@ -7263,7 +7263,7 @@ RbacAuthorizationV1API_replaceNamespacedRole(apiClient_t *apiClient, char *name,
     free(localVarToReplace_name);
     free(localVarToReplace__namespace);
     if (localVarSingleItemJSON_body) {
-        cJSON_Delete(localVarSingleItemJSON_body);
+        mazu_cJSON_Delete(localVarSingleItemJSON_body);
         localVarSingleItemJSON_body = NULL;
     }
     free(localVarBodyParameters);
@@ -7411,12 +7411,12 @@ RbacAuthorizationV1API_replaceNamespacedRoleBinding(apiClient_t *apiClient, char
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body = NULL;
+    mazu_cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
         localVarSingleItemJSON_body = v1_role_binding_convertToJSON(body);
-        localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyParameters = mazu_cJSON_Print(localVarSingleItemJSON_body);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
@@ -7444,9 +7444,9 @@ RbacAuthorizationV1API_replaceNamespacedRoleBinding(apiClient_t *apiClient, char
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *RbacAuthorizationV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    mazu_cJSON *RbacAuthorizationV1APIlocalVarJSON = mazu_cJSON_Parse(apiClient->dataReceived);
     v1_role_binding_t *elementToReturn = v1_role_binding_parseFromJSON(RbacAuthorizationV1APIlocalVarJSON);
-    cJSON_Delete(RbacAuthorizationV1APIlocalVarJSON);
+    mazu_cJSON_Delete(RbacAuthorizationV1APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
     }
@@ -7466,7 +7466,7 @@ RbacAuthorizationV1API_replaceNamespacedRoleBinding(apiClient_t *apiClient, char
     free(localVarToReplace_name);
     free(localVarToReplace__namespace);
     if (localVarSingleItemJSON_body) {
-        cJSON_Delete(localVarSingleItemJSON_body);
+        mazu_cJSON_Delete(localVarSingleItemJSON_body);
         localVarSingleItemJSON_body = NULL;
     }
     free(localVarBodyParameters);

@@ -57,12 +57,12 @@ void v1_http_get_action_free(v1_http_get_action_t *v1_http_get_action) {
     free(v1_http_get_action);
 }
 
-cJSON *v1_http_get_action_convertToJSON(v1_http_get_action_t *v1_http_get_action) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_http_get_action_convertToJSON(v1_http_get_action_t *v1_http_get_action) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_http_get_action->host
     if(v1_http_get_action->host) {
-    if(cJSON_AddStringToObject(item, "host", v1_http_get_action->host) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "host", v1_http_get_action->host) == NULL) {
     goto fail; //String
     }
     }
@@ -70,7 +70,7 @@ cJSON *v1_http_get_action_convertToJSON(v1_http_get_action_t *v1_http_get_action
 
     // v1_http_get_action->http_headers
     if(v1_http_get_action->http_headers) {
-    cJSON *http_headers = cJSON_AddArrayToObject(item, "httpHeaders");
+    mazu_cJSON *http_headers = mazu_cJSON_AddArrayToObject(item, "httpHeaders");
     if(http_headers == NULL) {
     goto fail; //nonprimitive container
     }
@@ -78,11 +78,11 @@ cJSON *v1_http_get_action_convertToJSON(v1_http_get_action_t *v1_http_get_action
     listEntry_t *http_headersListEntry;
     if (v1_http_get_action->http_headers) {
     list_ForEach(http_headersListEntry, v1_http_get_action->http_headers) {
-    cJSON *itemLocal = v1_http_header_convertToJSON(http_headersListEntry->data);
+    mazu_cJSON *itemLocal = v1_http_header_convertToJSON(http_headersListEntry->data);
     if(itemLocal == NULL) {
     goto fail;
     }
-    cJSON_AddItemToArray(http_headers, itemLocal);
+    mazu_cJSON_AddItemToArray(http_headers, itemLocal);
     }
     }
     }
@@ -90,7 +90,7 @@ cJSON *v1_http_get_action_convertToJSON(v1_http_get_action_t *v1_http_get_action
 
     // v1_http_get_action->path
     if(v1_http_get_action->path) {
-    if(cJSON_AddStringToObject(item, "path", v1_http_get_action->path) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "path", v1_http_get_action->path) == NULL) {
     goto fail; //String
     }
     }
@@ -100,11 +100,11 @@ cJSON *v1_http_get_action_convertToJSON(v1_http_get_action_t *v1_http_get_action
     if (!v1_http_get_action->port) {
         goto fail;
     }
-    cJSON *port_local_JSON = int_or_string_convertToJSON(v1_http_get_action->port);
+    mazu_cJSON *port_local_JSON = int_or_string_convertToJSON(v1_http_get_action->port);
     if(port_local_JSON == NULL) {
         goto fail; // custom
     }
-    cJSON_AddItemToObject(item, "port", port_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "port", port_local_JSON);
     if(item->child == NULL) {
         goto fail;
     }
@@ -112,7 +112,7 @@ cJSON *v1_http_get_action_convertToJSON(v1_http_get_action_t *v1_http_get_action
 
     // v1_http_get_action->scheme
     if(v1_http_get_action->scheme) {
-    if(cJSON_AddStringToObject(item, "scheme", v1_http_get_action->scheme) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "scheme", v1_http_get_action->scheme) == NULL) {
     goto fail; //String
     }
     }
@@ -120,12 +120,12 @@ cJSON *v1_http_get_action_convertToJSON(v1_http_get_action_t *v1_http_get_action
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_http_get_action_t *v1_http_get_action_parseFromJSON(cJSON *v1_http_get_actionJSON){
+v1_http_get_action_t *v1_http_get_action_parseFromJSON(mazu_cJSON *v1_http_get_actionJSON){
 
     v1_http_get_action_t *v1_http_get_action_local_var = NULL;
 
@@ -136,27 +136,27 @@ v1_http_get_action_t *v1_http_get_action_parseFromJSON(cJSON *v1_http_get_action
     int_or_string_t *port_local_nonprim = NULL;
 
     // v1_http_get_action->host
-    cJSON *host = cJSON_GetObjectItemCaseSensitive(v1_http_get_actionJSON, "host");
+    mazu_cJSON *host = mazu_cJSON_GetObjectItemCaseSensitive(v1_http_get_actionJSON, "host");
     if (host) { 
-    if(!cJSON_IsString(host) && !cJSON_IsNull(host))
+    if(!mazu_cJSON_IsString(host) && !mazu_cJSON_IsNull(host))
     {
     goto end; //String
     }
     }
 
     // v1_http_get_action->http_headers
-    cJSON *http_headers = cJSON_GetObjectItemCaseSensitive(v1_http_get_actionJSON, "httpHeaders");
+    mazu_cJSON *http_headers = mazu_cJSON_GetObjectItemCaseSensitive(v1_http_get_actionJSON, "httpHeaders");
     if (http_headers) { 
-    cJSON *http_headers_local_nonprimitive = NULL;
-    if(!cJSON_IsArray(http_headers)){
+    mazu_cJSON *http_headers_local_nonprimitive = NULL;
+    if(!mazu_cJSON_IsArray(http_headers)){
         goto end; //nonprimitive container
     }
 
     http_headersList = list_createList();
 
-    cJSON_ArrayForEach(http_headers_local_nonprimitive,http_headers )
+    mazu_cJSON_ArrayForEach(http_headers_local_nonprimitive,http_headers )
     {
-        if(!cJSON_IsObject(http_headers_local_nonprimitive)){
+        if(!mazu_cJSON_IsObject(http_headers_local_nonprimitive)){
             goto end;
         }
         v1_http_header_t *http_headersItem = v1_http_header_parseFromJSON(http_headers_local_nonprimitive);
@@ -166,16 +166,16 @@ v1_http_get_action_t *v1_http_get_action_parseFromJSON(cJSON *v1_http_get_action
     }
 
     // v1_http_get_action->path
-    cJSON *path = cJSON_GetObjectItemCaseSensitive(v1_http_get_actionJSON, "path");
+    mazu_cJSON *path = mazu_cJSON_GetObjectItemCaseSensitive(v1_http_get_actionJSON, "path");
     if (path) { 
-    if(!cJSON_IsString(path) && !cJSON_IsNull(path))
+    if(!mazu_cJSON_IsString(path) && !mazu_cJSON_IsNull(path))
     {
     goto end; //String
     }
     }
 
     // v1_http_get_action->port
-    cJSON *port = cJSON_GetObjectItemCaseSensitive(v1_http_get_actionJSON, "port");
+    mazu_cJSON *port = mazu_cJSON_GetObjectItemCaseSensitive(v1_http_get_actionJSON, "port");
     if (!port) {
         goto end;
     }
@@ -184,9 +184,9 @@ v1_http_get_action_t *v1_http_get_action_parseFromJSON(cJSON *v1_http_get_action
     port_local_nonprim = int_or_string_parseFromJSON(port); //custom
 
     // v1_http_get_action->scheme
-    cJSON *scheme = cJSON_GetObjectItemCaseSensitive(v1_http_get_actionJSON, "scheme");
+    mazu_cJSON *scheme = mazu_cJSON_GetObjectItemCaseSensitive(v1_http_get_actionJSON, "scheme");
     if (scheme) { 
-    if(!cJSON_IsString(scheme) && !cJSON_IsNull(scheme))
+    if(!mazu_cJSON_IsString(scheme) && !mazu_cJSON_IsNull(scheme))
     {
     goto end; //String
     }
@@ -194,11 +194,11 @@ v1_http_get_action_t *v1_http_get_action_parseFromJSON(cJSON *v1_http_get_action
 
 
     v1_http_get_action_local_var = v1_http_get_action_create (
-        host && !cJSON_IsNull(host) ? strdup(host->valuestring) : NULL,
+        host && !mazu_cJSON_IsNull(host) ? strdup(host->valuestring) : NULL,
         http_headers ? http_headersList : NULL,
-        path && !cJSON_IsNull(path) ? strdup(path->valuestring) : NULL,
+        path && !mazu_cJSON_IsNull(path) ? strdup(path->valuestring) : NULL,
         port_local_nonprim,
-        scheme && !cJSON_IsNull(scheme) ? strdup(scheme->valuestring) : NULL
+        scheme && !mazu_cJSON_IsNull(scheme) ? strdup(scheme->valuestring) : NULL
         );
 
     return v1_http_get_action_local_var;

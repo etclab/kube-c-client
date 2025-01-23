@@ -8,7 +8,7 @@
 #define _v1_role_H_
 
 #include <string.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
 #include "../include/binary.h"
@@ -37,9 +37,9 @@ v1_role_t *v1_role_create(
 
 void v1_role_free(v1_role_t *v1_role);
 
-v1_role_t *v1_role_parseFromJSON(cJSON *v1_roleJSON);
+v1_role_t *v1_role_parseFromJSON(mazu_cJSON *v1_roleJSON);
 
-cJSON *v1_role_convertToJSON(v1_role_t *v1_role);
+mazu_cJSON *v1_role_convertToJSON(v1_role_t *v1_role);
 
 #endif /* _v1_role_H_ */
 

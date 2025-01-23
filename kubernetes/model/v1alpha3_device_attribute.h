@@ -8,7 +8,7 @@
 #define _v1alpha3_device_attribute_H_
 
 #include <string.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
 #include "../include/binary.h"
@@ -35,9 +35,9 @@ v1alpha3_device_attribute_t *v1alpha3_device_attribute_create(
 
 void v1alpha3_device_attribute_free(v1alpha3_device_attribute_t *v1alpha3_device_attribute);
 
-v1alpha3_device_attribute_t *v1alpha3_device_attribute_parseFromJSON(cJSON *v1alpha3_device_attributeJSON);
+v1alpha3_device_attribute_t *v1alpha3_device_attribute_parseFromJSON(mazu_cJSON *v1alpha3_device_attributeJSON);
 
-cJSON *v1alpha3_device_attribute_convertToJSON(v1alpha3_device_attribute_t *v1alpha3_device_attribute);
+mazu_cJSON *v1alpha3_device_attribute_convertToJSON(v1alpha3_device_attribute_t *v1alpha3_device_attribute);
 
 #endif /* _v1alpha3_device_attribute_H_ */
 

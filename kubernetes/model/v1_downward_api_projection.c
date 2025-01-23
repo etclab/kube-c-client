@@ -33,12 +33,12 @@ void v1_downward_api_projection_free(v1_downward_api_projection_t *v1_downward_a
     free(v1_downward_api_projection);
 }
 
-cJSON *v1_downward_api_projection_convertToJSON(v1_downward_api_projection_t *v1_downward_api_projection) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_downward_api_projection_convertToJSON(v1_downward_api_projection_t *v1_downward_api_projection) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_downward_api_projection->items
     if(v1_downward_api_projection->items) {
-    cJSON *items = cJSON_AddArrayToObject(item, "items");
+    mazu_cJSON *items = mazu_cJSON_AddArrayToObject(item, "items");
     if(items == NULL) {
     goto fail; //nonprimitive container
     }
@@ -46,11 +46,11 @@ cJSON *v1_downward_api_projection_convertToJSON(v1_downward_api_projection_t *v1
     listEntry_t *itemsListEntry;
     if (v1_downward_api_projection->items) {
     list_ForEach(itemsListEntry, v1_downward_api_projection->items) {
-    cJSON *itemLocal = v1_downward_api_volume_file_convertToJSON(itemsListEntry->data);
+    mazu_cJSON *itemLocal = v1_downward_api_volume_file_convertToJSON(itemsListEntry->data);
     if(itemLocal == NULL) {
     goto fail;
     }
-    cJSON_AddItemToArray(items, itemLocal);
+    mazu_cJSON_AddItemToArray(items, itemLocal);
     }
     }
     }
@@ -58,12 +58,12 @@ cJSON *v1_downward_api_projection_convertToJSON(v1_downward_api_projection_t *v1
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_downward_api_projection_t *v1_downward_api_projection_parseFromJSON(cJSON *v1_downward_api_projectionJSON){
+v1_downward_api_projection_t *v1_downward_api_projection_parseFromJSON(mazu_cJSON *v1_downward_api_projectionJSON){
 
     v1_downward_api_projection_t *v1_downward_api_projection_local_var = NULL;
 
@@ -71,18 +71,18 @@ v1_downward_api_projection_t *v1_downward_api_projection_parseFromJSON(cJSON *v1
     list_t *itemsList = NULL;
 
     // v1_downward_api_projection->items
-    cJSON *items = cJSON_GetObjectItemCaseSensitive(v1_downward_api_projectionJSON, "items");
+    mazu_cJSON *items = mazu_cJSON_GetObjectItemCaseSensitive(v1_downward_api_projectionJSON, "items");
     if (items) { 
-    cJSON *items_local_nonprimitive = NULL;
-    if(!cJSON_IsArray(items)){
+    mazu_cJSON *items_local_nonprimitive = NULL;
+    if(!mazu_cJSON_IsArray(items)){
         goto end; //nonprimitive container
     }
 
     itemsList = list_createList();
 
-    cJSON_ArrayForEach(items_local_nonprimitive,items )
+    mazu_cJSON_ArrayForEach(items_local_nonprimitive,items )
     {
-        if(!cJSON_IsObject(items_local_nonprimitive)){
+        if(!mazu_cJSON_IsObject(items_local_nonprimitive)){
             goto end;
         }
         v1_downward_api_volume_file_t *itemsItem = v1_downward_api_volume_file_parseFromJSON(items_local_nonprimitive);

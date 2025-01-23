@@ -11,7 +11,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdbool.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 
 #include "../model/v2_horizontal_pod_autoscaler_behavior.h"
 v2_horizontal_pod_autoscaler_behavior_t* instantiate_v2_horizontal_pod_autoscaler_behavior(int include_optional);
@@ -45,11 +45,11 @@ v2_horizontal_pod_autoscaler_behavior_t* instantiate_v2_horizontal_pod_autoscale
 void test_v2_horizontal_pod_autoscaler_behavior(int include_optional) {
     v2_horizontal_pod_autoscaler_behavior_t* v2_horizontal_pod_autoscaler_behavior_1 = instantiate_v2_horizontal_pod_autoscaler_behavior(include_optional);
 
-	cJSON* jsonv2_horizontal_pod_autoscaler_behavior_1 = v2_horizontal_pod_autoscaler_behavior_convertToJSON(v2_horizontal_pod_autoscaler_behavior_1);
-	printf("v2_horizontal_pod_autoscaler_behavior :\n%s\n", cJSON_Print(jsonv2_horizontal_pod_autoscaler_behavior_1));
+	mazu_cJSON* jsonv2_horizontal_pod_autoscaler_behavior_1 = v2_horizontal_pod_autoscaler_behavior_convertToJSON(v2_horizontal_pod_autoscaler_behavior_1);
+	printf("v2_horizontal_pod_autoscaler_behavior :\n%s\n", mazu_cJSON_Print(jsonv2_horizontal_pod_autoscaler_behavior_1));
 	v2_horizontal_pod_autoscaler_behavior_t* v2_horizontal_pod_autoscaler_behavior_2 = v2_horizontal_pod_autoscaler_behavior_parseFromJSON(jsonv2_horizontal_pod_autoscaler_behavior_1);
-	cJSON* jsonv2_horizontal_pod_autoscaler_behavior_2 = v2_horizontal_pod_autoscaler_behavior_convertToJSON(v2_horizontal_pod_autoscaler_behavior_2);
-	printf("repeating v2_horizontal_pod_autoscaler_behavior:\n%s\n", cJSON_Print(jsonv2_horizontal_pod_autoscaler_behavior_2));
+	mazu_cJSON* jsonv2_horizontal_pod_autoscaler_behavior_2 = v2_horizontal_pod_autoscaler_behavior_convertToJSON(v2_horizontal_pod_autoscaler_behavior_2);
+	printf("repeating v2_horizontal_pod_autoscaler_behavior:\n%s\n", mazu_cJSON_Print(jsonv2_horizontal_pod_autoscaler_behavior_2));
 }
 
 int main() {

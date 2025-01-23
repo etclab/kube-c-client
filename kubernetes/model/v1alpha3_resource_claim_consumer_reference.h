@@ -8,7 +8,7 @@
 #define _v1alpha3_resource_claim_consumer_reference_H_
 
 #include <string.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
 #include "../include/binary.h"
@@ -35,9 +35,9 @@ v1alpha3_resource_claim_consumer_reference_t *v1alpha3_resource_claim_consumer_r
 
 void v1alpha3_resource_claim_consumer_reference_free(v1alpha3_resource_claim_consumer_reference_t *v1alpha3_resource_claim_consumer_reference);
 
-v1alpha3_resource_claim_consumer_reference_t *v1alpha3_resource_claim_consumer_reference_parseFromJSON(cJSON *v1alpha3_resource_claim_consumer_referenceJSON);
+v1alpha3_resource_claim_consumer_reference_t *v1alpha3_resource_claim_consumer_reference_parseFromJSON(mazu_cJSON *v1alpha3_resource_claim_consumer_referenceJSON);
 
-cJSON *v1alpha3_resource_claim_consumer_reference_convertToJSON(v1alpha3_resource_claim_consumer_reference_t *v1alpha3_resource_claim_consumer_reference);
+mazu_cJSON *v1alpha3_resource_claim_consumer_reference_convertToJSON(v1alpha3_resource_claim_consumer_reference_t *v1alpha3_resource_claim_consumer_reference);
 
 #endif /* _v1alpha3_resource_claim_consumer_reference_H_ */
 

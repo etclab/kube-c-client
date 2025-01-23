@@ -81,12 +81,12 @@ FlowcontrolApiserverV1beta3API_createFlowSchema_0(apiClient_t *apiClient, v1beta
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body = NULL;
+    mazu_cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
         localVarSingleItemJSON_body = v1beta3_flow_schema_convertToJSON(body);
-        localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyParameters = mazu_cJSON_Print(localVarSingleItemJSON_body);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
@@ -118,9 +118,9 @@ FlowcontrolApiserverV1beta3API_createFlowSchema_0(apiClient_t *apiClient, v1beta
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *FlowcontrolApiserverV1beta3APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    mazu_cJSON *FlowcontrolApiserverV1beta3APIlocalVarJSON = mazu_cJSON_Parse(apiClient->dataReceived);
     v1beta3_flow_schema_t *elementToReturn = v1beta3_flow_schema_parseFromJSON(FlowcontrolApiserverV1beta3APIlocalVarJSON);
-    cJSON_Delete(FlowcontrolApiserverV1beta3APIlocalVarJSON);
+    mazu_cJSON_Delete(FlowcontrolApiserverV1beta3APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
     }
@@ -138,7 +138,7 @@ FlowcontrolApiserverV1beta3API_createFlowSchema_0(apiClient_t *apiClient, v1beta
     
     free(localVarPath);
     if (localVarSingleItemJSON_body) {
-        cJSON_Delete(localVarSingleItemJSON_body);
+        mazu_cJSON_Delete(localVarSingleItemJSON_body);
         localVarSingleItemJSON_body = NULL;
     }
     free(localVarBodyParameters);
@@ -266,12 +266,12 @@ FlowcontrolApiserverV1beta3API_createPriorityLevelConfiguration_0(apiClient_t *a
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body = NULL;
+    mazu_cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
         localVarSingleItemJSON_body = v1beta3_priority_level_configuration_convertToJSON(body);
-        localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyParameters = mazu_cJSON_Print(localVarSingleItemJSON_body);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
@@ -303,9 +303,9 @@ FlowcontrolApiserverV1beta3API_createPriorityLevelConfiguration_0(apiClient_t *a
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *FlowcontrolApiserverV1beta3APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    mazu_cJSON *FlowcontrolApiserverV1beta3APIlocalVarJSON = mazu_cJSON_Parse(apiClient->dataReceived);
     v1beta3_priority_level_configuration_t *elementToReturn = v1beta3_priority_level_configuration_parseFromJSON(FlowcontrolApiserverV1beta3APIlocalVarJSON);
-    cJSON_Delete(FlowcontrolApiserverV1beta3APIlocalVarJSON);
+    mazu_cJSON_Delete(FlowcontrolApiserverV1beta3APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
     }
@@ -323,7 +323,7 @@ FlowcontrolApiserverV1beta3API_createPriorityLevelConfiguration_0(apiClient_t *a
     
     free(localVarPath);
     if (localVarSingleItemJSON_body) {
-        cJSON_Delete(localVarSingleItemJSON_body);
+        mazu_cJSON_Delete(localVarSingleItemJSON_body);
         localVarSingleItemJSON_body = NULL;
     }
     free(localVarBodyParameters);
@@ -564,12 +564,12 @@ FlowcontrolApiserverV1beta3API_deleteCollectionFlowSchema_0(apiClient_t *apiClie
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body = NULL;
+    mazu_cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
         localVarSingleItemJSON_body = v1_delete_options_convertToJSON(body);
-        localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyParameters = mazu_cJSON_Print(localVarSingleItemJSON_body);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
@@ -593,9 +593,9 @@ FlowcontrolApiserverV1beta3API_deleteCollectionFlowSchema_0(apiClient_t *apiClie
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *FlowcontrolApiserverV1beta3APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    mazu_cJSON *FlowcontrolApiserverV1beta3APIlocalVarJSON = mazu_cJSON_Parse(apiClient->dataReceived);
     v1_status_t *elementToReturn = v1_status_parseFromJSON(FlowcontrolApiserverV1beta3APIlocalVarJSON);
-    cJSON_Delete(FlowcontrolApiserverV1beta3APIlocalVarJSON);
+    mazu_cJSON_Delete(FlowcontrolApiserverV1beta3APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
     }
@@ -613,7 +613,7 @@ FlowcontrolApiserverV1beta3API_deleteCollectionFlowSchema_0(apiClient_t *apiClie
     
     free(localVarPath);
     if (localVarSingleItemJSON_body) {
-        cJSON_Delete(localVarSingleItemJSON_body);
+        mazu_cJSON_Delete(localVarSingleItemJSON_body);
         localVarSingleItemJSON_body = NULL;
     }
     free(localVarBodyParameters);
@@ -962,12 +962,12 @@ FlowcontrolApiserverV1beta3API_deleteCollectionPriorityLevelConfiguration_0(apiC
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body = NULL;
+    mazu_cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
         localVarSingleItemJSON_body = v1_delete_options_convertToJSON(body);
-        localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyParameters = mazu_cJSON_Print(localVarSingleItemJSON_body);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
@@ -991,9 +991,9 @@ FlowcontrolApiserverV1beta3API_deleteCollectionPriorityLevelConfiguration_0(apiC
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *FlowcontrolApiserverV1beta3APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    mazu_cJSON *FlowcontrolApiserverV1beta3APIlocalVarJSON = mazu_cJSON_Parse(apiClient->dataReceived);
     v1_status_t *elementToReturn = v1_status_parseFromJSON(FlowcontrolApiserverV1beta3APIlocalVarJSON);
-    cJSON_Delete(FlowcontrolApiserverV1beta3APIlocalVarJSON);
+    mazu_cJSON_Delete(FlowcontrolApiserverV1beta3APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
     }
@@ -1011,7 +1011,7 @@ FlowcontrolApiserverV1beta3API_deleteCollectionPriorityLevelConfiguration_0(apiC
     
     free(localVarPath);
     if (localVarSingleItemJSON_body) {
-        cJSON_Delete(localVarSingleItemJSON_body);
+        mazu_cJSON_Delete(localVarSingleItemJSON_body);
         localVarSingleItemJSON_body = NULL;
     }
     free(localVarBodyParameters);
@@ -1271,12 +1271,12 @@ FlowcontrolApiserverV1beta3API_deleteFlowSchema_0(apiClient_t *apiClient, char *
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body = NULL;
+    mazu_cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
         localVarSingleItemJSON_body = v1_delete_options_convertToJSON(body);
-        localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyParameters = mazu_cJSON_Print(localVarSingleItemJSON_body);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
@@ -1304,9 +1304,9 @@ FlowcontrolApiserverV1beta3API_deleteFlowSchema_0(apiClient_t *apiClient, char *
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *FlowcontrolApiserverV1beta3APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    mazu_cJSON *FlowcontrolApiserverV1beta3APIlocalVarJSON = mazu_cJSON_Parse(apiClient->dataReceived);
     v1_status_t *elementToReturn = v1_status_parseFromJSON(FlowcontrolApiserverV1beta3APIlocalVarJSON);
-    cJSON_Delete(FlowcontrolApiserverV1beta3APIlocalVarJSON);
+    mazu_cJSON_Delete(FlowcontrolApiserverV1beta3APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
     }
@@ -1325,7 +1325,7 @@ FlowcontrolApiserverV1beta3API_deleteFlowSchema_0(apiClient_t *apiClient, char *
     free(localVarPath);
     free(localVarToReplace_name);
     if (localVarSingleItemJSON_body) {
-        cJSON_Delete(localVarSingleItemJSON_body);
+        mazu_cJSON_Delete(localVarSingleItemJSON_body);
         localVarSingleItemJSON_body = NULL;
     }
     free(localVarBodyParameters);
@@ -1489,12 +1489,12 @@ FlowcontrolApiserverV1beta3API_deletePriorityLevelConfiguration_0(apiClient_t *a
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body = NULL;
+    mazu_cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
         localVarSingleItemJSON_body = v1_delete_options_convertToJSON(body);
-        localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyParameters = mazu_cJSON_Print(localVarSingleItemJSON_body);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
@@ -1522,9 +1522,9 @@ FlowcontrolApiserverV1beta3API_deletePriorityLevelConfiguration_0(apiClient_t *a
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *FlowcontrolApiserverV1beta3APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    mazu_cJSON *FlowcontrolApiserverV1beta3APIlocalVarJSON = mazu_cJSON_Parse(apiClient->dataReceived);
     v1_status_t *elementToReturn = v1_status_parseFromJSON(FlowcontrolApiserverV1beta3APIlocalVarJSON);
-    cJSON_Delete(FlowcontrolApiserverV1beta3APIlocalVarJSON);
+    mazu_cJSON_Delete(FlowcontrolApiserverV1beta3APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
     }
@@ -1543,7 +1543,7 @@ FlowcontrolApiserverV1beta3API_deletePriorityLevelConfiguration_0(apiClient_t *a
     free(localVarPath);
     free(localVarToReplace_name);
     if (localVarSingleItemJSON_body) {
-        cJSON_Delete(localVarSingleItemJSON_body);
+        mazu_cJSON_Delete(localVarSingleItemJSON_body);
         localVarSingleItemJSON_body = NULL;
     }
     free(localVarBodyParameters);
@@ -1655,9 +1655,9 @@ FlowcontrolApiserverV1beta3API_getAPIResources_20(apiClient_t *apiClient)
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *FlowcontrolApiserverV1beta3APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    mazu_cJSON *FlowcontrolApiserverV1beta3APIlocalVarJSON = mazu_cJSON_Parse(apiClient->dataReceived);
     v1_api_resource_list_t *elementToReturn = v1_api_resource_list_parseFromJSON(FlowcontrolApiserverV1beta3APIlocalVarJSON);
-    cJSON_Delete(FlowcontrolApiserverV1beta3APIlocalVarJSON);
+    mazu_cJSON_Delete(FlowcontrolApiserverV1beta3APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
     }
@@ -1861,9 +1861,9 @@ FlowcontrolApiserverV1beta3API_listFlowSchema_0(apiClient_t *apiClient, char *pr
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *FlowcontrolApiserverV1beta3APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    mazu_cJSON *FlowcontrolApiserverV1beta3APIlocalVarJSON = mazu_cJSON_Parse(apiClient->dataReceived);
     v1beta3_flow_schema_list_t *elementToReturn = v1beta3_flow_schema_list_parseFromJSON(FlowcontrolApiserverV1beta3APIlocalVarJSON);
-    cJSON_Delete(FlowcontrolApiserverV1beta3APIlocalVarJSON);
+    mazu_cJSON_Delete(FlowcontrolApiserverV1beta3APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
     }
@@ -2199,9 +2199,9 @@ FlowcontrolApiserverV1beta3API_listPriorityLevelConfiguration_0(apiClient_t *api
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *FlowcontrolApiserverV1beta3APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    mazu_cJSON *FlowcontrolApiserverV1beta3APIlocalVarJSON = mazu_cJSON_Parse(apiClient->dataReceived);
     v1beta3_priority_level_configuration_list_t *elementToReturn = v1beta3_priority_level_configuration_list_parseFromJSON(FlowcontrolApiserverV1beta3APIlocalVarJSON);
-    cJSON_Delete(FlowcontrolApiserverV1beta3APIlocalVarJSON);
+    mazu_cJSON_Delete(FlowcontrolApiserverV1beta3APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
     }
@@ -2449,12 +2449,12 @@ FlowcontrolApiserverV1beta3API_patchFlowSchemaStatus_0(apiClient_t *apiClient, c
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body = NULL;
+    mazu_cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
         localVarSingleItemJSON_body = object_convertToJSON(body);
-        localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyParameters = mazu_cJSON_Print(localVarSingleItemJSON_body);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
@@ -2486,9 +2486,9 @@ FlowcontrolApiserverV1beta3API_patchFlowSchemaStatus_0(apiClient_t *apiClient, c
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *FlowcontrolApiserverV1beta3APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    mazu_cJSON *FlowcontrolApiserverV1beta3APIlocalVarJSON = mazu_cJSON_Parse(apiClient->dataReceived);
     v1beta3_flow_schema_t *elementToReturn = v1beta3_flow_schema_parseFromJSON(FlowcontrolApiserverV1beta3APIlocalVarJSON);
-    cJSON_Delete(FlowcontrolApiserverV1beta3APIlocalVarJSON);
+    mazu_cJSON_Delete(FlowcontrolApiserverV1beta3APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
     }
@@ -2507,7 +2507,7 @@ FlowcontrolApiserverV1beta3API_patchFlowSchemaStatus_0(apiClient_t *apiClient, c
     free(localVarPath);
     free(localVarToReplace_name);
     if (localVarSingleItemJSON_body) {
-        cJSON_Delete(localVarSingleItemJSON_body);
+        mazu_cJSON_Delete(localVarSingleItemJSON_body);
         localVarSingleItemJSON_body = NULL;
     }
     free(localVarBodyParameters);
@@ -2670,12 +2670,12 @@ FlowcontrolApiserverV1beta3API_patchFlowSchema_0(apiClient_t *apiClient, char *n
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body = NULL;
+    mazu_cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
         localVarSingleItemJSON_body = object_convertToJSON(body);
-        localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyParameters = mazu_cJSON_Print(localVarSingleItemJSON_body);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
@@ -2707,9 +2707,9 @@ FlowcontrolApiserverV1beta3API_patchFlowSchema_0(apiClient_t *apiClient, char *n
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *FlowcontrolApiserverV1beta3APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    mazu_cJSON *FlowcontrolApiserverV1beta3APIlocalVarJSON = mazu_cJSON_Parse(apiClient->dataReceived);
     v1beta3_flow_schema_t *elementToReturn = v1beta3_flow_schema_parseFromJSON(FlowcontrolApiserverV1beta3APIlocalVarJSON);
-    cJSON_Delete(FlowcontrolApiserverV1beta3APIlocalVarJSON);
+    mazu_cJSON_Delete(FlowcontrolApiserverV1beta3APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
     }
@@ -2728,7 +2728,7 @@ FlowcontrolApiserverV1beta3API_patchFlowSchema_0(apiClient_t *apiClient, char *n
     free(localVarPath);
     free(localVarToReplace_name);
     if (localVarSingleItemJSON_body) {
-        cJSON_Delete(localVarSingleItemJSON_body);
+        mazu_cJSON_Delete(localVarSingleItemJSON_body);
         localVarSingleItemJSON_body = NULL;
     }
     free(localVarBodyParameters);
@@ -2891,12 +2891,12 @@ FlowcontrolApiserverV1beta3API_patchPriorityLevelConfigurationStatus_0(apiClient
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body = NULL;
+    mazu_cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
         localVarSingleItemJSON_body = object_convertToJSON(body);
-        localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyParameters = mazu_cJSON_Print(localVarSingleItemJSON_body);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
@@ -2928,9 +2928,9 @@ FlowcontrolApiserverV1beta3API_patchPriorityLevelConfigurationStatus_0(apiClient
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *FlowcontrolApiserverV1beta3APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    mazu_cJSON *FlowcontrolApiserverV1beta3APIlocalVarJSON = mazu_cJSON_Parse(apiClient->dataReceived);
     v1beta3_priority_level_configuration_t *elementToReturn = v1beta3_priority_level_configuration_parseFromJSON(FlowcontrolApiserverV1beta3APIlocalVarJSON);
-    cJSON_Delete(FlowcontrolApiserverV1beta3APIlocalVarJSON);
+    mazu_cJSON_Delete(FlowcontrolApiserverV1beta3APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
     }
@@ -2949,7 +2949,7 @@ FlowcontrolApiserverV1beta3API_patchPriorityLevelConfigurationStatus_0(apiClient
     free(localVarPath);
     free(localVarToReplace_name);
     if (localVarSingleItemJSON_body) {
-        cJSON_Delete(localVarSingleItemJSON_body);
+        mazu_cJSON_Delete(localVarSingleItemJSON_body);
         localVarSingleItemJSON_body = NULL;
     }
     free(localVarBodyParameters);
@@ -3112,12 +3112,12 @@ FlowcontrolApiserverV1beta3API_patchPriorityLevelConfiguration_0(apiClient_t *ap
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body = NULL;
+    mazu_cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
         localVarSingleItemJSON_body = object_convertToJSON(body);
-        localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyParameters = mazu_cJSON_Print(localVarSingleItemJSON_body);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
@@ -3149,9 +3149,9 @@ FlowcontrolApiserverV1beta3API_patchPriorityLevelConfiguration_0(apiClient_t *ap
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *FlowcontrolApiserverV1beta3APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    mazu_cJSON *FlowcontrolApiserverV1beta3APIlocalVarJSON = mazu_cJSON_Parse(apiClient->dataReceived);
     v1beta3_priority_level_configuration_t *elementToReturn = v1beta3_priority_level_configuration_parseFromJSON(FlowcontrolApiserverV1beta3APIlocalVarJSON);
-    cJSON_Delete(FlowcontrolApiserverV1beta3APIlocalVarJSON);
+    mazu_cJSON_Delete(FlowcontrolApiserverV1beta3APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
     }
@@ -3170,7 +3170,7 @@ FlowcontrolApiserverV1beta3API_patchPriorityLevelConfiguration_0(apiClient_t *ap
     free(localVarPath);
     free(localVarToReplace_name);
     if (localVarSingleItemJSON_body) {
-        cJSON_Delete(localVarSingleItemJSON_body);
+        mazu_cJSON_Delete(localVarSingleItemJSON_body);
         localVarSingleItemJSON_body = NULL;
     }
     free(localVarBodyParameters);
@@ -3304,9 +3304,9 @@ FlowcontrolApiserverV1beta3API_readFlowSchemaStatus_0(apiClient_t *apiClient, ch
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *FlowcontrolApiserverV1beta3APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    mazu_cJSON *FlowcontrolApiserverV1beta3APIlocalVarJSON = mazu_cJSON_Parse(apiClient->dataReceived);
     v1beta3_flow_schema_t *elementToReturn = v1beta3_flow_schema_parseFromJSON(FlowcontrolApiserverV1beta3APIlocalVarJSON);
-    cJSON_Delete(FlowcontrolApiserverV1beta3APIlocalVarJSON);
+    mazu_cJSON_Delete(FlowcontrolApiserverV1beta3APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
     }
@@ -3406,9 +3406,9 @@ FlowcontrolApiserverV1beta3API_readFlowSchema_0(apiClient_t *apiClient, char *na
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *FlowcontrolApiserverV1beta3APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    mazu_cJSON *FlowcontrolApiserverV1beta3APIlocalVarJSON = mazu_cJSON_Parse(apiClient->dataReceived);
     v1beta3_flow_schema_t *elementToReturn = v1beta3_flow_schema_parseFromJSON(FlowcontrolApiserverV1beta3APIlocalVarJSON);
-    cJSON_Delete(FlowcontrolApiserverV1beta3APIlocalVarJSON);
+    mazu_cJSON_Delete(FlowcontrolApiserverV1beta3APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
     }
@@ -3508,9 +3508,9 @@ FlowcontrolApiserverV1beta3API_readPriorityLevelConfigurationStatus_0(apiClient_
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *FlowcontrolApiserverV1beta3APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    mazu_cJSON *FlowcontrolApiserverV1beta3APIlocalVarJSON = mazu_cJSON_Parse(apiClient->dataReceived);
     v1beta3_priority_level_configuration_t *elementToReturn = v1beta3_priority_level_configuration_parseFromJSON(FlowcontrolApiserverV1beta3APIlocalVarJSON);
-    cJSON_Delete(FlowcontrolApiserverV1beta3APIlocalVarJSON);
+    mazu_cJSON_Delete(FlowcontrolApiserverV1beta3APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
     }
@@ -3610,9 +3610,9 @@ FlowcontrolApiserverV1beta3API_readPriorityLevelConfiguration_0(apiClient_t *api
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *FlowcontrolApiserverV1beta3APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    mazu_cJSON *FlowcontrolApiserverV1beta3APIlocalVarJSON = mazu_cJSON_Parse(apiClient->dataReceived);
     v1beta3_priority_level_configuration_t *elementToReturn = v1beta3_priority_level_configuration_parseFromJSON(FlowcontrolApiserverV1beta3APIlocalVarJSON);
-    cJSON_Delete(FlowcontrolApiserverV1beta3APIlocalVarJSON);
+    mazu_cJSON_Delete(FlowcontrolApiserverV1beta3APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
     }
@@ -3728,12 +3728,12 @@ FlowcontrolApiserverV1beta3API_replaceFlowSchemaStatus_0(apiClient_t *apiClient,
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body = NULL;
+    mazu_cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
         localVarSingleItemJSON_body = v1beta3_flow_schema_convertToJSON(body);
-        localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyParameters = mazu_cJSON_Print(localVarSingleItemJSON_body);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
@@ -3761,9 +3761,9 @@ FlowcontrolApiserverV1beta3API_replaceFlowSchemaStatus_0(apiClient_t *apiClient,
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *FlowcontrolApiserverV1beta3APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    mazu_cJSON *FlowcontrolApiserverV1beta3APIlocalVarJSON = mazu_cJSON_Parse(apiClient->dataReceived);
     v1beta3_flow_schema_t *elementToReturn = v1beta3_flow_schema_parseFromJSON(FlowcontrolApiserverV1beta3APIlocalVarJSON);
-    cJSON_Delete(FlowcontrolApiserverV1beta3APIlocalVarJSON);
+    mazu_cJSON_Delete(FlowcontrolApiserverV1beta3APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
     }
@@ -3782,7 +3782,7 @@ FlowcontrolApiserverV1beta3API_replaceFlowSchemaStatus_0(apiClient_t *apiClient,
     free(localVarPath);
     free(localVarToReplace_name);
     if (localVarSingleItemJSON_body) {
-        cJSON_Delete(localVarSingleItemJSON_body);
+        mazu_cJSON_Delete(localVarSingleItemJSON_body);
         localVarSingleItemJSON_body = NULL;
     }
     free(localVarBodyParameters);
@@ -3920,12 +3920,12 @@ FlowcontrolApiserverV1beta3API_replaceFlowSchema_0(apiClient_t *apiClient, char 
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body = NULL;
+    mazu_cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
         localVarSingleItemJSON_body = v1beta3_flow_schema_convertToJSON(body);
-        localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyParameters = mazu_cJSON_Print(localVarSingleItemJSON_body);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
@@ -3953,9 +3953,9 @@ FlowcontrolApiserverV1beta3API_replaceFlowSchema_0(apiClient_t *apiClient, char 
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *FlowcontrolApiserverV1beta3APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    mazu_cJSON *FlowcontrolApiserverV1beta3APIlocalVarJSON = mazu_cJSON_Parse(apiClient->dataReceived);
     v1beta3_flow_schema_t *elementToReturn = v1beta3_flow_schema_parseFromJSON(FlowcontrolApiserverV1beta3APIlocalVarJSON);
-    cJSON_Delete(FlowcontrolApiserverV1beta3APIlocalVarJSON);
+    mazu_cJSON_Delete(FlowcontrolApiserverV1beta3APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
     }
@@ -3974,7 +3974,7 @@ FlowcontrolApiserverV1beta3API_replaceFlowSchema_0(apiClient_t *apiClient, char 
     free(localVarPath);
     free(localVarToReplace_name);
     if (localVarSingleItemJSON_body) {
-        cJSON_Delete(localVarSingleItemJSON_body);
+        mazu_cJSON_Delete(localVarSingleItemJSON_body);
         localVarSingleItemJSON_body = NULL;
     }
     free(localVarBodyParameters);
@@ -4112,12 +4112,12 @@ FlowcontrolApiserverV1beta3API_replacePriorityLevelConfigurationStatus_0(apiClie
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body = NULL;
+    mazu_cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
         localVarSingleItemJSON_body = v1beta3_priority_level_configuration_convertToJSON(body);
-        localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyParameters = mazu_cJSON_Print(localVarSingleItemJSON_body);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
@@ -4145,9 +4145,9 @@ FlowcontrolApiserverV1beta3API_replacePriorityLevelConfigurationStatus_0(apiClie
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *FlowcontrolApiserverV1beta3APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    mazu_cJSON *FlowcontrolApiserverV1beta3APIlocalVarJSON = mazu_cJSON_Parse(apiClient->dataReceived);
     v1beta3_priority_level_configuration_t *elementToReturn = v1beta3_priority_level_configuration_parseFromJSON(FlowcontrolApiserverV1beta3APIlocalVarJSON);
-    cJSON_Delete(FlowcontrolApiserverV1beta3APIlocalVarJSON);
+    mazu_cJSON_Delete(FlowcontrolApiserverV1beta3APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
     }
@@ -4166,7 +4166,7 @@ FlowcontrolApiserverV1beta3API_replacePriorityLevelConfigurationStatus_0(apiClie
     free(localVarPath);
     free(localVarToReplace_name);
     if (localVarSingleItemJSON_body) {
-        cJSON_Delete(localVarSingleItemJSON_body);
+        mazu_cJSON_Delete(localVarSingleItemJSON_body);
         localVarSingleItemJSON_body = NULL;
     }
     free(localVarBodyParameters);
@@ -4304,12 +4304,12 @@ FlowcontrolApiserverV1beta3API_replacePriorityLevelConfiguration_0(apiClient_t *
     }
 
     // Body Param
-    cJSON *localVarSingleItemJSON_body = NULL;
+    mazu_cJSON *localVarSingleItemJSON_body = NULL;
     if (body != NULL)
     {
         //string
         localVarSingleItemJSON_body = v1beta3_priority_level_configuration_convertToJSON(body);
-        localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyParameters = mazu_cJSON_Print(localVarSingleItemJSON_body);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
@@ -4337,9 +4337,9 @@ FlowcontrolApiserverV1beta3API_replacePriorityLevelConfiguration_0(apiClient_t *
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *FlowcontrolApiserverV1beta3APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    mazu_cJSON *FlowcontrolApiserverV1beta3APIlocalVarJSON = mazu_cJSON_Parse(apiClient->dataReceived);
     v1beta3_priority_level_configuration_t *elementToReturn = v1beta3_priority_level_configuration_parseFromJSON(FlowcontrolApiserverV1beta3APIlocalVarJSON);
-    cJSON_Delete(FlowcontrolApiserverV1beta3APIlocalVarJSON);
+    mazu_cJSON_Delete(FlowcontrolApiserverV1beta3APIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
     }
@@ -4358,7 +4358,7 @@ FlowcontrolApiserverV1beta3API_replacePriorityLevelConfiguration_0(apiClient_t *
     free(localVarPath);
     free(localVarToReplace_name);
     if (localVarSingleItemJSON_body) {
-        cJSON_Delete(localVarSingleItemJSON_body);
+        mazu_cJSON_Delete(localVarSingleItemJSON_body);
         localVarSingleItemJSON_body = NULL;
     }
     free(localVarBodyParameters);

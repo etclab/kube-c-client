@@ -44,12 +44,12 @@ void core_v1_endpoint_port_free(core_v1_endpoint_port_t *core_v1_endpoint_port) 
     free(core_v1_endpoint_port);
 }
 
-cJSON *core_v1_endpoint_port_convertToJSON(core_v1_endpoint_port_t *core_v1_endpoint_port) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *core_v1_endpoint_port_convertToJSON(core_v1_endpoint_port_t *core_v1_endpoint_port) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // core_v1_endpoint_port->app_protocol
     if(core_v1_endpoint_port->app_protocol) {
-    if(cJSON_AddStringToObject(item, "appProtocol", core_v1_endpoint_port->app_protocol) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "appProtocol", core_v1_endpoint_port->app_protocol) == NULL) {
     goto fail; //String
     }
     }
@@ -57,7 +57,7 @@ cJSON *core_v1_endpoint_port_convertToJSON(core_v1_endpoint_port_t *core_v1_endp
 
     // core_v1_endpoint_port->name
     if(core_v1_endpoint_port->name) {
-    if(cJSON_AddStringToObject(item, "name", core_v1_endpoint_port->name) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "name", core_v1_endpoint_port->name) == NULL) {
     goto fail; //String
     }
     }
@@ -67,14 +67,14 @@ cJSON *core_v1_endpoint_port_convertToJSON(core_v1_endpoint_port_t *core_v1_endp
     if (!core_v1_endpoint_port->port) {
         goto fail;
     }
-    if(cJSON_AddNumberToObject(item, "port", core_v1_endpoint_port->port) == NULL) {
+    if(mazu_cJSON_AddNumberToObject(item, "port", core_v1_endpoint_port->port) == NULL) {
     goto fail; //Numeric
     }
 
 
     // core_v1_endpoint_port->protocol
     if(core_v1_endpoint_port->protocol) {
-    if(cJSON_AddStringToObject(item, "protocol", core_v1_endpoint_port->protocol) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "protocol", core_v1_endpoint_port->protocol) == NULL) {
     goto fail; //String
     }
     }
@@ -82,49 +82,49 @@ cJSON *core_v1_endpoint_port_convertToJSON(core_v1_endpoint_port_t *core_v1_endp
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-core_v1_endpoint_port_t *core_v1_endpoint_port_parseFromJSON(cJSON *core_v1_endpoint_portJSON){
+core_v1_endpoint_port_t *core_v1_endpoint_port_parseFromJSON(mazu_cJSON *core_v1_endpoint_portJSON){
 
     core_v1_endpoint_port_t *core_v1_endpoint_port_local_var = NULL;
 
     // core_v1_endpoint_port->app_protocol
-    cJSON *app_protocol = cJSON_GetObjectItemCaseSensitive(core_v1_endpoint_portJSON, "appProtocol");
+    mazu_cJSON *app_protocol = mazu_cJSON_GetObjectItemCaseSensitive(core_v1_endpoint_portJSON, "appProtocol");
     if (app_protocol) { 
-    if(!cJSON_IsString(app_protocol) && !cJSON_IsNull(app_protocol))
+    if(!mazu_cJSON_IsString(app_protocol) && !mazu_cJSON_IsNull(app_protocol))
     {
     goto end; //String
     }
     }
 
     // core_v1_endpoint_port->name
-    cJSON *name = cJSON_GetObjectItemCaseSensitive(core_v1_endpoint_portJSON, "name");
+    mazu_cJSON *name = mazu_cJSON_GetObjectItemCaseSensitive(core_v1_endpoint_portJSON, "name");
     if (name) { 
-    if(!cJSON_IsString(name) && !cJSON_IsNull(name))
+    if(!mazu_cJSON_IsString(name) && !mazu_cJSON_IsNull(name))
     {
     goto end; //String
     }
     }
 
     // core_v1_endpoint_port->port
-    cJSON *port = cJSON_GetObjectItemCaseSensitive(core_v1_endpoint_portJSON, "port");
+    mazu_cJSON *port = mazu_cJSON_GetObjectItemCaseSensitive(core_v1_endpoint_portJSON, "port");
     if (!port) {
         goto end;
     }
 
     
-    if(!cJSON_IsNumber(port))
+    if(!mazu_cJSON_IsNumber(port))
     {
     goto end; //Numeric
     }
 
     // core_v1_endpoint_port->protocol
-    cJSON *protocol = cJSON_GetObjectItemCaseSensitive(core_v1_endpoint_portJSON, "protocol");
+    mazu_cJSON *protocol = mazu_cJSON_GetObjectItemCaseSensitive(core_v1_endpoint_portJSON, "protocol");
     if (protocol) { 
-    if(!cJSON_IsString(protocol) && !cJSON_IsNull(protocol))
+    if(!mazu_cJSON_IsString(protocol) && !mazu_cJSON_IsNull(protocol))
     {
     goto end; //String
     }
@@ -132,10 +132,10 @@ core_v1_endpoint_port_t *core_v1_endpoint_port_parseFromJSON(cJSON *core_v1_endp
 
 
     core_v1_endpoint_port_local_var = core_v1_endpoint_port_create (
-        app_protocol && !cJSON_IsNull(app_protocol) ? strdup(app_protocol->valuestring) : NULL,
-        name && !cJSON_IsNull(name) ? strdup(name->valuestring) : NULL,
+        app_protocol && !mazu_cJSON_IsNull(app_protocol) ? strdup(app_protocol->valuestring) : NULL,
+        name && !mazu_cJSON_IsNull(name) ? strdup(name->valuestring) : NULL,
         port->valuedouble,
-        protocol && !cJSON_IsNull(protocol) ? strdup(protocol->valuestring) : NULL
+        protocol && !mazu_cJSON_IsNull(protocol) ? strdup(protocol->valuestring) : NULL
         );
 
     return core_v1_endpoint_port_local_var;

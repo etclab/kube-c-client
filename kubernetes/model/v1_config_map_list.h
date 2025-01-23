@@ -8,7 +8,7 @@
 #define _v1_config_map_list_H_
 
 #include <string.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
 #include "../include/binary.h"
@@ -37,9 +37,9 @@ v1_config_map_list_t *v1_config_map_list_create(
 
 void v1_config_map_list_free(v1_config_map_list_t *v1_config_map_list);
 
-v1_config_map_list_t *v1_config_map_list_parseFromJSON(cJSON *v1_config_map_listJSON);
+v1_config_map_list_t *v1_config_map_list_parseFromJSON(mazu_cJSON *v1_config_map_listJSON);
 
-cJSON *v1_config_map_list_convertToJSON(v1_config_map_list_t *v1_config_map_list);
+mazu_cJSON *v1_config_map_list_convertToJSON(v1_config_map_list_t *v1_config_map_list);
 
 #endif /* _v1_config_map_list_H_ */
 

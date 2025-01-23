@@ -36,21 +36,21 @@ void v1_host_path_volume_source_free(v1_host_path_volume_source_t *v1_host_path_
     free(v1_host_path_volume_source);
 }
 
-cJSON *v1_host_path_volume_source_convertToJSON(v1_host_path_volume_source_t *v1_host_path_volume_source) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_host_path_volume_source_convertToJSON(v1_host_path_volume_source_t *v1_host_path_volume_source) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_host_path_volume_source->path
     if (!v1_host_path_volume_source->path) {
         goto fail;
     }
-    if(cJSON_AddStringToObject(item, "path", v1_host_path_volume_source->path) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "path", v1_host_path_volume_source->path) == NULL) {
     goto fail; //String
     }
 
 
     // v1_host_path_volume_source->type
     if(v1_host_path_volume_source->type) {
-    if(cJSON_AddStringToObject(item, "type", v1_host_path_volume_source->type) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "type", v1_host_path_volume_source->type) == NULL) {
     goto fail; //String
     }
     }
@@ -58,31 +58,31 @@ cJSON *v1_host_path_volume_source_convertToJSON(v1_host_path_volume_source_t *v1
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_host_path_volume_source_t *v1_host_path_volume_source_parseFromJSON(cJSON *v1_host_path_volume_sourceJSON){
+v1_host_path_volume_source_t *v1_host_path_volume_source_parseFromJSON(mazu_cJSON *v1_host_path_volume_sourceJSON){
 
     v1_host_path_volume_source_t *v1_host_path_volume_source_local_var = NULL;
 
     // v1_host_path_volume_source->path
-    cJSON *path = cJSON_GetObjectItemCaseSensitive(v1_host_path_volume_sourceJSON, "path");
+    mazu_cJSON *path = mazu_cJSON_GetObjectItemCaseSensitive(v1_host_path_volume_sourceJSON, "path");
     if (!path) {
         goto end;
     }
 
     
-    if(!cJSON_IsString(path))
+    if(!mazu_cJSON_IsString(path))
     {
     goto end; //String
     }
 
     // v1_host_path_volume_source->type
-    cJSON *type = cJSON_GetObjectItemCaseSensitive(v1_host_path_volume_sourceJSON, "type");
+    mazu_cJSON *type = mazu_cJSON_GetObjectItemCaseSensitive(v1_host_path_volume_sourceJSON, "type");
     if (type) { 
-    if(!cJSON_IsString(type) && !cJSON_IsNull(type))
+    if(!mazu_cJSON_IsString(type) && !mazu_cJSON_IsNull(type))
     {
     goto end; //String
     }
@@ -91,7 +91,7 @@ v1_host_path_volume_source_t *v1_host_path_volume_source_parseFromJSON(cJSON *v1
 
     v1_host_path_volume_source_local_var = v1_host_path_volume_source_create (
         strdup(path->valuestring),
-        type && !cJSON_IsNull(type) ? strdup(type->valuestring) : NULL
+        type && !mazu_cJSON_IsNull(type) ? strdup(type->valuestring) : NULL
         );
 
     return v1_host_path_volume_source_local_var;

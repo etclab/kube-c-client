@@ -33,14 +33,14 @@ void v1_csi_node_spec_free(v1_csi_node_spec_t *v1_csi_node_spec) {
     free(v1_csi_node_spec);
 }
 
-cJSON *v1_csi_node_spec_convertToJSON(v1_csi_node_spec_t *v1_csi_node_spec) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_csi_node_spec_convertToJSON(v1_csi_node_spec_t *v1_csi_node_spec) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_csi_node_spec->drivers
     if (!v1_csi_node_spec->drivers) {
         goto fail;
     }
-    cJSON *drivers = cJSON_AddArrayToObject(item, "drivers");
+    mazu_cJSON *drivers = mazu_cJSON_AddArrayToObject(item, "drivers");
     if(drivers == NULL) {
     goto fail; //nonprimitive container
     }
@@ -48,23 +48,23 @@ cJSON *v1_csi_node_spec_convertToJSON(v1_csi_node_spec_t *v1_csi_node_spec) {
     listEntry_t *driversListEntry;
     if (v1_csi_node_spec->drivers) {
     list_ForEach(driversListEntry, v1_csi_node_spec->drivers) {
-    cJSON *itemLocal = v1_csi_node_driver_convertToJSON(driversListEntry->data);
+    mazu_cJSON *itemLocal = v1_csi_node_driver_convertToJSON(driversListEntry->data);
     if(itemLocal == NULL) {
     goto fail;
     }
-    cJSON_AddItemToArray(drivers, itemLocal);
+    mazu_cJSON_AddItemToArray(drivers, itemLocal);
     }
     }
 
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_csi_node_spec_t *v1_csi_node_spec_parseFromJSON(cJSON *v1_csi_node_specJSON){
+v1_csi_node_spec_t *v1_csi_node_spec_parseFromJSON(mazu_cJSON *v1_csi_node_specJSON){
 
     v1_csi_node_spec_t *v1_csi_node_spec_local_var = NULL;
 
@@ -72,22 +72,22 @@ v1_csi_node_spec_t *v1_csi_node_spec_parseFromJSON(cJSON *v1_csi_node_specJSON){
     list_t *driversList = NULL;
 
     // v1_csi_node_spec->drivers
-    cJSON *drivers = cJSON_GetObjectItemCaseSensitive(v1_csi_node_specJSON, "drivers");
+    mazu_cJSON *drivers = mazu_cJSON_GetObjectItemCaseSensitive(v1_csi_node_specJSON, "drivers");
     if (!drivers) {
         goto end;
     }
 
     
-    cJSON *drivers_local_nonprimitive = NULL;
-    if(!cJSON_IsArray(drivers)){
+    mazu_cJSON *drivers_local_nonprimitive = NULL;
+    if(!mazu_cJSON_IsArray(drivers)){
         goto end; //nonprimitive container
     }
 
     driversList = list_createList();
 
-    cJSON_ArrayForEach(drivers_local_nonprimitive,drivers )
+    mazu_cJSON_ArrayForEach(drivers_local_nonprimitive,drivers )
     {
-        if(!cJSON_IsObject(drivers_local_nonprimitive)){
+        if(!mazu_cJSON_IsObject(drivers_local_nonprimitive)){
             goto end;
         }
         v1_csi_node_driver_t *driversItem = v1_csi_node_driver_parseFromJSON(drivers_local_nonprimitive);

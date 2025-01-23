@@ -8,7 +8,7 @@
 #define _v1_volume_error_H_
 
 #include <string.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
 #include "../include/binary.h"
@@ -31,9 +31,9 @@ v1_volume_error_t *v1_volume_error_create(
 
 void v1_volume_error_free(v1_volume_error_t *v1_volume_error);
 
-v1_volume_error_t *v1_volume_error_parseFromJSON(cJSON *v1_volume_errorJSON);
+v1_volume_error_t *v1_volume_error_parseFromJSON(mazu_cJSON *v1_volume_errorJSON);
 
-cJSON *v1_volume_error_convertToJSON(v1_volume_error_t *v1_volume_error);
+mazu_cJSON *v1_volume_error_convertToJSON(v1_volume_error_t *v1_volume_error);
 
 #endif /* _v1_volume_error_H_ */
 

@@ -43,12 +43,12 @@ void v1_secret_volume_source_free(v1_secret_volume_source_t *v1_secret_volume_so
     free(v1_secret_volume_source);
 }
 
-cJSON *v1_secret_volume_source_convertToJSON(v1_secret_volume_source_t *v1_secret_volume_source) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_secret_volume_source_convertToJSON(v1_secret_volume_source_t *v1_secret_volume_source) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_secret_volume_source->default_mode
     if(v1_secret_volume_source->default_mode) {
-    if(cJSON_AddNumberToObject(item, "defaultMode", v1_secret_volume_source->default_mode) == NULL) {
+    if(mazu_cJSON_AddNumberToObject(item, "defaultMode", v1_secret_volume_source->default_mode) == NULL) {
     goto fail; //Numeric
     }
     }
@@ -56,7 +56,7 @@ cJSON *v1_secret_volume_source_convertToJSON(v1_secret_volume_source_t *v1_secre
 
     // v1_secret_volume_source->items
     if(v1_secret_volume_source->items) {
-    cJSON *items = cJSON_AddArrayToObject(item, "items");
+    mazu_cJSON *items = mazu_cJSON_AddArrayToObject(item, "items");
     if(items == NULL) {
     goto fail; //nonprimitive container
     }
@@ -64,11 +64,11 @@ cJSON *v1_secret_volume_source_convertToJSON(v1_secret_volume_source_t *v1_secre
     listEntry_t *itemsListEntry;
     if (v1_secret_volume_source->items) {
     list_ForEach(itemsListEntry, v1_secret_volume_source->items) {
-    cJSON *itemLocal = v1_key_to_path_convertToJSON(itemsListEntry->data);
+    mazu_cJSON *itemLocal = v1_key_to_path_convertToJSON(itemsListEntry->data);
     if(itemLocal == NULL) {
     goto fail;
     }
-    cJSON_AddItemToArray(items, itemLocal);
+    mazu_cJSON_AddItemToArray(items, itemLocal);
     }
     }
     }
@@ -76,7 +76,7 @@ cJSON *v1_secret_volume_source_convertToJSON(v1_secret_volume_source_t *v1_secre
 
     // v1_secret_volume_source->optional
     if(v1_secret_volume_source->optional) {
-    if(cJSON_AddBoolToObject(item, "optional", v1_secret_volume_source->optional) == NULL) {
+    if(mazu_cJSON_AddBoolToObject(item, "optional", v1_secret_volume_source->optional) == NULL) {
     goto fail; //Bool
     }
     }
@@ -84,7 +84,7 @@ cJSON *v1_secret_volume_source_convertToJSON(v1_secret_volume_source_t *v1_secre
 
     // v1_secret_volume_source->secret_name
     if(v1_secret_volume_source->secret_name) {
-    if(cJSON_AddStringToObject(item, "secretName", v1_secret_volume_source->secret_name) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "secretName", v1_secret_volume_source->secret_name) == NULL) {
     goto fail; //String
     }
     }
@@ -92,12 +92,12 @@ cJSON *v1_secret_volume_source_convertToJSON(v1_secret_volume_source_t *v1_secre
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_secret_volume_source_t *v1_secret_volume_source_parseFromJSON(cJSON *v1_secret_volume_sourceJSON){
+v1_secret_volume_source_t *v1_secret_volume_source_parseFromJSON(mazu_cJSON *v1_secret_volume_sourceJSON){
 
     v1_secret_volume_source_t *v1_secret_volume_source_local_var = NULL;
 
@@ -105,27 +105,27 @@ v1_secret_volume_source_t *v1_secret_volume_source_parseFromJSON(cJSON *v1_secre
     list_t *itemsList = NULL;
 
     // v1_secret_volume_source->default_mode
-    cJSON *default_mode = cJSON_GetObjectItemCaseSensitive(v1_secret_volume_sourceJSON, "defaultMode");
+    mazu_cJSON *default_mode = mazu_cJSON_GetObjectItemCaseSensitive(v1_secret_volume_sourceJSON, "defaultMode");
     if (default_mode) { 
-    if(!cJSON_IsNumber(default_mode))
+    if(!mazu_cJSON_IsNumber(default_mode))
     {
     goto end; //Numeric
     }
     }
 
     // v1_secret_volume_source->items
-    cJSON *items = cJSON_GetObjectItemCaseSensitive(v1_secret_volume_sourceJSON, "items");
+    mazu_cJSON *items = mazu_cJSON_GetObjectItemCaseSensitive(v1_secret_volume_sourceJSON, "items");
     if (items) { 
-    cJSON *items_local_nonprimitive = NULL;
-    if(!cJSON_IsArray(items)){
+    mazu_cJSON *items_local_nonprimitive = NULL;
+    if(!mazu_cJSON_IsArray(items)){
         goto end; //nonprimitive container
     }
 
     itemsList = list_createList();
 
-    cJSON_ArrayForEach(items_local_nonprimitive,items )
+    mazu_cJSON_ArrayForEach(items_local_nonprimitive,items )
     {
-        if(!cJSON_IsObject(items_local_nonprimitive)){
+        if(!mazu_cJSON_IsObject(items_local_nonprimitive)){
             goto end;
         }
         v1_key_to_path_t *itemsItem = v1_key_to_path_parseFromJSON(items_local_nonprimitive);
@@ -135,18 +135,18 @@ v1_secret_volume_source_t *v1_secret_volume_source_parseFromJSON(cJSON *v1_secre
     }
 
     // v1_secret_volume_source->optional
-    cJSON *optional = cJSON_GetObjectItemCaseSensitive(v1_secret_volume_sourceJSON, "optional");
+    mazu_cJSON *optional = mazu_cJSON_GetObjectItemCaseSensitive(v1_secret_volume_sourceJSON, "optional");
     if (optional) { 
-    if(!cJSON_IsBool(optional))
+    if(!mazu_cJSON_IsBool(optional))
     {
     goto end; //Bool
     }
     }
 
     // v1_secret_volume_source->secret_name
-    cJSON *secret_name = cJSON_GetObjectItemCaseSensitive(v1_secret_volume_sourceJSON, "secretName");
+    mazu_cJSON *secret_name = mazu_cJSON_GetObjectItemCaseSensitive(v1_secret_volume_sourceJSON, "secretName");
     if (secret_name) { 
-    if(!cJSON_IsString(secret_name) && !cJSON_IsNull(secret_name))
+    if(!mazu_cJSON_IsString(secret_name) && !mazu_cJSON_IsNull(secret_name))
     {
     goto end; //String
     }
@@ -157,7 +157,7 @@ v1_secret_volume_source_t *v1_secret_volume_source_parseFromJSON(cJSON *v1_secre
         default_mode ? default_mode->valuedouble : 0,
         items ? itemsList : NULL,
         optional ? optional->valueint : 0,
-        secret_name && !cJSON_IsNull(secret_name) ? strdup(secret_name->valuestring) : NULL
+        secret_name && !mazu_cJSON_IsNull(secret_name) ? strdup(secret_name->valuestring) : NULL
         );
 
     return v1_secret_volume_source_local_var;

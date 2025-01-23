@@ -8,7 +8,7 @@
 #define _authentication_v1_token_request_H_
 
 #include <string.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
 #include "../include/binary.h"
@@ -40,9 +40,9 @@ authentication_v1_token_request_t *authentication_v1_token_request_create(
 
 void authentication_v1_token_request_free(authentication_v1_token_request_t *authentication_v1_token_request);
 
-authentication_v1_token_request_t *authentication_v1_token_request_parseFromJSON(cJSON *authentication_v1_token_requestJSON);
+authentication_v1_token_request_t *authentication_v1_token_request_parseFromJSON(mazu_cJSON *authentication_v1_token_requestJSON);
 
-cJSON *authentication_v1_token_request_convertToJSON(authentication_v1_token_request_t *authentication_v1_token_request);
+mazu_cJSON *authentication_v1_token_request_convertToJSON(authentication_v1_token_request_t *authentication_v1_token_request);
 
 #endif /* _authentication_v1_token_request_H_ */
 

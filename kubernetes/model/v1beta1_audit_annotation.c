@@ -36,14 +36,14 @@ void v1beta1_audit_annotation_free(v1beta1_audit_annotation_t *v1beta1_audit_ann
     free(v1beta1_audit_annotation);
 }
 
-cJSON *v1beta1_audit_annotation_convertToJSON(v1beta1_audit_annotation_t *v1beta1_audit_annotation) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1beta1_audit_annotation_convertToJSON(v1beta1_audit_annotation_t *v1beta1_audit_annotation) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1beta1_audit_annotation->key
     if (!v1beta1_audit_annotation->key) {
         goto fail;
     }
-    if(cJSON_AddStringToObject(item, "key", v1beta1_audit_annotation->key) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "key", v1beta1_audit_annotation->key) == NULL) {
     goto fail; //String
     }
 
@@ -52,42 +52,42 @@ cJSON *v1beta1_audit_annotation_convertToJSON(v1beta1_audit_annotation_t *v1beta
     if (!v1beta1_audit_annotation->value_expression) {
         goto fail;
     }
-    if(cJSON_AddStringToObject(item, "valueExpression", v1beta1_audit_annotation->value_expression) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "valueExpression", v1beta1_audit_annotation->value_expression) == NULL) {
     goto fail; //String
     }
 
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1beta1_audit_annotation_t *v1beta1_audit_annotation_parseFromJSON(cJSON *v1beta1_audit_annotationJSON){
+v1beta1_audit_annotation_t *v1beta1_audit_annotation_parseFromJSON(mazu_cJSON *v1beta1_audit_annotationJSON){
 
     v1beta1_audit_annotation_t *v1beta1_audit_annotation_local_var = NULL;
 
     // v1beta1_audit_annotation->key
-    cJSON *key = cJSON_GetObjectItemCaseSensitive(v1beta1_audit_annotationJSON, "key");
+    mazu_cJSON *key = mazu_cJSON_GetObjectItemCaseSensitive(v1beta1_audit_annotationJSON, "key");
     if (!key) {
         goto end;
     }
 
     
-    if(!cJSON_IsString(key))
+    if(!mazu_cJSON_IsString(key))
     {
     goto end; //String
     }
 
     // v1beta1_audit_annotation->value_expression
-    cJSON *value_expression = cJSON_GetObjectItemCaseSensitive(v1beta1_audit_annotationJSON, "valueExpression");
+    mazu_cJSON *value_expression = mazu_cJSON_GetObjectItemCaseSensitive(v1beta1_audit_annotationJSON, "valueExpression");
     if (!value_expression) {
         goto end;
     }
 
     
-    if(!cJSON_IsString(value_expression))
+    if(!mazu_cJSON_IsString(value_expression))
     {
     goto end; //String
     }

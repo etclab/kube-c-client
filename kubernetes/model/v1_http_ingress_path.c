@@ -42,18 +42,18 @@ void v1_http_ingress_path_free(v1_http_ingress_path_t *v1_http_ingress_path) {
     free(v1_http_ingress_path);
 }
 
-cJSON *v1_http_ingress_path_convertToJSON(v1_http_ingress_path_t *v1_http_ingress_path) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_http_ingress_path_convertToJSON(v1_http_ingress_path_t *v1_http_ingress_path) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_http_ingress_path->backend
     if (!v1_http_ingress_path->backend) {
         goto fail;
     }
-    cJSON *backend_local_JSON = v1_ingress_backend_convertToJSON(v1_http_ingress_path->backend);
+    mazu_cJSON *backend_local_JSON = v1_ingress_backend_convertToJSON(v1_http_ingress_path->backend);
     if(backend_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "backend", backend_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "backend", backend_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -61,7 +61,7 @@ cJSON *v1_http_ingress_path_convertToJSON(v1_http_ingress_path_t *v1_http_ingres
 
     // v1_http_ingress_path->path
     if(v1_http_ingress_path->path) {
-    if(cJSON_AddStringToObject(item, "path", v1_http_ingress_path->path) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "path", v1_http_ingress_path->path) == NULL) {
     goto fail; //String
     }
     }
@@ -71,19 +71,19 @@ cJSON *v1_http_ingress_path_convertToJSON(v1_http_ingress_path_t *v1_http_ingres
     if (!v1_http_ingress_path->path_type) {
         goto fail;
     }
-    if(cJSON_AddStringToObject(item, "pathType", v1_http_ingress_path->path_type) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "pathType", v1_http_ingress_path->path_type) == NULL) {
     goto fail; //String
     }
 
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_http_ingress_path_t *v1_http_ingress_path_parseFromJSON(cJSON *v1_http_ingress_pathJSON){
+v1_http_ingress_path_t *v1_http_ingress_path_parseFromJSON(mazu_cJSON *v1_http_ingress_pathJSON){
 
     v1_http_ingress_path_t *v1_http_ingress_path_local_var = NULL;
 
@@ -91,7 +91,7 @@ v1_http_ingress_path_t *v1_http_ingress_path_parseFromJSON(cJSON *v1_http_ingres
     v1_ingress_backend_t *backend_local_nonprim = NULL;
 
     // v1_http_ingress_path->backend
-    cJSON *backend = cJSON_GetObjectItemCaseSensitive(v1_http_ingress_pathJSON, "backend");
+    mazu_cJSON *backend = mazu_cJSON_GetObjectItemCaseSensitive(v1_http_ingress_pathJSON, "backend");
     if (!backend) {
         goto end;
     }
@@ -100,22 +100,22 @@ v1_http_ingress_path_t *v1_http_ingress_path_parseFromJSON(cJSON *v1_http_ingres
     backend_local_nonprim = v1_ingress_backend_parseFromJSON(backend); //nonprimitive
 
     // v1_http_ingress_path->path
-    cJSON *path = cJSON_GetObjectItemCaseSensitive(v1_http_ingress_pathJSON, "path");
+    mazu_cJSON *path = mazu_cJSON_GetObjectItemCaseSensitive(v1_http_ingress_pathJSON, "path");
     if (path) { 
-    if(!cJSON_IsString(path) && !cJSON_IsNull(path))
+    if(!mazu_cJSON_IsString(path) && !mazu_cJSON_IsNull(path))
     {
     goto end; //String
     }
     }
 
     // v1_http_ingress_path->path_type
-    cJSON *path_type = cJSON_GetObjectItemCaseSensitive(v1_http_ingress_pathJSON, "pathType");
+    mazu_cJSON *path_type = mazu_cJSON_GetObjectItemCaseSensitive(v1_http_ingress_pathJSON, "pathType");
     if (!path_type) {
         goto end;
     }
 
     
-    if(!cJSON_IsString(path_type))
+    if(!mazu_cJSON_IsString(path_type))
     {
     goto end; //String
     }
@@ -123,7 +123,7 @@ v1_http_ingress_path_t *v1_http_ingress_path_parseFromJSON(cJSON *v1_http_ingres
 
     v1_http_ingress_path_local_var = v1_http_ingress_path_create (
         backend_local_nonprim,
-        path && !cJSON_IsNull(path) ? strdup(path->valuestring) : NULL,
+        path && !mazu_cJSON_IsNull(path) ? strdup(path->valuestring) : NULL,
         strdup(path_type->valuestring)
         );
 

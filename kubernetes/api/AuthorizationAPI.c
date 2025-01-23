@@ -53,9 +53,9 @@ AuthorizationAPI_getAPIGroup_4(apiClient_t *apiClient)
     //    printf("%s\n","Unauthorized");
     //}
     //nonprimitive not container
-    cJSON *AuthorizationAPIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    mazu_cJSON *AuthorizationAPIlocalVarJSON = mazu_cJSON_Parse(apiClient->dataReceived);
     v1_api_group_t *elementToReturn = v1_api_group_parseFromJSON(AuthorizationAPIlocalVarJSON);
-    cJSON_Delete(AuthorizationAPIlocalVarJSON);
+    mazu_cJSON_Delete(AuthorizationAPIlocalVarJSON);
     if(elementToReturn == NULL) {
         // return 0;
     }

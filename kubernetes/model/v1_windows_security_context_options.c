@@ -44,12 +44,12 @@ void v1_windows_security_context_options_free(v1_windows_security_context_option
     free(v1_windows_security_context_options);
 }
 
-cJSON *v1_windows_security_context_options_convertToJSON(v1_windows_security_context_options_t *v1_windows_security_context_options) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_windows_security_context_options_convertToJSON(v1_windows_security_context_options_t *v1_windows_security_context_options) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_windows_security_context_options->gmsa_credential_spec
     if(v1_windows_security_context_options->gmsa_credential_spec) {
-    if(cJSON_AddStringToObject(item, "gmsaCredentialSpec", v1_windows_security_context_options->gmsa_credential_spec) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "gmsaCredentialSpec", v1_windows_security_context_options->gmsa_credential_spec) == NULL) {
     goto fail; //String
     }
     }
@@ -57,7 +57,7 @@ cJSON *v1_windows_security_context_options_convertToJSON(v1_windows_security_con
 
     // v1_windows_security_context_options->gmsa_credential_spec_name
     if(v1_windows_security_context_options->gmsa_credential_spec_name) {
-    if(cJSON_AddStringToObject(item, "gmsaCredentialSpecName", v1_windows_security_context_options->gmsa_credential_spec_name) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "gmsaCredentialSpecName", v1_windows_security_context_options->gmsa_credential_spec_name) == NULL) {
     goto fail; //String
     }
     }
@@ -65,7 +65,7 @@ cJSON *v1_windows_security_context_options_convertToJSON(v1_windows_security_con
 
     // v1_windows_security_context_options->host_process
     if(v1_windows_security_context_options->host_process) {
-    if(cJSON_AddBoolToObject(item, "hostProcess", v1_windows_security_context_options->host_process) == NULL) {
+    if(mazu_cJSON_AddBoolToObject(item, "hostProcess", v1_windows_security_context_options->host_process) == NULL) {
     goto fail; //Bool
     }
     }
@@ -73,7 +73,7 @@ cJSON *v1_windows_security_context_options_convertToJSON(v1_windows_security_con
 
     // v1_windows_security_context_options->run_as_user_name
     if(v1_windows_security_context_options->run_as_user_name) {
-    if(cJSON_AddStringToObject(item, "runAsUserName", v1_windows_security_context_options->run_as_user_name) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "runAsUserName", v1_windows_security_context_options->run_as_user_name) == NULL) {
     goto fail; //String
     }
     }
@@ -81,46 +81,46 @@ cJSON *v1_windows_security_context_options_convertToJSON(v1_windows_security_con
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_windows_security_context_options_t *v1_windows_security_context_options_parseFromJSON(cJSON *v1_windows_security_context_optionsJSON){
+v1_windows_security_context_options_t *v1_windows_security_context_options_parseFromJSON(mazu_cJSON *v1_windows_security_context_optionsJSON){
 
     v1_windows_security_context_options_t *v1_windows_security_context_options_local_var = NULL;
 
     // v1_windows_security_context_options->gmsa_credential_spec
-    cJSON *gmsa_credential_spec = cJSON_GetObjectItemCaseSensitive(v1_windows_security_context_optionsJSON, "gmsaCredentialSpec");
+    mazu_cJSON *gmsa_credential_spec = mazu_cJSON_GetObjectItemCaseSensitive(v1_windows_security_context_optionsJSON, "gmsaCredentialSpec");
     if (gmsa_credential_spec) { 
-    if(!cJSON_IsString(gmsa_credential_spec) && !cJSON_IsNull(gmsa_credential_spec))
+    if(!mazu_cJSON_IsString(gmsa_credential_spec) && !mazu_cJSON_IsNull(gmsa_credential_spec))
     {
     goto end; //String
     }
     }
 
     // v1_windows_security_context_options->gmsa_credential_spec_name
-    cJSON *gmsa_credential_spec_name = cJSON_GetObjectItemCaseSensitive(v1_windows_security_context_optionsJSON, "gmsaCredentialSpecName");
+    mazu_cJSON *gmsa_credential_spec_name = mazu_cJSON_GetObjectItemCaseSensitive(v1_windows_security_context_optionsJSON, "gmsaCredentialSpecName");
     if (gmsa_credential_spec_name) { 
-    if(!cJSON_IsString(gmsa_credential_spec_name) && !cJSON_IsNull(gmsa_credential_spec_name))
+    if(!mazu_cJSON_IsString(gmsa_credential_spec_name) && !mazu_cJSON_IsNull(gmsa_credential_spec_name))
     {
     goto end; //String
     }
     }
 
     // v1_windows_security_context_options->host_process
-    cJSON *host_process = cJSON_GetObjectItemCaseSensitive(v1_windows_security_context_optionsJSON, "hostProcess");
+    mazu_cJSON *host_process = mazu_cJSON_GetObjectItemCaseSensitive(v1_windows_security_context_optionsJSON, "hostProcess");
     if (host_process) { 
-    if(!cJSON_IsBool(host_process))
+    if(!mazu_cJSON_IsBool(host_process))
     {
     goto end; //Bool
     }
     }
 
     // v1_windows_security_context_options->run_as_user_name
-    cJSON *run_as_user_name = cJSON_GetObjectItemCaseSensitive(v1_windows_security_context_optionsJSON, "runAsUserName");
+    mazu_cJSON *run_as_user_name = mazu_cJSON_GetObjectItemCaseSensitive(v1_windows_security_context_optionsJSON, "runAsUserName");
     if (run_as_user_name) { 
-    if(!cJSON_IsString(run_as_user_name) && !cJSON_IsNull(run_as_user_name))
+    if(!mazu_cJSON_IsString(run_as_user_name) && !mazu_cJSON_IsNull(run_as_user_name))
     {
     goto end; //String
     }
@@ -128,10 +128,10 @@ v1_windows_security_context_options_t *v1_windows_security_context_options_parse
 
 
     v1_windows_security_context_options_local_var = v1_windows_security_context_options_create (
-        gmsa_credential_spec && !cJSON_IsNull(gmsa_credential_spec) ? strdup(gmsa_credential_spec->valuestring) : NULL,
-        gmsa_credential_spec_name && !cJSON_IsNull(gmsa_credential_spec_name) ? strdup(gmsa_credential_spec_name->valuestring) : NULL,
+        gmsa_credential_spec && !mazu_cJSON_IsNull(gmsa_credential_spec) ? strdup(gmsa_credential_spec->valuestring) : NULL,
+        gmsa_credential_spec_name && !mazu_cJSON_IsNull(gmsa_credential_spec_name) ? strdup(gmsa_credential_spec_name->valuestring) : NULL,
         host_process ? host_process->valueint : 0,
-        run_as_user_name && !cJSON_IsNull(run_as_user_name) ? strdup(run_as_user_name->valuestring) : NULL
+        run_as_user_name && !mazu_cJSON_IsNull(run_as_user_name) ? strdup(run_as_user_name->valuestring) : NULL
         );
 
     return v1_windows_security_context_options_local_var;

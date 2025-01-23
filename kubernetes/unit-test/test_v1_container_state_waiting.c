@@ -11,7 +11,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdbool.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 
 #include "../model/v1_container_state_waiting.h"
 v1_container_state_waiting_t* instantiate_v1_container_state_waiting(int include_optional);
@@ -41,11 +41,11 @@ v1_container_state_waiting_t* instantiate_v1_container_state_waiting(int include
 void test_v1_container_state_waiting(int include_optional) {
     v1_container_state_waiting_t* v1_container_state_waiting_1 = instantiate_v1_container_state_waiting(include_optional);
 
-	cJSON* jsonv1_container_state_waiting_1 = v1_container_state_waiting_convertToJSON(v1_container_state_waiting_1);
-	printf("v1_container_state_waiting :\n%s\n", cJSON_Print(jsonv1_container_state_waiting_1));
+	mazu_cJSON* jsonv1_container_state_waiting_1 = v1_container_state_waiting_convertToJSON(v1_container_state_waiting_1);
+	printf("v1_container_state_waiting :\n%s\n", mazu_cJSON_Print(jsonv1_container_state_waiting_1));
 	v1_container_state_waiting_t* v1_container_state_waiting_2 = v1_container_state_waiting_parseFromJSON(jsonv1_container_state_waiting_1);
-	cJSON* jsonv1_container_state_waiting_2 = v1_container_state_waiting_convertToJSON(v1_container_state_waiting_2);
-	printf("repeating v1_container_state_waiting:\n%s\n", cJSON_Print(jsonv1_container_state_waiting_2));
+	mazu_cJSON* jsonv1_container_state_waiting_2 = v1_container_state_waiting_convertToJSON(v1_container_state_waiting_2);
+	printf("repeating v1_container_state_waiting:\n%s\n", mazu_cJSON_Print(jsonv1_container_state_waiting_2));
 }
 
 int main() {

@@ -66,19 +66,19 @@ void v1_rule_with_operations_free(v1_rule_with_operations_t *v1_rule_with_operat
     free(v1_rule_with_operations);
 }
 
-cJSON *v1_rule_with_operations_convertToJSON(v1_rule_with_operations_t *v1_rule_with_operations) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_rule_with_operations_convertToJSON(v1_rule_with_operations_t *v1_rule_with_operations) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_rule_with_operations->api_groups
     if(v1_rule_with_operations->api_groups) {
-    cJSON *api_groups = cJSON_AddArrayToObject(item, "apiGroups");
+    mazu_cJSON *api_groups = mazu_cJSON_AddArrayToObject(item, "apiGroups");
     if(api_groups == NULL) {
         goto fail; //primitive container
     }
 
     listEntry_t *api_groupsListEntry;
     list_ForEach(api_groupsListEntry, v1_rule_with_operations->api_groups) {
-    if(cJSON_AddStringToObject(api_groups, "", (char*)api_groupsListEntry->data) == NULL)
+    if(mazu_cJSON_AddStringToObject(api_groups, "", (char*)api_groupsListEntry->data) == NULL)
     {
         goto fail;
     }
@@ -88,14 +88,14 @@ cJSON *v1_rule_with_operations_convertToJSON(v1_rule_with_operations_t *v1_rule_
 
     // v1_rule_with_operations->api_versions
     if(v1_rule_with_operations->api_versions) {
-    cJSON *api_versions = cJSON_AddArrayToObject(item, "apiVersions");
+    mazu_cJSON *api_versions = mazu_cJSON_AddArrayToObject(item, "apiVersions");
     if(api_versions == NULL) {
         goto fail; //primitive container
     }
 
     listEntry_t *api_versionsListEntry;
     list_ForEach(api_versionsListEntry, v1_rule_with_operations->api_versions) {
-    if(cJSON_AddStringToObject(api_versions, "", (char*)api_versionsListEntry->data) == NULL)
+    if(mazu_cJSON_AddStringToObject(api_versions, "", (char*)api_versionsListEntry->data) == NULL)
     {
         goto fail;
     }
@@ -105,14 +105,14 @@ cJSON *v1_rule_with_operations_convertToJSON(v1_rule_with_operations_t *v1_rule_
 
     // v1_rule_with_operations->operations
     if(v1_rule_with_operations->operations) {
-    cJSON *operations = cJSON_AddArrayToObject(item, "operations");
+    mazu_cJSON *operations = mazu_cJSON_AddArrayToObject(item, "operations");
     if(operations == NULL) {
         goto fail; //primitive container
     }
 
     listEntry_t *operationsListEntry;
     list_ForEach(operationsListEntry, v1_rule_with_operations->operations) {
-    if(cJSON_AddStringToObject(operations, "", (char*)operationsListEntry->data) == NULL)
+    if(mazu_cJSON_AddStringToObject(operations, "", (char*)operationsListEntry->data) == NULL)
     {
         goto fail;
     }
@@ -122,14 +122,14 @@ cJSON *v1_rule_with_operations_convertToJSON(v1_rule_with_operations_t *v1_rule_
 
     // v1_rule_with_operations->resources
     if(v1_rule_with_operations->resources) {
-    cJSON *resources = cJSON_AddArrayToObject(item, "resources");
+    mazu_cJSON *resources = mazu_cJSON_AddArrayToObject(item, "resources");
     if(resources == NULL) {
         goto fail; //primitive container
     }
 
     listEntry_t *resourcesListEntry;
     list_ForEach(resourcesListEntry, v1_rule_with_operations->resources) {
-    if(cJSON_AddStringToObject(resources, "", (char*)resourcesListEntry->data) == NULL)
+    if(mazu_cJSON_AddStringToObject(resources, "", (char*)resourcesListEntry->data) == NULL)
     {
         goto fail;
     }
@@ -139,7 +139,7 @@ cJSON *v1_rule_with_operations_convertToJSON(v1_rule_with_operations_t *v1_rule_
 
     // v1_rule_with_operations->scope
     if(v1_rule_with_operations->scope) {
-    if(cJSON_AddStringToObject(item, "scope", v1_rule_with_operations->scope) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "scope", v1_rule_with_operations->scope) == NULL) {
     goto fail; //String
     }
     }
@@ -147,12 +147,12 @@ cJSON *v1_rule_with_operations_convertToJSON(v1_rule_with_operations_t *v1_rule_
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_rule_with_operations_t *v1_rule_with_operations_parseFromJSON(cJSON *v1_rule_with_operationsJSON){
+v1_rule_with_operations_t *v1_rule_with_operations_parseFromJSON(mazu_cJSON *v1_rule_with_operationsJSON){
 
     v1_rule_with_operations_t *v1_rule_with_operations_local_var = NULL;
 
@@ -169,17 +169,17 @@ v1_rule_with_operations_t *v1_rule_with_operations_parseFromJSON(cJSON *v1_rule_
     list_t *resourcesList = NULL;
 
     // v1_rule_with_operations->api_groups
-    cJSON *api_groups = cJSON_GetObjectItemCaseSensitive(v1_rule_with_operationsJSON, "apiGroups");
+    mazu_cJSON *api_groups = mazu_cJSON_GetObjectItemCaseSensitive(v1_rule_with_operationsJSON, "apiGroups");
     if (api_groups) { 
-    cJSON *api_groups_local = NULL;
-    if(!cJSON_IsArray(api_groups)) {
+    mazu_cJSON *api_groups_local = NULL;
+    if(!mazu_cJSON_IsArray(api_groups)) {
         goto end;//primitive container
     }
     api_groupsList = list_createList();
 
-    cJSON_ArrayForEach(api_groups_local, api_groups)
+    mazu_cJSON_ArrayForEach(api_groups_local, api_groups)
     {
-        if(!cJSON_IsString(api_groups_local))
+        if(!mazu_cJSON_IsString(api_groups_local))
         {
             goto end;
         }
@@ -188,17 +188,17 @@ v1_rule_with_operations_t *v1_rule_with_operations_parseFromJSON(cJSON *v1_rule_
     }
 
     // v1_rule_with_operations->api_versions
-    cJSON *api_versions = cJSON_GetObjectItemCaseSensitive(v1_rule_with_operationsJSON, "apiVersions");
+    mazu_cJSON *api_versions = mazu_cJSON_GetObjectItemCaseSensitive(v1_rule_with_operationsJSON, "apiVersions");
     if (api_versions) { 
-    cJSON *api_versions_local = NULL;
-    if(!cJSON_IsArray(api_versions)) {
+    mazu_cJSON *api_versions_local = NULL;
+    if(!mazu_cJSON_IsArray(api_versions)) {
         goto end;//primitive container
     }
     api_versionsList = list_createList();
 
-    cJSON_ArrayForEach(api_versions_local, api_versions)
+    mazu_cJSON_ArrayForEach(api_versions_local, api_versions)
     {
-        if(!cJSON_IsString(api_versions_local))
+        if(!mazu_cJSON_IsString(api_versions_local))
         {
             goto end;
         }
@@ -207,17 +207,17 @@ v1_rule_with_operations_t *v1_rule_with_operations_parseFromJSON(cJSON *v1_rule_
     }
 
     // v1_rule_with_operations->operations
-    cJSON *operations = cJSON_GetObjectItemCaseSensitive(v1_rule_with_operationsJSON, "operations");
+    mazu_cJSON *operations = mazu_cJSON_GetObjectItemCaseSensitive(v1_rule_with_operationsJSON, "operations");
     if (operations) { 
-    cJSON *operations_local = NULL;
-    if(!cJSON_IsArray(operations)) {
+    mazu_cJSON *operations_local = NULL;
+    if(!mazu_cJSON_IsArray(operations)) {
         goto end;//primitive container
     }
     operationsList = list_createList();
 
-    cJSON_ArrayForEach(operations_local, operations)
+    mazu_cJSON_ArrayForEach(operations_local, operations)
     {
-        if(!cJSON_IsString(operations_local))
+        if(!mazu_cJSON_IsString(operations_local))
         {
             goto end;
         }
@@ -226,17 +226,17 @@ v1_rule_with_operations_t *v1_rule_with_operations_parseFromJSON(cJSON *v1_rule_
     }
 
     // v1_rule_with_operations->resources
-    cJSON *resources = cJSON_GetObjectItemCaseSensitive(v1_rule_with_operationsJSON, "resources");
+    mazu_cJSON *resources = mazu_cJSON_GetObjectItemCaseSensitive(v1_rule_with_operationsJSON, "resources");
     if (resources) { 
-    cJSON *resources_local = NULL;
-    if(!cJSON_IsArray(resources)) {
+    mazu_cJSON *resources_local = NULL;
+    if(!mazu_cJSON_IsArray(resources)) {
         goto end;//primitive container
     }
     resourcesList = list_createList();
 
-    cJSON_ArrayForEach(resources_local, resources)
+    mazu_cJSON_ArrayForEach(resources_local, resources)
     {
-        if(!cJSON_IsString(resources_local))
+        if(!mazu_cJSON_IsString(resources_local))
         {
             goto end;
         }
@@ -245,9 +245,9 @@ v1_rule_with_operations_t *v1_rule_with_operations_parseFromJSON(cJSON *v1_rule_
     }
 
     // v1_rule_with_operations->scope
-    cJSON *scope = cJSON_GetObjectItemCaseSensitive(v1_rule_with_operationsJSON, "scope");
+    mazu_cJSON *scope = mazu_cJSON_GetObjectItemCaseSensitive(v1_rule_with_operationsJSON, "scope");
     if (scope) { 
-    if(!cJSON_IsString(scope) && !cJSON_IsNull(scope))
+    if(!mazu_cJSON_IsString(scope) && !mazu_cJSON_IsNull(scope))
     {
     goto end; //String
     }
@@ -259,7 +259,7 @@ v1_rule_with_operations_t *v1_rule_with_operations_parseFromJSON(cJSON *v1_rule_
         api_versions ? api_versionsList : NULL,
         operations ? operationsList : NULL,
         resources ? resourcesList : NULL,
-        scope && !cJSON_IsNull(scope) ? strdup(scope->valuestring) : NULL
+        scope && !mazu_cJSON_IsNull(scope) ? strdup(scope->valuestring) : NULL
         );
 
     return v1_rule_with_operations_local_var;

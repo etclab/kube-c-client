@@ -54,12 +54,12 @@ void authentication_v1_token_request_free(authentication_v1_token_request_t *aut
     free(authentication_v1_token_request);
 }
 
-cJSON *authentication_v1_token_request_convertToJSON(authentication_v1_token_request_t *authentication_v1_token_request) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *authentication_v1_token_request_convertToJSON(authentication_v1_token_request_t *authentication_v1_token_request) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // authentication_v1_token_request->api_version
     if(authentication_v1_token_request->api_version) {
-    if(cJSON_AddStringToObject(item, "apiVersion", authentication_v1_token_request->api_version) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "apiVersion", authentication_v1_token_request->api_version) == NULL) {
     goto fail; //String
     }
     }
@@ -67,7 +67,7 @@ cJSON *authentication_v1_token_request_convertToJSON(authentication_v1_token_req
 
     // authentication_v1_token_request->kind
     if(authentication_v1_token_request->kind) {
-    if(cJSON_AddStringToObject(item, "kind", authentication_v1_token_request->kind) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "kind", authentication_v1_token_request->kind) == NULL) {
     goto fail; //String
     }
     }
@@ -75,11 +75,11 @@ cJSON *authentication_v1_token_request_convertToJSON(authentication_v1_token_req
 
     // authentication_v1_token_request->metadata
     if(authentication_v1_token_request->metadata) {
-    cJSON *metadata_local_JSON = v1_object_meta_convertToJSON(authentication_v1_token_request->metadata);
+    mazu_cJSON *metadata_local_JSON = v1_object_meta_convertToJSON(authentication_v1_token_request->metadata);
     if(metadata_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "metadata", metadata_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "metadata", metadata_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -90,11 +90,11 @@ cJSON *authentication_v1_token_request_convertToJSON(authentication_v1_token_req
     if (!authentication_v1_token_request->spec) {
         goto fail;
     }
-    cJSON *spec_local_JSON = v1_token_request_spec_convertToJSON(authentication_v1_token_request->spec);
+    mazu_cJSON *spec_local_JSON = v1_token_request_spec_convertToJSON(authentication_v1_token_request->spec);
     if(spec_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "spec", spec_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "spec", spec_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -102,11 +102,11 @@ cJSON *authentication_v1_token_request_convertToJSON(authentication_v1_token_req
 
     // authentication_v1_token_request->status
     if(authentication_v1_token_request->status) {
-    cJSON *status_local_JSON = v1_token_request_status_convertToJSON(authentication_v1_token_request->status);
+    mazu_cJSON *status_local_JSON = v1_token_request_status_convertToJSON(authentication_v1_token_request->status);
     if(status_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "status", status_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "status", status_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -115,12 +115,12 @@ cJSON *authentication_v1_token_request_convertToJSON(authentication_v1_token_req
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-authentication_v1_token_request_t *authentication_v1_token_request_parseFromJSON(cJSON *authentication_v1_token_requestJSON){
+authentication_v1_token_request_t *authentication_v1_token_request_parseFromJSON(mazu_cJSON *authentication_v1_token_requestJSON){
 
     authentication_v1_token_request_t *authentication_v1_token_request_local_var = NULL;
 
@@ -134,31 +134,31 @@ authentication_v1_token_request_t *authentication_v1_token_request_parseFromJSON
     v1_token_request_status_t *status_local_nonprim = NULL;
 
     // authentication_v1_token_request->api_version
-    cJSON *api_version = cJSON_GetObjectItemCaseSensitive(authentication_v1_token_requestJSON, "apiVersion");
+    mazu_cJSON *api_version = mazu_cJSON_GetObjectItemCaseSensitive(authentication_v1_token_requestJSON, "apiVersion");
     if (api_version) { 
-    if(!cJSON_IsString(api_version) && !cJSON_IsNull(api_version))
+    if(!mazu_cJSON_IsString(api_version) && !mazu_cJSON_IsNull(api_version))
     {
     goto end; //String
     }
     }
 
     // authentication_v1_token_request->kind
-    cJSON *kind = cJSON_GetObjectItemCaseSensitive(authentication_v1_token_requestJSON, "kind");
+    mazu_cJSON *kind = mazu_cJSON_GetObjectItemCaseSensitive(authentication_v1_token_requestJSON, "kind");
     if (kind) { 
-    if(!cJSON_IsString(kind) && !cJSON_IsNull(kind))
+    if(!mazu_cJSON_IsString(kind) && !mazu_cJSON_IsNull(kind))
     {
     goto end; //String
     }
     }
 
     // authentication_v1_token_request->metadata
-    cJSON *metadata = cJSON_GetObjectItemCaseSensitive(authentication_v1_token_requestJSON, "metadata");
+    mazu_cJSON *metadata = mazu_cJSON_GetObjectItemCaseSensitive(authentication_v1_token_requestJSON, "metadata");
     if (metadata) { 
     metadata_local_nonprim = v1_object_meta_parseFromJSON(metadata); //nonprimitive
     }
 
     // authentication_v1_token_request->spec
-    cJSON *spec = cJSON_GetObjectItemCaseSensitive(authentication_v1_token_requestJSON, "spec");
+    mazu_cJSON *spec = mazu_cJSON_GetObjectItemCaseSensitive(authentication_v1_token_requestJSON, "spec");
     if (!spec) {
         goto end;
     }
@@ -167,15 +167,15 @@ authentication_v1_token_request_t *authentication_v1_token_request_parseFromJSON
     spec_local_nonprim = v1_token_request_spec_parseFromJSON(spec); //nonprimitive
 
     // authentication_v1_token_request->status
-    cJSON *status = cJSON_GetObjectItemCaseSensitive(authentication_v1_token_requestJSON, "status");
+    mazu_cJSON *status = mazu_cJSON_GetObjectItemCaseSensitive(authentication_v1_token_requestJSON, "status");
     if (status) { 
     status_local_nonprim = v1_token_request_status_parseFromJSON(status); //nonprimitive
     }
 
 
     authentication_v1_token_request_local_var = authentication_v1_token_request_create (
-        api_version && !cJSON_IsNull(api_version) ? strdup(api_version->valuestring) : NULL,
-        kind && !cJSON_IsNull(kind) ? strdup(kind->valuestring) : NULL,
+        api_version && !mazu_cJSON_IsNull(api_version) ? strdup(api_version->valuestring) : NULL,
+        kind && !mazu_cJSON_IsNull(kind) ? strdup(kind->valuestring) : NULL,
         metadata ? metadata_local_nonprim : NULL,
         spec_local_nonprim,
         status ? status_local_nonprim : NULL

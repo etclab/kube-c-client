@@ -8,7 +8,7 @@
 #define _v1_env_var_H_
 
 #include <string.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
 #include "../include/binary.h"
@@ -34,9 +34,9 @@ v1_env_var_t *v1_env_var_create(
 
 void v1_env_var_free(v1_env_var_t *v1_env_var);
 
-v1_env_var_t *v1_env_var_parseFromJSON(cJSON *v1_env_varJSON);
+v1_env_var_t *v1_env_var_parseFromJSON(mazu_cJSON *v1_env_varJSON);
 
-cJSON *v1_env_var_convertToJSON(v1_env_var_t *v1_env_var);
+mazu_cJSON *v1_env_var_convertToJSON(v1_env_var_t *v1_env_var);
 
 #endif /* _v1_env_var_H_ */
 

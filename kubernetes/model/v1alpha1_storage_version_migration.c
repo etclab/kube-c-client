@@ -54,12 +54,12 @@ void v1alpha1_storage_version_migration_free(v1alpha1_storage_version_migration_
     free(v1alpha1_storage_version_migration);
 }
 
-cJSON *v1alpha1_storage_version_migration_convertToJSON(v1alpha1_storage_version_migration_t *v1alpha1_storage_version_migration) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1alpha1_storage_version_migration_convertToJSON(v1alpha1_storage_version_migration_t *v1alpha1_storage_version_migration) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1alpha1_storage_version_migration->api_version
     if(v1alpha1_storage_version_migration->api_version) {
-    if(cJSON_AddStringToObject(item, "apiVersion", v1alpha1_storage_version_migration->api_version) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "apiVersion", v1alpha1_storage_version_migration->api_version) == NULL) {
     goto fail; //String
     }
     }
@@ -67,7 +67,7 @@ cJSON *v1alpha1_storage_version_migration_convertToJSON(v1alpha1_storage_version
 
     // v1alpha1_storage_version_migration->kind
     if(v1alpha1_storage_version_migration->kind) {
-    if(cJSON_AddStringToObject(item, "kind", v1alpha1_storage_version_migration->kind) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "kind", v1alpha1_storage_version_migration->kind) == NULL) {
     goto fail; //String
     }
     }
@@ -75,11 +75,11 @@ cJSON *v1alpha1_storage_version_migration_convertToJSON(v1alpha1_storage_version
 
     // v1alpha1_storage_version_migration->metadata
     if(v1alpha1_storage_version_migration->metadata) {
-    cJSON *metadata_local_JSON = v1_object_meta_convertToJSON(v1alpha1_storage_version_migration->metadata);
+    mazu_cJSON *metadata_local_JSON = v1_object_meta_convertToJSON(v1alpha1_storage_version_migration->metadata);
     if(metadata_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "metadata", metadata_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "metadata", metadata_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -88,11 +88,11 @@ cJSON *v1alpha1_storage_version_migration_convertToJSON(v1alpha1_storage_version
 
     // v1alpha1_storage_version_migration->spec
     if(v1alpha1_storage_version_migration->spec) {
-    cJSON *spec_local_JSON = v1alpha1_storage_version_migration_spec_convertToJSON(v1alpha1_storage_version_migration->spec);
+    mazu_cJSON *spec_local_JSON = v1alpha1_storage_version_migration_spec_convertToJSON(v1alpha1_storage_version_migration->spec);
     if(spec_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "spec", spec_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "spec", spec_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -101,11 +101,11 @@ cJSON *v1alpha1_storage_version_migration_convertToJSON(v1alpha1_storage_version
 
     // v1alpha1_storage_version_migration->status
     if(v1alpha1_storage_version_migration->status) {
-    cJSON *status_local_JSON = v1alpha1_storage_version_migration_status_convertToJSON(v1alpha1_storage_version_migration->status);
+    mazu_cJSON *status_local_JSON = v1alpha1_storage_version_migration_status_convertToJSON(v1alpha1_storage_version_migration->status);
     if(status_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "status", status_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "status", status_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -114,12 +114,12 @@ cJSON *v1alpha1_storage_version_migration_convertToJSON(v1alpha1_storage_version
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1alpha1_storage_version_migration_t *v1alpha1_storage_version_migration_parseFromJSON(cJSON *v1alpha1_storage_version_migrationJSON){
+v1alpha1_storage_version_migration_t *v1alpha1_storage_version_migration_parseFromJSON(mazu_cJSON *v1alpha1_storage_version_migrationJSON){
 
     v1alpha1_storage_version_migration_t *v1alpha1_storage_version_migration_local_var = NULL;
 
@@ -133,45 +133,45 @@ v1alpha1_storage_version_migration_t *v1alpha1_storage_version_migration_parseFr
     v1alpha1_storage_version_migration_status_t *status_local_nonprim = NULL;
 
     // v1alpha1_storage_version_migration->api_version
-    cJSON *api_version = cJSON_GetObjectItemCaseSensitive(v1alpha1_storage_version_migrationJSON, "apiVersion");
+    mazu_cJSON *api_version = mazu_cJSON_GetObjectItemCaseSensitive(v1alpha1_storage_version_migrationJSON, "apiVersion");
     if (api_version) { 
-    if(!cJSON_IsString(api_version) && !cJSON_IsNull(api_version))
+    if(!mazu_cJSON_IsString(api_version) && !mazu_cJSON_IsNull(api_version))
     {
     goto end; //String
     }
     }
 
     // v1alpha1_storage_version_migration->kind
-    cJSON *kind = cJSON_GetObjectItemCaseSensitive(v1alpha1_storage_version_migrationJSON, "kind");
+    mazu_cJSON *kind = mazu_cJSON_GetObjectItemCaseSensitive(v1alpha1_storage_version_migrationJSON, "kind");
     if (kind) { 
-    if(!cJSON_IsString(kind) && !cJSON_IsNull(kind))
+    if(!mazu_cJSON_IsString(kind) && !mazu_cJSON_IsNull(kind))
     {
     goto end; //String
     }
     }
 
     // v1alpha1_storage_version_migration->metadata
-    cJSON *metadata = cJSON_GetObjectItemCaseSensitive(v1alpha1_storage_version_migrationJSON, "metadata");
+    mazu_cJSON *metadata = mazu_cJSON_GetObjectItemCaseSensitive(v1alpha1_storage_version_migrationJSON, "metadata");
     if (metadata) { 
     metadata_local_nonprim = v1_object_meta_parseFromJSON(metadata); //nonprimitive
     }
 
     // v1alpha1_storage_version_migration->spec
-    cJSON *spec = cJSON_GetObjectItemCaseSensitive(v1alpha1_storage_version_migrationJSON, "spec");
+    mazu_cJSON *spec = mazu_cJSON_GetObjectItemCaseSensitive(v1alpha1_storage_version_migrationJSON, "spec");
     if (spec) { 
     spec_local_nonprim = v1alpha1_storage_version_migration_spec_parseFromJSON(spec); //nonprimitive
     }
 
     // v1alpha1_storage_version_migration->status
-    cJSON *status = cJSON_GetObjectItemCaseSensitive(v1alpha1_storage_version_migrationJSON, "status");
+    mazu_cJSON *status = mazu_cJSON_GetObjectItemCaseSensitive(v1alpha1_storage_version_migrationJSON, "status");
     if (status) { 
     status_local_nonprim = v1alpha1_storage_version_migration_status_parseFromJSON(status); //nonprimitive
     }
 
 
     v1alpha1_storage_version_migration_local_var = v1alpha1_storage_version_migration_create (
-        api_version && !cJSON_IsNull(api_version) ? strdup(api_version->valuestring) : NULL,
-        kind && !cJSON_IsNull(kind) ? strdup(kind->valuestring) : NULL,
+        api_version && !mazu_cJSON_IsNull(api_version) ? strdup(api_version->valuestring) : NULL,
+        kind && !mazu_cJSON_IsNull(kind) ? strdup(kind->valuestring) : NULL,
         metadata ? metadata_local_nonprim : NULL,
         spec ? spec_local_nonprim : NULL,
         status ? status_local_nonprim : NULL

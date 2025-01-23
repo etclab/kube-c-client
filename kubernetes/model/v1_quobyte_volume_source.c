@@ -56,12 +56,12 @@ void v1_quobyte_volume_source_free(v1_quobyte_volume_source_t *v1_quobyte_volume
     free(v1_quobyte_volume_source);
 }
 
-cJSON *v1_quobyte_volume_source_convertToJSON(v1_quobyte_volume_source_t *v1_quobyte_volume_source) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_quobyte_volume_source_convertToJSON(v1_quobyte_volume_source_t *v1_quobyte_volume_source) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_quobyte_volume_source->group
     if(v1_quobyte_volume_source->group) {
-    if(cJSON_AddStringToObject(item, "group", v1_quobyte_volume_source->group) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "group", v1_quobyte_volume_source->group) == NULL) {
     goto fail; //String
     }
     }
@@ -69,7 +69,7 @@ cJSON *v1_quobyte_volume_source_convertToJSON(v1_quobyte_volume_source_t *v1_quo
 
     // v1_quobyte_volume_source->read_only
     if(v1_quobyte_volume_source->read_only) {
-    if(cJSON_AddBoolToObject(item, "readOnly", v1_quobyte_volume_source->read_only) == NULL) {
+    if(mazu_cJSON_AddBoolToObject(item, "readOnly", v1_quobyte_volume_source->read_only) == NULL) {
     goto fail; //Bool
     }
     }
@@ -79,14 +79,14 @@ cJSON *v1_quobyte_volume_source_convertToJSON(v1_quobyte_volume_source_t *v1_quo
     if (!v1_quobyte_volume_source->registry) {
         goto fail;
     }
-    if(cJSON_AddStringToObject(item, "registry", v1_quobyte_volume_source->registry) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "registry", v1_quobyte_volume_source->registry) == NULL) {
     goto fail; //String
     }
 
 
     // v1_quobyte_volume_source->tenant
     if(v1_quobyte_volume_source->tenant) {
-    if(cJSON_AddStringToObject(item, "tenant", v1_quobyte_volume_source->tenant) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "tenant", v1_quobyte_volume_source->tenant) == NULL) {
     goto fail; //String
     }
     }
@@ -94,7 +94,7 @@ cJSON *v1_quobyte_volume_source_convertToJSON(v1_quobyte_volume_source_t *v1_quo
 
     // v1_quobyte_volume_source->user
     if(v1_quobyte_volume_source->user) {
-    if(cJSON_AddStringToObject(item, "user", v1_quobyte_volume_source->user) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "user", v1_quobyte_volume_source->user) == NULL) {
     goto fail; //String
     }
     }
@@ -104,89 +104,89 @@ cJSON *v1_quobyte_volume_source_convertToJSON(v1_quobyte_volume_source_t *v1_quo
     if (!v1_quobyte_volume_source->volume) {
         goto fail;
     }
-    if(cJSON_AddStringToObject(item, "volume", v1_quobyte_volume_source->volume) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "volume", v1_quobyte_volume_source->volume) == NULL) {
     goto fail; //String
     }
 
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_quobyte_volume_source_t *v1_quobyte_volume_source_parseFromJSON(cJSON *v1_quobyte_volume_sourceJSON){
+v1_quobyte_volume_source_t *v1_quobyte_volume_source_parseFromJSON(mazu_cJSON *v1_quobyte_volume_sourceJSON){
 
     v1_quobyte_volume_source_t *v1_quobyte_volume_source_local_var = NULL;
 
     // v1_quobyte_volume_source->group
-    cJSON *group = cJSON_GetObjectItemCaseSensitive(v1_quobyte_volume_sourceJSON, "group");
+    mazu_cJSON *group = mazu_cJSON_GetObjectItemCaseSensitive(v1_quobyte_volume_sourceJSON, "group");
     if (group) { 
-    if(!cJSON_IsString(group) && !cJSON_IsNull(group))
+    if(!mazu_cJSON_IsString(group) && !mazu_cJSON_IsNull(group))
     {
     goto end; //String
     }
     }
 
     // v1_quobyte_volume_source->read_only
-    cJSON *read_only = cJSON_GetObjectItemCaseSensitive(v1_quobyte_volume_sourceJSON, "readOnly");
+    mazu_cJSON *read_only = mazu_cJSON_GetObjectItemCaseSensitive(v1_quobyte_volume_sourceJSON, "readOnly");
     if (read_only) { 
-    if(!cJSON_IsBool(read_only))
+    if(!mazu_cJSON_IsBool(read_only))
     {
     goto end; //Bool
     }
     }
 
     // v1_quobyte_volume_source->registry
-    cJSON *registry = cJSON_GetObjectItemCaseSensitive(v1_quobyte_volume_sourceJSON, "registry");
+    mazu_cJSON *registry = mazu_cJSON_GetObjectItemCaseSensitive(v1_quobyte_volume_sourceJSON, "registry");
     if (!registry) {
         goto end;
     }
 
     
-    if(!cJSON_IsString(registry))
+    if(!mazu_cJSON_IsString(registry))
     {
     goto end; //String
     }
 
     // v1_quobyte_volume_source->tenant
-    cJSON *tenant = cJSON_GetObjectItemCaseSensitive(v1_quobyte_volume_sourceJSON, "tenant");
+    mazu_cJSON *tenant = mazu_cJSON_GetObjectItemCaseSensitive(v1_quobyte_volume_sourceJSON, "tenant");
     if (tenant) { 
-    if(!cJSON_IsString(tenant) && !cJSON_IsNull(tenant))
+    if(!mazu_cJSON_IsString(tenant) && !mazu_cJSON_IsNull(tenant))
     {
     goto end; //String
     }
     }
 
     // v1_quobyte_volume_source->user
-    cJSON *user = cJSON_GetObjectItemCaseSensitive(v1_quobyte_volume_sourceJSON, "user");
+    mazu_cJSON *user = mazu_cJSON_GetObjectItemCaseSensitive(v1_quobyte_volume_sourceJSON, "user");
     if (user) { 
-    if(!cJSON_IsString(user) && !cJSON_IsNull(user))
+    if(!mazu_cJSON_IsString(user) && !mazu_cJSON_IsNull(user))
     {
     goto end; //String
     }
     }
 
     // v1_quobyte_volume_source->volume
-    cJSON *volume = cJSON_GetObjectItemCaseSensitive(v1_quobyte_volume_sourceJSON, "volume");
+    mazu_cJSON *volume = mazu_cJSON_GetObjectItemCaseSensitive(v1_quobyte_volume_sourceJSON, "volume");
     if (!volume) {
         goto end;
     }
 
     
-    if(!cJSON_IsString(volume))
+    if(!mazu_cJSON_IsString(volume))
     {
     goto end; //String
     }
 
 
     v1_quobyte_volume_source_local_var = v1_quobyte_volume_source_create (
-        group && !cJSON_IsNull(group) ? strdup(group->valuestring) : NULL,
+        group && !mazu_cJSON_IsNull(group) ? strdup(group->valuestring) : NULL,
         read_only ? read_only->valueint : 0,
         strdup(registry->valuestring),
-        tenant && !cJSON_IsNull(tenant) ? strdup(tenant->valuestring) : NULL,
-        user && !cJSON_IsNull(user) ? strdup(user->valuestring) : NULL,
+        tenant && !mazu_cJSON_IsNull(tenant) ? strdup(tenant->valuestring) : NULL,
+        user && !mazu_cJSON_IsNull(user) ? strdup(user->valuestring) : NULL,
         strdup(volume->valuestring)
         );
 

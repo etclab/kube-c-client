@@ -36,12 +36,12 @@ void v1_ingress_rule_free(v1_ingress_rule_t *v1_ingress_rule) {
     free(v1_ingress_rule);
 }
 
-cJSON *v1_ingress_rule_convertToJSON(v1_ingress_rule_t *v1_ingress_rule) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_ingress_rule_convertToJSON(v1_ingress_rule_t *v1_ingress_rule) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_ingress_rule->host
     if(v1_ingress_rule->host) {
-    if(cJSON_AddStringToObject(item, "host", v1_ingress_rule->host) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "host", v1_ingress_rule->host) == NULL) {
     goto fail; //String
     }
     }
@@ -49,11 +49,11 @@ cJSON *v1_ingress_rule_convertToJSON(v1_ingress_rule_t *v1_ingress_rule) {
 
     // v1_ingress_rule->http
     if(v1_ingress_rule->http) {
-    cJSON *http_local_JSON = v1_http_ingress_rule_value_convertToJSON(v1_ingress_rule->http);
+    mazu_cJSON *http_local_JSON = v1_http_ingress_rule_value_convertToJSON(v1_ingress_rule->http);
     if(http_local_JSON == NULL) {
     goto fail; //model
     }
-    cJSON_AddItemToObject(item, "http", http_local_JSON);
+    mazu_cJSON_AddItemToObject(item, "http", http_local_JSON);
     if(item->child == NULL) {
     goto fail;
     }
@@ -62,12 +62,12 @@ cJSON *v1_ingress_rule_convertToJSON(v1_ingress_rule_t *v1_ingress_rule) {
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_ingress_rule_t *v1_ingress_rule_parseFromJSON(cJSON *v1_ingress_ruleJSON){
+v1_ingress_rule_t *v1_ingress_rule_parseFromJSON(mazu_cJSON *v1_ingress_ruleJSON){
 
     v1_ingress_rule_t *v1_ingress_rule_local_var = NULL;
 
@@ -75,23 +75,23 @@ v1_ingress_rule_t *v1_ingress_rule_parseFromJSON(cJSON *v1_ingress_ruleJSON){
     v1_http_ingress_rule_value_t *http_local_nonprim = NULL;
 
     // v1_ingress_rule->host
-    cJSON *host = cJSON_GetObjectItemCaseSensitive(v1_ingress_ruleJSON, "host");
+    mazu_cJSON *host = mazu_cJSON_GetObjectItemCaseSensitive(v1_ingress_ruleJSON, "host");
     if (host) { 
-    if(!cJSON_IsString(host) && !cJSON_IsNull(host))
+    if(!mazu_cJSON_IsString(host) && !mazu_cJSON_IsNull(host))
     {
     goto end; //String
     }
     }
 
     // v1_ingress_rule->http
-    cJSON *http = cJSON_GetObjectItemCaseSensitive(v1_ingress_ruleJSON, "http");
+    mazu_cJSON *http = mazu_cJSON_GetObjectItemCaseSensitive(v1_ingress_ruleJSON, "http");
     if (http) { 
     http_local_nonprim = v1_http_ingress_rule_value_parseFromJSON(http); //nonprimitive
     }
 
 
     v1_ingress_rule_local_var = v1_ingress_rule_create (
-        host && !cJSON_IsNull(host) ? strdup(host->valuestring) : NULL,
+        host && !mazu_cJSON_IsNull(host) ? strdup(host->valuestring) : NULL,
         http ? http_local_nonprim : NULL
         );
 

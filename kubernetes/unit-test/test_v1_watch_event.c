@@ -11,7 +11,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdbool.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 
 #include "../model/v1_watch_event.h"
 v1_watch_event_t* instantiate_v1_watch_event(int include_optional);
@@ -41,11 +41,11 @@ v1_watch_event_t* instantiate_v1_watch_event(int include_optional) {
 void test_v1_watch_event(int include_optional) {
     v1_watch_event_t* v1_watch_event_1 = instantiate_v1_watch_event(include_optional);
 
-	cJSON* jsonv1_watch_event_1 = v1_watch_event_convertToJSON(v1_watch_event_1);
-	printf("v1_watch_event :\n%s\n", cJSON_Print(jsonv1_watch_event_1));
+	mazu_cJSON* jsonv1_watch_event_1 = v1_watch_event_convertToJSON(v1_watch_event_1);
+	printf("v1_watch_event :\n%s\n", mazu_cJSON_Print(jsonv1_watch_event_1));
 	v1_watch_event_t* v1_watch_event_2 = v1_watch_event_parseFromJSON(jsonv1_watch_event_1);
-	cJSON* jsonv1_watch_event_2 = v1_watch_event_convertToJSON(v1_watch_event_2);
-	printf("repeating v1_watch_event:\n%s\n", cJSON_Print(jsonv1_watch_event_2));
+	mazu_cJSON* jsonv1_watch_event_2 = v1_watch_event_convertToJSON(v1_watch_event_2);
+	printf("repeating v1_watch_event:\n%s\n", mazu_cJSON_Print(jsonv1_watch_event_2));
 }
 
 int main() {

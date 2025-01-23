@@ -38,14 +38,14 @@ void v1_glusterfs_volume_source_free(v1_glusterfs_volume_source_t *v1_glusterfs_
     free(v1_glusterfs_volume_source);
 }
 
-cJSON *v1_glusterfs_volume_source_convertToJSON(v1_glusterfs_volume_source_t *v1_glusterfs_volume_source) {
-    cJSON *item = cJSON_CreateObject();
+mazu_cJSON *v1_glusterfs_volume_source_convertToJSON(v1_glusterfs_volume_source_t *v1_glusterfs_volume_source) {
+    mazu_cJSON *item = mazu_cJSON_CreateObject();
 
     // v1_glusterfs_volume_source->endpoints
     if (!v1_glusterfs_volume_source->endpoints) {
         goto fail;
     }
-    if(cJSON_AddStringToObject(item, "endpoints", v1_glusterfs_volume_source->endpoints) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "endpoints", v1_glusterfs_volume_source->endpoints) == NULL) {
     goto fail; //String
     }
 
@@ -54,14 +54,14 @@ cJSON *v1_glusterfs_volume_source_convertToJSON(v1_glusterfs_volume_source_t *v1
     if (!v1_glusterfs_volume_source->path) {
         goto fail;
     }
-    if(cJSON_AddStringToObject(item, "path", v1_glusterfs_volume_source->path) == NULL) {
+    if(mazu_cJSON_AddStringToObject(item, "path", v1_glusterfs_volume_source->path) == NULL) {
     goto fail; //String
     }
 
 
     // v1_glusterfs_volume_source->read_only
     if(v1_glusterfs_volume_source->read_only) {
-    if(cJSON_AddBoolToObject(item, "readOnly", v1_glusterfs_volume_source->read_only) == NULL) {
+    if(mazu_cJSON_AddBoolToObject(item, "readOnly", v1_glusterfs_volume_source->read_only) == NULL) {
     goto fail; //Bool
     }
     }
@@ -69,43 +69,43 @@ cJSON *v1_glusterfs_volume_source_convertToJSON(v1_glusterfs_volume_source_t *v1
     return item;
 fail:
     if (item) {
-        cJSON_Delete(item);
+        mazu_cJSON_Delete(item);
     }
     return NULL;
 }
 
-v1_glusterfs_volume_source_t *v1_glusterfs_volume_source_parseFromJSON(cJSON *v1_glusterfs_volume_sourceJSON){
+v1_glusterfs_volume_source_t *v1_glusterfs_volume_source_parseFromJSON(mazu_cJSON *v1_glusterfs_volume_sourceJSON){
 
     v1_glusterfs_volume_source_t *v1_glusterfs_volume_source_local_var = NULL;
 
     // v1_glusterfs_volume_source->endpoints
-    cJSON *endpoints = cJSON_GetObjectItemCaseSensitive(v1_glusterfs_volume_sourceJSON, "endpoints");
+    mazu_cJSON *endpoints = mazu_cJSON_GetObjectItemCaseSensitive(v1_glusterfs_volume_sourceJSON, "endpoints");
     if (!endpoints) {
         goto end;
     }
 
     
-    if(!cJSON_IsString(endpoints))
+    if(!mazu_cJSON_IsString(endpoints))
     {
     goto end; //String
     }
 
     // v1_glusterfs_volume_source->path
-    cJSON *path = cJSON_GetObjectItemCaseSensitive(v1_glusterfs_volume_sourceJSON, "path");
+    mazu_cJSON *path = mazu_cJSON_GetObjectItemCaseSensitive(v1_glusterfs_volume_sourceJSON, "path");
     if (!path) {
         goto end;
     }
 
     
-    if(!cJSON_IsString(path))
+    if(!mazu_cJSON_IsString(path))
     {
     goto end; //String
     }
 
     // v1_glusterfs_volume_source->read_only
-    cJSON *read_only = cJSON_GetObjectItemCaseSensitive(v1_glusterfs_volume_sourceJSON, "readOnly");
+    mazu_cJSON *read_only = mazu_cJSON_GetObjectItemCaseSensitive(v1_glusterfs_volume_sourceJSON, "readOnly");
     if (read_only) { 
-    if(!cJSON_IsBool(read_only))
+    if(!mazu_cJSON_IsBool(read_only))
     {
     goto end; //Bool
     }

@@ -8,7 +8,7 @@
 #define _v1_probe_H_
 
 #include <string.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
 #include "../include/binary.h"
@@ -51,9 +51,9 @@ v1_probe_t *v1_probe_create(
 
 void v1_probe_free(v1_probe_t *v1_probe);
 
-v1_probe_t *v1_probe_parseFromJSON(cJSON *v1_probeJSON);
+v1_probe_t *v1_probe_parseFromJSON(mazu_cJSON *v1_probeJSON);
 
-cJSON *v1_probe_convertToJSON(v1_probe_t *v1_probe);
+mazu_cJSON *v1_probe_convertToJSON(v1_probe_t *v1_probe);
 
 #endif /* _v1_probe_H_ */
 

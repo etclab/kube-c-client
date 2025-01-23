@@ -8,7 +8,7 @@
 #define _v1beta3_limit_response_H_
 
 #include <string.h>
-#include "../external/cJSON.h"
+#include "../external/mazu_cJSON.h"
 #include "../include/list.h"
 #include "../include/keyValuePair.h"
 #include "../include/binary.h"
@@ -32,9 +32,9 @@ v1beta3_limit_response_t *v1beta3_limit_response_create(
 
 void v1beta3_limit_response_free(v1beta3_limit_response_t *v1beta3_limit_response);
 
-v1beta3_limit_response_t *v1beta3_limit_response_parseFromJSON(cJSON *v1beta3_limit_responseJSON);
+v1beta3_limit_response_t *v1beta3_limit_response_parseFromJSON(mazu_cJSON *v1beta3_limit_responseJSON);
 
-cJSON *v1beta3_limit_response_convertToJSON(v1beta3_limit_response_t *v1beta3_limit_response);
+mazu_cJSON *v1beta3_limit_response_convertToJSON(v1beta3_limit_response_t *v1beta3_limit_response);
 
 #endif /* _v1beta3_limit_response_H_ */
 
