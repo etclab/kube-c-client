@@ -47,45 +47,34 @@ char *base64encode (const void *b64_encode_this, int encode_this_many_bytes){
 char *base64decode (const void *b64_decode_this, int decode_this_many_bytes, int *decoded_bytes){
 #ifdef OPENSSL
     // TODO(shadowbearvr): Verify this works...
-    if (!b64_decode_this || !decoded_len) {
+    if (!b64_decode_this || !decoded_bytes) {
         return NULL; // Return NULL for invalid input.
     }
 
     // Calculate the maximum possible size of the decoded data.
-    size_t input_len = strlen(b64_decode_this);
-    size_t max_decoded_len = 3 * (input_len / 4);
+    size_t max_decoded_len = 3 * (decode_this_many_bytes / 4);
     unsigned char *decoded_data = (unsigned char *)malloc(max_decoded_len);
     if (!decoded_data) {
         return NULL; // Return NULL if memory allocation fails.
     }
 
-    // Set up OpenSSL's decoding context.
-    EVP_ENCODE_CTX *ctx = EVP_ENCODE_CTX_new();
-    if (!ctx) {
-        free(decoded_data);
-        return NULL; // Return NULL if context creation fails.
-    }
-
     size_t output_len = 0; // To store the length of the decoded data.
+    size_t input_len = decode_this_many_bytes; // Use decode_this_many_bytes as the input length.
 
     // Decode the base64 input.
     if (EVP_DecodeBase64(
-            decoded_data,            // Output buffer for decoded data.
-            &output_len,             // Output length after decoding.
-            max_decoded_len,         // Max size of the output buffer.
+            decoded_data,             // Output buffer for decoded data.
+            &output_len,              // Output length after decoding.
+            max_decoded_len,          // Max size of the output buffer.
             (const unsigned char *)b64_decode_this, // Base64-encoded input.
-            input_len                // Length of the base64-encoded input.
+            input_len                 // Length of the base64-encoded input.
         ) != 1) {
         free(decoded_data);
-        EVP_ENCODE_CTX_free(ctx);
         return NULL; // Return NULL on decode failure.
     }
 
-    // Clean up OpenSSL's decoding context.
-    EVP_ENCODE_CTX_free(ctx);
-
-    *decoded_len = output_len; // Store the length of the decoded data.
-    return decoded_data; // Return the decoded data buffer.
+    *decoded_bytes = (int)output_len; // Store the length of the decoded data.
+    return (char *)decoded_data; // Return the decoded data buffer.
 #else // OPENSSL
 #warning Data will not be decoded. If you want to use function "base64decode", please define "-DOPENSSL" when building the library.
     return NULL;
